@@ -1,7 +1,7 @@
 # pixmap_path "<dir 1>:<dir 2>:<dir 3>:..."
 #
 
-pixmap_path "/usr/local/share/jamin/pixmaps"
+pixmap_path "@prefix@/share/jamin/pixmaps"
  
 #
 # style <name> [= <name>]
