@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: gtkmeter.c,v 1.8 2004/04/29 14:51:59 jdepner Exp $
+ *  $Id: gtkmeter.c,v 1.9 2004/11/01 14:52:39 joq Exp $
  */
 
 #include <math.h>
@@ -418,7 +418,8 @@ gtk_meter_update (GtkMeter *meter)
   if (new_value != meter->adjustment->value)
     {
       meter->adjustment->value = new_value;
-      gtk_signal_emit_by_name (GTK_OBJECT (meter->adjustment), "value_changed");
+      //gtk_signal_emit_by_name (GTK_OBJECT (meter->adjustment),
+      //		         "value_changed");
     }
 
   gtk_widget_draw(GTK_WIDGET(meter), NULL);
