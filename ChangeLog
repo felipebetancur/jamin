@@ -1,3 +1,8 @@
+2004-12-06  Steve Harris  <steve@plugin.org.uk>
+
+	* jam_ui.glade: changed packing of about dialogue so that the logo
+	  fills, but doesnt expand.
+
 2004-11-01  Jack O'Quin  <joq@io.com>
 
 	* Use jack_client_open(), if available.  Use actual client name in
