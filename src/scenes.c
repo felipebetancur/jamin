@@ -258,6 +258,9 @@ void set_scene_name (int number, const char *scene_name)
 
 void clear_scene (int scene_num)
 {
+    char        name[20];
+
+
     GtkTooltips *tooltips = gtk_tooltips_new();
 
 
@@ -273,6 +276,9 @@ void clear_scene (int scene_num)
                               GTK_ICON_SIZE_BUTTON);
 
     scene_loaded[menu_scene] = FALSE;
+
+    sprintf (name, "Scene %1d", menu_scene + 1);
+    gtk_entry_set_text (l_scene_name[menu_scene], name);
 }
 
 
