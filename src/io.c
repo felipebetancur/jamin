@@ -133,6 +133,7 @@ static jack_ringbuffer_t *out_rb[NCHANNELS]; /* output channel buffers */
 /* JACK connection data */
 io_jack_status_t jst = {0};		/* current JACK status */
 jack_client_t *client;			/* JACK client structure */
+char *client_name = NULL;		/* JACK client name (in heap) */
 int nchannels = NCHANNELS;		/* actual number of channels */
 
 /* These arrays are NULL-terminated... */
@@ -644,6 +645,11 @@ void io_cleanup()
 
 	/* MUST stop using JACK services before jack_client_close() */
 	client = NULL;
+	if (client_name) {
+	    char *p = client_name;	/* memory to free */
+	    client_name = NULL;		/* stop using the name */
+	    free(p);
+	}
 	jst.active = 0;
 	io_new_state(DSP_STOPPED);
 	jack_client_close(client_save);	/* leave the jack graph */
@@ -694,6 +700,46 @@ gboolean check_file (char *optarg)
 
 /****************  Initialization  ****************/
 
+/* io_jack_open -- open a connection with the JACK server
+ *
+ * Global variable client_name is a pointer to the client name string.
+ * This may be modified as a side-effect, if JACK assigns a different
+ * unique name for this session.
+ */
+jack_client_t *io_jack_open()
+{
+#ifdef HAVE_JACK_CLIENT_OPEN
+    jack_status_t status;
+
+    client = jack_client_open(client_name, JackNullOption, &status);
+    if (client == NULL) {
+	fprintf(stderr, _("%s: jack_client_open() failed, status = %d\n"),
+		PACKAGE, status);
+	return NULL;
+    }
+    if (status & JackServerStarted) {
+	fprintf(stderr, _("%s: JACK server started\n"), PACKAGE);
+    }
+    if (status & JackNameNotUnique) {
+	client_name = strdup(jack_get_client_name(client));
+	fprintf(stderr, _("%s: unique name `%s' assigned\n"),
+		PACKAGE, client_name);
+    }
+
+#else /* !HAVE_JACK_CLIENT_OPEN */
+
+    client = jack_client_new(client_name);
+    if (client == NULL) {
+	fprintf(stderr, _("%s: Cannot contact JACK server, is it running?\n"),
+		PACKAGE);
+    }
+
+#endif /* HAVE_JACK_CLIENT_OPEN */
+
+    return client;
+
+}
+
 /* io_init -- initialize DSP engine.
  *
  *  DSP engine state transitions:
@@ -705,8 +751,6 @@ void io_init(int argc, char *argv[])
     int chan;
     int opt, spectrum_freq;
     float crossfade_time;
-    char *client_name = NULL;
-
 
     spectrum_freq = 10;
     crossfade_time = 1.0;
@@ -832,10 +876,8 @@ void io_init(int argc, char *argv[])
 	client_name = strdup(PACKAGE);
     }
 
-    client = jack_client_new(client_name);
-    if (client == 0) {
-	fprintf(stderr, _("%s: Cannot contact JACK server, is it running?\n"),
-		PACKAGE);
+    client = io_jack_open();
+    if (client == NULL) {
 	exit(2);
     }
 
@@ -852,8 +894,6 @@ void io_init(int argc, char *argv[])
 
     /* initialize process_signal() */
     process_init((float) jst.sample_rate);
-
-    free(client_name);
 }
 
 

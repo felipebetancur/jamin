@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.57 2004/10/01 15:26:45 theno23 Exp $
+ *  $Id: state.c,v 1.58 2004/11/02 05:40:16 joq Exp $
  */
 
 #include <stdio.h>
@@ -31,6 +31,7 @@
 #include "geq.h"
 #include "spectrum.h"
 #include "state.h"
+#include "io.h"
 #include "process.h"
 #include "scenes.h"
 #include "hdeq.h"
@@ -952,12 +953,15 @@ char *s_get_filename()
 void s_update_title()
 {
     char *title; 
-   char *base;
+    char *base;
     char *tmp;
+
+    /* name for title bar */
+    char *title_name = (client_name? client_name: PACKAGE);
 
     tmp = strdup(filename);
     base = basename(tmp);
-    title = g_strdup_printf(PACKAGE " - %s - " VERSION, base);
+    title = g_strdup_printf("%s - %s - " VERSION, title_name, base);
     free(tmp);
     gtk_window_set_title ((GtkWindow *) main_window, title);
     free(title);

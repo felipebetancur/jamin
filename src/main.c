@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.57 2004/10/26 21:35:07 theno23 Exp $
+ *  $Id: main.c,v 1.58 2004/11/02 05:40:16 joq Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
     preferences_init();
     main_window = create_window1();
 
-    snprintf(title, sizeof(title), PACKAGE " " VERSION);
+    //snprintf(title, sizeof(title), "%s %s", title_name, VERSION);
     gtk_window_set_title ((GtkWindow *) main_window, title);
 
 #ifdef FILTER_TUNING

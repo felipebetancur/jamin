@@ -1,3 +1,8 @@
+2004-11-01  Jack O'Quin  <joq@io.com>
+
+	* Use jack_client_open(), if available.  Use actual client name in
+	title bar, not necessarily PACKAGE name.
+
 2004-10-28  Steve Harris  <steve@plugin.org.uk>
 
 	* src/process.c: added some code to change the bandwidth of the filters
