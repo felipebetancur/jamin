@@ -7,9 +7,8 @@
 
 #include "config.h"
 #include "state.h"
-#include "scenes.h"
 
-/* The smallest value that counts as a changei, should be aproximatly
+/* The smallest value that counts as a change, should be approximately
  * epsilon+delta */
 #define MIN_CHANGE (FLT_EPSILON + FLT_EPSILON)
 
@@ -30,6 +29,7 @@ static int suppress_feedback = 0;
 static void s_history_add(const char *description);
 static void s_set_events(int id, float value);
 void set_EQ_curve_values ();
+void unset_scene_buttons ();
 
 
 void state_init()
@@ -248,9 +248,8 @@ void s_load_session (GtkWidget *w, gpointer user_data)
     last_changed = S_LOAD;
     free(handler);
 
+    unset_scene_buttons ();
     set_EQ_curve_values ();
-
-    load_scene (last_state);
 }
 
 void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)

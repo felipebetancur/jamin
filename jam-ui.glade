@@ -2845,27 +2845,64 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkHBox" id="hbox54">
+		<widget class="GtkHBox" id="scenes_hbox">
+		  <property name="border_width">1</property>
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">0</property>
 
 		  <child>
-		    <widget class="GtkEventBox" id="scene1_eventbox">
+		    <widget class="GtkHBox" id="scene1_hbox">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">Scene 1</property>
-		      <signal name="button_press_event" handler="on_scene1_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:05:56 GMT"/>
+		      <property name="homogeneous">False</property>
+		      <property name="spacing">0</property>
 
 		      <child>
-			<widget class="GtkImage" id="scene1">
+			<widget class="GtkEventBox" id="scene1_eventbox">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-no</property>
-			  <property name="icon_size">4</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
+			  <property name="tooltip" translatable="yes">Right click for menu</property>
+			  <signal name="button_press_event" handler="on_scene1_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:05:56 GMT"/>
+
+			  <child>
+			    <widget class="GtkImage" id="scene1">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-no</property>
+			      <property name="icon_size">4</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
 			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">True</property>
+			  <property name="fill">True</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkEntry" id="scene1_name">
+			  <property name="width_request">50</property>
+			  <property name="height_request">24</property>
+			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Scene 1 name</property>
+			  <property name="can_focus">True</property>
+			  <property name="editable">True</property>
+			  <property name="visibility">True</property>
+			  <property name="max_length">10</property>
+			  <property name="text" translatable="yes">Scene 1</property>
+			  <property name="has_frame">True</property>
+			  <property name="invisible_char" translatable="yes">*</property>
+			  <property name="activates_default">False</property>
+			  <signal name="changed" handler="on_scene1_name_changed" last_modification_time="Sun, 13 Jul 2003 20:04:46 GMT"/>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">True</property>
+			  <property name="fill">True</property>
+			</packing>
 		      </child>
 		    </widget>
 		    <packing>
@@ -2876,21 +2913,57 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkEventBox" id="scene2_eventbox">
+		    <widget class="GtkHBox" id="scene2_hbox">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">Scene 2</property>
-		      <signal name="button_press_event" handler="on_scene2_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:06:05 GMT"/>
+		      <property name="homogeneous">False</property>
+		      <property name="spacing">0</property>
 
 		      <child>
-			<widget class="GtkImage" id="scene2">
+			<widget class="GtkEventBox" id="scene2_eventbox">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-no</property>
-			  <property name="icon_size">4</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
+			  <property name="tooltip" translatable="yes">Right click for menu</property>
+			  <signal name="button_press_event" handler="on_scene2_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:06:05 GMT"/>
+
+			  <child>
+			    <widget class="GtkImage" id="scene2">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-no</property>
+			      <property name="icon_size">4</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
 			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">True</property>
+			  <property name="fill">True</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkEntry" id="scene2_name">
+			  <property name="width_request">50</property>
+			  <property name="height_request">24</property>
+			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Scene 2 name</property>
+			  <property name="can_focus">True</property>
+			  <property name="editable">True</property>
+			  <property name="visibility">True</property>
+			  <property name="max_length">0</property>
+			  <property name="text" translatable="yes">Scene 2</property>
+			  <property name="has_frame">True</property>
+			  <property name="invisible_char" translatable="yes">*</property>
+			  <property name="activates_default">False</property>
+			  <signal name="changed" handler="on_scene2_name_changed" last_modification_time="Sun, 13 Jul 2003 20:04:51 GMT"/>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">True</property>
+			  <property name="fill">True</property>
+			</packing>
 		      </child>
 		    </widget>
 		    <packing>
@@ -2901,21 +2974,57 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkEventBox" id="scene3_eventbox">
+		    <widget class="GtkHBox" id="scene3_hbox">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">Scene 3</property>
-		      <signal name="button_press_event" handler="on_scene3_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:06:09 GMT"/>
+		      <property name="homogeneous">False</property>
+		      <property name="spacing">0</property>
 
 		      <child>
-			<widget class="GtkImage" id="scene3">
+			<widget class="GtkEventBox" id="scene3_eventbox">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-no</property>
-			  <property name="icon_size">4</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
+			  <property name="tooltip" translatable="yes">Right click for menu</property>
+			  <signal name="button_press_event" handler="on_scene3_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:06:09 GMT"/>
+
+			  <child>
+			    <widget class="GtkImage" id="scene3">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-no</property>
+			      <property name="icon_size">4</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
 			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">True</property>
+			  <property name="fill">True</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkEntry" id="scene3_name">
+			  <property name="width_request">50</property>
+			  <property name="height_request">24</property>
+			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Scene 3 name</property>
+			  <property name="can_focus">True</property>
+			  <property name="editable">True</property>
+			  <property name="visibility">True</property>
+			  <property name="max_length">0</property>
+			  <property name="text" translatable="yes">Scene 3</property>
+			  <property name="has_frame">True</property>
+			  <property name="invisible_char" translatable="yes">*</property>
+			  <property name="activates_default">False</property>
+			  <signal name="changed" handler="on_scene3_name_changed" last_modification_time="Sun, 13 Jul 2003 20:04:56 GMT"/>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">True</property>
+			  <property name="fill">True</property>
+			</packing>
 		      </child>
 		    </widget>
 		    <packing>
@@ -2926,21 +3035,57 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkEventBox" id="scene4_eventbox">
+		    <widget class="GtkHBox" id="scene4_hbox">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">Scene 4</property>
-		      <signal name="button_press_event" handler="on_scene4_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:06:15 GMT"/>
+		      <property name="homogeneous">False</property>
+		      <property name="spacing">0</property>
 
 		      <child>
-			<widget class="GtkImage" id="scene4">
+			<widget class="GtkEventBox" id="scene4_eventbox">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-no</property>
-			  <property name="icon_size">4</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
+			  <property name="tooltip" translatable="yes">Right click for menu</property>
+			  <signal name="button_press_event" handler="on_scene4_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:06:15 GMT"/>
+
+			  <child>
+			    <widget class="GtkImage" id="scene4">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-no</property>
+			      <property name="icon_size">4</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
 			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">True</property>
+			  <property name="fill">True</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkEntry" id="scene4_name">
+			  <property name="width_request">50</property>
+			  <property name="height_request">24</property>
+			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Scene 4 name</property>
+			  <property name="can_focus">True</property>
+			  <property name="editable">True</property>
+			  <property name="visibility">True</property>
+			  <property name="max_length">0</property>
+			  <property name="text" translatable="yes">Scene 4</property>
+			  <property name="has_frame">True</property>
+			  <property name="invisible_char" translatable="yes">*</property>
+			  <property name="activates_default">False</property>
+			  <signal name="changed" handler="on_scene4_name_changed" last_modification_time="Sun, 13 Jul 2003 20:05:01 GMT"/>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">True</property>
+			  <property name="fill">True</property>
+			</packing>
 		      </child>
 		    </widget>
 		    <packing>
@@ -2951,21 +3096,57 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkEventBox" id="scene5_eventbox">
+		    <widget class="GtkHBox" id="scene5_hbox">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">Scene 5</property>
-		      <signal name="button_press_event" handler="on_scene5_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:06:21 GMT"/>
+		      <property name="homogeneous">False</property>
+		      <property name="spacing">0</property>
 
 		      <child>
-			<widget class="GtkImage" id="scene5">
+			<widget class="GtkEventBox" id="scene5_eventbox">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-no</property>
-			  <property name="icon_size">4</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
+			  <property name="tooltip" translatable="yes">Right click for menu</property>
+			  <signal name="button_press_event" handler="on_scene5_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:06:21 GMT"/>
+
+			  <child>
+			    <widget class="GtkImage" id="scene5">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-no</property>
+			      <property name="icon_size">4</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
 			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">True</property>
+			  <property name="fill">True</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkEntry" id="scene5_name">
+			  <property name="width_request">50</property>
+			  <property name="height_request">24</property>
+			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Scene 5 name</property>
+			  <property name="can_focus">True</property>
+			  <property name="editable">True</property>
+			  <property name="visibility">True</property>
+			  <property name="max_length">0</property>
+			  <property name="text" translatable="yes">Scene 5</property>
+			  <property name="has_frame">True</property>
+			  <property name="invisible_char" translatable="yes">*</property>
+			  <property name="activates_default">False</property>
+			  <signal name="changed" handler="on_scene5_name_changed" last_modification_time="Sun, 13 Jul 2003 20:05:06 GMT"/>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">True</property>
+			  <property name="fill">True</property>
+			</packing>
 		      </child>
 		    </widget>
 		    <packing>
@@ -2976,21 +3157,57 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkEventBox" id="scene6_eventbox">
+		    <widget class="GtkHBox" id="scene6_hbox">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">Scene 6</property>
-		      <signal name="button_press_event" handler="on_scene6_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:06:27 GMT"/>
+		      <property name="homogeneous">False</property>
+		      <property name="spacing">0</property>
 
 		      <child>
-			<widget class="GtkImage" id="scene6">
+			<widget class="GtkEventBox" id="scene6_eventbox">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-no</property>
-			  <property name="icon_size">4</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
+			  <property name="tooltip" translatable="yes">Right click for menu</property>
+			  <signal name="button_press_event" handler="on_scene6_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:06:27 GMT"/>
+
+			  <child>
+			    <widget class="GtkImage" id="scene6">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-no</property>
+			      <property name="icon_size">4</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
 			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">True</property>
+			  <property name="fill">True</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkEntry" id="scene6_name">
+			  <property name="width_request">50</property>
+			  <property name="height_request">24</property>
+			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Scene 6 name</property>
+			  <property name="can_focus">True</property>
+			  <property name="editable">True</property>
+			  <property name="visibility">True</property>
+			  <property name="max_length">0</property>
+			  <property name="text" translatable="yes">Scene 6</property>
+			  <property name="has_frame">True</property>
+			  <property name="invisible_char" translatable="yes">*</property>
+			  <property name="activates_default">False</property>
+			  <signal name="changed" handler="on_scene6_name_changed" last_modification_time="Sun, 13 Jul 2003 20:05:11 GMT"/>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">True</property>
+			  <property name="fill">True</property>
+			</packing>
 		      </child>
 		    </widget>
 		    <packing>
@@ -6130,6 +6347,53 @@
 	      <property name="fill">True</property>
 	    </packing>
 	  </child>
+	</widget>
+      </child>
+    </widget>
+  </child>
+</widget>
+
+<widget class="GtkMenu" id="scene_menu">
+
+  <child>
+    <widget class="GtkImageMenuItem" id="setscene">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Assign settings to button</property>
+      <property name="label" translatable="yes">Set</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_setscene_activate" last_modification_time="Sun, 13 Jul 2003 18:13:07 GMT"/>
+
+      <child internal-child="image">
+	<widget class="GtkImage" id="image6">
+	  <property name="visible">True</property>
+	  <property name="stock">gtk-apply</property>
+	  <property name="icon_size">1</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+      </child>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="clearscene">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Clear settings from button</property>
+      <property name="label" translatable="yes">Clear</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_clearscene_activate" last_modification_time="Sun, 13 Jul 2003 18:13:07 GMT"/>
+
+      <child internal-child="image">
+	<widget class="GtkImage" id="image7">
+	  <property name="visible">True</property>
+	  <property name="stock">gtk-clear</property>
+	  <property name="icon_size">1</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
 	</widget>
       </child>
     </widget>

@@ -618,3 +618,35 @@ gboolean
 on_scene6_eventbox_button_press_event  (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
+
+void
+on_setscene_activate                   (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_clearscene_activate                 (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_scene1_name_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data);
+
+void
+on_scene2_name_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data);
+
+void
+on_scene3_name_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data);
+
+void
+on_scene4_name_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data);
+
+void
+on_scene5_name_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data);
+
+void
+on_scene6_name_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data);

@@ -82,7 +82,7 @@ void s_restore_state(s_state *state);
 
 extern float s_value[S_SIZE];
 
-/* fetch cureently used value */
+/* fetch currently used value */
 
 inline static float s_get_value(int id)
 {

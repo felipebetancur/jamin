@@ -2761,7 +2761,7 @@ on_scene1_eventbox_button_press_event  (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  select_scene (0);
+  select_scene (0, event->button);
 
   return FALSE;
 }
@@ -2772,7 +2772,7 @@ on_scene2_eventbox_button_press_event  (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  select_scene (1);
+  select_scene (1, event->button);
 
   return FALSE;
 }
@@ -2783,7 +2783,7 @@ on_scene3_eventbox_button_press_event  (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  select_scene (2);
+  select_scene (2, event->button);
 
   return FALSE;
 }
@@ -2794,7 +2794,7 @@ on_scene4_eventbox_button_press_event  (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  select_scene (3);
+  select_scene (3, event->button);
 
   return FALSE;
 }
@@ -2805,7 +2805,7 @@ on_scene5_eventbox_button_press_event  (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  select_scene (4);
+  select_scene (4, event->button);
 
   return FALSE;
 }
@@ -2816,7 +2816,72 @@ on_scene6_eventbox_button_press_event  (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  select_scene (5);
+  select_scene (5, event->button);
 
   return FALSE;
 }
+
+
+void
+on_setscene_activate                   (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+    set_scene ();
+}
+
+
+void
+on_clearscene_activate                 (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+    clear_scene ();
+}
+
+
+void
+on_scene1_name_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data)
+{
+    set_scene_name (0, NULL);
+}
+
+
+void
+on_scene2_name_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data)
+{
+    set_scene_name (1, NULL);
+}
+
+
+void
+on_scene3_name_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data)
+{
+    set_scene_name (2, NULL);
+}
+
+
+void
+on_scene4_name_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data)
+{
+    set_scene_name (3, NULL);
+}
+
+
+void
+on_scene5_name_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data)
+{
+    set_scene_name (4, NULL);
+}
+
+
+void
+on_scene6_name_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data)
+{
+    set_scene_name (5, NULL);
+}
+

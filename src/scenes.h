@@ -13,9 +13,13 @@
 
 
 void bind_scenes ();
-void select_scene (int number);
+void select_scene (int number, int button);
 int get_current_scene ();
-void load_scene (s_state *state);
+void set_scene ();
+void clear_scene ();
+void set_scene_name (int number, char *scene_name);
+void unset_scene_buttons ();
+s_state *get_scene (int number);
 
 
 #endif

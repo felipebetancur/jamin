@@ -1,11 +1,14 @@
 #include "scenes.h"
 #include "main.h"
 #include "support.h"
+#include "interface.h"
 
 
+static GtkMenu           *scene_menu;
 static GtkImage          *l_scene[NUM_SCENES];
 static GtkEventBox       *l_scene_eventbox[NUM_SCENES];
-static int               current_scene, next_scene;
+static GtkEntry          *l_scene_name[NUM_SCENES];
+static int               current_scene, menu_scene;
 static gboolean          scene_loaded[NUM_SCENES];
 static s_state           scene_state[NUM_SCENES];
 
@@ -13,13 +16,19 @@ static s_state           scene_state[NUM_SCENES];
 void set_EQ_curve_values ();
 
 
+/*  Initialize all scene related structures and get the widget addresses.  */
+
 void bind_scenes ()
 {
     int             i;
     char            name[20];
 
+
+    scene_menu = (GtkMenu *) create_scene_menu();
+
+
     current_scene = -1;
-    next_scene = -1;
+    menu_scene = -1;
 
     for (i = 0 ; i < NUM_SCENES ; i++)
       {
@@ -28,42 +37,72 @@ void bind_scenes ()
         sprintf (name, "scene%1d_eventbox", i + 1);
         l_scene_eventbox[i] = 
           GTK_EVENT_BOX (lookup_widget (main_window, name));
+        sprintf (name, "scene%1d_name", i + 1);
+        l_scene_name[i] = 
+          GTK_ENTRY (lookup_widget (main_window, name));
         scene_loaded[i] = FALSE;
         scene_state[i].description = NULL; 
         gtk_widget_set_sensitive ((GtkWidget *) l_scene[i], FALSE);
-        gtk_widget_set_sensitive ((GtkWidget *) l_scene_eventbox[i], FALSE);
       }
 }
 
 
-void select_scene (int number)
+/*  Select one of the scenes as the current scene or pop up the set/clear
+    menu.  */
+
+void select_scene (int number, int button)
 {
     int             i;
 
-    if (scene_loaded[number])
+
+    /*  Left button selects the scene.  */
+
+    switch (button)
       {
-        for (i = 0 ; i < NUM_SCENES ; i++)
+      case 1:
+        if (scene_loaded[number])
           {
-            if (i == number)
+            for (i = 0 ; i < NUM_SCENES ; i++)
               {
-                gtk_image_set_from_stock (l_scene[i], GTK_STOCK_YES, 
-                                          GTK_ICON_SIZE_BUTTON);
+                if (i == number)
+                  {
+                    gtk_image_set_from_stock (l_scene[i], GTK_STOCK_YES, 
+                                              GTK_ICON_SIZE_BUTTON);
 
-                current_scene = i;
+                    current_scene = i;
 
-                s_restore_state (&scene_state[i]);
+                    s_restore_state (&scene_state[i]);
 
-                set_EQ_curve_values ();
-              }
-            else
-              {
-                gtk_image_set_from_stock (l_scene[i], GTK_STOCK_NO, 
-                                          GTK_ICON_SIZE_BUTTON);
+                    set_EQ_curve_values ();
+                  }
+                else
+                  {
+                    gtk_image_set_from_stock (l_scene[i], GTK_STOCK_NO, 
+                                              GTK_ICON_SIZE_BUTTON);
+                  }
               }
           }
+        break;
+
+
+        /*  Middle button is ignored.  */
+
+      case 2:
+        break;
+
+
+        /*  Right button pops up the set/clear menu.  */
+
+      case 3:
+        menu_scene = number;
+        gtk_menu_popup (scene_menu, NULL, NULL, NULL, NULL, button, 
+                        gtk_get_current_event_time());
+        break;
       }
 }
 
+
+/*  Returns the current active scene number or -1 if no scene is active.  */
 
 int get_current_scene ()
 {
@@ -71,34 +110,50 @@ int get_current_scene ()
 }
 
 
-void load_scene (s_state *state)
+/*  Returns the requested scene state or NULL if that scene is not loaded.  */
+
+s_state *get_scene (int number)
 {
-    int         i, num;
+  if (!scene_loaded[number]) return (NULL);
+
+  return (&scene_state[number]);
+}
+
+
+/*  Set the scene state from the current settings.  Get the scene name from
+    the scene_name text entry widget.  */
+
+void set_scene ()
+{
+    int         i;
+    char        name[256];
     GtkTooltips *tooltips = gtk_tooltips_new();
 
 
-    next_scene++;
-
-
-    num = next_scene % NUM_SCENES;
-
-    gtk_widget_set_sensitive ((GtkWidget *) l_scene[num], TRUE);
-    gtk_widget_set_sensitive ((GtkWidget *) l_scene_eventbox[num], TRUE);
+    gtk_widget_set_sensitive ((GtkWidget *) l_scene[menu_scene], TRUE);
 
     for (i = 0 ; i < S_SIZE ; i++) 
-      scene_state[num].value[i] = state->value[i];
+      scene_state[menu_scene].value[i] = s_get_value(i);
 
-    scene_state[num].description = 
-        (char *) realloc (scene_state[num].description, 
-        strlen (state->description) + 1);
+    
+    strcpy (name, gtk_entry_get_text (l_scene_name[menu_scene]));
+    scene_state[menu_scene].description = 
+            (char *) realloc (scene_state[menu_scene].description, 
+            strlen (name) + 1);
 
-    strcpy (scene_state[num].description, state->description);
+    strcpy (scene_state[menu_scene].description, name);
 
-    scene_loaded[num] = TRUE;
+
+    /*  Set the scene loaded flag.  */
+
+    scene_loaded[menu_scene] = TRUE;
+
+
+    /*  Change the selected icon to green/yes.  */
 
     for (i = 0 ; i < NUM_SCENES ; i++)
       {
-        if (i == num)
+        if (i == menu_scene)
           {
             gtk_image_set_from_stock (l_scene[i], GTK_STOCK_YES, 
                                       GTK_ICON_SIZE_BUTTON);
@@ -112,6 +167,77 @@ void load_scene (s_state *state)
           }
       }
 
-    gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[num]), 
-                          scene_state[num].description, NULL);
+
+    /*  Set the tooltip to the full name (it may be too long to show up
+        completely in the text widget).  */
+
+    gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[menu_scene]), 
+                          scene_state[menu_scene].description, NULL);
+}
+
+
+/*  Set the scene name.  If the scene_name passed in is null get the name 
+    from the scene_name text entry widget.  This is called from callbacks.c
+    on a change to the scene_name widget.  */
+
+void set_scene_name (int number, char *scene_name)
+{
+    char        name[256];
+    GtkTooltips *tooltips = gtk_tooltips_new();
+
+
+    if (scene_name == NULL)
+      {
+        strcpy (name, gtk_entry_get_text (l_scene_name[number]));
+      }
+    else
+      {
+        strcpy (name, scene_name);
+
+        gtk_entry_set_text (l_scene_name[number], name);
+      }
+
+    scene_state[number].description = 
+        (char *) realloc (scene_state[number].description, 
+        strlen (name) + 1);
+
+    strcpy (scene_state[menu_scene].description, name);
+
+
+    /*  Set the tooltip to the full name (it may be too long to show up
+        completely in the text widget).  */
+
+    gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[menu_scene]), 
+                          scene_state[menu_scene].description, NULL);
+}
+
+
+void clear_scene ()
+{
+    GtkTooltips *tooltips = gtk_tooltips_new();
+
+    gtk_widget_set_sensitive ((GtkWidget *) l_scene[menu_scene], FALSE);
+
+    gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[menu_scene]), 
+                          "Right click for menu", NULL);
+
+    scene_loaded[menu_scene] = FALSE;
+}
+
+
+/*  Set all of the buttons to unselected state.  This should be done whenever 
+    there is a state change.  I'm not sure quite where to put the calls at
+    present.  */
+
+void unset_scene_buttons ()
+{
+    int         i;
+
+
+    current_scene = -1;
+    for (i = 0 ; i < NUM_SCENES ; i++)
+      {
+        gtk_image_set_from_stock (l_scene[i], GTK_STOCK_NO, 
+                                  GTK_ICON_SIZE_BUTTON);
+      }
 }
