@@ -1,8 +1,8 @@
-2004-01-12  Jack O'Quin  <joq@io.com>
-
-	* First beta release [0.8.0].
-
 2004-01-12  Steve Harris  <steve@plugin.org.uk>
 
 	* hdeq.c (hdeq_curve_motion): Changed stack alloced sprintfs to be
-	heap alloced (with g_strdup_printf)
+	  heap alloced (with g_strdup_printf)
+
+2004-01-12  Jack O'Quin  <joq@io.com>
+
+	* First beta release [0.8.0].
