@@ -15,15 +15,17 @@ TODO (owner)
 
 - Change all uses of JAM to JAMin
 - Commit documentation to CVS (Ron)
-- Save state/scene/settings (Jan)
+- Make save and load work with multiple scenes (Steve)
+- Morph settings on scene changes (Steve)
+- Finish context sensitive help verbiage (everyone)
 - copyright headers in source code file (everyone)
 - move option parsing from io.c to main.c (Jack)
 - option to start up with no ports connected (Jack)
 - option for session name (Jack)
 - set JACK port latencies correctly (Jack, Steve)
-- man page
+- man page (Jan)
 - add test script directory (Jack)
-- set hotkeys for most used stuff: volume/pan, tabs, transport
+- set hotkeys for most used stuff: volume/pan, tabs, transport (Jan)
 
 
 TO THINK ABOUT
