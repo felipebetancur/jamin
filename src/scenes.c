@@ -369,3 +369,18 @@ void set_scene_warning_button ()
         current_scene = i + 100;
       }
 }
+
+
+/*  Set a specific scene button to a warning.  Only done on load.  */
+
+void set_num_scene_warning_button (int scene)
+{
+  int        i;
+
+
+  i = scene % 100;
+
+
+  gtk_image_set_from_stock (l_scene[i], GTK_STOCK_DIALOG_WARNING, 
+                            GTK_ICON_SIZE_BUTTON);
+}
