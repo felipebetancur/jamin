@@ -98,8 +98,8 @@ void geq_set_gains()
 
 void geq_set_sliders(int length, float x[], float y[])
 {
-    int i, j;
-    float dist;
+    int i, j, prev_band;
+    float dist, value;
 
 
     if (length != BINS / 2 - 1)
@@ -126,8 +126,11 @@ void geq_set_sliders(int length, float x[], float y[])
         EQ_drawn = 1;
 
 
-        /*  Convert to db and set the faders in the graphic EQ.  */
+        /*  Convert to db and set the faders in the graphic EQ.  The previous
+            band stuff is purely cosmetic in the low end.  I don't think that 
+            31Hz actually gets used anyway.  */
 
+        prev_band = -1;
         for (j = 0 ; j < EQ_BANDS ; j++)
           {
             float nearest_dist = 9999999.0f;
@@ -141,8 +144,18 @@ void geq_set_sliders(int length, float x[], float y[])
                     nearest_dist = dist;
                   }
               }
+            if (nearest_band == prev_band)
+              {
+                value = (y[nearest_band] + y[nearest_band + 1]) * 0.5;
+              }
+            else
+              {
+                value = y[nearest_band];
+              }
+            prev_band = nearest_band;
 
-            gtk_adjustment_set_value (geqa[j], y[nearest_band] / 0.05);
+
+            gtk_adjustment_set_value (geqa[j], value / 0.05);
           }
 
 

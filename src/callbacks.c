@@ -14,7 +14,6 @@
 #include "interface.h"
 #include "support.h"
 #include "process.h"
-#include "io.h"
 #include "intrim.h"
 #include "compressor-ui.h"
 #include "gtkmeter.h"
@@ -425,6 +424,7 @@ draw_EQ_spectrum_curve (float single_levels[])
 {
     static int     x[EQ_INTERP], y[EQ_INTERP];
     int            i;
+    float          step, range, freq;
 
 
     /*  Don't update if we're drawing an EQ curve.  */
@@ -455,15 +455,16 @@ draw_EQ_spectrum_curve (float single_levels[])
         /*  Convert the single levels to db, plot, and save the pixel positions
             so that we can erase them on the next pass.  */
 
+        range = l_geq_freqs[EQ_BANDS - 1] - l_geq_freqs[0];
+        step = range / (float) EQ_INTERP;
+
         for (i = 0 ; i < EQ_INTERP ; i++)
           {
-            const float freq = ((float) i / (float) BINS) * sample_rate;
+            freq = l_geq_freqs[0] + (float) i * step;
+
 
             x[i] = NINT (((log10(freq) - l_low2mid_adj->lower) /
                           EQ_curve_range_x) * EQ_curve_width);
-
-            //x[i] = NINT (((EQ_xinterp[i] - l_low2mid_adj->lower) / 
-            //              EQ_curve_range_x) * EQ_curve_width);
 
 
             /*  Most of the single_level values will be in the -90.0db to 
