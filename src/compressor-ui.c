@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: compressor-ui.c,v 1.22 2004/04/26 23:13:55 jdepner Exp $
+ *  $Id: compressor-ui.c,v 1.23 2004/05/06 09:42:59 theno23 Exp $
  */
 
 #include <stdio.h>
@@ -601,5 +601,16 @@ gboolean unsuspend_ganging (gpointer data)
   suspend_gang = FALSE;
   return (FALSE);
 }
+
+/* macro to create a trivial accesor function for the gang values */
+#define GANG_ACCESOR(p) \
+    gboolean comp_ ## p ## _ganged(int band) { return gang_ ## p[band]; }
+
+GANG_ACCESOR(at);
+GANG_ACCESOR(re);
+GANG_ACCESOR(th);
+GANG_ACCESOR(ra);
+GANG_ACCESOR(kn);
+GANG_ACCESOR(ma);
 
 /* vi:set ts=8 sts=4 sw=4: */

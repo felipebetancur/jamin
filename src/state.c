@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.51 2004/05/01 17:00:24 jdepner Exp $
+ *  $Id: state.c,v 1.52 2004/05/06 09:42:59 theno23 Exp $
  */
 
 #include <stdio.h>
@@ -66,13 +66,32 @@ static float crossfade_time = 1.0;
 static void s_set_events(int id, float value);
 void s_update_title();
 void s_history_add(const char *description);
+void s_save_global_int(xmlDocPtr doc, char *symbol, int value);
+void s_save_global_float(xmlDocPtr doc, char *symbol, float value);
+void s_save_global_gang(xmlDocPtr doc, char *p, int band, gboolean value);
 
 static const gchar *filename = NULL;
+
+/* global session parmaeters read from the XML file */
+
+typedef struct {
+    int scene;
+    int mode;
+    float freq;
+    float lgain;
+    float hgain;
+    float ct;
+    int gang_at[XO_BANDS];
+    int gang_re[XO_BANDS];
+    int gang_th[XO_BANDS];
+    int gang_ra[XO_BANDS];
+    int gang_kn[XO_BANDS];
+    int gang_ma[XO_BANDS];
+} xml_global_params;
 
 void state_init()
 {
     unsigned int i;
-
 
     for (i=0; i<S_SIZE; i++) {
 	s_value[i] = 0.0f;
@@ -483,6 +502,19 @@ void s_save_session (const char *fname)
     node = xmlNewText("\n");
     xmlAddChild(rootnode, node);
 
+// XXX Jan, these need to be replaced with the real, live values 
+    s_save_global_int(doc, "mode", SPEC_POST_EQ);
+    s_save_global_float(doc, "ct", 1.0);
+
+    for (i = 0 ; i < XO_BANDS ; i++) {
+        s_save_global_gang(doc, "at", i, comp_at_ganged(i));
+        s_save_global_gang(doc, "re", i, comp_re_ganged(i));
+        s_save_global_gang(doc, "th", i, comp_th_ganged(i));
+        s_save_global_gang(doc, "ra", i, comp_ra_ganged(i));
+        s_save_global_gang(doc, "kn", i, comp_kn_ganged(i));
+        s_save_global_gang(doc, "ma", i, comp_ma_ganged(i));
+    }
+
     /* Save current active state */
     for (i=0; i<S_SIZE; i++) {
 	node = xmlNewDocRawNode(doc, NULL, "parameter", NULL);
@@ -556,11 +588,8 @@ void s_load_session (const char *fname)
     xmlSAXHandlerPtr handler;
     int scene = -1;
     int fd;
-    int mode, freq, i;
-    float lgain, hgain, ct;
-    gboolean gang_at[XO_BANDS], gang_re[XO_BANDS], gang_th[XO_BANDS], 
-      gang_ra[XO_BANDS], gang_kn[XO_BANDS], gang_ma[XO_BANDS];
-
+    int i;
+    xml_global_params gp;
 
     saved_scene = -1;
     unset_scene_buttons ();
@@ -593,9 +622,27 @@ void s_load_session (const char *fname)
     handler->warning = s_warning;
     handler->error = s_error;
 
-    xmlSAXUserParseFile(handler, &scene, filename);
+    /* set the gp struct to some sensible defualts incase values aren't set in
+     * the XML file */
+    gp.scene = scene;
+    gp.mode = SPEC_POST_EQ;
+    gp.freq = 10;
+    gp.lgain = -12.0;
+    gp.hgain = 12.0;
+    gp.ct = 1.0;
+    for (i = 0 ; i < XO_BANDS ; i++) {
+        gp.gang_at[i] = FALSE;
+        gp.gang_re[i] = FALSE;
+        gp.gang_th[i] = FALSE;
+        gp.gang_ra[i] = FALSE;
+        gp.gang_kn[i] = FALSE;
+        gp.gang_ma[i] = FALSE;
+    }
 
-    if (scene == LOAD_ERROR) {
+    /* run the SAX parser */    
+    xmlSAXUserParseFile(handler, &gp, filename);
+
+    if (gp.scene == LOAD_ERROR) {
 	errstr = g_strdup_printf("Loading file '%s' failed", filename);
 	message (GTK_MESSAGE_WARNING, errstr);
         perror(errstr);
@@ -607,46 +654,25 @@ void s_load_session (const char *fname)
     last_changed = S_LOAD;
     free(handler);
 
+    /* global params are read into the gp struct, and set in the UI code from
+     * here */
 
-    /*  Set the per session parameters from the .jam file.  When Steve implements
-        this he can remove the following setting lines.  These were put here to
-        test the functionality.  */
+    process_set_spec_mode (gp.mode);
+    set_spectrum_freq (gp.freq);
+    hdeq_set_upper_gain (gp.hgain);
+    geq_set_range (geq_get_adjustment(0)->lower, gp.hgain);
+    hdeq_set_lower_gain (gp.lgain);
+    geq_set_range (gp.lgain, geq_get_adjustment(0)->upper);
+    s_set_crossfade_time (gp.ct);
 
-    /* Remove */
-    mode = SPEC_POST_EQ;
-    freq = 10;
-    lgain = -12.0;
-    hgain = 12.0;
-    ct = 1.0;
-    /**********/
-
-    process_set_spec_mode (mode);
-    set_spectrum_freq (freq);
-    hdeq_set_upper_gain (hgain);
-    geq_set_range (geq_get_adjustment(0)->lower, hgain);
-    hdeq_set_lower_gain (lgain);
-    geq_set_range (lgain, geq_get_adjustment(0)->upper);
-    s_set_crossfade_time (ct);
-
-    for (i = 0 ; i < XO_BANDS ; i++)
-      {
-        /* Remove */
-        gang_at[i] = FALSE;
-        gang_re[i] = FALSE;
-        gang_th[i] = FALSE;
-        gang_ra[i] = FALSE;
-        gang_kn[i] = FALSE;
-        gang_ma[i] = FALSE;
-        /**********/
-
-        if (gang_at[i]) comp_gang_at (i);
-        if (gang_re[i]) comp_gang_re (i);
-        if (gang_th[i]) comp_gang_th (i);
-        if (gang_ra[i]) comp_gang_ra (i);
-        if (gang_kn[i]) comp_gang_kn (i);
-        if (gang_ma[i]) comp_gang_ma (i);
-      }
-
+    for (i = 0 ; i < XO_BANDS ; i++) {
+        if (gp.gang_at[i]) comp_gang_at (i);
+        if (gp.gang_re[i]) comp_gang_re (i);
+        if (gp.gang_th[i]) comp_gang_th (i);
+        if (gp.gang_ra[i]) comp_gang_ra (i);
+        if (gp.gang_kn[i]) comp_gang_kn (i);
+        if (gp.gang_ma[i]) comp_gang_ma (i);
+    }
 
     /*  This is the active scene.  */
 
@@ -674,8 +700,8 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 {
     const xmlChar **p;
     unsigned int i, found = 0;
-    const char *symbol = NULL, *value = NULL;
-    int *scene = (int *)user_data;
+    const char *symbol = NULL, *value = NULL, *index = NULL;
+    xml_global_params *gp = user_data;
     int active = 0;
     int changed = 0;
 
@@ -690,7 +716,7 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 	    if (!strcmp(*p, "name")) {
 		sname = *(p+1);
 	    } else if (!strcmp(*p, "number")) {
-		*scene = atoi(*(p+1));
+		gp->scene = atoi(*(p+1));
 	    } else if (!strcmp(*p, "active") && !strcmp(*(p+1), "true")) {
 		active = 1;
 	    } else if (!strcmp(*p, "changed") && !strcmp(*(p+1), "true")) {
@@ -703,17 +729,76 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
             scenes in the XML file.  */
 
 	if (active) {
-            saved_scene = *scene;
-	    set_scene(*scene);
+            saved_scene = gp->scene;
+	    set_scene(gp->scene);
 	}
 	if (changed) {
-            saved_scene = *scene + 100;
-	    set_num_scene_warning_button(changed_scene_no(*scene));
+            saved_scene = gp->scene + 100;
+	    set_num_scene_warning_button(changed_scene_no(gp->scene));
 	}
 
-	if (sname && *scene > -1) {
-	    set_scene(*scene);
-	    set_scene_name(*scene, sname);
+	if (sname && gp->scene > -1) {
+	    set_scene(gp->scene);
+	    set_scene_name(gp->scene, sname);
+	}
+
+	return;
+    }
+
+    /* if its a global setting */
+    if (!strcmp(name, "global")) {
+	/* find the name, value and index attributes */
+	for (p=attrs; p && *p; p+=2) {
+	    if (!strcmp(*p, "name")) {
+		symbol = *(p+1);
+	    } else if (!strcmp(*p, "value")) {
+		value = *(p+1);
+	    } else if (!strcmp(*p, "index")) {
+		index = *(p+1);
+	    }
+	}
+
+	if (!strcmp(symbol, "mode")) {
+	    gp->mode = atoi(value);
+	} else if (!strcmp(symbol, "freq")) {
+	    gp->freq = atof(value);
+	} else if (!strcmp(symbol, "lgain")) {
+	    gp->lgain = atof(value);
+	} else if (!strcmp(symbol, "hgain")) {
+	    gp->hgain = atof(value);
+	} else if (!strcmp(symbol, "ct")) {
+	    gp->ct = atof(value);
+	} else if ((const char *)strstr(symbol, "gang_") == symbol) {
+	    int ind = index ? atoi(index) : -1;
+	    int val = atoi(value);
+
+	    if (ind >= 0 && ind < XO_BANDS) {
+		if (!strcmp(symbol, "gang_at")) {
+		    gp->gang_at[ind] = val;
+		} else if (!strcmp(symbol, "gang_re")) {
+		    gp->gang_re[ind] = val;
+		} else if (!strcmp(symbol, "gang_th")) {
+		    gp->gang_th[ind] = val;
+		} else if (!strcmp(symbol, "gang_ra")) {
+		    gp->gang_ra[ind] = val;
+		} else if (!strcmp(symbol, "gang_kn")) {
+		    gp->gang_kn[ind] = val;
+		} else if (!strcmp(symbol, "gang_ma")) {
+		    gp->gang_ma[ind] = val;
+		} else {
+		    errstr = g_strdup_printf("Unhandled gang: %s\n", symbol);
+		    message (GTK_MESSAGE_WARNING, errstr);
+		    free(errstr);
+		}
+	    } else {
+		errstr = g_strdup_printf("Unhandled index: %s\n", index);
+		message (GTK_MESSAGE_WARNING, errstr);
+		free(errstr);
+	    }
+	} else {
+	    errstr = g_strdup_printf("Unhandled global paramter: %s\n", symbol);
+	    message (GTK_MESSAGE_WARNING, errstr);
+	    free(errstr);
 	}
 
 	return;
@@ -738,17 +823,17 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
     /* Find the matching symbol, this is horribly inefficient */
     for (i=0; i<S_SIZE && !found; i++) {
 	if (!strcmp(symbol, s_symbol[i])) {
-	    if (*scene == -1) {
+	    if (gp->scene == -1) {
 		s_value[i] = atof(value);
 		suppress_feedback++;
 		s_set_events(i, s_value[i]);
 		suppress_feedback--;
 	    } else {
-		s_state *st = get_scene(*scene);
+		s_state *st = get_scene(gp->scene);
 		if (st) {
 		    st->value[i] = atof(value);
 		} else {
-                  errstr = g_strdup_printf("Bad scene number %d\n", *scene);
+                  errstr = g_strdup_printf("Bad scene number %d\n", gp->scene);
                   message (GTK_MESSAGE_WARNING, errstr);
                   free(errstr);
 		}
@@ -765,7 +850,8 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 
       if (!strstr (symbol ,"stereo-balance"))
         {
-          errstr = g_strdup_printf("Unknown symbol: %s\n", symbol);
+	  errstr = g_strdup_printf("Unknown symbol: %s in element %s\n",
+				   symbol, name);
           message (GTK_MESSAGE_WARNING, errstr);
           free(errstr);
         }
@@ -871,5 +957,49 @@ void s_set_crossfade_time(float ct)
   crossfade_time = ct;
 }
 
+void s_save_global_int(xmlDocPtr doc, char *symbol, int value)
+{
+    xmlNodePtr root = xmlDocGetRootElement(doc);
+    xmlNodePtr node = xmlNewDocRawNode(doc, NULL, "global", NULL);
+    char tmp[256];
+
+    snprintf(tmp, 255, "%d", value);
+    xmlSetProp(node, "name", symbol);
+    xmlSetProp(node, "value", tmp);
+    xmlAddChild(root, node);
+    node = xmlNewText("\n");
+    xmlAddChild(root, node);
+}
+
+void s_save_global_float(xmlDocPtr doc, char *symbol, float value)
+{
+    xmlNodePtr root = xmlDocGetRootElement(doc);
+    xmlNodePtr node = xmlNewDocRawNode(doc, NULL, "global", NULL);
+    char tmp[256];
+
+    snprintf(tmp, 255, "%f", value);
+    xmlSetProp(node, "name", symbol);
+    xmlSetProp(node, "value", tmp);
+    xmlAddChild(root, node);
+    node = xmlNewText("\n");
+    xmlAddChild(root, node);
+}
+
+void s_save_global_gang(xmlDocPtr doc, char *p, int band, gboolean value)
+{
+    xmlNodePtr root = xmlDocGetRootElement(doc);
+    xmlNodePtr node = xmlNewDocRawNode(doc, NULL, "global", NULL);
+    char tmp[256];
+
+    snprintf(tmp, 255, "gang_%s", p);
+    xmlSetProp(node, "name", tmp);
+    snprintf(tmp, 255, "%d", band);
+    xmlSetProp(node, "index", tmp);
+    snprintf(tmp, 255, "%d", value);
+    xmlSetProp(node, "value", tmp);
+    xmlAddChild(root, node);
+    node = xmlNewText("\n");
+    xmlAddChild(root, node);
+}
 
 /* vi:set ts=8 sts=4 sw=4: */

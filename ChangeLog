@@ -1,3 +1,8 @@
+2004-05-06  Steve Harris  <steve@plugin.org.uk>
+
+	* state.c, compressor-ui.c: added global settings to XML file. all
+	  should be read, but only the gang states are written correctly.
+
 2004-05-05  Steve Harris  <steve@plugin.org.uk>
 
 	* configure.in, main.c: made OSC library optional, fixed scene change
