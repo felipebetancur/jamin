@@ -127,7 +127,7 @@ static jack_port_t *input_ports[NCHANNELS];
 static jack_port_t *output_ports[NCHANNELS];
 static char *in_names[NCHANNELS] = { "in_L", "in_R" };
 static char *out_names[NCHANNELS] = { "out_L", "out_R" };
-static char *iports[NCHANNELS] = {"alsa_pcm:capture_1", "alsa_pcm:capture_2"};
+static char *iports[NCHANNELS] = {"", ""};
 static char *oports[NCHANNELS] = {"alsa_pcm:playback_1", "alsa_pcm:playback_2"};
 
 
@@ -949,14 +949,18 @@ void io_activate()
     /* connect any required JACK ports */
     if (connect_ports) {
 	for (chan = 0; chan < nchannels; chan++) {
-	    if (jack_connect(client, iports[chan],
-			     jack_port_name(input_ports[chan])))
-		fprintf(stderr, "Cannot connect input port \"%s\"\n",
-			iports[chan]);
-	    if (jack_connect(client, jack_port_name(output_ports[chan]),
-			     oports[chan]))
-		fprintf(stderr, "Cannot connect output port \"%s\"\n",
-			oports[chan]);
+	    if (iports[chan] && *iports[chan]) {
+		if (jack_connect(client, iports[chan],
+				 jack_port_name(input_ports[chan])))
+		    fprintf(stderr, "Cannot connect input port \"%s\"\n",
+			    iports[chan]);
+	    }
+	    if (oports[chan] && *oports[chan]) {
+		if (jack_connect(client, jack_port_name(output_ports[chan]),
+				 oports[chan]))
+		    fprintf(stderr, "Cannot connect output port \"%s\"\n",
+			    oports[chan]);
+	    }
 	}
     }
 
