@@ -1,3 +1,8 @@
+2004-03-23  Jack O'Quin  <joq@io.com>
+
+	* io.c: use first two JACK driver playback ports for default
+	  output destination.  Now works with any driver, not just ALSA.
+
 2004-02-22  Steve Harris  <steve@plugin.org.uk>
 
 	* process.c (run_eq): linked UI controls to bypass for EQ and limiter
