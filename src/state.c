@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.32 2004/01/03 00:52:34 jdepner Exp $
+ *  $Id: state.c,v 1.33 2004/01/05 18:00:03 theno23 Exp $
  */
 
 #include <stdio.h>
@@ -170,8 +170,9 @@ void s_clear_history()
     g_list_free(history);
     history = NULL;
     s_history_add("Initial state");
-    undo_pos = history;
-    s_restore_state((s_state *)history->data);
+    undo_pos = history->next;
+    //s_restore_state((s_state *)history->data);
+    last_changed = S_LOAD;
 }
 
 void s_history_add(const char *description)
@@ -181,11 +182,23 @@ void s_history_add(const char *description)
     ns = malloc(sizeof(s_state));
     ns->description = (char *)description;
     memcpy(ns->value, s_value, S_SIZE * sizeof(float));
+
+    if (undo_pos) {
+	//XXX Known memeory leak (swh - 2004-01-05)
+	undo_pos->next = NULL;
+    }
+
+#if 0
+// BAD CODE
     if (undo_pos) {
 	while (undo_pos->next) {
-	    g_list_remove_all(history, undo_pos->next);
+fprintf(stderr, "%p (%s:%d)\n", undo_pos->next, __FILE__, __LINE__);
+	    undo_pos = undo_pos->next;
+	    g_list_remove_all(history, undo_pos);
 	}
     }
+#endif
+
     history = g_list_append(history, ns);
     undo_pos = g_list_last(history);
     /* printf("add %s\n", description); */
@@ -194,6 +207,7 @@ void s_history_add(const char *description)
 
 void s_undo() 
 {
+    GList *undo_next;
     int       scene, crc[2];
     s_state   *st[2];
 
@@ -201,12 +215,15 @@ void s_undo()
 
 fprintf(stderr,"%s %d %p\n",__FILE__,__LINE__,undo_pos);
     if (!undo_pos) {
+fprintf(stderr, "undo pos is NULL, no action\n");
 	return;
     }
-    undo_pos = g_list_previous(undo_pos);
-    if (!undo_pos) {
+    undo_next = g_list_previous(undo_pos);
+    if (!undo_next) {
+fprintf(stderr, "undo pos would be NULL, so no action\n");
 	return;
     }
+    undo_pos = undo_next;
     s_restore_state((s_state *)undo_pos->data);
 
     scene = get_previous_scene_num ();
@@ -218,7 +235,7 @@ fprintf(stderr,"%s %d %p\n",__FILE__,__LINE__,undo_pos);
         crc[0] = compute_state_crc (st[0]);
         crc[1] = compute_state_crc (st[1]);
 
-        if (crc[0] == crc[1]) 
+        if (crc[0] == crc[1])
           {
             set_scene (scene);
             fprintf(stderr,"%s %d SETTING SCENE\n",__FILE__,__LINE__);
@@ -415,7 +432,7 @@ void s_load_session (const char *fname)
     handler = calloc(1, sizeof(xmlSAXHandler));
     handler->startElement = s_startElement;
     xmlSAXUserParseFile(handler, &scene, filename);
-    s_history_add(g_strdup_printf("%s", filename));
+    s_history_add(g_strdup_printf("Load %s", filename));
     last_changed = S_LOAD;
     free(handler);
 
@@ -437,6 +454,8 @@ void s_load_session (const char *fname)
 
     hdeq_set_xover ();
     set_EQ_curve_values ();
+
+    s_clear_history();
 }
 
 void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
