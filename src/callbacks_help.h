@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.28 2004/04/11 15:30:10 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.29 2004/04/26 20:44:25 jdepner Exp $
  */
 
 char general_help[] = {
@@ -215,9 +215,14 @@ frequency.\n"
 
 char preferences_help[] = {
 "    This dialog allows you to set the crossfade time (for transitioning \
-between states).  You can also set the colors to be used for the low, mid, \
-and high band compressor curves and text as well as the ganged compressor \
-control highlight color.\n"
+between states).  You can also set many of the colors used throughout the \
+GUI.  WARNING - even though you're allowed to modify the HDEQ spectrum color \
+it is recommended that you DO NOT as it is used in the XOR graphics plane.  \
+In other words, the color that you see is arithmetically XOR'ed against \
+whatever background it passes over so that the color that comes out is not \
+what you see in the color chooser dialog.  The default color is a medium \
+gray.  This color works well against almost any background color (except \
+gray ;-)\n"
 };
 
 

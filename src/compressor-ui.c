@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: compressor-ui.c,v 1.20 2004/04/11 23:24:57 theno23 Exp $
+ *  $Id: compressor-ui.c,v 1.21 2004/04/26 20:44:25 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -435,62 +435,62 @@ void repaint_gang_labels ()
       if (gang_at[i])
         {
           gtk_widget_modify_fg ((GtkWidget *) lab_at[i], GTK_STATE_NORMAL, 
-                                get_band_color (GANG_HIGHLIGHT_COLOR));
+                                get_color (GANG_HIGHLIGHT_COLOR));
         }
       else
         {
           gtk_widget_modify_fg ((GtkWidget *) lab_at[i], GTK_STATE_NORMAL, 
-                                get_band_color (NORMAL_COLOR));
+                                get_color (NORMAL_COLOR));
         }
       if (gang_re[i])
         {
           gtk_widget_modify_fg ((GtkWidget *) lab_re[i], GTK_STATE_NORMAL, 
-                                get_band_color (GANG_HIGHLIGHT_COLOR));
+                                get_color (GANG_HIGHLIGHT_COLOR));
         }
       else
         {
           gtk_widget_modify_fg ((GtkWidget *) lab_re[i], GTK_STATE_NORMAL, 
-                                get_band_color (NORMAL_COLOR));
+                                get_color (NORMAL_COLOR));
         }
       if (gang_th[i])
         {
           gtk_widget_modify_fg ((GtkWidget *) lab_th[i], GTK_STATE_NORMAL, 
-                                get_band_color (GANG_HIGHLIGHT_COLOR));
+                                get_color (GANG_HIGHLIGHT_COLOR));
         }
       else
         {
           gtk_widget_modify_fg ((GtkWidget *) lab_th[i], GTK_STATE_NORMAL, 
-                                get_band_color (NORMAL_COLOR));
+                                get_color (NORMAL_COLOR));
         }
       if (gang_ra[i])
         {
           gtk_widget_modify_fg ((GtkWidget *) lab_ra[i], GTK_STATE_NORMAL, 
-                                get_band_color (GANG_HIGHLIGHT_COLOR));
+                                get_color (GANG_HIGHLIGHT_COLOR));
         }
       else
         {
           gtk_widget_modify_fg ((GtkWidget *) lab_ra[i], GTK_STATE_NORMAL, 
-                                get_band_color (NORMAL_COLOR));
+                                get_color (NORMAL_COLOR));
         }
       if (gang_kn[i])
         {
           gtk_widget_modify_fg ((GtkWidget *) lab_kn[i], GTK_STATE_NORMAL, 
-                                get_band_color (GANG_HIGHLIGHT_COLOR));
+                                get_color (GANG_HIGHLIGHT_COLOR));
         }
       else
         {
           gtk_widget_modify_fg ((GtkWidget *) lab_kn[i], GTK_STATE_NORMAL, 
-                                get_band_color (NORMAL_COLOR));
+                                get_color (NORMAL_COLOR));
         }
       if (gang_ma[i])
         {
           gtk_widget_modify_fg ((GtkWidget *) lab_ma[i], GTK_STATE_NORMAL, 
-                                get_band_color (GANG_HIGHLIGHT_COLOR));
+                                get_color (GANG_HIGHLIGHT_COLOR));
         }
       else
         {
           gtk_widget_modify_fg ((GtkWidget *) lab_ma[i], GTK_STATE_NORMAL, 
-                                get_band_color (NORMAL_COLOR));
+                                get_color (NORMAL_COLOR));
         }
     }
 }
@@ -502,13 +502,13 @@ void comp_gang_at (int band)
     {
       gang_at[band] = FALSE;
       gtk_widget_modify_fg ((GtkWidget *) lab_at[band], GTK_STATE_NORMAL, 
-                            get_band_color (NORMAL_COLOR));
+                            get_color (NORMAL_COLOR));
     }
   else
     {
       gang_at[band] = TRUE;
       gtk_widget_modify_fg ((GtkWidget *) lab_at[band], GTK_STATE_NORMAL, 
-                            get_band_color (GANG_HIGHLIGHT_COLOR));
+                            get_color (GANG_HIGHLIGHT_COLOR));
     }
 }
 
@@ -518,13 +518,13 @@ void comp_gang_re (int band)
     {
       gang_re[band] = FALSE;
       gtk_widget_modify_fg ((GtkWidget *) lab_re[band], GTK_STATE_NORMAL, 
-                            get_band_color (3));
+                            get_color (NORMAL_COLOR));
     }
   else
     {
       gang_re[band] = TRUE;
       gtk_widget_modify_fg ((GtkWidget *) lab_re[band], GTK_STATE_NORMAL, 
-                            get_band_color (GANG_HIGHLIGHT_COLOR));
+                            get_color (GANG_HIGHLIGHT_COLOR));
     }
 }
 
@@ -534,13 +534,13 @@ void comp_gang_th (int band)
     {
       gang_th[band] = FALSE;
       gtk_widget_modify_fg ((GtkWidget *) lab_th[band], GTK_STATE_NORMAL, 
-                            get_band_color (3));
+                            get_color (NORMAL_COLOR));
     }
   else
     {
       gang_th[band] = TRUE;
       gtk_widget_modify_fg ((GtkWidget *) lab_th[band], GTK_STATE_NORMAL, 
-                            get_band_color (GANG_HIGHLIGHT_COLOR));
+                            get_color (GANG_HIGHLIGHT_COLOR));
     }
 }
 
@@ -550,13 +550,13 @@ void comp_gang_ra (int band)
     {
       gang_ra[band] = FALSE;
       gtk_widget_modify_fg ((GtkWidget *) lab_ra[band], GTK_STATE_NORMAL, 
-                            get_band_color (3));
+                            get_color (NORMAL_COLOR));
     }
   else
     {
       gang_ra[band] = TRUE;
       gtk_widget_modify_fg ((GtkWidget *) lab_ra[band], GTK_STATE_NORMAL, 
-                            get_band_color (GANG_HIGHLIGHT_COLOR));
+                            get_color (GANG_HIGHLIGHT_COLOR));
     }
 }
 void comp_gang_kn (int band)
@@ -565,13 +565,13 @@ void comp_gang_kn (int band)
     {
       gang_kn[band] = FALSE;
       gtk_widget_modify_fg ((GtkWidget *) lab_kn[band], GTK_STATE_NORMAL, 
-                            get_band_color (3));
+                            get_color (NORMAL_COLOR));
     }
   else
     {
       gang_kn[band] = TRUE;
       gtk_widget_modify_fg ((GtkWidget *) lab_kn[band], GTK_STATE_NORMAL, 
-                            get_band_color (GANG_HIGHLIGHT_COLOR));
+                            get_color (GANG_HIGHLIGHT_COLOR));
     }
 }
 
@@ -581,13 +581,13 @@ void comp_gang_ma (int band)
     {
       gang_ma[band] = FALSE;
       gtk_widget_modify_fg ((GtkWidget *) lab_ma[band], GTK_STATE_NORMAL, 
-                            get_band_color (3));
+                            get_color (NORMAL_COLOR));
     }
   else
     {
       gang_ma[band] = TRUE;
       gtk_widget_modify_fg ((GtkWidget *) lab_ma[band], GTK_STATE_NORMAL, 
-                            get_band_color (GANG_HIGHLIGHT_COLOR));
+                            get_color (GANG_HIGHLIGHT_COLOR));
     }
 }
 

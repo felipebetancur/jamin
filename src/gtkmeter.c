@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: gtkmeter.c,v 1.6 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: gtkmeter.c,v 1.7 2004/04/26 20:44:25 jdepner Exp $
  */
 
 #include <math.h>
@@ -20,6 +20,7 @@
 #include <gtk/gtksignal.h>
 
 #include "gtkmeter.h"
+#include "preferences.h"
 
 #define METER_DEFAULT_WIDTH 10
 #define METER_DEFAULT_LENGTH 100
@@ -97,8 +98,8 @@ gtk_meter_init (GtkMeter *meter)
   meter->button = 0;
   meter->direction = GTK_METER_UP;
   meter->timer = 0;
-  meter->amber_level = -6.0f;
-  meter->amber_frac = 0.0f;
+  meter->warning_level = -6.0f;
+  meter->warning_frac = 0.0f;
   meter->iec_lower = 0.0f;
   meter->iec_upper = 0.0f;
   meter->old_value = 0.0;
@@ -178,7 +179,7 @@ gtk_meter_set_adjustment (GtkMeter      *meter,
   meter->old_upper = adjustment->upper;
   meter->iec_lower = iec_scale(adjustment->lower);
   meter->iec_upper = iec_scale(adjustment->upper);
-  meter->amber_frac = (iec_scale(meter->amber_level) - meter->iec_lower) /
+  meter->warning_frac = (iec_scale(meter->warning_level) - meter->iec_lower) /
 	            (meter->iec_upper - meter->iec_lower);
 
   gtk_meter_update (meter);
@@ -189,7 +190,6 @@ gtk_meter_realize (GtkWidget *widget)
 {
   GtkMeter *meter;
   GdkWindowAttr attributes;
-  GdkColor green, amber, red, peak;
   gint attributes_mask;
 
   g_return_if_fail (widget != NULL);
@@ -206,9 +206,8 @@ gtk_meter_realize (GtkWidget *widget)
   attributes.window_type = GDK_WINDOW_CHILD;
   attributes.event_mask = gtk_widget_get_events (widget) | GDK_EXPOSURE_MASK;
   attributes.visual = gtk_widget_get_visual (widget);
-  attributes.colormap = gtk_widget_get_colormap (widget);
 
-  attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
+  attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL;
   widget->window = gdk_window_new (widget->parent->window, &attributes, attributes_mask);
 
   widget->style = gtk_style_attach (widget->style, widget->window);
@@ -217,33 +216,17 @@ gtk_meter_realize (GtkWidget *widget)
 
   gtk_style_set_background (widget->style, widget->window, GTK_STATE_ACTIVE);
 
-  meter->green_gc = gdk_gc_new(widget->window);
-  green.red = 0;
-  green.green = 60000;
-  green.blue = 0;
-  gdk_colormap_alloc_color (attributes.colormap, &green, FALSE, TRUE);
-  gdk_gc_set_foreground(meter->green_gc, &green);
+  meter->normal_gc = gdk_gc_new(widget->window);
+  gdk_gc_set_foreground(meter->normal_gc, get_color (METER_NORMAL_COLOR));
 
-  meter->amber_gc = gdk_gc_new(widget->window);
-  amber.red = 50000;
-  amber.green = 55000;
-  amber.blue = 0;
-  gdk_colormap_alloc_color (attributes.colormap, &amber, FALSE, TRUE);
-  gdk_gc_set_foreground(meter->amber_gc, &amber);
+  meter->warning_gc = gdk_gc_new(widget->window);
+  gdk_gc_set_foreground(meter->warning_gc, get_color (METER_WARNING_COLOR));
 
-  meter->red_gc = gdk_gc_new(widget->window);
-  red.red = 60000;
-  red.green = 0;
-  red.blue = 0;
-  gdk_colormap_alloc_color (attributes.colormap, &red, FALSE, TRUE);
-  gdk_gc_set_foreground(meter->red_gc, &red);
+  meter->over_gc = gdk_gc_new(widget->window);
+  gdk_gc_set_foreground(meter->over_gc, get_color (METER_OVER_COLOR));
 
   meter->peak_gc = gdk_gc_new(widget->window);
-  peak.red = 60000;
-  peak.green = 60000;
-  peak.blue = 0;
-  gdk_colormap_alloc_color (attributes.colormap, &peak, FALSE, TRUE);
-  gdk_gc_set_foreground(meter->peak_gc, &peak);
+  gdk_gc_set_foreground(meter->peak_gc, get_color (METER_PEAK_COLOR));
 }
 
 static void 
@@ -334,16 +317,16 @@ gtk_meter_expose (GtkWidget      *widget,
 		  widget->allocation.width, widget->allocation.height);
 
 
-  if (frac < meter->amber_frac) {
+  if (frac < meter->warning_frac) {
     g_h = frac * length;
     a_h = g_h;
     r_h = g_h;
   } else if (val <= 100.0f) {
-    g_h = meter->amber_frac * length;
+    g_h = meter->warning_frac * length;
     a_h = frac * length;
     r_h = a_h;
   } else {
-    g_h = meter->amber_frac * length;
+    g_h = meter->warning_frac * length;
     a_h = length * (100.0f - meter->iec_lower) / (meter->iec_upper -
 		    meter->iec_lower);
     r_h = frac * length;
@@ -358,7 +341,7 @@ gtk_meter_expose (GtkWidget      *widget,
 
   switch (meter->direction) {
     case GTK_METER_LEFT:
-      gdk_draw_rectangle (widget->window, meter->amber_gc, TRUE, a_h +
+      gdk_draw_rectangle (widget->window, meter->warning_gc, TRUE, a_h +
 		      1, 1, length - a_h, width);
       /*
       gdk_draw_rectangle (widget->window, meter->peak_gc, TRUE, length *
@@ -367,14 +350,14 @@ gtk_meter_expose (GtkWidget      *widget,
       break;
 
     case GTK_METER_RIGHT:
-      gdk_draw_rectangle (widget->window, meter->green_gc, TRUE, 1, 1,
+      gdk_draw_rectangle (widget->window, meter->normal_gc, TRUE, 1, 1,
 		      g_h, width);
       if (a_h > g_h) {
-	gdk_draw_rectangle (widget->window, meter->amber_gc, TRUE, 1+g_h, 1,
+	gdk_draw_rectangle (widget->window, meter->warning_gc, TRUE, 1+g_h, 1,
 			a_h - g_h, width);
       }
       if (r_h > a_h) {
-	gdk_draw_rectangle (widget->window, meter->red_gc, TRUE, 1+a_h, 1,
+	gdk_draw_rectangle (widget->window, meter->over_gc, TRUE, 1+a_h, 1,
 			r_h - a_h, width);
       }
       gdk_draw_rectangle (widget->window, meter->peak_gc, TRUE, length *
@@ -383,14 +366,14 @@ gtk_meter_expose (GtkWidget      *widget,
 
     case GTK_METER_UP:
     default:
-      gdk_draw_rectangle (widget->window, meter->green_gc, TRUE, 1, length -
+      gdk_draw_rectangle (widget->window, meter->normal_gc, TRUE, 1, length -
 		      g_h + 1, width, g_h);
       if (a_h > g_h) {
-	gdk_draw_rectangle (widget->window, meter->amber_gc, TRUE, 1, length -
+	gdk_draw_rectangle (widget->window, meter->warning_gc, TRUE, 1, length -
 			a_h + 1, width, a_h - g_h);
       }
       if (r_h > a_h) {
-	gdk_draw_rectangle (widget->window, meter->red_gc, TRUE, 1, length -
+	gdk_draw_rectangle (widget->window, meter->over_gc, TRUE, 1, length -
 			r_h + 1, width, r_h - a_h);
       }
       if (peak_frac > 0) {
@@ -445,7 +428,7 @@ gtk_meter_adjustment_changed (GtkAdjustment *adjustment,
       meter->iec_lower = iec_scale(adjustment->lower);
       meter->iec_upper = iec_scale(adjustment->upper);
 
-      gtk_meter_set_warn_point(meter, meter->amber_level);
+      gtk_meter_set_warn_point(meter, meter->warning_level);
 
       gtk_meter_update (meter);
 
@@ -508,15 +491,39 @@ void gtk_meter_reset_peak(GtkMeter *meter)
 
 void gtk_meter_set_warn_point(GtkMeter *meter, gfloat pt)
 {
-    meter->amber_level = pt;
+    meter->warning_level = pt;
     if (meter->direction == GTK_METER_LEFT || meter->direction ==
 		    GTK_METER_DOWN) {
-	meter->amber_frac = 1.0f - (iec_scale(meter->amber_level) -
+	meter->warning_frac = 1.0f - (iec_scale(meter->warning_level) -
 		meter->iec_lower) / (meter->iec_upper - meter->iec_lower);
     } else {
-        meter->amber_frac = (iec_scale(meter->amber_level) - meter->iec_lower) /
+        meter->warning_frac = (iec_scale(meter->warning_level) - meter->iec_lower) /
 		(meter->iec_upper - meter->iec_lower);
     }
 
     gtk_widget_draw(GTK_WIDGET(meter), NULL);
+}
+
+void gtk_meter_set_color (int color_id)
+{
+  switch (color_id)
+    {
+    case METER_NORMAL_COLOR:
+      /*  Need to set meter normal color for all meters ??? */
+      break;
+
+    case METER_WARNING_COLOR:
+      /*  Need to set meter warning color for all meters ??? */
+      break;
+
+
+    case METER_OVER_COLOR:
+      /*  Need to set meter over color for all meters ??? */
+      break;
+
+
+    case METER_PEAK_COLOR:
+      /*  Need to set meter peak color for all meters ??? */
+      break;
+    }
 }

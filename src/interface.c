@@ -5087,27 +5087,37 @@ create_preferences_dialog (void)
   GtkWidget *crossfade_spinbutton;
   GtkWidget *crossfade_frame;
   GtkWidget *frame29;
-  GtkWidget *color_buttonbox;
-  GtkWidget *low_band_color_button;
-  GtkWidget *alignment7;
-  GtkWidget *hbox55;
-  GtkWidget *image218;
-  GtkWidget *label322;
-  GtkWidget *mid_band_color_button;
-  GtkWidget *alignment8;
-  GtkWidget *hbox56;
-  GtkWidget *image219;
-  GtkWidget *label323;
-  GtkWidget *high_band_color_button;
-  GtkWidget *alignment9;
-  GtkWidget *hbox57;
-  GtkWidget *image220;
-  GtkWidget *label324;
-  GtkWidget *gang_highlight_color_button;
-  GtkWidget *alignment10;
-  GtkWidget *hbox58;
-  GtkWidget *image221;
-  GtkWidget *label325;
+  GtkWidget *color_optionmenu;
+  GtkWidget *menu2;
+  GtkWidget *low_band_compressor1;
+  GtkWidget *image249;
+  GtkWidget *mid_band_compressor1;
+  GtkWidget *image250;
+  GtkWidget *high_band_compressor1;
+  GtkWidget *image251;
+  GtkWidget *separator3;
+  GtkWidget *ganged_controls1;
+  GtkWidget *image252;
+  GtkWidget *separator4;
+  GtkWidget *parametric_handles1;
+  GtkWidget *image253;
+  GtkWidget *hdeq_curve1;
+  GtkWidget *image254;
+  GtkWidget *hdeq_grid1;
+  GtkWidget *image255;
+  GtkWidget *hdeq_spectrum1;
+  GtkWidget *image256;
+  GtkWidget *hdeq_background1;
+  GtkWidget *image257;
+  GtkWidget *separator5;
+  GtkWidget *meter_normal1;
+  GtkWidget *image258;
+  GtkWidget *meter_warning1;
+  GtkWidget *image259;
+  GtkWidget *meter_over1;
+  GtkWidget *image260;
+  GtkWidget *meter_peak1;
+  GtkWidget *image261;
   GtkWidget *colors;
   GtkWidget *dialog_action_area2;
   GtkWidget *preferences_close;
@@ -5154,119 +5164,163 @@ create_preferences_dialog (void)
   gtk_widget_show (frame29);
   gtk_box_pack_start (GTK_BOX (preferences_vbox2), frame29, TRUE, TRUE, 0);
 
-  color_buttonbox = gtk_vbutton_box_new ();
-  gtk_widget_set_name (color_buttonbox, "color_buttonbox");
-  gtk_widget_show (color_buttonbox);
-  gtk_container_add (GTK_CONTAINER (frame29), color_buttonbox);
-  gtk_container_set_border_width (GTK_CONTAINER (color_buttonbox), 8);
+  color_optionmenu = gtk_option_menu_new ();
+  gtk_widget_set_name (color_optionmenu, "color_optionmenu");
+  gtk_widget_show (color_optionmenu);
+  gtk_container_add (GTK_CONTAINER (frame29), color_optionmenu);
 
-  low_band_color_button = gtk_button_new ();
-  gtk_widget_set_name (low_band_color_button, "low_band_color_button");
-  gtk_widget_show (low_band_color_button);
-  gtk_container_add (GTK_CONTAINER (color_buttonbox), low_band_color_button);
-  GTK_WIDGET_SET_FLAGS (low_band_color_button, GTK_CAN_DEFAULT);
+  menu2 = gtk_menu_new ();
+  gtk_widget_set_name (menu2, "menu2");
 
-  alignment7 = gtk_alignment_new (0.5, 0.5, 0, 0);
-  gtk_widget_set_name (alignment7, "alignment7");
-  gtk_widget_show (alignment7);
-  gtk_container_add (GTK_CONTAINER (low_band_color_button), alignment7);
+  low_band_compressor1 = gtk_image_menu_item_new_with_mnemonic (_("Low Band Compressor"));
+  gtk_widget_set_name (low_band_compressor1, "low_band_compressor1");
+  gtk_widget_show (low_band_compressor1);
+  gtk_container_add (GTK_CONTAINER (menu2), low_band_compressor1);
 
-  hbox55 = gtk_hbox_new (FALSE, 2);
-  gtk_widget_set_name (hbox55, "hbox55");
-  gtk_widget_show (hbox55);
-  gtk_container_add (GTK_CONTAINER (alignment7), hbox55);
+  image249 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image249, "image249");
+  gtk_widget_show (image249);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (low_band_compressor1), image249);
 
-  image218 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_set_name (image218, "image218");
-  gtk_widget_show (image218);
-  gtk_box_pack_start (GTK_BOX (hbox55), image218, FALSE, FALSE, 0);
+  mid_band_compressor1 = gtk_image_menu_item_new_with_mnemonic (_("Mid Band Compressor"));
+  gtk_widget_set_name (mid_band_compressor1, "mid_band_compressor1");
+  gtk_widget_show (mid_band_compressor1);
+  gtk_container_add (GTK_CONTAINER (menu2), mid_band_compressor1);
 
-  label322 = gtk_label_new_with_mnemonic (_("Low band color"));
-  gtk_widget_set_name (label322, "label322");
-  gtk_widget_show (label322);
-  gtk_box_pack_start (GTK_BOX (hbox55), label322, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label322), GTK_JUSTIFY_LEFT);
+  image250 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image250, "image250");
+  gtk_widget_show (image250);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (mid_band_compressor1), image250);
 
-  mid_band_color_button = gtk_button_new ();
-  gtk_widget_set_name (mid_band_color_button, "mid_band_color_button");
-  gtk_widget_show (mid_band_color_button);
-  gtk_container_add (GTK_CONTAINER (color_buttonbox), mid_band_color_button);
-  GTK_WIDGET_SET_FLAGS (mid_band_color_button, GTK_CAN_DEFAULT);
+  high_band_compressor1 = gtk_image_menu_item_new_with_mnemonic (_("High Band Compressor"));
+  gtk_widget_set_name (high_band_compressor1, "high_band_compressor1");
+  gtk_widget_show (high_band_compressor1);
+  gtk_container_add (GTK_CONTAINER (menu2), high_band_compressor1);
 
-  alignment8 = gtk_alignment_new (0.5, 0.5, 0, 0);
-  gtk_widget_set_name (alignment8, "alignment8");
-  gtk_widget_show (alignment8);
-  gtk_container_add (GTK_CONTAINER (mid_band_color_button), alignment8);
+  image251 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image251, "image251");
+  gtk_widget_show (image251);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (high_band_compressor1), image251);
 
-  hbox56 = gtk_hbox_new (FALSE, 2);
-  gtk_widget_set_name (hbox56, "hbox56");
-  gtk_widget_show (hbox56);
-  gtk_container_add (GTK_CONTAINER (alignment8), hbox56);
+  separator3 = gtk_menu_item_new ();
+  gtk_widget_set_name (separator3, "separator3");
+  gtk_widget_show (separator3);
+  gtk_container_add (GTK_CONTAINER (menu2), separator3);
+  gtk_widget_set_sensitive (separator3, FALSE);
 
-  image219 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_set_name (image219, "image219");
-  gtk_widget_show (image219);
-  gtk_box_pack_start (GTK_BOX (hbox56), image219, FALSE, FALSE, 0);
+  ganged_controls1 = gtk_image_menu_item_new_with_mnemonic (_("Ganged Controls"));
+  gtk_widget_set_name (ganged_controls1, "ganged_controls1");
+  gtk_widget_show (ganged_controls1);
+  gtk_container_add (GTK_CONTAINER (menu2), ganged_controls1);
 
-  label323 = gtk_label_new_with_mnemonic (_("Mid band color"));
-  gtk_widget_set_name (label323, "label323");
-  gtk_widget_show (label323);
-  gtk_box_pack_start (GTK_BOX (hbox56), label323, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label323), GTK_JUSTIFY_LEFT);
+  image252 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image252, "image252");
+  gtk_widget_show (image252);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (ganged_controls1), image252);
 
-  high_band_color_button = gtk_button_new ();
-  gtk_widget_set_name (high_band_color_button, "high_band_color_button");
-  gtk_widget_show (high_band_color_button);
-  gtk_container_add (GTK_CONTAINER (color_buttonbox), high_band_color_button);
-  GTK_WIDGET_SET_FLAGS (high_band_color_button, GTK_CAN_DEFAULT);
+  separator4 = gtk_menu_item_new ();
+  gtk_widget_set_name (separator4, "separator4");
+  gtk_widget_show (separator4);
+  gtk_container_add (GTK_CONTAINER (menu2), separator4);
+  gtk_widget_set_sensitive (separator4, FALSE);
 
-  alignment9 = gtk_alignment_new (0.5, 0.5, 0, 0);
-  gtk_widget_set_name (alignment9, "alignment9");
-  gtk_widget_show (alignment9);
-  gtk_container_add (GTK_CONTAINER (high_band_color_button), alignment9);
+  parametric_handles1 = gtk_image_menu_item_new_with_mnemonic (_("Parametric Handles"));
+  gtk_widget_set_name (parametric_handles1, "parametric_handles1");
+  gtk_widget_show (parametric_handles1);
+  gtk_container_add (GTK_CONTAINER (menu2), parametric_handles1);
 
-  hbox57 = gtk_hbox_new (FALSE, 2);
-  gtk_widget_set_name (hbox57, "hbox57");
-  gtk_widget_show (hbox57);
-  gtk_container_add (GTK_CONTAINER (alignment9), hbox57);
+  image253 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image253, "image253");
+  gtk_widget_show (image253);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (parametric_handles1), image253);
 
-  image220 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_set_name (image220, "image220");
-  gtk_widget_show (image220);
-  gtk_box_pack_start (GTK_BOX (hbox57), image220, FALSE, FALSE, 0);
+  hdeq_curve1 = gtk_image_menu_item_new_with_mnemonic (_("HDEQ Curve"));
+  gtk_widget_set_name (hdeq_curve1, "hdeq_curve1");
+  gtk_widget_show (hdeq_curve1);
+  gtk_container_add (GTK_CONTAINER (menu2), hdeq_curve1);
 
-  label324 = gtk_label_new_with_mnemonic (_("High band color"));
-  gtk_widget_set_name (label324, "label324");
-  gtk_widget_show (label324);
-  gtk_box_pack_start (GTK_BOX (hbox57), label324, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label324), GTK_JUSTIFY_LEFT);
+  image254 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image254, "image254");
+  gtk_widget_show (image254);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (hdeq_curve1), image254);
 
-  gang_highlight_color_button = gtk_button_new ();
-  gtk_widget_set_name (gang_highlight_color_button, "gang_highlight_color_button");
-  gtk_widget_show (gang_highlight_color_button);
-  gtk_container_add (GTK_CONTAINER (color_buttonbox), gang_highlight_color_button);
-  GTK_WIDGET_SET_FLAGS (gang_highlight_color_button, GTK_CAN_DEFAULT);
+  hdeq_grid1 = gtk_image_menu_item_new_with_mnemonic (_("HDEQ Grid"));
+  gtk_widget_set_name (hdeq_grid1, "hdeq_grid1");
+  gtk_widget_show (hdeq_grid1);
+  gtk_container_add (GTK_CONTAINER (menu2), hdeq_grid1);
 
-  alignment10 = gtk_alignment_new (0.5, 0.5, 0, 0);
-  gtk_widget_set_name (alignment10, "alignment10");
-  gtk_widget_show (alignment10);
-  gtk_container_add (GTK_CONTAINER (gang_highlight_color_button), alignment10);
+  image255 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image255, "image255");
+  gtk_widget_show (image255);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (hdeq_grid1), image255);
 
-  hbox58 = gtk_hbox_new (FALSE, 2);
-  gtk_widget_set_name (hbox58, "hbox58");
-  gtk_widget_show (hbox58);
-  gtk_container_add (GTK_CONTAINER (alignment10), hbox58);
+  hdeq_spectrum1 = gtk_image_menu_item_new_with_mnemonic (_("HDEQ Spectrum"));
+  gtk_widget_set_name (hdeq_spectrum1, "hdeq_spectrum1");
+  gtk_widget_show (hdeq_spectrum1);
+  gtk_container_add (GTK_CONTAINER (menu2), hdeq_spectrum1);
 
-  image221 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_set_name (image221, "image221");
-  gtk_widget_show (image221);
-  gtk_box_pack_start (GTK_BOX (hbox58), image221, FALSE, FALSE, 0);
+  image256 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image256, "image256");
+  gtk_widget_show (image256);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (hdeq_spectrum1), image256);
 
-  label325 = gtk_label_new_with_mnemonic (_("Ganged control highlight"));
-  gtk_widget_set_name (label325, "label325");
-  gtk_widget_show (label325);
-  gtk_box_pack_start (GTK_BOX (hbox58), label325, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label325), GTK_JUSTIFY_LEFT);
+  hdeq_background1 = gtk_image_menu_item_new_with_mnemonic (_("HDEQ Background"));
+  gtk_widget_set_name (hdeq_background1, "hdeq_background1");
+  gtk_widget_show (hdeq_background1);
+  gtk_container_add (GTK_CONTAINER (menu2), hdeq_background1);
+
+  image257 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image257, "image257");
+  gtk_widget_show (image257);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (hdeq_background1), image257);
+
+  separator5 = gtk_menu_item_new ();
+  gtk_widget_set_name (separator5, "separator5");
+  gtk_widget_show (separator5);
+  gtk_container_add (GTK_CONTAINER (menu2), separator5);
+  gtk_widget_set_sensitive (separator5, FALSE);
+
+  meter_normal1 = gtk_image_menu_item_new_with_mnemonic (_("Meter Normal"));
+  gtk_widget_set_name (meter_normal1, "meter_normal1");
+  gtk_widget_show (meter_normal1);
+  gtk_container_add (GTK_CONTAINER (menu2), meter_normal1);
+
+  image258 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image258, "image258");
+  gtk_widget_show (image258);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (meter_normal1), image258);
+
+  meter_warning1 = gtk_image_menu_item_new_with_mnemonic (_("Meter Warning"));
+  gtk_widget_set_name (meter_warning1, "meter_warning1");
+  gtk_widget_show (meter_warning1);
+  gtk_container_add (GTK_CONTAINER (menu2), meter_warning1);
+
+  image259 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image259, "image259");
+  gtk_widget_show (image259);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (meter_warning1), image259);
+
+  meter_over1 = gtk_image_menu_item_new_with_mnemonic (_("Meter Over"));
+  gtk_widget_set_name (meter_over1, "meter_over1");
+  gtk_widget_show (meter_over1);
+  gtk_container_add (GTK_CONTAINER (menu2), meter_over1);
+
+  image260 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image260, "image260");
+  gtk_widget_show (image260);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (meter_over1), image260);
+
+  meter_peak1 = gtk_image_menu_item_new_with_mnemonic (_("Meter Peak"));
+  gtk_widget_set_name (meter_peak1, "meter_peak1");
+  gtk_widget_show (meter_peak1);
+  gtk_container_add (GTK_CONTAINER (menu2), meter_peak1);
+
+  image261 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image261, "image261");
+  gtk_widget_show (image261);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (meter_peak1), image261);
+
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (color_optionmenu), menu2);
 
   colors = gtk_label_new (_("Colors"));
   gtk_widget_set_name (colors, "colors");
@@ -5300,17 +5354,44 @@ create_preferences_dialog (void)
   g_signal_connect ((gpointer) crossfade_spinbutton, "focus_out_event",
                     G_CALLBACK (on_text_focus_out_event),
                     NULL);
-  g_signal_connect ((gpointer) low_band_color_button, "clicked",
-                    G_CALLBACK (on_low_band_color_button_clicked),
+  g_signal_connect ((gpointer) low_band_compressor1, "activate",
+                    G_CALLBACK (on_low_band_compressor_color_activate),
                     NULL);
-  g_signal_connect ((gpointer) mid_band_color_button, "clicked",
-                    G_CALLBACK (on_mid_band_color_button_clicked),
+  g_signal_connect ((gpointer) mid_band_compressor1, "activate",
+                    G_CALLBACK (on_mid_band_compressor_color_activate),
                     NULL);
-  g_signal_connect ((gpointer) high_band_color_button, "clicked",
-                    G_CALLBACK (on_high_band_color_button_clicked),
+  g_signal_connect ((gpointer) high_band_compressor1, "activate",
+                    G_CALLBACK (on_high_band_compressor_color_activate),
                     NULL);
-  g_signal_connect ((gpointer) gang_highlight_color_button, "clicked",
-                    G_CALLBACK (on_gang_highlight_color_button_clicked),
+  g_signal_connect ((gpointer) ganged_controls1, "activate",
+                    G_CALLBACK (on_ganged_controls_color_activate),
+                    NULL);
+  g_signal_connect ((gpointer) parametric_handles1, "activate",
+                    G_CALLBACK (on_parametric_handles_color_activate),
+                    NULL);
+  g_signal_connect ((gpointer) hdeq_curve1, "activate",
+                    G_CALLBACK (on_hdeq_curve_color_activate),
+                    NULL);
+  g_signal_connect ((gpointer) hdeq_grid1, "activate",
+                    G_CALLBACK (on_hdeq_grid_color_activate),
+                    NULL);
+  g_signal_connect ((gpointer) hdeq_spectrum1, "activate",
+                    G_CALLBACK (on_hdeq_spectrum_color_activate),
+                    NULL);
+  g_signal_connect ((gpointer) hdeq_background1, "activate",
+                    G_CALLBACK (on_hdeq_background_color_activate),
+                    NULL);
+  g_signal_connect ((gpointer) meter_normal1, "activate",
+                    G_CALLBACK (on_meter_normal_color_activate),
+                    NULL);
+  g_signal_connect ((gpointer) meter_warning1, "activate",
+                    G_CALLBACK (on_meter_warning_color_activate),
+                    NULL);
+  g_signal_connect ((gpointer) meter_over1, "activate",
+                    G_CALLBACK (on_meter_over_color_activate),
+                    NULL);
+  g_signal_connect ((gpointer) meter_peak1, "activate",
+                    G_CALLBACK (on_meter_peak_color_activate),
                     NULL);
   g_signal_connect ((gpointer) preferences_close, "clicked",
                     G_CALLBACK (on_preferences_close_clicked),
@@ -5325,27 +5406,37 @@ create_preferences_dialog (void)
   GLADE_HOOKUP_OBJECT (preferences_dialog, crossfade_spinbutton, "crossfade_spinbutton");
   GLADE_HOOKUP_OBJECT (preferences_dialog, crossfade_frame, "crossfade_frame");
   GLADE_HOOKUP_OBJECT (preferences_dialog, frame29, "frame29");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, color_buttonbox, "color_buttonbox");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, low_band_color_button, "low_band_color_button");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, alignment7, "alignment7");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, hbox55, "hbox55");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, image218, "image218");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, label322, "label322");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, mid_band_color_button, "mid_band_color_button");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, alignment8, "alignment8");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, hbox56, "hbox56");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, image219, "image219");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, label323, "label323");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, high_band_color_button, "high_band_color_button");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, alignment9, "alignment9");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, hbox57, "hbox57");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, image220, "image220");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, label324, "label324");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, gang_highlight_color_button, "gang_highlight_color_button");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, alignment10, "alignment10");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, hbox58, "hbox58");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, image221, "image221");
-  GLADE_HOOKUP_OBJECT (preferences_dialog, label325, "label325");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, color_optionmenu, "color_optionmenu");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, menu2, "menu2");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, low_band_compressor1, "low_band_compressor1");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, image249, "image249");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, mid_band_compressor1, "mid_band_compressor1");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, image250, "image250");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, high_band_compressor1, "high_band_compressor1");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, image251, "image251");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, separator3, "separator3");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, ganged_controls1, "ganged_controls1");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, image252, "image252");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, separator4, "separator4");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, parametric_handles1, "parametric_handles1");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, image253, "image253");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, hdeq_curve1, "hdeq_curve1");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, image254, "image254");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, hdeq_grid1, "hdeq_grid1");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, image255, "image255");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, hdeq_spectrum1, "hdeq_spectrum1");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, image256, "image256");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, hdeq_background1, "hdeq_background1");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, image257, "image257");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, separator5, "separator5");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, meter_normal1, "meter_normal1");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, image258, "image258");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, meter_warning1, "meter_warning1");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, image259, "image259");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, meter_over1, "meter_over1");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, image260, "image260");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, meter_peak1, "meter_peak1");
+  GLADE_HOOKUP_OBJECT (preferences_dialog, image261, "image261");
   GLADE_HOOKUP_OBJECT (preferences_dialog, colors, "colors");
   GLADE_HOOKUP_OBJECT_NO_REF (preferences_dialog, dialog_action_area2, "dialog_action_area2");
   GLADE_HOOKUP_OBJECT (preferences_dialog, preferences_close, "preferences_close");

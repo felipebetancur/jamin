@@ -1026,22 +1026,6 @@ on_crossfade_spinbutton_value_changed  (GtkSpinButton   *spinbutton,
                                         gpointer         user_data);
 
 void
-on_low_band_color_button_clicked       (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
-on_mid_band_color_button_clicked       (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
-on_high_band_color_button_clicked      (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
-on_gang_highlight_color_button_clicked (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
 on_preferences_close_clicked           (GtkButton       *button,
                                         gpointer         user_data);
 
@@ -1197,4 +1181,56 @@ on_scene_name_cancel_clicked           (GtkButton       *button,
 
 void
 on_scene_name_ok_clicked               (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_low_band_compressor_color_activate  (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_mid_band_compressor_color_activate  (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_high_band_compressor_color_activate (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_ganged_controls_color_activate      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_parametric_handles_color_activate   (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_hdeq_curve_color_activate           (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_hdeq_grid_color_activate            (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_hdeq_spectrum_color_activate        (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_hdeq_background_color_activate      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_meter_normal_color_activate         (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_meter_warning_color_activate        (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_meter_over_color_activate           (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_meter_peak_color_activate           (GtkMenuItem     *menuitem,
                                         gpointer         user_data);

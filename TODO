@@ -14,7 +14,6 @@ TO BE DECIDED (owner)
 TODO (owner)
 
 - save options to startup file (Jan, Steve)
-- add all modifiable colors to preferences menu (Jan)
 - save compressor control ganging with state (Steve)
 - no preliminary focus in preferences and options dialog so help works (Jan)
 - commit mastering documentation to CVS (Ron)
@@ -70,4 +69,4 @@ CLOSED (date)
 - bypass for components (2004/02/21)
 - correct high and low pass slope in parametric controls (2004/03/01)
 - update web pages to show Options menu (2004/03/??)
-
+- add all modifiable colors to preferences menu (2004/04/26)

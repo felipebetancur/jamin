@@ -122,8 +122,6 @@ static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_comp_lbl[3],
                        *l_EQ_curve_lbl, *l_c_curve_lbl[3];
 static GtkDrawingArea  *l_EQ_curve, *l_comp_curve[3];
 static GdkDrawable     *EQ_drawable, *comp_drawable[3];
-static GdkColor        white, black, EQ_back_color, EQ_fore_color, 
-                       EQ_spectrum_color, EQ_grid_color, EQ_notch_color;
 static GdkGC           *EQ_gc, *comp_gc[3];
 static PangoContext    *comp_pc[3], *EQ_pc;
 static GtkAdjustment   *l_low2mid_adj;
@@ -234,17 +232,6 @@ void bind_hdeq ()
                                                  "mid_curve_lbl"));
     l_c_curve_lbl[2] = GTK_LABEL (lookup_widget (main_window, 
                                                  "high_curve_lbl"));
-
-
-    /*  Set some default colors.  */
-
-    set_color (&white, 65535, 65535, 65535);
-    set_color (&black, 0, 0, 0);
-    set_color (&EQ_notch_color, 65535, 65535, 0);
-    set_color (&EQ_back_color, 0, 21611, 0);
-    set_color (&EQ_fore_color, 65535, 65535, 65535);
-    set_color (&EQ_grid_color, 0, 36611, 0);
-    set_color (&EQ_spectrum_color, 32768, 32768, 32768);
 
 
     /*  All of the notch defaults.  Note that EQ_notch_index is NOT the 
@@ -585,7 +572,7 @@ void draw_EQ_spectrum_curve (float single_levels[])
         /*  Plot the curve in the XOR graphics plane so we can erase it by
             drawing it a second time.  */
 
-        gdk_gc_set_foreground (EQ_gc, &EQ_spectrum_color);
+        gdk_gc_set_foreground (EQ_gc, get_color (HDEQ_SPECTRUM_COLOR));
         gdk_gc_set_function (EQ_gc, GDK_XOR);
         gdk_gc_set_line_attributes (EQ_gc, 1, GDK_LINE_SOLID, GDK_CAP_BUTT,
                                     GDK_JOIN_MITER);
@@ -641,7 +628,7 @@ void draw_EQ_spectrum_curve (float single_levels[])
 
         gdk_gc_set_line_attributes (EQ_gc, 1, GDK_LINE_SOLID, GDK_CAP_BUTT,
                                     GDK_JOIN_MITER);
-        gdk_gc_set_foreground (EQ_gc, &black);
+        gdk_gc_set_foreground (EQ_gc, get_color (NORMAL_COLOR));
         gdk_gc_set_function (EQ_gc, GDK_COPY);
 
         EQ_cleared = 0;
@@ -874,7 +861,7 @@ void draw_EQ_curve ()
     /*  Clear the curve drawing area.  */
 
     EQ_cleared = 1;
-    gdk_gc_set_foreground (EQ_gc, &EQ_back_color);
+    gdk_gc_set_foreground (EQ_gc, get_color (HDEQ_BACKGROUND_COLOR));
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, 0, 0, EQ_curve_width + 1, 
         EQ_curve_height + 1);
 
@@ -885,7 +872,7 @@ void draw_EQ_curve ()
     geq_get_freqs_and_gains (l_geq_freqs, l_geq_gains);
 
 
-    gdk_gc_set_foreground (EQ_gc, &EQ_grid_color);
+    gdk_gc_set_foreground (EQ_gc, get_color (HDEQ_GRID_COLOR));
 
 
     /*  Box around the area.  */
@@ -939,7 +926,7 @@ void draw_EQ_curve ()
     gdk_gc_set_line_attributes (EQ_gc, 2, GDK_LINE_SOLID, GDK_CAP_BUTT,
         GDK_JOIN_MITER);
 
-    gdk_gc_set_foreground (EQ_gc, get_band_color (LOW_BAND_COLOR));
+    gdk_gc_set_foreground (EQ_gc, get_color (LOW_BAND_COLOR));
     freq2xpix (process_get_low2mid_xover (), &x1);
     gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE,
@@ -947,7 +934,7 @@ void draw_EQ_curve ()
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE, 
         EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, 
         XOVER_HANDLE_SIZE);
-    gdk_gc_set_foreground (EQ_gc, &black);
+    gdk_gc_set_foreground (EQ_gc, get_color (NORMAL_COLOR));
     gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE,
         0, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE,
@@ -957,7 +944,7 @@ void draw_EQ_curve ()
     xover_handle_l2m = x1;
 
 
-    gdk_gc_set_foreground (EQ_gc, get_band_color (HIGH_BAND_COLOR));
+    gdk_gc_set_foreground (EQ_gc, get_color (HIGH_BAND_COLOR));
     freq2xpix (process_get_mid2high_xover (), &x1);
     gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE,
@@ -965,7 +952,7 @@ void draw_EQ_curve ()
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE,
         EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, 
         XOVER_HANDLE_SIZE);
-    gdk_gc_set_foreground (EQ_gc, &black);
+    gdk_gc_set_foreground (EQ_gc, get_color (NORMAL_COLOR));
     gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE,
         0, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE,
@@ -1036,7 +1023,7 @@ void draw_EQ_curve ()
     /*  Plot the curve.  Note that we're plotting the "notched" arrays not
         the interp arrays.  */
 
-    gdk_gc_set_foreground (EQ_gc, &EQ_fore_color);
+    gdk_gc_set_foreground (EQ_gc, get_color (HDEQ_CURVE_COLOR));
     for (i = 0 ; i < EQ_length - 1 ; i++)
       {
         logfreq2xpix (EQ_x_notched[i], &x1);
@@ -1053,7 +1040,7 @@ void draw_EQ_curve ()
 
     for (i = 0 ; i < NOTCHES ; i++)
       {
-        gdk_gc_set_foreground (EQ_gc, &EQ_notch_color);
+        gdk_gc_set_foreground (EQ_gc, get_color (HANDLE_COLOR));
 
         logfreq2xpix (EQ_x_notched[EQ_notch_index[i]], &x1);
 
@@ -1073,7 +1060,7 @@ void draw_EQ_curve ()
         gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, 
             x1 - NOTCH_HANDLE_HALF_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
             NOTCH_HANDLE_WIDTH, NOTCH_HANDLE_HEIGHT);
-        gdk_gc_set_foreground (EQ_gc, &black);
+        gdk_gc_set_foreground (EQ_gc, get_color (NORMAL_COLOR));
         gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, 
             x1 - NOTCH_HANDLE_HALF_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
             NOTCH_HANDLE_WIDTH, NOTCH_HANDLE_HEIGHT);
@@ -1096,7 +1083,7 @@ void draw_EQ_curve ()
 
         if (i && i < NOTCHES - 1)
           {
-            gdk_gc_set_foreground (EQ_gc, &EQ_notch_color);
+            gdk_gc_set_foreground (EQ_gc, get_color (HANDLE_COLOR));
 
             x0 = EQ_notch_index[i] - EQ_notch_width[i];
 
@@ -1109,7 +1096,7 @@ void draw_EQ_curve ()
             gdk_draw_arc (EQ_drawable, EQ_gc, TRUE, 
                 x1 - NOTCH_HANDLE_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
                 NOTCH_HANDLE_WIDTH * 2, NOTCH_HANDLE_HEIGHT, 5760, 11520);
-            gdk_gc_set_foreground (EQ_gc, &black);
+            gdk_gc_set_foreground (EQ_gc, get_color (NORMAL_COLOR));
             gdk_draw_arc (EQ_drawable, EQ_gc, FALSE, 
                 x1 - NOTCH_HANDLE_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
                 NOTCH_HANDLE_WIDTH * 2, NOTCH_HANDLE_HEIGHT, 5760, 11520);
@@ -1118,7 +1105,7 @@ void draw_EQ_curve ()
             EQ_notch_handle[1][0][i] = y1;
 
 
-            gdk_gc_set_foreground (EQ_gc, &EQ_notch_color);
+            gdk_gc_set_foreground (EQ_gc, get_color (HANDLE_COLOR));
 
             x0 = EQ_notch_index[i] + EQ_notch_width[i];
 
@@ -1131,7 +1118,7 @@ void draw_EQ_curve ()
             gdk_draw_arc (EQ_drawable, EQ_gc, TRUE, 
                 x1 - NOTCH_HANDLE_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
                 NOTCH_HANDLE_WIDTH * 2, NOTCH_HANDLE_HEIGHT, 17280, 11520);
-            gdk_gc_set_foreground (EQ_gc, &black);
+            gdk_gc_set_foreground (EQ_gc, get_color (NORMAL_COLOR));
             gdk_draw_arc (EQ_drawable, EQ_gc, FALSE, 
                 x1 - NOTCH_HANDLE_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
                 NOTCH_HANDLE_WIDTH * 2, NOTCH_HANDLE_HEIGHT, 17280, 11520);
@@ -1343,7 +1330,7 @@ void hdeq_curve_motion (GdkEventMotion *event)
 
             if (!EQ_input_points || x > EQ_xinput[EQ_input_points - 1])
               {
-                gdk_gc_set_foreground (EQ_gc, &EQ_fore_color);
+                gdk_gc_set_foreground (EQ_gc, get_color (HDEQ_CURVE_COLOR));
                 if (EQ_input_points) gdk_draw_line (EQ_drawable, EQ_gc, 
                     NINT (EQ_xinput[EQ_input_points - 1]), 
                     NINT (EQ_yinput[EQ_input_points - 1]), x, y);
@@ -2238,7 +2225,7 @@ static void comp_write_annotation (int i, char *string)
 
     gdk_window_clear_area (comp_drawable[i], 3, 3, ink_rect.width + 5,
 		    ink_rect.height + 5);
-    gdk_gc_set_foreground (comp_gc[i], &black);
+    gdk_gc_set_foreground (comp_gc[i], get_color (NORMAL_COLOR));
 
     pl = pango_layout_new (comp_pc[i]);  
     pango_layout_set_text (pl, string, -1);
@@ -2310,7 +2297,7 @@ void draw_comp_curve (int i)
 
     gdk_gc_set_line_attributes (comp_gc[i], 2, GDK_LINE_SOLID, GDK_CAP_BUTT,
         GDK_JOIN_MITER);
-    gdk_gc_set_foreground (comp_gc[i], get_band_color (i));
+    gdk_gc_set_foreground (comp_gc[i], get_color (LOW_BAND_COLOR + i));
 
 
     comp = comp_get_settings (i);
@@ -2335,7 +2322,7 @@ void draw_comp_curve (int i)
       }
     gdk_gc_set_line_attributes (comp_gc[i], 1, GDK_LINE_SOLID, GDK_CAP_BUTT,
         GDK_JOIN_MITER);
-    gdk_gc_set_foreground (comp_gc[i], &black);
+    gdk_gc_set_foreground (comp_gc[i], get_color (NORMAL_COLOR));
 }
 
 
@@ -2405,9 +2392,9 @@ void comp_curve_box_motion (int i, GdkEventMotion  *event)
 void comp_box_leave (int i)
 {
     gtk_widget_modify_fg ((GtkWidget *) l_comp_lbl[i], GTK_STATE_NORMAL, 
-                          get_band_color (NORMAL_COLOR));
+                          get_color (NORMAL_COLOR));
     gtk_widget_modify_fg ((GtkWidget *) l_c_curve_lbl[i], GTK_STATE_NORMAL, 
-                          get_band_color (NORMAL_COLOR));
+                          get_color (NORMAL_COLOR));
 }
 
 
@@ -2417,9 +2404,9 @@ void comp_box_leave (int i)
 void comp_box_enter (int i)
 {
     gtk_widget_modify_fg ((GtkWidget *) l_comp_lbl[i], GTK_STATE_NORMAL, 
-                          get_band_color (i));
+                          get_color (LOW_BAND_COLOR + i));
     gtk_widget_modify_fg ((GtkWidget *) l_c_curve_lbl[i], GTK_STATE_NORMAL, 
-                          get_band_color (i));
+                          get_color (LOW_BAND_COLOR + i));
 }
 
 

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: gtkmeter.h,v 1.3 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: gtkmeter.h,v 1.4 2004/04/26 20:44:25 jdepner Exp $
  */
 
 #ifndef __GTK_METER_H__
@@ -50,9 +50,9 @@ struct _GtkMeter
   /* Button currently pressed or 0 if none */
   guint8 button;
 
-  /* Amber dB and deflection points */
-  gfloat amber_level;
-  gfloat amber_frac;
+  /* Warning dB and deflection points */
+  gfloat warning_level;
+  gfloat warning_frac;
 
   /* Deflection limits */
   gfloat iec_lower;
@@ -69,9 +69,9 @@ struct _GtkMeter
   gfloat old_lower;
   gfloat old_upper;
 
-  GdkGC *green_gc;
-  GdkGC *amber_gc;
-  GdkGC *red_gc;
+  GdkGC *normal_gc;
+  GdkGC *warning_gc;
+  GdkGC *over_gc;
   GdkGC *peak_gc;
 
   /* The adjustment object that stores the data for this meter */
@@ -97,6 +97,7 @@ void	       gtk_meter_reset_peak		(GtkMeter     *meter);
 
 void           gtk_meter_set_warn_point         (GtkMeter *meter,
 						 gfloat pt);
+void           gtk_meter_set_color              (int color_id);
 
 #ifdef __cplusplus
 }

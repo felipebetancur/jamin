@@ -11,25 +11,33 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: preferences.h,v 1.2 2004/01/19 23:20:39 jdepner Exp $
+ *  $Id: preferences.h,v 1.3 2004/04/26 20:44:26 jdepner Exp $
  */
 
 #ifndef PREFERENCES_H
 #define PREFERENCES_H
 
 
-#define LOW_BAND_COLOR       0
-#define MID_BAND_COLOR       1
-#define HIGH_BAND_COLOR      2
-#define NORMAL_COLOR         3
-#define GANG_HIGHLIGHT_COLOR 4
+#define NORMAL_COLOR          0
+#define LOW_BAND_COLOR        1
+#define MID_BAND_COLOR        2
+#define HIGH_BAND_COLOR       3
+#define GANG_HIGHLIGHT_COLOR  4
+#define HANDLE_COLOR          5
+#define HDEQ_CURVE_COLOR      6
+#define HDEQ_GRID_COLOR       7
+#define HDEQ_SPECTRUM_COLOR   8
+#define HDEQ_BACKGROUND_COLOR 9
+#define METER_NORMAL_COLOR    10
+#define METER_WARNING_COLOR   11
+#define METER_OVER_COLOR      12
+#define METER_PEAK_COLOR      13
+
+#define COLORS                14
 
 
 void preferences_init();
-GdkColor *get_band_color (int band);
-void set_band_color (int band, GdkColor color);
-GdkColor *get_gang_color ();
-void set_gang_color (GdkColor color);
+GdkColor *get_color (int color_id);
 void set_color (GdkColor *color, unsigned short red, unsigned short green, 
                 unsigned short blue);
 void popup_preferences_dialog (int updown);

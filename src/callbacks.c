@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.144 2004/04/11 15:30:09 jdepner Exp $
+ *  $Id: callbacks.c,v 1.145 2004/04/26 20:44:25 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -2210,38 +2210,6 @@ on_crossfade_spinbutton_value_changed  (GtkSpinButton   *spinbutton,
 
 
 void
-on_low_band_color_button_clicked       (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (LOW_BAND_COLOR);
-}
-
-
-void
-on_mid_band_color_button_clicked       (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (MID_BAND_COLOR);
-}
-
-
-void
-on_high_band_color_button_clicked      (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (HIGH_BAND_COLOR);
-}
-
-
-void
-on_gang_highlight_color_button_clicked (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (GANG_HIGHLIGHT_COLOR);
-}
-
-
-void
 on_preferences_close_clicked           (GtkButton       *button,
                                         gpointer         user_data)
 {
@@ -2529,4 +2497,108 @@ on_scene_name_ok_clicked               (GtkButton       *button,
 {
   set_scene_name (hot_scene, scene_name_text);
   popup_scene_name_dialog (0);
+}
+
+
+void
+on_low_band_compressor_color_activate  (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_color_dialog (LOW_BAND_COLOR);
+}
+
+
+void
+on_mid_band_compressor_color_activate  (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_color_dialog (MID_BAND_COLOR);
+}
+
+
+void
+on_high_band_compressor_color_activate (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_color_dialog (HIGH_BAND_COLOR);
+}
+
+
+void
+on_ganged_controls_color_activate      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_color_dialog (GANG_HIGHLIGHT_COLOR);
+}
+
+
+void
+on_parametric_handles_color_activate   (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_color_dialog (HANDLE_COLOR);
+}
+
+
+void
+on_hdeq_curve_color_activate           (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_color_dialog (HDEQ_CURVE_COLOR);
+}
+
+
+void
+on_hdeq_grid_color_activate            (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_color_dialog (HDEQ_GRID_COLOR);
+}
+
+
+void
+on_hdeq_spectrum_color_activate        (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_color_dialog (HDEQ_SPECTRUM_COLOR);
+}
+
+
+void
+on_hdeq_background_color_activate      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_color_dialog (HDEQ_BACKGROUND_COLOR);
+}
+
+
+void
+on_meter_normal_color_activate         (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_color_dialog (METER_NORMAL_COLOR);
+}
+
+
+void
+on_meter_warning_color_activate        (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_color_dialog (METER_WARNING_COLOR);
+}
+
+
+void
+on_meter_over_color_activate           (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_color_dialog (METER_OVER_COLOR);
+}
+
+
+void
+on_meter_peak_color_activate           (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_color_dialog (METER_PEAK_COLOR);
 }

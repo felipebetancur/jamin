@@ -38,6 +38,7 @@
 #include "support.h"
 #include "compressor-ui.h"
 #include "state.h"
+#include "gtkmeter.h"
 
 
 static char color_help[] = {
@@ -49,7 +50,7 @@ the color you want (fuschia, puce, chartreuse, whatever) just press OK.\n"
 
 static GtkWidget         *preferences_dialog, *color_dialog, *colorsel;
 static GdkColormap       *colormap = NULL;
-static GdkColor          band_color[4], gang_color;
+static GdkColor          color[COLORS];
 static int               color_id;
 
 static void color_ok_callback (GtkWidget *w, gpointer user_data);
@@ -80,34 +81,27 @@ void preferences_init()
 
     colormap = gdk_colormap_get_system ();
 
-    set_color (&band_color[0], 60000, 0, 0);
-    set_color (&band_color[1], 0, 50000, 0);
-    set_color (&band_color[2], 0, 0, 60000);
-    set_color (&band_color[3], 0, 0, 0);
+    set_color (&color[NORMAL_COLOR], 0, 0, 0);
+    set_color (&color[LOW_BAND_COLOR], 0, 50000, 0);
+    set_color (&color[MID_BAND_COLOR], 0, 0, 60000);
+    set_color (&color[HIGH_BAND_COLOR], 60000, 0, 0);
+    set_color (&color[GANG_HIGHLIGHT_COLOR], 65535, 0, 0);
 
-    set_color (&gang_color, 65535, 0, 0);
+    set_color (&color[HANDLE_COLOR], 65535, 65535, 0);
+    set_color (&color[HDEQ_CURVE_COLOR], 65535, 65535, 65535);
+    set_color (&color[HDEQ_GRID_COLOR], 0, 36611, 0);
+    set_color (&color[HDEQ_SPECTRUM_COLOR], 32768, 32768, 32768);
+    set_color (&color[HDEQ_BACKGROUND_COLOR], 0, 21611, 0);
+    set_color (&color[METER_NORMAL_COLOR], 0, 60000, 0);
+    set_color (&color[METER_WARNING_COLOR], 50000, 55000, 0);
+    set_color (&color[METER_OVER_COLOR], 60000, 0, 0);
+    set_color (&color[METER_PEAK_COLOR], 60000, 60000, 0);
 }
 
 
-GdkColor *get_band_color (int band)
+GdkColor *get_color (int color_id)
 {
-  return (&band_color[band]);
-}
-
-
-void set_band_color (int band, GdkColor color)
-{
-}
-
-
-GdkColor *get_gang_color ()
-{
-  return (&gang_color);
-}
-
-
-void set_gang_color (GdkColor color)
-{
+  return (&color[color_id]);
 }
 
 
@@ -147,14 +141,7 @@ void popup_color_dialog (int id)
 
   color_id = id;
 
-  if (id == GANG_HIGHLIGHT_COLOR)
-    {
-      ptr = &gang_color;
-    }
-  else
-    {
-      ptr = &band_color[id];
-    }
+  ptr = &color[id];
 
 
   gtk_color_selection_set_current_color ((GtkColorSelection *) colorsel, ptr);
@@ -166,26 +153,20 @@ void popup_color_dialog (int id)
 
 static void color_ok_callback (GtkWidget *w, gpointer user_data)
 {
-  GdkColor color;
+  GdkColor l_color;
 
 
   gtk_color_selection_get_current_color ((GtkColorSelection *) colorsel, 
-                                         &color);
+                                         &l_color);
 
-  if (color_id == GANG_HIGHLIGHT_COLOR)
-    {
-      set_color (&gang_color, color.red, color.green, color.blue);
+  set_color (&color[color_id], l_color.red, l_color.green, l_color.blue);
 
-      repaint_gang_labels ();
-    }
-  else
-    {
-      set_color (&band_color[color_id], color.red, color.green, color.blue);
-
-      draw_EQ_curve ();
-      draw_comp_curve (color_id);
-    }
-
+  repaint_gang_labels ();
+  draw_EQ_curve ();
+  draw_comp_curve (0);
+  draw_comp_curve (1);
+  draw_comp_curve (2);
+  gtk_meter_set_color (color_id);
 
   gtk_widget_hide (color_dialog);
 }
