@@ -60,9 +60,6 @@ static GdkPixbuf         *LED_green_on = NULL, *LED_green_off = NULL,
                          *LED_yellow = NULL, *LED_red = NULL;
 
 
-void set_EQ_curve_values ();
-
-
 /*  Initialize all scene related structures and get the widget addresses.  */
 
 void bind_scenes ()
@@ -210,7 +207,7 @@ void select_scene (int number, int button)
 
                         s_crossfade_to_state (&scene_state[i], -1.0f);
 
-                        set_EQ_curve_values ();
+                        set_EQ_curve_values (0, 0.0);
 
                         s_history_add_state (scene_state[i]);
 
