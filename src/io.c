@@ -266,9 +266,9 @@ void io_new_state(int next)
 void io_get_status(jack_status_t *jp)
 {
     transport_status(&jst.tinfo);
+    *jp = jst;
     if (client)
 	jp->cpu_load = jack_cpu_load(client);
-    *jp = jst;
 }
 
 
