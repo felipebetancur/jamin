@@ -6,7 +6,3 @@ EXTRA_DIST = \
 	autogen.sh \
 	jam-ui.glade \
 	jam-ui.gladep
-
-quickly:
-	(cd src && make CFLAGS=-g jamin-interface.o)
-	make all

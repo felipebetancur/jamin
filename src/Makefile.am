@@ -5,12 +5,18 @@ INCLUDES = \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	@PACKAGE_CFLAGS@
 
-jamin_CFLAGS = -g -ffast-math
-jamin_LDFLAGS = -lm
+# use a convenience library to build non-optimized sources.
+# TODO: figure out how to optimize hdeq if gcc version is not 2.95
 
-bin_PROGRAMS = jamin
+noinst_LIBRARIES	= libnopt.a
+libnopt_a_SOURCES	= interface.c interface.h hdeq.c hdeq.h
+libnopt_a_CFLAGS	= -g @JAMIN_CFLAGS@
 
-man_MANS = jamin.1
+jamin_CFLAGS		= @CFLAGS_OPT@ @JAMIN_CFLAGS@
+jamin_LDADD		= libnopt.a @PACKAGE_LIBS@ @JAMIN_LIBS@
+
+bin_PROGRAMS		= jamin
+man_MANS		= jamin.1
 
 jamin_SOURCES = \
 	callbacks.c callbacks.h callbacks_help.h \
@@ -19,10 +25,8 @@ jamin_SOURCES = \
 	db.h \
 	debug.h \
 	geq.c geq.h \
-	hdeq.c hdeq.h\
 	gtkmeter.c gtkmeter.h \
 	gtkmeterscale.c gtkmeterscale.h \
-	interface.c interface.h \
 	intrim.c intrim.h \
 	io.c io.h \
 	io-menu.c io-menu.h \
@@ -44,13 +48,8 @@ jamin_SOURCES = \
 	help.c help.h
 	status-ui.c status-ui.h
 
-jamin_LDADD = @PACKAGE_LIBS@
-
 state.h: mk-stateh.pl state-vars.txt
 	@echo "WARNING: Rebuilding state.h"
 	./mk-stateh.pl
 
 EXTRA_DIST = mk-stateh.pl jamin.1
-
-quickly:
-	(cd .. && make quickly)
