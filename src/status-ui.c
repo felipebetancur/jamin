@@ -43,33 +43,34 @@ void status_update(GtkWidget *main_window)
     io_get_status(&j);
 
     if (!j.active)
-	state_msg = "Disconnected";
+	    state_msg = _("Disconnected");
     else
 	switch (transport_get_state()) {
 	case JackTransportStopped:
-	    state_msg = "Stopped";
+		state_msg = _("Stopped");
 	    break;
 
 	case JackTransportStarting:
-	    state_msg = "Starting";
+		state_msg = _("Starting");
 	    break;
 
 	case JackTransportRolling:
-	    state_msg = "Rolling";
+		state_msg = _("Rolling");
 	    break;
 
 	default:
-	    state_msg = "[unknown]";
+		state_msg = _("[unknown]");
 	}
 
 
     if (j.realtime)
-	rt = "  |  RT";
+	    rt = _("  |  RT");
     else
 	rt = "";
 
-    snprintf(string, sizeof(string), "%s  |  %4.1f%% CPU  |  %d xruns  |  %"
-	     PRIu32 " frames  |  %" PRIu32 " Hz%s",
+    snprintf(string, sizeof(string),
+	     _("%s  |  %4.1f%% CPU  |  %d xruns  |  %"
+	       PRIu32 " frames  |  %" PRIu32 " Hz%s"),
              state_msg, j.cpu_load, j.xruns, j.buf_size, j.sample_rate, rt);
 
     if (l_status_label == NULL)
