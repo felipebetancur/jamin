@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: scenes.h,v 1.14 2004/04/09 16:25:53 jdepner Exp $
+ *  $Id: scenes.h,v 1.15 2004/05/07 16:24:48 theno23 Exp $
  */
 
 #ifndef SCENES_H
@@ -23,10 +23,7 @@
 #include <gtk/gtk.h>
 
 #include "state.h"
-
-
-#define NUM_SCENES 20
-
+#include "constants.h"
 
 void bind_scenes ();
 void select_scene (int number, int button);

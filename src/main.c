@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.51 2004/05/07 15:49:59 theno23 Exp $
+ *  $Id: main.c,v 1.52 2004/05/07 16:24:48 theno23 Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -225,7 +225,9 @@ int scene_handler(const char *path, const char *types, lo_arg **argv, int argc,
                  void *data, void *user_data)
 {
     if (argv[0]->i > 0 && argv[0]->i <= NUM_SCENES) {
-	select_scene(argv[0]->i - 1, 1);
+	if (argv[0]->i - 1 != get_current_scene()) {
+	    select_scene(argv[0]->i - 1, 1);
+	}
     }
 
     return 0;

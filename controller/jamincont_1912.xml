@@ -8,8 +8,35 @@
     <meta name="copyright" value="GPL"/>
     <meta name="properties" value="HARD_RT_CAPABLE"/>
     <code><![CDATA[
+      #include <unistd.h>
       #include <stdio.h>
+      #include <pthread.h>
       #include <lo.h>
+
+      #include "../src/constants.h"
+
+      #define EXITV -999
+
+      static void *controller_thread(void *p)
+      {
+	volatile int *scene = p;
+	int last_scene = -1;
+      	lo_address address = lo_address_new(NULL, "4444");
+
+	printf("THREAD\n");
+
+	while (*scene != EXITV) {
+	  if (last_scene != *scene) {
+	    last_scene = *scene;
+	    lo_send(address, "/scene", "i", last_scene);
+	  }
+	  usleep(100);
+	}
+
+	//printf("DONE\n");
+
+	return NULL;
+      }
     ]]></code>
   </global>
 
@@ -17,21 +44,19 @@
     <name>JAMin Controller</name>
 
     <callback event="instantiate"><![CDATA[
-      last_scene = -1;
-      address = lo_address_new(NULL, "4444");
+      thread = malloc(sizeof(pthread_t));
+      pthread_create(thread, NULL, controller_thread, &(plugin_data->scene));
+      scene = -1;
     ]]></callback>
 
     <callback event="activate"><![CDATA[
-      last_scene = -1;
+      scene = -1;
     ]]></callback>
 
     <callback event="run"><![CDATA[
       unsigned long pos;
 
-      if ((int)(scene + 0.5f) != last_scene) {
-	plugin_data->last_scene = (int)(scene + 0.5f);
-	lo_send(address, "/scene", "i", plugin_data->last_scene);
-      }
+      plugin_data->scene = (int)(scene_cont + 0.5f);
 
       if (input != output) {
         for (pos = 0; pos < sample_count; pos++) {
@@ -40,10 +65,14 @@
       }
     ]]></callback>
 
-    <port label="scene" dir="input" type="control" hint="default_1,integer">
+    <callback event="cleanup"><![CDATA[
+      plugin_data->scene = EXITV;
+    ]]></callback>
+
+    <port label="scene_cont" dir="input" type="control" hint="default_1,integer">
       <name>Scene no.</name>
       <p>Changes the JAMin scene number</p>
-      <range min="1" max="20"/>
+      <range min="1" max="NUM_SCENES"/>
     </port>
 
     <port label="input" dir="input" type="audio">
@@ -54,7 +83,7 @@
       <name>Output</name>
     </port>
 
-    <instance-data label="last_scene" type="int" />
-    <instance-data label="address" type="lo_address" />
+    <instance-data label="scene" type="int" />
+    <instance-data label="thread" type="pthread_t *" />
   </plugin>
 </ladspa>
