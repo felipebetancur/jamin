@@ -371,6 +371,7 @@ void s_load_session (const char *fname)
     }
 
 
+    hdeq_set_xover ();
     set_EQ_curve_values ();
 }
 

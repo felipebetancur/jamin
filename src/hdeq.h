@@ -21,6 +21,7 @@ void hdeq_curve_set_label (char *string);
 void set_EQ_curve_values (int id, float value);
 void hdeq_set_lower_gain (float gain);
 void hdeq_set_upper_gain (float gain);
+void hdeq_set_xover ();
 void draw_comp_curve (int i);
 void comp_curve_expose (GtkWidget *widget, int i);
 void comp_curve_realize (GtkWidget *widget, int i);

@@ -1781,6 +1781,18 @@ void set_EQ_curve_values (int id, float value)
 }
 
 
+/*  Reset the crossovers.  */
+
+void hdeq_set_xover ()
+{
+    xover_fa = pow (10.0, s_get_value (S_XOVER_FREQ(0)));
+    xover_fb = pow (10.0, s_get_value (S_XOVER_FREQ(1)));
+    
+    hdeq_low2mid_init ();
+    hdeq_mid2high_init ();
+}
+
+
 /*  Set the lower gain limit for the hdeq and the geq.  */
 
 void hdeq_set_lower_gain (float gain)
