@@ -479,8 +479,13 @@ create_window1 (void)
   GtkWidget *high_solo;
   GtkWidget *high_bypass;
   GtkWidget *label_freq_h;
-  GtkWidget *right_mid_vbox;
   GtkWidget *right_bottom_vbox;
+  GtkWidget *boost_eventbox;
+  GtkWidget *frame26;
+  GtkWidget *hbox53;
+  GtkWidget *label316;
+  GtkWidget *boost_scale;
+  GtkWidget *boost_label;
   GtkWidget *limiter_eventbox;
   GtkWidget *frame25;
   GtkWidget *vbox105;
@@ -504,12 +509,6 @@ create_window1 (void)
   GtkWidget *limiter_bypass_event_box;
   GtkWidget *limiter_bypass;
   GtkWidget *limiterlabel;
-  GtkWidget *boost_eventbox;
-  GtkWidget *frame26;
-  GtkWidget *hbox53;
-  GtkWidget *label316;
-  GtkWidget *boost_scale;
-  GtkWidget *boost_label;
   GtkWidget *frame27;
   GtkWidget *output_vbox;
   GtkWidget *output_eventbox;
@@ -3170,17 +3169,45 @@ create_window1 (void)
   gtk_frame_set_label_widget (GTK_FRAME (frame_h), label_freq_h);
   gtk_label_set_justify (GTK_LABEL (label_freq_h), GTK_JUSTIFY_LEFT);
 
-  right_mid_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (right_mid_vbox, "right_mid_vbox");
-  gtk_widget_show (right_mid_vbox);
-  gtk_box_pack_start (GTK_BOX (hbox49), right_mid_vbox, TRUE, TRUE, 2);
-  gtk_widget_set_size_request (right_mid_vbox, 173, 246);
-
   right_bottom_vbox = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (right_bottom_vbox, "right_bottom_vbox");
   gtk_widget_show (right_bottom_vbox);
-  gtk_box_pack_start (GTK_BOX (right_mid_vbox), right_bottom_vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox49), right_bottom_vbox, TRUE, TRUE, 2);
   gtk_widget_set_size_request (right_bottom_vbox, 175, 246);
+
+  boost_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (boost_eventbox, "boost_eventbox");
+  gtk_widget_show (boost_eventbox);
+  gtk_box_pack_start (GTK_BOX (right_bottom_vbox), boost_eventbox, FALSE, TRUE, 0);
+
+  frame26 = gtk_frame_new (NULL);
+  gtk_widget_set_name (frame26, "frame26");
+  gtk_widget_show (frame26);
+  gtk_container_add (GTK_CONTAINER (boost_eventbox), frame26);
+  gtk_container_set_border_width (GTK_CONTAINER (frame26), 1);
+
+  hbox53 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox53, "hbox53");
+  gtk_widget_show (hbox53);
+  gtk_container_add (GTK_CONTAINER (frame26), hbox53);
+
+  label316 = gtk_label_new (_("Amount "));
+  gtk_widget_set_name (label316, "label316");
+  gtk_widget_show (label316);
+  gtk_box_pack_start (GTK_BOX (hbox53), label316, FALSE, FALSE, 1);
+  gtk_label_set_justify (GTK_LABEL (label316), GTK_JUSTIFY_LEFT);
+
+  boost_scale = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 10, 0.25, 1, 0)));
+  gtk_widget_set_name (boost_scale, "boost_scale");
+  gtk_widget_show (boost_scale);
+  gtk_box_pack_start (GTK_BOX (hbox53), boost_scale, TRUE, TRUE, 0);
+  gtk_scale_set_value_pos (GTK_SCALE (boost_scale), GTK_POS_LEFT);
+
+  boost_label = gtk_label_new (_("Boost"));
+  gtk_widget_set_name (boost_label, "boost_label");
+  gtk_widget_show (boost_label);
+  gtk_frame_set_label_widget (GTK_FRAME (frame26), boost_label);
+  gtk_label_set_justify (GTK_LABEL (boost_label), GTK_JUSTIFY_LEFT);
 
   limiter_eventbox = gtk_event_box_new ();
   gtk_widget_set_name (limiter_eventbox, "limiter_eventbox");
@@ -3346,40 +3373,6 @@ create_window1 (void)
   gtk_widget_show (limiterlabel);
   gtk_frame_set_label_widget (GTK_FRAME (frame25), limiterlabel);
   gtk_label_set_justify (GTK_LABEL (limiterlabel), GTK_JUSTIFY_LEFT);
-
-  boost_eventbox = gtk_event_box_new ();
-  gtk_widget_set_name (boost_eventbox, "boost_eventbox");
-  gtk_widget_show (boost_eventbox);
-  gtk_box_pack_start (GTK_BOX (right_bottom_vbox), boost_eventbox, FALSE, TRUE, 0);
-
-  frame26 = gtk_frame_new (NULL);
-  gtk_widget_set_name (frame26, "frame26");
-  gtk_widget_show (frame26);
-  gtk_container_add (GTK_CONTAINER (boost_eventbox), frame26);
-  gtk_container_set_border_width (GTK_CONTAINER (frame26), 1);
-
-  hbox53 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (hbox53, "hbox53");
-  gtk_widget_show (hbox53);
-  gtk_container_add (GTK_CONTAINER (frame26), hbox53);
-
-  label316 = gtk_label_new (_("Amount "));
-  gtk_widget_set_name (label316, "label316");
-  gtk_widget_show (label316);
-  gtk_box_pack_start (GTK_BOX (hbox53), label316, FALSE, FALSE, 1);
-  gtk_label_set_justify (GTK_LABEL (label316), GTK_JUSTIFY_LEFT);
-
-  boost_scale = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 10, 0.25, 1, 0)));
-  gtk_widget_set_name (boost_scale, "boost_scale");
-  gtk_widget_show (boost_scale);
-  gtk_box_pack_start (GTK_BOX (hbox53), boost_scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (boost_scale), GTK_POS_LEFT);
-
-  boost_label = gtk_label_new (_("Boost"));
-  gtk_widget_set_name (boost_label, "boost_label");
-  gtk_widget_show (boost_label);
-  gtk_frame_set_label_widget (GTK_FRAME (frame26), boost_label);
-  gtk_label_set_justify (GTK_LABEL (boost_label), GTK_JUSTIFY_LEFT);
 
   frame27 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame27, "frame27");
@@ -4017,6 +4010,15 @@ create_window1 (void)
   g_signal_connect ((gpointer) high_bypass, "toggled",
                     G_CALLBACK (on_high_bypass_toggled),
                     NULL);
+  g_signal_connect ((gpointer) boost_eventbox, "enter_notify_event",
+                    G_CALLBACK (on_boost_eventbox_enter_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) boost_scale, "value_changed",
+                    G_CALLBACK (on_boost_scale_value_changed),
+                    NULL);
+  g_signal_connect ((gpointer) boost_scale, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
   g_signal_connect ((gpointer) limiter_eventbox, "enter_notify_event",
                     G_CALLBACK (on_limiter_eventbox_enter_notify_event),
                     NULL);
@@ -4049,15 +4051,6 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) limiter_bypass, "toggled",
                     G_CALLBACK (on_limiter_bypass_toggled),
-                    NULL);
-  g_signal_connect ((gpointer) boost_eventbox, "enter_notify_event",
-                    G_CALLBACK (on_boost_eventbox_enter_notify_event),
-                    NULL);
-  g_signal_connect ((gpointer) boost_scale, "value_changed",
-                    G_CALLBACK (on_boost_scale_value_changed),
-                    NULL);
-  g_signal_connect ((gpointer) boost_scale, "button_press_event",
-                    G_CALLBACK (reset_range),
                     NULL);
   g_signal_connect ((gpointer) output_eventbox, "enter_notify_event",
                     G_CALLBACK (on_output_eventbox_enter_notify_event),
@@ -4525,8 +4518,13 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, high_solo, "high_solo");
   GLADE_HOOKUP_OBJECT (window1, high_bypass, "high_bypass");
   GLADE_HOOKUP_OBJECT (window1, label_freq_h, "label_freq_h");
-  GLADE_HOOKUP_OBJECT (window1, right_mid_vbox, "right_mid_vbox");
   GLADE_HOOKUP_OBJECT (window1, right_bottom_vbox, "right_bottom_vbox");
+  GLADE_HOOKUP_OBJECT (window1, boost_eventbox, "boost_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, frame26, "frame26");
+  GLADE_HOOKUP_OBJECT (window1, hbox53, "hbox53");
+  GLADE_HOOKUP_OBJECT (window1, label316, "label316");
+  GLADE_HOOKUP_OBJECT (window1, boost_scale, "boost_scale");
+  GLADE_HOOKUP_OBJECT (window1, boost_label, "boost_label");
   GLADE_HOOKUP_OBJECT (window1, limiter_eventbox, "limiter_eventbox");
   GLADE_HOOKUP_OBJECT (window1, frame25, "frame25");
   GLADE_HOOKUP_OBJECT (window1, vbox105, "vbox105");
@@ -4550,12 +4548,6 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, limiter_bypass_event_box, "limiter_bypass_event_box");
   GLADE_HOOKUP_OBJECT (window1, limiter_bypass, "limiter_bypass");
   GLADE_HOOKUP_OBJECT (window1, limiterlabel, "limiterlabel");
-  GLADE_HOOKUP_OBJECT (window1, boost_eventbox, "boost_eventbox");
-  GLADE_HOOKUP_OBJECT (window1, frame26, "frame26");
-  GLADE_HOOKUP_OBJECT (window1, hbox53, "hbox53");
-  GLADE_HOOKUP_OBJECT (window1, label316, "label316");
-  GLADE_HOOKUP_OBJECT (window1, boost_scale, "boost_scale");
-  GLADE_HOOKUP_OBJECT (window1, boost_label, "boost_label");
   GLADE_HOOKUP_OBJECT (window1, frame27, "frame27");
   GLADE_HOOKUP_OBJECT (window1, output_vbox, "output_vbox");
   GLADE_HOOKUP_OBJECT (window1, output_eventbox, "output_eventbox");
