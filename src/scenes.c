@@ -178,7 +178,6 @@ void set_scene (int scene_num)
     char        name[256];
     GtkTooltips *tooltips = gtk_tooltips_new();
 
-
     if (scene_num >= 0) menu_scene = scene_num;
 
 
@@ -226,7 +225,6 @@ void set_scene (int scene_num)
     gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[menu_scene]), 
                           scene_state[menu_scene].description, NULL);
 }
-
 
 /* Gets the scene name */
 

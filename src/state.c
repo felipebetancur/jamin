@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.29 2003/12/17 17:26:16 jdepner Exp $
+ *  $Id: state.c,v 1.30 2003/12/18 15:40:37 theno23 Exp $
  */
 
 #include <stdio.h>
@@ -227,7 +227,7 @@ void s_restore_state(s_state *state)
     int i, duration;
 
     /* printf("restore %s\n", state->description); */
-    /* crossfade in 3ms, sounds a bit better */
+    /* crossfade in 3ms, sounds a bit better than jumping */
     duration = (int)(sample_rate * 0.003f);
     suppress_feedback++;
     for (i=0; i<S_SIZE; i++) {
@@ -243,7 +243,6 @@ void s_restore_state(s_state *state)
 void s_crossfade_to_state(s_state *state, float time)
 {
     int i, duration;
-
 
     /* printf("restore %s\n", state->description); */
     duration = (int)(sample_rate * time);
@@ -439,9 +438,9 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 		sname = *(p+1);
 	    } else if (!strcmp(*p, "number")) {
 		*scene = atoi(*(p+1));
-	    } else if (!strcmp(*p, "active")) {
+	    } else if (!strcmp(*p, "active") && !strcmp(*(p+1), "true")) {
 		active = 1;
-	    } else if (!strcmp(*p, "changed")) {
+	    } else if (!strcmp(*p, "changed") && !strcmp(*(p+1), "true")) {
 		changed = 1;
 	    }
 	}
