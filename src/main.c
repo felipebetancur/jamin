@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.54 2004/05/26 23:23:27 joq Exp $
+ *  $Id: main.c,v 1.55 2004/10/01 15:26:45 theno23 Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -125,8 +125,12 @@ int main(int argc, char *argv[])
 
 #ifdef HAVE_OSC
     st = lo_server_thread_new(OSC_PORT, error);
-    lo_server_thread_add_method(st, SCENE_URI, "i", scene_handler, NULL);
-    lo_server_thread_start(st);
+    if (st) {
+	lo_server_thread_add_method(st, SCENE_URI, "i", scene_handler, NULL);
+	lo_server_thread_start(st);
+    } else {
+	fprintf(stderr, "This " PACKAGE " instance will not have OSC support,\n"		"probably the port is allread in use\n");
+    }
 #endif
 
     /* start I/O processing, then run GTK main loop, until "quit" */

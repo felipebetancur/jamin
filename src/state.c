@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.56 2004/05/06 22:48:16 jdepner Exp $
+ *  $Id: state.c,v 1.57 2004/10/01 15:26:45 theno23 Exp $
  */
 
 #include <stdio.h>
@@ -654,6 +654,7 @@ void s_load_session (const char *fname)
     }
 
     /* run the SAX parser */    
+    scene_init();
     xmlSAXUserParseFile(handler, &gp, filename);
 
     if (gp.scene == LOAD_ERROR) {

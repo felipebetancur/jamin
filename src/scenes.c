@@ -274,6 +274,11 @@ s_state *get_scene (int number)
   return (&scene_state[i]);
 }
 
+void scene_init()
+{
+    memset(scene_state, 0, sizeof(s_state) * NUM_SCENES);
+}
+
 
 /*  Set the scene state from the current settings.  Get the scene name from
     the scene_name text entry widget.  If scene_num is -1 use the last pressed
