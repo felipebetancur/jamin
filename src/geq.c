@@ -23,7 +23,6 @@ static int EQ_drawn = 0;
 float geq_gains[EQ_BANDS + 1];
 /* Frequency of each band of the EQ */
 float geq_freqs[EQ_BANDS];
-
 int bin_base[BINS];
 float bin_delta[BINS];
 
@@ -88,6 +87,11 @@ void bind_geq()
 
 void eqg_changed(int id, float value)
 {
+    unsigned int i;
+
+    for (i = 0; i < BINS/2 -1; i++) {
+	eq_coefs[i] = s_get_value(id+i);
+    }
     /* XXX need to restore the values used by draw_EQ_curve() */
     draw_EQ_curve();
 }

@@ -3,7 +3,9 @@
 #include <string.h>
 #include <assert.h>
 #include <gtk/gtk.h>
+#include <libxml/parser.h>
 
+#include "config.h"
 #include "state.h"
 
 /* The smallest value that counts as a changei, should be aproximatly
@@ -15,7 +17,7 @@ typedef struct {
     float value[S_SIZE];
 } s_state;
 
-static float            s_value[S_SIZE];
+float                   s_value[S_SIZE];
 static float            s_target[S_SIZE];
 static int              s_duration[S_SIZE];
 static GtkAdjustment   *s_adjustment[S_SIZE];
@@ -23,6 +25,7 @@ static s_callback_func  s_callback[S_SIZE];
 
 static s_state       *last_state = NULL;
 static int	      last_changed = S_NONE;
+static char          *last_description = NULL;
 
 static GList         *history = NULL;
 static GList         *undo_pos = NULL;
@@ -70,6 +73,10 @@ void s_set_value_ui(int id, float value)
     if (last_changed != S_NONE && last_changed != id) {
 	s_history_add(g_strdup_printf("%s = %f", s_description[last_changed],
 		      s_value[last_changed]));
+    }
+    if (last_description) {
+	s_history_add(last_description);
+	last_description = NULL;
     }
     s_value[id] = value;
     if (value - MIN_CHANGE < last_state->value[id] &&
@@ -173,22 +180,87 @@ void s_save_session (GtkWidget *w, gpointer user_data)
 {
     const gchar      *filename;
     GtkFileSelection *file_selector = (GtkFileSelection *) user_data;
-
+    xmlDocPtr doc;
+    xmlNodePtr rootnode, node;
+    unsigned int i;
+    char tmp[256];
 
     filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_selector));
 
-    fprintf (stderr,"%s %d %s\n",__FILE__,__LINE__,filename);
+    xmlSetCompressMode(5);
+    doc = xmlNewDoc("1.0");
+    rootnode = xmlNewDocRawNode(doc, NULL, "jam-param-list", NULL);
+    xmlSetProp(rootnode, "version", VERSION);
+    xmlDocSetRootElement(doc, rootnode);
+    node = xmlNewText("\n");
+    xmlAddChild(rootnode, node);
+    for (i=0; i<S_SIZE; i++) {
+	node = xmlNewDocRawNode(doc, NULL, "parameter", NULL);
+	snprintf(tmp, 255, "%g", s_value[i]);
+	xmlSetProp(node, "name", s_symbol[i]);
+	xmlSetProp(node, "value", tmp);
+	xmlAddChild(rootnode, node);
+	node = xmlNewText("\n");
+	xmlAddChild(rootnode, node);
+    }
+    xmlSaveFile(filename, doc);
+    xmlFreeDoc(doc);
 }
+
+void s_startElement(void *user_data, const xmlChar *name,
+                    const xmlChar **attrs);
 
 void s_load_session (GtkWidget *w, gpointer user_data)
 {
     const gchar      *filename;
     GtkFileSelection *file_selector = (GtkFileSelection *) user_data;
+    xmlSAXHandlerPtr  handler;
 
+    filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION
+                                                (file_selector));
 
-    filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_selector));
+    handler = calloc(1, sizeof(xmlSAXHandler));
+    handler->startElement = s_startElement;
+    xmlSAXUserParseFile(handler, NULL, filename);
+    last_description = g_strdup_printf("Loaded %s", filename);
+    last_changed = S_NONE;
+    free(handler);
+}
 
-    fprintf (stderr,"%s %d %s\n",__FILE__,__LINE__,filename);
+void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
+{
+    const xmlChar **p;
+    unsigned int i, found = 0;
+    const char *symbol = NULL, *value = NULL;
+
+    /* Check its the right element */
+    if (strcmp(name, "parameter")) {
+	return;
+    }
+
+    /* Find the name and value attributes */
+    for (p=attrs; p && *p; p+=2) {
+	if (!strcmp(*p, "name")) {
+	    symbol = *(p+1);
+	} else if (!strcmp(*p, "value")) {
+	    value = *(p+1);
+	}
+    }
+
+    /* Find the matching symbol, this is horribly inefficient */
+    for (i=0; i<S_SIZE && !found; i++) {
+	if (!strcmp(symbol, s_symbol[i])) {
+	    s_value[i] = atof(value);
+	    suppress_feedback++;
+	    s_set_events(i, s_value[i]);
+	    suppress_feedback--;
+	    //printf("load %s = %g\n", symbol, s_value[i]);
+	    found = 1;
+	}
+    }
+    if (!found) {
+	fprintf(stderr, "Unknown symbol: %s\n", *p);
+    }
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

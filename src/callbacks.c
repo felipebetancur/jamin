@@ -2552,7 +2552,7 @@ on_save_button_clicked                 (GtkButton       *button,
 
     if (getenv ("HOME") != NULL)
       {
-        sprintf (string, "%s/.jam/", getenv ("HOME"));
+        snprintf (string, 511, "%s/.jam/", getenv ("HOME"));
         gtk_file_selection_set_filename (file_selector, string);
       }
 

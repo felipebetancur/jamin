@@ -29,6 +29,8 @@ print OUT <<EOB;
 #ifndef STATE_H
 #define STATE_H
 
+/* This is a generated file DO NOT EDIT, see state-vars.txt */
+
 #include <gtk/gtk.h>
 
 typedef void(* s_callback_func)(int id, float value);
@@ -47,6 +49,8 @@ void s_clear_history();
 void s_set_callback(int id, s_callback_func callback);
 void s_set_adjustment(int id, GtkAdjustment *adjustment);
 void s_undo();
+void s_save_session (GtkWidget *w, gpointer user_data);
+void s_load_session (GtkWidget *w, gpointer user_data);
 
 #define S_NONE -1
 EOB
@@ -63,7 +67,16 @@ for $sym (@symbols) {
 	}
 }
 
-print OUT "\n#define S_SIZE $id\n\n";
+print OUT <<EOB;
+#define S_SIZE $id
+
+extern float s_value[S_SIZE];
+
+inline static float s_get_value(int id)
+{
+	return s_value[id];
+}
+EOB
 
 $first = 1;
 print OUT "static const char * const s_description[S_SIZE] = {\n";
