@@ -24,7 +24,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.c,v 1.18 2003/12/03 07:02:00 joq Exp $
+ *  $Id: io-menu.c,v 1.19 2003/12/03 08:59:11 kotau Exp $
  */
 
 #include <stdio.h>
@@ -270,7 +270,40 @@ iomenu_connection_item(jack_port_t *port, const char *connection_name)
 static GtkWidget *
 iomenu_group_item(iomenu_callback handler, const char *group)
 {
+    int i;
+    const char **g_inports = jack_get_ports(client, group,
+					 JACK_DEFAULT_AUDIO_TYPE,
+					 JackPortIsOutput);
+    const char **g_outports = jack_get_ports(client, group,
+					 JACK_DEFAULT_AUDIO_TYPE,
+					 JackPortIsInput);
+    if (g_inports == NULL || g_outports == NULL) {
+	iomenu_error(_("no %s ports available\n"), group);
+	return 0;
+    }
+    
     GtkWidget *item = gtk_check_menu_item_new_with_label(group);
+    
+    /* scan for ports that are connected */
+    if (handler == iomenu_all_inputs){
+	for (i = 0; iports_list[i] && g_inports[i]; ++i) {
+
+	    if (jack_port_connected_to(iports_list[i], g_inports[i])){
+//		printf ("some inports connected\n");
+	
+		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), TRUE);
+	    }
+	}
+    } else {
+	for (i = 0; oports_list[i] && g_outports[i]; ++i) {
+
+	    if (jack_port_connected_to(oports_list[i], g_outports[i])){ 
+//		printf ("Some outports connected\n");
+		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), TRUE);
+	    }
+	}
+    }	
+
 
     g_signal_connect(G_OBJECT(item), "activate",
 		     G_CALLBACK(handler), (char *) group);
