@@ -7,7 +7,9 @@ config.h.in
 config.log
 config.status
 configure
-intltool-*
+intltool-extract
+intltool-merge
+intltool-update
 jamin-*.tar.gz
 libtool
 ltmain.sh
