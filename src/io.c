@@ -834,6 +834,11 @@ void io_activate()
 	    jack_port_register(client, out_names[chan],
 			       JACK_DEFAULT_AUDIO_TYPE,
 			       JackPortIsOutput, 0);
+
+	if (input_ports[chan] == NULL || output_ports[chan] == NULL) {
+	    fprintf(stderr, "%s: Cannot register JACK ports.", PACKAGE);
+	    exit(2);
+	}
     }
 
     if (jack_activate(client)) {
