@@ -57,9 +57,9 @@ grep "^AM_GLIB_GNU_GETTEXT" $srcdir/configure.in >/dev/null && {
   }
 }
 
-(automake-1.6 --version) < /dev/null > /dev/null 2>&1 || {
+(automake --version) < /dev/null > /dev/null 2>&1 || {
   echo
-  echo "**Error**: You must have \`automake-1.6' installed."
+  echo "**Error**: You must have \`automake' installed."
   echo "You can get it from: ftp://ftp.gnu.org/pub/gnu/"
   DIE=1
   NO_AUTOMAKE=yes
@@ -120,14 +120,14 @@ do
 	  libtoolize --force --copy
 	fi
       fi
-      echo "Running aclocal-1.6 $aclocalinclude ..."
-      aclocal-1.6 $aclocalinclude
+      echo "Running aclocal $aclocalinclude ..."
+      aclocal $aclocalinclude
       if grep "^AM_CONFIG_HEADER" configure.in >/dev/null; then
 	echo "Running autoheader..."
 	autoheader
       fi
-      echo "Running automake-1.6 --gnu $am_opt ..."
-      automake-1.6 --add-missing --gnu $am_opt
+      echo "Running automake --gnu $am_opt ..."
+      automake --add-missing --gnu $am_opt
       echo "Running autoconf ..."
       autoconf
     )

@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_INIT(configure.in)
-AM_INIT_AUTOMAKE(jamin, 0.9.04)
+AM_INIT_AUTOMAKE(jamin, 0.9.05)
 AM_CONFIG_HEADER(config.h)
 AM_MAINTAINER_MODE
 
@@ -16,7 +16,10 @@ AC_HEADER_STDC
 AC_C_CONST
 AC_C_VOLATILE
 AC_C_INLINE
-AC_PROG_RANLIB
+AC_ENABLE_STATIC(no)
+AC_ENABLE_SHARED(yes)
+AC_LIBTOOL_DLOPEN
+AC_PROG_LIBTOOL
 ALL_LINGUAS="ru"
 
 CFLAGS_OPT=$CFLAGS
