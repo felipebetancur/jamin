@@ -5756,12 +5756,16 @@ create_about_dialog (void)
   gtk_widget_set_name (scrolledwindow1, "scrolledwindow1");
   gtk_widget_show (scrolledwindow1);
   gtk_container_add (GTK_CONTAINER (notebook2), scrolledwindow1);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow1), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
   what_is = gtk_text_view_new ();
   gtk_widget_set_name (what_is, "what_is");
   gtk_widget_show (what_is);
   gtk_container_add (GTK_CONTAINER (scrolledwindow1), what_is);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (what_is), FALSE);
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (what_is), GTK_WRAP_WORD);
+  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (what_is), FALSE);
+  gtk_text_view_set_left_margin (GTK_TEXT_VIEW (what_is), 10);
   gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (what_is)),
 	_("\nJAMin is the JACK Audio Mastering interface.  JAMin is designed to perform professional audio mastering of any number of input streams.  It consists of a number of tools to do this: a 1024 band hand drawn EQ with modifiable parametric controls, a 31 band graphic EQ, 3 band compressor, 3 band stereo width control, lookahead limiter, boost, and a number of other features."), -1);
 
@@ -5775,12 +5779,16 @@ create_about_dialog (void)
   gtk_widget_set_name (scrolledwindow2, "scrolledwindow2");
   gtk_widget_show (scrolledwindow2);
   gtk_container_add (GTK_CONTAINER (notebook2), scrolledwindow2);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow2), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
   developers = gtk_text_view_new ();
   gtk_widget_set_name (developers, "developers");
   gtk_widget_show (developers);
   gtk_container_add (GTK_CONTAINER (scrolledwindow2), developers);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (developers), FALSE);
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (developers), GTK_WRAP_WORD);
+  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (developers), FALSE);
+  gtk_text_view_set_left_margin (GTK_TEXT_VIEW (developers), 10);
   gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (developers)),
 	_("\nSteve Harris is the JAMin principle author and team leader.\n\nSourceForge CVS developers, in alphabetical order:\n\nJan Depner\nSteve Harris\nJack O'Quin\nRon Parker\nPatrick Shirkey\n\nTranslators:\n\nAlexandre Prokoudine\n"), -1);
 
@@ -5794,12 +5802,16 @@ create_about_dialog (void)
   gtk_widget_set_name (scrolledwindow3, "scrolledwindow3");
   gtk_widget_show (scrolledwindow3);
   gtk_container_add (GTK_CONTAINER (notebook2), scrolledwindow3);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow3), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
   license = gtk_text_view_new ();
   gtk_widget_set_name (license, "license");
   gtk_widget_show (license);
   gtk_container_add (GTK_CONTAINER (scrolledwindow3), license);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (license), FALSE);
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (license), GTK_WRAP_WORD);
+  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (license), FALSE);
+  gtk_text_view_set_left_margin (GTK_TEXT_VIEW (license), 10);
   gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (license)),
 	_("\nJAMin is released under the GNU General Public License and is copyright (c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, and P. Shirkey. \n\nThis program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. \n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\nYou should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA."), -1);
 
@@ -5813,12 +5825,16 @@ create_about_dialog (void)
   gtk_widget_set_name (scrolledwindow4, "scrolledwindow4");
   gtk_widget_show (scrolledwindow4);
   gtk_container_add (GTK_CONTAINER (notebook2), scrolledwindow4);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow4), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
   online = gtk_text_view_new ();
   gtk_widget_set_name (online, "online");
   gtk_widget_show (online);
   gtk_container_add (GTK_CONTAINER (scrolledwindow4), online);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (online), FALSE);
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (online), GTK_WRAP_WORD);
+  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (online), FALSE);
+  gtk_text_view_set_left_margin (GTK_TEXT_VIEW (online), 10);
   gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (online)),
 	_("\nWeb site: <http://jamin.sourceforge.net>\n\nMailing list: http://lists.sourceforge.net/lists/listinfo/jamin-devel\n\nProject page: http://sourceforge.net/projects/jamin/"), -1);
 

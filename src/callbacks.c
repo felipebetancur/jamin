@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.157 2004/11/03 20:38:43 jdepner Exp $
+ *  $Id: callbacks.c,v 1.158 2004/12/02 16:09:37 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -58,7 +58,8 @@
 
 static char             *help_ptr = NULL, scene_name_text[100];
 static gboolean         text_focus = FALSE, force_keypress_help = FALSE;
-static GtkToggleButton  *l_solo_button[XO_NBANDS], *l_bypass_button[XO_NBANDS];
+static GtkToggleButton  *l_solo_button[XO_NBANDS], *l_bypass_button[XO_NBANDS], 
+                        *l_main_bypass;
 static int              hot_scene = 0;
 static GtkWidget        *scene_name_dialog, *about_dialog;
 static GtkEntry         *l_scene_name_entry;
@@ -167,6 +168,9 @@ void
 on_window1_show                        (GtkWidget       *widget,
                                         gpointer         user_data)
 {
+  GdkColor    bypass;
+
+
   help_ptr = _(general_help);
 
   crossover_init ();
@@ -187,6 +191,8 @@ on_window1_show                        (GtkWidget       *widget,
                                                        "high_solo"));
   l_bypass_button[2] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
                                                        "high_bypass"));
+  l_main_bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
+                                                       "bypass_button"));
 
   scene_name_dialog = create_scene_name_dialog ();
 
@@ -194,6 +200,13 @@ on_window1_show                        (GtkWidget       *widget,
 
   l_scene_name_entry = GTK_ENTRY (lookup_widget (scene_name_dialog, 
                                                  "scene_name_entry"));
+
+  bypass.red = 65535;
+  bypass.green = 0;
+  bypass.blue = 0;
+
+  gtk_widget_modify_bg ((GtkWidget *) l_main_bypass, TRUE, &bypass);
+
 }
 
 
