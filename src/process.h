@@ -38,8 +38,6 @@ void process_set_spec_mode(int mode);
 
 void process_init(float fs, int buffer_size);
 
-int iec_scale(float db);
-
 int process_signal(jack_nframes_t nframes, int nchannels,
 		   jack_default_audio_sample_t *in[],
 		   jack_default_audio_sample_t *out[]);

@@ -43,13 +43,6 @@ void in_meter_value(float amp[])
     gtk_adjustment_set_value(in_meter_adj[1], 20.0f * log10f(amp[1]));
     amp[0] = 0.0f;
     amp[1] = 0.0f;
-
-    /*
-    gtk_progress_bar_set_fraction(in_meter[0],
-	    iec_scale(20.0f * log10f(amp[0])) * 0.01f);
-    gtk_progress_bar_set_fraction(in_meter[1],
-	    iec_scale(20.0f * log10f(amp[1])) * 0.01f);
-	    */
 }
 
 void out_meter_value(float amp[])

@@ -24,6 +24,7 @@ float eq_coefs[BINS]; /* Linear gain of each FFT bin */
 float lim_peak[2];
 
 int global_bypass = 0;
+int limiter_connected = FALSE;
 
 float in_peak[NCHANNELS], out_peak[NCHANNELS];
 
@@ -244,7 +245,10 @@ int process_signal(jack_nframes_t nframes,
     static unsigned int in_ptr = 0;
     static unsigned int n_calc_pt = BINS - (BINS / OVER_SAMP);
 
-    lim_connect(lim_plugin, &limiter, out[0], out[1]);
+    if (!limiter_connected) {
+	limiter_connected = TRUE;
+	lim_connect(lim_plugin, &limiter, out[0], out[1]);
+    }
 
     for (pos = 0; pos < nframes; pos++) {
 	const unsigned int op = (in_ptr - latency) & BUF_MASK;
@@ -336,31 +340,6 @@ int process_signal(jack_nframes_t nframes,
     }
 
     return 0;
-}
-
-int iec_scale(float db)
-{
-    float def = 0.0f;		/* Meter deflection %age */
-
-    if (db < -70.0f) {
-	def = 0.0f;
-    } else if (db < -60.0f) {
-	def = (db + 70.0f) * 0.25f;
-    } else if (db < -50.0f) {
-	def = (db + 60.0f) * 0.5f + 5.0f;
-    } else if (db < -40.0f) {
-	def = (db + 50.0f) * 0.75f + 7.5;
-    } else if (db < -30.0f) {
-	def = (db + 40.0f) * 1.5f + 15.0f;
-    } else if (db < -20.0f) {
-	def = (db + 30.0f) * 2.0f + 30.0f;
-    } else if (db < 0.0f) {
-	def = (db + 20.0f) * 2.5f + 50.0f;
-    } else {
-	def = 100.0f;
-    }
-
-    return (int) def;
 }
 
 float eval_comp(float thresh, float ratio, float knee, float in)
