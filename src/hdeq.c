@@ -1025,19 +1025,27 @@ void draw_EQ_curve ()
               {
                 EQ_notch_width[i] = 5;
               }
+          }
 
 
-            /*  Save the state.  */
+        /*  Insert the notches before we pull out the frequencies and save 
+            state.  */
 
+        insert_notch ();
+
+
+        /*  Save the state.  */
+
+        for (i = 0 ; i < NOTCHES ; i++)
+          {
 	    s_set_description (S_NOTCH_GAIN (i) ,
 			       g_strdup_printf("Reset notch %d", i));
             s_set_value_ns (S_NOTCH_GAIN (i), EQ_notch_gain[i]);
             s_set_value_ns (S_NOTCH_Q (i), (float) EQ_notch_width[i]);
-            s_set_value_ns (S_NOTCH_FREQ (i), EQ_x_notched[EQ_notch_index[i]]);
+            s_set_value_ns (S_NOTCH_FREQ (i), 
+                            powf (10.0f, EQ_x_notched[EQ_notch_index[i]]));
             s_set_value_ns (S_NOTCH_FLAG (i), (float) EQ_notch_flag[i]);
           }
-
-        insert_notch ();
       }
 
 
