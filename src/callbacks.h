@@ -698,3 +698,63 @@ gboolean
 on_window1_key_press_event             (GtkWidget       *widget,
                                         GdkEventKey     *event,
                                         gpointer         user_data);
+
+gboolean
+on_scene1_name_focus_in_event          (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene1_name_focus_out_event         (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene2_name_focus_in_event          (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene2_name_focus_out_event         (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene3_name_focus_in_event          (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene3_name_focus_out_event         (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene4_name_focus_in_event          (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene4_name_focus_out_event         (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene5_name_focus_in_event          (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene5_name_focus_out_event         (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene6_name_focus_in_event          (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene6_name_focus_out_event         (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data);

@@ -178,7 +178,7 @@ char transport_controls_help[] = {
 
 char bypass_help[] = {
 "    This button will bypass all of JAMin's functions.  The keyboard \
-accelerator for this button is the 'b' key.\n"
+accelerator for this button is the 'Pause' key.\n"
 };
 
 
@@ -214,11 +214,11 @@ button means that scene settings are available for this button.  A dull red \
 button means that no settings have been saved for this scene button.  You can \
 clear settings from a button using the right click menu and the 'Clear' \
 entry.\n\n\
-    The keyboard accelerators for the scene buttons are the numeric keys, \
-1-6 or the keypad keys, 1-6.  Pressing the 1 key will cause scene 1 to become \
-active.  The ALT modifier can be used to assign settings to a scene button \
-(instead of using the scene button menus).  Pressing <Alt>-1 will assign the \
-current settings to scene button 1 (you still need to set the name).  The \
-CTRL modifier can be used to clear a scene button.  Pressing <Ctrl>-1 will \
-clear that scene button.\n"
+    The keyboard accelerators for the scene buttons are the function keys, \
+F1 through F6.  Pressing the F1 key will cause scene 1 to become active.  The \
+ALT modifier can be used to assign settings to a scene button (instead of \
+using the scene button menus).  Pressing <Alt>-F1 will assign the current \
+settings to scene button 1 (you still need to set the name).  The CTRL \
+modifier can be used to clear a scene button.  Pressing <Ctrl>-F1 will clear \
+that scene button.\n"
 };

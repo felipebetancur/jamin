@@ -457,12 +457,9 @@ create_window1 (void)
   GtkWidget *out_trim_scale;
   GtkWidget *outscale_R;
   GtkWidget *outmeter_r;
-  GtkAccelGroup *accel_group;
   GtkTooltips *tooltips;
 
   tooltips = gtk_tooltips_new ();
-
-  accel_group = gtk_accel_group_new ();
 
   window1 = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_widget_set_name (window1, "window1");
@@ -1654,7 +1651,6 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scene1_hbox), scene1_name, TRUE, TRUE, 0);
   gtk_widget_set_size_request (scene1_name, 50, 24);
   gtk_tooltips_set_tip (tooltips, scene1_name, _("Scene 1 name"), NULL);
-  gtk_entry_set_max_length (GTK_ENTRY (scene1_name), 10);
   gtk_entry_set_text (GTK_ENTRY (scene1_name), _("Scene 1"));
 
   scene2_hbox = gtk_hbox_new (FALSE, 0);
@@ -2871,9 +2867,6 @@ create_window1 (void)
   gtk_table_attach (GTK_TABLE (table23), bypass_button, 0, 1, 0, 1,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_widget_add_accelerator (bypass_button, "clicked", accel_group,
-                              GDK_b, 0,
-                              GTK_ACCEL_VISIBLE);
 
   vbox121 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox121, "vbox121");
@@ -2892,45 +2885,30 @@ create_window1 (void)
   gtk_widget_show (load_button);
   gtk_container_add (GTK_CONTAINER (vbuttonbox1), load_button);
   GTK_WIDGET_SET_FLAGS (load_button, GTK_CAN_DEFAULT);
-  gtk_widget_add_accelerator (load_button, "clicked", accel_group,
-                              GDK_l, 0,
-                              GTK_ACCEL_VISIBLE);
 
   save_button = gtk_button_new_with_mnemonic (_("Save"));
   gtk_widget_set_name (save_button, "save_button");
   gtk_widget_show (save_button);
   gtk_container_add (GTK_CONTAINER (vbuttonbox1), save_button);
   GTK_WIDGET_SET_FLAGS (save_button, GTK_CAN_DEFAULT);
-  gtk_widget_add_accelerator (save_button, "clicked", accel_group,
-                              GDK_s, 0,
-                              GTK_ACCEL_VISIBLE);
 
   undo_button = gtk_button_new_with_mnemonic (_("Undo"));
   gtk_widget_set_name (undo_button, "undo_button");
   gtk_widget_show (undo_button);
   gtk_container_add (GTK_CONTAINER (vbuttonbox1), undo_button);
   GTK_WIDGET_SET_FLAGS (undo_button, GTK_CAN_DEFAULT);
-  gtk_widget_add_accelerator (undo_button, "clicked", accel_group,
-                              GDK_u, 0,
-                              GTK_ACCEL_VISIBLE);
 
   help_button = gtk_button_new_with_mnemonic (_("Help"));
   gtk_widget_set_name (help_button, "help_button");
   gtk_widget_show (help_button);
   gtk_container_add (GTK_CONTAINER (vbuttonbox1), help_button);
   GTK_WIDGET_SET_FLAGS (help_button, GTK_CAN_DEFAULT);
-  gtk_widget_add_accelerator (help_button, "clicked", accel_group,
-                              GDK_h, 0,
-                              GTK_ACCEL_VISIBLE);
 
   quit_button = gtk_button_new_with_mnemonic (_("Quit"));
   gtk_widget_set_name (quit_button, "quit_button");
   gtk_widget_show (quit_button);
   gtk_container_add (GTK_CONTAINER (vbuttonbox1), quit_button);
   GTK_WIDGET_SET_FLAGS (quit_button, GTK_CAN_DEFAULT);
-  gtk_widget_add_accelerator (quit_button, "clicked", accel_group,
-                              GDK_q, 0,
-                              GTK_ACCEL_VISIBLE);
 
   right_bottom_vbox = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (right_bottom_vbox, "right_bottom_vbox");
@@ -3288,11 +3266,23 @@ create_window1 (void)
   g_signal_connect ((gpointer) scene1_name, "changed",
                     G_CALLBACK (on_scene1_name_changed),
                     NULL);
+  g_signal_connect ((gpointer) scene1_name, "focus_in_event",
+                    G_CALLBACK (on_scene1_name_focus_in_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene1_name, "focus_out_event",
+                    G_CALLBACK (on_scene1_name_focus_out_event),
+                    NULL);
   g_signal_connect ((gpointer) scene2_eventbox, "button_press_event",
                     G_CALLBACK (on_scene2_eventbox_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) scene2_name, "changed",
                     G_CALLBACK (on_scene2_name_changed),
+                    NULL);
+  g_signal_connect ((gpointer) scene2_name, "focus_in_event",
+                    G_CALLBACK (on_scene2_name_focus_in_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene2_name, "focus_out_event",
+                    G_CALLBACK (on_scene2_name_focus_out_event),
                     NULL);
   g_signal_connect ((gpointer) scene3_eventbox, "button_press_event",
                     G_CALLBACK (on_scene3_eventbox_button_press_event),
@@ -3300,11 +3290,23 @@ create_window1 (void)
   g_signal_connect ((gpointer) scene3_name, "changed",
                     G_CALLBACK (on_scene3_name_changed),
                     NULL);
+  g_signal_connect ((gpointer) scene3_name, "focus_in_event",
+                    G_CALLBACK (on_scene3_name_focus_in_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene3_name, "focus_out_event",
+                    G_CALLBACK (on_scene3_name_focus_out_event),
+                    NULL);
   g_signal_connect ((gpointer) scene4_eventbox, "button_press_event",
                     G_CALLBACK (on_scene4_eventbox_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) scene4_name, "changed",
                     G_CALLBACK (on_scene4_name_changed),
+                    NULL);
+  g_signal_connect ((gpointer) scene4_name, "focus_in_event",
+                    G_CALLBACK (on_scene4_name_focus_in_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene4_name, "focus_out_event",
+                    G_CALLBACK (on_scene4_name_focus_out_event),
                     NULL);
   g_signal_connect ((gpointer) scene5_eventbox, "button_press_event",
                     G_CALLBACK (on_scene5_eventbox_button_press_event),
@@ -3312,11 +3314,23 @@ create_window1 (void)
   g_signal_connect ((gpointer) scene5_name, "changed",
                     G_CALLBACK (on_scene5_name_changed),
                     NULL);
+  g_signal_connect ((gpointer) scene5_name, "focus_in_event",
+                    G_CALLBACK (on_scene5_name_focus_in_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene5_name, "focus_out_event",
+                    G_CALLBACK (on_scene5_name_focus_out_event),
+                    NULL);
   g_signal_connect ((gpointer) scene6_eventbox, "button_press_event",
                     G_CALLBACK (on_scene6_eventbox_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) scene6_name, "changed",
                     G_CALLBACK (on_scene6_name_changed),
+                    NULL);
+  g_signal_connect ((gpointer) scene6_name, "focus_in_event",
+                    G_CALLBACK (on_scene6_name_focus_in_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene6_name, "focus_out_event",
+                    G_CALLBACK (on_scene6_name_focus_out_event),
                     NULL);
   g_signal_connect ((gpointer) comp_curve_eventbox, "enter_notify_event",
                     G_CALLBACK (on_comp_curve_eventbox_enter_notify_event),
@@ -3945,8 +3959,6 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, outscale_R, "outscale_R");
   GLADE_HOOKUP_OBJECT (window1, outmeter_r, "outmeter_r");
   GLADE_HOOKUP_OBJECT_NO_REF (window1, tooltips, "tooltips");
-
-  gtk_window_add_accel_group (GTK_WINDOW (window1), accel_group);
 
   return window1;
 }

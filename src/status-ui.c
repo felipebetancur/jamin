@@ -29,11 +29,13 @@
 
 
 static GtkLabel *l_status_label = NULL;
+static char focus_string[20];
+
 
 void status_update(GtkWidget *main_window)
 {
     char *state_msg, *rt;
-    gchar title[256];
+    gchar string[256];
     
     jack_status_t j;
 
@@ -63,11 +65,21 @@ void status_update(GtkWidget *main_window)
     else
       rt = "";
 
-    snprintf(title, sizeof(title), "%s : %4.1f%% CPU : %ld frames : %ld Hz%s",
-             state_msg, j.cpu_load, j.buf_size, j.sample_rate, rt);
+    snprintf(string, sizeof(string), 
+             "%s : %4.1f%% CPU : %ld frames : %ld Hz%s  :  Focus - %s",
+             state_msg, j.cpu_load, j.buf_size, j.sample_rate, rt, 
+             focus_string);
 
     if (l_status_label == NULL)
       l_status_label = GTK_LABEL (lookup_widget (main_window, "status_label"));
 
-    gtk_label_set_text (l_status_label, title);
+    gtk_label_set_text (l_status_label, string);
+}
+
+
+void status_set_focus (GtkWidget *main_window, char *string)
+{
+    strcpy (focus_string, string);
+
+    status_update (main_window);
 }

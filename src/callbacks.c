@@ -32,10 +32,24 @@
 #include "scenes.h"
 #include "help.h"
 
+
 /* vi:set ts=8 sts=4 sw=4: */
 
 
+#define MAIN_BUTTONS             0
+#define INPUT                    1
+#define HDEQ                     2
+#define EQ_OPTIONS               3
+#define LOW                      4
+#define MID                      5
+#define HIGH                     6
+#define LIMITER                  7
+#define OUTPUT                   8
+
+
 static char *help_ptr = general_help;
+static gboolean text_focus = FALSE;
+static unsigned short focus = MAIN_BUTTONS;
 
 
 void
@@ -115,7 +129,7 @@ on_mid2high_realize                    (GtkWidget       *widget,
 
 
 void
-on_quit_button_clicked                        (GtkButton       *button,
+on_quit_button_clicked                 (GtkButton       *button,
                                         gpointer         user_data)
 {
     clean_quit ();
@@ -138,6 +152,8 @@ on_window1_show                        (GtkWidget       *widget,
                                         gpointer         user_data)
 {
     crossover_init ();
+
+    status_set_focus (main_window, "Main buttons");
 }
 
 
@@ -948,7 +964,9 @@ void
 on_scene1_name_changed                 (GtkEditable     *editable,
                                         gpointer         user_data)
 {
+    fprintf(stderr,"%s %d\n",__FILE__,__LINE__);
     set_scene_name (0, NULL);
+    fprintf(stderr,"%s %d\n",__FILE__,__LINE__);
 }
 
 
@@ -1283,21 +1301,124 @@ on_window1_key_press_event             (GtkWidget       *widget,
                                         GdkEventKey     *event,
                                         gpointer         user_data)
 {
+    GtkToggleButton       *bypass;
+    gboolean              tmp;
     unsigned int          key = event->keyval, state = event->state;
-    int scene = -1;
+    int                   scene = -1;
 
-    if (key == GDK_1 || key == GDK_KP_1 || key == GDK_KP_End) 
-      scene = 0;
-    if (key == GDK_2 || key == GDK_KP_2 || key == GDK_KP_Down) 
-      scene = 1;
-    if (key == GDK_3 || key == GDK_KP_3 || key == GDK_KP_Page_Down) 
-      scene = 2;
-    if (key == GDK_4 || key == GDK_KP_4 || key == GDK_KP_Left) 
-      scene = 3;
-    if (key == GDK_5 || key == GDK_KP_5 || key == GDK_KP_Begin) 
-      scene = 4;
-    if (key == GDK_6 || key == GDK_KP_6 || key == GDK_KP_Right) 
-      scene = 5;
+
+    /*  If a text widget has the focus we don't want to trap key presses.  */
+
+    if (text_focus) return FALSE;
+
+
+    switch (key)
+      {
+        /*  Non-maskable, instantaneous.  */
+
+      case GDK_Pause:
+        bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
+                                                   "bypass_button"));
+        tmp = gtk_toggle_button_get_active (bypass);
+        gtk_toggle_button_set_active (bypass, (!tmp));
+        return FALSE;
+        break;
+
+      case GDK_1:
+      case GDK_KP_1:
+      case GDK_KP_End:
+        scene = 0;
+        break;
+
+      case GDK_2:
+      case GDK_KP_2:
+      case GDK_KP_Down:
+        scene = 1;
+        break;
+
+      case GDK_3:
+      case GDK_KP_3:
+      case GDK_KP_Page_Down:
+        scene = 2;
+        break;
+
+      case GDK_4:
+      case GDK_KP_4:
+      case GDK_KP_Left:
+        scene = 3;
+        break;
+
+      case GDK_5:
+      case GDK_KP_5:
+      case GDK_KP_Begin:
+        scene = 4;
+        break;
+
+      case GDK_6:
+      case GDK_KP_6:
+      case GDK_KP_Right:
+        scene = 5;
+        break;
+
+      case GDK_h:
+        help_message (help_help);
+        return FALSE;
+        break;
+
+
+        /*  Non-maskable, change focus. */
+
+      case GDK_B:
+        focus = MAIN_BUTTONS;
+        status_set_focus (main_window, "Main buttons");
+        return FALSE;
+        break;
+
+      case GDK_I:
+        focus = INPUT;
+        status_set_focus (main_window, "Input");
+        return FALSE;
+        break;
+
+      case GDK_D:
+        focus = HDEQ;
+        status_set_focus (main_window, "HDEQ");
+        return FALSE;
+        break;
+
+      case GDK_E:
+        focus = EQ_OPTIONS;
+        status_set_focus (main_window, "EQ options");
+        return FALSE;
+        break;
+
+      case GDK_L:
+        focus = LOW;
+        status_set_focus (main_window, "Low compressor");
+        return FALSE;
+        break;
+
+      case GDK_M:
+        focus = MID;
+        status_set_focus (main_window, "Mid compressor");
+        return FALSE;
+        break;
+
+      case GDK_H:
+        focus = HIGH;
+        status_set_focus (main_window, "High compressor");
+        return FALSE;
+        break;
+
+      case GDK_O:
+        focus = OUTPUT;
+        status_set_focus (main_window, "Output");
+        return FALSE;
+        break;
+      }
+
+
+    /*  Check modifiers for scene changes.  */
 
     if (scene >= 0)
       {
@@ -1315,11 +1436,286 @@ on_window1_key_press_event             (GtkWidget       *widget,
             clear_scene (scene);
             break;
           }
+        return FALSE;
       }
 
 
-    //fprintf(stderr,"%s %d %x %x %d\n",__FILE__,__LINE__, key, state, scene);
+    /*  All other key presses depend on which focus we are in.  Just in case
+        anyone was wondering, the reason I handled the buttons this way
+        instead of assigning an accelerator to the button was that it was
+        easier to handle the exceptions (text input override) in one place.
+        It's also easier to see this way.  -  JCD  */
 
+    switch (focus)
+      {
+      case MAIN_BUTTONS:
+        switch (key)
+          {
+          case GDK_l:
+            on_load_button_clicked (NULL, NULL);
+            break;
+
+          case GDK_s:
+            on_save_button_clicked (NULL, NULL);
+            break;
+
+          case GDK_u:
+            s_undo();
+            break;
+
+          case GDK_q:
+            on_quit_button_clicked (NULL, NULL);
+            break;
+          }
+        break;
+
+      case INPUT:
+        switch (key)
+          {
+          case GDK_leftarrow:
+            break;
+
+          case GDK_rightarrow:
+            break;
+
+          case GDK_uparrow:
+            break;
+
+          case GDK_downarrow:
+            break;
+          }
+        break;
+
+      case HDEQ:
+        switch (key)
+          {
+          case GDK_leftarrow:
+            break;
+
+          case GDK_rightarrow:
+            break;
+
+          case GDK_uparrow:
+            break;
+
+          case GDK_downarrow:
+            break;
+          }
+        break;
+
+      case EQ_OPTIONS:
+        switch (key)
+          {
+          case GDK_leftarrow:
+            break;
+
+          case GDK_rightarrow:
+            break;
+
+          case GDK_uparrow:
+            break;
+
+          case GDK_downarrow:
+            break;
+          }
+        break;
+
+      case LOW:
+        switch (key)
+          {
+          case GDK_leftarrow:
+            break;
+
+          case GDK_rightarrow:
+            break;
+
+          case GDK_uparrow:
+            break;
+
+          case GDK_downarrow:
+            break;
+          }
+        break;
+
+      case MID:
+        switch (key)
+          {
+          case GDK_leftarrow:
+            break;
+
+          case GDK_rightarrow:
+            break;
+
+          case GDK_uparrow:
+            break;
+
+          case GDK_downarrow:
+            break;
+          }
+        break;
+
+      case HIGH:
+        switch (key)
+          {
+          case GDK_leftarrow:
+            break;
+
+          case GDK_rightarrow:
+            break;
+
+          case GDK_uparrow:
+            break;
+
+          case GDK_downarrow:
+            break;
+          }
+        break;
+
+      case OUTPUT:
+        switch (key)
+          {
+          case GDK_leftarrow:
+            break;
+
+          case GDK_rightarrow:
+            break;
+
+          case GDK_uparrow:
+            break;
+
+          case GDK_downarrow:
+            break;
+          }
+        break;
+
+      }
+
+
+
+    fprintf(stderr,"%s %d %x %x %d\n",__FILE__,__LINE__, key, state, scene);
+
+    return FALSE;
+}
+
+
+gboolean
+on_scene1_name_focus_in_event          (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data)
+{
+    fprintf(stderr,"%s %d\n",__FILE__,__LINE__);
+    text_focus = TRUE;
+    return FALSE;
+}
+
+
+gboolean
+on_scene1_name_focus_out_event         (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data)
+{
+    fprintf(stderr,"%s %d\n",__FILE__,__LINE__);
+    text_focus = FALSE;
+    return FALSE;
+}
+
+
+gboolean
+on_scene2_name_focus_in_event          (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data)
+{
+    text_focus = TRUE;
+    return FALSE;
+}
+
+
+gboolean
+on_scene2_name_focus_out_event         (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data)
+{
+    text_focus = FALSE;
+    return FALSE;
+}
+
+
+gboolean
+on_scene3_name_focus_in_event          (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data)
+{
+    text_focus = TRUE;
+    return FALSE;
+}
+
+
+gboolean
+on_scene3_name_focus_out_event         (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data)
+{
+    text_focus = FALSE;
+    return FALSE;
+}
+
+
+gboolean
+on_scene4_name_focus_in_event          (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data)
+{
+    text_focus = TRUE;
+    return FALSE;
+}
+
+
+gboolean
+on_scene4_name_focus_out_event         (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data)
+{
+    text_focus = FALSE;
+    return FALSE;
+}
+
+
+gboolean
+on_scene5_name_focus_in_event          (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data)
+{
+    text_focus = TRUE;
+    return FALSE;
+}
+
+
+gboolean
+on_scene5_name_focus_out_event         (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data)
+{
+    text_focus = FALSE;
+    return FALSE;
+}
+
+
+gboolean
+on_scene6_name_focus_in_event          (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data)
+{
+    text_focus = TRUE;
+    return FALSE;
+}
+
+
+gboolean
+on_scene6_name_focus_out_event         (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data)
+{
+    text_focus = FALSE;
     return FALSE;
 }
 

@@ -2907,12 +2907,14 @@
 			      <property name="can_focus">True</property>
 			      <property name="editable">True</property>
 			      <property name="visibility">True</property>
-			      <property name="max_length">10</property>
+			      <property name="max_length">0</property>
 			      <property name="text" translatable="yes">Scene 1</property>
 			      <property name="has_frame">True</property>
 			      <property name="invisible_char" translatable="yes">*</property>
 			      <property name="activates_default">False</property>
 			      <signal name="changed" handler="on_scene1_name_changed" last_modification_time="Sun, 13 Jul 2003 20:04:46 GMT"/>
+			      <signal name="focus_in_event" handler="on_scene1_name_focus_in_event" last_modification_time="Wed, 30 Jul 2003 14:11:02 GMT"/>
+			      <signal name="focus_out_event" handler="on_scene1_name_focus_out_event" last_modification_time="Wed, 30 Jul 2003 14:18:22 GMT"/>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
@@ -2974,6 +2976,8 @@
 			      <property name="invisible_char" translatable="yes">*</property>
 			      <property name="activates_default">False</property>
 			      <signal name="changed" handler="on_scene2_name_changed" last_modification_time="Sun, 13 Jul 2003 20:04:51 GMT"/>
+			      <signal name="focus_in_event" handler="on_scene2_name_focus_in_event" last_modification_time="Wed, 30 Jul 2003 14:18:47 GMT"/>
+			      <signal name="focus_out_event" handler="on_scene2_name_focus_out_event" last_modification_time="Wed, 30 Jul 2003 14:18:53 GMT"/>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
@@ -3035,6 +3039,8 @@
 			      <property name="invisible_char" translatable="yes">*</property>
 			      <property name="activates_default">False</property>
 			      <signal name="changed" handler="on_scene3_name_changed" last_modification_time="Sun, 13 Jul 2003 20:04:56 GMT"/>
+			      <signal name="focus_in_event" handler="on_scene3_name_focus_in_event" last_modification_time="Wed, 30 Jul 2003 14:19:51 GMT"/>
+			      <signal name="focus_out_event" handler="on_scene3_name_focus_out_event" last_modification_time="Wed, 30 Jul 2003 14:20:04 GMT"/>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
@@ -3096,6 +3102,8 @@
 			      <property name="invisible_char" translatable="yes">*</property>
 			      <property name="activates_default">False</property>
 			      <signal name="changed" handler="on_scene4_name_changed" last_modification_time="Sun, 13 Jul 2003 20:05:01 GMT"/>
+			      <signal name="focus_in_event" handler="on_scene4_name_focus_in_event" last_modification_time="Wed, 30 Jul 2003 14:20:15 GMT"/>
+			      <signal name="focus_out_event" handler="on_scene4_name_focus_out_event" last_modification_time="Wed, 30 Jul 2003 14:20:25 GMT"/>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
@@ -3157,6 +3165,8 @@
 			      <property name="invisible_char" translatable="yes">*</property>
 			      <property name="activates_default">False</property>
 			      <signal name="changed" handler="on_scene5_name_changed" last_modification_time="Sun, 13 Jul 2003 20:05:06 GMT"/>
+			      <signal name="focus_in_event" handler="on_scene5_name_focus_in_event" last_modification_time="Wed, 30 Jul 2003 14:20:35 GMT"/>
+			      <signal name="focus_out_event" handler="on_scene5_name_focus_out_event" last_modification_time="Wed, 30 Jul 2003 14:20:40 GMT"/>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
@@ -3218,6 +3228,8 @@
 			      <property name="invisible_char" translatable="yes">*</property>
 			      <property name="activates_default">False</property>
 			      <signal name="changed" handler="on_scene6_name_changed" last_modification_time="Sun, 13 Jul 2003 20:05:11 GMT"/>
+			      <signal name="focus_in_event" handler="on_scene6_name_focus_in_event" last_modification_time="Wed, 30 Jul 2003 14:20:48 GMT"/>
+			      <signal name="focus_out_event" handler="on_scene6_name_focus_out_event" last_modification_time="Wed, 30 Jul 2003 14:20:54 GMT"/>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
@@ -5678,7 +5690,6 @@
 						  <property name="inconsistent">False</property>
 						  <signal name="toggled" handler="on_bypass_button_toggled" last_modification_time="Sun, 20 Apr 2003 16:13:35 GMT"/>
 						  <signal name="enter_notify_event" handler="on_bypass_button_enter_notify_event" last_modification_time="Mon, 21 Jul 2003 00:44:51 GMT"/>
-						  <accelerator key="b" modifiers="0" signal="clicked"/>
 						</widget>
 						<packing>
 						  <property name="left_attach">0</property>
@@ -5721,7 +5732,6 @@
 						      <property name="relief">GTK_RELIEF_NORMAL</property>
 						      <signal name="clicked" handler="on_load_button_clicked" last_modification_time="Fri, 06 Jun 2003 16:21:12 GMT"/>
 						      <signal name="enter_notify_event" handler="on_load_button_enter_notify_event" last_modification_time="Mon, 21 Jul 2003 00:45:17 GMT"/>
-						      <accelerator key="l" modifiers="0" signal="clicked"/>
 						    </widget>
 						  </child>
 
@@ -5735,7 +5745,6 @@
 						      <property name="relief">GTK_RELIEF_NORMAL</property>
 						      <signal name="clicked" handler="on_save_button_clicked" last_modification_time="Fri, 06 Jun 2003 13:22:21 GMT"/>
 						      <signal name="enter_notify_event" handler="on_save_button_enter_notify_event" last_modification_time="Mon, 21 Jul 2003 00:45:23 GMT"/>
-						      <accelerator key="s" modifiers="0" signal="clicked"/>
 						    </widget>
 						  </child>
 
@@ -5749,7 +5758,6 @@
 						      <property name="relief">GTK_RELIEF_NORMAL</property>
 						      <signal name="clicked" handler="on_undo_button_clicked" last_modification_time="Thu, 17 Jul 2003 23:04:05 GMT"/>
 						      <signal name="enter_notify_event" handler="on_undo_button_enter_notify_event" last_modification_time="Mon, 21 Jul 2003 00:45:31 GMT"/>
-						      <accelerator key="u" modifiers="0" signal="clicked"/>
 						    </widget>
 						  </child>
 
@@ -5763,7 +5771,6 @@
 						      <property name="relief">GTK_RELIEF_NORMAL</property>
 						      <signal name="clicked" handler="on_help_button_clicked" last_modification_time="Thu, 17 Jul 2003 23:09:31 GMT"/>
 						      <signal name="enter_notify_event" handler="on_help_button_enter_notify_event" last_modification_time="Mon, 21 Jul 2003 00:38:41 GMT"/>
-						      <accelerator key="h" modifiers="0" signal="clicked"/>
 						    </widget>
 						  </child>
 
@@ -5777,7 +5784,6 @@
 						      <property name="relief">GTK_RELIEF_NORMAL</property>
 						      <signal name="clicked" handler="on_quit_button_clicked" last_modification_time="Thu, 17 Jul 2003 23:10:08 GMT"/>
 						      <signal name="enter_notify_event" handler="on_quit_button_enter_notify_event" last_modification_time="Mon, 21 Jul 2003 00:46:04 GMT"/>
-						      <accelerator key="q" modifiers="0" signal="clicked"/>
 						    </widget>
 						  </child>
 						</widget>

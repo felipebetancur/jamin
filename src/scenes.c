@@ -210,6 +210,7 @@ const char *get_scene_name(int number)
     return gtk_entry_get_text(l_scene_name[number]);
 }
 
+
 /*  Set the scene name.  If the scene_name passed in is null get the name 
     from the scene_name text entry widget.  This is called from callbacks.c
     on a change to the scene_name widget.  */
@@ -218,6 +219,12 @@ void set_scene_name (int number, const char *scene_name)
 {
     char        name[256];
     GtkTooltips *tooltips = gtk_tooltips_new();
+
+
+    /*  If we are trying to modify the name without anything loaded, bypass
+        this.  */
+
+    if (menu_scene < 0) return;
 
 
     if (scene_name == NULL)
