@@ -39,7 +39,7 @@ void bind_limiter()
     s_set_callback(S_LIM_LIMIT, ll_changed);
 
     s_set_value(S_LIM_INPUT, 0.0f, 0);
-    s_set_value(S_LIM_TIME, 0.1f, 0);
+    s_set_value(S_LIM_TIME, 1.0f, 0);
     s_set_value(S_LIM_LIMIT, 0.0f, 0);
 
     in_meter = GTK_METER(lookup_widget(main_window, "lim_in_meter"));
