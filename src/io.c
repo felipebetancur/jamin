@@ -1,7 +1,7 @@
 /*
  *  io.c -- JAMin I/O driver.
  *
- *  Copyright (C) 2003 Jack O'Quin.
+ *  Copyright (C) 2003, 2004 Jack O'Quin.
  *  
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -58,6 +58,8 @@
  *	+ JACK not running realtime
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
@@ -71,8 +73,10 @@
 #include <errno.h>
 #include <assert.h>
 #include <jack/jack.h>
+#ifdef HAVE_JACK_CREATE_THREAD
+#include <jack/thread.h>
+#endif
 
-#include "config.h"
 #include "ringbuffer.h"		/* uses <jack/ringbuffer.h>, if available */
 #include "process.h"
 #include "resource.h"
@@ -857,9 +861,12 @@ int io_create_dsp_thread()
 {
     int rc;
     int policy;
-    struct sched_param rt_param, my_param;
+    struct sched_param rt_param;
     pthread_attr_t attributes;
     pthread_attr_init(&attributes);
+#ifndef HAVE_JACK_CREATE_THREAD
+    struct sched_param my_param;
+#endif
 
     /* Set priority and scheduling parameters based on the attributes
      * of the JACK client thread. */
@@ -883,6 +890,23 @@ int io_create_dsp_thread()
 			  rt_param.sched_priority));
     } else
 	IF_DEBUG(DBG_TERSE, io_trace("JACK subsystem not realtime"));
+
+#ifdef HAVE_JACK_CREATE_THREAD
+
+    rc = jack_create_thread(&dsp_thread, rt_param.sched_priority,
+			    jst.realtime, io_dsp_thread, NULL);
+    switch (rc) {
+    case 0:
+	IF_DEBUG(DBG_TERSE, io_trace("DSP thread created"));
+	break;
+    case EPERM:
+	io_errlog(EPERM, "no realtime privileges for DSP thread");
+	break;
+    default:
+	io_errlog(rc, "error creating DSP thread");
+    }
+
+#else  /* !HAVE_JACK_CREATE_THREAD */
 
     rc = pthread_attr_setschedpolicy(&attributes, policy);
     if (rc) {
@@ -984,10 +1008,11 @@ int io_create_dsp_thread()
     /* return this thread to the scheduler it used before */
     sched_setscheduler(0, policy, &my_param);
     IF_DEBUG(DBG_TERSE, io_trace("DSP thread finally created"));
-    return 0;
-#else /* !HAVE_POSIX_SCHED */
-    return rc;
+    rc = 0;
 #endif /* HAVE_POSIX_SCHED */
+#endif /* HAVE_JACK_CREATE_THREAD */
+
+    return rc;
 }
 
 
