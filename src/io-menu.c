@@ -24,7 +24,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.c,v 1.16 2003/11/26 15:33:50 joq Exp $
+ *  $Id: io-menu.c,v 1.17 2003/12/01 11:39:22 kotau Exp $
  */
 
 #include <stdio.h>
@@ -69,7 +69,7 @@ iomenu_error(char *fmt, ...)
     vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
 
-    fprintf(stderr, "iomenu error: %s\n", buffer);
+    fprintf(stderr, _("iomenu error: %s\n"), buffer);
 }
 
 static jack_port_t *selected_port;	/* currently selected port */
@@ -88,17 +88,17 @@ iomenu_connect(GtkWidget *widget, char *port_name)
     const char *selected_name = jack_port_name(selected_port);
 
     if (jack_port_flags(selected_port) & JackPortIsInput) {
-	fprintf(stderr, "connecting port %s to %s\n",
+	fprintf(stderr, _("connecting port %s to %s\n"),
 		port_name, selected_name);
 	if (jack_connect(client, port_name, selected_name)) {
-	    iomenu_error("unable to connect from %s\n", port_name);
+	    iomenu_error(_("unable to connect from %s\n"), port_name);
 	}
 
     } else if (jack_port_flags(selected_port) & JackPortIsOutput) {
-	fprintf(stderr, "connecting port %s to %s\n",
+	fprintf(stderr, _("connecting port %s to %s\n"),
 		selected_name, port_name);
 	if (jack_connect(client, selected_name, port_name)) {
-	    iomenu_error("unable to connect to %s\n", port_name);
+	    iomenu_error(_("unable to connect to %s\n"), port_name);
 	}
     }
 }
@@ -110,17 +110,17 @@ iomenu_disconnect(GtkWidget *widget, char *port_name)
     const char *selected_name = jack_port_name(selected_port);
 
     if (jack_port_flags(selected_port) & JackPortIsInput) {
-	fprintf(stderr, "disconnecting port %s from %s\n",
+	fprintf(stderr, _("disconnecting port %s from %s\n"),
 		port_name, selected_name);
 	if (jack_disconnect(client, port_name, selected_name)) {
-	    iomenu_error("unable to disconnect port %s\n", port_name);
+	    iomenu_error(_("unable to disconnect port %s\n"), port_name);
 	}
 
     } else if (jack_port_flags(selected_port) & JackPortIsOutput) {
-	fprintf(stderr, "disconnecting port %s from %s\n",
+	fprintf(stderr, _("disconnecting port %s from %s\n"),
 		selected_name, port_name);
 	if (jack_disconnect(client, selected_name, port_name)) {
-	    iomenu_error("unable to disconnect port %s\n", port_name);
+	    iomenu_error(_("unable to disconnect port %s\n"), port_name);
 	}
     }
 }
@@ -268,9 +268,9 @@ iomenu_bind(GtkWidget *main_window, jack_client_t *jack_client,
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(menubar_item), pulldown_menu);
     in_item =
 	iomenu_add_item(pulldown_menu,
-			gtk_menu_item_new_with_label("In"));
+			gtk_menu_item_new_with_label(_("In")));
     out_item =
 	iomenu_add_item(pulldown_menu,
-			gtk_menu_item_new_with_label("Out"));
+			gtk_menu_item_new_with_label(_("Out")));
     gtk_widget_show(pulldown_menu);
 }
