@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.54 2004/05/06 10:28:00 jdepner Exp $
+ *  $Id: state.c,v 1.55 2004/05/06 14:27:34 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -679,14 +679,6 @@ void s_load_session (const char *fname)
     geq_set_range (gp.lgain, geq_get_adjustment(0)->upper);
     s_set_crossfade_time (gp.ct);
 
-    for (i = 0 ; i < XO_BANDS ; i++) {
-        if (gp.gang_at[i]) comp_gang_at (i);
-        if (gp.gang_re[i]) comp_gang_re (i);
-        if (gp.gang_th[i]) comp_gang_th (i);
-        if (gp.gang_ra[i]) comp_gang_ra (i);
-        if (gp.gang_kn[i]) comp_gang_kn (i);
-        if (gp.gang_ma[i]) comp_gang_ma (i);
-    }
 
     /*  This is the active scene.  */
 
@@ -701,6 +693,19 @@ void s_load_session (const char *fname)
 
     if (!fname) {
 	filename = NULL;
+    }
+
+
+    /*  Set the ganging after the scene otherwise it will try to gang move
+        the scene values.  */
+
+    for (i = 0 ; i < XO_BANDS ; i++) {
+        if (gp.gang_at[i]) comp_gang_at (i);
+        if (gp.gang_re[i]) comp_gang_re (i);
+        if (gp.gang_th[i]) comp_gang_th (i);
+        if (gp.gang_ra[i]) comp_gang_ra (i);
+        if (gp.gang_kn[i]) comp_gang_kn (i);
+        if (gp.gang_ma[i]) comp_gang_ma (i);
     }
 
 
