@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-29 09:12-0600\n"
-"PO-Revision-Date: 2004-12-16 03:51+0300\n"
+"POT-Creation-Date: 2005-01-06 13:35-0600\n"
+"PO-Revision-Date: 2005-01-06 13:49-0600\n"
 "Last-Translator: \n"
 "Language-Team:  <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1598,7 +1598,6 @@ msgid "%s internal error %d: %s\n"
 msgstr "%s внутренняя ошибка %d: %s\n"
 
 #: src/io.c:234
-#, c-format
 msgid " Terminating due to -F option.\n"
 msgstr " Завершение ввиду параметра -F.\n"
 
@@ -1626,13 +1625,13 @@ msgstr "%s: сервер JACK запущен\n"
 msgid "%s: unique name `%s' assigned\n"
 msgstr "%s: назначено уникальное имя `%s'\n"
 
-#: src/io.c:747
+#: src/io.c:746
 #, c-format
 msgid "%s: Cannot contact JACK server, is it running?\n"
 msgstr "%s: Не удаётся соединиться с JACK-сервером. Он запущен?\n"
 
-#: src/io.c:861
-#, fuzzy, c-format
+#: src/io.c:859
+#, c-format
 msgid ""
 "Usage: %s [-%s] [inport1 inport2 [outport1 outport2]]\n"
 "\n"
@@ -1675,7 +1674,7 @@ msgstr ""
 "\t-t\tне запускать DSP-нить\n"
 "\n"
 
-#: src/io.c:1058
+#: src/io.c:1056
 #, c-format
 msgid ""
 "%s: not permitted to create realtime DSP thread.\n"
@@ -1687,31 +1686,42 @@ msgstr ""
 "\tсуперпользователя или с JACK capabilities.\n"
 "\tВыполнение операции продолжается с ключом -t.\n"
 
-#: src/io.c:1109
+#: src/io.c:1107
 #, c-format
 msgid "%s: Cannot register JACK ports."
 msgstr "%s: Не удаётся зарегистрировать JACK-порты."
 
-#: src/io.c:1115
+#: src/io.c:1113
 #, c-format
 msgid "%s: Cannot activate JACK client."
 msgstr "%s: Не удаётся активировать JACK-клиент."
 
-#: src/io.c:1136
+#: src/io.c:1134
 msgid "No physical playback ports found"
 msgstr ""
 "Не найдено ни одного физического \n"
 "порта воспроизведения"
 
-#: src/io.c:1148
+#: src/io.c:1146
 #, c-format
 msgid "Cannot connect input port \"%s\"\n"
 msgstr "Не удаётся подсоединить порт входа \"%s\"\n"
 
-#: src/io.c:1158
+#: src/io.c:1156
 #, c-format
 msgid "Cannot connect output port \"%s\"\n"
 msgstr "Не удаётся подсоединить порт выхода \"%s\"\n"
+
+#: src/main.c:88
+msgid ""
+"(C) 2003-2005 J. Depner, S. Harris, J. O'Quin, R. Parker and P. Shirkey\n"
+msgstr ""
+
+#: src/main.c:90
+msgid ""
+"This is free software, and you are welcome to redistribute it\n"
+"under certain conditions; see the file COPYING for details.\n"
+msgstr ""
 
 #: src/status-ui.c:46
 msgid "Disconnected"

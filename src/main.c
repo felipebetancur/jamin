@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.58 2004/11/02 05:40:16 joq Exp $
+ *  $Id: main.c,v 1.59 2005/01/06 19:58:42 joq Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -85,9 +85,10 @@ int main(int argc, char *argv[])
 #endif
 
     printf(PACKAGE " " VERSION "\n");
-    printf("(c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker and P. Shirkey\n");
-    printf("This is free software, and you are welcome to redistribute it\n" 
-	   "under certain conditions; see the file COPYING for details.\n");
+    g_print(_("(C) 2003-2005 J. Depner, S. Harris, J. O'Quin, R. Parker"
+	      " and P. Shirkey\n"));
+    g_print(_("This is free software, and you are welcome to redistribute it\n" 
+	      "under certain conditions; see the file COPYING for details.\n"));
 
     set_configuration_files();
     gtk_init(&argc, &argv);

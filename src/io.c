@@ -229,9 +229,9 @@ void io_errlog(int err, char *fmt, ...)
 
     IF_DEBUG(DBG_TERSE,
 	     io_trace("error %d: %s", err, buffer));
-    fprintf(stderr, _("%s internal error %d: %s\n"), PACKAGE, err, buffer);
+    g_print(_("%s internal error %d: %s\n"), PACKAGE, err, buffer);
     if (all_errors_fatal) {
-	fprintf(stderr, _(" Terminating due to -F option.\n"));
+	g_print(_(" Terminating due to -F option.\n"));
 	abort();
     }
 }
@@ -693,9 +693,9 @@ gboolean check_file (char *optarg)
 
   if ((fp = fopen (optarg, "r")) == NULL)
     {
-      errstr = g_strdup_printf (_("File %s : %s\nUsing default."), optarg, 
+      errstr = g_strdup_printf(_("File %s : %s\nUsing default."), optarg, 
                                 strerror (errno));
-      fprintf (stderr, "%s\n", errstr);
+      g_print("%s\n", errstr);
       message (GTK_MESSAGE_ERROR, errstr);
       free (errstr);
       return (FALSE);
@@ -727,25 +727,23 @@ jack_client_t *io_jack_open()
     }
 
     if (client == NULL) {
-	fprintf(stderr, _("%s: jack_client_open() failed, status = 0x%2.0x\n"),
+	g_print(_("%s: jack_client_open() failed, status = 0x%2.0x\n"),
 		PACKAGE, status);
 	return NULL;
     }
     if (status & JackServerStarted) {
-	fprintf(stderr, _("%s: JACK server started\n"), PACKAGE);
+	g_print(_("%s: JACK server started\n"), PACKAGE);
     }
     if (status & JackNameNotUnique) {
 	client_name = strdup(jack_get_client_name(client));
-	fprintf(stderr, _("%s: unique name `%s' assigned\n"),
-		PACKAGE, client_name);
+	g_print(_("%s: unique name `%s' assigned\n"), PACKAGE, client_name);
     }
 
 #else /* !HAVE_JACK_CLIENT_OPEN */
 
     client = jack_client_new(client_name);
     if (client == NULL) {
-	fprintf(stderr, _("%s: Cannot contact JACK server, is it running?\n"),
-		PACKAGE);
+	g_print(_("%s: Cannot contact JACK server, is it running?\n"), PACKAGE);
     }
 
 #endif /* HAVE_JACK_CLIENT_OPEN */
@@ -857,7 +855,7 @@ void io_init(int argc, char *argv[])
 	show_help = 1;
 
     if (show_help) {
-	fprintf(stderr, _(
+	g_print(_(
                 "Usage: %s [-%s] [inport1 inport2 [outport1 outport2]]\n"
                 "\nuser options:\n"
                 "\t-f file\tload session file on startup\n"
@@ -1054,11 +1052,11 @@ int io_create_dsp_thread()
     if (rc != 0) {
 	sched_setscheduler(0, policy, &my_param);
 
-        errstr = g_strdup_printf (
+        errstr = g_strdup_printf(
 	    _("%s: not permitted to create realtime DSP thread.\n"
 	      "\tYou must run as root or use JACK capabilities.\n"
 	      "\tContinuing operation, but with -t option.\n"), PACKAGE);
-        fprintf (stderr, "%s\n", errstr);
+        g_print(stderr, "%s\n", errstr);
         message (GTK_MESSAGE_WARNING, errstr);
         free (errstr);
 
@@ -1106,13 +1104,13 @@ void io_activate()
 			       JackPortIsOutput, 0);
 
 	if (input_ports[chan] == NULL || output_ports[chan] == NULL) {
-	    fprintf(stderr, _("%s: Cannot register JACK ports."), PACKAGE);
+	    g_print(_("%s: Cannot register JACK ports."), PACKAGE);
 	    exit(2);
 	}
     }
 
     if (jack_activate(client)) {
-	fprintf(stderr, _("%s: Cannot activate JACK client."), PACKAGE);
+	g_print(_("%s: Cannot activate JACK client."), PACKAGE);
 	exit(2);
     }
 
@@ -1134,7 +1132,7 @@ void io_activate()
 		}
 	    } else {
 		errstr = g_strdup_printf(_("No physical playback ports found"));
-		fprintf (stderr, "%s\n", errstr);
+		g_print("%s\n", errstr);
 		message (GTK_MESSAGE_WARNING, errstr);
 		free (errstr);
 	    }
@@ -1144,9 +1142,9 @@ void io_activate()
 	    if (iports[chan] && *iports[chan]) {
 		if (jack_connect(client, iports[chan],
 				 jack_port_name(input_ports[chan]))) {
-                    errstr = g_strdup_printf (
+                    errstr = g_strdup_printf(
                         _("Cannot connect input port \"%s\"\n"), iports[chan]);
-                    fprintf (stderr, "%s\n", errstr);
+                    g_print("%s\n", errstr);
                     message (GTK_MESSAGE_WARNING, errstr);
                     free (errstr);
 		}
@@ -1154,9 +1152,9 @@ void io_activate()
 	    if (oports[chan] && *oports[chan]) {
 		if (jack_connect(client, jack_port_name(output_ports[chan]),
 				 oports[chan])) {
-                    errstr = g_strdup_printf (
+                    errstr = g_strdup_printf(
                         _("Cannot connect output port \"%s\"\n"), oports[chan]);
-                    fprintf (stderr, "%s\n", errstr);
+                    g_print("%s\n", errstr);
                     message (GTK_MESSAGE_WARNING, errstr);
                     free (errstr);
 		}
