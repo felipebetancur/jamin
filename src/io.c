@@ -906,6 +906,8 @@ int io_create_dsp_thread()
 	return 0;
     }
 
+#ifdef HAVE_POSIX_SCHED
+
     IF_DEBUG(DBG_TERSE, io_trace("first pthread_create() returns %d\n", rc));
 
     /* The following comment was copied from jack/libjack/client.c
@@ -980,6 +982,9 @@ int io_create_dsp_thread()
     sched_setscheduler(0, policy, &my_param);
     IF_DEBUG(DBG_TERSE, io_trace("DSP thread finally created"));
     return 0;
+#else /* !HAVE_POSIX_SCHED */
+    return rc;
+#endif /* HAVE_POSIX_SCHED */
 }
 
 
