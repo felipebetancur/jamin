@@ -65,22 +65,23 @@ style "steel"
 
 }
 
+
 style "thai-gold"
 {
-  #This sets the padding around the window to the pixmap specified.
-  #bg_pixmap[<STATE>] = "<pixmap filename>"
-   bg_pixmap[NORMAL] = "thai-gold.png"
 
-}
+   #Sets the colors for the faders
 
-style "scale"
-{
-  #Sets the colors for the faders
-  
-  fg[NORMAL] = { 0.74, 0.85, 0.93 }	# sky blue nee. ardour
-  bg[NORMAL] = {0.32, 0.39, 0.45 }	# grey blue nee. ardour
-  bg[PRELIGHT] = {0.32, 0.39, 0.45 }  
+   	bg_pixmap[NORMAL] = "thai-gold.png"
+   	bg_pixmap[PRELIGHT] = "thai-gold.png"
+   	bg_pixmap[INSENSITIVE] = "thai-gold.png"
 
+   # text
+
+	fg[NORMAL] = { 0.74, 0.85, 0.93 }	# sky blue
+	fg[ACTIVE] = { 0.74, 0.85, 0.93 }
+	fg[PRELIGHT] = { 0.74, 0.85, 0.93 }
+	fg[SELECTED] = { 0.74, 0.85, 0.93 }
+	fg[INSENSITIVE] = { 0.5, 0.5, 0.5 }	# grey
 }
 
 style "button"
@@ -120,13 +121,15 @@ style "toggle_button" = "button"
   bg_pixmap[NORMAL] = "<parent>"
 }
 
+# This set the text for everything except the faders and buttons.
+
 style "text"
 {
 	fg[NORMAL] = { 0.74, 0.85, 0.93 }	# sky blue
 	fg[ACTIVE] = { 0.74, 0.85, 0.93 }
 	fg[PRELIGHT] = { 0.74, 0.85, 0.93 }
 	fg[SELECTED] = { 0.74, 0.85, 0.93 }
-	fg[INSENSITIVE] = { 0.74, 0.85, 0.93 }
+	fg[INSENSITIVE] = { 0.5, 0.5, 0.5 }	# grey
    	bg_pixmap[NORMAL] = "<parent>"
    	bg_pixmap[ACTIVE] = "<parent>"
    	bg_pixmap[PRELIGHT] = "<parent>"
