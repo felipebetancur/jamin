@@ -632,7 +632,7 @@ create_window1 (void)
   gtk_widget_show (image212);
   gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (redo1), image212);
 
-  jack_ports = gtk_menu_item_new_with_mnemonic (_("Ports"));
+  jack_ports = gtk_menu_item_new_with_mnemonic (_("_Ports"));
   gtk_widget_set_name (jack_ports, "jack_ports");
   gtk_widget_show (jack_ports);
   gtk_container_add (GTK_CONTAINER (menubar1), jack_ports);
@@ -5686,8 +5686,7 @@ create_about_dialog (void)
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (what_is), GTK_WRAP_WORD);
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (what_is), FALSE);
   gtk_text_view_set_left_margin (GTK_TEXT_VIEW (what_is), 10);
-  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (what_is)),
-	_("\nJAMin is the JACK Audio Mastering interface.  JAMin is designed to perform professional audio mastering of any number of input streams.  It consists of a number of tools to do this: a 1024 band hand drawn EQ with modifiable parametric controls, a 31 band graphic EQ, 3 band compressor, 3 band stereo width control, lookahead limiter, boost, and a number of other features."), -1);
+  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (what_is)), _("\nJAMin is the JACK Audio Mastering interface.  JAMin is designed to perform professional audio mastering of any number of input streams.  It consists of a number of tools to do this: a 1024 band hand drawn EQ with modifiable parametric controls, a 31 band graphic EQ, 3 band compressor, 3 band stereo width control, lookahead limiter, boost, and a number of other features."), -1);
 
   label327 = gtk_label_new (_("What Is JAMin"));
   gtk_widget_set_name (label327, "label327");
@@ -5708,8 +5707,7 @@ create_about_dialog (void)
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (developers), GTK_WRAP_WORD);
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (developers), FALSE);
   gtk_text_view_set_left_margin (GTK_TEXT_VIEW (developers), 10);
-  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (developers)),
-	_("\nSteve Harris is the JAMin principle author and team leader.\n\nSourceForge CVS developers, in alphabetical order:\n\nJan Depner\nSteve Harris\nJack O'Quin\nRon Parker\nPatrick Shirkey\n\nTranslators:\n\nAlexandre Prokoudine\n"), -1);
+  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (developers)), _("\nSteve Harris is the JAMin principle author and team leader.\n\nSourceForge CVS developers, in alphabetical order:\n\nJan Depner\nSteve Harris\nJack O'Quin\nRon Parker\nPatrick Shirkey\n\nTranslators:\n\nAlexandre Prokoudine\n"), -1);
 
   label328 = gtk_label_new (_("Developers"));
   gtk_widget_set_name (label328, "label328");
@@ -5730,8 +5728,7 @@ create_about_dialog (void)
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (license), GTK_WRAP_WORD);
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (license), FALSE);
   gtk_text_view_set_left_margin (GTK_TEXT_VIEW (license), 10);
-  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (license)),
-	_("\nJAMin is released under the GNU General Public License and is copyright (c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, and P. Shirkey. \n\nThis program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. \n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\nYou should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA."), -1);
+  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (license)), _("\nJAMin is released under the GNU General Public License and is copyright (c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, and P. Shirkey. \n\nThis program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. \n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\nYou should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA."), -1);
 
   label329 = gtk_label_new (_("License"));
   gtk_widget_set_name (label329, "label329");
@@ -5752,8 +5749,7 @@ create_about_dialog (void)
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (online), GTK_WRAP_WORD);
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (online), FALSE);
   gtk_text_view_set_left_margin (GTK_TEXT_VIEW (online), 10);
-  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (online)),
-	_("\nWeb site: <http://jamin.sourceforge.net>\n\nMailing list: http://lists.sourceforge.net/lists/listinfo/jamin-devel\n\nProject page: http://sourceforge.net/projects/jamin/"), -1);
+  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (online)), _("\nWeb site: <http://jamin.sourceforge.net>\n\nMailing list: http://lists.sourceforge.net/lists/listinfo/jamin-devel\n\nProject page: http://sourceforge.net/projects/jamin/"), -1);
 
   label330 = gtk_label_new (_("Online"));
   gtk_widget_set_name (label330, "label330");
