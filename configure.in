@@ -32,8 +32,6 @@ AC_CHECK_LIB(jack,jack_ringbuffer_create,
 	[AC_DEFINE(HAVE_JACK_RINGBUFFER,,[JACK has ringbuffer support])],)
 AC_CHECK_LIB(pthread, pthread_create,,
 	[AC_MSG_ERROR([you have no POSIX thread support])])
-AC_POSIX_RTSCHED
-AC_SUBST(POSIX_RTSCHED_LIBS)
 
 [if test "${enable_double_fft+set}" = set; then]
 	PKG_CHECK_MODULES(FFTW, fftw3 >= 3.0, AC_DEFINE(FFTW_TYPE, [double], [Datatype used by installed FFTW libraries]), [AC_MSG_ERROR([Didn't find any double precision FFTW3 libraries])])
