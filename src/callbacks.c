@@ -2734,3 +2734,43 @@ on_mid_meter_lbl_realize               (GtkWidget       *widget,
 
 }
 
+
+gboolean
+rev_button                             (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+
+  return FALSE;
+}
+
+
+gboolean
+fwd_button                             (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+
+  return FALSE;
+}
+
+
+gboolean
+play_toggle                            (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+
+  return FALSE;
+}
+
+
+gboolean
+stop_toggle                            (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+
+  return FALSE;
+}
+

@@ -495,3 +495,23 @@ on_low_meter_lbl_realize               (GtkWidget       *widget,
 void
 on_mid_meter_lbl_realize               (GtkWidget       *widget,
                                         gpointer         user_data);
+
+gboolean
+rev_button                             (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+fwd_button                             (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+play_toggle                            (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+stop_toggle                            (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);

@@ -225,6 +225,30 @@ create_window1 (void)
   GtkWidget *eventbox1;
   GtkWidget *vbox11;
   GtkWidget *hbox41;
+  GtkWidget *center_left_hbox;
+  GtkWidget *hbox45;
+  GtkWidget *table23;
+  GtkWidget *eventbox57;
+  GtkWidget *rev;
+  GtkWidget *eventbox59;
+  GtkWidget *fwd;
+  GtkWidget *eventbox60;
+  GtkWidget *play;
+  AtkRelationSet *tmp_relation_set;
+  AtkRelationType tmp_relationship;
+  AtkRelation *tmp_relation;
+  AtkObject *play_relation_targets[1];
+  AtkObject *atko;
+  GtkWidget *eventbox61;
+  GtkWidget *stop;
+  AtkObject *stop_relation_targets[1];
+  GtkWidget *sysinfo_hbox;
+  GtkWidget *vbox146;
+  GtkWidget *textview1;
+  GtkWidget *textview2;
+  GtkWidget *textview3;
+  GtkWidget *textview4;
+  GtkWidget *textview5;
   GtkWidget *vbox139;
   GtkWidget *eventbox54;
   GtkWidget *vbox140;
@@ -275,7 +299,7 @@ create_window1 (void)
   GtkWidget *comp_kn_1;
   GtkWidget *vbox123;
   GtkWidget *comp_ma_1;
-  GtkWidget *autoutton1;
+  GtkWidget *autobutton1;
   GtkWidget *Lcomp_sw_hbox;
   GtkWidget *label298;
   GtkWidget *hscale2;
@@ -292,16 +316,16 @@ create_window1 (void)
   GtkWidget *label268;
   GtkWidget *label269;
   GtkWidget *vbox132;
-  GtkWidget *vscale1;
+  GtkWidget *comp_ra_2;
   GtkWidget *label270;
-  GtkWidget *vscale2;
+  GtkWidget *comp_kn_2;
   GtkWidget *label271;
-  GtkWidget *vscale3;
-  GtkWidget *vscale4;
-  GtkWidget *vscale5;
+  GtkWidget *comp_th_2;
+  GtkWidget *comp_re_2;
+  GtkWidget *comp_at_2;
   GtkWidget *vbox133;
-  GtkWidget *vscale6;
-  GtkWidget *togglebutton1;
+  GtkWidget *comp_ma_2;
+  GtkWidget *autobutton2;
   GtkWidget *Mcomp_sw_hbox;
   GtkWidget *label297;
   GtkWidget *hscale3;
@@ -318,38 +342,24 @@ create_window1 (void)
   GtkWidget *label278;
   GtkWidget *label279;
   GtkWidget *vbox136;
-  GtkWidget *vscale7;
+  GtkWidget *comp_ra_3;
   GtkWidget *label280;
-  GtkWidget *vscale8;
+  GtkWidget *comp_kn_3;
   GtkWidget *label281;
-  GtkWidget *vscale9;
-  GtkWidget *vscale10;
-  GtkWidget *vscale11;
+  GtkWidget *comp_at_3;
+  GtkWidget *comp_re_3;
+  GtkWidget *comp_th_3;
   GtkWidget *vbox137;
-  GtkWidget *vscale12;
-  GtkWidget *togglebutton2;
+  GtkWidget *comp_ma_3;
+  GtkWidget *autobutton3;
   GtkWidget *Hcomp_sw_hbox;
   GtkWidget *label296;
   GtkWidget *hscale4;
   GtkWidget *label285;
   GtkWidget *label265;
-  GtkWidget *hbox44;
-  GtkWidget *vbox146;
-  GtkWidget *textview1;
-  GtkWidget *textview2;
-  GtkWidget *textview3;
-  GtkWidget *textview4;
-  GtkWidget *textview5;
-  GtkWidget *vbuttonbox2;
-  GtkWidget *rewind;
-  GtkWidget *image1;
-  GtkWidget *button16;
-  GtkWidget *image2;
-  GtkWidget *button17;
-  GtkWidget *image3;
-  GtkWidget *button18;
-  GtkWidget *image4;
-  GtkWidget *hbox28;
+  GtkWidget *phase_meter_hbox;
+  GtkWidget *drawingarea1;
+  GtkWidget *bottom_hbox;
   GtkWidget *hbox38;
   GtkWidget *comp1_frame;
   GtkWidget *low_curve_box;
@@ -405,7 +415,7 @@ create_window1 (void)
   gtk_widget_set_name (window1, "window1");
   GTK_WIDGET_SET_FLAGS (window1, GTK_CAN_FOCUS);
   gtk_window_set_title (GTK_WINDOW (window1), _("JAM"));
-  gtk_window_set_default_size (GTK_WINDOW (window1), 800, 630);
+  gtk_window_set_default_size (GTK_WINDOW (window1), 800, 635);
 
   alignment2 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_widget_set_name (alignment2, "alignment2");
@@ -416,17 +426,19 @@ create_window1 (void)
   gtk_widget_set_name (bighbox, "bighbox");
   gtk_widget_show (bighbox);
   gtk_container_add (GTK_CONTAINER (alignment2), bighbox);
+  gtk_widget_set_size_request (bighbox, 760, 635);
 
   vbox1 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox1, "vbox1");
   gtk_widget_show (vbox1);
-  gtk_box_pack_start (GTK_BOX (bighbox), vbox1, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (vbox1, 715, 600);
+  gtk_box_pack_start (GTK_BOX (bighbox), vbox1, FALSE, FALSE, 0);
+  gtk_widget_set_size_request (vbox1, 760, 635);
 
   hbox13 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox13, "hbox13");
   gtk_widget_show (hbox13);
   gtk_box_pack_start (GTK_BOX (vbox1), hbox13, FALSE, TRUE, 0);
+  gtk_widget_set_size_request (hbox13, 677, 230);
 
   frame15 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame15, "frame15");
@@ -502,8 +514,8 @@ create_window1 (void)
   notebook1 = gtk_notebook_new ();
   gtk_widget_set_name (notebook1, "notebook1");
   gtk_widget_show (notebook1);
-  gtk_box_pack_start (GTK_BOX (vbox78), notebook1, FALSE, TRUE, 0);
-  gtk_widget_set_size_request (notebook1, 600, 165);
+  gtk_box_pack_start (GTK_BOX (vbox78), notebook1, FALSE, FALSE, 0);
+  gtk_widget_set_size_request (notebook1, 600, 170);
 
   vbox99 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox99, "vbox99");
@@ -1538,35 +1550,155 @@ create_window1 (void)
   gtk_widget_set_name (vbox11, "vbox11");
   gtk_widget_show (vbox11);
   gtk_container_add (GTK_CONTAINER (eventbox1), vbox11);
-  gtk_widget_set_size_request (vbox11, 385, 285);
+  gtk_widget_set_size_request (vbox11, 385, 395);
 
   hbox41 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox41, "hbox41");
   gtk_widget_show (hbox41);
-  gtk_box_pack_start (GTK_BOX (vbox11), hbox41, FALSE, TRUE, 0);
-  gtk_widget_set_size_request (hbox41, 250, 240);
+  gtk_box_pack_start (GTK_BOX (vbox11), hbox41, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (hbox41, 439, 225);
+
+  center_left_hbox = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (center_left_hbox, "center_left_hbox");
+  gtk_widget_show (center_left_hbox);
+  gtk_box_pack_start (GTK_BOX (hbox41), center_left_hbox, FALSE, FALSE, 0);
+  gtk_widget_set_size_request (center_left_hbox, 210, 210);
+
+  hbox45 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox45, "hbox45");
+  gtk_widget_show (hbox45);
+  gtk_box_pack_start (GTK_BOX (center_left_hbox), hbox45, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (hbox45, 95, 64);
+
+  table23 = gtk_table_new (2, 2, FALSE);
+  gtk_widget_set_name (table23, "table23");
+  gtk_widget_show (table23);
+  gtk_box_pack_start (GTK_BOX (hbox45), table23, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (table23, 36, 40);
+
+  eventbox57 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox57, "eventbox57");
+  gtk_widget_show (eventbox57);
+  gtk_table_attach (GTK_TABLE (table23), eventbox57, 0, 1, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox57, _("rewind transport"), NULL);
+
+  rev = gtk_image_new_from_stock ("gtk-go-back", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (rev, "rev");
+  gtk_widget_show (rev);
+  gtk_container_add (GTK_CONTAINER (eventbox57), rev);
+
+  eventbox59 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox59, "eventbox59");
+  gtk_widget_show (eventbox59);
+  gtk_table_attach (GTK_TABLE (table23), eventbox59, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox59, _("fast forward transport"), NULL);
+
+  fwd = gtk_image_new_from_stock ("gtk-go-forward", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (fwd, "fwd");
+  gtk_widget_show (fwd);
+  gtk_container_add (GTK_CONTAINER (eventbox59), fwd);
+
+  eventbox60 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox60, "eventbox60");
+  gtk_widget_show (eventbox60);
+  gtk_table_attach (GTK_TABLE (table23), eventbox60, 1, 2, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (GTK_FILL), 0, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox60, _("play transport"), NULL);
+
+  play = create_pixmap (window1, "play.xpm");
+  gtk_widget_set_name (play, "play");
+  gtk_widget_show (play);
+  gtk_container_add (GTK_CONTAINER (eventbox60), play);
+
+  eventbox61 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox61, "eventbox61");
+  gtk_widget_show (eventbox61);
+  gtk_table_attach (GTK_TABLE (table23), eventbox61, 1, 2, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (GTK_FILL), 0, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox61, _("stop transport"), NULL);
+
+  stop = create_pixmap (window1, "stop.xpm");
+  gtk_widget_set_name (stop, "stop");
+  gtk_widget_show (stop);
+  gtk_container_add (GTK_CONTAINER (eventbox61), stop);
+
+  sysinfo_hbox = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (sysinfo_hbox, "sysinfo_hbox");
+  gtk_widget_show (sysinfo_hbox);
+  gtk_box_pack_start (GTK_BOX (hbox45), sysinfo_hbox, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (sysinfo_hbox, 60, 70);
+
+  vbox146 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox146, "vbox146");
+  gtk_widget_show (vbox146);
+  gtk_box_pack_start (GTK_BOX (sysinfo_hbox), vbox146, FALSE, FALSE, 5);
+  gtk_widget_set_size_request (vbox146, 100, 70);
+
+  textview1 = gtk_text_view_new ();
+  gtk_widget_set_name (textview1, "textview1");
+  gtk_widget_show (textview1);
+  gtk_box_pack_start (GTK_BOX (vbox146), textview1, TRUE, FALSE, 0);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (textview1), FALSE);
+  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (textview1), FALSE);
+
+  textview2 = gtk_text_view_new ();
+  gtk_widget_set_name (textview2, "textview2");
+  gtk_widget_show (textview2);
+  gtk_box_pack_start (GTK_BOX (vbox146), textview2, TRUE, FALSE, 0);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (textview2), FALSE);
+  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (textview2), FALSE);
+
+  textview3 = gtk_text_view_new ();
+  gtk_widget_set_name (textview3, "textview3");
+  gtk_widget_show (textview3);
+  gtk_box_pack_start (GTK_BOX (vbox146), textview3, TRUE, FALSE, 0);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (textview3), FALSE);
+  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (textview3), FALSE);
+
+  textview4 = gtk_text_view_new ();
+  gtk_widget_set_name (textview4, "textview4");
+  gtk_widget_show (textview4);
+  gtk_box_pack_start (GTK_BOX (vbox146), textview4, TRUE, FALSE, 0);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (textview4), FALSE);
+  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (textview4), FALSE);
+
+  textview5 = gtk_text_view_new ();
+  gtk_widget_set_name (textview5, "textview5");
+  gtk_widget_show (textview5);
+  gtk_box_pack_start (GTK_BOX (vbox146), textview5, TRUE, FALSE, 0);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (textview5), FALSE);
+  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (textview5), FALSE);
 
   vbox139 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox139, "vbox139");
   gtk_widget_show (vbox139);
-  gtk_box_pack_start (GTK_BOX (hbox41), vbox139, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (vbox139, 90, -2);
+  gtk_box_pack_start (GTK_BOX (center_left_hbox), vbox139, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (vbox139, 45, 140);
   gtk_container_set_border_width (GTK_CONTAINER (vbox139), 5);
 
   eventbox54 = gtk_event_box_new ();
   gtk_widget_set_name (eventbox54, "eventbox54");
   gtk_widget_show (eventbox54);
   gtk_box_pack_start (GTK_BOX (vbox139), eventbox54, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (eventbox54, 35, 44);
 
   vbox140 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox140, "vbox140");
   gtk_widget_show (vbox140);
   gtk_container_add (GTK_CONTAINER (eventbox54), vbox140);
+  gtk_widget_set_size_request (vbox140, 35, 44);
 
   table20 = gtk_table_new (3, 2, FALSE);
   gtk_widget_set_name (table20, "table20");
   gtk_widget_show (table20);
   gtk_box_pack_start (GTK_BOX (vbox140), table20, FALSE, TRUE, 0);
+  gtk_widget_set_size_request (table20, 35, 44);
   gtk_table_set_row_spacings (GTK_TABLE (table20), 1);
 
   label287 = gtk_label_new (_("Level"));
@@ -1625,22 +1757,26 @@ create_window1 (void)
   gtk_table_attach (GTK_TABLE (table20), label289, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (label289, 27, 14);
   gtk_misc_set_alignment (GTK_MISC (label289), 0, 0.5);
 
   eventbox55 = gtk_event_box_new ();
   gtk_widget_set_name (eventbox55, "eventbox55");
   gtk_widget_show (eventbox55);
   gtk_box_pack_start (GTK_BOX (vbox139), eventbox55, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (eventbox55, 35, 42);
 
   vbox141 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox141, "vbox141");
   gtk_widget_show (vbox141);
   gtk_container_add (GTK_CONTAINER (eventbox55), vbox141);
+  gtk_widget_set_size_request (vbox141, 35, -2);
 
   table21 = gtk_table_new (3, 2, FALSE);
   gtk_widget_set_name (table21, "table21");
   gtk_widget_show (table21);
   gtk_box_pack_start (GTK_BOX (vbox141), table21, FALSE, TRUE, 0);
+  gtk_widget_set_size_request (table21, 35, 42);
 
   label290 = gtk_label_new (_("Level"));
   gtk_widget_set_name (label290, "label290");
@@ -1698,22 +1834,26 @@ create_window1 (void)
   gtk_table_attach (GTK_TABLE (table21), label292, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (label292, 25, 14);
   gtk_misc_set_alignment (GTK_MISC (label292), 0, 0.5);
 
   eventbox56 = gtk_event_box_new ();
   gtk_widget_set_name (eventbox56, "eventbox56");
   gtk_widget_show (eventbox56);
   gtk_box_pack_start (GTK_BOX (vbox139), eventbox56, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (eventbox56, 35, 44);
 
   vbox142 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox142, "vbox142");
   gtk_widget_show (vbox142);
   gtk_container_add (GTK_CONTAINER (eventbox56), vbox142);
+  gtk_widget_set_size_request (vbox142, 35, 44);
 
   table22 = gtk_table_new (3, 2, FALSE);
   gtk_widget_set_name (table22, "table22");
   gtk_widget_show (table22);
   gtk_box_pack_start (GTK_BOX (vbox142), table22, FALSE, TRUE, 0);
+  gtk_widget_set_size_request (table22, 35, 44);
   gtk_table_set_row_spacings (GTK_TABLE (table22), 1);
 
   label293 = gtk_label_new (_("Level"));
@@ -1772,28 +1912,31 @@ create_window1 (void)
   gtk_table_attach (GTK_TABLE (table22), label295, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (label295, 30, 14);
   gtk_misc_set_alignment (GTK_MISC (label295), 0, 0.5);
 
   notebook3 = gtk_notebook_new ();
   gtk_widget_set_name (notebook3, "notebook3");
   gtk_widget_show (notebook3);
-  gtk_box_pack_start (GTK_BOX (hbox41), notebook3, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (notebook3, 100, 190);
+  gtk_box_pack_start (GTK_BOX (hbox41), notebook3, FALSE, TRUE, 0);
 
   hbox1 = gtk_hbox_new (TRUE, 13);
   gtk_widget_set_name (hbox1, "hbox1");
   gtk_widget_show (hbox1);
   gtk_container_add (GTK_CONTAINER (notebook3), hbox1);
+  gtk_widget_set_size_request (hbox1, 215, 155);
 
   low_comp_event_box = gtk_event_box_new ();
   gtk_widget_set_name (low_comp_event_box, "low_comp_event_box");
   gtk_widget_show (low_comp_event_box);
   gtk_box_pack_start (GTK_BOX (hbox1), low_comp_event_box, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (low_comp_event_box, 215, 155);
 
   alignment7 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_widget_set_name (alignment7, "alignment7");
   gtk_widget_show (alignment7);
   gtk_container_add (GTK_CONTAINER (low_comp_event_box), alignment7);
+  gtk_widget_set_size_request (alignment7, 215, 155);
 
   frame7 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame7, "frame7");
@@ -1805,16 +1948,19 @@ create_window1 (void)
   gtk_widget_set_name (low_comp, "low_comp");
   gtk_widget_show (low_comp);
   gtk_container_add (GTK_CONTAINER (frame7), low_comp);
+  gtk_widget_set_size_request (low_comp, 192, 154);
 
   vbox30 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox30, "vbox30");
   gtk_widget_show (vbox30);
   gtk_box_pack_start (GTK_BOX (low_comp), vbox30, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (vbox30, 192, 154);
 
   table8 = gtk_table_new (2, 5, FALSE);
   gtk_widget_set_name (table8, "table8");
   gtk_widget_show (table8);
   gtk_box_pack_start (GTK_BOX (vbox30), table8, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (table8, 192, 134);
 
   label71 = gtk_label_new (_("Release"));
   gtk_widget_set_name (label71, "label71");
@@ -1915,6 +2061,7 @@ create_window1 (void)
   gtk_table_attach (GTK_TABLE (table8), vbox123, 4, 5, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
+  gtk_widget_set_size_request (vbox123, 34, 77);
 
   comp_ma_1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 30, 0, 0, 0)));
   gtk_widget_set_name (comp_ma_1, "comp_ma_1");
@@ -1922,10 +2069,10 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox123), comp_ma_1, TRUE, TRUE, 0);
   gtk_range_set_inverted (GTK_RANGE (comp_ma_1), TRUE);
 
-  autoutton1 = gtk_toggle_button_new_with_mnemonic (_("auto"));
-  gtk_widget_set_name (autoutton1, "autoutton1");
-  gtk_widget_show (autoutton1);
-  gtk_box_pack_start (GTK_BOX (vbox123), autoutton1, FALSE, FALSE, 0);
+  autobutton1 = gtk_toggle_button_new_with_mnemonic (_("auto"));
+  gtk_widget_set_name (autobutton1, "autobutton1");
+  gtk_widget_show (autobutton1);
+  gtk_box_pack_start (GTK_BOX (vbox123), autobutton1, FALSE, FALSE, 0);
 
   Lcomp_sw_hbox = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (Lcomp_sw_hbox, "Lcomp_sw_hbox");
@@ -1937,12 +2084,14 @@ create_window1 (void)
   gtk_widget_set_name (label298, "label298");
   gtk_widget_show (label298);
   gtk_box_pack_start (GTK_BOX (Lcomp_sw_hbox), label298, FALSE, FALSE, 0);
+  gtk_widget_set_size_request (label298, 40, 28);
   gtk_label_set_justify (GTK_LABEL (label298), GTK_JUSTIFY_LEFT);
 
   hscale2 = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -1, 1, 0.1, 0.1, 0)));
   gtk_widget_set_name (hscale2, "hscale2");
   gtk_widget_show (hscale2);
   gtk_box_pack_end (GTK_BOX (Lcomp_sw_hbox), hscale2, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (hscale2, 37, 36);
   gtk_scale_set_digits (GTK_SCALE (hscale2), 2);
 
   label_Low = gtk_label_new (_("Low : 00000 - 00000"));
@@ -1961,33 +2110,37 @@ create_window1 (void)
   gtk_widget_set_name (eventbox51, "eventbox51");
   gtk_widget_show (eventbox51);
   gtk_container_add (GTK_CONTAINER (notebook3), eventbox51);
+  gtk_widget_set_size_request (eventbox51, 196, 135);
 
   alignment10 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_widget_set_name (alignment10, "alignment10");
   gtk_widget_show (alignment10);
   gtk_container_add (GTK_CONTAINER (eventbox51), alignment10);
+  gtk_widget_set_size_request (alignment10, 196, 135);
 
   frame22 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame22, "frame22");
   gtk_widget_show (frame22);
   gtk_container_add (GTK_CONTAINER (alignment10), frame22);
+  gtk_widget_set_size_request (frame22, 196, 135);
 
   mid_comp = gtk_vbox_new (FALSE, 1);
   gtk_widget_set_name (mid_comp, "mid_comp");
   gtk_widget_show (mid_comp);
   gtk_container_add (GTK_CONTAINER (frame22), mid_comp);
-  gtk_widget_set_size_request (mid_comp, -2, 119);
+  gtk_widget_set_size_request (mid_comp, 192, 119);
 
   vbox131 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox131, "vbox131");
   gtk_widget_show (vbox131);
   gtk_box_pack_start (GTK_BOX (mid_comp), vbox131, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (vbox131, -2, 160);
+  gtk_widget_set_size_request (vbox131, 192, 160);
 
   table16 = gtk_table_new (2, 5, FALSE);
   gtk_widget_set_name (table16, "table16");
   gtk_widget_show (table16);
   gtk_box_pack_start (GTK_BOX (vbox131), table16, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (table16, 192, 134);
 
   label266 = gtk_label_new (_("Attack"));
   gtk_widget_set_name (label266, "label266");
@@ -2027,13 +2180,14 @@ create_window1 (void)
   gtk_table_attach (GTK_TABLE (table16), vbox132, 3, 4, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
+  gtk_widget_set_size_request (vbox132, 29, 120);
 
-  vscale1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1, 1, 20, 0, 0, 0)));
-  gtk_widget_set_name (vscale1, "vscale1");
-  gtk_widget_show (vscale1);
-  gtk_box_pack_start (GTK_BOX (vbox132), vscale1, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (vscale1, 20, 53);
-  gtk_range_set_inverted (GTK_RANGE (vscale1), TRUE);
+  comp_ra_2 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1, 1, 20, 0, 0, 0)));
+  gtk_widget_set_name (comp_ra_2, "comp_ra_2");
+  gtk_widget_show (comp_ra_2);
+  gtk_box_pack_start (GTK_BOX (vbox132), comp_ra_2, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (comp_ra_2, 20, 53);
+  gtk_range_set_inverted (GTK_RANGE (comp_ra_2), TRUE);
 
   label270 = gtk_label_new (_("Knee"));
   gtk_widget_set_name (label270, "label270");
@@ -2042,12 +2196,12 @@ create_window1 (void)
   gtk_widget_set_size_request (label270, 29, 14);
   gtk_label_set_justify (GTK_LABEL (label270), GTK_JUSTIFY_LEFT);
 
-  vscale2 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 1, 0, 0, 0)));
-  gtk_widget_set_name (vscale2, "vscale2");
-  gtk_widget_show (vscale2);
-  gtk_box_pack_start (GTK_BOX (vbox132), vscale2, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (vscale2, 20, 53);
-  gtk_range_set_inverted (GTK_RANGE (vscale2), TRUE);
+  comp_kn_2 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 1, 0, 0, 0)));
+  gtk_widget_set_name (comp_kn_2, "comp_kn_2");
+  gtk_widget_show (comp_kn_2);
+  gtk_box_pack_start (GTK_BOX (vbox132), comp_kn_2, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (comp_kn_2, 20, 53);
+  gtk_range_set_inverted (GTK_RANGE (comp_kn_2), TRUE);
 
   label271 = gtk_label_new (_("Makeup"));
   gtk_widget_set_name (label271, "label271");
@@ -2057,29 +2211,29 @@ create_window1 (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_label_set_justify (GTK_LABEL (label271), GTK_JUSTIFY_LEFT);
 
-  vscale3 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -30, 0, 0, 0, 0)));
-  gtk_widget_set_name (vscale3, "vscale3");
-  gtk_widget_show (vscale3);
-  gtk_table_attach (GTK_TABLE (table16), vscale3, 2, 3, 1, 2,
+  comp_th_2 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -30, 0, 0, 0, 0)));
+  gtk_widget_set_name (comp_th_2, "comp_th_2");
+  gtk_widget_show (comp_th_2);
+  gtk_table_attach (GTK_TABLE (table16), comp_th_2, 2, 3, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-  gtk_range_set_inverted (GTK_RANGE (vscale3), TRUE);
+  gtk_range_set_inverted (GTK_RANGE (comp_th_2), TRUE);
 
-  vscale4 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (10, 10, 800, 0, 0, 0)));
-  gtk_widget_set_name (vscale4, "vscale4");
-  gtk_widget_show (vscale4);
-  gtk_table_attach (GTK_TABLE (table16), vscale4, 1, 2, 1, 2,
+  comp_re_2 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (10, 10, 800, 0, 0, 0)));
+  gtk_widget_set_name (comp_re_2, "comp_re_2");
+  gtk_widget_show (comp_re_2);
+  gtk_table_attach (GTK_TABLE (table16), comp_re_2, 1, 2, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-  gtk_range_set_inverted (GTK_RANGE (vscale4), TRUE);
+  gtk_range_set_inverted (GTK_RANGE (comp_re_2), TRUE);
 
-  vscale5 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (10, 10, 400, 0, 0, 0)));
-  gtk_widget_set_name (vscale5, "vscale5");
-  gtk_widget_show (vscale5);
-  gtk_table_attach (GTK_TABLE (table16), vscale5, 0, 1, 1, 2,
+  comp_at_2 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (10, 10, 400, 0, 0, 0)));
+  gtk_widget_set_name (comp_at_2, "comp_at_2");
+  gtk_widget_show (comp_at_2);
+  gtk_table_attach (GTK_TABLE (table16), comp_at_2, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_range_set_inverted (GTK_RANGE (vscale5), TRUE);
+  gtk_range_set_inverted (GTK_RANGE (comp_at_2), TRUE);
 
   vbox133 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox133, "vbox133");
@@ -2087,17 +2241,18 @@ create_window1 (void)
   gtk_table_attach (GTK_TABLE (table16), vbox133, 4, 5, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
+  gtk_widget_set_size_request (vbox133, 34, 77);
 
-  vscale6 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 30, 0, 0, 0)));
-  gtk_widget_set_name (vscale6, "vscale6");
-  gtk_widget_show (vscale6);
-  gtk_box_pack_start (GTK_BOX (vbox133), vscale6, TRUE, TRUE, 0);
-  gtk_range_set_inverted (GTK_RANGE (vscale6), TRUE);
+  comp_ma_2 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 30, 0, 0, 0)));
+  gtk_widget_set_name (comp_ma_2, "comp_ma_2");
+  gtk_widget_show (comp_ma_2);
+  gtk_box_pack_start (GTK_BOX (vbox133), comp_ma_2, TRUE, TRUE, 0);
+  gtk_range_set_inverted (GTK_RANGE (comp_ma_2), TRUE);
 
-  togglebutton1 = gtk_toggle_button_new_with_mnemonic (_("auto"));
-  gtk_widget_set_name (togglebutton1, "togglebutton1");
-  gtk_widget_show (togglebutton1);
-  gtk_box_pack_start (GTK_BOX (vbox133), togglebutton1, FALSE, FALSE, 0);
+  autobutton2 = gtk_toggle_button_new_with_mnemonic (_("auto"));
+  gtk_widget_set_name (autobutton2, "autobutton2");
+  gtk_widget_show (autobutton2);
+  gtk_box_pack_start (GTK_BOX (vbox133), autobutton2, FALSE, FALSE, 0);
 
   Mcomp_sw_hbox = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (Mcomp_sw_hbox, "Mcomp_sw_hbox");
@@ -2109,12 +2264,14 @@ create_window1 (void)
   gtk_widget_set_name (label297, "label297");
   gtk_widget_show (label297);
   gtk_box_pack_start (GTK_BOX (Mcomp_sw_hbox), label297, FALSE, FALSE, 0);
+  gtk_widget_set_size_request (label297, 40, 28);
   gtk_label_set_justify (GTK_LABEL (label297), GTK_JUSTIFY_LEFT);
 
   hscale3 = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (-0, -1, 1, 0.1, 0.1, 0)));
   gtk_widget_set_name (hscale3, "hscale3");
   gtk_widget_show (hscale3);
   gtk_box_pack_start (GTK_BOX (Mcomp_sw_hbox), hscale3, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (hscale3, 37, 36);
   gtk_scale_set_digits (GTK_SCALE (hscale3), 2);
 
   label275 = gtk_label_new (_("Mid : 00000 - 00000"));
@@ -2133,16 +2290,19 @@ create_window1 (void)
   gtk_widget_set_name (eventbox52, "eventbox52");
   gtk_widget_show (eventbox52);
   gtk_container_add (GTK_CONTAINER (notebook3), eventbox52);
+  gtk_widget_set_size_request (eventbox52, 209, 151);
 
   alignment11 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_widget_set_name (alignment11, "alignment11");
   gtk_widget_show (alignment11);
   gtk_container_add (GTK_CONTAINER (eventbox52), alignment11);
+  gtk_widget_set_size_request (alignment11, 209, 151);
 
   frame23 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame23, "frame23");
   gtk_widget_show (frame23);
   gtk_container_add (GTK_CONTAINER (alignment11), frame23);
+  gtk_widget_set_size_request (frame23, 209, 151);
 
   high_comp = gtk_vbox_new (FALSE, 1);
   gtk_widget_set_name (high_comp, "high_comp");
@@ -2154,11 +2314,13 @@ create_window1 (void)
   gtk_widget_set_name (vbox135, "vbox135");
   gtk_widget_show (vbox135);
   gtk_box_pack_start (GTK_BOX (high_comp), vbox135, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (vbox135, 192, 154);
 
   table18 = gtk_table_new (2, 5, FALSE);
   gtk_widget_set_name (table18, "table18");
   gtk_widget_show (table18);
   gtk_box_pack_start (GTK_BOX (vbox135), table18, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (table18, 192, 134);
 
   label276 = gtk_label_new (_("Attack"));
   gtk_widget_set_name (label276, "label276");
@@ -2199,13 +2361,14 @@ create_window1 (void)
   gtk_table_attach (GTK_TABLE (table18), vbox136, 3, 4, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
+  gtk_widget_set_size_request (vbox136, 29, 120);
 
-  vscale7 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1, 1, 20, 0, 0, 0)));
-  gtk_widget_set_name (vscale7, "vscale7");
-  gtk_widget_show (vscale7);
-  gtk_box_pack_start (GTK_BOX (vbox136), vscale7, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (vscale7, 20, 53);
-  gtk_range_set_inverted (GTK_RANGE (vscale7), TRUE);
+  comp_ra_3 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1, 1, 20, 0, 0, 0)));
+  gtk_widget_set_name (comp_ra_3, "comp_ra_3");
+  gtk_widget_show (comp_ra_3);
+  gtk_box_pack_start (GTK_BOX (vbox136), comp_ra_3, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (comp_ra_3, 20, 53);
+  gtk_range_set_inverted (GTK_RANGE (comp_ra_3), TRUE);
 
   label280 = gtk_label_new (_("Knee"));
   gtk_widget_set_name (label280, "label280");
@@ -2214,12 +2377,12 @@ create_window1 (void)
   gtk_widget_set_size_request (label280, 29, 14);
   gtk_label_set_justify (GTK_LABEL (label280), GTK_JUSTIFY_LEFT);
 
-  vscale8 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 1, 0, 0, 0)));
-  gtk_widget_set_name (vscale8, "vscale8");
-  gtk_widget_show (vscale8);
-  gtk_box_pack_start (GTK_BOX (vbox136), vscale8, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (vscale8, 20, 53);
-  gtk_range_set_inverted (GTK_RANGE (vscale8), TRUE);
+  comp_kn_3 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 1, 0, 0, 0)));
+  gtk_widget_set_name (comp_kn_3, "comp_kn_3");
+  gtk_widget_show (comp_kn_3);
+  gtk_box_pack_start (GTK_BOX (vbox136), comp_kn_3, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (comp_kn_3, 20, 53);
+  gtk_range_set_inverted (GTK_RANGE (comp_kn_3), TRUE);
 
   label281 = gtk_label_new (_("Makeup"));
   gtk_widget_set_name (label281, "label281");
@@ -2229,29 +2392,29 @@ create_window1 (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_label_set_justify (GTK_LABEL (label281), GTK_JUSTIFY_LEFT);
 
-  vscale9 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (10, 10, 400, 0, 0, 0)));
-  gtk_widget_set_name (vscale9, "vscale9");
-  gtk_widget_show (vscale9);
-  gtk_table_attach (GTK_TABLE (table18), vscale9, 0, 1, 1, 2,
+  comp_at_3 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (10, 10, 400, 0, 0, 0)));
+  gtk_widget_set_name (comp_at_3, "comp_at_3");
+  gtk_widget_show (comp_at_3);
+  gtk_table_attach (GTK_TABLE (table18), comp_at_3, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-  gtk_range_set_inverted (GTK_RANGE (vscale9), TRUE);
+  gtk_range_set_inverted (GTK_RANGE (comp_at_3), TRUE);
 
-  vscale10 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (10, 10, 800, 0, 0, 0)));
-  gtk_widget_set_name (vscale10, "vscale10");
-  gtk_widget_show (vscale10);
-  gtk_table_attach (GTK_TABLE (table18), vscale10, 1, 2, 1, 2,
+  comp_re_3 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (10, 10, 800, 0, 0, 0)));
+  gtk_widget_set_name (comp_re_3, "comp_re_3");
+  gtk_widget_show (comp_re_3);
+  gtk_table_attach (GTK_TABLE (table18), comp_re_3, 1, 2, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-  gtk_range_set_inverted (GTK_RANGE (vscale10), TRUE);
+  gtk_range_set_inverted (GTK_RANGE (comp_re_3), TRUE);
 
-  vscale11 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -30, 0, 0, 0, 0)));
-  gtk_widget_set_name (vscale11, "vscale11");
-  gtk_widget_show (vscale11);
-  gtk_table_attach (GTK_TABLE (table18), vscale11, 2, 3, 1, 2,
+  comp_th_3 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -30, 0, 0, 0, 0)));
+  gtk_widget_set_name (comp_th_3, "comp_th_3");
+  gtk_widget_show (comp_th_3);
+  gtk_table_attach (GTK_TABLE (table18), comp_th_3, 2, 3, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-  gtk_range_set_inverted (GTK_RANGE (vscale11), TRUE);
+  gtk_range_set_inverted (GTK_RANGE (comp_th_3), TRUE);
 
   vbox137 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox137, "vbox137");
@@ -2259,17 +2422,18 @@ create_window1 (void)
   gtk_table_attach (GTK_TABLE (table18), vbox137, 4, 5, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
+  gtk_widget_set_size_request (vbox137, 34, 77);
 
-  vscale12 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 30, 0, 0, 0)));
-  gtk_widget_set_name (vscale12, "vscale12");
-  gtk_widget_show (vscale12);
-  gtk_box_pack_start (GTK_BOX (vbox137), vscale12, TRUE, TRUE, 0);
-  gtk_range_set_inverted (GTK_RANGE (vscale12), TRUE);
+  comp_ma_3 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 30, 0, 0, 0)));
+  gtk_widget_set_name (comp_ma_3, "comp_ma_3");
+  gtk_widget_show (comp_ma_3);
+  gtk_box_pack_start (GTK_BOX (vbox137), comp_ma_3, TRUE, TRUE, 0);
+  gtk_range_set_inverted (GTK_RANGE (comp_ma_3), TRUE);
 
-  togglebutton2 = gtk_toggle_button_new_with_mnemonic (_("auto"));
-  gtk_widget_set_name (togglebutton2, "togglebutton2");
-  gtk_widget_show (togglebutton2);
-  gtk_box_pack_start (GTK_BOX (vbox137), togglebutton2, FALSE, FALSE, 0);
+  autobutton3 = gtk_toggle_button_new_with_mnemonic (_("auto"));
+  gtk_widget_set_name (autobutton3, "autobutton3");
+  gtk_widget_show (autobutton3);
+  gtk_box_pack_start (GTK_BOX (vbox137), autobutton3, FALSE, FALSE, 0);
 
   Hcomp_sw_hbox = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (Hcomp_sw_hbox, "Hcomp_sw_hbox");
@@ -2287,6 +2451,7 @@ create_window1 (void)
   gtk_widget_set_name (hscale4, "hscale4");
   gtk_widget_show (hscale4);
   gtk_box_pack_start (GTK_BOX (Hcomp_sw_hbox), hscale4, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (hscale4, 37, 36);
   gtk_scale_set_digits (GTK_SCALE (hscale4), 2);
 
   label285 = gtk_label_new (_("High : 00000 - 00000"));
@@ -2301,117 +2466,26 @@ create_window1 (void)
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook3), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook3), 2), label265);
   gtk_label_set_justify (GTK_LABEL (label265), GTK_JUSTIFY_LEFT);
 
-  hbox44 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (hbox44, "hbox44");
-  gtk_widget_show (hbox44);
-  gtk_box_pack_start (GTK_BOX (hbox41), hbox44, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (hbox44, 40, 168);
+  phase_meter_hbox = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (phase_meter_hbox, "phase_meter_hbox");
+  gtk_widget_show (phase_meter_hbox);
+  gtk_box_pack_start (GTK_BOX (hbox41), phase_meter_hbox, TRUE, TRUE, 0);
 
-  vbox146 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox146, "vbox146");
-  gtk_widget_show (vbox146);
-  gtk_box_pack_end (GTK_BOX (hbox44), vbox146, FALSE, TRUE, 0);
-  gtk_widget_set_size_request (vbox146, 100, 70);
+  drawingarea1 = gtk_drawing_area_new ();
+  gtk_widget_set_name (drawingarea1, "drawingarea1");
+  gtk_widget_show (drawingarea1);
+  gtk_box_pack_start (GTK_BOX (phase_meter_hbox), drawingarea1, TRUE, TRUE, 5);
 
-  textview1 = gtk_text_view_new ();
-  gtk_widget_set_name (textview1, "textview1");
-  gtk_widget_show (textview1);
-  gtk_box_pack_start (GTK_BOX (vbox146), textview1, TRUE, FALSE, 0);
-  gtk_text_view_set_editable (GTK_TEXT_VIEW (textview1), FALSE);
-  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (textview1), FALSE);
-
-  textview2 = gtk_text_view_new ();
-  gtk_widget_set_name (textview2, "textview2");
-  gtk_widget_show (textview2);
-  gtk_box_pack_start (GTK_BOX (vbox146), textview2, TRUE, FALSE, 0);
-  gtk_text_view_set_editable (GTK_TEXT_VIEW (textview2), FALSE);
-  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (textview2), FALSE);
-
-  textview3 = gtk_text_view_new ();
-  gtk_widget_set_name (textview3, "textview3");
-  gtk_widget_show (textview3);
-  gtk_box_pack_start (GTK_BOX (vbox146), textview3, TRUE, FALSE, 0);
-  gtk_text_view_set_editable (GTK_TEXT_VIEW (textview3), FALSE);
-  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (textview3), FALSE);
-
-  textview4 = gtk_text_view_new ();
-  gtk_widget_set_name (textview4, "textview4");
-  gtk_widget_show (textview4);
-  gtk_box_pack_start (GTK_BOX (vbox146), textview4, TRUE, FALSE, 0);
-  gtk_text_view_set_editable (GTK_TEXT_VIEW (textview4), FALSE);
-  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (textview4), FALSE);
-
-  textview5 = gtk_text_view_new ();
-  gtk_widget_set_name (textview5, "textview5");
-  gtk_widget_show (textview5);
-  gtk_box_pack_start (GTK_BOX (vbox146), textview5, TRUE, FALSE, 0);
-  gtk_text_view_set_editable (GTK_TEXT_VIEW (textview5), FALSE);
-  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (textview5), FALSE);
-
-  vbuttonbox2 = gtk_vbutton_box_new ();
-  gtk_widget_set_name (vbuttonbox2, "vbuttonbox2");
-  gtk_widget_show (vbuttonbox2);
-  gtk_box_pack_start (GTK_BOX (hbox44), vbuttonbox2, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (vbuttonbox2, 25, -2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbuttonbox2), 20);
-
-  rewind = gtk_button_new ();
-  gtk_widget_set_name (rewind, "rewind");
-  gtk_widget_show (rewind);
-  gtk_container_add (GTK_CONTAINER (vbuttonbox2), rewind);
-  GTK_WIDGET_SET_FLAGS (rewind, GTK_CAN_DEFAULT);
-  gtk_tooltips_set_tip (tooltips, rewind, _("Rewind"), NULL);
-
-  image1 = gtk_image_new_from_stock ("gtk-goto-first", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_set_name (image1, "image1");
-  gtk_widget_show (image1);
-  gtk_container_add (GTK_CONTAINER (rewind), image1);
-
-  button16 = gtk_button_new ();
-  gtk_widget_set_name (button16, "button16");
-  gtk_widget_show (button16);
-  gtk_container_add (GTK_CONTAINER (vbuttonbox2), button16);
-  GTK_WIDGET_SET_FLAGS (button16, GTK_CAN_DEFAULT);
-  gtk_tooltips_set_tip (tooltips, button16, _("Play"), NULL);
-
-  image2 = gtk_image_new_from_stock ("gtk-yes", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_set_name (image2, "image2");
-  gtk_widget_show (image2);
-  gtk_container_add (GTK_CONTAINER (button16), image2);
-
-  button17 = gtk_button_new ();
-  gtk_widget_set_name (button17, "button17");
-  gtk_widget_show (button17);
-  gtk_container_add (GTK_CONTAINER (vbuttonbox2), button17);
-  GTK_WIDGET_SET_FLAGS (button17, GTK_CAN_DEFAULT);
-  gtk_tooltips_set_tip (tooltips, button17, _("Stop"), NULL);
-
-  image3 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_set_name (image3, "image3");
-  gtk_widget_show (image3);
-  gtk_container_add (GTK_CONTAINER (button17), image3);
-
-  button18 = gtk_button_new ();
-  gtk_widget_set_name (button18, "button18");
-  gtk_widget_show (button18);
-  gtk_container_add (GTK_CONTAINER (vbuttonbox2), button18);
-  GTK_WIDGET_SET_FLAGS (button18, GTK_CAN_DEFAULT);
-  gtk_tooltips_set_tip (tooltips, button18, _("Fast Forward"), NULL);
-
-  image4 = gtk_image_new_from_stock ("gtk-goto-last", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_set_name (image4, "image4");
-  gtk_widget_show (image4);
-  gtk_container_add (GTK_CONTAINER (button18), image4);
-
-  hbox28 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (hbox28, "hbox28");
-  gtk_widget_show (hbox28);
-  gtk_box_pack_end (GTK_BOX (vbox11), hbox28, FALSE, FALSE, 3);
+  bottom_hbox = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (bottom_hbox, "bottom_hbox");
+  gtk_widget_show (bottom_hbox);
+  gtk_box_pack_end (GTK_BOX (vbox11), bottom_hbox, TRUE, FALSE, 3);
+  gtk_widget_set_size_request (bottom_hbox, 385, 170);
 
   hbox38 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox38, "hbox38");
   gtk_widget_show (hbox38);
-  gtk_box_pack_start (GTK_BOX (hbox28), hbox38, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (bottom_hbox), hbox38, TRUE, TRUE, 0);
 
   comp1_frame = gtk_frame_new (NULL);
   gtk_widget_set_name (comp1_frame, "comp1_frame");
@@ -2500,7 +2574,8 @@ create_window1 (void)
   notebook2 = gtk_notebook_new ();
   gtk_widget_set_name (notebook2, "notebook2");
   gtk_widget_show (notebook2);
-  gtk_box_pack_start (GTK_BOX (hbox28), notebook2, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (bottom_hbox), notebook2, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (notebook2, 179, 160);
 
   limiter_frame = gtk_frame_new (NULL);
   gtk_widget_set_name (limiter_frame, "limiter_frame");
@@ -2652,7 +2727,7 @@ create_window1 (void)
   vbox121 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox121, "vbox121");
   gtk_widget_show (vbox121);
-  gtk_box_pack_start (GTK_BOX (hbox28), vbox121, FALSE, TRUE, 5);
+  gtk_box_pack_start (GTK_BOX (bottom_hbox), vbox121, FALSE, TRUE, 5);
 
   bypass_button = gtk_toggle_button_new_with_mnemonic (_("Bypass"));
   gtk_widget_set_name (bypass_button, "bypass_button");
@@ -2801,6 +2876,18 @@ create_window1 (void)
   g_signal_connect ((gpointer) low2mid_lbl, "realize",
                     G_CALLBACK (on_low2mid_lbl_realize),
                     NULL);
+  g_signal_connect ((gpointer) rev, "button_press_event",
+                    G_CALLBACK (rev_button),
+                    NULL);
+  g_signal_connect ((gpointer) fwd, "button_press_event",
+                    G_CALLBACK (fwd_button),
+                    NULL);
+  g_signal_connect ((gpointer) play, "button_press_event",
+                    G_CALLBACK (play_toggle),
+                    NULL);
+  g_signal_connect ((gpointer) stop, "button_press_event",
+                    G_CALLBACK (stop_toggle),
+                    NULL);
   g_signal_connect ((gpointer) label289, "realize",
                     G_CALLBACK (on_low_meter_lbl_realize),
                     NULL);
@@ -2825,7 +2912,7 @@ create_window1 (void)
   g_signal_connect ((gpointer) comp_kn_1, "value_changed",
                     G_CALLBACK (on_comp_kn_1_value_changed),
                     NULL);
-  g_signal_connect ((gpointer) autoutton1, "toggled",
+  g_signal_connect ((gpointer) autobutton1, "toggled",
                     G_CALLBACK (on_autoutton1_toggled),
                     NULL);
   g_signal_connect ((gpointer) hscale2, "value_changed",
@@ -2849,10 +2936,10 @@ create_window1 (void)
   g_signal_connect ((gpointer) label270, "realize",
                     G_CALLBACK (on_mid_knee_lbl_realize),
                     NULL);
-  g_signal_connect ((gpointer) vscale2, "value_changed",
+  g_signal_connect ((gpointer) comp_kn_2, "value_changed",
                     G_CALLBACK (on_comp_kn_2_value_changed),
                     NULL);
-  g_signal_connect ((gpointer) togglebutton1, "toggled",
+  g_signal_connect ((gpointer) autobutton2, "toggled",
                     G_CALLBACK (on_autoutton2_toggled),
                     NULL);
   g_signal_connect ((gpointer) hscale3, "value_changed",
@@ -2876,10 +2963,10 @@ create_window1 (void)
   g_signal_connect ((gpointer) label280, "realize",
                     G_CALLBACK (on_high_knee_lbl_realize),
                     NULL);
-  g_signal_connect ((gpointer) vscale8, "value_changed",
+  g_signal_connect ((gpointer) comp_kn_3, "value_changed",
                     G_CALLBACK (on_comp_kn_3_value_changed),
                     NULL);
-  g_signal_connect ((gpointer) togglebutton2, "toggled",
+  g_signal_connect ((gpointer) autobutton3, "toggled",
                     G_CALLBACK (on_autoutton3_toggled),
                     NULL);
   g_signal_connect ((gpointer) hscale4, "value_changed",
@@ -2975,6 +3062,25 @@ create_window1 (void)
   g_signal_connect ((gpointer) quit, "clicked",
                     G_CALLBACK (on_quit_clicked),
                     NULL);
+
+  atko = gtk_widget_get_accessible (play);
+  tmp_relation_set = atk_object_ref_relation_set (atko);
+  play_relation_targets[0] = gtk_widget_get_accessible (play);
+  tmp_relationship = atk_relation_type_for_name ("embeds");
+  tmp_relation = atk_relation_new (play_relation_targets, 1, tmp_relationship);
+  atk_relation_set_add (tmp_relation_set, tmp_relation);
+  g_object_unref (G_OBJECT (tmp_relation));
+  g_object_unref (G_OBJECT (tmp_relation_set));
+
+  atko = gtk_widget_get_accessible (stop);
+  tmp_relation_set = atk_object_ref_relation_set (atko);
+  stop_relation_targets[0] = gtk_widget_get_accessible (stop);
+  tmp_relationship = atk_relation_type_for_name ("embeds");
+  tmp_relation = atk_relation_new (stop_relation_targets, 1, tmp_relationship);
+  atk_relation_set_add (tmp_relation_set, tmp_relation);
+  g_object_unref (G_OBJECT (tmp_relation));
+  g_object_unref (G_OBJECT (tmp_relation_set));
+
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
   GLADE_HOOKUP_OBJECT_NO_REF (window1, window1, "window1");
@@ -3171,6 +3277,24 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, eventbox1, "eventbox1");
   GLADE_HOOKUP_OBJECT (window1, vbox11, "vbox11");
   GLADE_HOOKUP_OBJECT (window1, hbox41, "hbox41");
+  GLADE_HOOKUP_OBJECT (window1, center_left_hbox, "center_left_hbox");
+  GLADE_HOOKUP_OBJECT (window1, hbox45, "hbox45");
+  GLADE_HOOKUP_OBJECT (window1, table23, "table23");
+  GLADE_HOOKUP_OBJECT (window1, eventbox57, "eventbox57");
+  GLADE_HOOKUP_OBJECT (window1, rev, "rev");
+  GLADE_HOOKUP_OBJECT (window1, eventbox59, "eventbox59");
+  GLADE_HOOKUP_OBJECT (window1, fwd, "fwd");
+  GLADE_HOOKUP_OBJECT (window1, eventbox60, "eventbox60");
+  GLADE_HOOKUP_OBJECT (window1, play, "play");
+  GLADE_HOOKUP_OBJECT (window1, eventbox61, "eventbox61");
+  GLADE_HOOKUP_OBJECT (window1, stop, "stop");
+  GLADE_HOOKUP_OBJECT (window1, sysinfo_hbox, "sysinfo_hbox");
+  GLADE_HOOKUP_OBJECT (window1, vbox146, "vbox146");
+  GLADE_HOOKUP_OBJECT (window1, textview1, "textview1");
+  GLADE_HOOKUP_OBJECT (window1, textview2, "textview2");
+  GLADE_HOOKUP_OBJECT (window1, textview3, "textview3");
+  GLADE_HOOKUP_OBJECT (window1, textview4, "textview4");
+  GLADE_HOOKUP_OBJECT (window1, textview5, "textview5");
   GLADE_HOOKUP_OBJECT (window1, vbox139, "vbox139");
   GLADE_HOOKUP_OBJECT (window1, eventbox54, "eventbox54");
   GLADE_HOOKUP_OBJECT (window1, vbox140, "vbox140");
@@ -3221,7 +3345,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, comp_kn_1, "comp_kn_1");
   GLADE_HOOKUP_OBJECT (window1, vbox123, "vbox123");
   GLADE_HOOKUP_OBJECT (window1, comp_ma_1, "comp_ma_1");
-  GLADE_HOOKUP_OBJECT (window1, autoutton1, "autoutton1");
+  GLADE_HOOKUP_OBJECT (window1, autobutton1, "autobutton1");
   GLADE_HOOKUP_OBJECT (window1, Lcomp_sw_hbox, "Lcomp_sw_hbox");
   GLADE_HOOKUP_OBJECT (window1, label298, "label298");
   GLADE_HOOKUP_OBJECT (window1, hscale2, "hscale2");
@@ -3238,16 +3362,16 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, label268, "label268");
   GLADE_HOOKUP_OBJECT (window1, label269, "label269");
   GLADE_HOOKUP_OBJECT (window1, vbox132, "vbox132");
-  GLADE_HOOKUP_OBJECT (window1, vscale1, "vscale1");
+  GLADE_HOOKUP_OBJECT (window1, comp_ra_2, "comp_ra_2");
   GLADE_HOOKUP_OBJECT (window1, label270, "label270");
-  GLADE_HOOKUP_OBJECT (window1, vscale2, "vscale2");
+  GLADE_HOOKUP_OBJECT (window1, comp_kn_2, "comp_kn_2");
   GLADE_HOOKUP_OBJECT (window1, label271, "label271");
-  GLADE_HOOKUP_OBJECT (window1, vscale3, "vscale3");
-  GLADE_HOOKUP_OBJECT (window1, vscale4, "vscale4");
-  GLADE_HOOKUP_OBJECT (window1, vscale5, "vscale5");
+  GLADE_HOOKUP_OBJECT (window1, comp_th_2, "comp_th_2");
+  GLADE_HOOKUP_OBJECT (window1, comp_re_2, "comp_re_2");
+  GLADE_HOOKUP_OBJECT (window1, comp_at_2, "comp_at_2");
   GLADE_HOOKUP_OBJECT (window1, vbox133, "vbox133");
-  GLADE_HOOKUP_OBJECT (window1, vscale6, "vscale6");
-  GLADE_HOOKUP_OBJECT (window1, togglebutton1, "togglebutton1");
+  GLADE_HOOKUP_OBJECT (window1, comp_ma_2, "comp_ma_2");
+  GLADE_HOOKUP_OBJECT (window1, autobutton2, "autobutton2");
   GLADE_HOOKUP_OBJECT (window1, Mcomp_sw_hbox, "Mcomp_sw_hbox");
   GLADE_HOOKUP_OBJECT (window1, label297, "label297");
   GLADE_HOOKUP_OBJECT (window1, hscale3, "hscale3");
@@ -3264,38 +3388,24 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, label278, "label278");
   GLADE_HOOKUP_OBJECT (window1, label279, "label279");
   GLADE_HOOKUP_OBJECT (window1, vbox136, "vbox136");
-  GLADE_HOOKUP_OBJECT (window1, vscale7, "vscale7");
+  GLADE_HOOKUP_OBJECT (window1, comp_ra_3, "comp_ra_3");
   GLADE_HOOKUP_OBJECT (window1, label280, "label280");
-  GLADE_HOOKUP_OBJECT (window1, vscale8, "vscale8");
+  GLADE_HOOKUP_OBJECT (window1, comp_kn_3, "comp_kn_3");
   GLADE_HOOKUP_OBJECT (window1, label281, "label281");
-  GLADE_HOOKUP_OBJECT (window1, vscale9, "vscale9");
-  GLADE_HOOKUP_OBJECT (window1, vscale10, "vscale10");
-  GLADE_HOOKUP_OBJECT (window1, vscale11, "vscale11");
+  GLADE_HOOKUP_OBJECT (window1, comp_at_3, "comp_at_3");
+  GLADE_HOOKUP_OBJECT (window1, comp_re_3, "comp_re_3");
+  GLADE_HOOKUP_OBJECT (window1, comp_th_3, "comp_th_3");
   GLADE_HOOKUP_OBJECT (window1, vbox137, "vbox137");
-  GLADE_HOOKUP_OBJECT (window1, vscale12, "vscale12");
-  GLADE_HOOKUP_OBJECT (window1, togglebutton2, "togglebutton2");
+  GLADE_HOOKUP_OBJECT (window1, comp_ma_3, "comp_ma_3");
+  GLADE_HOOKUP_OBJECT (window1, autobutton3, "autobutton3");
   GLADE_HOOKUP_OBJECT (window1, Hcomp_sw_hbox, "Hcomp_sw_hbox");
   GLADE_HOOKUP_OBJECT (window1, label296, "label296");
   GLADE_HOOKUP_OBJECT (window1, hscale4, "hscale4");
   GLADE_HOOKUP_OBJECT (window1, label285, "label285");
   GLADE_HOOKUP_OBJECT (window1, label265, "label265");
-  GLADE_HOOKUP_OBJECT (window1, hbox44, "hbox44");
-  GLADE_HOOKUP_OBJECT (window1, vbox146, "vbox146");
-  GLADE_HOOKUP_OBJECT (window1, textview1, "textview1");
-  GLADE_HOOKUP_OBJECT (window1, textview2, "textview2");
-  GLADE_HOOKUP_OBJECT (window1, textview3, "textview3");
-  GLADE_HOOKUP_OBJECT (window1, textview4, "textview4");
-  GLADE_HOOKUP_OBJECT (window1, textview5, "textview5");
-  GLADE_HOOKUP_OBJECT (window1, vbuttonbox2, "vbuttonbox2");
-  GLADE_HOOKUP_OBJECT (window1, rewind, "rewind");
-  GLADE_HOOKUP_OBJECT (window1, image1, "image1");
-  GLADE_HOOKUP_OBJECT (window1, button16, "button16");
-  GLADE_HOOKUP_OBJECT (window1, image2, "image2");
-  GLADE_HOOKUP_OBJECT (window1, button17, "button17");
-  GLADE_HOOKUP_OBJECT (window1, image3, "image3");
-  GLADE_HOOKUP_OBJECT (window1, button18, "button18");
-  GLADE_HOOKUP_OBJECT (window1, image4, "image4");
-  GLADE_HOOKUP_OBJECT (window1, hbox28, "hbox28");
+  GLADE_HOOKUP_OBJECT (window1, phase_meter_hbox, "phase_meter_hbox");
+  GLADE_HOOKUP_OBJECT (window1, drawingarea1, "drawingarea1");
+  GLADE_HOOKUP_OBJECT (window1, bottom_hbox, "bottom_hbox");
   GLADE_HOOKUP_OBJECT (window1, hbox38, "hbox38");
   GLADE_HOOKUP_OBJECT (window1, comp1_frame, "comp1_frame");
   GLADE_HOOKUP_OBJECT (window1, low_curve_box, "low_curve_box");
