@@ -39,12 +39,11 @@ You will need:
 Recommended versions, where applicable, are shown under the general
 requirement. 
 
-       ALSA >= 0.9		<http://www.alsa-project.org>
        JACK >= 0.80.0		<http://jackit.sourceforge.net>
        libxml2 >= 2.5		<http://xmlsoft.org>
        GTK+ 2.0			<http://www.gtk.org>
        LADSPA SDK		<http://www.ladspa.org>
-       swh-plugins >= 0.4.2	<http://www.plugin.org.uk>
+       swh-plugins >= 0.4.6	<http://www.plugin.org.uk>
        fftw-3 >= 3.0.0		<http://www.fftw.org>
 	 should have float support enabled
 
