@@ -3058,7 +3058,7 @@ create_window1 (void)
   gtk_misc_set_alignment (GTK_MISC (release_val_label), 1, 0.5);
   gtk_misc_set_padding (GTK_MISC (release_val_label), 4, 0);
 
-  lim_lh_scale = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (-10, 0, 3, 0.1, 1, 0)));
+  lim_lh_scale = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1, -3, 2.17609, 0.1, 1, 0)));
   gtk_widget_set_name (lim_lh_scale, "lim_lh_scale");
   gtk_widget_show (lim_lh_scale);
   gtk_table_attach (GTK_TABLE (table15), lim_lh_scale, 2, 3, 1, 2,
