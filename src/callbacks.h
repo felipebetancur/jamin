@@ -10,27 +10,7 @@ on_mid2high_value_changed              (GtkRange        *range,
                                         gpointer         user_data);
 
 void
-on_low2mid_realize                     (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_mid2high_realize                    (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_low_comp_realize                    (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_mid_comp_realize                    (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_high_comp_realize                   (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_quit_clicked                        (GtkButton       *button,
+on_quit_button_clicked                        (GtkButton       *button,
                                         gpointer         user_data);
 
 gboolean
@@ -40,26 +20,6 @@ on_window1_delete_event                (GtkWidget       *widget,
 
 void
 on_in_trim_scale_value_changed         (GtkRange        *range,
-                                        gpointer         user_data);
-
-void
-on_low2mid_lbl_realize                 (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_mid2high_lbl_realize                (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_label_Low_realize                   (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_label_Mid_realize                   (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_label_High_realize                  (GtkWidget       *widget,
                                         gpointer         user_data);
 
 void
@@ -78,14 +38,6 @@ on_EQ_curve_expose_event               (GtkWidget       *widget,
 
 void
 on_EQ_curve_realize                    (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_EQ_curve_lbl_realize                (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_eqb1_realize                        (GtkWidget       *widget,
                                         gpointer         user_data);
 
 gboolean
@@ -120,18 +72,6 @@ on_comp_kn_2_value_changed             (GtkRange        *range,
 
 void
 on_comp_kn_3_value_changed             (GtkRange        *range,
-                                        gpointer         user_data);
-
-void
-on_low_knee_lbl_realize                (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_mid_knee_lbl_realize                (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_high_knee_lbl_realize               (GtkWidget       *widget,
                                         gpointer         user_data);
 
 void
@@ -266,26 +206,14 @@ on_low_curve_box_enter_notify_event    (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data);
 
-void
-on_low_curve_lbl_realize               (GtkWidget       *widget,
-                                        gpointer         user_data);
-
 gboolean
 on_mid_curve_box_enter_notify_event    (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data);
 
-void
-on_mid_curve_lbl_realize               (GtkWidget       *widget,
-                                        gpointer         user_data);
-
 gboolean
 on_high_curve_box_enter_notify_event   (GtkWidget       *widget,
                                         GdkEventCrossing *event,
-                                        gpointer         user_data);
-
-void
-on_high_curve_lbl_realize              (GtkWidget       *widget,
                                         gpointer         user_data);
 
 gboolean
@@ -369,7 +297,7 @@ on_output_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
 void
-on_button10_clicked                    (GtkButton       *button,
+on_undo_button_clicked                    (GtkButton       *button,
                                         gpointer         user_data);
 
 void
@@ -391,12 +319,12 @@ on_low2mid_button_release_event        (GtkWidget       *widget,
                                         gpointer         user_data);
 
 gboolean
-on_mid2high2_button_press_event        (GtkWidget       *widget,
+on_mid2high_button_press_event        (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
 
 gboolean
-on_mid2high2_button_release_event      (GtkWidget       *widget,
+on_mid2high_button_release_event      (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
 
@@ -446,18 +374,6 @@ on_load_button_clicked                 (GtkButton       *button,
 
 void
 on_optionmenu1_realize                 (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_low_curve_lbl_realize               (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_mid_curve_lbl_realize               (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_high_curve_lbl_realize              (GtkWidget       *widget,
                                         gpointer         user_data);
 
 void
@@ -516,14 +432,6 @@ stop_toggle                            (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
 
-void
-on_EQ_cureve_lbl_realize               (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_EQ_curve_lbl_realize                (GtkWidget       *widget,
-                                        gpointer         user_data);
-
 gboolean
 stop_toggle                            (GtkWidget       *widget,
                                         GdkEventButton  *event,
@@ -579,10 +487,6 @@ foward_transport                       (GtkWidget       *widget,
 gboolean
 forward_transport                      (GtkWidget       *widget,
                                         GdkEventButton  *event,
-                                        gpointer         user_data);
-
-void
-on_low_knee_lbl_realize                (GtkWidget       *widget,
                                         gpointer         user_data);
 
 void
@@ -649,4 +553,148 @@ on_scene5_name_changed                 (GtkEditable     *editable,
 
 void
 on_scene6_name_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data);
+
+void
+on_help_button_clicked                 (GtkButton       *button,
+                                        gpointer         user_data);
+
+gboolean
+on_window1_button_press_event          (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_EQ_curve_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_show_help                           (GtkWidget       *widget,
+                                        GtkWidgetHelpType  help_type,
+                                        gpointer         user_data);
+
+gboolean
+on_input_eventbox_enter_notify_event   (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_geq_eventbox_enter_notify_event     (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_spectrum_eventbox_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_crossover_eventbox_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_curve_eventbox_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_eventbox_enter_notify_event    (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_stereo_eventbox_enter_notify_event  (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_gain_meter_eventbox_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_limiter_eventbox_enter_notify_event (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_boost_eventbox_enter_notify_event   (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_output_eventbox_enter_notify_event  (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_help_button_enter_notify_event      (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_eq_options_eventbox_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_spectrum_options_eventbox_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_crossover_label_eventbox_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_status_label_eventbox_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_transport_controls_eventbox_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_bypass_button_enter_notify_event    (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_load_button_enter_notify_event      (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_save_button_enter_notify_event      (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_undo_button_enter_notify_event      (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_quit_button_enter_notify_event      (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scenes_eventbox_enter_notify_event  (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
                                         gpointer         user_data);

@@ -11,12 +11,13 @@ jamin_LDFLAGS = -lm
 bin_PROGRAMS = jamin
 
 jamin_SOURCES = \
-	callbacks.c callbacks.h \
+	callbacks.c callbacks.h callbacks_help.h \
 	compressor.h \
 	compressor-ui.c compressor-ui.h \
 	db.h \
 	debug.h \
 	geq.c geq.h \
+	hdeq.c hdeq.h\
 	gtkmeter.c gtkmeter.h \
 	gtkmeterscale.c gtkmeterscale.h \
 	interface.c interface.h \
@@ -36,7 +37,8 @@ jamin_SOURCES = \
 	stereo.c stereo.h \
 	support.c support.h \
 	transport.c transport.h \
-	scenes.c scenes.h
+	scenes.c scenes.h \
+	help.c help.h
 	status-ui.c status-ui.h
 
 jamin_LDADD = @PACKAGE_LIBS@

@@ -20,6 +20,7 @@
 #include "support.h"
 #include "io.h"
 #include "geq.h"
+#include "hdeq.h"
 #include "limiter-ui.h"
 #include "compressor-ui.h"
 #include "intrim.h"
@@ -29,6 +30,7 @@
 #include "state.h"
 #include "status-ui.h"
 #include "scenes.h"
+#include "help.h"
 
 GtkWidget *main_window;
 
@@ -38,6 +40,7 @@ int main(int argc, char *argv[])
 {
     char rcfile[PATH_MAX], title[128];
     int fd;
+
 
 #ifdef ENABLE_NLS
     bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
@@ -76,6 +79,7 @@ int main(int argc, char *argv[])
     /* bind the graphic equaliser sliders to adjustments */
 
     bind_geq();
+    bind_hdeq();
     gtk_widget_show(main_window);
     bind_intrim();
     bind_limiter();
