@@ -86,11 +86,12 @@
 #include "jackstatus.h"
 #include "state.h"
 #include "spectrum.h"
+#include "preferences.h"
 #include "debug.h"
 #include "help.h"
 #include "support.h"
 
-char *jamin_options = "dFf:n:hprTtvVs:c:";    /* valid JAMin options */
+char *jamin_options = "dFf:n:hprTtvVs:c:i";   /* valid JAMin options */
 char *pname;				      /* `basename $0` */
 int dummy_mode = 0;			      /* -d option */
 int all_errors_fatal = 0;		      /* -F option */
@@ -758,6 +759,10 @@ void io_init(int argc, char *argv[])
 	    break;
 	case 'T':			/* list trace output */
 	    trace_option = 1;
+	    break;
+	case 'i':			/* Use IIR type crossover */
+            preferences_set_xover_button (IIR);
+            process_set_crossover_type (IIR);
 	    break;
 	case 'v':			/* verbose */
 	    debug_level += 1;		/* increment output level */

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.61 2004/10/22 10:15:45 theno23 Exp $
+ *  $Id: process.c,v 1.62 2004/10/23 11:26:59 jdepner Exp $
  */
 
 #include <math.h>
@@ -679,6 +679,11 @@ void process_set_xo_band_action(int band, int action)
 void process_set_eq_bypass(int bypass)
 {
     eq_bypass_pending = bypass;
+}
+
+void process_set_crossover_type(int type)
+{
+    iir_xover = type;
 }
 
 void process_set_limiter_bypass(int bypass)

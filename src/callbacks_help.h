@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.37 2004/06/06 19:22:48 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.38 2004/10/23 11:26:58 jdepner Exp $
  */
 
 #include "support.h"
@@ -84,8 +84,9 @@ here as well.  Up to 10 per second (default) and down to 0 (disabled).\n\
 are saved in the file $HOME/.jamin-defaults.  This is done whenever you \
 exit from JAMin.  You can actually edit this file and change the colors by \
 hand.  They are just RGB values in the 0-65535 range but it's much easier to \
-use the GUI ;-).  You may also set the crossfade time in this dialog (see the \
-man page for more information on crossfade time).\n\
+use the GUI ;-).  You may also set the crossfade time and crossover type in \
+this dialog (see the man page for more information on crossfade time and \
+crossover type).\n\
     For help on the rest of the GUI, context specific help can be obtained \
 by moving the mouse pointer into one of the tool areas (compressor, EQ, \
 limiter, input, etc) and pressing <Shift><F1>.\n")
@@ -123,8 +124,9 @@ char crossover_help[] = {N_(
 three sections.  It applies to the compressors and stereo widths. If the \
 crossovers are set to 500Hz and 5KHz then the first stereo width control and \
 compressor works for 25-500Hz, the second for 500Hz-5KHz, and the last for \
-5KHz-20KHz.  The crossover has no effect on the HDEQ.  However, the crossover \
-bars that are visible in the HDEQ serve as a visual reference.\n")
+5KHz-20KHz.  The crossover has no effect on the HDEQ unless one or more bands \
+are soloed.  The crossover bars that are visible in the HDEQ serve as a visual \
+reference.\n")
 };
 
 
@@ -234,8 +236,9 @@ char preferences_help[] = {N_(
 are saved in the file $HOME/.jamin-defaults.  This is done whenever you \
 exit from JAMin.  You can actually edit this file and change the colors by \
 hand.  They are just RGB values in the 0-65535 range but it's much easier to \
-use the GUI ;-).  You may also set the crossfade time in this dialog (see the \
-man page for more information on crossfade time).\n")
+use the GUI ;-).  You may also set the crossfade time and crossover type in \
+this dialog (see the man page for more information on crossfade time and \
+crossover type).\n")
 };
 
 

@@ -53,6 +53,8 @@ static GdkColormap       *colormap = NULL;
 static GdkColor          color[COLORS];
 static int               color_id;
 static GtkSpinButton     *ct_spin;
+static GtkRadioButton    *iir_button, *fft_button;
+static GtkToggleButton   *t_iir, *t_fft;
 
 
 static void color_ok_callback (GtkWidget *w, gpointer user_data);
@@ -88,6 +90,14 @@ void preferences_init()
 
     ct_spin = GTK_SPIN_BUTTON (lookup_widget (preferences_dialog, 
                                               "crossfade_spinbutton"));
+
+    iir_button = GTK_RADIO_BUTTON (lookup_widget (preferences_dialog, 
+						   "IIR_Crossover"));
+    fft_button = GTK_RADIO_BUTTON (lookup_widget (preferences_dialog, 
+						   "FFT_Crossover"));
+    t_iir = &iir_button->check_button.toggle_button;
+    t_fft = &fft_button->check_button.toggle_button;
+
 
     color_dialog = create_colorselectiondialog1 ();
 
@@ -231,6 +241,22 @@ void preferences_init()
 GdkColor *get_color (int color_id)
 {
   return (&color[color_id]);
+}
+
+
+void preferences_set_xover_button (int type)
+{
+  /*  Can't get this to work no matter what I try.
+
+  if (type == IIR)
+    {
+      gtk_toggle_button_set_active (t_iir, TRUE);
+    }
+  else
+    {
+      gtk_toggle_button_set_active (t_fft, TRUE);
+    }
+  */
 }
 
 

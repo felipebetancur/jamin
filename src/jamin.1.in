@@ -1,4 +1,4 @@
-.TH JAMIN "1" @VERSION@ "August 2004" "Audio"
+.TH JAMIN "1" @VERSION@ "October 2004" "Audio"
 .SH "NAME"
 jamin \- JACK Audio Mastering interface
 
@@ -59,6 +59,12 @@ Without this option, JAMin will connect to \fIoutport1\fR and
 \fIoutport2\fR if they were explicitly listed on the command line.  If
 not, it connects to the first two physical output ports with the
 string ":playback" in their names.
+.TP 
+\fB\-i\fR
+.br 
+Use IIR type crossover instead of the default FFT type crossover.
+The IIR crossover is less CPU intensive but the FFT crossover may
+give better results (YMMV).
 .TP 
 \fB\-r\fR
 .br 

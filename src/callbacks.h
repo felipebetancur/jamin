@@ -1207,3 +1207,11 @@ on_meter_peak_color_activate           (GtkMenuItem     *menuitem,
 void
 on_reset_all_colors1_activate          (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
+
+void
+on_FFT_Crossover_clicked               (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_IIR_Crossover_clicked               (GtkButton       *button,
+                                        gpointer         user_data);

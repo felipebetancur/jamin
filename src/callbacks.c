@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.152 2004/06/06 11:27:47 jdepner Exp $
+ *  $Id: callbacks.c,v 1.153 2004/10/23 11:26:58 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -2578,3 +2578,19 @@ on_reset_all_colors1_activate          (GtkMenuItem     *menuitem,
   pref_reset_all_colors ();
   pref_force_color_change ();
 }
+
+void
+on_FFT_Crossover_clicked               (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  process_set_crossover_type (FFT);
+}
+
+
+void
+on_IIR_Crossover_clicked               (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  process_set_crossover_type (IIR);
+}
+
