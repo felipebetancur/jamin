@@ -1072,7 +1072,7 @@ void hdeq_curve_motion (GdkEventMotion *event)
     int            i, j, x, y, size, diffx_fa, diffx_fb, diff_notch[2], 
                    cursor, drag, notch_flag = -1, lo, hi, clock_diff;
     float          freq, gain, s_gain;
-    char           coords[20];
+    char           *coords = NULL;
     clock_t        new_clock;
     static clock_t old_clock = -1;
     struct tms     buf;
@@ -1113,10 +1113,10 @@ void hdeq_curve_motion (GdkEventMotion *event)
         s_gain = -(EQ_SPECTRUM_RANGE - (((((double) EQ_curve_height - 
             (double) y) / (double) EQ_curve_height) * EQ_SPECTRUM_RANGE)));
 
-        sprintf (coords, _("%dHz , EQ : %ddb , Spectrum : %ddb"), NINT (freq),
-            NINT (gain), NINT (s_gain));
+	coords = g_strdup_printf(_("%dHz , EQ : %ddb , Spectrum : %ddb"), NINT
+		(freq), NINT (gain), NINT (s_gain));
         gtk_label_set_text (l_EQ_curve_lbl, coords);
-
+	free(coords);
 
         /*  If we're in the midst of drawing the curve...  */
 
@@ -1384,9 +1384,10 @@ void hdeq_curve_motion (GdkEventMotion *event)
                 lo = NINT (pow (10.0, EQ_xinterp[i]));
                 hi = NINT (pow (10.0, EQ_xinterp[j]));
 
-                sprintf (coords, _("%ddb , %dHz - %dHz"), NINT (gain), lo, 
-                    hi);
+                coords = g_strdup_printf (_("%ddb , %dHz - %dHz"),
+						NINT (gain), lo, hi);
                 gtk_label_set_text (l_EQ_curve_lbl, coords);
+		free(coords);
               }
           }
 
