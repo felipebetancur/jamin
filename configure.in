@@ -5,6 +5,8 @@ AM_INIT_AUTOMAKE(JAMin, 0.5.23)
 AM_CONFIG_HEADER(config.h)
 AM_MAINTAINER_MODE
 
+AC_ARG_ENABLE(double-fft, [  --enable-double-fft Enable double precision fourier transform code - not recommended])
+
 AC_ISC_POSIX
 AC_PROG_CC
 AM_PROG_CC_STDC
@@ -16,9 +18,19 @@ PKG_CHECK_MODULES(JACK, jack >= 0.50.0)
 dnl PKG_CHECK_MODULES(FFTW, fftw3f >= 3.0, AC_DEFINE(FFTW_TYPE, [double], [Datatype used by installed FFTW libraries]), [echo "Didn't find double FFTW libraries, but will also look for float"])
 dnl PKG_CHECK_MODULES(FFTW, fftw3 >= 3.0, AC_DEFINE(FFTW_TYPE, [float], [Datatype used by installed FFTW libraries]), [echo "Can't find float FFTW libraries"])
 
-PKG_CHECK_MODULES(FFTW, fftw3f >= 3.0, AC_DEFINE(FFTW_TYPE, [float], [Datatype used by installed FFTW libraries]), [
-	PKG_CHECK_MODULES(FFTW, fftw3 >= 3.0, [AC_DEFINE(FFTW_TYPE, [double], [Datatype used by installed FFTW libraries]) AC_MSG_WARN([Using double FFTs, may result in higher quality output, but will cause much higher CPU load])], [AC_MSG_ERROR([Didn't find any FFTW3 libraries])])
-])
+dnl PKG_CHECK_MODULES(FFTW, fftw3fg >= 3.0, AC_DEFINE(FFTW_TYPE, [float], [Datatype used by installed FFTW libraries]), [
+dnl 	PKG_CHECK_MODULES(FFTW, fftw3f >= 3.0, [AC_DEFINE(FFTW_TYPE, [double], [Datatype used by installed FFTW libraries]) AC_MSG_WARN([ **** Using double FFTs] [**** may result in higher quality output, but will cause much higher CPU load] [**** Will not run in realtime on most 2003 era CPUs])], [AC_MSG_ERROR([Didn't find any FFTW3 libraries])])
+dnl ])
+
+[if test "${enable_double_fft+set}" = set; then]
+	PKG_CHECK_MODULES(FFTW, fftw3 >= 3.0, AC_DEFINE(FFTW_TYPE, [double], [Datatype used by installed FFTW libraries]), [AC_MSG_ERROR([Didn't find any double precision FFTW3 libraries])])
+[else]
+	PKG_CHECK_MODULES(FFTW, fftw3f >= 3.0, AC_DEFINE(FFTW_TYPE, [float], [Datatype used by installed FFTW libraries]), [AC_MSG_ERROR([Didn't find any float FFTW3 libraries.
+configure: error: Make sure you built FFTW with --enable-float.
+configure: error: Double precision /can/ be used (--enable-double-fft),
+configure: error: but this package will not run in realtime on many 2003
+configure: error: era machines])])
+[fi]
 
 PKG_CHECK_MODULES(XML, libxml-2.0 >= 2.0)
 AC_CHECK_LIB([m], [sqrt], , [AC_MSG_ERROR(Can't find libm)])
