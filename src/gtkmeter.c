@@ -24,7 +24,7 @@
 #include "gtkmeter.h"
 
 #define METER_DEFAULT_WIDTH 10
-#define METER_DEFAULT_HEIGHT 100
+#define METER_DEFAULT_LENGTH 100
 
 /* Forward declarations */
 
@@ -252,8 +252,15 @@ static void
 gtk_meter_size_request (GtkWidget      *widget,
 		       GtkRequisition *requisition)
 {
-  requisition->width = METER_DEFAULT_WIDTH;
-  requisition->height = METER_DEFAULT_HEIGHT;
+  GtkMeter *meter = GTK_METER(widget);
+
+  if (meter->direction == GTK_METER_UP || meter->direction == GTK_METER_DOWN) {
+    requisition->width = METER_DEFAULT_WIDTH;
+    requisition->height = METER_DEFAULT_LENGTH;
+  } else {
+    requisition->width = METER_DEFAULT_LENGTH;
+    requisition->height = METER_DEFAULT_WIDTH;
+  }
 }
 
 static void
