@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.148 2004/05/01 13:07:03 jdepner Exp $
+ *  $Id: callbacks.c,v 1.149 2004/05/01 17:00:23 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -2178,7 +2178,6 @@ on_crossfade_spinbutton_value_changed  (GtkSpinButton   *spinbutton,
   float ct = gtk_spin_button_get_value (spinbutton);
 
   s_set_crossfade_time (ct);
-
 }
 
 

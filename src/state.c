@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.50 2004/05/01 13:07:04 jdepner Exp $
+ *  $Id: state.c,v 1.51 2004/05/01 17:00:24 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -28,6 +28,8 @@
 
 #include "config.h"
 #include "main.h"
+#include "geq.h"
+#include "spectrum.h"
 #include "state.h"
 #include "process.h"
 #include "scenes.h"
@@ -554,6 +556,11 @@ void s_load_session (const char *fname)
     xmlSAXHandlerPtr handler;
     int scene = -1;
     int fd;
+    int mode, freq, i;
+    float lgain, hgain, ct;
+    gboolean gang_at[XO_BANDS], gang_re[XO_BANDS], gang_th[XO_BANDS], 
+      gang_ra[XO_BANDS], gang_kn[XO_BANDS], gang_ma[XO_BANDS];
+
 
     saved_scene = -1;
     unset_scene_buttons ();
@@ -601,6 +608,46 @@ void s_load_session (const char *fname)
     free(handler);
 
 
+    /*  Set the per session parameters from the .jam file.  When Steve implements
+        this he can remove the following setting lines.  These were put here to
+        test the functionality.  */
+
+    /* Remove */
+    mode = SPEC_POST_EQ;
+    freq = 10;
+    lgain = -12.0;
+    hgain = 12.0;
+    ct = 1.0;
+    /**********/
+
+    process_set_spec_mode (mode);
+    set_spectrum_freq (freq);
+    hdeq_set_upper_gain (hgain);
+    geq_set_range (geq_get_adjustment(0)->lower, hgain);
+    hdeq_set_lower_gain (lgain);
+    geq_set_range (lgain, geq_get_adjustment(0)->upper);
+    s_set_crossfade_time (ct);
+
+    for (i = 0 ; i < XO_BANDS ; i++)
+      {
+        /* Remove */
+        gang_at[i] = FALSE;
+        gang_re[i] = FALSE;
+        gang_th[i] = FALSE;
+        gang_ra[i] = FALSE;
+        gang_kn[i] = FALSE;
+        gang_ma[i] = FALSE;
+        /**********/
+
+        if (gang_at[i]) comp_gang_at (i);
+        if (gang_re[i]) comp_gang_re (i);
+        if (gang_th[i]) comp_gang_th (i);
+        if (gang_ra[i]) comp_gang_ra (i);
+        if (gang_kn[i]) comp_gang_kn (i);
+        if (gang_ma[i]) comp_gang_ma (i);
+      }
+
+
     /*  This is the active scene.  */
 
     if (saved_scene < 100)
@@ -615,6 +662,7 @@ void s_load_session (const char *fname)
     if (!fname) {
 	filename = NULL;
     }
+
 
     hdeq_set_xover ();
     set_EQ_curve_values (0, 0.0);
