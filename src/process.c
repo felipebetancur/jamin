@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.32 2003/12/04 15:36:52 theno23 Exp $
+ *  $Id: process.c,v 1.33 2003/12/09 15:57:20 theno23 Exp $
  */
 
 #include <math.h>
@@ -34,6 +34,8 @@
 #define BUF_MASK   (BINS-1)		/* BINS is a power of two */
 
 #define LERP(f,a,b) ((a) + (f) * ((b) - (a)))
+
+#define IS_DENORMAL(fv) (((*(unsigned int*)&(fv))&0x7f800000)!=0)
 
 typedef FFTW_TYPE fft_data;
 
@@ -82,6 +84,14 @@ const jack_nframes_t dsp_block_size = BINS / OVER_SAMP;
 
 void run_eq(unsigned int port, unsigned int in_pos);
 void run_width(int xo_band, float *left, float *right, int nframes);
+
+static inline void denormal_kill(float *v);
+static inline void denormal_kill(float *v)
+{
+    static const float offset = 1e-18f;
+    *v += offset;
+    *v -= offset;
+}
 
 void process_init(float fs)
 {
@@ -280,6 +290,28 @@ int process_signal(jack_nframes_t nframes,
 
 	for (port = 0; port < nchannels; port++) {
 	    in_buf[port][in_ptr] = in[port][pos] * in_gain[port];
+	    denormal_kill(&in_buf[port][in_ptr]);
+	    if (in_buf[port][in_ptr] > 100.0f) {
+		in_buf[port][in_ptr] = 100.0f;
+	    } else if (in_buf[port][in_ptr] < -100.0f) {
+		in_buf[port][in_ptr] = -100.0f;
+	    }
+#if 0
+	    if (IS_DENORMAL(in_buf[port][in_ptr])) {
+//printf("denormal");
+		in_buf[port][in_ptr] = 0.0f;
+	    }
+	    if (!finite(in_buf[port][in_ptr])) {
+printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
+		if (isnan(in_buf[port][in_ptr])) {
+		    in_buf[port][in_ptr] = 0.0f;
+		} else if (in_buf[port][in_ptr] > 0.0f) {
+		    in_buf[port][in_ptr] = 1.0f;
+		} else {
+		    in_buf[port][in_ptr] = -1.0f;
+		}
+	    }
+#endif
 	    amp = fabs(in_buf[port][in_ptr]);
 	    if (amp > in_peak[port]) {
 		in_peak[port] = amp;
