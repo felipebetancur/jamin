@@ -117,12 +117,12 @@ style "main_button" = "button"
 
 style "toggle_button" = "button"
 {
-  fg[NORMAL] = { 1.0, 0, 0 }
   fg[ACTIVE] = { 1.0, 0, 0 }
-  
+  fg[PRELIGHT] = { 1.0, 0, 0 }
+  bg[ACTIVE] = {0.32, 0.39, 0.45 }
   # This sets the background pixmap of the toggle_button to that of its
   # parent widget (as defined in the application).
-  bg_pixmap[NORMAL] = "<parent>"
+  # bg_pixmap[NORMAL] = "<parent>"
 }
 
 # This set the text for everything except the faders and buttons.
@@ -169,6 +169,7 @@ widget_class "*Gtk*Scale" style "thai-gold"
 widget_class "*Gtk*Label" style "text"
 widget_class "*GtkCheckButton*" style "toggle_button"
 widget_class "*GtkRadioButton*" style "toggle_button"
+widget_class "*GtkToggleButton*" style "toggle_button"
 widget_class "*GtkButton*" style "button"
 widget_class "*Ruler" style "ruler"
 widget_class "*GtkText" style "text"
