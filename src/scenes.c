@@ -10,6 +10,9 @@ static gboolean          scene_loaded[NUM_SCENES];
 static s_state           scene_state[NUM_SCENES];
 
 
+void set_EQ_curve_values ();
+
+
 void bind_scenes ()
 {
     int             i;
