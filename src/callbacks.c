@@ -8,6 +8,7 @@
 #include <gtk/gtk.h>
 
 #include "callbacks.h"
+#include "geq.h"
 #include "interface.h"
 #include "support.h"
 #include "process.h"
@@ -16,11 +17,16 @@
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
 
 
-static GtkHScale   *l_low2mid, *l_mid2high;
-static GtkWidget   *l_low_comp, *l_mid_comp, *l_high_comp;
-static GtkLabel    *l_low2mid_lbl, *l_mid2high_lbl, *l_low_comp_lbl, 
-                   *l_mid_comp_lbl, *l_high_comp_lbl;
-
+static GtkHScale       *l_low2mid, *l_mid2high;
+static GtkVScale       *l_eqb1;
+static GtkWidget       *l_low_comp, *l_mid_comp, *l_high_comp;
+static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_low_comp_lbl, 
+                       *l_mid_comp_lbl, *l_high_comp_lbl, *l_EQ_curve_lbl;
+static GtkDrawingArea  *l_EQ_curve;
+static GdkGC           *norm_gc;
+static GtkAdjustment   *l_low2mid_adj, *l_eqb1_adj;
+static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
+                       EQ_curve_height;
 
 
 void
@@ -28,7 +34,6 @@ on_low2mid_value_changed               (GtkRange        *range,
                                         gpointer         user_data)
 {
     double          value, other_value,lvalue, mvalue, hvalue;
-    GtkAdjustment   *adj;
     char            label[6];
 
     value = gtk_range_get_value (range);
@@ -52,9 +57,9 @@ on_low2mid_value_changed               (GtkRange        *range,
     /*  If the low slider is at the bottom of it's range, desensitize the low 
         band compressor.  */
 
-    adj = gtk_range_get_adjustment (range);
+    l_low2mid_adj = gtk_range_get_adjustment (range);
 
-    if (value == adj->lower)
+    if (value == l_low2mid_adj->lower)
       {
         gtk_widget_set_sensitive (l_low_comp, FALSE);
       }
@@ -82,7 +87,7 @@ on_low2mid_value_changed               (GtkRange        *range,
     sprintf (label, "Mid : %d - %d", NINT (lvalue), NINT (hvalue));
     gtk_label_set_label (l_mid_comp_lbl, label);
 
-    lvalue = pow (10.0, adj->lower);
+    lvalue = pow (10.0, l_low2mid_adj->lower);
     mvalue = pow (10.0, value);
     sprintf (label, "Low : %d - %d", NINT (lvalue), NINT (mvalue));
     gtk_label_set_label (l_low_comp_lbl, label);
@@ -94,7 +99,6 @@ on_mid2high_value_changed              (GtkRange        *range,
                                         gpointer         user_data)
 {
     double          value, other_value, lvalue, mvalue, hvalue;
-    GtkAdjustment   *adj;
     char            label[6];
 
 
@@ -120,9 +124,7 @@ on_mid2high_value_changed              (GtkRange        *range,
         compressor.  */
 
 
-    adj = gtk_range_get_adjustment (range);
-
-    if (value == adj->upper)
+    if (value == l_low2mid_adj->upper)
       {
         gtk_widget_set_sensitive (l_high_comp, FALSE);
       }
@@ -150,7 +152,7 @@ on_mid2high_value_changed              (GtkRange        *range,
     sprintf (label, "Mid : %d - %d", NINT (lvalue), NINT (mvalue));
     gtk_label_set_label (l_mid_comp_lbl, label);
 
-    hvalue = pow (10.0, adj->upper);
+    hvalue = pow (10.0, l_low2mid_adj->upper);
     sprintf (label, "High : %d - %d", NINT (mvalue), NINT (hvalue));
     gtk_label_set_label (l_high_comp_lbl, label);
 }
@@ -270,3 +272,117 @@ on_window1_show                        (GtkWidget       *widget,
 
     on_mid2high_value_changed ((GtkRange *) l_mid2high, NULL);
 }
+
+
+gboolean
+on_EQ_curve_configure_event            (GtkWidget       *widget,
+                                        GdkEventConfigure *event,
+                                        gpointer         user_data)
+{ 
+    return FALSE;
+}
+
+
+gboolean
+on_EQ_curve_expose_event               (GtkWidget       *widget,
+                                        GdkEventExpose  *event,
+                                        gpointer         user_data)
+{
+    int            i, x0 = 0, y0 = 0, x1, y1;
+
+
+
+    l_low2mid_adj = gtk_range_get_adjustment ((GtkRange *) l_low2mid);
+    l_eqb1_adj = gtk_range_get_adjustment ((GtkRange *) l_eqb1);
+    EQ_curve_range_x = l_low2mid_adj->upper - l_low2mid_adj->lower;
+    EQ_curve_range_y = l_eqb1_adj->upper - l_eqb1_adj->lower;
+    EQ_curve_width = widget->allocation.width;
+    EQ_curve_height = widget->allocation.height;
+
+    for (i = 0 ; i < EQ_BANDS ; i++)
+      {
+        x1 = NINT (((log10 (geq_freqs[i]) - l_low2mid_adj->lower) / 
+            EQ_curve_range_x) * EQ_curve_width);
+
+        y1 = EQ_curve_height - NINT (((((log10 (geq_gains[i])) / 
+            0.05) - l_eqb1_adj->lower) / EQ_curve_range_y) * 
+            EQ_curve_height);
+
+
+        gdk_draw_line (widget->window, norm_gc, x1, 0, x1, 
+            EQ_curve_height);
+
+
+        if (i) gdk_draw_line (widget->window, norm_gc, x0, y0, x1, y1);
+
+        x0 = x1;
+        y0 = y1;
+      }
+
+
+    return FALSE;
+}
+
+
+void
+on_EQ_curve_realize                    (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    l_EQ_curve = (GtkDrawingArea *) widget;
+
+    norm_gc = widget->style->fg_gc[GTK_WIDGET_STATE (widget)];
+}
+
+
+void
+on_EQ_curve_lbl_realize                (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    l_EQ_curve_lbl = (GtkLabel *) widget;
+}
+
+
+void
+on_eqb1_realize                        (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    l_eqb1 = (GtkVScale *) widget;
+}
+
+
+gboolean
+on_EQ_curve_event_box_motion_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventMotion  *event,
+                                        gpointer         user_data)
+{
+    static int     prev_x = -1, prev_y = -1;
+    int            x, y;
+    float          freq, gain;
+    char           coords[20];
+
+
+    x = NINT (event->x);
+    y = NINT (event->y);
+
+    if (x != prev_x || y != prev_y)
+      {
+        
+        freq = pow (10.0, (l_low2mid_adj->lower + (((double) x / 
+            (double) EQ_curve_width) * EQ_curve_range_x)));
+
+
+        gain = ((((double) EQ_curve_height - (double) y) / 
+            (double) EQ_curve_height) * EQ_curve_range_y) + 
+            l_eqb1_adj->lower;
+
+        sprintf (coords, "%dHz , %ddb", NINT (freq), NINT (gain));
+        gtk_label_set_text (l_EQ_curve_lbl, coords);
+
+        prev_x = x;
+        prev_y = y;
+      }
+
+    return FALSE;
+}
+

@@ -187,38 +187,10 @@ create_window1 (void)
   GtkWidget *label210;
   GtkWidget *label207;
   GtkWidget *vbox99;
-  GtkWidget *eventbox47;
-  GtkWidget *drawingarea1;
-  GtkWidget *hbox23;
-  GtkWidget *label176;
-  GtkWidget *label177;
-  GtkWidget *label178;
-  GtkWidget *label179;
-  GtkWidget *label180;
-  GtkWidget *label181;
-  GtkWidget *label182;
-  GtkWidget *label183;
-  GtkWidget *label184;
-  GtkWidget *label185;
-  GtkWidget *label186;
-  GtkWidget *label187;
-  GtkWidget *label188;
-  GtkWidget *label189;
-  GtkWidget *label190;
-  GtkWidget *label191;
-  GtkWidget *label192;
-  GtkWidget *label193;
-  GtkWidget *label194;
-  GtkWidget *label195;
-  GtkWidget *label196;
-  GtkWidget *label197;
-  GtkWidget *label198;
-  GtkWidget *label199;
-  GtkWidget *label200;
-  GtkWidget *label201;
-  GtkWidget *label202;
-  GtkWidget *label203;
-  GtkWidget *label204;
+  GtkWidget *EQ_curve_event_box;
+  GtkWidget *frame9;
+  GtkWidget *EQ_curve;
+  GtkWidget *EQ_curve_lbl;
   GtkWidget *label48;
   GtkWidget *hbox24;
   GtkWidget *vbox82;
@@ -1347,170 +1319,27 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (hbox25), vbox99, TRUE, TRUE, 0);
   gtk_widget_set_size_request (vbox99, -2, 160);
 
-  eventbox47 = gtk_event_box_new ();
-  gtk_widget_set_name (eventbox47, "eventbox47");
-  gtk_widget_show (eventbox47);
-  gtk_box_pack_start (GTK_BOX (vbox99), eventbox47, TRUE, TRUE, 0);
+  EQ_curve_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (EQ_curve_event_box, "EQ_curve_event_box");
+  gtk_widget_show (EQ_curve_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox99), EQ_curve_event_box, TRUE, TRUE, 0);
 
-  drawingarea1 = gtk_drawing_area_new ();
-  gtk_widget_set_name (drawingarea1, "drawingarea1");
-  gtk_widget_show (drawingarea1);
-  gtk_container_add (GTK_CONTAINER (eventbox47), drawingarea1);
+  frame9 = gtk_frame_new (NULL);
+  gtk_widget_set_name (frame9, "frame9");
+  gtk_widget_show (frame9);
+  gtk_container_add (GTK_CONTAINER (EQ_curve_event_box), frame9);
 
-  hbox23 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (hbox23, "hbox23");
-  gtk_widget_show (hbox23);
-  gtk_box_pack_start (GTK_BOX (vbox99), hbox23, FALSE, TRUE, 0);
-  gtk_widget_set_size_request (hbox23, -2, 20);
+  EQ_curve = gtk_drawing_area_new ();
+  gtk_widget_set_name (EQ_curve, "EQ_curve");
+  gtk_widget_show (EQ_curve);
+  gtk_container_add (GTK_CONTAINER (frame9), EQ_curve);
+  gtk_widget_set_events (EQ_curve, GDK_POINTER_MOTION_MASK);
 
-  label176 = gtk_label_new (_("25"));
-  gtk_widget_set_name (label176, "label176");
-  gtk_widget_show (label176);
-  gtk_box_pack_start (GTK_BOX (hbox23), label176, TRUE, TRUE, 0);
-
-  label177 = gtk_label_new (_("31"));
-  gtk_widget_set_name (label177, "label177");
-  gtk_widget_show (label177);
-  gtk_box_pack_start (GTK_BOX (hbox23), label177, TRUE, TRUE, 0);
-
-  label178 = gtk_label_new (_("39"));
-  gtk_widget_set_name (label178, "label178");
-  gtk_widget_show (label178);
-  gtk_box_pack_start (GTK_BOX (hbox23), label178, TRUE, TRUE, 0);
-
-  label179 = gtk_label_new (_("50"));
-  gtk_widget_set_name (label179, "label179");
-  gtk_widget_show (label179);
-  gtk_box_pack_start (GTK_BOX (hbox23), label179, TRUE, TRUE, 0);
-
-  label180 = gtk_label_new (_("62"));
-  gtk_widget_set_name (label180, "label180");
-  gtk_widget_show (label180);
-  gtk_box_pack_start (GTK_BOX (hbox23), label180, TRUE, TRUE, 0);
-
-  label181 = gtk_label_new (_("79"));
-  gtk_widget_set_name (label181, "label181");
-  gtk_widget_show (label181);
-  gtk_box_pack_start (GTK_BOX (hbox23), label181, TRUE, TRUE, 0);
-
-  label182 = gtk_label_new (_("100"));
-  gtk_widget_set_name (label182, "label182");
-  gtk_widget_show (label182);
-  gtk_box_pack_start (GTK_BOX (hbox23), label182, TRUE, TRUE, 0);
-
-  label183 = gtk_label_new (_("125"));
-  gtk_widget_set_name (label183, "label183");
-  gtk_widget_show (label183);
-  gtk_box_pack_start (GTK_BOX (hbox23), label183, TRUE, TRUE, 0);
-
-  label184 = gtk_label_new (_("158"));
-  gtk_widget_set_name (label184, "label184");
-  gtk_widget_show (label184);
-  gtk_box_pack_start (GTK_BOX (hbox23), label184, TRUE, TRUE, 0);
-
-  label185 = gtk_label_new (_("200"));
-  gtk_widget_set_name (label185, "label185");
-  gtk_widget_show (label185);
-  gtk_box_pack_start (GTK_BOX (hbox23), label185, TRUE, TRUE, 0);
-
-  label186 = gtk_label_new (_("251"));
-  gtk_widget_set_name (label186, "label186");
-  gtk_widget_show (label186);
-  gtk_box_pack_start (GTK_BOX (hbox23), label186, TRUE, TRUE, 0);
-
-  label187 = gtk_label_new (_("317"));
-  gtk_widget_set_name (label187, "label187");
-  gtk_widget_show (label187);
-  gtk_box_pack_start (GTK_BOX (hbox23), label187, TRUE, TRUE, 0);
-
-  label188 = gtk_label_new (_("400"));
-  gtk_widget_set_name (label188, "label188");
-  gtk_widget_show (label188);
-  gtk_box_pack_start (GTK_BOX (hbox23), label188, TRUE, TRUE, 0);
-
-  label189 = gtk_label_new (_("503"));
-  gtk_widget_set_name (label189, "label189");
-  gtk_widget_show (label189);
-  gtk_box_pack_start (GTK_BOX (hbox23), label189, TRUE, TRUE, 0);
-
-  label190 = gtk_label_new (_("634"));
-  gtk_widget_set_name (label190, "label190");
-  gtk_widget_show (label190);
-  gtk_box_pack_start (GTK_BOX (hbox23), label190, TRUE, TRUE, 0);
-
-  label191 = gtk_label_new (_("800"));
-  gtk_widget_set_name (label191, "label191");
-  gtk_widget_show (label191);
-  gtk_box_pack_start (GTK_BOX (hbox23), label191, TRUE, TRUE, 0);
-
-  label192 = gtk_label_new (_("1K"));
-  gtk_widget_set_name (label192, "label192");
-  gtk_widget_show (label192);
-  gtk_box_pack_start (GTK_BOX (hbox23), label192, TRUE, TRUE, 0);
-
-  label193 = gtk_label_new (_("1K2"));
-  gtk_widget_set_name (label193, "label193");
-  gtk_widget_show (label193);
-  gtk_box_pack_start (GTK_BOX (hbox23), label193, TRUE, TRUE, 0);
-
-  label194 = gtk_label_new (_("1K5"));
-  gtk_widget_set_name (label194, "label194");
-  gtk_widget_show (label194);
-  gtk_box_pack_start (GTK_BOX (hbox23), label194, TRUE, TRUE, 0);
-
-  label195 = gtk_label_new (_("2K"));
-  gtk_widget_set_name (label195, "label195");
-  gtk_widget_show (label195);
-  gtk_box_pack_start (GTK_BOX (hbox23), label195, TRUE, TRUE, 0);
-
-  label196 = gtk_label_new (_("3K2"));
-  gtk_widget_set_name (label196, "label196");
-  gtk_widget_show (label196);
-  gtk_box_pack_start (GTK_BOX (hbox23), label196, TRUE, TRUE, 0);
-
-  label197 = gtk_label_new (_("4K"));
-  gtk_widget_set_name (label197, "label197");
-  gtk_widget_show (label197);
-  gtk_box_pack_start (GTK_BOX (hbox23), label197, TRUE, TRUE, 0);
-
-  label198 = gtk_label_new (_("5K"));
-  gtk_widget_set_name (label198, "label198");
-  gtk_widget_show (label198);
-  gtk_box_pack_start (GTK_BOX (hbox23), label198, TRUE, TRUE, 0);
-
-  label199 = gtk_label_new (_("6K"));
-  gtk_widget_set_name (label199, "label199");
-  gtk_widget_show (label199);
-  gtk_box_pack_start (GTK_BOX (hbox23), label199, TRUE, TRUE, 0);
-
-  label200 = gtk_label_new (_("8K"));
-  gtk_widget_set_name (label200, "label200");
-  gtk_widget_show (label200);
-  gtk_box_pack_start (GTK_BOX (hbox23), label200, TRUE, TRUE, 0);
-
-  label201 = gtk_label_new (_("10K"));
-  gtk_widget_set_name (label201, "label201");
-  gtk_widget_show (label201);
-  gtk_box_pack_start (GTK_BOX (hbox23), label201, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (label201, 24, -2);
-
-  label202 = gtk_label_new (_("12K"));
-  gtk_widget_set_name (label202, "label202");
-  gtk_widget_show (label202);
-  gtk_box_pack_start (GTK_BOX (hbox23), label202, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (label202, 24, -2);
-
-  label203 = gtk_label_new (_("16K"));
-  gtk_widget_set_name (label203, "label203");
-  gtk_widget_show (label203);
-  gtk_box_pack_start (GTK_BOX (hbox23), label203, TRUE, TRUE, 0);
-
-  label204 = gtk_label_new ("");
-  gtk_widget_set_name (label204, "label204");
-  gtk_widget_show (label204);
-  gtk_box_pack_start (GTK_BOX (hbox23), label204, FALSE, TRUE, 0);
-  gtk_widget_set_size_request (label204, 5, -2);
-  gtk_label_set_justify (GTK_LABEL (label204), GTK_JUSTIFY_LEFT);
+  EQ_curve_lbl = gtk_label_new (_("     "));
+  gtk_widget_set_name (EQ_curve_lbl, "EQ_curve_lbl");
+  gtk_widget_show (EQ_curve_lbl);
+  gtk_frame_set_label_widget (GTK_FRAME (frame9), EQ_curve_lbl);
+  gtk_label_set_justify (GTK_LABEL (EQ_curve_lbl), GTK_JUSTIFY_LEFT);
 
   label48 = gtk_label_new (_("Graph"));
   gtk_widget_set_name (label48, "label48");
@@ -2751,6 +2580,24 @@ create_window1 (void)
   g_signal_connect ((gpointer) in_trim_scale, "value_changed",
                     G_CALLBACK (on_in_trim_scale_value_changed),
                     NULL);
+  g_signal_connect ((gpointer) eqb1, "realize",
+                    G_CALLBACK (on_eqb1_realize),
+                    NULL);
+  g_signal_connect ((gpointer) EQ_curve_event_box, "motion_notify_event",
+                    G_CALLBACK (on_EQ_curve_event_box_motion_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) EQ_curve, "configure_event",
+                    G_CALLBACK (on_EQ_curve_configure_event),
+                    NULL);
+  g_signal_connect ((gpointer) EQ_curve, "expose_event",
+                    G_CALLBACK (on_EQ_curve_expose_event),
+                    NULL);
+  g_signal_connect ((gpointer) EQ_curve, "realize",
+                    G_CALLBACK (on_EQ_curve_realize),
+                    NULL);
+  g_signal_connect ((gpointer) EQ_curve_lbl, "realize",
+                    G_CALLBACK (on_EQ_curve_lbl_realize),
+                    NULL);
   g_signal_connect ((gpointer) low2mid, "value_changed",
                     G_CALLBACK (on_low2mid_value_changed),
                     NULL);
@@ -2950,38 +2797,10 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, label210, "label210");
   GLADE_HOOKUP_OBJECT (window1, label207, "label207");
   GLADE_HOOKUP_OBJECT (window1, vbox99, "vbox99");
-  GLADE_HOOKUP_OBJECT (window1, eventbox47, "eventbox47");
-  GLADE_HOOKUP_OBJECT (window1, drawingarea1, "drawingarea1");
-  GLADE_HOOKUP_OBJECT (window1, hbox23, "hbox23");
-  GLADE_HOOKUP_OBJECT (window1, label176, "label176");
-  GLADE_HOOKUP_OBJECT (window1, label177, "label177");
-  GLADE_HOOKUP_OBJECT (window1, label178, "label178");
-  GLADE_HOOKUP_OBJECT (window1, label179, "label179");
-  GLADE_HOOKUP_OBJECT (window1, label180, "label180");
-  GLADE_HOOKUP_OBJECT (window1, label181, "label181");
-  GLADE_HOOKUP_OBJECT (window1, label182, "label182");
-  GLADE_HOOKUP_OBJECT (window1, label183, "label183");
-  GLADE_HOOKUP_OBJECT (window1, label184, "label184");
-  GLADE_HOOKUP_OBJECT (window1, label185, "label185");
-  GLADE_HOOKUP_OBJECT (window1, label186, "label186");
-  GLADE_HOOKUP_OBJECT (window1, label187, "label187");
-  GLADE_HOOKUP_OBJECT (window1, label188, "label188");
-  GLADE_HOOKUP_OBJECT (window1, label189, "label189");
-  GLADE_HOOKUP_OBJECT (window1, label190, "label190");
-  GLADE_HOOKUP_OBJECT (window1, label191, "label191");
-  GLADE_HOOKUP_OBJECT (window1, label192, "label192");
-  GLADE_HOOKUP_OBJECT (window1, label193, "label193");
-  GLADE_HOOKUP_OBJECT (window1, label194, "label194");
-  GLADE_HOOKUP_OBJECT (window1, label195, "label195");
-  GLADE_HOOKUP_OBJECT (window1, label196, "label196");
-  GLADE_HOOKUP_OBJECT (window1, label197, "label197");
-  GLADE_HOOKUP_OBJECT (window1, label198, "label198");
-  GLADE_HOOKUP_OBJECT (window1, label199, "label199");
-  GLADE_HOOKUP_OBJECT (window1, label200, "label200");
-  GLADE_HOOKUP_OBJECT (window1, label201, "label201");
-  GLADE_HOOKUP_OBJECT (window1, label202, "label202");
-  GLADE_HOOKUP_OBJECT (window1, label203, "label203");
-  GLADE_HOOKUP_OBJECT (window1, label204, "label204");
+  GLADE_HOOKUP_OBJECT (window1, EQ_curve_event_box, "EQ_curve_event_box");
+  GLADE_HOOKUP_OBJECT (window1, frame9, "frame9");
+  GLADE_HOOKUP_OBJECT (window1, EQ_curve, "EQ_curve");
+  GLADE_HOOKUP_OBJECT (window1, EQ_curve_lbl, "EQ_curve_lbl");
   GLADE_HOOKUP_OBJECT (window1, label48, "label48");
   GLADE_HOOKUP_OBJECT (window1, hbox24, "hbox24");
   GLADE_HOOKUP_OBJECT (window1, vbox82, "vbox82");

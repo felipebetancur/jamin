@@ -117,3 +117,31 @@ on_label_High_realize                  (GtkWidget       *widget,
 void
 on_window1_show                        (GtkWidget       *widget,
                                         gpointer         user_data);
+
+gboolean
+on_EQ_curve_configure_event            (GtkWidget       *widget,
+                                        GdkEventConfigure *event,
+                                        gpointer         user_data);
+
+gboolean
+on_EQ_curve_expose_event               (GtkWidget       *widget,
+                                        GdkEventExpose  *event,
+                                        gpointer         user_data);
+
+void
+on_EQ_curve_realize                    (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_EQ_curve_lbl_realize                (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_eqb1_realize                        (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+gboolean
+on_EQ_curve_event_box_motion_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventMotion  *event,
+                                        gpointer         user_data);
