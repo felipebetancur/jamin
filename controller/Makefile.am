@@ -6,7 +6,7 @@ jamincont_1912_so_LDADD = @OSC_LIBS@
 EXTRA_DIST = jamincont_1912.xml ladspa-swh.dtd xml2c.pl
 LINK = gcc -nostartfiles -shared -Wl,-Bsymbolic -lc -o $@
 
-%.c: %.xml
-	./xml2c.pl $*.xml > $*.c
+%.so.c: %.xml
+	./xml2c.pl $*.xml > $*.so.c
 
 .PRECIOUS:      %.c
