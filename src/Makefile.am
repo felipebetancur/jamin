@@ -49,7 +49,9 @@ jamin_SOURCES = \
 	transport.c transport.h \
 	scenes.c scenes.h \
 	preferences.c preferences.h \
-	help.c help.h
+	help.c help.h \
+	denormal-kill.h \
+	biquad.h
 
 jamin_scene_CFLAGS 	= @OSC_CFLAGS@
 jamin_scene_LDADD 	= @OSC_LIBS@

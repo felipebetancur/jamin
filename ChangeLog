@@ -1,3 +1,17 @@
+2004-10-21  Steve Harris  <steve@plugin.org.uk>
+
+	  The code now uses IIR biquads to do the corssover. Theres a lopass
+	  that splits off the lower band, mid+high is got by inverting that
+	  filter then mid is extracted by lowpassing the mid+high signal,
+	  and the 2nd filter is inverted to get the high band.
+
+	  I'm not sure this is a good technique, but it seems to work.
+
+	* src/process.c: Made a new function run_eq_iir() that uses IIR filters
+	  to do the crossover.
+	* src/biquad.h: Added, from sqh-plugins.
+	* src/denomral-kill.h: split from process.c.
+
 2004-10-05  Steve Harris  <steve@plugin.org.uk>
 
 	* src/Makefile.am: Bugfix from Mario Lang to allow building on machines

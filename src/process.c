@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.59 2004/10/03 21:44:15 theno23 Exp $
+ *  $Id: process.c,v 1.60 2004/10/21 21:09:06 theno23 Exp $
  */
 
 #include <math.h>
@@ -31,6 +31,8 @@
 #include "intrim.h"
 #include "io.h"
 #include "db.h"
+#include "denormal-kill.h"
+#include "biquad.h"
 
 #define BUF_MASK   (BINS-1)		/* BINS is a power of two */
 
@@ -58,7 +60,9 @@ static float gain_fix[BANDS];
 static float bin_peak[BINS];
 static int bands[BINS];
 static float in_buf[NCHANNELS][BINS];
+static float mid_buf[NCHANNELS][BINS];
 static float out_buf[NCHANNELS][XO_NBANDS][BINS];
+static biquad xo_filt[NCHANNELS][XO_NBANDS-1];
 static float window[BINS];
 static fft_data *real;
 static fft_data *comp;
@@ -98,15 +102,8 @@ float sample_rate = 0.0f;
 const jack_nframes_t dsp_block_size = BINS / OVER_SAMP;
 
 void run_eq(unsigned int port, unsigned int in_pos);
+void run_eq_iir(unsigned int port, unsigned int in_pos);
 void run_width(int xo_band, float *left, float *right, int nframes);
-
-static inline void denormal_kill(float *v);
-static inline void denormal_kill(float *v)
-{
-    static const float offset = 1e-18f;
-    *v += offset;
-    *v -= offset;
-}
 
 void process_init(float fs)
 {
@@ -298,6 +295,87 @@ void run_eq(unsigned int port, unsigned int in_ptr)
     }
 }
 
+/* this is like run_eq except that it only uses a FFT to do the EQ, 
+   the crossover is handled by IIR filters */
+
+void run_eq_iir(unsigned int port, unsigned int in_ptr)
+{
+    const float fix = 2.5f / ((float) BINS * (float) OVER_SAMP);
+    float peak;
+    unsigned int i, j;
+    int targ_bin;
+    float *peak_data;
+
+    for (i = 0; i < BINS; i++) {
+	real[i] = window[i] * in_buf[port][(in_ptr + i) & BUF_MASK];
+    }
+
+    fftwf_execute(plan_rc);
+
+    /* run the EQ + spectrum an. + xover process */
+
+    if (spectrum_mode == SPEC_PRE_EQ) {
+	peak_data = comp;
+    } else {
+	peak_data = comp_tmp;
+    }
+
+    memset(comp_tmp, 0, BINS * sizeof(fft_data));
+    targ_bin = xover_fa / sample_rate * ((float)BINS + 0.5f);
+
+    comp_tmp[0] = comp[0] * eq_coefs[0];
+    if (comp_tmp[0] > bin_peak[0]) bin_peak[0] = comp_tmp[0];
+    
+    for (i = 1; i < BINS / 2 - 1; i++) {
+	const float eq_gain = xo_band_action[XO_LOW] == MUTE ? 0.0f :
+				(eq_bypass ? 1.0f : eq_coefs[i]);
+
+	comp_tmp[i] = comp[i] * eq_gain;
+	comp_tmp[BINS - i] = comp[BINS - i] * eq_gain;
+
+	peak = sqrtf(peak_data[i] * peak_data[i] + peak_data[BINS - i] *
+		peak_data[BINS - i]);
+	if (peak > bin_peak[i]) {
+	    bin_peak[i] = peak;
+	}
+    }
+    fftwf_execute(plan_cr);
+    for (j = 0; j < BINS; j++) {
+	mid_buf[port][(in_ptr + j) & BUF_MASK] += real[j] * fix * window[j];
+    }
+
+    lp_set_params(&xo_filt[port][0], xover_fa, 0.25, 44100.0f);
+    lp_set_params(&xo_filt[port][1], xover_fb - 20.0f, 0.25, 44100.0f);
+
+//XXX need to fill other bands
+    for (j = 0; j < BINS; j++) {
+	const float x = mid_buf[port][(in_ptr + j) & BUF_MASK];
+	const float a = biquad_run(&xo_filt[port][0], x);
+	const float b = biquad_run(&xo_filt[port][1], x - a);
+	const float c = (x - a) - b;
+
+	out_buf[port][XO_LOW][(in_ptr + j) & BUF_MASK] = a;
+	out_buf[port][XO_MID][(in_ptr + j) & BUF_MASK] = b;
+	out_buf[port][XO_HIGH][(in_ptr + j) & BUF_MASK] = c;
+    }
+
+    if (xo_band_action[XO_LOW] == MUTE) {
+	for (j = 0; j < BINS; j++) {
+	    out_buf[port][XO_LOW][(in_ptr + j) & BUF_MASK] = 0.0f;
+	}
+    }
+    if (xo_band_action[XO_MID] == MUTE) {
+	for (j = 0; j < BINS; j++) {
+	    out_buf[port][XO_MID][(in_ptr + j) & BUF_MASK] = 0.0f;
+	}
+    }
+    if (xo_band_action[XO_HIGH] == MUTE) {
+	for (j = 0; j < BINS; j++) {
+	    out_buf[port][XO_HIGH][(in_ptr + j) & BUF_MASK] = 0.0f;
+	}
+    }
+}
+
 #define EPSILON 0.0000001f		/* small positive number */
 float bin_peak_read_and_clear(int bin)
 {
@@ -367,6 +445,8 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	    out_buf[port][XO_MID][op] = 0.0f;
 	    out_tmp[port][XO_HIGH][pos] = out_buf[port][XO_HIGH][op];
 	    out_buf[port][XO_HIGH][op] = 0.0f;
+
+	    mid_buf[port][op] = 0.0f;
 	}
 
 	in_ptr = (in_ptr + 1) & BUF_MASK;
@@ -378,8 +458,10 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 		eq_bypass = eq_bypass_pending;
 		limiter_bypass = limiter_bypass_pending;
 
-		run_eq(CHANNEL_L, in_ptr);
-		run_eq(CHANNEL_R, in_ptr);
+		//run_eq(CHANNEL_L, in_ptr);
+		//run_eq(CHANNEL_R, in_ptr);
+		run_eq_iir(CHANNEL_L, in_ptr);
+		run_eq_iir(CHANNEL_R, in_ptr);
 	    }
 	    /* Work out when we can run it again */
 	    n_calc_pt = (in_ptr + dsp_block_size) & BUF_MASK;
@@ -573,6 +655,9 @@ void process_set_ws_boost(float val)
 void process_set_xo_band_action(int band, int action)
 {
     assert(action == ACTIVE || action == MUTE || action == BYPASS);
+
+char *desc[] = {"active", "mute", "bypass", "huh!"};
+printf("B%d -> %d (%s)\n", band, action, desc[action]);
 
     xo_band_action_pending[band] = action;
 }

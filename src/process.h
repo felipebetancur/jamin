@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.h,v 1.26 2004/06/06 12:14:09 theno23 Exp $
+ *  $Id: process.h,v 1.27 2004/10/21 21:09:06 theno23 Exp $
  */
 
 #ifndef PROCESS_H
@@ -20,7 +20,7 @@
 #include <jack/jack.h>
 
 #define BINS		2048		/* must be power of two */
-#define OVER_SAMP 	8		/* buffer overlap count, must
+#define OVER_SAMP 	16		/* buffer overlap count, must
 					   be a factor of BINS */
 #define BANDS 		30
 
