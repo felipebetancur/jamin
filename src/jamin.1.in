@@ -1,10 +1,12 @@
-.TH JAMIN "1" @VERSION@ "January 2004" "Audio"
+.TH JAMIN "1" @VERSION@ "August 2004" "Audio"
 .SH "NAME"
 jamin \- JACK Audio Mastering interface
 
 .SH "SYNOPSIS"
 \fBjamin\fR [\fI options \fR] [\fI inport1 inport2\fR [\fI outport1
 outport2\fR ]]
+
+\fBjamin-scene\fR \fI<scene-num>\fR
 
 .SH "DESCRIPTION"
 The \fBjamin\fR command invokes JAMin, the JACK Audio Mastering
@@ -91,6 +93,15 @@ elsewhere, if desired.
 .B ~/.jamin/default.jam
 If this session file exists, it is loaded by default on startup, except
 when overridden by the \fB\-f\fR option.
+
+.SH IPC
+.PP
+If JAMin has been built with OSC support enabled it responds to UDP OSC
+messages on port 4444.
+.PP
+Messages to /jamin/scene with a numerical argument cause the scene number to
+change. A commaind line tool (\fBjamin-scene\fR) and LADSPA Plugin
+(\fBjamin_cont\fR, ID:1912) are provided for remote scene changes.
 
 .SH "EXAMPLES"
 .PP 

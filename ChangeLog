@@ -1,3 +1,7 @@
+2004-08-01  Steve Harris  <steve@plugin.org.uk>
+
+	* jamin.1.in: Added notes saying now the OSC method can be used.
+
 2004-07-17  Steve Harris  <steve@plugin.org.uk>
 
 	* limiter*.c: Replaced limiter code with code to drive new limiter
