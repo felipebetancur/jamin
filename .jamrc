@@ -1,0 +1,167 @@
+# pixmap_path "<dir 1>:<dir 2>:<dir 3>:..."
+#
+#
+# Change this path or link it to your pixmaps dir
+#
+
+ pixmap_path "/art/code/jam/pixmaps"
+ 
+#
+# style <name> [= <name>]
+# {
+#   <option>
+# }
+#
+# widget <widget_set> style <style_name>
+# widget_class <widget_class_set> style <style_name>
+
+# Here is a list of all the possible states.  Note that some do not apply to
+# certain widgets.
+#
+# NORMAL - The normal state of a widget, without the mouse over top of
+# it, and not being pressed, etc.
+#
+# PRELIGHT - When the mouse is over top of the widget, colors defined
+# using this state will be in effect.
+#
+# ACTIVE - When the widget is pressed or clicked it will be active, and
+# the attributes assigned by this tag will be in effect.
+#
+# INSENSITIVE - When a widget is set insensitive, and cannot be
+# activated, it will take these attributes.
+#
+# SELECTED - When an object is selected, it takes these attributes.
+#
+# Given these states, we can set the attributes of the widgets in each of
+# these states using the following directives.
+#
+# fg - Sets the foreground color of a widget.
+# fg - Sets the background color of a widget.
+# bg_pixmap - Sets the background of a widget to a tiled pixmap.
+# font - Sets the font to be used with the given widget.
+#
+
+# This sets a style called "button".  The name is not really important, as
+# it is assigned to the actual widgets at the bottom of the file.
+
+style "gold"
+{
+  #This sets the padding around the window to the pixmap specified.
+  #bg_pixmap[<STATE>] = "<pixmap filename>"
+   bg_pixmap[NORMAL] = "gold.xpm"
+  
+  #Sets the background color to red when in the "NORMAL"
+  #state.
+
+  #bg[NORMAL] = { 0, 0, 0 }
+
+}
+
+style "maori"
+{
+  #This sets the padding around the window to the pixmap specified.
+  #bg_pixmap[<STATE>] = "<pixmap filename>"
+   bg_pixmap[NORMAL] = "maori.xpm"
+  
+  #Sets the background color to red when in the "NORMAL"
+  #state.
+
+  #bg[NORMAL] = { 0, 0, 0 }
+
+}
+
+
+style "scale"
+{
+  #Sets the colors for the faders
+  
+  fg[NORMAL] = { 0.74, 0.85, 0.93 }	# sky blue nee. ardour
+  bg[NORMAL] = {0.32, 0.39, 0.45 }	# grey blue nee. ardour
+  bg[PRELIGHT] = {0.32, 0.39, 0.45 }  
+
+}
+
+style "button"
+{
+  # This shows all the possible states for a button.  The only one that
+  # doesn't apply is the SELECTED state.
+  
+  fg[NORMAL] = { 0, 0, 0 } 		# black
+  fg[ACTIVE] = {0.32, 0.39, 0.45 } 	# grey blue nee. ardour
+  fg[PRELIGHT] = { 0, 0, 0 }
+  bg[NORMAL] = {0.32, 0.39, 0.45 }	
+  bg[ACTIVE] = { 0, 0, 0 }
+  bg[PRELIGHT] = {0.32, 0.39, 0.45 }	
+}
+
+# In this example, we inherit the attributes of the "button" style and then
+# override the font and background color when prelit to create a new
+# "main_button" style.
+
+style "main_button" = "button"
+{
+  font = "-adobe-helvetica-medium-r-normal--*-100-*-*-*-*-*-*"
+  bg[PRELIGHT] = { 1.0, 0, 0 } 	# red
+  bg[NORMAL] = { 1.0, 0, 0 }
+  bg[ACTIVE] = { 1.0, 0, 0 }
+  fg[NORMAL] = { 1.0, 0, 0 }
+  fg[ACTIVE] = { 1.0, 0, 0 }
+}
+
+style "toggle_button" = "button"
+{
+  fg[NORMAL] = { 1.0, 0, 0 }
+  fg[ACTIVE] = { 1.0, 0, 0 }
+  
+  # This sets the background pixmap of the toggle_button to that of its
+  # parent widget (as defined in the application).
+  bg_pixmap[NORMAL] = "<parent>"
+}
+
+style "text"
+{
+	fg[NORMAL] = { 0.74, 0.85, 0.93 }	# sky blue
+	fg[ACTIVE] = { 0.74, 0.85, 0.93 }
+	fg[PRELIGHT] = { 0.74, 0.85, 0.93 }
+	fg[SELECTED] = { 0.74, 0.85, 0.93 }
+	fg[INSENSITIVE] = { 0.74, 0.85, 0.93 }
+   	bg_pixmap[NORMAL] = "<parent>"
+   	bg_pixmap[ACTIVE] = "<parent>"
+   	bg_pixmap[PRELIGHT] = "<parent>"
+   	bg_pixmap[INSENSITIVE] = "<parent>"
+
+}
+
+style "ruler"
+{
+  font = "-adobe-helvetica-medium-r-normal--*-80-*-*-*-*-*-*"
+}
+
+# pixmap_path "~/.pixmaps"
+
+# These set the widget types to use the styles defined above.
+# The widget types are listed in the class hierarchy, but could probably be
+# just listed in this document for the users reference.
+
+widget_class "GtkWindow" style "maori"
+widget_class "GtkDialog" style "gold"
+widget_class "GtkFileSelection" style "gold"
+
+# comps and limiter colors
+widget_class "*Gtk*Box" style "maori"
+
+widget_class "*Gtk*Label" style "text"
+widget_class "*Gtk*Scale" style "scale"
+widget_class "*GtkCheckButton*" style "toggle_button"
+widget_class "*GtkRadioButton*" style "toggle_button"
+widget_class "*GtkButton*" style "button"
+widget_class "*Ruler" style "ruler"
+widget_class "*GtkText" style "text"
+
+# notebook  color
+widget_class "*GtkNotebook" style "text"
+
+# This sets all the buttons that are children of the "main window" to
+# the main_button style.  These must be documented to be taken advantage of.
+widget "window1.*GtkButton*" style "main_button"
+

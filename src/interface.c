@@ -45,105 +45,240 @@ create_window1 (void)
   GtkWidget *vbox78;
   GtkWidget *notebook1;
   GtkWidget *hbox21;
+  GtkWidget *eventbox2;
   GtkWidget *eqb_hbox;
   GtkWidget *vbox41;
+  GtkWidget *eventbox3;
   GtkWidget *eqb1;
   GtkWidget *label131;
   GtkWidget *vbox42;
   GtkWidget *vbox52;
-  GtkWidget *eqb2;
+  GtkWidget *eventbox4;
+  GtkWidget *eq2b;
   GtkWidget *label132;
   GtkWidget *vbox43;
   GtkWidget *vbox53;
-  GtkWidget *eqb3;
+  GtkWidget *eventbox5;
+  GtkWidget *eq3b;
   GtkWidget *label133;
   GtkWidget *vbox44;
   GtkWidget *vbox54;
-  GtkWidget *eqb4;
+  GtkWidget *eventbox6;
+  GtkWidget *eq4b;
   GtkWidget *label134;
   GtkWidget *vbox45;
   GtkWidget *vbox55;
-  GtkWidget *eqb5;
+  GtkWidget *eventbox7;
+  GtkWidget *eq5b;
   GtkWidget *label135;
   GtkWidget *vbox46;
   GtkWidget *vbox56;
-  GtkWidget *eqb6;
+  GtkWidget *eventbox8;
+  GtkWidget *eq6b;
   GtkWidget *label136;
   GtkWidget *vbox47;
   GtkWidget *vbox57;
-  GtkWidget *eqb7;
+  GtkWidget *eventbox9;
+  GtkWidget *eq7b;
   GtkWidget *label137;
   GtkWidget *vbox48;
   GtkWidget *vbox58;
-  GtkWidget *eqb8;
+  GtkWidget *eventbox10;
+  GtkWidget *eq8b;
   GtkWidget *label138;
   GtkWidget *vbox50;
   GtkWidget *vbox59;
-  GtkWidget *eqb9;
+  GtkWidget *eventbox11;
+  GtkWidget *eq9b;
   GtkWidget *label139;
   GtkWidget *vbox49;
   GtkWidget *vbox60;
-  GtkWidget *eqb10;
+  GtkWidget *eventbox12;
+  GtkWidget *eq10b;
   GtkWidget *label140;
   GtkWidget *vbox51;
   GtkWidget *vbox61;
-  GtkWidget *eqb11;
+  GtkWidget *eventbox13;
+  GtkWidget *eq11b;
   GtkWidget *label141;
   GtkWidget *vbox62;
-  GtkWidget *eqb12;
+  GtkWidget *eventbox14;
+  GtkWidget *eq12b;
   GtkWidget *label142;
   GtkWidget *vbox63;
-  GtkWidget *eqb13;
+  GtkWidget *eventbox15;
+  GtkWidget *eq13b;
   GtkWidget *label143;
   GtkWidget *vbox64;
-  GtkWidget *eqb14;
+  GtkWidget *eventbox16;
+  GtkWidget *eq14b;
   GtkWidget *label144;
   GtkWidget *vbox65;
-  GtkWidget *eqb15;
+  GtkWidget *eventbox17;
+  GtkWidget *eq15b;
   GtkWidget *label145;
   GtkWidget *vbox66;
-  GtkWidget *eqb16;
+  GtkWidget *eventbox18;
+  GtkWidget *eq16b;
   GtkWidget *label146;
   GtkWidget *vbox67;
-  GtkWidget *eqb17;
+  GtkWidget *eventbox19;
+  GtkWidget *eq17b;
   GtkWidget *label147;
   GtkWidget *vbox68;
-  GtkWidget *eqb18;
+  GtkWidget *eventbox20;
+  GtkWidget *eq18b;
   GtkWidget *label148;
   GtkWidget *vbox69;
-  GtkWidget *eqb19;
+  GtkWidget *eventbox21;
+  GtkWidget *eq19b;
   GtkWidget *label149;
   GtkWidget *vbox70;
-  GtkWidget *eqb20;
+  GtkWidget *eventbox22;
+  GtkWidget *eq20b;
   GtkWidget *label150;
   GtkWidget *vbox71;
-  GtkWidget *eqb21;
+  GtkWidget *eventbox23;
+  GtkWidget *eq21b;
   GtkWidget *label151;
   GtkWidget *vbox72;
-  GtkWidget *eqb22;
+  GtkWidget *eventbox24;
+  GtkWidget *eq22b;
   GtkWidget *label152;
   GtkWidget *vbox73;
-  GtkWidget *eqb23;
+  GtkWidget *eventbox25;
+  GtkWidget *eq23b;
   GtkWidget *label153;
   GtkWidget *vbox74;
-  GtkWidget *eqb24;
+  GtkWidget *eventbox26;
+  GtkWidget *eventbox27;
+  GtkWidget *eq24b;
   GtkWidget *label154;
   GtkWidget *vbox75;
-  GtkWidget *eqb25;
+  GtkWidget *eventbox28;
+  GtkWidget *eq25b;
   GtkWidget *label155;
   GtkWidget *vbox76;
-  GtkWidget *eqb26;
+  GtkWidget *eventbox29;
+  GtkWidget *eq26b;
   GtkWidget *label156;
   GtkWidget *vbox77;
-  GtkWidget *eqb27;
+  GtkWidget *eventbox30;
+  GtkWidget *eq27b;
   GtkWidget *label157;
   GtkWidget *vbox80;
-  GtkWidget *eqb28;
+  GtkWidget *eventbox31;
+  GtkWidget *eq28b;
   GtkWidget *label158;
   GtkWidget *label47;
-  GtkWidget *empty_notebook_page;
+  GtkWidget *hbox25;
+  GtkWidget *vbox97;
+  GtkWidget *label205;
+  GtkWidget *label208;
+  GtkWidget *label206;
+  GtkWidget *label210;
+  GtkWidget *label207;
+  GtkWidget *vbox99;
+  GtkWidget *eventbox47;
+  GtkWidget *drawingarea1;
+  GtkWidget *hbox23;
+  GtkWidget *label176;
+  GtkWidget *label177;
+  GtkWidget *label178;
+  GtkWidget *label179;
+  GtkWidget *label180;
+  GtkWidget *label181;
+  GtkWidget *label182;
+  GtkWidget *label183;
+  GtkWidget *label184;
+  GtkWidget *label185;
+  GtkWidget *label186;
+  GtkWidget *label187;
+  GtkWidget *label188;
+  GtkWidget *label189;
+  GtkWidget *label190;
+  GtkWidget *label191;
+  GtkWidget *label192;
+  GtkWidget *label193;
+  GtkWidget *label194;
+  GtkWidget *label195;
+  GtkWidget *label196;
+  GtkWidget *label197;
+  GtkWidget *label198;
+  GtkWidget *label199;
+  GtkWidget *label200;
+  GtkWidget *label201;
+  GtkWidget *label202;
+  GtkWidget *label203;
+  GtkWidget *label204;
   GtkWidget *label48;
+  GtkWidget *hbox24;
+  GtkWidget *vbox82;
+  GtkWidget *label159;
+  GtkWidget *lsgain;
+  GtkWidget *vscale91;
+  GtkWidget *vbox83;
+  GtkWidget *label160;
+  GtkWidget *lsfreq;
+  GtkWidget *vscale92;
+  GtkWidget *vbox84;
+  GtkWidget *label161;
+  GtkWidget *lsslope;
+  GtkWidget *vscale93;
+  GtkWidget *vbox85;
+  GtkWidget *label162;
+  GtkWidget *b1gain;
+  GtkWidget *vscale94;
+  GtkWidget *vbox86;
+  GtkWidget *label163;
+  GtkWidget *b1freq;
+  GtkWidget *vscale95;
+  GtkWidget *vbox87;
+  GtkWidget *label164;
+  GtkWidget *b1bw;
+  GtkWidget *vscale96;
+  GtkWidget *vbox88;
+  GtkWidget *label165;
+  GtkWidget *b2gain;
+  GtkWidget *vscale97;
+  GtkWidget *vbox89;
+  GtkWidget *label166;
+  GtkWidget *b2freq;
+  GtkWidget *vscale98;
+  GtkWidget *vbox90;
+  GtkWidget *label167;
+  GtkWidget *b2bw;
+  GtkWidget *vscale99;
+  GtkWidget *vbox91;
+  GtkWidget *label168;
+  GtkWidget *b3gain;
+  GtkWidget *vscale100;
+  GtkWidget *vbox92;
+  GtkWidget *label169;
+  GtkWidget *b3freq;
+  GtkWidget *vscale101;
+  GtkWidget *vbox93;
+  GtkWidget *label170;
+  GtkWidget *b3bw;
+  GtkWidget *vscale102;
+  GtkWidget *vbox94;
+  GtkWidget *label171;
+  GtkWidget *hsgain;
+  GtkWidget *vscale103;
+  GtkWidget *vbox95;
+  GtkWidget *label172;
+  GtkWidget *hsfreq;
+  GtkWidget *vscale104;
+  GtkWidget *vbox96;
+  GtkWidget *label173;
+  GtkWidget *hsslope;
+  GtkWidget *vscale105;
   GtkWidget *label49;
+  GtkWidget *hbox26;
+  GtkWidget *label211;
+  GtkWidget *eventbox48;
+  GtkWidget *drawingarea2;
+  GtkWidget *label212;
   GtkWidget *label78;
   GtkWidget *cross_lbl;
   GtkWidget *table14;
@@ -264,6 +399,9 @@ create_window1 (void)
   GtkWidget *button9;
   GtkWidget *button10;
   GtkWidget *quit;
+  GtkTooltips *tooltips;
+
+  tooltips = gtk_tooltips_new ();
 
   window1 = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_widget_set_name (window1, "window1");
@@ -359,10 +497,15 @@ create_window1 (void)
   gtk_widget_show (hbox21);
   gtk_container_add (GTK_CONTAINER (notebook1), hbox21);
 
+  eventbox2 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox2, "eventbox2");
+  gtk_widget_show (eventbox2);
+  gtk_box_pack_start (GTK_BOX (hbox21), eventbox2, FALSE, FALSE, 0);
+
   eqb_hbox = gtk_hbox_new (TRUE, 0);
   gtk_widget_set_name (eqb_hbox, "eqb_hbox");
   gtk_widget_show (eqb_hbox);
-  gtk_box_pack_start (GTK_BOX (hbox21), eqb_hbox, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (eventbox2), eqb_hbox);
   gtk_container_set_border_width (GTK_CONTAINER (eqb_hbox), 1);
 
   vbox41 = gtk_vbox_new (FALSE, 0);
@@ -370,10 +513,16 @@ create_window1 (void)
   gtk_widget_show (vbox41);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox41, TRUE, TRUE, 0);
 
+  eventbox3 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox3, "eventbox3");
+  gtk_widget_show (eventbox3);
+  gtk_box_pack_start (GTK_BOX (vbox41), eventbox3, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox3, _("25 Hz"), NULL);
+
   eqb1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
   gtk_widget_set_name (eqb1, "eqb1");
   gtk_widget_show (eqb1);
-  gtk_box_pack_start (GTK_BOX (vbox41), eqb1, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (eventbox3), eqb1);
   gtk_scale_set_digits (GTK_SCALE (eqb1), 0);
   gtk_range_set_inverted (GTK_RANGE (eqb1), TRUE);
 
@@ -393,12 +542,18 @@ create_window1 (void)
   gtk_widget_show (vbox52);
   gtk_box_pack_start (GTK_BOX (vbox42), vbox52, TRUE, TRUE, 0);
 
-  eqb2 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb2, "eqb2");
-  gtk_widget_show (eqb2);
-  gtk_box_pack_start (GTK_BOX (vbox52), eqb2, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb2), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb2), TRUE);
+  eventbox4 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox4, "eventbox4");
+  gtk_widget_show (eventbox4);
+  gtk_box_pack_start (GTK_BOX (vbox52), eventbox4, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox4, _("31 Hz"), NULL);
+
+  eq2b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq2b, "eq2b");
+  gtk_widget_show (eq2b);
+  gtk_container_add (GTK_CONTAINER (eventbox4), eq2b);
+  gtk_scale_set_digits (GTK_SCALE (eq2b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq2b), TRUE);
 
   label132 = gtk_label_new (_("31"));
   gtk_widget_set_name (label132, "label132");
@@ -416,12 +571,18 @@ create_window1 (void)
   gtk_widget_show (vbox53);
   gtk_box_pack_start (GTK_BOX (vbox43), vbox53, TRUE, TRUE, 0);
 
-  eqb3 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb3, "eqb3");
-  gtk_widget_show (eqb3);
-  gtk_box_pack_start (GTK_BOX (vbox53), eqb3, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb3), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb3), TRUE);
+  eventbox5 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox5, "eventbox5");
+  gtk_widget_show (eventbox5);
+  gtk_box_pack_start (GTK_BOX (vbox53), eventbox5, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox5, _("39 Hz"), NULL);
+
+  eq3b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq3b, "eq3b");
+  gtk_widget_show (eq3b);
+  gtk_container_add (GTK_CONTAINER (eventbox5), eq3b);
+  gtk_scale_set_digits (GTK_SCALE (eq3b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq3b), TRUE);
 
   label133 = gtk_label_new (_("39"));
   gtk_widget_set_name (label133, "label133");
@@ -439,12 +600,18 @@ create_window1 (void)
   gtk_widget_show (vbox54);
   gtk_box_pack_start (GTK_BOX (vbox44), vbox54, TRUE, TRUE, 0);
 
-  eqb4 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb4, "eqb4");
-  gtk_widget_show (eqb4);
-  gtk_box_pack_start (GTK_BOX (vbox54), eqb4, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb4), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb4), TRUE);
+  eventbox6 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox6, "eventbox6");
+  gtk_widget_show (eventbox6);
+  gtk_box_pack_start (GTK_BOX (vbox54), eventbox6, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox6, _("50 Hz"), NULL);
+
+  eq4b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq4b, "eq4b");
+  gtk_widget_show (eq4b);
+  gtk_container_add (GTK_CONTAINER (eventbox6), eq4b);
+  gtk_scale_set_digits (GTK_SCALE (eq4b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq4b), TRUE);
 
   label134 = gtk_label_new (_("50"));
   gtk_widget_set_name (label134, "label134");
@@ -462,12 +629,18 @@ create_window1 (void)
   gtk_widget_show (vbox55);
   gtk_box_pack_start (GTK_BOX (vbox45), vbox55, TRUE, TRUE, 0);
 
-  eqb5 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb5, "eqb5");
-  gtk_widget_show (eqb5);
-  gtk_box_pack_start (GTK_BOX (vbox55), eqb5, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb5), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb5), TRUE);
+  eventbox7 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox7, "eventbox7");
+  gtk_widget_show (eventbox7);
+  gtk_box_pack_start (GTK_BOX (vbox55), eventbox7, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox7, _("62 Hz"), NULL);
+
+  eq5b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq5b, "eq5b");
+  gtk_widget_show (eq5b);
+  gtk_container_add (GTK_CONTAINER (eventbox7), eq5b);
+  gtk_scale_set_digits (GTK_SCALE (eq5b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq5b), TRUE);
 
   label135 = gtk_label_new (_("62"));
   gtk_widget_set_name (label135, "label135");
@@ -485,12 +658,18 @@ create_window1 (void)
   gtk_widget_show (vbox56);
   gtk_box_pack_start (GTK_BOX (vbox46), vbox56, TRUE, TRUE, 0);
 
-  eqb6 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb6, "eqb6");
-  gtk_widget_show (eqb6);
-  gtk_box_pack_start (GTK_BOX (vbox56), eqb6, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb6), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb6), TRUE);
+  eventbox8 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox8, "eventbox8");
+  gtk_widget_show (eventbox8);
+  gtk_box_pack_start (GTK_BOX (vbox56), eventbox8, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox8, _("79 Hz"), NULL);
+
+  eq6b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq6b, "eq6b");
+  gtk_widget_show (eq6b);
+  gtk_container_add (GTK_CONTAINER (eventbox8), eq6b);
+  gtk_scale_set_digits (GTK_SCALE (eq6b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq6b), TRUE);
 
   label136 = gtk_label_new (_("79"));
   gtk_widget_set_name (label136, "label136");
@@ -508,12 +687,18 @@ create_window1 (void)
   gtk_widget_show (vbox57);
   gtk_box_pack_start (GTK_BOX (vbox47), vbox57, TRUE, TRUE, 0);
 
-  eqb7 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb7, "eqb7");
-  gtk_widget_show (eqb7);
-  gtk_box_pack_start (GTK_BOX (vbox57), eqb7, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb7), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb7), TRUE);
+  eventbox9 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox9, "eventbox9");
+  gtk_widget_show (eventbox9);
+  gtk_box_pack_start (GTK_BOX (vbox57), eventbox9, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox9, _("100 Hz"), NULL);
+
+  eq7b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq7b, "eq7b");
+  gtk_widget_show (eq7b);
+  gtk_container_add (GTK_CONTAINER (eventbox9), eq7b);
+  gtk_scale_set_digits (GTK_SCALE (eq7b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq7b), TRUE);
 
   label137 = gtk_label_new (_("100"));
   gtk_widget_set_name (label137, "label137");
@@ -531,12 +716,18 @@ create_window1 (void)
   gtk_widget_show (vbox58);
   gtk_box_pack_start (GTK_BOX (vbox48), vbox58, TRUE, TRUE, 0);
 
-  eqb8 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb8, "eqb8");
-  gtk_widget_show (eqb8);
-  gtk_box_pack_start (GTK_BOX (vbox58), eqb8, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb8), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb8), TRUE);
+  eventbox10 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox10, "eventbox10");
+  gtk_widget_show (eventbox10);
+  gtk_box_pack_start (GTK_BOX (vbox58), eventbox10, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox10, _("125 Hz"), NULL);
+
+  eq8b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq8b, "eq8b");
+  gtk_widget_show (eq8b);
+  gtk_container_add (GTK_CONTAINER (eventbox10), eq8b);
+  gtk_scale_set_digits (GTK_SCALE (eq8b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq8b), TRUE);
 
   label138 = gtk_label_new (_("125"));
   gtk_widget_set_name (label138, "label138");
@@ -554,12 +745,18 @@ create_window1 (void)
   gtk_widget_show (vbox59);
   gtk_box_pack_start (GTK_BOX (vbox50), vbox59, TRUE, TRUE, 0);
 
-  eqb9 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb9, "eqb9");
-  gtk_widget_show (eqb9);
-  gtk_box_pack_start (GTK_BOX (vbox59), eqb9, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb9), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb9), TRUE);
+  eventbox11 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox11, "eventbox11");
+  gtk_widget_show (eventbox11);
+  gtk_box_pack_start (GTK_BOX (vbox59), eventbox11, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox11, _("158 Hz"), NULL);
+
+  eq9b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq9b, "eq9b");
+  gtk_widget_show (eq9b);
+  gtk_container_add (GTK_CONTAINER (eventbox11), eq9b);
+  gtk_scale_set_digits (GTK_SCALE (eq9b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq9b), TRUE);
 
   label139 = gtk_label_new (_("158"));
   gtk_widget_set_name (label139, "label139");
@@ -577,12 +774,18 @@ create_window1 (void)
   gtk_widget_show (vbox60);
   gtk_box_pack_start (GTK_BOX (vbox49), vbox60, TRUE, TRUE, 0);
 
-  eqb10 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb10, "eqb10");
-  gtk_widget_show (eqb10);
-  gtk_box_pack_start (GTK_BOX (vbox60), eqb10, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb10), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb10), TRUE);
+  eventbox12 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox12, "eventbox12");
+  gtk_widget_show (eventbox12);
+  gtk_box_pack_start (GTK_BOX (vbox60), eventbox12, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox12, _("200 Hz"), NULL);
+
+  eq10b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq10b, "eq10b");
+  gtk_widget_show (eq10b);
+  gtk_container_add (GTK_CONTAINER (eventbox12), eq10b);
+  gtk_scale_set_digits (GTK_SCALE (eq10b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq10b), TRUE);
 
   label140 = gtk_label_new (_("200"));
   gtk_widget_set_name (label140, "label140");
@@ -600,12 +803,18 @@ create_window1 (void)
   gtk_widget_show (vbox61);
   gtk_box_pack_start (GTK_BOX (vbox51), vbox61, TRUE, TRUE, 0);
 
-  eqb11 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb11, "eqb11");
-  gtk_widget_show (eqb11);
-  gtk_box_pack_start (GTK_BOX (vbox61), eqb11, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb11), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb11), TRUE);
+  eventbox13 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox13, "eventbox13");
+  gtk_widget_show (eventbox13);
+  gtk_box_pack_start (GTK_BOX (vbox61), eventbox13, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox13, _("251 Hz"), NULL);
+
+  eq11b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq11b, "eq11b");
+  gtk_widget_show (eq11b);
+  gtk_container_add (GTK_CONTAINER (eventbox13), eq11b);
+  gtk_scale_set_digits (GTK_SCALE (eq11b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq11b), TRUE);
 
   label141 = gtk_label_new (_("251"));
   gtk_widget_set_name (label141, "label141");
@@ -618,12 +827,18 @@ create_window1 (void)
   gtk_widget_show (vbox62);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox62, TRUE, TRUE, 0);
 
-  eqb12 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb12, "eqb12");
-  gtk_widget_show (eqb12);
-  gtk_box_pack_start (GTK_BOX (vbox62), eqb12, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb12), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb12), TRUE);
+  eventbox14 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox14, "eventbox14");
+  gtk_widget_show (eventbox14);
+  gtk_box_pack_start (GTK_BOX (vbox62), eventbox14, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox14, _("317 Hz"), NULL);
+
+  eq12b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq12b, "eq12b");
+  gtk_widget_show (eq12b);
+  gtk_container_add (GTK_CONTAINER (eventbox14), eq12b);
+  gtk_scale_set_digits (GTK_SCALE (eq12b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq12b), TRUE);
 
   label142 = gtk_label_new (_("317"));
   gtk_widget_set_name (label142, "label142");
@@ -636,12 +851,18 @@ create_window1 (void)
   gtk_widget_show (vbox63);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox63, TRUE, TRUE, 0);
 
-  eqb13 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb13, "eqb13");
-  gtk_widget_show (eqb13);
-  gtk_box_pack_start (GTK_BOX (vbox63), eqb13, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb13), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb13), TRUE);
+  eventbox15 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox15, "eventbox15");
+  gtk_widget_show (eventbox15);
+  gtk_box_pack_start (GTK_BOX (vbox63), eventbox15, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox15, _("400 Hz"), NULL);
+
+  eq13b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq13b, "eq13b");
+  gtk_widget_show (eq13b);
+  gtk_container_add (GTK_CONTAINER (eventbox15), eq13b);
+  gtk_scale_set_digits (GTK_SCALE (eq13b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq13b), TRUE);
 
   label143 = gtk_label_new (_("400"));
   gtk_widget_set_name (label143, "label143");
@@ -654,12 +875,18 @@ create_window1 (void)
   gtk_widget_show (vbox64);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox64, TRUE, TRUE, 0);
 
-  eqb14 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb14, "eqb14");
-  gtk_widget_show (eqb14);
-  gtk_box_pack_start (GTK_BOX (vbox64), eqb14, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb14), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb14), TRUE);
+  eventbox16 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox16, "eventbox16");
+  gtk_widget_show (eventbox16);
+  gtk_box_pack_start (GTK_BOX (vbox64), eventbox16, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox16, _("503 Hz"), NULL);
+
+  eq14b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq14b, "eq14b");
+  gtk_widget_show (eq14b);
+  gtk_container_add (GTK_CONTAINER (eventbox16), eq14b);
+  gtk_scale_set_digits (GTK_SCALE (eq14b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq14b), TRUE);
 
   label144 = gtk_label_new (_("503"));
   gtk_widget_set_name (label144, "label144");
@@ -672,12 +899,18 @@ create_window1 (void)
   gtk_widget_show (vbox65);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox65, TRUE, TRUE, 0);
 
-  eqb15 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb15, "eqb15");
-  gtk_widget_show (eqb15);
-  gtk_box_pack_start (GTK_BOX (vbox65), eqb15, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb15), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb15), TRUE);
+  eventbox17 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox17, "eventbox17");
+  gtk_widget_show (eventbox17);
+  gtk_box_pack_start (GTK_BOX (vbox65), eventbox17, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox17, _("634 Hz"), NULL);
+
+  eq15b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq15b, "eq15b");
+  gtk_widget_show (eq15b);
+  gtk_container_add (GTK_CONTAINER (eventbox17), eq15b);
+  gtk_scale_set_digits (GTK_SCALE (eq15b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq15b), TRUE);
 
   label145 = gtk_label_new (_("634"));
   gtk_widget_set_name (label145, "label145");
@@ -690,12 +923,18 @@ create_window1 (void)
   gtk_widget_show (vbox66);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox66, TRUE, TRUE, 0);
 
-  eqb16 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb16, "eqb16");
-  gtk_widget_show (eqb16);
-  gtk_box_pack_start (GTK_BOX (vbox66), eqb16, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb16), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb16), TRUE);
+  eventbox18 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox18, "eventbox18");
+  gtk_widget_show (eventbox18);
+  gtk_box_pack_start (GTK_BOX (vbox66), eventbox18, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox18, _("800 Hz"), NULL);
+
+  eq16b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq16b, "eq16b");
+  gtk_widget_show (eq16b);
+  gtk_container_add (GTK_CONTAINER (eventbox18), eq16b);
+  gtk_scale_set_digits (GTK_SCALE (eq16b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq16b), TRUE);
 
   label146 = gtk_label_new (_("800"));
   gtk_widget_set_name (label146, "label146");
@@ -708,12 +947,18 @@ create_window1 (void)
   gtk_widget_show (vbox67);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox67, TRUE, TRUE, 0);
 
-  eqb17 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb17, "eqb17");
-  gtk_widget_show (eqb17);
-  gtk_box_pack_start (GTK_BOX (vbox67), eqb17, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb17), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb17), TRUE);
+  eventbox19 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox19, "eventbox19");
+  gtk_widget_show (eventbox19);
+  gtk_box_pack_start (GTK_BOX (vbox67), eventbox19, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox19, _("1000 Hz"), NULL);
+
+  eq17b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq17b, "eq17b");
+  gtk_widget_show (eq17b);
+  gtk_container_add (GTK_CONTAINER (eventbox19), eq17b);
+  gtk_scale_set_digits (GTK_SCALE (eq17b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq17b), TRUE);
 
   label147 = gtk_label_new (_("1K"));
   gtk_widget_set_name (label147, "label147");
@@ -726,12 +971,18 @@ create_window1 (void)
   gtk_widget_show (vbox68);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox68, TRUE, TRUE, 0);
 
-  eqb18 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb18, "eqb18");
-  gtk_widget_show (eqb18);
-  gtk_box_pack_start (GTK_BOX (vbox68), eqb18, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb18), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb18), TRUE);
+  eventbox20 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox20, "eventbox20");
+  gtk_widget_show (eventbox20);
+  gtk_box_pack_start (GTK_BOX (vbox68), eventbox20, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox20, _("1200 Hz"), NULL);
+
+  eq18b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq18b, "eq18b");
+  gtk_widget_show (eq18b);
+  gtk_container_add (GTK_CONTAINER (eventbox20), eq18b);
+  gtk_scale_set_digits (GTK_SCALE (eq18b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq18b), TRUE);
 
   label148 = gtk_label_new (_("1K2"));
   gtk_widget_set_name (label148, "label148");
@@ -744,12 +995,18 @@ create_window1 (void)
   gtk_widget_show (vbox69);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox69, TRUE, TRUE, 0);
 
-  eqb19 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb19, "eqb19");
-  gtk_widget_show (eqb19);
-  gtk_box_pack_start (GTK_BOX (vbox69), eqb19, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb19), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb19), TRUE);
+  eventbox21 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox21, "eventbox21");
+  gtk_widget_show (eventbox21);
+  gtk_box_pack_start (GTK_BOX (vbox69), eventbox21, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox21, _("1500 Hz"), NULL);
+
+  eq19b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq19b, "eq19b");
+  gtk_widget_show (eq19b);
+  gtk_container_add (GTK_CONTAINER (eventbox21), eq19b);
+  gtk_scale_set_digits (GTK_SCALE (eq19b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq19b), TRUE);
 
   label149 = gtk_label_new (_("1K5"));
   gtk_widget_set_name (label149, "label149");
@@ -762,12 +1019,18 @@ create_window1 (void)
   gtk_widget_show (vbox70);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox70, TRUE, TRUE, 0);
 
-  eqb20 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb20, "eqb20");
-  gtk_widget_show (eqb20);
-  gtk_box_pack_start (GTK_BOX (vbox70), eqb20, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb20), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb20), TRUE);
+  eventbox22 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox22, "eventbox22");
+  gtk_widget_show (eventbox22);
+  gtk_box_pack_start (GTK_BOX (vbox70), eventbox22, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox22, _("2000 Hz"), NULL);
+
+  eq20b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq20b, "eq20b");
+  gtk_widget_show (eq20b);
+  gtk_container_add (GTK_CONTAINER (eventbox22), eq20b);
+  gtk_scale_set_digits (GTK_SCALE (eq20b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq20b), TRUE);
 
   label150 = gtk_label_new (_("2K"));
   gtk_widget_set_name (label150, "label150");
@@ -780,12 +1043,18 @@ create_window1 (void)
   gtk_widget_show (vbox71);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox71, TRUE, TRUE, 0);
 
-  eqb21 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb21, "eqb21");
-  gtk_widget_show (eqb21);
-  gtk_box_pack_start (GTK_BOX (vbox71), eqb21, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb21), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb21), TRUE);
+  eventbox23 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox23, "eventbox23");
+  gtk_widget_show (eventbox23);
+  gtk_box_pack_start (GTK_BOX (vbox71), eventbox23, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox23, _("3200 Hz"), NULL);
+
+  eq21b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq21b, "eq21b");
+  gtk_widget_show (eq21b);
+  gtk_container_add (GTK_CONTAINER (eventbox23), eq21b);
+  gtk_scale_set_digits (GTK_SCALE (eq21b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq21b), TRUE);
 
   label151 = gtk_label_new (_("3K2"));
   gtk_widget_set_name (label151, "label151");
@@ -798,12 +1067,18 @@ create_window1 (void)
   gtk_widget_show (vbox72);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox72, TRUE, TRUE, 0);
 
-  eqb22 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb22, "eqb22");
-  gtk_widget_show (eqb22);
-  gtk_box_pack_start (GTK_BOX (vbox72), eqb22, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb22), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb22), TRUE);
+  eventbox24 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox24, "eventbox24");
+  gtk_widget_show (eventbox24);
+  gtk_box_pack_start (GTK_BOX (vbox72), eventbox24, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox24, _("4000 Hz"), NULL);
+
+  eq22b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq22b, "eq22b");
+  gtk_widget_show (eq22b);
+  gtk_container_add (GTK_CONTAINER (eventbox24), eq22b);
+  gtk_scale_set_digits (GTK_SCALE (eq22b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq22b), TRUE);
 
   label152 = gtk_label_new (_("4K"));
   gtk_widget_set_name (label152, "label152");
@@ -816,12 +1091,18 @@ create_window1 (void)
   gtk_widget_show (vbox73);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox73, TRUE, TRUE, 0);
 
-  eqb23 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb23, "eqb23");
-  gtk_widget_show (eqb23);
-  gtk_box_pack_start (GTK_BOX (vbox73), eqb23, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb23), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb23), TRUE);
+  eventbox25 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox25, "eventbox25");
+  gtk_widget_show (eventbox25);
+  gtk_box_pack_start (GTK_BOX (vbox73), eventbox25, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox25, _("5000 Hz"), NULL);
+
+  eq23b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq23b, "eq23b");
+  gtk_widget_show (eq23b);
+  gtk_container_add (GTK_CONTAINER (eventbox25), eq23b);
+  gtk_scale_set_digits (GTK_SCALE (eq23b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq23b), TRUE);
 
   label153 = gtk_label_new (_("5K"));
   gtk_widget_set_name (label153, "label153");
@@ -834,12 +1115,23 @@ create_window1 (void)
   gtk_widget_show (vbox74);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox74, TRUE, TRUE, 0);
 
-  eqb24 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb24, "eqb24");
-  gtk_widget_show (eqb24);
-  gtk_box_pack_start (GTK_BOX (vbox74), eqb24, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb24), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb24), TRUE);
+  eventbox26 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox26, "eventbox26");
+  gtk_widget_show (eventbox26);
+  gtk_box_pack_start (GTK_BOX (vbox74), eventbox26, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox26, _("6000 Hz"), NULL);
+
+  eventbox27 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox27, "eventbox27");
+  gtk_widget_show (eventbox27);
+  gtk_container_add (GTK_CONTAINER (eventbox26), eventbox27);
+
+  eq24b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq24b, "eq24b");
+  gtk_widget_show (eq24b);
+  gtk_container_add (GTK_CONTAINER (eventbox27), eq24b);
+  gtk_scale_set_digits (GTK_SCALE (eq24b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq24b), TRUE);
 
   label154 = gtk_label_new (_("6K"));
   gtk_widget_set_name (label154, "label154");
@@ -852,12 +1144,18 @@ create_window1 (void)
   gtk_widget_show (vbox75);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox75, TRUE, TRUE, 0);
 
-  eqb25 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb25, "eqb25");
-  gtk_widget_show (eqb25);
-  gtk_box_pack_start (GTK_BOX (vbox75), eqb25, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb25), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb25), TRUE);
+  eventbox28 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox28, "eventbox28");
+  gtk_widget_show (eventbox28);
+  gtk_box_pack_start (GTK_BOX (vbox75), eventbox28, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox28, _("8000 Hz"), NULL);
+
+  eq25b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq25b, "eq25b");
+  gtk_widget_show (eq25b);
+  gtk_container_add (GTK_CONTAINER (eventbox28), eq25b);
+  gtk_scale_set_digits (GTK_SCALE (eq25b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq25b), TRUE);
 
   label155 = gtk_label_new (_("8K"));
   gtk_widget_set_name (label155, "label155");
@@ -870,12 +1168,18 @@ create_window1 (void)
   gtk_widget_show (vbox76);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox76, TRUE, TRUE, 0);
 
-  eqb26 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb26, "eqb26");
-  gtk_widget_show (eqb26);
-  gtk_box_pack_start (GTK_BOX (vbox76), eqb26, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb26), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb26), TRUE);
+  eventbox29 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox29, "eventbox29");
+  gtk_widget_show (eventbox29);
+  gtk_box_pack_start (GTK_BOX (vbox76), eventbox29, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox29, _("10 KHz"), NULL);
+
+  eq26b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq26b, "eq26b");
+  gtk_widget_show (eq26b);
+  gtk_container_add (GTK_CONTAINER (eventbox29), eq26b);
+  gtk_scale_set_digits (GTK_SCALE (eq26b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq26b), TRUE);
 
   label156 = gtk_label_new (_("10K"));
   gtk_widget_set_name (label156, "label156");
@@ -888,12 +1192,18 @@ create_window1 (void)
   gtk_widget_show (vbox77);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox77, TRUE, TRUE, 0);
 
-  eqb27 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb27, "eqb27");
-  gtk_widget_show (eqb27);
-  gtk_box_pack_start (GTK_BOX (vbox77), eqb27, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb27), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb27), TRUE);
+  eventbox30 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox30, "eventbox30");
+  gtk_widget_show (eventbox30);
+  gtk_box_pack_start (GTK_BOX (vbox77), eventbox30, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox30, _("12 KHz"), NULL);
+
+  eq27b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq27b, "eq27b");
+  gtk_widget_show (eq27b);
+  gtk_container_add (GTK_CONTAINER (eventbox30), eq27b);
+  gtk_scale_set_digits (GTK_SCALE (eq27b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq27b), TRUE);
 
   label157 = gtk_label_new (_("12K"));
   gtk_widget_set_name (label157, "label157");
@@ -906,12 +1216,18 @@ create_window1 (void)
   gtk_widget_show (vbox80);
   gtk_box_pack_start (GTK_BOX (eqb_hbox), vbox80, TRUE, TRUE, 0);
 
-  eqb28 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
-  gtk_widget_set_name (eqb28, "eqb28");
-  gtk_widget_show (eqb28);
-  gtk_box_pack_start (GTK_BOX (vbox80), eqb28, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (eqb28), 0);
-  gtk_range_set_inverted (GTK_RANGE (eqb28), TRUE);
+  eventbox31 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox31, "eventbox31");
+  gtk_widget_show (eventbox31);
+  gtk_box_pack_start (GTK_BOX (vbox80), eventbox31, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox31, _("16 KHz"), NULL);
+
+  eq28b = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (eq28b, "eq28b");
+  gtk_widget_show (eq28b);
+  gtk_container_add (GTK_CONTAINER (eventbox31), eq28b);
+  gtk_scale_set_digits (GTK_SCALE (eq28b), 0);
+  gtk_range_set_inverted (GTK_RANGE (eq28b), TRUE);
 
   label158 = gtk_label_new (_("16K"));
   gtk_widget_set_name (label158, "label158");
@@ -925,9 +1241,222 @@ create_window1 (void)
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 0), label47);
   gtk_label_set_justify (GTK_LABEL (label47), GTK_JUSTIFY_LEFT);
 
-  empty_notebook_page = gtk_vbox_new (FALSE, 0);
-  gtk_widget_show (empty_notebook_page);
-  gtk_container_add (GTK_CONTAINER (notebook1), empty_notebook_page);
+  hbox25 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox25, "hbox25");
+  gtk_widget_show (hbox25);
+  gtk_container_add (GTK_CONTAINER (notebook1), hbox25);
+
+  vbox97 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox97, "vbox97");
+  gtk_widget_show (vbox97);
+  gtk_box_pack_start (GTK_BOX (hbox25), vbox97, FALSE, FALSE, 0);
+  gtk_widget_set_size_request (vbox97, 40, 160);
+
+  label205 = gtk_label_new ("");
+  gtk_widget_set_name (label205, "label205");
+  gtk_widget_show (label205);
+  gtk_box_pack_start (GTK_BOX (vbox97), label205, FALSE, FALSE, 0);
+  gtk_widget_set_size_request (label205, 20, 20);
+  gtk_label_set_justify (GTK_LABEL (label205), GTK_JUSTIFY_LEFT);
+
+  label208 = gtk_label_new ("");
+  gtk_widget_set_name (label208, "label208");
+  gtk_widget_show (label208);
+  gtk_box_pack_start (GTK_BOX (vbox97), label208, FALSE, FALSE, 0);
+  gtk_widget_set_size_request (label208, -2, 14);
+  gtk_label_set_justify (GTK_LABEL (label208), GTK_JUSTIFY_LEFT);
+
+  label206 = gtk_label_new ("");
+  gtk_widget_set_name (label206, "label206");
+  gtk_widget_show (label206);
+  gtk_box_pack_start (GTK_BOX (vbox97), label206, FALSE, FALSE, 0);
+  gtk_widget_set_size_request (label206, -2, 14);
+  gtk_label_set_justify (GTK_LABEL (label206), GTK_JUSTIFY_LEFT);
+
+  label210 = gtk_label_new ("");
+  gtk_widget_set_name (label210, "label210");
+  gtk_widget_show (label210);
+  gtk_box_pack_start (GTK_BOX (vbox97), label210, FALSE, FALSE, 0);
+  gtk_widget_set_size_request (label210, -2, 85);
+  gtk_label_set_justify (GTK_LABEL (label210), GTK_JUSTIFY_LEFT);
+
+  label207 = gtk_label_new ("");
+  gtk_widget_set_name (label207, "label207");
+  gtk_widget_show (label207);
+  gtk_box_pack_start (GTK_BOX (vbox97), label207, FALSE, FALSE, 0);
+  gtk_widget_set_size_request (label207, -2, 14);
+  gtk_label_set_justify (GTK_LABEL (label207), GTK_JUSTIFY_LEFT);
+
+  vbox99 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox99, "vbox99");
+  gtk_widget_show (vbox99);
+  gtk_box_pack_start (GTK_BOX (hbox25), vbox99, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (vbox99, -2, 160);
+
+  eventbox47 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox47, "eventbox47");
+  gtk_widget_show (eventbox47);
+  gtk_box_pack_start (GTK_BOX (vbox99), eventbox47, TRUE, TRUE, 0);
+
+  drawingarea1 = gtk_drawing_area_new ();
+  gtk_widget_set_name (drawingarea1, "drawingarea1");
+  gtk_widget_show (drawingarea1);
+  gtk_container_add (GTK_CONTAINER (eventbox47), drawingarea1);
+
+  hbox23 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox23, "hbox23");
+  gtk_widget_show (hbox23);
+  gtk_box_pack_start (GTK_BOX (vbox99), hbox23, FALSE, TRUE, 0);
+  gtk_widget_set_size_request (hbox23, -2, 20);
+
+  label176 = gtk_label_new (_("25"));
+  gtk_widget_set_name (label176, "label176");
+  gtk_widget_show (label176);
+  gtk_box_pack_start (GTK_BOX (hbox23), label176, TRUE, TRUE, 0);
+
+  label177 = gtk_label_new (_("31"));
+  gtk_widget_set_name (label177, "label177");
+  gtk_widget_show (label177);
+  gtk_box_pack_start (GTK_BOX (hbox23), label177, TRUE, TRUE, 0);
+
+  label178 = gtk_label_new (_("39"));
+  gtk_widget_set_name (label178, "label178");
+  gtk_widget_show (label178);
+  gtk_box_pack_start (GTK_BOX (hbox23), label178, TRUE, TRUE, 0);
+
+  label179 = gtk_label_new (_("50"));
+  gtk_widget_set_name (label179, "label179");
+  gtk_widget_show (label179);
+  gtk_box_pack_start (GTK_BOX (hbox23), label179, TRUE, TRUE, 0);
+
+  label180 = gtk_label_new (_("62"));
+  gtk_widget_set_name (label180, "label180");
+  gtk_widget_show (label180);
+  gtk_box_pack_start (GTK_BOX (hbox23), label180, TRUE, TRUE, 0);
+
+  label181 = gtk_label_new (_("79"));
+  gtk_widget_set_name (label181, "label181");
+  gtk_widget_show (label181);
+  gtk_box_pack_start (GTK_BOX (hbox23), label181, TRUE, TRUE, 0);
+
+  label182 = gtk_label_new (_("100"));
+  gtk_widget_set_name (label182, "label182");
+  gtk_widget_show (label182);
+  gtk_box_pack_start (GTK_BOX (hbox23), label182, TRUE, TRUE, 0);
+
+  label183 = gtk_label_new (_("125"));
+  gtk_widget_set_name (label183, "label183");
+  gtk_widget_show (label183);
+  gtk_box_pack_start (GTK_BOX (hbox23), label183, TRUE, TRUE, 0);
+
+  label184 = gtk_label_new (_("158"));
+  gtk_widget_set_name (label184, "label184");
+  gtk_widget_show (label184);
+  gtk_box_pack_start (GTK_BOX (hbox23), label184, TRUE, TRUE, 0);
+
+  label185 = gtk_label_new (_("200"));
+  gtk_widget_set_name (label185, "label185");
+  gtk_widget_show (label185);
+  gtk_box_pack_start (GTK_BOX (hbox23), label185, TRUE, TRUE, 0);
+
+  label186 = gtk_label_new (_("251"));
+  gtk_widget_set_name (label186, "label186");
+  gtk_widget_show (label186);
+  gtk_box_pack_start (GTK_BOX (hbox23), label186, TRUE, TRUE, 0);
+
+  label187 = gtk_label_new (_("317"));
+  gtk_widget_set_name (label187, "label187");
+  gtk_widget_show (label187);
+  gtk_box_pack_start (GTK_BOX (hbox23), label187, TRUE, TRUE, 0);
+
+  label188 = gtk_label_new (_("400"));
+  gtk_widget_set_name (label188, "label188");
+  gtk_widget_show (label188);
+  gtk_box_pack_start (GTK_BOX (hbox23), label188, TRUE, TRUE, 0);
+
+  label189 = gtk_label_new (_("503"));
+  gtk_widget_set_name (label189, "label189");
+  gtk_widget_show (label189);
+  gtk_box_pack_start (GTK_BOX (hbox23), label189, TRUE, TRUE, 0);
+
+  label190 = gtk_label_new (_("634"));
+  gtk_widget_set_name (label190, "label190");
+  gtk_widget_show (label190);
+  gtk_box_pack_start (GTK_BOX (hbox23), label190, TRUE, TRUE, 0);
+
+  label191 = gtk_label_new (_("800"));
+  gtk_widget_set_name (label191, "label191");
+  gtk_widget_show (label191);
+  gtk_box_pack_start (GTK_BOX (hbox23), label191, TRUE, TRUE, 0);
+
+  label192 = gtk_label_new (_("1K"));
+  gtk_widget_set_name (label192, "label192");
+  gtk_widget_show (label192);
+  gtk_box_pack_start (GTK_BOX (hbox23), label192, TRUE, TRUE, 0);
+
+  label193 = gtk_label_new (_("1K2"));
+  gtk_widget_set_name (label193, "label193");
+  gtk_widget_show (label193);
+  gtk_box_pack_start (GTK_BOX (hbox23), label193, TRUE, TRUE, 0);
+
+  label194 = gtk_label_new (_("1K5"));
+  gtk_widget_set_name (label194, "label194");
+  gtk_widget_show (label194);
+  gtk_box_pack_start (GTK_BOX (hbox23), label194, TRUE, TRUE, 0);
+
+  label195 = gtk_label_new (_("2K"));
+  gtk_widget_set_name (label195, "label195");
+  gtk_widget_show (label195);
+  gtk_box_pack_start (GTK_BOX (hbox23), label195, TRUE, TRUE, 0);
+
+  label196 = gtk_label_new (_("3K2"));
+  gtk_widget_set_name (label196, "label196");
+  gtk_widget_show (label196);
+  gtk_box_pack_start (GTK_BOX (hbox23), label196, TRUE, TRUE, 0);
+
+  label197 = gtk_label_new (_("4K"));
+  gtk_widget_set_name (label197, "label197");
+  gtk_widget_show (label197);
+  gtk_box_pack_start (GTK_BOX (hbox23), label197, TRUE, TRUE, 0);
+
+  label198 = gtk_label_new (_("5K"));
+  gtk_widget_set_name (label198, "label198");
+  gtk_widget_show (label198);
+  gtk_box_pack_start (GTK_BOX (hbox23), label198, TRUE, TRUE, 0);
+
+  label199 = gtk_label_new (_("6K"));
+  gtk_widget_set_name (label199, "label199");
+  gtk_widget_show (label199);
+  gtk_box_pack_start (GTK_BOX (hbox23), label199, TRUE, TRUE, 0);
+
+  label200 = gtk_label_new (_("8K"));
+  gtk_widget_set_name (label200, "label200");
+  gtk_widget_show (label200);
+  gtk_box_pack_start (GTK_BOX (hbox23), label200, TRUE, TRUE, 0);
+
+  label201 = gtk_label_new (_("10K"));
+  gtk_widget_set_name (label201, "label201");
+  gtk_widget_show (label201);
+  gtk_box_pack_start (GTK_BOX (hbox23), label201, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (label201, 24, -2);
+
+  label202 = gtk_label_new (_("12K"));
+  gtk_widget_set_name (label202, "label202");
+  gtk_widget_show (label202);
+  gtk_box_pack_start (GTK_BOX (hbox23), label202, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (label202, 24, -2);
+
+  label203 = gtk_label_new (_("16K"));
+  gtk_widget_set_name (label203, "label203");
+  gtk_widget_show (label203);
+  gtk_box_pack_start (GTK_BOX (hbox23), label203, TRUE, TRUE, 0);
+
+  label204 = gtk_label_new ("");
+  gtk_widget_set_name (label204, "label204");
+  gtk_widget_show (label204);
+  gtk_box_pack_start (GTK_BOX (hbox23), label204, FALSE, TRUE, 0);
+  gtk_widget_set_size_request (label204, 5, -2);
+  gtk_label_set_justify (GTK_LABEL (label204), GTK_JUSTIFY_LEFT);
 
   label48 = gtk_label_new (_("Graph"));
   gtk_widget_set_name (label48, "label48");
@@ -935,9 +1464,372 @@ create_window1 (void)
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 1), label48);
   gtk_label_set_justify (GTK_LABEL (label48), GTK_JUSTIFY_LEFT);
 
-  empty_notebook_page = gtk_vbox_new (FALSE, 0);
-  gtk_widget_show (empty_notebook_page);
-  gtk_container_add (GTK_CONTAINER (notebook1), empty_notebook_page);
+  hbox24 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox24, "hbox24");
+  gtk_widget_show (hbox24);
+  gtk_container_add (GTK_CONTAINER (notebook1), hbox24);
+
+  vbox82 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox82, "vbox82");
+  gtk_widget_show (vbox82);
+  gtk_box_pack_start (GTK_BOX (hbox24), vbox82, TRUE, TRUE, 0);
+
+  label159 = gtk_label_new (_("dB"));
+  gtk_widget_set_name (label159, "label159");
+  gtk_widget_show (label159);
+  gtk_box_pack_start (GTK_BOX (vbox82), label159, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label159), GTK_JUSTIFY_LEFT);
+  gtk_misc_set_alignment (GTK_MISC (label159), 0.48, 0.5);
+  gtk_misc_set_padding (GTK_MISC (label159), 2, 0);
+
+  lsgain = gtk_event_box_new ();
+  gtk_widget_set_name (lsgain, "lsgain");
+  gtk_widget_show (lsgain);
+  gtk_box_pack_start (GTK_BOX (vbox82), lsgain, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, lsgain, _("Low-Shelving gain"), NULL);
+
+  vscale91 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (vscale91, "vscale91");
+  gtk_widget_show (vscale91);
+  gtk_container_add (GTK_CONTAINER (lsgain), vscale91);
+  gtk_scale_set_digits (GTK_SCALE (vscale91), 0);
+  gtk_range_set_inverted (GTK_RANGE (vscale91), TRUE);
+
+  vbox83 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox83, "vbox83");
+  gtk_widget_show (vbox83);
+  gtk_box_pack_start (GTK_BOX (hbox24), vbox83, TRUE, TRUE, 0);
+
+  label160 = gtk_label_new (_("Hz"));
+  gtk_widget_set_name (label160, "label160");
+  gtk_widget_show (label160);
+  gtk_box_pack_start (GTK_BOX (vbox83), label160, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label160), GTK_JUSTIFY_LEFT);
+
+  lsfreq = gtk_event_box_new ();
+  gtk_widget_set_name (lsfreq, "lsfreq");
+  gtk_widget_show (lsfreq);
+  gtk_box_pack_start (GTK_BOX (vbox83), lsfreq, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, lsfreq, _("Low-shelving frequency"), NULL);
+
+  vscale92 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (vscale92, "vscale92");
+  gtk_widget_show (vscale92);
+  gtk_container_add (GTK_CONTAINER (lsfreq), vscale92);
+  gtk_scale_set_digits (GTK_SCALE (vscale92), 0);
+  gtk_range_set_inverted (GTK_RANGE (vscale92), TRUE);
+
+  vbox84 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox84, "vbox84");
+  gtk_widget_show (vbox84);
+  gtk_box_pack_start (GTK_BOX (hbox24), vbox84, TRUE, TRUE, 0);
+
+  label161 = gtk_label_new (_("slope"));
+  gtk_widget_set_name (label161, "label161");
+  gtk_widget_show (label161);
+  gtk_box_pack_start (GTK_BOX (vbox84), label161, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label161), GTK_JUSTIFY_LEFT);
+
+  lsslope = gtk_event_box_new ();
+  gtk_widget_set_name (lsslope, "lsslope");
+  gtk_widget_show (lsslope);
+  gtk_box_pack_start (GTK_BOX (vbox84), lsslope, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, lsslope, _("Low-shelving slope"), NULL);
+
+  vscale93 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (vscale93, "vscale93");
+  gtk_widget_show (vscale93);
+  gtk_container_add (GTK_CONTAINER (lsslope), vscale93);
+  gtk_scale_set_digits (GTK_SCALE (vscale93), 0);
+  gtk_range_set_inverted (GTK_RANGE (vscale93), TRUE);
+
+  vbox85 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox85, "vbox85");
+  gtk_widget_show (vbox85);
+  gtk_box_pack_start (GTK_BOX (hbox24), vbox85, TRUE, TRUE, 0);
+
+  label162 = gtk_label_new (_("dB"));
+  gtk_widget_set_name (label162, "label162");
+  gtk_widget_show (label162);
+  gtk_box_pack_start (GTK_BOX (vbox85), label162, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label162), GTK_JUSTIFY_LEFT);
+
+  b1gain = gtk_event_box_new ();
+  gtk_widget_set_name (b1gain, "b1gain");
+  gtk_widget_show (b1gain);
+  gtk_box_pack_start (GTK_BOX (vbox85), b1gain, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, b1gain, _("Band 1 gain"), NULL);
+
+  vscale94 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (vscale94, "vscale94");
+  gtk_widget_show (vscale94);
+  gtk_container_add (GTK_CONTAINER (b1gain), vscale94);
+  gtk_scale_set_digits (GTK_SCALE (vscale94), 0);
+  gtk_range_set_inverted (GTK_RANGE (vscale94), TRUE);
+
+  vbox86 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox86, "vbox86");
+  gtk_widget_show (vbox86);
+  gtk_box_pack_start (GTK_BOX (hbox24), vbox86, TRUE, TRUE, 0);
+
+  label163 = gtk_label_new (_("Hz"));
+  gtk_widget_set_name (label163, "label163");
+  gtk_widget_show (label163);
+  gtk_box_pack_start (GTK_BOX (vbox86), label163, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label163), GTK_JUSTIFY_LEFT);
+
+  b1freq = gtk_event_box_new ();
+  gtk_widget_set_name (b1freq, "b1freq");
+  gtk_widget_show (b1freq);
+  gtk_box_pack_start (GTK_BOX (vbox86), b1freq, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, b1freq, _("Band 1 frequency"), NULL);
+
+  vscale95 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (vscale95, "vscale95");
+  gtk_widget_show (vscale95);
+  gtk_container_add (GTK_CONTAINER (b1freq), vscale95);
+  gtk_scale_set_digits (GTK_SCALE (vscale95), 0);
+  gtk_range_set_inverted (GTK_RANGE (vscale95), TRUE);
+
+  vbox87 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox87, "vbox87");
+  gtk_widget_show (vbox87);
+  gtk_box_pack_start (GTK_BOX (hbox24), vbox87, TRUE, TRUE, 0);
+
+  label164 = gtk_label_new (_("oct"));
+  gtk_widget_set_name (label164, "label164");
+  gtk_widget_show (label164);
+  gtk_box_pack_start (GTK_BOX (vbox87), label164, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label164), GTK_JUSTIFY_LEFT);
+
+  b1bw = gtk_event_box_new ();
+  gtk_widget_set_name (b1bw, "b1bw");
+  gtk_widget_show (b1bw);
+  gtk_box_pack_start (GTK_BOX (vbox87), b1bw, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, b1bw, _("Band 1 bandwidth"), NULL);
+
+  vscale96 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (vscale96, "vscale96");
+  gtk_widget_show (vscale96);
+  gtk_container_add (GTK_CONTAINER (b1bw), vscale96);
+  gtk_scale_set_digits (GTK_SCALE (vscale96), 0);
+  gtk_range_set_inverted (GTK_RANGE (vscale96), TRUE);
+
+  vbox88 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox88, "vbox88");
+  gtk_widget_show (vbox88);
+  gtk_box_pack_start (GTK_BOX (hbox24), vbox88, TRUE, TRUE, 0);
+
+  label165 = gtk_label_new (_("dB"));
+  gtk_widget_set_name (label165, "label165");
+  gtk_widget_show (label165);
+  gtk_box_pack_start (GTK_BOX (vbox88), label165, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label165), GTK_JUSTIFY_LEFT);
+
+  b2gain = gtk_event_box_new ();
+  gtk_widget_set_name (b2gain, "b2gain");
+  gtk_widget_show (b2gain);
+  gtk_box_pack_start (GTK_BOX (vbox88), b2gain, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, b2gain, _("Band 2 gain"), NULL);
+
+  vscale97 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (vscale97, "vscale97");
+  gtk_widget_show (vscale97);
+  gtk_container_add (GTK_CONTAINER (b2gain), vscale97);
+  gtk_scale_set_digits (GTK_SCALE (vscale97), 0);
+  gtk_range_set_inverted (GTK_RANGE (vscale97), TRUE);
+
+  vbox89 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox89, "vbox89");
+  gtk_widget_show (vbox89);
+  gtk_box_pack_start (GTK_BOX (hbox24), vbox89, TRUE, TRUE, 0);
+
+  label166 = gtk_label_new (_("Hz"));
+  gtk_widget_set_name (label166, "label166");
+  gtk_widget_show (label166);
+  gtk_box_pack_start (GTK_BOX (vbox89), label166, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label166), GTK_JUSTIFY_LEFT);
+
+  b2freq = gtk_event_box_new ();
+  gtk_widget_set_name (b2freq, "b2freq");
+  gtk_widget_show (b2freq);
+  gtk_box_pack_start (GTK_BOX (vbox89), b2freq, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, b2freq, _("Band 2 frequency"), NULL);
+
+  vscale98 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (vscale98, "vscale98");
+  gtk_widget_show (vscale98);
+  gtk_container_add (GTK_CONTAINER (b2freq), vscale98);
+  gtk_scale_set_digits (GTK_SCALE (vscale98), 0);
+  gtk_range_set_inverted (GTK_RANGE (vscale98), TRUE);
+
+  vbox90 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox90, "vbox90");
+  gtk_widget_show (vbox90);
+  gtk_box_pack_start (GTK_BOX (hbox24), vbox90, TRUE, TRUE, 0);
+
+  label167 = gtk_label_new (_("oct"));
+  gtk_widget_set_name (label167, "label167");
+  gtk_widget_show (label167);
+  gtk_box_pack_start (GTK_BOX (vbox90), label167, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label167), GTK_JUSTIFY_LEFT);
+
+  b2bw = gtk_event_box_new ();
+  gtk_widget_set_name (b2bw, "b2bw");
+  gtk_widget_show (b2bw);
+  gtk_box_pack_start (GTK_BOX (vbox90), b2bw, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, b2bw, _("Band 2 bandwidth"), NULL);
+
+  vscale99 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (vscale99, "vscale99");
+  gtk_widget_show (vscale99);
+  gtk_container_add (GTK_CONTAINER (b2bw), vscale99);
+  gtk_scale_set_digits (GTK_SCALE (vscale99), 0);
+  gtk_range_set_inverted (GTK_RANGE (vscale99), TRUE);
+
+  vbox91 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox91, "vbox91");
+  gtk_widget_show (vbox91);
+  gtk_box_pack_start (GTK_BOX (hbox24), vbox91, TRUE, TRUE, 0);
+
+  label168 = gtk_label_new (_("dB"));
+  gtk_widget_set_name (label168, "label168");
+  gtk_widget_show (label168);
+  gtk_box_pack_start (GTK_BOX (vbox91), label168, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label168), GTK_JUSTIFY_LEFT);
+
+  b3gain = gtk_event_box_new ();
+  gtk_widget_set_name (b3gain, "b3gain");
+  gtk_widget_show (b3gain);
+  gtk_box_pack_start (GTK_BOX (vbox91), b3gain, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, b3gain, _("Band 3 gain"), NULL);
+
+  vscale100 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (vscale100, "vscale100");
+  gtk_widget_show (vscale100);
+  gtk_container_add (GTK_CONTAINER (b3gain), vscale100);
+  gtk_scale_set_digits (GTK_SCALE (vscale100), 0);
+  gtk_range_set_inverted (GTK_RANGE (vscale100), TRUE);
+
+  vbox92 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox92, "vbox92");
+  gtk_widget_show (vbox92);
+  gtk_box_pack_start (GTK_BOX (hbox24), vbox92, TRUE, TRUE, 0);
+
+  label169 = gtk_label_new (_("Hz"));
+  gtk_widget_set_name (label169, "label169");
+  gtk_widget_show (label169);
+  gtk_box_pack_start (GTK_BOX (vbox92), label169, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label169), GTK_JUSTIFY_LEFT);
+
+  b3freq = gtk_event_box_new ();
+  gtk_widget_set_name (b3freq, "b3freq");
+  gtk_widget_show (b3freq);
+  gtk_box_pack_start (GTK_BOX (vbox92), b3freq, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, b3freq, _("Band 3 frequency"), NULL);
+
+  vscale101 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (vscale101, "vscale101");
+  gtk_widget_show (vscale101);
+  gtk_container_add (GTK_CONTAINER (b3freq), vscale101);
+  gtk_scale_set_digits (GTK_SCALE (vscale101), 0);
+  gtk_range_set_inverted (GTK_RANGE (vscale101), TRUE);
+
+  vbox93 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox93, "vbox93");
+  gtk_widget_show (vbox93);
+  gtk_box_pack_start (GTK_BOX (hbox24), vbox93, TRUE, TRUE, 0);
+
+  label170 = gtk_label_new (_("oct"));
+  gtk_widget_set_name (label170, "label170");
+  gtk_widget_show (label170);
+  gtk_box_pack_start (GTK_BOX (vbox93), label170, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label170), GTK_JUSTIFY_LEFT);
+
+  b3bw = gtk_event_box_new ();
+  gtk_widget_set_name (b3bw, "b3bw");
+  gtk_widget_show (b3bw);
+  gtk_box_pack_start (GTK_BOX (vbox93), b3bw, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, b3bw, _("Band 3 bandwidth"), NULL);
+
+  vscale102 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (vscale102, "vscale102");
+  gtk_widget_show (vscale102);
+  gtk_container_add (GTK_CONTAINER (b3bw), vscale102);
+  gtk_scale_set_digits (GTK_SCALE (vscale102), 0);
+  gtk_range_set_inverted (GTK_RANGE (vscale102), TRUE);
+
+  vbox94 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox94, "vbox94");
+  gtk_widget_show (vbox94);
+  gtk_box_pack_start (GTK_BOX (hbox24), vbox94, TRUE, TRUE, 0);
+
+  label171 = gtk_label_new (_("dB"));
+  gtk_widget_set_name (label171, "label171");
+  gtk_widget_show (label171);
+  gtk_box_pack_start (GTK_BOX (vbox94), label171, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label171), GTK_JUSTIFY_LEFT);
+
+  hsgain = gtk_event_box_new ();
+  gtk_widget_set_name (hsgain, "hsgain");
+  gtk_widget_show (hsgain);
+  gtk_box_pack_start (GTK_BOX (vbox94), hsgain, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, hsgain, _("High-shelving gain"), NULL);
+
+  vscale103 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (vscale103, "vscale103");
+  gtk_widget_show (vscale103);
+  gtk_container_add (GTK_CONTAINER (hsgain), vscale103);
+  gtk_scale_set_digits (GTK_SCALE (vscale103), 0);
+  gtk_range_set_inverted (GTK_RANGE (vscale103), TRUE);
+
+  vbox95 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox95, "vbox95");
+  gtk_widget_show (vbox95);
+  gtk_box_pack_start (GTK_BOX (hbox24), vbox95, TRUE, TRUE, 0);
+
+  label172 = gtk_label_new (_("Hz"));
+  gtk_widget_set_name (label172, "label172");
+  gtk_widget_show (label172);
+  gtk_box_pack_start (GTK_BOX (vbox95), label172, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label172), GTK_JUSTIFY_LEFT);
+
+  hsfreq = gtk_event_box_new ();
+  gtk_widget_set_name (hsfreq, "hsfreq");
+  gtk_widget_show (hsfreq);
+  gtk_box_pack_start (GTK_BOX (vbox95), hsfreq, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, hsfreq, _("High-shelving frequency"), NULL);
+
+  vscale104 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (vscale104, "vscale104");
+  gtk_widget_show (vscale104);
+  gtk_container_add (GTK_CONTAINER (hsfreq), vscale104);
+  gtk_scale_set_digits (GTK_SCALE (vscale104), 0);
+  gtk_range_set_inverted (GTK_RANGE (vscale104), TRUE);
+
+  vbox96 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox96, "vbox96");
+  gtk_widget_show (vbox96);
+  gtk_box_pack_start (GTK_BOX (hbox24), vbox96, TRUE, TRUE, 0);
+
+  label173 = gtk_label_new (_("slope"));
+  gtk_widget_set_name (label173, "label173");
+  gtk_widget_show (label173);
+  gtk_box_pack_start (GTK_BOX (vbox96), label173, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label173), GTK_JUSTIFY_LEFT);
+
+  hsslope = gtk_event_box_new ();
+  gtk_widget_set_name (hsslope, "hsslope");
+  gtk_widget_show (hsslope);
+  gtk_box_pack_start (GTK_BOX (vbox96), hsslope, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, hsslope, _("High-shelving slope"), NULL);
+
+  vscale105 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 1, 6, 0)));
+  gtk_widget_set_name (vscale105, "vscale105");
+  gtk_widget_show (vscale105);
+  gtk_container_add (GTK_CONTAINER (hsslope), vscale105);
+  gtk_scale_set_digits (GTK_SCALE (vscale105), 0);
+  gtk_range_set_inverted (GTK_RANGE (vscale105), TRUE);
 
   label49 = gtk_label_new (_("Parametric"));
   gtk_widget_set_name (label49, "label49");
@@ -945,9 +1837,33 @@ create_window1 (void)
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 2), label49);
   gtk_label_set_justify (GTK_LABEL (label49), GTK_JUSTIFY_LEFT);
 
-  empty_notebook_page = gtk_vbox_new (FALSE, 0);
-  gtk_widget_show (empty_notebook_page);
-  gtk_container_add (GTK_CONTAINER (notebook1), empty_notebook_page);
+  hbox26 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox26, "hbox26");
+  gtk_widget_show (hbox26);
+  gtk_container_add (GTK_CONTAINER (notebook1), hbox26);
+
+  label211 = gtk_label_new ("");
+  gtk_widget_set_name (label211, "label211");
+  gtk_widget_show (label211);
+  gtk_box_pack_start (GTK_BOX (hbox26), label211, TRUE, TRUE, 0);
+  gtk_label_set_justify (GTK_LABEL (label211), GTK_JUSTIFY_LEFT);
+
+  eventbox48 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox48, "eventbox48");
+  gtk_widget_show (eventbox48);
+  gtk_box_pack_start (GTK_BOX (hbox26), eventbox48, TRUE, TRUE, 0);
+
+  drawingarea2 = gtk_drawing_area_new ();
+  gtk_widget_set_name (drawingarea2, "drawingarea2");
+  gtk_widget_show (drawingarea2);
+  gtk_container_add (GTK_CONTAINER (eventbox48), drawingarea2);
+  gtk_widget_set_size_request (drawingarea2, 520, 0);
+
+  label212 = gtk_label_new ("");
+  gtk_widget_set_name (label212, "label212");
+  gtk_widget_show (label212);
+  gtk_box_pack_start (GTK_BOX (hbox26), label212, TRUE, TRUE, 0);
+  gtk_label_set_justify (GTK_LABEL (label212), GTK_JUSTIFY_LEFT);
 
   label78 = gtk_label_new (_("Spectrum"));
   gtk_widget_set_name (label78, "label78");
@@ -966,7 +1882,7 @@ create_window1 (void)
   gtk_widget_show (table14);
   gtk_box_pack_start (GTK_BOX (vbox78), table14, TRUE, FALSE, 0);
 
-  low2mid = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (3.09691, 1.39794, 4.30103, 0.01, 0.1, 0)));
+  low2mid = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (2.22462, 1.39794, 4.30103, 0.01, 0.1, 0)));
   gtk_widget_set_name (low2mid, "low2mid");
   gtk_widget_show (low2mid);
   gtk_table_attach (GTK_TABLE (table14), low2mid, 1, 2, 0, 1,
@@ -983,7 +1899,7 @@ create_window1 (void)
   gtk_label_set_justify (GTK_LABEL (low2mid_lbl), GTK_JUSTIFY_LEFT);
   gtk_misc_set_alignment (GTK_MISC (low2mid_lbl), 0, 0.5);
 
-  mid2high2 = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (4.09691, 1.39794, 4.30103, 0.01, 0.1, 0)));
+  mid2high2 = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (3.20204, 1.39794, 4.30103, 0.01, 0.1, 0)));
   gtk_widget_set_name (mid2high2, "mid2high2");
   gtk_widget_show (mid2high2);
   gtk_table_attach (GTK_TABLE (table14), mid2high2, 1, 2, 1, 2,
@@ -1838,104 +2754,240 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, vbox78, "vbox78");
   GLADE_HOOKUP_OBJECT (window1, notebook1, "notebook1");
   GLADE_HOOKUP_OBJECT (window1, hbox21, "hbox21");
+  GLADE_HOOKUP_OBJECT (window1, eventbox2, "eventbox2");
   GLADE_HOOKUP_OBJECT (window1, eqb_hbox, "eqb_hbox");
   GLADE_HOOKUP_OBJECT (window1, vbox41, "vbox41");
+  GLADE_HOOKUP_OBJECT (window1, eventbox3, "eventbox3");
   GLADE_HOOKUP_OBJECT (window1, eqb1, "eqb1");
   GLADE_HOOKUP_OBJECT (window1, label131, "label131");
   GLADE_HOOKUP_OBJECT (window1, vbox42, "vbox42");
   GLADE_HOOKUP_OBJECT (window1, vbox52, "vbox52");
-  GLADE_HOOKUP_OBJECT (window1, eqb2, "eqb2");
+  GLADE_HOOKUP_OBJECT (window1, eventbox4, "eventbox4");
+  GLADE_HOOKUP_OBJECT (window1, eq2b, "eq2b");
   GLADE_HOOKUP_OBJECT (window1, label132, "label132");
   GLADE_HOOKUP_OBJECT (window1, vbox43, "vbox43");
   GLADE_HOOKUP_OBJECT (window1, vbox53, "vbox53");
-  GLADE_HOOKUP_OBJECT (window1, eqb3, "eqb3");
+  GLADE_HOOKUP_OBJECT (window1, eventbox5, "eventbox5");
+  GLADE_HOOKUP_OBJECT (window1, eq3b, "eq3b");
   GLADE_HOOKUP_OBJECT (window1, label133, "label133");
   GLADE_HOOKUP_OBJECT (window1, vbox44, "vbox44");
   GLADE_HOOKUP_OBJECT (window1, vbox54, "vbox54");
-  GLADE_HOOKUP_OBJECT (window1, eqb4, "eqb4");
+  GLADE_HOOKUP_OBJECT (window1, eventbox6, "eventbox6");
+  GLADE_HOOKUP_OBJECT (window1, eq4b, "eq4b");
   GLADE_HOOKUP_OBJECT (window1, label134, "label134");
   GLADE_HOOKUP_OBJECT (window1, vbox45, "vbox45");
   GLADE_HOOKUP_OBJECT (window1, vbox55, "vbox55");
-  GLADE_HOOKUP_OBJECT (window1, eqb5, "eqb5");
+  GLADE_HOOKUP_OBJECT (window1, eventbox7, "eventbox7");
+  GLADE_HOOKUP_OBJECT (window1, eq5b, "eq5b");
   GLADE_HOOKUP_OBJECT (window1, label135, "label135");
   GLADE_HOOKUP_OBJECT (window1, vbox46, "vbox46");
   GLADE_HOOKUP_OBJECT (window1, vbox56, "vbox56");
-  GLADE_HOOKUP_OBJECT (window1, eqb6, "eqb6");
+  GLADE_HOOKUP_OBJECT (window1, eventbox8, "eventbox8");
+  GLADE_HOOKUP_OBJECT (window1, eq6b, "eq6b");
   GLADE_HOOKUP_OBJECT (window1, label136, "label136");
   GLADE_HOOKUP_OBJECT (window1, vbox47, "vbox47");
   GLADE_HOOKUP_OBJECT (window1, vbox57, "vbox57");
-  GLADE_HOOKUP_OBJECT (window1, eqb7, "eqb7");
+  GLADE_HOOKUP_OBJECT (window1, eventbox9, "eventbox9");
+  GLADE_HOOKUP_OBJECT (window1, eq7b, "eq7b");
   GLADE_HOOKUP_OBJECT (window1, label137, "label137");
   GLADE_HOOKUP_OBJECT (window1, vbox48, "vbox48");
   GLADE_HOOKUP_OBJECT (window1, vbox58, "vbox58");
-  GLADE_HOOKUP_OBJECT (window1, eqb8, "eqb8");
+  GLADE_HOOKUP_OBJECT (window1, eventbox10, "eventbox10");
+  GLADE_HOOKUP_OBJECT (window1, eq8b, "eq8b");
   GLADE_HOOKUP_OBJECT (window1, label138, "label138");
   GLADE_HOOKUP_OBJECT (window1, vbox50, "vbox50");
   GLADE_HOOKUP_OBJECT (window1, vbox59, "vbox59");
-  GLADE_HOOKUP_OBJECT (window1, eqb9, "eqb9");
+  GLADE_HOOKUP_OBJECT (window1, eventbox11, "eventbox11");
+  GLADE_HOOKUP_OBJECT (window1, eq9b, "eq9b");
   GLADE_HOOKUP_OBJECT (window1, label139, "label139");
   GLADE_HOOKUP_OBJECT (window1, vbox49, "vbox49");
   GLADE_HOOKUP_OBJECT (window1, vbox60, "vbox60");
-  GLADE_HOOKUP_OBJECT (window1, eqb10, "eqb10");
+  GLADE_HOOKUP_OBJECT (window1, eventbox12, "eventbox12");
+  GLADE_HOOKUP_OBJECT (window1, eq10b, "eq10b");
   GLADE_HOOKUP_OBJECT (window1, label140, "label140");
   GLADE_HOOKUP_OBJECT (window1, vbox51, "vbox51");
   GLADE_HOOKUP_OBJECT (window1, vbox61, "vbox61");
-  GLADE_HOOKUP_OBJECT (window1, eqb11, "eqb11");
+  GLADE_HOOKUP_OBJECT (window1, eventbox13, "eventbox13");
+  GLADE_HOOKUP_OBJECT (window1, eq11b, "eq11b");
   GLADE_HOOKUP_OBJECT (window1, label141, "label141");
   GLADE_HOOKUP_OBJECT (window1, vbox62, "vbox62");
-  GLADE_HOOKUP_OBJECT (window1, eqb12, "eqb12");
+  GLADE_HOOKUP_OBJECT (window1, eventbox14, "eventbox14");
+  GLADE_HOOKUP_OBJECT (window1, eq12b, "eq12b");
   GLADE_HOOKUP_OBJECT (window1, label142, "label142");
   GLADE_HOOKUP_OBJECT (window1, vbox63, "vbox63");
-  GLADE_HOOKUP_OBJECT (window1, eqb13, "eqb13");
+  GLADE_HOOKUP_OBJECT (window1, eventbox15, "eventbox15");
+  GLADE_HOOKUP_OBJECT (window1, eq13b, "eq13b");
   GLADE_HOOKUP_OBJECT (window1, label143, "label143");
   GLADE_HOOKUP_OBJECT (window1, vbox64, "vbox64");
-  GLADE_HOOKUP_OBJECT (window1, eqb14, "eqb14");
+  GLADE_HOOKUP_OBJECT (window1, eventbox16, "eventbox16");
+  GLADE_HOOKUP_OBJECT (window1, eq14b, "eq14b");
   GLADE_HOOKUP_OBJECT (window1, label144, "label144");
   GLADE_HOOKUP_OBJECT (window1, vbox65, "vbox65");
-  GLADE_HOOKUP_OBJECT (window1, eqb15, "eqb15");
+  GLADE_HOOKUP_OBJECT (window1, eventbox17, "eventbox17");
+  GLADE_HOOKUP_OBJECT (window1, eq15b, "eq15b");
   GLADE_HOOKUP_OBJECT (window1, label145, "label145");
   GLADE_HOOKUP_OBJECT (window1, vbox66, "vbox66");
-  GLADE_HOOKUP_OBJECT (window1, eqb16, "eqb16");
+  GLADE_HOOKUP_OBJECT (window1, eventbox18, "eventbox18");
+  GLADE_HOOKUP_OBJECT (window1, eq16b, "eq16b");
   GLADE_HOOKUP_OBJECT (window1, label146, "label146");
   GLADE_HOOKUP_OBJECT (window1, vbox67, "vbox67");
-  GLADE_HOOKUP_OBJECT (window1, eqb17, "eqb17");
+  GLADE_HOOKUP_OBJECT (window1, eventbox19, "eventbox19");
+  GLADE_HOOKUP_OBJECT (window1, eq17b, "eq17b");
   GLADE_HOOKUP_OBJECT (window1, label147, "label147");
   GLADE_HOOKUP_OBJECT (window1, vbox68, "vbox68");
-  GLADE_HOOKUP_OBJECT (window1, eqb18, "eqb18");
+  GLADE_HOOKUP_OBJECT (window1, eventbox20, "eventbox20");
+  GLADE_HOOKUP_OBJECT (window1, eq18b, "eq18b");
   GLADE_HOOKUP_OBJECT (window1, label148, "label148");
   GLADE_HOOKUP_OBJECT (window1, vbox69, "vbox69");
-  GLADE_HOOKUP_OBJECT (window1, eqb19, "eqb19");
+  GLADE_HOOKUP_OBJECT (window1, eventbox21, "eventbox21");
+  GLADE_HOOKUP_OBJECT (window1, eq19b, "eq19b");
   GLADE_HOOKUP_OBJECT (window1, label149, "label149");
   GLADE_HOOKUP_OBJECT (window1, vbox70, "vbox70");
-  GLADE_HOOKUP_OBJECT (window1, eqb20, "eqb20");
+  GLADE_HOOKUP_OBJECT (window1, eventbox22, "eventbox22");
+  GLADE_HOOKUP_OBJECT (window1, eq20b, "eq20b");
   GLADE_HOOKUP_OBJECT (window1, label150, "label150");
   GLADE_HOOKUP_OBJECT (window1, vbox71, "vbox71");
-  GLADE_HOOKUP_OBJECT (window1, eqb21, "eqb21");
+  GLADE_HOOKUP_OBJECT (window1, eventbox23, "eventbox23");
+  GLADE_HOOKUP_OBJECT (window1, eq21b, "eq21b");
   GLADE_HOOKUP_OBJECT (window1, label151, "label151");
   GLADE_HOOKUP_OBJECT (window1, vbox72, "vbox72");
-  GLADE_HOOKUP_OBJECT (window1, eqb22, "eqb22");
+  GLADE_HOOKUP_OBJECT (window1, eventbox24, "eventbox24");
+  GLADE_HOOKUP_OBJECT (window1, eq22b, "eq22b");
   GLADE_HOOKUP_OBJECT (window1, label152, "label152");
   GLADE_HOOKUP_OBJECT (window1, vbox73, "vbox73");
-  GLADE_HOOKUP_OBJECT (window1, eqb23, "eqb23");
+  GLADE_HOOKUP_OBJECT (window1, eventbox25, "eventbox25");
+  GLADE_HOOKUP_OBJECT (window1, eq23b, "eq23b");
   GLADE_HOOKUP_OBJECT (window1, label153, "label153");
   GLADE_HOOKUP_OBJECT (window1, vbox74, "vbox74");
-  GLADE_HOOKUP_OBJECT (window1, eqb24, "eqb24");
+  GLADE_HOOKUP_OBJECT (window1, eventbox26, "eventbox26");
+  GLADE_HOOKUP_OBJECT (window1, eventbox27, "eventbox27");
+  GLADE_HOOKUP_OBJECT (window1, eq24b, "eq24b");
   GLADE_HOOKUP_OBJECT (window1, label154, "label154");
   GLADE_HOOKUP_OBJECT (window1, vbox75, "vbox75");
-  GLADE_HOOKUP_OBJECT (window1, eqb25, "eqb25");
+  GLADE_HOOKUP_OBJECT (window1, eventbox28, "eventbox28");
+  GLADE_HOOKUP_OBJECT (window1, eq25b, "eq25b");
   GLADE_HOOKUP_OBJECT (window1, label155, "label155");
   GLADE_HOOKUP_OBJECT (window1, vbox76, "vbox76");
-  GLADE_HOOKUP_OBJECT (window1, eqb26, "eqb26");
+  GLADE_HOOKUP_OBJECT (window1, eventbox29, "eventbox29");
+  GLADE_HOOKUP_OBJECT (window1, eq26b, "eq26b");
   GLADE_HOOKUP_OBJECT (window1, label156, "label156");
   GLADE_HOOKUP_OBJECT (window1, vbox77, "vbox77");
-  GLADE_HOOKUP_OBJECT (window1, eqb27, "eqb27");
+  GLADE_HOOKUP_OBJECT (window1, eventbox30, "eventbox30");
+  GLADE_HOOKUP_OBJECT (window1, eq27b, "eq27b");
   GLADE_HOOKUP_OBJECT (window1, label157, "label157");
   GLADE_HOOKUP_OBJECT (window1, vbox80, "vbox80");
-  GLADE_HOOKUP_OBJECT (window1, eqb28, "eqb28");
+  GLADE_HOOKUP_OBJECT (window1, eventbox31, "eventbox31");
+  GLADE_HOOKUP_OBJECT (window1, eq28b, "eq28b");
   GLADE_HOOKUP_OBJECT (window1, label158, "label158");
   GLADE_HOOKUP_OBJECT (window1, label47, "label47");
+  GLADE_HOOKUP_OBJECT (window1, hbox25, "hbox25");
+  GLADE_HOOKUP_OBJECT (window1, vbox97, "vbox97");
+  GLADE_HOOKUP_OBJECT (window1, label205, "label205");
+  GLADE_HOOKUP_OBJECT (window1, label208, "label208");
+  GLADE_HOOKUP_OBJECT (window1, label206, "label206");
+  GLADE_HOOKUP_OBJECT (window1, label210, "label210");
+  GLADE_HOOKUP_OBJECT (window1, label207, "label207");
+  GLADE_HOOKUP_OBJECT (window1, vbox99, "vbox99");
+  GLADE_HOOKUP_OBJECT (window1, eventbox47, "eventbox47");
+  GLADE_HOOKUP_OBJECT (window1, drawingarea1, "drawingarea1");
+  GLADE_HOOKUP_OBJECT (window1, hbox23, "hbox23");
+  GLADE_HOOKUP_OBJECT (window1, label176, "label176");
+  GLADE_HOOKUP_OBJECT (window1, label177, "label177");
+  GLADE_HOOKUP_OBJECT (window1, label178, "label178");
+  GLADE_HOOKUP_OBJECT (window1, label179, "label179");
+  GLADE_HOOKUP_OBJECT (window1, label180, "label180");
+  GLADE_HOOKUP_OBJECT (window1, label181, "label181");
+  GLADE_HOOKUP_OBJECT (window1, label182, "label182");
+  GLADE_HOOKUP_OBJECT (window1, label183, "label183");
+  GLADE_HOOKUP_OBJECT (window1, label184, "label184");
+  GLADE_HOOKUP_OBJECT (window1, label185, "label185");
+  GLADE_HOOKUP_OBJECT (window1, label186, "label186");
+  GLADE_HOOKUP_OBJECT (window1, label187, "label187");
+  GLADE_HOOKUP_OBJECT (window1, label188, "label188");
+  GLADE_HOOKUP_OBJECT (window1, label189, "label189");
+  GLADE_HOOKUP_OBJECT (window1, label190, "label190");
+  GLADE_HOOKUP_OBJECT (window1, label191, "label191");
+  GLADE_HOOKUP_OBJECT (window1, label192, "label192");
+  GLADE_HOOKUP_OBJECT (window1, label193, "label193");
+  GLADE_HOOKUP_OBJECT (window1, label194, "label194");
+  GLADE_HOOKUP_OBJECT (window1, label195, "label195");
+  GLADE_HOOKUP_OBJECT (window1, label196, "label196");
+  GLADE_HOOKUP_OBJECT (window1, label197, "label197");
+  GLADE_HOOKUP_OBJECT (window1, label198, "label198");
+  GLADE_HOOKUP_OBJECT (window1, label199, "label199");
+  GLADE_HOOKUP_OBJECT (window1, label200, "label200");
+  GLADE_HOOKUP_OBJECT (window1, label201, "label201");
+  GLADE_HOOKUP_OBJECT (window1, label202, "label202");
+  GLADE_HOOKUP_OBJECT (window1, label203, "label203");
+  GLADE_HOOKUP_OBJECT (window1, label204, "label204");
   GLADE_HOOKUP_OBJECT (window1, label48, "label48");
+  GLADE_HOOKUP_OBJECT (window1, hbox24, "hbox24");
+  GLADE_HOOKUP_OBJECT (window1, vbox82, "vbox82");
+  GLADE_HOOKUP_OBJECT (window1, label159, "label159");
+  GLADE_HOOKUP_OBJECT (window1, lsgain, "lsgain");
+  GLADE_HOOKUP_OBJECT (window1, vscale91, "vscale91");
+  GLADE_HOOKUP_OBJECT (window1, vbox83, "vbox83");
+  GLADE_HOOKUP_OBJECT (window1, label160, "label160");
+  GLADE_HOOKUP_OBJECT (window1, lsfreq, "lsfreq");
+  GLADE_HOOKUP_OBJECT (window1, vscale92, "vscale92");
+  GLADE_HOOKUP_OBJECT (window1, vbox84, "vbox84");
+  GLADE_HOOKUP_OBJECT (window1, label161, "label161");
+  GLADE_HOOKUP_OBJECT (window1, lsslope, "lsslope");
+  GLADE_HOOKUP_OBJECT (window1, vscale93, "vscale93");
+  GLADE_HOOKUP_OBJECT (window1, vbox85, "vbox85");
+  GLADE_HOOKUP_OBJECT (window1, label162, "label162");
+  GLADE_HOOKUP_OBJECT (window1, b1gain, "b1gain");
+  GLADE_HOOKUP_OBJECT (window1, vscale94, "vscale94");
+  GLADE_HOOKUP_OBJECT (window1, vbox86, "vbox86");
+  GLADE_HOOKUP_OBJECT (window1, label163, "label163");
+  GLADE_HOOKUP_OBJECT (window1, b1freq, "b1freq");
+  GLADE_HOOKUP_OBJECT (window1, vscale95, "vscale95");
+  GLADE_HOOKUP_OBJECT (window1, vbox87, "vbox87");
+  GLADE_HOOKUP_OBJECT (window1, label164, "label164");
+  GLADE_HOOKUP_OBJECT (window1, b1bw, "b1bw");
+  GLADE_HOOKUP_OBJECT (window1, vscale96, "vscale96");
+  GLADE_HOOKUP_OBJECT (window1, vbox88, "vbox88");
+  GLADE_HOOKUP_OBJECT (window1, label165, "label165");
+  GLADE_HOOKUP_OBJECT (window1, b2gain, "b2gain");
+  GLADE_HOOKUP_OBJECT (window1, vscale97, "vscale97");
+  GLADE_HOOKUP_OBJECT (window1, vbox89, "vbox89");
+  GLADE_HOOKUP_OBJECT (window1, label166, "label166");
+  GLADE_HOOKUP_OBJECT (window1, b2freq, "b2freq");
+  GLADE_HOOKUP_OBJECT (window1, vscale98, "vscale98");
+  GLADE_HOOKUP_OBJECT (window1, vbox90, "vbox90");
+  GLADE_HOOKUP_OBJECT (window1, label167, "label167");
+  GLADE_HOOKUP_OBJECT (window1, b2bw, "b2bw");
+  GLADE_HOOKUP_OBJECT (window1, vscale99, "vscale99");
+  GLADE_HOOKUP_OBJECT (window1, vbox91, "vbox91");
+  GLADE_HOOKUP_OBJECT (window1, label168, "label168");
+  GLADE_HOOKUP_OBJECT (window1, b3gain, "b3gain");
+  GLADE_HOOKUP_OBJECT (window1, vscale100, "vscale100");
+  GLADE_HOOKUP_OBJECT (window1, vbox92, "vbox92");
+  GLADE_HOOKUP_OBJECT (window1, label169, "label169");
+  GLADE_HOOKUP_OBJECT (window1, b3freq, "b3freq");
+  GLADE_HOOKUP_OBJECT (window1, vscale101, "vscale101");
+  GLADE_HOOKUP_OBJECT (window1, vbox93, "vbox93");
+  GLADE_HOOKUP_OBJECT (window1, label170, "label170");
+  GLADE_HOOKUP_OBJECT (window1, b3bw, "b3bw");
+  GLADE_HOOKUP_OBJECT (window1, vscale102, "vscale102");
+  GLADE_HOOKUP_OBJECT (window1, vbox94, "vbox94");
+  GLADE_HOOKUP_OBJECT (window1, label171, "label171");
+  GLADE_HOOKUP_OBJECT (window1, hsgain, "hsgain");
+  GLADE_HOOKUP_OBJECT (window1, vscale103, "vscale103");
+  GLADE_HOOKUP_OBJECT (window1, vbox95, "vbox95");
+  GLADE_HOOKUP_OBJECT (window1, label172, "label172");
+  GLADE_HOOKUP_OBJECT (window1, hsfreq, "hsfreq");
+  GLADE_HOOKUP_OBJECT (window1, vscale104, "vscale104");
+  GLADE_HOOKUP_OBJECT (window1, vbox96, "vbox96");
+  GLADE_HOOKUP_OBJECT (window1, label173, "label173");
+  GLADE_HOOKUP_OBJECT (window1, hsslope, "hsslope");
+  GLADE_HOOKUP_OBJECT (window1, vscale105, "vscale105");
   GLADE_HOOKUP_OBJECT (window1, label49, "label49");
+  GLADE_HOOKUP_OBJECT (window1, hbox26, "hbox26");
+  GLADE_HOOKUP_OBJECT (window1, label211, "label211");
+  GLADE_HOOKUP_OBJECT (window1, eventbox48, "eventbox48");
+  GLADE_HOOKUP_OBJECT (window1, drawingarea2, "drawingarea2");
+  GLADE_HOOKUP_OBJECT (window1, label212, "label212");
   GLADE_HOOKUP_OBJECT (window1, label78, "label78");
   GLADE_HOOKUP_OBJECT (window1, cross_lbl, "cross_lbl");
   GLADE_HOOKUP_OBJECT (window1, table14, "table14");
@@ -2056,6 +3108,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, button9, "button9");
   GLADE_HOOKUP_OBJECT (window1, button10, "button10");
   GLADE_HOOKUP_OBJECT (window1, quit, "quit");
+  GLADE_HOOKUP_OBJECT_NO_REF (window1, tooltips, "tooltips");
 
   return window1;
 }

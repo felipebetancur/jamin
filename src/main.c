@@ -31,10 +31,11 @@ main (int argc, char *argv[])
   textdomain (GETTEXT_PACKAGE);
 #endif
 
+  gtk_rc_parse("/root/.jamrc");
   gtk_set_locale ();
   gtk_init (&argc, &argv);
   backend_init(argc, argv);
-
+  
   add_pixmap_directory (PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
 
   /*
@@ -42,6 +43,7 @@ main (int argc, char *argv[])
    * (except popup menus), just so that you see something after building
    * the project. Delete any components that you don't want shown initially.
    */
+   
   main_window = create_window1 ();
   gtk_widget_show (main_window);
 
