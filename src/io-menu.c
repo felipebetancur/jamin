@@ -24,7 +24,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.c,v 1.23 2004/02/21 01:45:48 joq Exp $
+ *  $Id: io-menu.c,v 1.24 2004/04/08 15:37:37 joq Exp $
  */
 
 #include <stdlib.h>
@@ -36,6 +36,12 @@
 
 #include "support.h"
 
+/* Shared global JACK connection information.  The `client' pointer
+ * must be NULL when the JACK connection is inactive.  The
+ * `input_ports' and `output_ports' are NULL-terminated arrays of
+ * pointers to this client's input and output ports. */
+#include "io.h"
+
 /* Global GTK data. */
 static GtkWidget   *menubar_item;	/* "Ports" menubar item */
 static GtkWidget   *pulldown_menu;	/* "Ports" pulldown menu */
@@ -43,13 +49,6 @@ static GtkWidget   *in_item;		/* "Connect" menubar item */
 static GtkWidget   *out_item;		/* "Disconnect" menubar item */
 static GtkWidget   *iports_menu = NULL;	/* In ports menu */
 static GtkWidget   *oports_menu = NULL;	/* Out ports menu */
-
-/* Global JACK data passed to iomenu_bind().  The iports_list and
- * oports_list are NULL-terminated arrays of pointers to this client's
- * input and output ports. */
-static jack_client_t *client;
-static jack_port_t  **iports_list;
-static jack_port_t  **oports_list;
 
 /* These lists of currently registered input and output ports are
  * updated each time the menu is used. */
@@ -102,7 +101,11 @@ iomenu_select_port(GtkWidget *menu_item, jack_port_t *port)
 static void
 iomenu_connect(GtkWidget *widget, char *port_name)
 {
-    const char *selected_name = jack_port_name(selected_port);
+    const char *selected_name;
+
+    if (client == NULL)
+	    return;
+    selected_name = jack_port_name(selected_port);
 
     if (jack_port_flags(selected_port) & JackPortIsInput) {
 	fprintf(stderr, _("connecting port %s to %s\n"),
@@ -124,7 +127,11 @@ iomenu_connect(GtkWidget *widget, char *port_name)
 static void
 iomenu_disconnect(GtkWidget *widget, char *port_name)
 {
-    const char *selected_name = jack_port_name(selected_port);
+    const char *selected_name;
+
+    if (client == NULL)
+	    return;
+    selected_name = jack_port_name(selected_port);
 
     if (jack_port_flags(selected_port) & JackPortIsInput) {
 	fprintf(stderr, _("disconnecting port %s from %s\n"),
@@ -147,19 +154,23 @@ static void
 iomenu_all_inputs(GtkWidget *widget, char *group)
 {
     int i;
-    const char **gports = jack_get_ports(client, group,
-					 JACK_DEFAULT_AUDIO_TYPE,
-					 JackPortIsOutput);
+    const char **gports;
+
+    if (client == NULL)
+	    return;
+
+    gports = jack_get_ports(client, group, JACK_DEFAULT_AUDIO_TYPE,
+			    JackPortIsOutput);
 
     if (gports == NULL)
 	return;
 
     /* connect or disconnect as many input ports as possible */
-    for (i = 0; iports_list[i] && gports[i]; ++i) {
+    for (i = 0; input_ports[i] && gports[i]; ++i) {
 
-	const char *local_name = jack_port_name(iports_list[i]);
+	const char *local_name = jack_port_name(input_ports[i]);
 
-	if (jack_port_connected_to(iports_list[i], gports[i])) {
+	if (jack_port_connected_to(input_ports[i], gports[i])) {
 
 	    fprintf(stderr, _("disconnecting port %s from %s\n"),
 		    gports[i], local_name);
@@ -189,19 +200,23 @@ static void
 iomenu_all_outputs(GtkWidget *widget, char *group)
 {
     int i;
-    const char **gports = jack_get_ports(client, group,
-					 JACK_DEFAULT_AUDIO_TYPE,
-					 JackPortIsInput);
+    const char **gports;
+
+    if (client == NULL)
+	    return;
+
+    gports = jack_get_ports(client, group, JACK_DEFAULT_AUDIO_TYPE,
+			    JackPortIsInput);
 
     if (gports == NULL)
 	return;
 
     /* connect or disconnect as many output ports as possible */
-    for (i = 0; oports_list[i] && gports[i]; ++i) {
+    for (i = 0; output_ports[i] && gports[i]; ++i) {
 
-	const char *local_name = jack_port_name(oports_list[i]);
+	const char *local_name = jack_port_name(output_ports[i]);
 
-	if (jack_port_connected_to(oports_list[i], gports[i])) {
+	if (jack_port_connected_to(output_ports[i], gports[i])) {
 
 	    fprintf(stderr, _("disconnecting port %s from %s\n"),
 		    gports[i], local_name);
@@ -272,20 +287,23 @@ iomenu_connection_item(jack_port_t *port, const char *connection_name)
 static int
 iomenu_check_input(const char *group)
 {
-    const char **gports = jack_get_ports(client, group,
-					 JACK_DEFAULT_AUDIO_TYPE,
-					 JackPortIsOutput);
+    const char **gports;
     int rc = FALSE;
 
-    if (gports) {
-	int i;
-	for (i = 0; iports_list[i] && gports[i]; ++i) {
-	    if (jack_port_connected_to(iports_list[i], gports[i])) {
-		rc = TRUE;
-		break;
+    if (client) {
+	    gports = jack_get_ports(client, group, JACK_DEFAULT_AUDIO_TYPE,
+				    JackPortIsOutput);
+	    if (gports) {
+		    int i;
+		    for (i = 0; input_ports[i] && gports[i]; ++i) {
+			    if (jack_port_connected_to(input_ports[i],
+						       gports[i])) {
+				    rc = TRUE;
+				    break;
+			    }
+		    }
+		    free(gports);
 	    }
-	}
-	free(gports);
     }
     return rc;
 }
@@ -294,20 +312,23 @@ iomenu_check_input(const char *group)
 static int
 iomenu_check_output(const char *group)
 {
-    const char **gports = jack_get_ports(client, group,
-					 JACK_DEFAULT_AUDIO_TYPE,
-					 JackPortIsInput);
+    const char **gports;
     int rc = FALSE;
 
-    if (gports) {
-	int i;
-	for (i = 0; oports_list[i] && gports[i]; ++i) {
-	    if (jack_port_connected_to(oports_list[i], gports[i])) {
-		rc = TRUE;
-		break;
+    if (client) {
+	    gports = jack_get_ports(client, group, JACK_DEFAULT_AUDIO_TYPE,
+				    JackPortIsInput);
+	    if (gports) {
+		    int i;
+		    for (i = 0; output_ports[i] && gports[i]; ++i) {
+			    if (jack_port_connected_to(output_ports[i],
+						       gports[i])) {
+				    rc = TRUE;
+				    break;
+			    }
+		    }
+		    free(gports);
 	    }
-	}
-	free(gports);
     }
     return rc;
 }
@@ -500,9 +521,9 @@ iomenu_pull_down_ports()
 		      iomenu_check_input, iomenu_all_inputs);
 
     /* create menu items for each input port */
-    for (i = 0; iports_list[i]; ++i) {
+    for (i = 0; input_ports[i]; ++i) {
 	iomenu_add_item(iports_menu,
-			iomenu_port_item(iports_list[i]));
+			iomenu_port_item(input_ports[i]));
     }
 
     /* add output groups item and submenu, plus separator */
@@ -510,9 +531,9 @@ iomenu_pull_down_ports()
 		      iomenu_check_output, iomenu_all_outputs);
 
     /* create menu items for each output port */
-    for (i = 0; oports_list[i]; ++i) {
+    for (i = 0; output_ports[i]; ++i) {
 	iomenu_add_item(oports_menu,
-			iomenu_port_item(oports_list[i]));
+			iomenu_port_item(output_ports[i]));
     }
 
     gtk_widget_show(iports_menu);
@@ -521,14 +542,8 @@ iomenu_pull_down_ports()
 
 /* initialization */
 void 
-iomenu_bind(GtkWidget *main_window, jack_client_t *jack_client,
-	    jack_port_t *input_ports[], jack_port_t *output_ports[])
+iomenu_bind(GtkWidget *main_window)
 {
-    /* save pointers to JACK objects */
-    client = jack_client;
-    iports_list = input_ports;
-    oports_list = output_ports;
-
     /* Allocate buffer for up to MAXGROUPS input and output group
      * names.  Each group name is a JACK client name followed by ':'
      * and a zero byte. */

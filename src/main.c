@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.44 2004/04/04 23:19:44 jdepner Exp $
+ *  $Id: main.c,v 1.45 2004/04/08 15:37:37 joq Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
     bind_hdeq();
     gtk_widget_show(main_window);
     bind_intrim();
-    iomenu_bind(main_window, client, input_ports, output_ports);
+    iomenu_bind(main_window);
     bind_limiter(); 
     bind_compressors();
     bind_spectrum();
