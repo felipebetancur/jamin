@@ -36,6 +36,7 @@ jamin_SOURCES = \
 	main.c main.h \
 	plugin.c plugin.h \
 	process.c process.h \
+	resource.c resource.h \
 	ringbuffer.c ringbuffer.h \
 	spectrum.c spectrum.h \
 	spline.c \

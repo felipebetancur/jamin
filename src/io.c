@@ -75,6 +75,7 @@
 
 #include "ringbuffer.h"
 #include "process.h"
+#include "resource.h"
 #include "plugin.h"
 #include "io.h"
 #include "transport.h"
@@ -82,7 +83,7 @@
 #include "state.h"
 #include "debug.h"
 
-char *jamin_options = "dFf:n:hpTtvV";	/* valid JAMin options */
+char *jamin_options = "dFf:n:hpr::TtvV"; /* valid JAMin options */
 char *pname;				/* `basename $0` */
 int dummy_mode = 0;			/* -d option */
 int all_errors_fatal = 0;		/* -F option */
@@ -700,6 +701,9 @@ void io_init(int argc, char *argv[])
 	case 'p':			/* no port connections */
 	    connect_ports = 0;
 	    break;
+	case 'r':			/* use GTK resource file */
+	    resource_file_name(optarg);
+	    break;
 	case 't':			/* no DSP thread */
 	    thread_option = 0;
 	    break;
@@ -740,6 +744,7 @@ void io_init(int argc, char *argv[])
                 "\t-f file\tload session file on startup\n"
                 "\t-h\tshow this help\n"
                 "\t-n name\tset JACK client name\n"
+                "\t-r[file] use GTK resource file\n"
                 "\t-p\tdon't automatically connect JACK output ports\n"
                 "\t-v\tverbose output (use -vv... for more detail)\n"
                 "\t-V\tprint version and quit\n"
