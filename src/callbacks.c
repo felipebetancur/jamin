@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.155 2004/10/28 08:20:30 theno23 Exp $
+ *  $Id: callbacks.c,v 1.156 2004/11/03 17:41:20 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -31,12 +31,12 @@
 
 
 #include "main.h"
+#include "support.h"
 #include "callbacks.h"
 #include "callbacks_help.h"
 #include "geq.h"
 #include "hdeq.h"
 #include "interface.h"
-#include "support.h"
 #include "process.h"
 #include "intrim.h"
 #include "compressor-ui.h"
@@ -1444,7 +1444,7 @@ on_redo1_activate                       (GtkMenuItem     *menuitem,
 
 void general_help_callback ()
 {
-    message (GTK_MESSAGE_INFO, general_help);
+  message (GTK_MESSAGE_INFO, _(general_help));
 }
 
 
@@ -1458,7 +1458,7 @@ on_about1_activate                     (GtkMenuItem     *menuitem,
 
   if ((splash = create_pixmap (main_window, "JAMin_splash.jpg")) == NULL)
     {
-      message (GTK_MESSAGE_INFO, general_help);
+      message (GTK_MESSAGE_INFO, _(general_help));
     }
   else
     {
@@ -1489,7 +1489,7 @@ void
 on_about_prerequisites1_activate       (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  message (GTK_MESSAGE_INFO, prerequisites_help);
+  message (GTK_MESSAGE_INFO, _(prerequisites_help));
 }
 
 
@@ -1530,7 +1530,7 @@ void
 on_help1_activate                      (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  message (GTK_MESSAGE_INFO, help_help);
+  message (GTK_MESSAGE_INFO, _(help_help));
 }
 
 
@@ -1538,7 +1538,7 @@ void
 on_keys1_activate                      (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  message (GTK_MESSAGE_INFO, keys_help);
+  message (GTK_MESSAGE_INFO, _(keys_help));
 }
 
 
