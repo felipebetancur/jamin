@@ -31,7 +31,6 @@ static GList         *undo_pos = NULL;
 
 static int suppress_feedback = 0;
 
-static void s_history_add(const char *description);
 static void s_set_events(int id, float value);
 void set_EQ_curve_values ();
 void unset_scene_buttons ();
@@ -155,7 +154,7 @@ void s_clear_history()
     s_restore_state((s_state *)history->data);
 }
 
-static void s_history_add(const char *description)
+void s_history_add(const char *description)
 {
     s_state *ns;
 

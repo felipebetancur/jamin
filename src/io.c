@@ -730,7 +730,19 @@ void io_init(int argc, char *argv[])
 
     if (show_help) {
 	fprintf(stderr,
-		"Usage: %s [-%s] [inport1 inport2 [outport1 outport2]]\n\n",
+                "Usage: %s [-%s] [inport1 inport2 [outport1 outport2]]\n"
+                "\nuser options:\n"
+                "\t-p\tdon't automatically connect to jack ports\n"
+                "\t-f file\tload session file on startup\n"
+                "\t-V\tprint version\n"
+                "\t-h\tshow this help\n"
+                "\ndeveloper options:\n"
+                "\t-d\tdummy mode (don't connect to jackd)\n"
+                "\t-F\ttreat all errors as fatal\n"
+                "\t-T\tprint trace buffer\n"
+                "\t-t\tdont't start dsp thread\n"
+                "\t-v\tdebug level (use -vv...) for increased verbosity\n"
+                "\n",
 		pname, jamin_options);
 	exit(1);
     }

@@ -21,6 +21,7 @@
 
 
 #include "scenes.h"
+#include "state.h"
 #include "main.h"
 #include "support.h"
 #include "interface.h"

@@ -19,6 +19,7 @@ void s_set_value_block(float *values, int base, int count);
 void s_set_value_no_history(int id, float value);
 void s_set_description(int id, const char *desc);
 void s_clear_history();
+void s_history_add(const char *description);
 void s_set_callback(int id, s_callback_func callback);
 void s_set_adjustment(int id, GtkAdjustment * adjustment);
 void s_undo();
