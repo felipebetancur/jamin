@@ -341,14 +341,6 @@ on_notebook1_realize                   (GtkWidget       *widget,
                                         gpointer         user_data);
 
 void
-on_save_button_clicked                 (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
-on_load_button_clicked                 (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
 on_optionmenu1_realize                 (GtkWidget       *widget,
                                         gpointer         user_data);
 
@@ -636,26 +628,6 @@ on_transport_controls_eventbox_enter_notify_event
 
 gboolean
 on_bypass_button_enter_notify_event    (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data);
-
-gboolean
-on_load_button_enter_notify_event      (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data);
-
-gboolean
-on_save_button_enter_notify_event      (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data);
-
-gboolean
-on_undo_button_enter_notify_event      (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data);
-
-gboolean
-on_quit_button_enter_notify_event      (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data);
 

@@ -37,20 +37,8 @@
 /* vi:set ts=8 sts=4 sw=4: */
 
 
-#define INPUT                    0
-#define HDEQ                     1
-#define EQ_OPTIONS               2
-#define LOW                      3
-#define MID                      4
-#define HIGH                     5
-#define LIMITER                  6
-#define OUTPUT                   7
-
-
-
 static char *help_ptr = general_help;
 static gboolean text_focus = FALSE;
-static unsigned short focus = INPUT;
 
 GtkButton *graph_tb = NULL;
 
@@ -155,8 +143,6 @@ on_window1_show                        (GtkWidget       *widget,
                                         gpointer         user_data)
 {
     crossover_init ();
-
-    status_set_focus (main_window, "Input");
 }
 
 
@@ -639,14 +625,6 @@ on_output_activate                     (GtkMenuItem     *menuitem,
 
 
 void
-on_undo_button_clicked                    (GtkButton       *button,
-                                        gpointer         user_data)
-{
-	s_undo();
-}
-
-
-void
 on_lim_lh_scale_value_changed          (GtkRange        *range,
                                         gpointer         user_data)
 {
@@ -734,70 +712,6 @@ on_lim_input_hscale_realize            (GtkWidget       *widget,
 {
 	s_set_adjustment(S_LIM_INPUT,
 			gtk_range_get_adjustment(GTK_RANGE(widget)));
-}
-
-
-void
-on_save_button_clicked                 (GtkButton       *button,
-                                        gpointer         user_data)
-{
-    GtkFileSelection    *file_selector;
-    gchar               *string;
-
-
-    file_selector = 
-       (GtkFileSelection *) gtk_file_selection_new ("Select a session file");
-
-    if (getenv ("HOME") != NULL)
-      {
-        string = g_strdup_printf("%s/.jam/", getenv ("HOME"));
-        gtk_file_selection_set_filename (file_selector, string);
-      }
-
-    gtk_file_selection_complete (file_selector, "*.jam");
-
-    g_signal_connect (GTK_OBJECT (file_selector->ok_button),
-        "clicked", G_CALLBACK (s_save_session_from_ui), file_selector);
-
-    g_signal_connect_swapped (GTK_OBJECT (file_selector->ok_button),
-        "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
-
-    g_signal_connect_swapped (GTK_OBJECT (file_selector->cancel_button),
-        "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
-
-    gtk_widget_show ((GtkWidget *) file_selector);
-}
-
-
-void
-on_load_button_clicked                 (GtkButton       *button,
-                                        gpointer         user_data)
-{
-    GtkFileSelection    *file_selector;
-    gchar               string[512];
-
-
-    file_selector = 
-       (GtkFileSelection *) gtk_file_selection_new ("Select a session file");
-
-    if (getenv ("HOME") != NULL)
-      {
-        snprintf (string, sizeof(string), "%s/.jam/", getenv ("HOME"));
-        gtk_file_selection_set_filename (file_selector, string);
-      }
-
-    gtk_file_selection_complete (file_selector, "*.jam");
-
-    g_signal_connect (GTK_OBJECT (file_selector->ok_button),
-        "clicked", G_CALLBACK (s_load_session_from_ui), file_selector);
-
-    g_signal_connect_swapped (GTK_OBJECT (file_selector->ok_button),
-        "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
-
-    g_signal_connect_swapped (GTK_OBJECT (file_selector->cancel_button),
-        "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
-
-    gtk_widget_show ((GtkWidget *) file_selector);
 }
 
 
@@ -1010,13 +924,6 @@ on_scene6_name_changed                 (GtkEditable     *editable,
                                         gpointer         user_data)
 {
     set_scene_name (5, NULL);
-}
-
-void
-on_help_button_clicked                 (GtkButton       *button,
-                                        gpointer         user_data)
-{
-    help_message (help_help);
 }
 
 
@@ -1237,49 +1144,6 @@ on_bypass_button_enter_notify_event    (GtkWidget       *widget,
 
 
 gboolean
-on_load_button_enter_notify_event      (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data)
-{
-    help_ptr = load_help;
-
-    return FALSE;
-}
-
-
-gboolean
-on_save_button_enter_notify_event      (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data)
-{
-    help_ptr = save_help;
-
-    return FALSE;
-}
-
-
-gboolean
-on_undo_button_enter_notify_event      (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data)
-{
-    help_ptr = undo_help;
-
-    return FALSE;
-}
-
-
-gboolean
-on_quit_button_enter_notify_event      (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data)
-{
-    help_ptr = quit_help;
-
-    return FALSE;
-}
-
-gboolean
 on_scenes_eventbox_enter_notify_event  (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
@@ -1297,284 +1161,6 @@ on_notebook1_switch_page               (GtkNotebook     *notebook,
                                         gpointer         user_data)
 {
     hdeq_notebook1_set_page (page_num);
-}
-
-gboolean
-on_window1_key_press_event             (GtkWidget       *widget,
-                                        GdkEventKey     *event,
-                                        gpointer         user_data)
-{
-    GtkToggleButton       *bypass;
-    gboolean              tmp;
-    unsigned int          key = event->keyval, state = event->state;
-    int                   scene = -1;
-
-
-    /*  If a text widget has the focus we don't want to trap key presses.  */
-
-    if (text_focus) return FALSE;
-
-
-    switch (key)
-      {
-        /*  Non-maskable, instantaneous.  */
-
-      case GDK_Pause:
-        bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
-                                                   "bypass_button"));
-        tmp = gtk_toggle_button_get_active (bypass);
-        gtk_toggle_button_set_active (bypass, (!tmp));
-        return FALSE;
-
-      case GDK_space:
-	transport_toggle_play();
-        return FALSE;
-
-      case GDK_Home:
-	transport_set_position(0);
-        return FALSE;
-
-      case GDK_End:
-	transport_set_position(1000000000);
-        return FALSE;
-
-      case GDK_1:
-      case GDK_KP_1:
-      case GDK_KP_End:
-        scene = 0;
-        break;
-
-      case GDK_2:
-      case GDK_KP_2:
-      case GDK_KP_Down:
-        scene = 1;
-        break;
-
-      case GDK_3:
-      case GDK_KP_3:
-      case GDK_KP_Page_Down:
-        scene = 2;
-        break;
-
-      case GDK_4:
-      case GDK_KP_4:
-      case GDK_KP_Left:
-        scene = 3;
-        break;
-
-      case GDK_5:
-      case GDK_KP_5:
-      case GDK_KP_Begin:
-        scene = 4;
-        break;
-
-      case GDK_6:
-      case GDK_KP_6:
-      case GDK_KP_Right:
-        scene = 5;
-        break;
-
-      case GDK_h:
-        help_message (help_help);
-        return FALSE;
-        break;
-
-
-        /*  Non-maskable, change focus. */
-
-      case GDK_I:
-        focus = INPUT;
-        status_set_focus (main_window, "Input");
-        return FALSE;
-
-      case GDK_D:
-        focus = HDEQ;
-        status_set_focus (main_window, "HDEQ");
-        return FALSE;
-
-      case GDK_E:
-        focus = EQ_OPTIONS;
-        status_set_focus (main_window, "EQ options");
-        return FALSE;
-
-      case GDK_L:
-        focus = LOW;
-        status_set_focus (main_window, "Low compressor");
-        return FALSE;
-
-      case GDK_M:
-        focus = MID;
-        status_set_focus (main_window, "Mid compressor");
-        return FALSE;
-        break;
-
-      case GDK_H:
-        focus = HIGH;
-        status_set_focus (main_window, "High compressor");
-        return FALSE;
-
-      case GDK_O:
-        focus = OUTPUT;
-        status_set_focus (main_window, "Output");
-        return FALSE;
-      }
-
-
-    /*  Check modifiers for scene changes.  */
-
-    if (scene >= 0)
-      {
-        switch (state)
-          {
-          case 0:
-            select_scene (scene, 1);
-            break;
-
-          case GDK_MOD1_MASK:
-            set_scene (scene);
-            break;
-
-          case GDK_CONTROL_MASK:
-            clear_scene (scene);
-            break;
-          }
-        return FALSE;
-      }
-
-
-    /*  All other key presses depend on which focus we are in.  Just in case
-        anyone was wondering, the reason I handled the buttons this way
-        instead of assigning an accelerator to the button was that it was
-        easier to handle the exceptions (text input override) in one place.
-        It's also easier to see this way.  -  JCD  */
-
-    switch (focus)
-      {
-      case INPUT:
-        switch (key)
-          {
-          case GDK_leftarrow:
-            break;
-
-          case GDK_rightarrow:
-            break;
-
-          case GDK_uparrow:
-            break;
-
-          case GDK_downarrow:
-            break;
-          }
-        break;
-
-      case HDEQ:
-        switch (key)
-          {
-          case GDK_leftarrow:
-            break;
-
-          case GDK_rightarrow:
-            break;
-
-          case GDK_uparrow:
-            break;
-
-          case GDK_downarrow:
-            break;
-          }
-        break;
-
-      case EQ_OPTIONS:
-        switch (key)
-          {
-          case GDK_leftarrow:
-            break;
-
-          case GDK_rightarrow:
-            break;
-
-          case GDK_uparrow:
-            break;
-
-          case GDK_downarrow:
-            break;
-          }
-        break;
-
-      case LOW:
-        switch (key)
-          {
-          case GDK_leftarrow:
-            break;
-
-          case GDK_rightarrow:
-            break;
-
-          case GDK_uparrow:
-            break;
-
-          case GDK_downarrow:
-            break;
-          }
-        break;
-
-      case MID:
-        switch (key)
-          {
-          case GDK_leftarrow:
-            break;
-
-          case GDK_rightarrow:
-            break;
-
-          case GDK_uparrow:
-            break;
-
-          case GDK_downarrow:
-            break;
-          }
-        break;
-
-      case HIGH:
-        switch (key)
-          {
-          case GDK_leftarrow:
-            break;
-
-          case GDK_rightarrow:
-            break;
-
-          case GDK_uparrow:
-            break;
-
-          case GDK_downarrow:
-            break;
-          }
-        break;
-
-      case OUTPUT:
-        switch (key)
-          {
-          case GDK_leftarrow:
-            break;
-
-          case GDK_rightarrow:
-            break;
-
-          case GDK_uparrow:
-            break;
-
-          case GDK_downarrow:
-            break;
-          }
-        break;
-
-      }
-
-
-    fprintf(stderr,"%s %d %x %x %d\n",__FILE__,__LINE__, key, state, scene);
-
-    return FALSE;
 }
 
 
@@ -1741,18 +1327,6 @@ on_open1_activate                      (GtkMenuItem     *menuitem,
 
 
 void
-on_save1_activate                      (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-	if (s_have_filename()) {
-		s_save_session(NULL);
-	} else {
-		on_save_button_clicked (NULL, NULL);
-	}
-}
-
-
-void
 on_save_as1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
@@ -1781,6 +1355,18 @@ on_save_as1_activate                   (GtkMenuItem     *menuitem,
         "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
 
     gtk_widget_show ((GtkWidget *) file_selector);
+}
+
+
+void
+on_save1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+	if (s_have_filename()) {
+		s_save_session(NULL);
+	} else {
+		on_save_as1_activate (NULL, NULL);
+	}
 }
 
 
@@ -1894,3 +1480,159 @@ on_keys1_activate                      (GtkMenuItem     *menuitem,
   help_message (keys_help);
 }
 
+
+gboolean
+on_window1_key_press_event             (GtkWidget       *widget,
+                                        GdkEventKey     *event,
+                                        gpointer         user_data)
+{
+    GtkToggleButton       *bypass;
+    gboolean              tmp;
+    unsigned int          key = event->keyval, state = event->state;
+    int                   scene;
+
+
+    /*  If a text widget has the focus we don't want to trap key presses.  */
+
+    if (text_focus) return FALSE;
+
+
+    scene = -1;
+
+
+    switch (key)
+      {
+
+        /*  Bypass  */
+
+      case GDK_b:
+        bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
+                                                   "bypass_button"));
+        tmp = gtk_toggle_button_get_active (bypass);
+        gtk_toggle_button_set_active (bypass, (!tmp));
+        break;
+
+
+        /*  Toggle play  */
+
+      case GDK_space:
+	transport_toggle_play();
+        break;
+
+
+        /*  Rewind  */
+
+      case GDK_less:
+	transport_set_position(0);
+        break;
+
+
+        /*  FF  */
+
+      case GDK_greater:
+	transport_set_position(1000000000);
+        break;
+
+
+        /*  Select scene 1  */
+
+      case GDK_1:
+      case GDK_KP_1:
+      case GDK_KP_End:
+        scene = 0;
+        break;
+
+
+        /*  Select scene 2  */
+
+      case GDK_2:
+      case GDK_KP_2:
+      case GDK_KP_Down:
+        scene = 1;
+        break;
+
+
+        /*  Select scene 3  */
+
+      case GDK_3:
+      case GDK_KP_3:
+      case GDK_KP_Page_Down:
+        scene = 2;
+        break;
+
+
+        /*  Select scene 4  */
+
+      case GDK_4:
+      case GDK_KP_4:
+      case GDK_KP_Left:
+        scene = 3;
+        break;
+
+
+        /*  Select scene 5  */
+
+      case GDK_5:
+      case GDK_KP_5:
+      case GDK_KP_Begin:
+        scene = 4;
+        break;
+
+
+        /*  Select scene 6  */
+
+      case GDK_6:
+      case GDK_KP_6:
+      case GDK_KP_Right:
+        scene = 5;
+        break;
+
+
+
+        /*  Undo  */
+
+      case GDK_u:
+        if (state == GDK_CONTROL_MASK) s_undo ();
+        break;
+
+
+        /*  Redo  */
+
+      case GDK_r:
+        if (state == GDK_CONTROL_MASK) s_redo ();
+        break;
+
+
+        /*  Save As session  */
+
+      case GDK_a:
+        if (state == GDK_CONTROL_MASK) on_save_as1_activate (NULL, NULL);
+        break;
+      }
+
+
+    /*  Check modifiers for scene set and clear.  */
+
+    if (scene >= 0)
+      {
+        switch (state)
+          {
+          case 0:
+            select_scene (scene, 1);
+            break;
+
+          case GDK_MOD1_MASK:
+            set_scene (scene);
+            break;
+
+          case GDK_CONTROL_MASK:
+            clear_scene (scene);
+            break;
+          }
+      }
+
+
+    //fprintf(stderr,"%s %d %x %x %d\n",__FILE__,__LINE__, key, state, scene);
+
+    return FALSE;
+}

@@ -12,12 +12,11 @@ a number of other features.\n\n\
     Steve Harris\n\
     Jack O'Quin\n\
     Ron Parker\n\
+    Alexandre Prokoudine\n\
     Patrick Shirkey\n\n\
-    Others have contributed significant ideas or patches.  Alexandre \
-Prokoudine helped define the translation infrastructure and provided our \
-Russian translation.\n\n\
     JAMin is released under the GNU General Public License and is copyright \
-(c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, and P. Shirkey. \n\
+(c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, A. Prokoudine, and \
+P. Shirkey. \n\
     This program is free software; you can redistribute it and/or modify it \
 under the terms of the GNU General Public License as published by the Free \
 Software Foundation; either version 2 of the License, or (at your option) any \
@@ -34,8 +33,8 @@ Mass Ave, Cambridge, MA 02139, USA.\n"
 
 char help_help[] = {
 "    Context specific help can be obtained by moving the mouse pointer into \
-one of the tool areas (compressor, EQ, limiter, input, etc) or over any of \
-the individual buttons (Help, Quit, Undo, etc) and pressing <Shift><F1>.\n"
+one of the tool areas (compressor, EQ, limiter, input, etc) and pressing \
+<Shift><F1>.\n"
 };
 
 
@@ -69,12 +68,6 @@ bars that are visible in the HDEQ serve as a visual reference.\n"
 };
 
 
-char quit_help[] = {
-"    Intuitively obvious to the most casual observer..  The keyboard \
-accelerator for this button is the 'q' key.\n"
-};
-
-
 char geq_help[] = {
 "    The graphic EQ (GEQ) can be used to set gain for specific bands of the \
 audio spectrum.  The center of the band is annotated at the bottom of each \
@@ -86,9 +79,7 @@ notch settings in the HDEQ.\n"
 
 char input_help[] = {
 "    The input section allows you to set the input gain to the JAMin system.  \
-You can also pan the input left or right.  If you have set the keyboard \
-focus to the input section (using the 'I' key) the left, right, up, and down \
-arrows can be used to adjust the gain and pan.\n"
+You can also pan the input left or right.\n"
 };
 
 
@@ -177,27 +168,7 @@ char transport_controls_help[] = {
 
 char bypass_help[] = {
 "    This button will bypass all of JAMin's functions.  The keyboard \
-accelerator for this button is the 'Pause' key.\n"
-};
-
-
-char load_help[] = {
-"    The load button allows you to load saved settings.  The default \
-directory for JAMin settings files (compressed XML) is ~/.jam.  The keyboard \
-accelerator for this button is the 'l' key.\n"
-};
-
-
-char save_help[] = {
-"    The save button allows you to save the JAMin settings.  The default \
-directory for JAMin settings files (compressed XML) is ~/.jam.  The keyboard \
-accelerator for this button is the 's' key.\n"
-};
-
-
-char undo_help[] = {
-"    Use this button to undo the most recent changes to the JAMin \
-parameters.  The keyboard accelerator for this button is the 'u' key.\n"
+accelerator for this button is the 'b' key.\n"
 };
 
 
@@ -224,21 +195,19 @@ that scene button.\n"
 
 
 char keys_help[] = {
-"    Keyboard accelerators are available for almost all of the functions in \
-JAMin.  Some of the keys change the system focus so that common keys can \
-be used for multiple actions.  Please use <Shift><F1> with the mouse in the \
-focus area for specifics on key accelerators for each area.\n\n\
-\tPause\t-\tBypass\n\
+"    Keyboard accelerators are available for many of the functions in \
+JAMin:\n\n\
+\tb\t\t-\tBypass\n\
 \tSpace\t-\tToggle play\n\
-\tHome\t-\tPosition transport to beginning\n\
-\tEnd\t\t-\tPosition transport to end\n\
+\t<\t\t-\tPosition transport to beginning\n\
+\t>\t\t-\tPosition transport to end\n\
 \t1-6\t\t-\tSelect scene 1-6\n\
-\th\t\t-\tGeneral help\n\
-\tI\t\t-\tSet focus to input section\n\
-\tD\t\t-\tSet focus to hand-drawn EQ\n\
-\tE\t\t-\tSet focus to EQ options\n\
-\tL\t\t-\tSet focus to low band compressor\n\
-\tM\t\t-\tSet focus to mid band compressor\n\
-\tH\t\t-\tSet focus to high band compressor\n\
-\tO\t\t-\tSet focus to output section\n"
+\t<Ctrl>-h\t-\tGeneral help\n\
+\t<Ctrl>-k\t-\tKeyboard accelerator help (this screen)\n\
+\t<Ctrl>-u\t-\tUndo\n\
+\t<Ctrl>-r\t-\tRedo\n\
+\t<Ctrl>-o\t-\tOpen session file\n\
+\t<Ctrl>-s\t-\tSave to current session file\n\
+\t<Ctrl>-a\t-\tSave session file as new session file\n\
+\t<Ctrl>-q\t-\tQuit\n"
 };

@@ -32,7 +32,6 @@
 
 static GtkLabel *l_status_label = NULL;
 static GtkLabel *l_time_label = NULL;
-static char focus_string[20];
 
 
 void status_update(GtkWidget *main_window)
@@ -80,9 +79,8 @@ void status_update(GtkWidget *main_window)
 	rt = "";
 
     snprintf(string, sizeof(string), "%s  |  %4.1f%% CPU  |  %" PRIu32
-	     " frames  |  %" PRIu32 " Hz%s  |  Focus - %s",
-             state_msg, j.cpu_load, j.buf_size, j.sample_rate, rt, 
-             focus_string);
+	     " frames  |  %" PRIu32 " Hz%s",
+             state_msg, j.cpu_load, j.buf_size, j.sample_rate, rt);
 
     if (l_status_label == NULL)
 	l_status_label = GTK_LABEL(lookup_widget(main_window, "status_label"));
@@ -112,11 +110,4 @@ void status_set_time(GtkWidget *main_window)
 	l_time_label = GTK_LABEL(lookup_widget(main_window, "time_label"));
 
     gtk_label_set_text(l_time_label, string);
-}
-
-
-void status_set_focus(GtkWidget *main_window, char *string)
-{
-    strncpy(focus_string, string, sizeof(focus_string));
-    status_update(main_window);
 }
