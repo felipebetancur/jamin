@@ -53,7 +53,8 @@ static GtkDrawingArea  *l_EQ_curve, *l_comp_curve[3];
 static GtkNotebook     *notebook1;
 static GdkDrawable     *EQ_drawable, *comp_drawable[3];
 static GdkColormap     *colormap;
-static GdkColor        white, grey, black, red, green, blue, comp_color[4];
+static GdkColor        white, grey, black, red, green, blue, yellow, 
+                       comp_color[4], EQ_back, EQ_fore;
 static GdkGC           *EQ_gc, *comp_gc[3];
 static PangoContext    *comp_pc[3], *EQ_pc;
 static GtkAdjustment   *l_low2mid_adj;
@@ -408,6 +409,12 @@ on_window1_show                        (GtkWidget       *widget,
 
     gdk_colormap_alloc_color (colormap, &grey, FALSE, TRUE);
 
+    yellow.red = 65535;
+    yellow.green = 65535;
+    yellow.blue = 0;
+
+    gdk_colormap_alloc_color (colormap, &yellow, FALSE, TRUE);
+
     red.red = 60000;
     red.green = 0;
     red.blue = 0;
@@ -430,6 +437,19 @@ on_window1_show                        (GtkWidget       *widget,
     comp_color[2] = blue;
 
     comp_color[3] = black;
+
+
+    EQ_back.red = 0;
+    EQ_back.green = 31611;
+    EQ_back.blue = 0;
+
+    gdk_colormap_alloc_color (colormap, &EQ_back, FALSE, TRUE);
+
+    EQ_fore.red = 0;
+    EQ_fore.green = 65535;
+    EQ_fore.blue = 0;
+
+    gdk_colormap_alloc_color (colormap, &EQ_fore, FALSE, TRUE);
 }
 
 
@@ -701,9 +721,10 @@ draw_EQ_curve ()
     /*  Clear the curve drawing area.  */
 
     EQ_cleared = 1;
-    gdk_window_clear_area (EQ_drawable, 0, 0, EQ_curve_width + 1, 
+    gdk_gc_set_foreground (EQ_gc, &EQ_back);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, 0, 0, EQ_curve_width + 1, 
         EQ_curve_height + 1);
-    gdk_gc_set_foreground (EQ_gc, &black);
+    gdk_gc_set_foreground (EQ_gc, &EQ_fore);
 
 
     /*  Draw the grid lines.  */
@@ -834,7 +855,7 @@ draw_EQ_curve ()
 
     /*  Plot the curve.  */
 
-    gdk_gc_set_foreground (EQ_gc, &red);
+    gdk_gc_set_foreground (EQ_gc, &EQ_fore);
     for (i = 0 ; i < EQ_length ; i++)
       {
         logfreq2xpix (EQ_x_notched[i], &x1);
@@ -851,7 +872,7 @@ draw_EQ_curve ()
 
     for (i = 0 ; i < NOTCHES ; i++)
       {
-        gdk_gc_set_foreground (EQ_gc, &green);
+        gdk_gc_set_foreground (EQ_gc, &yellow);
 
         logfreq2xpix (EQ_x_notched[EQ_notch_index[i]], &x1);
 
@@ -893,7 +914,7 @@ draw_EQ_curve ()
 
         if (i && i < NOTCHES - 1)
           {
-            gdk_gc_set_foreground (EQ_gc, &green);
+            gdk_gc_set_foreground (EQ_gc, &yellow);
 
             x0 = EQ_notch_index[i] - EQ_notch_width[i];
 
@@ -915,7 +936,7 @@ draw_EQ_curve ()
             EQ_notch_handle[1][0][i] = y1;
 
 
-            gdk_gc_set_foreground (EQ_gc, &green);
+            gdk_gc_set_foreground (EQ_gc, &yellow);
 
             x0 = EQ_notch_index[i] + EQ_notch_width[i];
 
@@ -1110,6 +1131,7 @@ on_EQ_curve_event_box_motion_notify_event
 
             if (!EQ_input_points || x > EQ_xinput[EQ_input_points - 1])
               {
+                gdk_gc_set_foreground (EQ_gc, &EQ_fore);
                 if (EQ_input_points) gdk_draw_line (EQ_drawable, EQ_gc, 
                     NINT (EQ_xinput[EQ_input_points - 1]), 
                     NINT (EQ_yinput[EQ_input_points - 1]), x, y);
