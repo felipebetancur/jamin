@@ -17,11 +17,15 @@ TODO (owner)
 - Finish context sensitive help verbiage (everyone)
 - set JACK port latencies correctly (Jack, Steve)
 
+TODO -- post 0.8 (owner)
+
+- XML parser error/warning reporting (Steve)
 
 TO THINK ABOUT
 
 - making the DocBook/XML documentation compatible with Yelp (Alexandre)
 - error and debug message rationalization, IF_DEBUG(), -v option
+	maybe incude error dialogue?
 - add test script directory (Jack)
 
 
