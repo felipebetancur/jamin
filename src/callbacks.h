@@ -287,3 +287,39 @@ on_high_curve_box_enter_notify_event   (GtkWidget       *widget,
 void
 on_high_curve_lbl_realize              (GtkWidget       *widget,
                                         gpointer         user_data);
+
+gboolean
+on_low_comp_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_low_comp_event_box_leave_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_mid_comp_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_mid_comp_event_box_leave_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_high_comp_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_high_comp_event_box_leave_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
