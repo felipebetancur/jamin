@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.59 2005/01/06 19:58:42 joq Exp $
+ *  $Id: main.c,v 1.60 2005/02/20 15:58:49 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -73,7 +73,6 @@ int scene_handler(const char *path, const char *types, lo_arg **argv, int argc,
 
 int main(int argc, char *argv[])
 {
-    char title[128];
 #ifdef HAVE_OSC
     lo_server_thread st;
 #endif
@@ -102,8 +101,6 @@ int main(int argc, char *argv[])
     preferences_init();
     main_window = create_window1();
 
-    //snprintf(title, sizeof(title), "%s %s", title_name, VERSION);
-    gtk_window_set_title ((GtkWindow *) main_window, title);
 
 #ifdef FILTER_TUNING
     GtkWidget *ft = create_filter_tuning();

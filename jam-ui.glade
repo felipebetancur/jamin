@@ -3747,7 +3747,7 @@
 			      </child>
 
 			      <child>
-				<widget class="GtkLabel" id="label317">
+				<widget class="GtkLabel" id="label3178">
 				  <property name="visible">True</property>
 				  <property name="label" translatable="yes">Compressor curves</property>
 				  <property name="use_underline">False</property>
