@@ -534,9 +534,9 @@ int io_process(jack_nframes_t nframes, void *arg)
 
     IF_DEBUG(DBG_VERBOSE, io_trace("JACK process() start"));
 
-#ifndef HAVE_JACK_TRANSPORT_PLAY
+#ifndef NEW_JACK_TRANSPORT
     transport_control(nframes);		/* handle JACK transport */
-#endif /* HAVE_JACK_TRANSPORT_PLAY */
+#endif /* NEW_JACK_TRANSPORT */
 
     /* get input and output buffer addresses from JACK */
     for (chan = 0; chan < nchannels; chan++) {

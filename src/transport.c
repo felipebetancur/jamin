@@ -30,7 +30,7 @@
 #include "transport.h"
 
 
-#ifndef HAVE_JACK_TRANSPORT_PLAY
+#ifndef NEW_JACK_TRANSPORT
 
 /**************** old JACK transport interface ****************/
 
@@ -107,7 +107,7 @@ static int transport_master()
     return jamin_is_timebase_master;
 }
 
-#endif /* HAVE_JACK_TRANSPORT_PLAY */
+#endif /* NEW_JACK_TRANSPORT */
 
 
 /******************* user interface functions *******************/
@@ -120,7 +120,7 @@ static int transport_master()
 
 jack_transport_state_t transport_get_state()
 {
-#ifdef HAVE_JACK_TRANSPORT_PLAY
+#ifdef NEW_JACK_TRANSPORT
 
     jack_position_t pos;
     return jack_transport_query(client, &pos);
@@ -129,15 +129,15 @@ jack_transport_state_t transport_get_state()
 
     return tpt.info.transport_state;
 
-#endif /* HAVE_JACK_TRANSPORT_PLAY */
+#endif /* NEW_JACK_TRANSPORT */
 }
 
 
 void transport_play()
 {
-#ifdef HAVE_JACK_TRANSPORT_PLAY
+#ifdef NEW_JACK_TRANSPORT
 
-    jack_transport_play(client);
+    jack_transport_start(client);
     IF_DEBUG(DBG_TERSE, fprintf(stderr,"Transport started!\n"));
 
 #else /* old JACK transport interface */
@@ -148,13 +148,13 @@ void transport_play()
 		 fprintf(stderr,"Transport started.\n"));
     }
 
-#endif /* HAVE_JACK_TRANSPORT_PLAY */
+#endif /* NEW_JACK_TRANSPORT */
 }
 
 
 void transport_set_position(jack_nframes_t frame)
 {
-#ifdef HAVE_JACK_TRANSPORT_PLAY
+#ifdef NEW_JACK_TRANSPORT
 
     jack_transport_goto_frame(client, frame);
     IF_DEBUG(DBG_TERSE,
@@ -169,13 +169,13 @@ void transport_set_position(jack_nframes_t frame)
 			 frame));
     }
 
-#endif /* HAVE_JACK_TRANSPORT_PLAY */
+#endif /* NEW_JACK_TRANSPORT */
 }
 
 
 void transport_stop()
 {
-#ifdef HAVE_JACK_TRANSPORT_PLAY
+#ifdef NEW_JACK_TRANSPORT
 
     jack_transport_stop(client);
     IF_DEBUG(DBG_TERSE, fprintf(stderr,"Transport stopped!\n"));
@@ -187,7 +187,7 @@ void transport_stop()
 	IF_DEBUG(DBG_TERSE, fprintf(stderr,"Transport stopped.\n"));
     }
 
-#endif /* HAVE_JACK_TRANSPORT_PLAY */
+#endif /* NEW_JACK_TRANSPORT */
 }
 
 

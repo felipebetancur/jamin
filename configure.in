@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_INIT(configure.in)
-AM_INIT_AUTOMAKE(JAMin, 0.5.3)
+AM_INIT_AUTOMAKE(JAMin, 0.5.4)
 AM_CONFIG_HEADER(config.h)
 AM_MAINTAINER_MODE
 
@@ -63,8 +63,8 @@ AC_CHECK_FUNCS([atexit])
 AC_CHECK_LIB(jack,jack_is_realtime,
 	[AC_DEFINE(HAVE_JACK_IS_REALTIME,,[query JACK realtime mode])],
 )
-AC_CHECK_LIB(jack,jack_transport_play,
-	[AC_DEFINE(HAVE_JACK_TRANSPORT_PLAY,,[new JACK transport interface])],
+AC_CHECK_LIB(jack,jack_transport_start,
+	[AC_DEFINE(NEW_JACK_TRANSPORT,,[new JACK transport interface])],
 )
 
 

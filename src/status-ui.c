@@ -49,7 +49,7 @@ void status_update(GtkWidget *main_window)
 	    state_msg = "Stopped";
 	    break;
 
-#ifdef HAVE_JACK_TRANSPORT_PLAY
+#ifdef NEW_JACK_TRANSPORT
 
 	case JackTransportStarting:
 	    state_msg = "Starting";
@@ -61,7 +61,7 @@ void status_update(GtkWidget *main_window)
 	    state_msg = "Looping";
 	    break;
 
-#endif /* HAVE_JACK_TRANSPORT_PLAY */
+#endif /* NEW_JACK_TRANSPORT */
 
 	case JackTransportRolling:
 	    state_msg = "Rolling";
