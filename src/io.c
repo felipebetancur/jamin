@@ -670,6 +670,10 @@ void io_init(int argc, char *argv[])
 	case 't':			/* use DSP thread */
 	    thread_option = 1;
 	    break;
+#else
+	case 't':			/* cant use DSP thread */
+	    fprintf(stderr, "Threading option is not enabled\n");
+	    break;
 #endif
 	case 'T':			/* list trace output */
 	    trace_option = 1;

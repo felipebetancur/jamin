@@ -2698,3 +2698,11 @@ on_load_button_clicked                 (GtkButton       *button,
 
     gtk_widget_show ((GtkWidget *) file_selector);
 }
+
+void
+on_optionmenu1_realize                 (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    gtk_option_menu_set_history (GTK_OPTION_MENU(widget), 1);
+}
+

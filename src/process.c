@@ -43,7 +43,7 @@ static float sw_m_gain[XO_NBANDS];
 static float sw_s_gain[XO_NBANDS];
 static float limiter_gain = 1.0f;
 
-static int spectrum_mode = SPEC_PRE_EQ;
+static int spectrum_mode = SPEC_POST_EQ;
 
 /* Data for plugins */
 plugin *comp_plugin, *lim_plugin;

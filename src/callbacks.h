@@ -443,3 +443,7 @@ on_save_button_clicked                 (GtkButton       *button,
 void
 on_load_button_clicked                 (GtkButton       *button,
                                         gpointer         user_data);
+
+void
+on_optionmenu1_realize                 (GtkWidget       *widget,
+                                        gpointer         user_data);

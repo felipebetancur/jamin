@@ -227,6 +227,8 @@
 			  <property name="show_border">True</property>
 			  <property name="tab_pos">GTK_POS_TOP</property>
 			  <property name="scrollable">False</property>
+			  <property name="tab_hborder">2</property>
+			  <property name="tab_vborder">2</property>
 			  <property name="enable_popup">False</property>
 			  <signal name="realize" handler="on_notebook1_realize" last_modification_time="Thu, 15 May 2003 14:56:56 GMT"/>
 
@@ -2544,6 +2546,7 @@
 					  <property name="visible">True</property>
 					  <property name="can_focus">True</property>
 					  <property name="history">0</property>
+					  <signal name="realize" handler="on_optionmenu1_realize" last_modification_time="Mon, 16 Jun 2003 21:41:10 GMT"/>
 
 					  <child>
 					    <widget class="GtkMenu" id="menu1">
@@ -2833,6 +2836,8 @@
 			      <property name="show_border">True</property>
 			      <property name="tab_pos">GTK_POS_TOP</property>
 			      <property name="scrollable">False</property>
+			      <property name="tab_hborder">2</property>
+			      <property name="tab_vborder">2</property>
 			      <property name="enable_popup">False</property>
 
 			      <child>
@@ -4292,8 +4297,6 @@
 
 							      <child>
 								<widget class="GtkToggleButton" id="autobutton3">
-								  <property name="width_request">30</property>
-								  <property name="height_request">30</property>
 								  <property name="visible">True</property>
 								  <property name="can_focus">True</property>
 								  <property name="label" translatable="yes">auto</property>
@@ -5020,6 +5023,8 @@
 				  <property name="show_border">True</property>
 				  <property name="tab_pos">GTK_POS_TOP</property>
 				  <property name="scrollable">False</property>
+				  <property name="tab_hborder">2</property>
+				  <property name="tab_vborder">2</property>
 				  <property name="enable_popup">False</property>
 
 				  <child>
