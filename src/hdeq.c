@@ -153,9 +153,9 @@ void bind_hdeq ()
     l_comp[1] = lookup_widget (main_window, "mid_comp");
     l_comp[2] = lookup_widget (main_window, "high_comp");
 
-    l_comp_lbl[0] = GTK_LABEL (lookup_widget (main_window, "label_Low"));
-    l_comp_lbl[1] = GTK_LABEL (lookup_widget (main_window, "label_Mid"));
-    l_comp_lbl[2] = GTK_LABEL (lookup_widget (main_window, "label_High"));
+    l_comp_lbl[0] = GTK_LABEL (lookup_widget (main_window, "label_freq_l"));
+    l_comp_lbl[1] = GTK_LABEL (lookup_widget (main_window, "label_freq_m"));
+    l_comp_lbl[2] = GTK_LABEL (lookup_widget (main_window, "label_freq_h"));
 
     l_EQ_curve = GTK_DRAWING_AREA (lookup_widget (main_window, "EQ_curve"));
     l_EQ_curve_lbl = GTK_LABEL (lookup_widget (main_window, "EQ_curve_lbl"));

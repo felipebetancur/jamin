@@ -458,15 +458,15 @@ rewind_transport                       (GtkWidget       *widget,
                                         gpointer         user_data);
 
 void
-on_autobutton1_toggled                 (GtkToggleButton *togglebutton,
+on_autobutton_l_toggled                 (GtkToggleButton *togglebutton,
                                         gpointer         user_data);
 
 void
-on_autobutton2_toggled                 (GtkToggleButton *togglebutton,
+on_autobutton_m_toggled                 (GtkToggleButton *togglebutton,
                                         gpointer         user_data);
 
 void
-on_autobutton3_toggled                 (GtkToggleButton *togglebutton,
+on_autobutton_h_toggled                 (GtkToggleButton *togglebutton,
                                         gpointer         user_data);
 
 gboolean
@@ -757,4 +757,53 @@ on_scene6_name_focus_in_event          (GtkWidget       *widget,
 gboolean
 on_scene6_name_focus_out_event         (GtkWidget       *widget,
                                         GdkEventFocus   *event,
+                                        gpointer         user_data);
+
+void
+on_new1_activate                       (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_open1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_save1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_save_as1_activate                   (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_quit1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_cut1_activate                       (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_copy1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_paste1_activate                     (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_delete1_activate                    (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_about1_activate                     (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_graph_tb_pressed                    (GtkButton       *button,
+                                        gpointer         user_data);
+
+gboolean
+on_cc_window_delete_event              (GtkWidget       *widget,
+                                        GdkEvent        *event,
                                         gpointer         user_data);

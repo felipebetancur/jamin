@@ -1,1 +1,1 @@
-extern GtkWidget *main_window;
+extern GtkWidget *main_window, *cc_window;

@@ -52,6 +52,8 @@ static char *help_ptr = general_help;
 static gboolean text_focus = FALSE;
 static unsigned short focus = MAIN_BUTTONS;
 
+GtkButton *graph_tb = NULL;
+
 
 void
 on_low2mid_value_changed               (GtkRange        *range,
@@ -581,7 +583,7 @@ make_mscale (gchar *widget_name, gchar *string1, gchar *string2,
 }
 
 void
-on_autobutton1_toggled                  (GtkToggleButton *togglebutton,
+on_autobutton_l_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
     comp_set_auto(0, gtk_toggle_button_get_active(togglebutton));
@@ -589,7 +591,7 @@ on_autobutton1_toggled                  (GtkToggleButton *togglebutton,
 
 
 void
-on_autobutton2_toggled                  (GtkToggleButton *togglebutton,
+on_autobutton_m_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
     comp_set_auto(1, gtk_toggle_button_get_active(togglebutton));
@@ -597,7 +599,7 @@ on_autobutton2_toggled                  (GtkToggleButton *togglebutton,
 
 
 void
-on_autobutton3_toggled                  (GtkToggleButton *togglebutton,
+on_autobutton_h_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
     comp_set_auto(2, gtk_toggle_button_get_active(togglebutton));
@@ -1723,3 +1725,130 @@ on_scene6_name_focus_out_event         (GtkWidget       *widget,
     return FALSE;
 }
 
+
+void
+on_new1_activate                       (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_open1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+    GtkFileSelection    *file_selector;
+    gchar               string[512];
+
+
+    file_selector = 
+       (GtkFileSelection *) gtk_file_selection_new ("Select a session file");
+
+    if (getenv ("HOME") != NULL)
+      {
+        snprintf (string, sizeof(string), "%s/.jam/", getenv ("HOME"));
+        gtk_file_selection_set_filename (file_selector, string);
+      }
+
+    gtk_file_selection_complete (file_selector, "*.jam");
+
+    g_signal_connect (GTK_OBJECT (file_selector->ok_button),
+        "clicked", G_CALLBACK (s_load_session), file_selector);
+
+    g_signal_connect_swapped (GTK_OBJECT (file_selector->ok_button),
+        "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
+
+    g_signal_connect_swapped (GTK_OBJECT (file_selector->cancel_button),
+        "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
+
+    gtk_widget_show ((GtkWidget *) file_selector);
+}
+
+
+void
+on_save1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_save_as1_activate                   (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+    GtkFileSelection    *file_selector;
+    gchar               string[512];
+
+
+    file_selector = 
+       (GtkFileSelection *) gtk_file_selection_new ("Select a session file");
+
+    if (getenv ("HOME") != NULL)
+      {
+        snprintf (string, sizeof(string), "%s/.jam/", getenv ("HOME"));
+        gtk_file_selection_set_filename (file_selector, string);
+      }
+
+    gtk_file_selection_complete (file_selector, "*.jam");
+
+    g_signal_connect (GTK_OBJECT (file_selector->ok_button),
+        "clicked", G_CALLBACK (s_save_session), file_selector);
+
+    g_signal_connect_swapped (GTK_OBJECT (file_selector->ok_button),
+        "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
+
+    g_signal_connect_swapped (GTK_OBJECT (file_selector->cancel_button),
+        "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
+
+    gtk_widget_show ((GtkWidget *) file_selector);
+}
+
+
+void
+on_quit1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+    clean_quit();
+}
+
+
+void
+on_cut1_activate                       (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_copy1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_paste1_activate                     (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_delete1_activate                    (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_about1_activate                     (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+
+}
