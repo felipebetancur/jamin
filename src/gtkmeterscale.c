@@ -23,7 +23,7 @@
 
 #include "gtkmeterscale.h"
 
-#define METERSCALE_MAX_FONT_SIZE 9
+#define METERSCALE_MAX_FONT_SIZE 8
 
 /* Forward declarations */
 
@@ -38,7 +38,7 @@ static void gtk_meterscale_size_allocate       (GtkWidget     *widget,
 static gint gtk_meterscale_expose              (GtkWidget        *widget,
 						GdkEventExpose   *event);
 static float iec_scale(float db);
-static int meterscale_draw_notch(GtkMeterScale *meterscale, float db, int mark,
+static void meterscale_draw_notch(GtkMeterScale *meterscale, float db, int mark,
 		PangoRectangle *last_label_rect);
 
 /* Local data */
@@ -134,7 +134,6 @@ gtk_meterscale_realize (GtkWidget *widget)
 {
   GtkMeterScale *meterscale;
   GdkWindowAttr attributes;
-  GdkColor green, amber, red, peak;
   gint attributes_mask;
 
   g_return_if_fail (widget != NULL);
@@ -222,9 +221,7 @@ gtk_meterscale_expose (GtkWidget      *widget,
 {
   GtkMeterScale *meterscale;
   PangoRectangle lr;
-  float val, frac, peak_frac;
-  int g_h, a_h, r_h;
-  int length = 0, width = 0;
+  float val;
 
   g_return_val_if_fail (widget != NULL, FALSE);
   g_return_val_if_fail (GTK_IS_METERSCALE (widget), FALSE);
@@ -237,8 +234,11 @@ gtk_meterscale_expose (GtkWidget      *widget,
 
   /* Draw the background */
   gtk_paint_box (widget->style, widget->window, GTK_STATE_NORMAL,
-		  GTK_SHADOW_IN, NULL, widget, "trough", 0, 0,
+		  GTK_SHADOW_ETCHED_IN, NULL, widget, "trough", 0, 0,
 		  widget->allocation.width, widget->allocation.height);
+  gdk_window_clear_area (widget->window, 1, 1, widget->allocation.width - 2,
+		  widget->allocation.height - 2);
+
 
   lr.x = 0;
   lr.y = 0;
@@ -258,7 +258,7 @@ gtk_meterscale_expose (GtkWidget      *widget,
   return FALSE;
 }
 
-static int meterscale_draw_notch(GtkMeterScale *meterscale, float db, int mark,
+static void meterscale_draw_notch(GtkMeterScale *meterscale, float db, int mark,
 		PangoRectangle *last_label_rect)
 {
     GtkWidget *widget = GTK_WIDGET(meterscale);
@@ -296,8 +296,6 @@ static int meterscale_draw_notch(GtkMeterScale *meterscale, float db, int mark,
 	pango_font_description_set_family(pfd, "sans-serif");
 	pango_font_description_set_size(pfd, size * PANGO_SCALE);
 	pango_context_set_font_description(pc, pfd);
-
-	printf("size = %d\n", size);
 
 	pl = pango_layout_new(pc);
 

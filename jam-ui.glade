@@ -31,7 +31,7 @@
 	<widget class="GtkHBox" id="bighbox">
 	  <property name="visible">True</property>
 	  <property name="homogeneous">False</property>
-	  <property name="spacing">0</property>
+	  <property name="spacing">1</property>
 
 	  <child>
 	    <widget class="GtkVBox" id="vbox1">
@@ -64,7 +64,7 @@
 			    <widget class="GtkHBox" id="hbox14">
 			      <property name="visible">True</property>
 			      <property name="homogeneous">False</property>
-			      <property name="spacing">0</property>
+			      <property name="spacing">1</property>
 
 			      <child>
 				<widget class="GtkVScale" id="in_trim_scale">
@@ -93,6 +93,23 @@
 				  <property name="int1">-60</property>
 				  <property name="int2">6</property>
 				  <property name="last_modification_time">Sat, 26 Apr 2003 00:20:38 GMT</property>
+				</widget>
+				<packing>
+				  <property name="padding">0</property>
+				  <property name="expand">False</property>
+				  <property name="fill">True</property>
+				</packing>
+			      </child>
+
+			      <child>
+				<widget class="Custom" id="custom15">
+				  <property name="width_request">10</property>
+				  <property name="visible">True</property>
+				  <property name="creation_function">make_mscale</property>
+				  <property name="string1">left right</property>
+				  <property name="int1">-60</property>
+				  <property name="int2">6</property>
+				  <property name="last_modification_time">Sat, 26 Apr 2003 19:56:11 GMT</property>
 				</widget>
 				<packing>
 				  <property name="padding">0</property>
@@ -4353,7 +4370,7 @@
 						      <child>
 							<widget class="GtkTable" id="table9">
 							  <property name="visible">True</property>
-							  <property name="n_rows">2</property>
+							  <property name="n_rows">3</property>
 							  <property name="n_columns">2</property>
 							  <property name="homogeneous">False</property>
 							  <property name="row_spacing">1</property>
@@ -4405,8 +4422,8 @@
 							    <packing>
 							      <property name="left_attach">0</property>
 							      <property name="right_attach">1</property>
-							      <property name="top_attach">1</property>
-							      <property name="bottom_attach">2</property>
+							      <property name="top_attach">2</property>
+							      <property name="bottom_attach">3</property>
 							      <property name="x_padding">2</property>
 							      <property name="x_options">fill</property>
 							      <property name="y_options"></property>
@@ -4445,10 +4462,53 @@
 							    <packing>
 							      <property name="left_attach">1</property>
 							      <property name="right_attach">2</property>
+							      <property name="top_attach">2</property>
+							      <property name="bottom_attach">3</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options">fill</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="Custom" id="custom16">
+							      <property name="height_request">10</property>
+							      <property name="visible">True</property>
+							      <property name="creation_function">make_mscale</property>
+							      <property name="string1">top bottom</property>
+							      <property name="int1">-40</property>
+							      <property name="int2">0</property>
+							      <property name="last_modification_time">Sat, 26 Apr 2003 20:02:46 GMT</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">1</property>
+							      <property name="right_attach">2</property>
 							      <property name="top_attach">1</property>
 							      <property name="bottom_attach">2</property>
 							      <property name="x_options">fill</property>
-							      <property name="y_options">fill</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label255">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes"></property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">0</property>
+							      <property name="right_attach">1</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options"></property>
 							    </packing>
 							  </child>
 							</widget>
@@ -4866,7 +4926,7 @@
 						      <child>
 							<widget class="GtkTable" id="table13">
 							  <property name="visible">True</property>
-							  <property name="n_rows">2</property>
+							  <property name="n_rows">3</property>
 							  <property name="n_columns">2</property>
 							  <property name="homogeneous">False</property>
 							  <property name="row_spacing">1</property>
@@ -4918,8 +4978,8 @@
 							    <packing>
 							      <property name="left_attach">0</property>
 							      <property name="right_attach">1</property>
-							      <property name="top_attach">1</property>
-							      <property name="bottom_attach">2</property>
+							      <property name="top_attach">2</property>
+							      <property name="bottom_attach">3</property>
 							      <property name="x_padding">2</property>
 							      <property name="x_options">fill</property>
 							      <property name="y_options"></property>
@@ -4958,10 +5018,53 @@
 							    <packing>
 							      <property name="left_attach">1</property>
 							      <property name="right_attach">2</property>
+							      <property name="top_attach">2</property>
+							      <property name="bottom_attach">3</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options">fill</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="Custom" id="custom17">
+							      <property name="height_request">10</property>
+							      <property name="visible">True</property>
+							      <property name="creation_function">make_mscale</property>
+							      <property name="string1">top bottom</property>
+							      <property name="int1">-40</property>
+							      <property name="int2">0</property>
+							      <property name="last_modification_time">Sat, 26 Apr 2003 20:02:53 GMT</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">1</property>
+							      <property name="right_attach">2</property>
 							      <property name="top_attach">1</property>
 							      <property name="bottom_attach">2</property>
 							      <property name="x_options">fill</property>
-							      <property name="y_options">fill</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label256">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes"></property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">0</property>
+							      <property name="right_attach">1</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options"></property>
 							    </packing>
 							  </child>
 							</widget>
@@ -5378,7 +5481,7 @@
 						      <child>
 							<widget class="GtkTable" id="table11">
 							  <property name="visible">True</property>
-							  <property name="n_rows">2</property>
+							  <property name="n_rows">3</property>
 							  <property name="n_columns">2</property>
 							  <property name="homogeneous">False</property>
 							  <property name="row_spacing">1</property>
@@ -5430,8 +5533,8 @@
 							    <packing>
 							      <property name="left_attach">0</property>
 							      <property name="right_attach">1</property>
-							      <property name="top_attach">1</property>
-							      <property name="bottom_attach">2</property>
+							      <property name="top_attach">2</property>
+							      <property name="bottom_attach">3</property>
 							      <property name="x_padding">2</property>
 							      <property name="x_options">fill</property>
 							      <property name="y_options"></property>
@@ -5451,8 +5554,8 @@
 							    <packing>
 							      <property name="left_attach">1</property>
 							      <property name="right_attach">2</property>
-							      <property name="top_attach">1</property>
-							      <property name="bottom_attach">2</property>
+							      <property name="top_attach">2</property>
+							      <property name="bottom_attach">3</property>
 							      <property name="x_options">fill</property>
 							      <property name="y_options">fill</property>
 							    </packing>
@@ -5474,6 +5577,49 @@
 							      <property name="top_attach">0</property>
 							      <property name="bottom_attach">1</property>
 							      <property name="y_options">fill</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="Custom" id="custom18">
+							      <property name="height_request">10</property>
+							      <property name="visible">True</property>
+							      <property name="creation_function">make_mscale</property>
+							      <property name="string1">top bottom</property>
+							      <property name="int1">-40</property>
+							      <property name="int2">0</property>
+							      <property name="last_modification_time">Sat, 26 Apr 2003 20:03:00 GMT</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">1</property>
+							      <property name="right_attach">2</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							      <property name="x_options">fill</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label257">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes"></property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">0</property>
+							      <property name="right_attach">1</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options"></property>
 							    </packing>
 							  </child>
 							</widget>
@@ -6101,6 +6247,23 @@
 	      <property name="int1">-60</property>
 	      <property name="int2">6</property>
 	      <property name="last_modification_time">Sat, 26 Apr 2003 02:44:13 GMT</property>
+	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">False</property>
+	      <property name="fill">True</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="Custom" id="outscale">
+	      <property name="width_request">10</property>
+	      <property name="visible">True</property>
+	      <property name="creation_function">make_mscale</property>
+	      <property name="string1">left right</property>
+	      <property name="int1">-60</property>
+	      <property name="int2">6</property>
+	      <property name="last_modification_time">Sat, 26 Apr 2003 19:38:54 GMT</property>
 	    </widget>
 	    <packing>
 	      <property name="padding">0</property>

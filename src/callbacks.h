@@ -328,6 +328,10 @@ GtkWidget*
 make_meter (gchar *widget_name, gchar *string1, gchar *string2,
                 gint int1, gint int2);
 
+GtkWidget*
+make_mscale (gchar *widget_name, gchar *string1, gchar *string2,
+		gint int1, gint int2);
+
 void
 on_autoutton1_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data);

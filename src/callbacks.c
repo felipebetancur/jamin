@@ -15,7 +15,9 @@
 #include "support.h"
 #include "process.h"
 #include "intrim.h"
+#include "compressor-ui.h"
 #include "gtkmeter.h"
+#include "gtkmeterscale.h"
 
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
 #define EQ_INTERP (BINS / 2 - 1)
@@ -1405,6 +1407,33 @@ make_meter (gchar *widget_name, gchar *string1, gchar *string2,
     }
 
     ret = gtk_meter_new(adjustment, dir);
+    gtk_object_ref(GTK_OBJECT(ret));
+
+    return ret;
+}
+
+
+GtkWidget*
+make_mscale (gchar *widget_name, gchar *string1, gchar *string2,
+                gint int1, gint int2)
+{
+    int sides;
+    GtkWidget *ret;
+
+    if (string1 && strstr(string1, "left")) {
+	sides |= GTK_METERSCALE_LEFT;
+    }
+    if (string1 && strstr(string1, "right")) {
+	sides |= GTK_METERSCALE_RIGHT;
+    }
+    if (string1 && strstr(string1, "top")) {
+	sides |= GTK_METERSCALE_TOP;
+    }
+    if (string1 && strstr(string1, "bottom")) {
+	sides |= GTK_METERSCALE_BOTTOM;
+    }
+
+    ret = gtk_meterscale_new(sides, int1, int2);
     gtk_object_ref(GTK_OBJECT(ret));
 
     return ret;
