@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.58 2004/10/03 14:12:38 theno23 Exp $
+ *  $Id: process.c,v 1.59 2004/10/03 21:44:15 theno23 Exp $
  */
 
 #include <math.h>
@@ -165,8 +165,12 @@ void process_init(float fs)
 
     /* Calculate root raised cosine window */
     for (i = 0; i < BINS; i++) {
+       window[i] = -0.5f * cosf(2.0f * M_PI * (float) i /
+                                (float) BINS) + 0.5f;
+/* root rasied cosine window - aparently sounds worse ...
 	window[i] = sqrtf(0.5f + -0.5 * cosf(2.0f * M_PI * (float) i /
 			  (float) BINS));
+*/
     }
 
     plugin_init();
