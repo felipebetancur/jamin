@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE ladspa SYSTEM "ladspa-swh.dtd">
+<?xml-stylesheet href="ladspa.css" type="text/css"?>
+
+<ladspa>
+  <global>
+    <meta name="maker" value="xxx &lt;yyy@zzz.com&gt;"/>
+    <meta name="copyright" value="GPL"/>
+    <meta name="properties" value="HARD_RT_CAPABLE"/>
+    <code><![CDATA[
+      #include <stdio.h>
+      #include <lo.h>
+    ]]></code>
+  </global>
+
+  <plugin label="jaminController" id="1912" class="UtilityPlugin">
+    <name>JAMin Controller</name>
+
+    <callback event="instantiate"><![CDATA[
+      last_scene = -1;
+      address = lo_address_new(NULL, "4444");
+    ]]></callback>
+
+    <callback event="activate"><![CDATA[
+      last_scene = -1;
+    ]]></callback>
+
+    <callback event="run"><![CDATA[
+      unsigned long pos;
+
+      if ((int)(scene + 0.5f) != last_scene) {
+	plugin_data->last_scene = (int)(scene + 0.5f);
+	lo_send(address, "/scene", "i", plugin_data->last_scene);
+      }
+
+      if (input != output) {
+        for (pos = 0; pos < sample_count; pos++) {
+          buffer_write(output[pos], input[pos]);
+        }
+      }
+    ]]></callback>
+
+    <port label="scene" dir="input" type="control" hint="default_1,integer">
+      <name>Scene no.</name>
+      <p>Changes the JAMin scene number</p>
+      <range min="1" max="20"/>
+    </port>
+
+    <port label="input" dir="input" type="audio">
+      <name>Input</name>
+    </port>
+
+    <port label="output" dir="output" type="audio">
+      <name>Output</name>
+    </port>
+
+    <instance-data label="last_scene" type="int" />
+    <instance-data label="address" type="lo_address" />
+  </plugin>
+</ladspa>
