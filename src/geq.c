@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: geq.c,v 1.26 2003/11/21 02:16:55 joq Exp $
+ *  $Id: geq.c,v 1.27 2003/12/10 01:48:41 jdepner Exp $
  */
 
 /* code to control the graphic eq's, swh */
@@ -215,7 +215,6 @@ gboolean eqb_changed(GtkAdjustment *adj, gpointer user_data)
         because this could just be a scene change.  */
 
     if (!EQ_drawn) set_scene_warning_button ();
-
 
     return FALSE;
 }

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.107 2003/12/09 22:25:22 jdepner Exp $
+ *  $Id: callbacks.c,v 1.108 2003/12/10 01:48:41 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -81,6 +81,8 @@ on_low2mid_button_press_event          (GtkWidget       *widget,
 {
     hdeq_low2mid_button (1);
 
+    set_scene_warning_button ();
+
     return FALSE;
 }
 
@@ -102,6 +104,8 @@ on_mid2high_button_press_event        (GtkWidget       *widget,
                                         gpointer         user_data)
 {
     hdeq_mid2high_button (1);
+
+    set_scene_warning_button ();
 
     return FALSE;
 }
@@ -291,8 +295,6 @@ on_lim_out_trim_scale_value_changed        (GtkRange        *range,
 {
     s_set_value_ui(S_LIM_LIMIT,
 		    gtk_range_get_adjustment(GTK_RANGE(range))->value);
-
-    set_scene_warning_button ();
 }
 
 
@@ -301,8 +303,6 @@ on_in_trim_scale_value_changed         (GtkRange        *range,
                                         gpointer         user_data)
 {
     s_set_value_ui(S_IN_GAIN, gtk_range_get_adjustment(range)->value);
-
-    set_scene_warning_button ();
 }
 
 
@@ -311,8 +311,6 @@ on_pan_scale_value_changed             (GtkRange        *range,
                                         gpointer         user_data)
 {
     s_set_value_ui(S_IN_PAN, gtk_range_get_adjustment(range)->value);
-
-    set_scene_warning_button ();
 }
 
 
@@ -661,8 +659,6 @@ on_lim_lh_scale_value_changed          (GtkRange        *range,
 {
     s_set_value_ui(S_LIM_TIME,
                  gtk_range_get_adjustment(GTK_RANGE(range))->value);
-
-    set_scene_warning_button ();
 }
 
 void
@@ -681,8 +677,6 @@ on_hscale_1_l_value_changed               (GtkRange        *range,
 {
     s_set_value_ui(S_STEREO_WIDTH(0),
                    gtk_range_get_adjustment(GTK_RANGE(range))->value);
-
-    set_scene_warning_button ();
 }
 
 
@@ -701,8 +695,6 @@ on_hscale_1_m_value_changed               (GtkRange        *range,
 {
     s_set_value_ui(S_STEREO_WIDTH(1),
                    gtk_range_get_adjustment(GTK_RANGE(range))->value);
-
-    set_scene_warning_button ();
 }
 
 
@@ -721,8 +713,6 @@ on_hscale_1_h_value_changed               (GtkRange        *range,
 {
     s_set_value_ui(S_STEREO_WIDTH(2),
                    gtk_range_get_adjustment(GTK_RANGE(range))->value);
-
-    set_scene_warning_button ();
 }
 
 
@@ -741,8 +731,6 @@ on_lim_input_hscale_value_changed      (GtkRange        *range,
 {
     s_set_value_ui(S_LIM_INPUT,
                    gtk_range_get_adjustment(GTK_RANGE(range))->value);
-
-    set_scene_warning_button ();
 }
 
 
@@ -832,8 +820,6 @@ on_boost_scale_value_changed           (GtkRange        *range,
 {
     s_set_value_ui(S_BOOST,
                    gtk_range_get_adjustment(GTK_RANGE(range))->value);
-
-    set_scene_warning_button ();
 }
 
 
@@ -1633,12 +1619,10 @@ on_out_trim_scale_value_changed        (GtkRange        *range,
                                         gpointer         user_data)
 {
     s_set_value_ui(S_OUT_GAIN, gtk_range_get_adjustment(range)->value);
-
-    set_scene_warning_button ();
 }
 
 gboolean
-on_comp_button_press_event             (GtkWidget       *widget,
+scene_warning                          (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
@@ -1646,4 +1630,3 @@ on_comp_button_press_event             (GtkWidget       *widget,
 
   return FALSE;
 }
-

@@ -818,15 +818,15 @@ on_out_trim_scale_value_changed        (GtkRange        *range,
                                         gpointer         user_data);
 
 
-gboolean
-on_comp_button_press_event             (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data);
-
 void
 on_jack_ports_activate                 (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
 void
 on_about_prerequisites1_activate       (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+gboolean
+scene_warning                          (GtkWidget       *widget,
+                                        GdkEventButton  *event,
                                         gpointer         user_data);

@@ -3380,8 +3380,14 @@ create_window1 (void)
   g_signal_connect ((gpointer) in_trim_scale, "value_changed",
                     G_CALLBACK (on_in_trim_scale_value_changed),
                     NULL);
+  g_signal_connect ((gpointer) in_trim_scale, "button_press_event",
+                    G_CALLBACK (scene_warning),
+                    NULL);
   g_signal_connect ((gpointer) pan_scale, "value_changed",
                     G_CALLBACK (on_pan_scale_value_changed),
+                    NULL);
+  g_signal_connect ((gpointer) pan_scale, "button_press_event",
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) notebook1, "switch_page",
                     G_CALLBACK (on_notebook1_switch_page),
@@ -3500,6 +3506,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) low2mid, "button_release_event",
                     G_CALLBACK (on_low2mid_button_release_event),
                     NULL);
+  g_signal_connect ((gpointer) mid2high_event_box, "button_press_event",
+                    G_CALLBACK (scene_warning),
+                    NULL);
   g_signal_connect ((gpointer) mid2high, "value_changed",
                     G_CALLBACK (on_mid2high_value_changed),
                     NULL);
@@ -3519,22 +3528,22 @@ create_window1 (void)
                     G_CALLBACK (on_frame_l_enter_notify_event),
                     NULL);
   g_signal_connect ((gpointer) comp_at_1, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) comp_re_1, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) comp_th_1, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) comp_ra_1, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) comp_kn_1, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) comp_ma_1, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) autobutton_l, "toggled",
                     G_CALLBACK (on_autobutton_l_toggled),
@@ -3544,6 +3553,9 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) hscale_1_l, "realize",
                     G_CALLBACK (on_hscale_1_l_realize),
+                    NULL);
+  g_signal_connect ((gpointer) hscale_1_l, "button_press_event",
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) mid_comp_event_box, "enter_notify_event",
                     G_CALLBACK (on_mid_comp_event_box_enter_notify_event),
@@ -3555,22 +3567,22 @@ create_window1 (void)
                     G_CALLBACK (on_frame_m_enter_notify_event),
                     NULL);
   g_signal_connect ((gpointer) comp_at_2, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) comp_re_2, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) comp_th_2, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) comp_ra_2, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) comp_kn_2, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) comp_ma_2, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) autobutton_m, "toggled",
                     G_CALLBACK (on_autobutton_m_toggled),
@@ -3580,6 +3592,9 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) hscale_1_m, "realize",
                     G_CALLBACK (on_hscale_1_m_realize),
+                    NULL);
+  g_signal_connect ((gpointer) hscale_1_m, "button_press_event",
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) high_comp_event_box, "enter_notify_event",
                     G_CALLBACK (on_high_comp_event_box_enter_notify_event),
@@ -3591,22 +3606,22 @@ create_window1 (void)
                     G_CALLBACK (on_frame_h_enter_notify_event),
                     NULL);
   g_signal_connect ((gpointer) comp_at_3, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) comp_re_3, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) comp_th_3, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) comp_ra_3, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) comp_kn_3, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) comp_ma_3, "button_press_event",
-                    G_CALLBACK (on_comp_button_press_event),
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) autobutton_h, "toggled",
                     G_CALLBACK (on_autobutton_h_toggled),
@@ -3617,6 +3632,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) hscale_1_h, "realize",
                     G_CALLBACK (on_hscale_1_h_realize),
                     NULL);
+  g_signal_connect ((gpointer) hscale_1_h, "button_press_event",
+                    G_CALLBACK (scene_warning),
+                    NULL);
   g_signal_connect ((gpointer) limiter_eventbox, "enter_notify_event",
                     G_CALLBACK (on_limiter_eventbox_enter_notify_event),
                     NULL);
@@ -3626,14 +3644,23 @@ create_window1 (void)
   g_signal_connect ((gpointer) lim_input_hscale, "realize",
                     G_CALLBACK (on_lim_input_hscale_realize),
                     NULL);
+  g_signal_connect ((gpointer) lim_input_hscale, "button_press_event",
+                    G_CALLBACK (scene_warning),
+                    NULL);
   g_signal_connect ((gpointer) release_val_label, "realize",
                     G_CALLBACK (on_release_val_label_realize),
                     NULL);
   g_signal_connect ((gpointer) lim_lh_scale, "value_changed",
                     G_CALLBACK (on_lim_lh_scale_value_changed),
                     NULL);
+  g_signal_connect ((gpointer) lim_lh_scale, "button_press_event",
+                    G_CALLBACK (scene_warning),
+                    NULL);
   g_signal_connect ((gpointer) lim_out_trim_scale, "value_changed",
                     G_CALLBACK (on_lim_out_trim_scale_value_changed),
+                    NULL);
+  g_signal_connect ((gpointer) lim_out_trim_scale, "button_press_event",
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) boost_eventbox, "enter_notify_event",
                     G_CALLBACK (on_boost_eventbox_enter_notify_event),
@@ -3641,11 +3668,17 @@ create_window1 (void)
   g_signal_connect ((gpointer) boost_scale, "value_changed",
                     G_CALLBACK (on_boost_scale_value_changed),
                     NULL);
+  g_signal_connect ((gpointer) boost_scale, "button_press_event",
+                    G_CALLBACK (scene_warning),
+                    NULL);
   g_signal_connect ((gpointer) output_eventbox, "enter_notify_event",
                     G_CALLBACK (on_output_eventbox_enter_notify_event),
                     NULL);
   g_signal_connect ((gpointer) out_trim_scale, "value_changed",
                     G_CALLBACK (on_out_trim_scale_value_changed),
+                    NULL);
+  g_signal_connect ((gpointer) out_trim_scale, "button_press_event",
+                    G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) bypass_button, "toggled",
                     G_CALLBACK (on_bypass_button_toggled),

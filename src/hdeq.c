@@ -335,8 +335,6 @@ void hdeq_mid2high_set (GtkRange *range)
 void hdeq_low2mid_button (int active)
 {
     xover_active = active;
-
-    set_scene_warning_button ();
 }
 
 
@@ -346,8 +344,6 @@ void hdeq_low2mid_button (int active)
 void hdeq_mid2high_button (int active)
 {
     xover_active = active;
-
-    set_scene_warning_button ();
 }
 
 
