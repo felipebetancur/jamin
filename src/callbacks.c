@@ -1278,3 +1278,13 @@ on_scenes_eventbox_enter_notify_event  (GtkWidget       *widget,
     return FALSE;
 }
 
+
+void
+on_notebook1_switch_page               (GtkNotebook     *notebook,
+                                        GtkNotebookPage *page,
+                                        guint            page_num,
+                                        gpointer         user_data)
+{
+    hdeq_notebook1_set_page (page_num);
+}
+

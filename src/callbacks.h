@@ -693,3 +693,9 @@ gboolean
 on_scenes_eventbox_enter_notify_event  (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data);
+
+void
+on_notebook1_switch_page               (GtkNotebook     *notebook,
+                                        GtkNotebookPage *page,
+                                        guint            page_num,
+                                        gpointer         user_data);

@@ -3171,6 +3171,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) pan_scale, "value_changed",
                     G_CALLBACK (on_pan_scale_value_changed),
                     NULL);
+  g_signal_connect ((gpointer) notebook1, "switch_page",
+                    G_CALLBACK (on_notebook1_switch_page),
+                    NULL);
   g_signal_connect ((gpointer) EQ_curve_event_box, "button_press_event",
                     G_CALLBACK (on_EQ_curve_event_box_button_press_event),
                     NULL);

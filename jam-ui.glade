@@ -240,6 +240,7 @@
 			  <property name="tab_pos">GTK_POS_TOP</property>
 			  <property name="scrollable">False</property>
 			  <property name="enable_popup">False</property>
+			  <signal name="switch_page" handler="on_notebook1_switch_page" last_modification_time="Tue, 22 Jul 2003 15:30:14 GMT"/>
 
 			  <child>
 			    <widget class="GtkVBox" id="vbox99">
