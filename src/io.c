@@ -660,53 +660,23 @@ void io_shutdown(void *arg)
 }
 
 
-/*  Silly little function to expand the ~ in case someone has slammed it up
-    against the option and the shell couldn't expand it.  I know, this is a
-    waste of time, but I was bored.  JCD    (there's probably already a
-    function written to do this I just didn't know what it was)  */
+/*  Silly little function to check file names for a valid, readable file
+    prior to trying to use them.  */
 
-void expand_tilde (char *option, char *optarg)
+gboolean check_file (char *optarg)
 {
-  int  i, j, k;
-  char fn[256], home[256];
+  FILE *fp;
 
-
-  if (strchr (optarg, '~'))
+  if ((fp = fopen (optarg, "r")) == NULL)
     {
-      if (getenv ("HOME") != NULL)
-        {
-          strcpy (home, getenv ("HOME"));
-        }
-      else
-        {
-          fprintf (stderr, 
-                   "\nUsing ~ in path with %s option requires a space between the %s and the path\n", 
-                   option, option);
-          fprintf (stderr, 
-                   "or setting the $HOME environment variable.\n");
-          fprintf (stderr, "Terminating\n\n");
-          exit (-1);
-        }
-      k = 0;
-      for (i = 0 ; i < strlen (optarg) ; i++)
-        {
-          if (optarg[i] == '~')
-            {
-              for (j = 0 ; j < strlen (home) ; j++)
-                {
-                  fn[k] = home[j];
-                  k++;
-                }
-            }
-          else
-            {
-              fn[k] = optarg[i];
-              k++;
-            }
-        }
-      fn[k] = 0;
-      strcpy (optarg, fn);
+      fprintf (stderr, "\n\n");
+      perror (optarg);
+      fprintf (stderr, "Using default.\n\n");
+      return (FALSE);
     }
+
+  fclose (fp);
+  return (TRUE);
 }
 
 
@@ -740,8 +710,7 @@ void io_init(int argc, char *argv[])
 	    all_errors_fatal = 1;
 	    break;
 	case 'f':
-            expand_tilde ("-f", optarg);
-            s_set_filename(optarg);
+            if (check_file (optarg)) s_set_filename(optarg);
             break;
 	case 'n':			/* Set JACK client name */
 	    client_name = strdup(optarg);
@@ -753,8 +722,8 @@ void io_init(int argc, char *argv[])
 	    connect_ports = 0;
 	    break;
 	case 'r':			/* use GTK resource file */
-            expand_tilde ("-r", optarg);
-	    resource_file_name(optarg);
+            /*if (check_file (optarg))*/
+            resource_file_name(optarg);
 	    break;
 	case 't':			/* no DSP thread */
 	    thread_option = 0;
