@@ -15,6 +15,7 @@ jamin_SOURCES = \
 	compressor.h \
 	compressor-ui.c compressor-ui.h \
 	db.h \
+	debug.h \
 	geq.c geq.h \
 	gtkmeter.c gtkmeter.h \
 	gtkmeterscale.c gtkmeterscale.h \
@@ -26,6 +27,7 @@ jamin_SOURCES = \
 	main.c main.h \
 	plugin.c plugin.h \
 	process.c process.h \
+	ringbuffer.c ringbuffer.h \
 	spectrum.c spectrum.h \
 	spline.c \
 	state.c state.h \

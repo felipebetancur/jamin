@@ -1,7 +1,7 @@
 #ifndef IO_H
 #define IO_H
 
-#include <jack/jack.h>
+#include <jack/types.h>
 
 /* types of latency sources */
 #define LAT_BUFFERS	0		/* I/O buffering */
@@ -15,7 +15,8 @@ void io_set_granularity(jack_nframes_t block_size);
 
 extern float sample_rate;
 
-int backend_init(int argc, char *argv[]);
-int backend_activate(int argc, char *argv[]);
+void io_init(int argc, char *argv[]);
+void io_activate();
+void io_cleanup();
 
 #endif

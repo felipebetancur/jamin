@@ -31,7 +31,6 @@
 GtkWidget *main_window;
 
 gboolean update_meters(gpointer data);
-void cleanup();
 
 int main(int argc, char *argv[])
 {
@@ -53,7 +52,7 @@ int main(int argc, char *argv[])
 
     gtk_set_locale();
     gtk_init(&argc, &argv);
-    backend_init(argc, argv);
+    io_init(argc, argv);		/* set up I/O processing */
     state_init();
 
     add_pixmap_directory(PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
@@ -73,12 +72,11 @@ int main(int argc, char *argv[])
 
     g_timeout_add(100, update_meters, NULL);
 
-    backend_activate(argc, argv);
+    io_activate();			/* start I/O processing */
 
     gtk_main();
 
-    /* Disconnect from JACK and stuff */
-    cleanup();
+    io_cleanup();			/* clean up I/O resources */
 
     return 0;
 }

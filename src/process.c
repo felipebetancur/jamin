@@ -130,24 +130,15 @@ void process_init(float fs, int buffer_size)
            exit(1);
     }
 
-    out_tmp[CHANNEL_L][XO_LOW] = calloc(buffer_size, sizeof(float));
-    out_tmp[CHANNEL_R][XO_LOW] = calloc(buffer_size, sizeof(float));
-    out_tmp[CHANNEL_L][XO_MID] = calloc(buffer_size, sizeof(float));
-    out_tmp[CHANNEL_R][XO_MID] = calloc(buffer_size, sizeof(float));
-    out_tmp[CHANNEL_L][XO_HIGH] = calloc(buffer_size, sizeof(float));
-    out_tmp[CHANNEL_R][XO_HIGH] = calloc(buffer_size, sizeof(float));
-
-    compressors[XO_LOW].handle = plugin_instantiate(comp_plugin, fs);
-    comp_connect(comp_plugin, &compressors[XO_LOW],
-	    out_tmp[CHANNEL_L][XO_LOW], out_tmp[CHANNEL_R][XO_LOW]);
-
-    compressors[XO_MID].handle = plugin_instantiate(comp_plugin, fs);
-    comp_connect(comp_plugin, &compressors[XO_MID],
-	    out_tmp[CHANNEL_L][XO_MID], out_tmp[CHANNEL_R][XO_MID]);
-
-    compressors[XO_HIGH].handle = plugin_instantiate(comp_plugin, fs);
-    comp_connect(comp_plugin, &compressors[XO_HIGH],
-	    out_tmp[CHANNEL_L][XO_HIGH], out_tmp[CHANNEL_R][XO_HIGH]);
+    /* This compressor is specifically stereo, so there are always two
+     * channels. */
+    for (band = 0; band < XO_NBANDS; band++) {
+	out_tmp[CHANNEL_L][band] = calloc(step_size, sizeof(float));
+	out_tmp[CHANNEL_R][band] = calloc(step_size, sizeof(float));
+	compressors[band].handle = plugin_instantiate(comp_plugin, fs);
+	comp_connect(comp_plugin, &compressors[band],
+		     out_tmp[CHANNEL_L][band], out_tmp[CHANNEL_R][band]);
+    }
 
     limiter.handle = plugin_instantiate(lim_plugin, fs);
     lim_connect(lim_plugin, &limiter, NULL, NULL);
