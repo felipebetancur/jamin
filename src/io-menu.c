@@ -24,11 +24,13 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.c,v 1.17 2003/12/01 11:39:22 kotau Exp $
+ *  $Id: io-menu.c,v 1.18 2003/12/03 07:02:00 joq Exp $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <errno.h>
 #include <gtk/gtk.h>
 #include <jack/jack.h>
 
@@ -39,19 +41,29 @@ static GtkWidget   *menubar_item;	/* "Ports" menubar item */
 static GtkWidget   *pulldown_menu;	/* "Ports" pulldown menu */
 static GtkWidget   *in_item;		/* "Connect" menubar item */
 static GtkWidget   *out_item;		/* "Disconnect" menubar item */
+static GtkWidget   *iports_menu = NULL;	/* In ports menu */
+static GtkWidget   *oports_menu = NULL;	/* Out ports menu */
 
 /* Global JACK data passed to iomenu_bind().  The iports_list and
  * oports_list are NULL-terminated arrays of pointers to this client's
  * input and output ports. */
 static jack_client_t *client;
-static jack_port_t **iports_list;
-static jack_port_t **oports_list;
+static jack_port_t  **iports_list;
+static jack_port_t  **oports_list;
 
 /* These lists of currently registered input and output ports are
  * updated each time the menu is used. */
 static const char **inports = NULL;
 static const char **outports = NULL;
 
+/* NULL-terminated lists of client names from inports and outports,
+ * each name ending in a ':'. */
+#define MAXGROUPS 32
+#define MAXNAMELEN (32+2)		/* JACK_CLIENT_NAME_SIZE + 2 */
+static const char *ingroups[MAXGROUPS]; 
+static const char *outgroups[MAXGROUPS];
+static size_t ngroup_names = 0;
+static char group_names[2*MAXGROUPS*MAXNAMELEN];
 
 /* * * * * * * * * * * *   Callbacks   * * * * * * * * * * * * * * */
 
@@ -72,7 +84,7 @@ iomenu_error(char *fmt, ...)
     fprintf(stderr, _("iomenu error: %s\n"), buffer);
 }
 
-static jack_port_t *selected_port;	/* currently selected port */
+static jack_port_t  *selected_port;	/* currently selected port */
 
 /* remember the local port selected */
 static void
@@ -125,6 +137,91 @@ iomenu_disconnect(GtkWidget *widget, char *port_name)
     }
 }
 
+/* connect (or disconnect) all input ports */
+static void
+iomenu_all_inputs(GtkWidget *widget, char *group)
+{
+    int i;
+    const char **gports = jack_get_ports(client, group,
+					 JACK_DEFAULT_AUDIO_TYPE,
+					 JackPortIsOutput);
+
+    if (gports == NULL) {
+	iomenu_error(_("no %s ports available\n"), group);
+	return;
+    }
+
+    /* connect or disconnect as many input ports as possible */
+    for (i = 0; iports_list[i] && gports[i]; ++i) {
+
+	const char *local_name = jack_port_name(iports_list[i]);
+
+	if (jack_port_connected_to(iports_list[i], gports[i])) {
+
+	    fprintf(stderr, _("disconnecting port %s from %s\n"),
+		    gports[i], local_name);
+
+	    if (jack_disconnect(client, gports[i], local_name)) {
+		iomenu_error(_("unable to disconnect %s from %s\n"),
+			     gports[i], local_name);
+	    }
+
+	} else {
+
+	    fprintf(stderr, _("connecting port %s to %s\n"),
+		    gports[i], local_name);
+
+	    if (jack_connect(client, gports[i], local_name)) {
+		iomenu_error(_("unable to connect %s to %s\n"),
+			     gports[i], local_name);
+	    }
+	}
+    }
+}
+
+/* connect (or disconnect) all output ports */
+static void
+iomenu_all_outputs(GtkWidget *widget, char *group)
+{
+    int i;
+    const char **gports = jack_get_ports(client, group,
+					 JACK_DEFAULT_AUDIO_TYPE,
+					 JackPortIsInput);
+
+    if (gports == NULL) {
+	iomenu_error(_("no %s ports available\n"), group);
+	return;
+    }
+
+    /* connect or disconnect as many output ports as possible */
+    for (i = 0; oports_list[i] && gports[i]; ++i) {
+
+	const char *local_name = jack_port_name(oports_list[i]);
+
+	if (jack_port_connected_to(oports_list[i], gports[i])) {
+
+	    fprintf(stderr, _("disconnecting port %s from %s\n"),
+		    gports[i], local_name);
+
+	    if (jack_disconnect(client,  local_name, gports[i])) {
+		iomenu_error(_("unable to disconnect %s from %s\n"),
+			     local_name, gports[i]);
+	    }
+
+	} else {
+
+	    fprintf(stderr, _("connecting port %s to %s\n"),
+		    gports[i], local_name);
+
+	    if (jack_connect(client, local_name, gports[i])) {
+		iomenu_error(_("unable to connect %s to %s\n"),
+			     local_name, gports[i]);
+	    }
+	}
+    }
+}
+
+
 /* * * * * * * * * * * *   Menu Creation   * * * * * * * * * * * * */
 
 GtkWidget *
@@ -133,6 +230,15 @@ iomenu_add_item(GtkWidget *menu, GtkWidget *item)
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
     gtk_widget_show(item);
     return item;
+}
+
+GtkWidget *
+iomenu_add_submenu(GtkWidget *item)
+{
+    GtkWidget *menu = gtk_menu_new();
+
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(item), menu);
+    return menu;
 }
 
 GtkWidget *
@@ -157,6 +263,42 @@ iomenu_connection_item(jack_port_t *port, const char *connection_name)
     return item;
 }
 
+/* add a group of JACK ports to the interface
+ *
+ *  Creates a menu item for the `group' with `handler' as callback.
+ */
+static GtkWidget *
+iomenu_group_item(iomenu_callback handler, const char *group)
+{
+    GtkWidget *item = gtk_check_menu_item_new_with_label(group);
+
+    g_signal_connect(G_OBJECT(item), "activate",
+		     G_CALLBACK(handler), (char *) group);
+
+    return item;
+}
+
+/* add groups item and submenu followed by separator */
+GtkWidget *
+iomenu_add_groups(GtkWidget *menu, const char **groups,
+		  iomenu_callback handler)
+{
+    GtkWidget *item =
+	iomenu_add_item(menu, gtk_menu_item_new_with_label(_("Groups")));
+    GtkWidget *sub_menu = iomenu_add_submenu(item);
+    int i;
+
+    /* create menu items for each input group */
+    for (i = 0; groups[i]; ++i) {
+	iomenu_add_item(sub_menu, iomenu_group_item(handler, groups[i]));
+    }
+    gtk_widget_show(sub_menu);
+
+    iomenu_add_item(menu, gtk_separator_menu_item_new());
+
+    return item;
+}
+
 /* add a local JACK port to the interface
  *
  *  Creates a menu item for the `port'.  Attaches a submenu to this
@@ -172,8 +314,7 @@ iomenu_port_item(jack_port_t *port)
 
     port_name = jack_port_short_name(port);
     item = gtk_menu_item_new_with_label(port_name);
-    sub_menu = gtk_menu_new();
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(item), sub_menu);
+    sub_menu = iomenu_add_submenu(item);
     if (jack_port_flags(port) & JackPortIsInput) {
 	int i;
 	for (i = 0; outports[i]; ++i) {
@@ -191,6 +332,64 @@ iomenu_port_item(jack_port_t *port)
     return item;
 }
 
+/* copy colon-terminated and NULL-terminate group_name */
+static inline char *
+iomenu_copy_name(const char *p)
+{
+    char *ret = &group_names[ngroup_names];
+
+    /* there is always enough room in group_names[] */
+    while (*p != ':')
+	group_names[ngroup_names++] = *p++;
+    
+    group_names[ngroup_names++] = ':';
+    group_names[ngroup_names++] = '\0';
+
+    return ret;
+}
+
+/* compare colon-terminated names */
+static inline int
+iomenu_name_matches(const char *p, const char *q)
+{
+    do {
+	if (*p == ':')
+	    return (*q == ':');
+    } while (*p++ == *q++);
+
+    return FALSE;
+}
+
+/* look up colon-terminated name in group list */
+static int
+iomenu_lookup_name(const char **groups, int ngroups, const char *name)
+{
+    int i;
+
+    /* the last entry is the most likely match, so search the list
+     * backwards */
+    for (i = ngroups-1; i >= 0; --i) {
+	if (iomenu_name_matches(groups[i], name))
+	    return TRUE;
+    }
+
+    return FALSE;
+}
+
+/* build NULL-terminated list of unique client names in ports list */
+static void
+iomenu_list_groups(const char **groups, const char **ports)
+{
+    int ngroups = 0;
+    int i;
+
+    for (i = 0; ports[i] && (ngroups < MAXGROUPS-1); ++i) {
+	if (!iomenu_lookup_name(groups, ngroups, ports[i]))
+	    groups[ngroups++] = iomenu_copy_name(ports[i]);
+    }
+    groups[ngroups] = NULL;
+}
+
 /* make an up-to-date list of JACK input and output port names
  *
  *   returns: 0 if successful, nonzero otherwise.
@@ -199,17 +398,27 @@ static int
 iomenu_list_jack_ports()
 {
     if (client == NULL)			/* not connected to JACK? */
-	return -1;
+	return ESRCH;
 
     if (inports)
 	free(inports);
-    inports = jack_get_ports(client, NULL, NULL, JackPortIsInput);
+    inports = jack_get_ports(client, NULL, JACK_DEFAULT_AUDIO_TYPE,
+			     JackPortIsInput);
+    if (inports == NULL)
+	return ENOENT;
 
     if (outports)
 	free(outports);
-    outports = jack_get_ports(client, NULL, NULL, JackPortIsOutput);
+    outports = jack_get_ports(client, NULL, JACK_DEFAULT_AUDIO_TYPE,
+			      JackPortIsOutput);
+    if (outports == NULL)
+	return ENOENT;
 
-    return (inports == NULL || outports == NULL);
+    ngroup_names = 0;			/* empty group name buffer */
+    iomenu_list_groups(ingroups, inports);
+    iomenu_list_groups(outgroups, outports);
+
+    return 0;
 }
 
 /* called whenever the port menu pulldown is selected */
@@ -217,8 +426,6 @@ void
 iomenu_pull_down_ports()
 {
     int i;
-    static GtkWidget *iports_menu = NULL; /* In ports menu */
-    static GtkWidget *oports_menu = NULL; /* Out ports menu */
 
     if (iomenu_list_jack_ports() != 0)	/* not connected to JACK? */
 	return;
@@ -228,16 +435,20 @@ iomenu_pull_down_ports()
 	gtk_widget_destroy(iports_menu);
 	gtk_widget_destroy(oports_menu);
     }
-    iports_menu = gtk_menu_new();
-    oports_menu = gtk_menu_new();
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(in_item), iports_menu);
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(out_item), oports_menu);
+    iports_menu = iomenu_add_submenu(in_item);
+    oports_menu = iomenu_add_submenu(out_item);
+
+    /* add input groups item and submenu, plus separator */
+    iomenu_add_groups(iports_menu, outgroups, iomenu_all_inputs);
 
     /* create menu items for each input port */
     for (i = 0; iports_list[i]; ++i) {
 	iomenu_add_item(iports_menu,
 			iomenu_port_item(iports_list[i]));
     }
+
+    /* add output groups item and submenu, plus separator */
+    iomenu_add_groups(oports_menu, ingroups, iomenu_all_outputs);
 
     /* create menu items for each output port */
     for (i = 0; oports_list[i]; ++i) {
