@@ -79,9 +79,10 @@
 #include "io.h"
 #include "transport.h"
 #include "jackstatus.h"
+#include "state.h"
 #include "debug.h"
 
-char *jamin_options = "dFhTtvV";	/* valid JAMin options */
+char *jamin_options = "dFhTtvVf:";	/* valid JAMin options */
 char *pname;				/* `basename $0` */
 int dummy_mode = 0;			/* -d option */
 int all_errors_fatal = 0;		/* -F option */
@@ -687,6 +688,9 @@ void io_init(int argc, char *argv[])
 	    break;
 	case 'v':			/* verbose */
 	    debug_level += 1;		/* increment output level */
+	    break;
+	case 'f':
+	    s_set_filename(optarg);
 	    break;
 	case 'V':			/* version */
 	    /* version info already printed */

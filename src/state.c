@@ -293,14 +293,25 @@ void s_save_session (const char *fname)
 void s_startElement(void *user_data, const xmlChar *name,
                     const xmlChar **attrs);
 
-void s_load_session (GtkWidget *w, gpointer user_data)
+void s_load_session_from_ui (GtkWidget *w, gpointer user_data)
 {
     GtkFileSelection *file_selector = (GtkFileSelection *) user_data;
-    xmlSAXHandlerPtr  handler;
+
+    s_load_session(gtk_file_selection_get_filename (GTK_FILE_SELECTION
+                                                (file_selector)));
+}
+    
+void s_load_session (const char *fname)
+{
+    xmlSAXHandlerPtr handler;
     int scene = -1;
 
-    filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION
-                                                (file_selector));
+    if (fname) {
+	filename = fname;
+    }
+    if (!filename) {
+	return;
+    }
     s_update_title();
 
     handler = calloc(1, sizeof(xmlSAXHandler));
@@ -432,6 +443,11 @@ void s_update_title()
     free(tmp);
     gtk_window_set_title ((GtkWindow *) main_window, title);
     free(title);
+}
+
+void s_set_filename(const char *fname)
+{
+    filename = fname;
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

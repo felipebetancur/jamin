@@ -789,7 +789,7 @@ on_load_button_clicked                 (GtkButton       *button,
     gtk_file_selection_complete (file_selector, "*.jam");
 
     g_signal_connect (GTK_OBJECT (file_selector->ok_button),
-        "clicked", G_CALLBACK (s_load_session), file_selector);
+        "clicked", G_CALLBACK (s_load_session_from_ui), file_selector);
 
     g_signal_connect_swapped (GTK_OBJECT (file_selector->ok_button),
         "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
@@ -1754,7 +1754,7 @@ on_open1_activate                      (GtkMenuItem     *menuitem,
     gtk_file_selection_complete (file_selector, "*.jam");
 
     g_signal_connect (GTK_OBJECT (file_selector->ok_button),
-        "clicked", G_CALLBACK (s_load_session), file_selector);
+        "clicked", G_CALLBACK (s_load_session_from_ui), file_selector);
 
     g_signal_connect_swapped (GTK_OBJECT (file_selector->ok_button),
         "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);

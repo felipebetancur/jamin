@@ -563,7 +563,7 @@ create_window1 (void)
   gtk_widget_set_name (top_hbox, "top_hbox");
   gtk_widget_show (top_hbox);
   gtk_box_pack_start (GTK_BOX (outer_vbox), top_hbox, FALSE, TRUE, 0);
-  gtk_widget_set_size_request (top_hbox, -2, 40);
+  gtk_widget_set_size_request (top_hbox, -1, 40);
 
   transport_controls_eventbox = gtk_event_box_new ();
   gtk_widget_set_name (transport_controls_eventbox, "transport_controls_eventbox");
@@ -827,13 +827,13 @@ create_window1 (void)
   gtk_widget_set_name (bighbox, "bighbox");
   gtk_widget_show (bighbox);
   gtk_container_add (GTK_CONTAINER (alignment2), bighbox);
-  gtk_widget_set_size_request (bighbox, 800, -2);
+  gtk_widget_set_size_request (bighbox, 800, -1);
 
   vbox1 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox1, "vbox1");
   gtk_widget_show (vbox1);
   gtk_box_pack_start (GTK_BOX (bighbox), vbox1, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (vbox1, 745, -2);
+  gtk_widget_set_size_request (vbox1, 745, -1);
 
   hbox13 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox13, "hbox13");
@@ -2103,7 +2103,7 @@ create_window1 (void)
   gtk_widget_set_name (frame_l, "frame_l");
   gtk_widget_show (frame_l);
   gtk_box_pack_start (GTK_BOX (bottom_comp_hbox), frame_l, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (frame_l, 196, -2);
+  gtk_widget_set_size_request (frame_l, 196, -1);
 
   vbox_l = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox_l, "vbox_l");
@@ -2136,7 +2136,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_at_1, "comp_at_1");
   gtk_widget_show (comp_at_1);
   gtk_box_pack_start (GTK_BOX (vbox_1_l), comp_at_1, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (comp_at_1, 27, -2);
+  gtk_widget_set_size_request (comp_at_1, 27, -1);
   gtk_scale_set_digits (GTK_SCALE (comp_at_1), 0);
   gtk_range_set_inverted (GTK_RANGE (comp_at_1), TRUE);
 
@@ -2155,7 +2155,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_re_1, "comp_re_1");
   gtk_widget_show (comp_re_1);
   gtk_box_pack_start (GTK_BOX (vbox_2_l), comp_re_1, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (comp_re_1, 27, -2);
+  gtk_widget_set_size_request (comp_re_1, 27, -1);
   gtk_scale_set_digits (GTK_SCALE (comp_re_1), 0);
   gtk_range_set_inverted (GTK_RANGE (comp_re_1), TRUE);
 
@@ -2174,7 +2174,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_th_1, "comp_th_1");
   gtk_widget_show (comp_th_1);
   gtk_box_pack_start (GTK_BOX (vbox_3_l), comp_th_1, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (comp_th_1, 30, -2);
+  gtk_widget_set_size_request (comp_th_1, 30, -1);
   gtk_range_set_inverted (GTK_RANGE (comp_th_1), TRUE);
 
   vbox_4_l = gtk_vbox_new (FALSE, 0);
@@ -2192,7 +2192,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_ra_1, "comp_ra_1");
   gtk_widget_show (comp_ra_1);
   gtk_box_pack_start (GTK_BOX (vbox_4_l), comp_ra_1, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (comp_ra_1, 30, -2);
+  gtk_widget_set_size_request (comp_ra_1, 30, -1);
   gtk_range_set_inverted (GTK_RANGE (comp_ra_1), TRUE);
 
   vbox_5_l = gtk_vbox_new (FALSE, 0);
@@ -2210,7 +2210,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_kn_1, "comp_kn_1");
   gtk_widget_show (comp_kn_1);
   gtk_box_pack_start (GTK_BOX (vbox_5_l), comp_kn_1, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (comp_kn_1, 27, -2);
+  gtk_widget_set_size_request (comp_kn_1, 27, -1);
   gtk_range_set_inverted (GTK_RANGE (comp_kn_1), TRUE);
 
   vbox_6_l = gtk_vbox_new (FALSE, 0);
@@ -2240,7 +2240,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_ma_1, "comp_ma_1");
   gtk_widget_show (comp_ma_1);
   gtk_container_add (GTK_CONTAINER (eventbox_1_l), comp_ma_1);
-  gtk_widget_set_size_request (comp_ma_1, 27, -2);
+  gtk_widget_set_size_request (comp_ma_1, 27, -1);
   gtk_range_set_inverted (GTK_RANGE (comp_ma_1), TRUE);
 
   eventbox_2_l = gtk_event_box_new ();
@@ -2297,7 +2297,7 @@ create_window1 (void)
   gtk_widget_set_name (frame_m, "frame_m");
   gtk_widget_show (frame_m);
   gtk_box_pack_start (GTK_BOX (bottom_comp_hbox), frame_m, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (frame_m, 196, -2);
+  gtk_widget_set_size_request (frame_m, 196, -1);
 
   vbox_m = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox_m, "vbox_m");
@@ -2330,7 +2330,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_at_2, "comp_at_2");
   gtk_widget_show (comp_at_2);
   gtk_box_pack_start (GTK_BOX (vbox_1_m), comp_at_2, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (comp_at_2, 27, -2);
+  gtk_widget_set_size_request (comp_at_2, 27, -1);
   gtk_scale_set_digits (GTK_SCALE (comp_at_2), 0);
   gtk_range_set_inverted (GTK_RANGE (comp_at_2), TRUE);
 
@@ -2349,7 +2349,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_re_2, "comp_re_2");
   gtk_widget_show (comp_re_2);
   gtk_box_pack_start (GTK_BOX (vbox_2_m), comp_re_2, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (comp_re_2, 27, -2);
+  gtk_widget_set_size_request (comp_re_2, 27, -1);
   gtk_scale_set_digits (GTK_SCALE (comp_re_2), 0);
   gtk_range_set_inverted (GTK_RANGE (comp_re_2), TRUE);
 
@@ -2368,7 +2368,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_th_2, "comp_th_2");
   gtk_widget_show (comp_th_2);
   gtk_box_pack_start (GTK_BOX (vbox_3_m), comp_th_2, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (comp_th_2, 30, -2);
+  gtk_widget_set_size_request (comp_th_2, 30, -1);
   gtk_range_set_inverted (GTK_RANGE (comp_th_2), TRUE);
 
   vbox_4_m = gtk_vbox_new (FALSE, 0);
@@ -2386,7 +2386,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_ra_2, "comp_ra_2");
   gtk_widget_show (comp_ra_2);
   gtk_box_pack_start (GTK_BOX (vbox_4_m), comp_ra_2, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (comp_ra_2, 30, -2);
+  gtk_widget_set_size_request (comp_ra_2, 30, -1);
   gtk_range_set_inverted (GTK_RANGE (comp_ra_2), TRUE);
 
   vbox_5_m = gtk_vbox_new (FALSE, 0);
@@ -2404,7 +2404,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_kn_2, "comp_kn_2");
   gtk_widget_show (comp_kn_2);
   gtk_box_pack_start (GTK_BOX (vbox_5_m), comp_kn_2, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (comp_kn_2, 27, -2);
+  gtk_widget_set_size_request (comp_kn_2, 27, -1);
   gtk_range_set_inverted (GTK_RANGE (comp_kn_2), TRUE);
 
   vbox_6_m = gtk_vbox_new (FALSE, 0);
@@ -2434,7 +2434,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_ma_2, "comp_ma_2");
   gtk_widget_show (comp_ma_2);
   gtk_container_add (GTK_CONTAINER (eventbox_1_m), comp_ma_2);
-  gtk_widget_set_size_request (comp_ma_2, 27, -2);
+  gtk_widget_set_size_request (comp_ma_2, 27, -1);
   gtk_range_set_inverted (GTK_RANGE (comp_ma_2), TRUE);
 
   eventbox_2_m = gtk_event_box_new ();
@@ -2491,7 +2491,7 @@ create_window1 (void)
   gtk_widget_set_name (frame_h, "frame_h");
   gtk_widget_show (frame_h);
   gtk_box_pack_start (GTK_BOX (bottom_comp_hbox), frame_h, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (frame_h, 196, -2);
+  gtk_widget_set_size_request (frame_h, 196, -1);
 
   vbox_h = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox_h, "vbox_h");
@@ -2524,7 +2524,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_at_3, "comp_at_3");
   gtk_widget_show (comp_at_3);
   gtk_box_pack_start (GTK_BOX (vbox_1_h), comp_at_3, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (comp_at_3, 27, -2);
+  gtk_widget_set_size_request (comp_at_3, 27, -1);
   gtk_scale_set_digits (GTK_SCALE (comp_at_3), 0);
   gtk_range_set_inverted (GTK_RANGE (comp_at_3), TRUE);
 
@@ -2543,7 +2543,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_re_3, "comp_re_3");
   gtk_widget_show (comp_re_3);
   gtk_box_pack_start (GTK_BOX (vbox_2_h), comp_re_3, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (comp_re_3, 27, -2);
+  gtk_widget_set_size_request (comp_re_3, 27, -1);
   gtk_scale_set_digits (GTK_SCALE (comp_re_3), 0);
   gtk_range_set_inverted (GTK_RANGE (comp_re_3), TRUE);
 
@@ -2562,7 +2562,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_th_3, "comp_th_3");
   gtk_widget_show (comp_th_3);
   gtk_box_pack_start (GTK_BOX (vbox_3_h), comp_th_3, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (comp_th_3, 30, -2);
+  gtk_widget_set_size_request (comp_th_3, 30, -1);
   gtk_range_set_inverted (GTK_RANGE (comp_th_3), TRUE);
 
   vbox_4_h = gtk_vbox_new (FALSE, 0);
@@ -2580,7 +2580,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_ra_3, "comp_ra_3");
   gtk_widget_show (comp_ra_3);
   gtk_box_pack_start (GTK_BOX (vbox_4_h), comp_ra_3, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (comp_ra_3, 30, -2);
+  gtk_widget_set_size_request (comp_ra_3, 30, -1);
   gtk_range_set_inverted (GTK_RANGE (comp_ra_3), TRUE);
 
   vbox_5_h = gtk_vbox_new (FALSE, 0);
@@ -2598,7 +2598,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_kn_3, "comp_kn_3");
   gtk_widget_show (comp_kn_3);
   gtk_box_pack_start (GTK_BOX (vbox_5_h), comp_kn_3, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (comp_kn_3, 27, -2);
+  gtk_widget_set_size_request (comp_kn_3, 27, -1);
   gtk_range_set_inverted (GTK_RANGE (comp_kn_3), TRUE);
 
   vbox_6_h = gtk_vbox_new (FALSE, 0);
@@ -2628,7 +2628,7 @@ create_window1 (void)
   gtk_widget_set_name (comp_ma_3, "comp_ma_3");
   gtk_widget_show (comp_ma_3);
   gtk_container_add (GTK_CONTAINER (eventbox_1_h), comp_ma_3);
-  gtk_widget_set_size_request (comp_ma_3, 27, -2);
+  gtk_widget_set_size_request (comp_ma_3, 27, -1);
   gtk_range_set_inverted (GTK_RANGE (comp_ma_3), TRUE);
 
   eventbox_2_h = gtk_event_box_new ();
@@ -2685,7 +2685,7 @@ create_window1 (void)
   gtk_widget_set_name (right_mid_vbox, "right_mid_vbox");
   gtk_widget_show (right_mid_vbox);
   gtk_box_pack_start (GTK_BOX (hbox49), right_mid_vbox, TRUE, TRUE, 2);
-  gtk_widget_set_size_request (right_mid_vbox, 173, -2);
+  gtk_widget_set_size_request (right_mid_vbox, 173, -1);
 
   right_bottom_vbox = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (right_bottom_vbox, "right_bottom_vbox");
@@ -2901,7 +2901,7 @@ create_window1 (void)
   gtk_widget_set_name (out_trim_scale, "out_trim_scale");
   gtk_widget_show (out_trim_scale);
   gtk_box_pack_start (GTK_BOX (hbox51), out_trim_scale, FALSE, TRUE, 0);
-  gtk_widget_set_size_request (out_trim_scale, 35, -2);
+  gtk_widget_set_size_request (out_trim_scale, 35, -1);
   gtk_range_set_inverted (GTK_RANGE (out_trim_scale), TRUE);
 
   outmeter_l = make_meter ("outmeter_l", "up", NULL, -60, 6);
