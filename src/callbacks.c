@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.145 2004/04/26 20:44:25 jdepner Exp $
+ *  $Id: callbacks.c,v 1.146 2004/04/26 23:13:52 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1842,9 +1842,7 @@ void
 on_jack_ports_activate                 (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-
-    // fprintf(stderr, "JACK Ports menu selected.\n");
-      iomenu_pull_down_ports(menuitem);
+  iomenu_pull_down_ports(menuitem);
 }
 
 
@@ -2557,18 +2555,18 @@ on_hdeq_grid_color_activate            (GtkMenuItem     *menuitem,
 
 
 void
-on_hdeq_spectrum_color_activate        (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (HDEQ_SPECTRUM_COLOR);
-}
-
-
-void
 on_hdeq_background_color_activate      (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
   popup_color_dialog (HDEQ_BACKGROUND_COLOR);
+}
+
+
+void
+on_text_color_activate                 (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_color_dialog (TEXT_COLOR);
 }
 
 

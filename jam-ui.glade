@@ -7656,7 +7656,7 @@
 			      <signal name="activate" handler="on_low_band_compressor_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image249">
+				<widget class="GtkImage" id="image272">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-select-color</property>
 				  <property name="icon_size">1</property>
@@ -7677,7 +7677,7 @@
 			      <signal name="activate" handler="on_mid_band_compressor_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image250">
+				<widget class="GtkImage" id="image273">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-select-color</property>
 				  <property name="icon_size">1</property>
@@ -7698,7 +7698,7 @@
 			      <signal name="activate" handler="on_high_band_compressor_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image251">
+				<widget class="GtkImage" id="image274">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-select-color</property>
 				  <property name="icon_size">1</property>
@@ -7725,7 +7725,7 @@
 			      <signal name="activate" handler="on_ganged_controls_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image252">
+				<widget class="GtkImage" id="image275">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-select-color</property>
 				  <property name="icon_size">1</property>
@@ -7752,7 +7752,7 @@
 			      <signal name="activate" handler="on_parametric_handles_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image253">
+				<widget class="GtkImage" id="image276">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-select-color</property>
 				  <property name="icon_size">1</property>
@@ -7773,7 +7773,7 @@
 			      <signal name="activate" handler="on_hdeq_curve_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image254">
+				<widget class="GtkImage" id="image277">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-select-color</property>
 				  <property name="icon_size">1</property>
@@ -7794,28 +7794,7 @@
 			      <signal name="activate" handler="on_hdeq_grid_color_activate" last_modification_time="Mon, 26 Apr 2004 19:51:53 GMT"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image255">
-				  <property name="visible">True</property>
-				  <property name="stock">gtk-select-color</property>
-				  <property name="icon_size">1</property>
-				  <property name="xalign">0.5</property>
-				  <property name="yalign">0.5</property>
-				  <property name="xpad">0</property>
-				  <property name="ypad">0</property>
-				</widget>
-			      </child>
-			    </widget>
-			  </child>
-
-			  <child>
-			    <widget class="GtkImageMenuItem" id="hdeq_spectrum1">
-			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">HDEQ Spectrum</property>
-			      <property name="use_underline">True</property>
-			      <signal name="activate" handler="on_hdeq_spectrum_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
-
-			      <child internal-child="image">
-				<widget class="GtkImage" id="image256">
+				<widget class="GtkImage" id="image278">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-select-color</property>
 				  <property name="icon_size">1</property>
@@ -7836,7 +7815,7 @@
 			      <signal name="activate" handler="on_hdeq_background_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image257">
+				<widget class="GtkImage" id="image279">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-select-color</property>
 				  <property name="icon_size">1</property>
@@ -7856,6 +7835,33 @@
 			  </child>
 
 			  <child>
+			    <widget class="GtkImageMenuItem" id="text1">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">Text</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_text_color_activate" last_modification_time="Mon, 26 Apr 2004 21:44:00 GMT"/>
+
+			      <child internal-child="image">
+				<widget class="GtkImage" id="image280">
+				  <property name="visible">True</property>
+				  <property name="stock">gtk-select-color</property>
+				  <property name="icon_size">1</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				</widget>
+			      </child>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkMenuItem" id="separator7">
+			      <property name="visible">True</property>
+			    </widget>
+			  </child>
+
+			  <child>
 			    <widget class="GtkImageMenuItem" id="meter_normal1">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">Meter Normal</property>
@@ -7863,7 +7869,7 @@
 			      <signal name="activate" handler="on_meter_normal_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image258">
+				<widget class="GtkImage" id="image281">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-select-color</property>
 				  <property name="icon_size">1</property>
@@ -7884,7 +7890,7 @@
 			      <signal name="activate" handler="on_meter_warning_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image259">
+				<widget class="GtkImage" id="image282">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-select-color</property>
 				  <property name="icon_size">1</property>
@@ -7905,7 +7911,7 @@
 			      <signal name="activate" handler="on_meter_over_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image260">
+				<widget class="GtkImage" id="image283">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-select-color</property>
 				  <property name="icon_size">1</property>
@@ -7926,7 +7932,7 @@
 			      <signal name="activate" handler="on_meter_peak_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image261">
+				<widget class="GtkImage" id="image284">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-select-color</property>
 				  <property name="icon_size">1</property>

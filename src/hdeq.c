@@ -628,7 +628,7 @@ void draw_EQ_spectrum_curve (float single_levels[])
 
         gdk_gc_set_line_attributes (EQ_gc, 1, GDK_LINE_SOLID, GDK_CAP_BUTT,
                                     GDK_JOIN_MITER);
-        gdk_gc_set_foreground (EQ_gc, get_color (NORMAL_COLOR));
+        gdk_gc_set_foreground (EQ_gc, get_color (TEXT_COLOR));
         gdk_gc_set_function (EQ_gc, GDK_COPY);
 
         EQ_cleared = 0;
@@ -934,7 +934,7 @@ void draw_EQ_curve ()
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE, 
         EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, 
         XOVER_HANDLE_SIZE);
-    gdk_gc_set_foreground (EQ_gc, get_color (NORMAL_COLOR));
+    gdk_gc_set_foreground (EQ_gc, get_color (TEXT_COLOR));
     gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE,
         0, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE,
@@ -952,7 +952,7 @@ void draw_EQ_curve ()
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE,
         EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, 
         XOVER_HANDLE_SIZE);
-    gdk_gc_set_foreground (EQ_gc, get_color (NORMAL_COLOR));
+    gdk_gc_set_foreground (EQ_gc, get_color (TEXT_COLOR));
     gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE,
         0, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE,
@@ -1060,7 +1060,7 @@ void draw_EQ_curve ()
         gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, 
             x1 - NOTCH_HANDLE_HALF_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
             NOTCH_HANDLE_WIDTH, NOTCH_HANDLE_HEIGHT);
-        gdk_gc_set_foreground (EQ_gc, get_color (NORMAL_COLOR));
+        gdk_gc_set_foreground (EQ_gc, get_color (TEXT_COLOR));
         gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, 
             x1 - NOTCH_HANDLE_HALF_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
             NOTCH_HANDLE_WIDTH, NOTCH_HANDLE_HEIGHT);
@@ -1096,7 +1096,7 @@ void draw_EQ_curve ()
             gdk_draw_arc (EQ_drawable, EQ_gc, TRUE, 
                 x1 - NOTCH_HANDLE_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
                 NOTCH_HANDLE_WIDTH * 2, NOTCH_HANDLE_HEIGHT, 5760, 11520);
-            gdk_gc_set_foreground (EQ_gc, get_color (NORMAL_COLOR));
+            gdk_gc_set_foreground (EQ_gc, get_color (TEXT_COLOR));
             gdk_draw_arc (EQ_drawable, EQ_gc, FALSE, 
                 x1 - NOTCH_HANDLE_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
                 NOTCH_HANDLE_WIDTH * 2, NOTCH_HANDLE_HEIGHT, 5760, 11520);
@@ -1118,7 +1118,7 @@ void draw_EQ_curve ()
             gdk_draw_arc (EQ_drawable, EQ_gc, TRUE, 
                 x1 - NOTCH_HANDLE_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
                 NOTCH_HANDLE_WIDTH * 2, NOTCH_HANDLE_HEIGHT, 17280, 11520);
-            gdk_gc_set_foreground (EQ_gc, get_color (NORMAL_COLOR));
+            gdk_gc_set_foreground (EQ_gc, get_color (TEXT_COLOR));
             gdk_draw_arc (EQ_drawable, EQ_gc, FALSE, 
                 x1 - NOTCH_HANDLE_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
                 NOTCH_HANDLE_WIDTH * 2, NOTCH_HANDLE_HEIGHT, 17280, 11520);
@@ -1315,6 +1315,7 @@ void hdeq_curve_motion (GdkEventMotion *event)
 
 	coords = g_strdup_printf(_("%dHz , EQ : %ddb , Spectrum : %ddb"), NINT
 		(freq), NINT (gain), NINT (s_gain));
+
         gtk_label_set_text (l_EQ_curve_lbl, coords);
 	free(coords);
 
@@ -1334,6 +1335,7 @@ void hdeq_curve_motion (GdkEventMotion *event)
                 if (EQ_input_points) gdk_draw_line (EQ_drawable, EQ_gc, 
                     NINT (EQ_xinput[EQ_input_points - 1]), 
                     NINT (EQ_yinput[EQ_input_points - 1]), x, y);
+                gdk_gc_set_foreground (EQ_gc, get_color (TEXT_COLOR));
 
                 size = (EQ_input_points + 1) * sizeof (float);
                 EQ_xinput = (float *) realloc (EQ_xinput, size);
@@ -2225,7 +2227,7 @@ static void comp_write_annotation (int i, char *string)
 
     gdk_window_clear_area (comp_drawable[i], 3, 3, ink_rect.width + 5,
 		    ink_rect.height + 5);
-    gdk_gc_set_foreground (comp_gc[i], get_color (NORMAL_COLOR));
+    gdk_gc_set_foreground (comp_gc[i], get_color (TEXT_COLOR));
 
     pl = pango_layout_new (comp_pc[i]);  
     pango_layout_set_text (pl, string, -1);
@@ -2322,7 +2324,7 @@ void draw_comp_curve (int i)
       }
     gdk_gc_set_line_attributes (comp_gc[i], 1, GDK_LINE_SOLID, GDK_CAP_BUTT,
         GDK_JOIN_MITER);
-    gdk_gc_set_foreground (comp_gc[i], get_color (NORMAL_COLOR));
+    gdk_gc_set_foreground (comp_gc[i], get_color (TEXT_COLOR));
 }
 
 
@@ -2392,9 +2394,9 @@ void comp_curve_box_motion (int i, GdkEventMotion  *event)
 void comp_box_leave (int i)
 {
     gtk_widget_modify_fg ((GtkWidget *) l_comp_lbl[i], GTK_STATE_NORMAL, 
-                          get_color (NORMAL_COLOR));
+                          get_color (TEXT_COLOR));
     gtk_widget_modify_fg ((GtkWidget *) l_c_curve_lbl[i], GTK_STATE_NORMAL, 
-                          get_color (NORMAL_COLOR));
+                          get_color (TEXT_COLOR));
 }
 
 

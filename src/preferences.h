@@ -11,14 +11,14 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: preferences.h,v 1.3 2004/04/26 20:44:26 jdepner Exp $
+ *  $Id: preferences.h,v 1.4 2004/04/26 23:14:04 jdepner Exp $
  */
 
 #ifndef PREFERENCES_H
 #define PREFERENCES_H
 
 
-#define NORMAL_COLOR          0
+#define TEXT_COLOR            0
 #define LOW_BAND_COLOR        1
 #define MID_BAND_COLOR        2
 #define HIGH_BAND_COLOR       3

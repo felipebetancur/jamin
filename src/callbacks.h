@@ -1212,11 +1212,11 @@ on_hdeq_grid_color_activate            (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
 void
-on_hdeq_spectrum_color_activate        (GtkMenuItem     *menuitem,
+on_hdeq_background_color_activate      (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
 void
-on_hdeq_background_color_activate      (GtkMenuItem     *menuitem,
+on_text_color_activate                 (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
 void
