@@ -52,7 +52,7 @@ int backend_init(int argc, char *argv[])
 	printf("Registering as %s\n", client_name);
 
 	sample_rate = (float)jack_get_sample_rate(client);
-	process_init(sample_rate);
+	process_init(sample_rate, jack_get_buffer_size(client));
 
 	jack_set_process_callback(client, process, 0);
 

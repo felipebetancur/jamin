@@ -12,10 +12,13 @@
 #include "interface.h"
 #include "support.h"
 #include "geq.h"
+#include "intrim.h"
+#include "process.h"
 
 GtkWidget *main_window;
 
 void backend_init(int argc, char *argv[]);
+gboolean update_meters(gpointer data);
 void cleanup();
 
 int
@@ -44,6 +47,8 @@ main (int argc, char *argv[])
 
   /* bind the graphic equaliser sliders to adjustments */
   bind_geq();
+  bind_intrim();
+  g_timeout_add(100, update_meters, NULL);
   
   gtk_main();
 
@@ -53,3 +58,7 @@ main (int argc, char *argv[])
   return 0;
 }
 
+gboolean update_meters(gpointer data)
+{
+	in_meter_value(in_peak);
+}

@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <errno.h>
+#include <math.h>
 #include <gtk/gtk.h>
 
 #include "callbacks.h"
@@ -158,3 +159,11 @@ on_window1_delete_event                (GtkWidget       *widget,
 
   return FALSE;
 }
+
+void
+on_in_trim_scale_value_changed         (GtkRange        *range,
+                                        gpointer         user_data)
+{
+  in_trim_gain = powf(10.0f, gtk_range_get_adjustment(range)->value * 0.05f);
+}
+

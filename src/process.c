@@ -1,5 +1,6 @@
 #include <math.h>
 #include <string.h>
+#include <stdlib.h>
 #include <jack/jack.h>
 #include <fftw3.h>
 
@@ -17,6 +18,9 @@ float xover_fb = 2048.0f;
 comp_settings compressors[3];
 lim_settings limiter;
 float eq_coefs[BINS]; /* Linear gain of each FFT bin */
+float in_trim_gain = 1.0f;
+
+float in_peak;
 
 static float band_f[BANDS];
 static float gain_fix[BANDS];
@@ -45,7 +49,7 @@ float sample_rate = 0.0f;
 
 void run_eq(unsigned int port, unsigned int in_pos);
 
-void process_init(float fs)
+void process_init(float fs, int buffer_size)
 {
     float centre = 25.0f;
     unsigned int i, j, band;
@@ -109,14 +113,17 @@ void process_init(float fs)
     plugin_init();
     comp_plugin = plugin_load("sc4_1882.so");
     lim_plugin = plugin_load("lookahead_limiter_1435.so");
+    if (comp_plugin == NULL || lim_plugin == NULL)  {
+           fprintf(stderr, "Required plugin missing.\n");
+           exit(1);
+    }
 
-    // XXX 2048, yuk, should be jack max buffer size
-    out_tmp[0][XO_LOW] = calloc(2048, sizeof(float));
-    out_tmp[1][XO_LOW] = calloc(2048, sizeof(float));
-    out_tmp[0][XO_MID] = calloc(2048, sizeof(float));
-    out_tmp[1][XO_MID] = calloc(2048, sizeof(float));
-    out_tmp[0][XO_HIGH] = calloc(2048, sizeof(float));
-    out_tmp[1][XO_HIGH] = calloc(2048, sizeof(float));
+    out_tmp[0][XO_LOW] = calloc(buffer_size, sizeof(float));
+    out_tmp[1][XO_LOW] = calloc(buffer_size, sizeof(float));
+    out_tmp[0][XO_MID] = calloc(buffer_size, sizeof(float));
+    out_tmp[1][XO_MID] = calloc(buffer_size, sizeof(float));
+    out_tmp[0][XO_HIGH] = calloc(buffer_size, sizeof(float));
+    out_tmp[1][XO_HIGH] = calloc(buffer_size, sizeof(float));
 
     compressors[0].handle = plugin_instantiate(comp_plugin, fs);
     comp_connect(comp_plugin, &compressors[0], out_tmp[0][XO_LOW],
@@ -238,9 +245,17 @@ int process(jack_nframes_t nframes, void *arg)
 
     for (pos = 0; pos < nframes; pos++) {
 	const unsigned int op = (in_ptr - latency) & BUF_MASK;
+	float amp;
 
 	for (port = 0; port < 2; port++) {
-	    in_buf[port][in_ptr] = in[port][pos];
+	    in_buf[port][in_ptr] = in[port][pos] * in_trim_gain;
+	    amp = fabs(in_buf[port][in_ptr]);
+	    if (amp > in_peak) {
+		in_peak = amp;
+	    } else {
+		in_peak = in_peak * 0.99f + amp * 0.01f;
+	    }
+
 	    out_tmp[port][XO_LOW][pos] = out_buf[port][XO_LOW][op];
 	    out_buf[port][XO_LOW][op] = 0.0f;
 	    out_tmp[port][XO_MID][pos] = out_buf[port][XO_MID][op];

@@ -37,3 +37,7 @@ gboolean
 on_window1_delete_event                (GtkWidget       *widget,
                                         GdkEvent        *event,
                                         gpointer         user_data);
+
+void
+on_in_trim_scale_value_changed         (GtkRange        *range,
+                                        gpointer         user_data);

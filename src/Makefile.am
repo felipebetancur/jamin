@@ -21,7 +21,8 @@ jam_SOURCES = \
 	process.c process.h \
 	plugin.c plugin.h \
 	compressor.h \
-	limiter.h
+	limiter.h \
+	intrim.c intrim.h
 
 
 jam_LDADD = @PACKAGE_LIBS@
