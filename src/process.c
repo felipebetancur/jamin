@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.56 2004/06/06 12:14:09 theno23 Exp $
+ *  $Id: process.c,v 1.57 2004/07/17 10:38:23 theno23 Exp $
  */
 
 #include <math.h>
@@ -171,11 +171,7 @@ void process_init(float fs)
 
     plugin_init();
     comp_plugin = plugin_load("sc4_1882.so");
-    lim_plugin = plugin_load("lookahead_limiter_const_1906.so");
-    if (!lim_plugin) {
-	printf("Cannot find preferred limiter, looking for alternative\n");
-	lim_plugin = plugin_load("lookahead_limiter_1435.so");
-    }
+    lim_plugin = plugin_load("fast_lookahead_limiter_1913.so");
     if (comp_plugin == NULL || lim_plugin == NULL)  {
            fprintf(stderr, "Required plugin missing.\n");
            exit(1);
@@ -205,7 +201,7 @@ void process_init(float fs)
 
 void run_eq(unsigned int port, unsigned int in_ptr)
 {
-    const float fix = 2.0f / ((float) BINS * (float) OVER_SAMP);
+    const float fix = 2.5f / ((float) BINS * (float) OVER_SAMP);
     float peak;
     unsigned int i, j;
     int targ_bin;

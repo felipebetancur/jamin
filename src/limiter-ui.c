@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: limiter-ui.c,v 1.13 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: limiter-ui.c,v 1.14 2004/07/17 10:38:23 theno23 Exp $
  */
 
 #include <stdio.h>
@@ -55,7 +55,7 @@ void bind_limiter()
     s_set_callback(S_LIM_LIMIT, ll_changed);
 
     s_set_value(S_LIM_INPUT, 0.0f, 0);
-    s_set_value(S_LIM_TIME,  1.0f, 0);
+    s_set_value(S_LIM_TIME,  0.05f, 0);
     s_set_value(S_LIM_LIMIT, 0.0f, 0);
 
     in_meter = GTK_METER(lookup_widget(main_window, "lim_in_meter"));
@@ -73,7 +73,7 @@ void bind_limiter()
 
 void li_changed(int id, float value)
 {
-    process_set_limiter_input_gain(db2lin(value));
+    limiter.ingain = value;
 }
 
 void lh_changed(int id, float value)
@@ -88,7 +88,7 @@ void lh_changed(int id, float value)
     }
     gtk_label_set_text(lh_label, text);
 
-    limiter.delay = powf(10.0f, value - 3.0f);
+    limiter.release = powf(10.0f, value - 3.0f);
 }
 
 void ll_changed(int id, float value)

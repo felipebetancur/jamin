@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: limiter.h,v 1.7 2003/11/20 08:43:40 theno23 Exp $
+ *  $Id: limiter.h,v 1.8 2004/07/17 10:38:23 theno23 Exp $
  */
 
 #ifndef LIMITER_H
@@ -19,18 +19,20 @@
 
 #include <process.h>
 
-#define LIM_LIMIT         0
-#define LIM_DELAY         1
-#define LIM_ATTENUATION   2
-#define LIM_IN_1          3
-#define LIM_IN_2          4
-#define LIM_OUT_1         5
-#define LIM_OUT_2         6
-#define LIM_LATENCY       7
+#define LIM_INGAIN        0
+#define LIM_LIMIT         1
+#define LIM_RELEASE       2
+#define LIM_ATTENUATION   3
+#define LIM_IN_1          4
+#define LIM_IN_2          5
+#define LIM_OUT_1         6
+#define LIM_OUT_2         7
+#define LIM_LATENCY       8
 
 typedef struct {
+	float ingain;
 	float limit;
-	float delay;
+	float release;
 	float attenuation;
 	float latency;
 	LADSPA_Handle handle;
@@ -38,8 +40,9 @@ typedef struct {
 
 static inline void lim_connect(plugin *p, lim_settings *s, float *left, float
 		*right) {
+	plugin_connect_port(p, s->handle, LIM_INGAIN, &(s->ingain));
 	plugin_connect_port(p, s->handle, LIM_LIMIT, &(s->limit));
-	plugin_connect_port(p, s->handle, LIM_DELAY, &(s->delay));
+	plugin_connect_port(p, s->handle, LIM_RELEASE, &(s->release));
 	plugin_connect_port(p, s->handle, LIM_ATTENUATION, &(s->attenuation));
 	plugin_connect_port(p, s->handle, LIM_IN_1, left);
 	plugin_connect_port(p, s->handle, LIM_IN_2, right);
@@ -48,9 +51,10 @@ static inline void lim_connect(plugin *p, lim_settings *s, float *left, float
 	plugin_connect_port(p, s->handle, LIM_LATENCY, &(s->latency));
 
 	/* Make sure that it is set to something */
+	s->ingain = 0.0f;
 	s->limit = 0.0f;
+	s->release = 0.01f;
 	s->attenuation = 0.0f;
-	s->delay = 0.01f;
 }
 
 #endif

@@ -24,6 +24,7 @@ jamin_SOURCES = \
 	constants.h \
 	db.h \
 	debug.h \
+	ladspa.h \
 	geq.c geq.h \
 	gtkmeter.c gtkmeter.h \
 	gtkmeterscale.c gtkmeterscale.h \

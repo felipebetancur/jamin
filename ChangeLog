@@ -1,3 +1,10 @@
+2004-07-17  Steve Harris  <steve@plugin.org.uk>
+
+	* limiter*.c: Replaced limiter code with code to drive new limiter
+	  fastLookaheadLimiter(1913). JAMin now requires swh-plugins 0.4.6+.
+	* jam-ui.glade: Changed range of limiter release time.
+	* process.c: removed explicit gain change code (now internal to limiter)
+
 2004-05-30  Steve Harris  <steve@plugin.org.uk>
 
 	* jam-ui.glade: changed minimum limiter release time to 1ms
