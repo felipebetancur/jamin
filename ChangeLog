@@ -1,3 +1,10 @@
+2004-01-27  Steve Harris  <steve@plugin.org.uk>
+
+	* process.c (process, run_eq): added functions to control
+	  active/mute/byapss state of each crossover band
+
+	* process.h: added macros for band states
+
 2004-01-18  Steve Harris  <steve@plugin.org.uk>
 
 	* callbacks.c (on_new1_activate): now calls s_load_session with NULL

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.39 2004/01/19 20:31:07 jdepner Exp $
+ *  $Id: process.c,v 1.40 2004/01/27 12:36:49 theno23 Exp $
  */
 
 #include <math.h>
@@ -39,6 +39,9 @@
 #define IS_DENORMAL(fv) (((*(unsigned int*)&(fv))&0x7f800000)!=0)
 
 typedef FFTW_TYPE fft_data;
+
+static int xo_band_action[XO_NBANDS] = {ACTIVE, ACTIVE, ACTIVE};
+static int xo_band_action_pending[XO_NBANDS] = {ACTIVE, ACTIVE, ACTIVE};
 
 /* These values need to be controlled by the UI, somehow */
 float xover_fa = 207.0f;
@@ -222,8 +225,11 @@ void run_eq(unsigned int port, unsigned int in_ptr)
     if (comp_tmp[0] > bin_peak[0]) bin_peak[0] = comp_tmp[0];
     
     for (i = 1; i < targ_bin && i < BINS / 2 - 1; i++) {
-	comp_tmp[i] = comp[i] * eq_coefs[i];
-	comp_tmp[BINS - i] = comp[BINS - i] * eq_coefs[i];
+	const float eq_gain = xo_band_action[XO_LOW] == MUTE ? 0.0f :
+				eq_coefs[i];
+
+	comp_tmp[i] = comp[i] * eq_gain;
+	comp_tmp[BINS - i] = comp[BINS - i] * eq_gain;
 
 	peak = sqrtf(peak_data[i] * peak_data[i] + peak_data[BINS - i] *
 		peak_data[BINS - i]);
@@ -240,8 +246,11 @@ void run_eq(unsigned int port, unsigned int in_ptr)
     memset(comp_tmp, 0, BINS * sizeof(fft_data));
     targ_bin = xover_fb / sample_rate * (float) (BINS * 2);
     for (; i < targ_bin && i < BINS / 2 - 1; i++) {
-	comp_tmp[i] = comp[i] * eq_coefs[i];
-	comp_tmp[BINS - i] = comp[BINS - i] * eq_coefs[i];
+	const float eq_gain = xo_band_action[XO_MID] == MUTE ? 0.0f :
+				eq_coefs[i];
+
+	comp_tmp[i] = comp[i] * eq_gain;
+	comp_tmp[BINS - i] = comp[BINS - i] * eq_gain;
 	peak = sqrtf(peak_data[i] * peak_data[i] + peak_data[BINS - i] *
 		peak_data[BINS - i]);
 	if (peak > bin_peak[i]) {
@@ -256,8 +265,11 @@ void run_eq(unsigned int port, unsigned int in_ptr)
 
     memset(comp_tmp, 0, BINS * sizeof(fft_data));
     for (; i < BINS / 2 - 1; i++) {
-	comp_tmp[i] = comp[i] * eq_coefs[i];
-	comp_tmp[BINS - i] = comp[BINS - i] * eq_coefs[i];
+	const float eq_gain = xo_band_action[XO_HIGH] == MUTE ? 0.0f :
+				eq_coefs[i];
+
+	comp_tmp[i] = comp[i] * eq_gain;
+	comp_tmp[BINS - i] = comp[BINS - i] * eq_gain;
 	peak = sqrtf(peak_data[i] * peak_data[i] + peak_data[BINS - i] *
 		peak_data[BINS - i]);
 	if (peak > bin_peak[i]) {
@@ -287,7 +299,7 @@ int process_signal(jack_nframes_t nframes,
 		   jack_default_audio_sample_t *in[],
 		   jack_default_audio_sample_t *out[])
 {
-    unsigned int pos, port;
+    unsigned int pos, port, band;
     const unsigned int latency = BINS - dsp_block_size;
     static unsigned int in_ptr = 0;
     static unsigned int n_calc_pt = BINS - (BINS / OVER_SAMP);
@@ -356,15 +368,13 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 
     //printf("rolled fifo's...\n");
 
-    plugin_run(comp_plugin, compressors[XO_LOW].handle, nframes);
-    run_width(XO_LOW, out_tmp[CHANNEL_L][XO_LOW], out_tmp[CHANNEL_R][XO_LOW],
-	    nframes);
-    plugin_run(comp_plugin, compressors[XO_MID].handle, nframes);
-    run_width(XO_MID, out_tmp[CHANNEL_L][XO_MID], out_tmp[CHANNEL_R][XO_MID],
-	    nframes);
-    plugin_run(comp_plugin, compressors[XO_HIGH].handle, nframes);
-    run_width(XO_HIGH, out_tmp[CHANNEL_L][XO_HIGH], out_tmp[CHANNEL_R][XO_HIGH],
-	    nframes);
+    for (band = XO_LOW; band < XO_NBANDS; band++) {
+	if (xo_band_action[band] == ACTIVE) {
+	    plugin_run(comp_plugin, compressors[band].handle, nframes);
+	    run_width(band, out_tmp[CHANNEL_L][band],
+			out_tmp[CHANNEL_R][band], nframes);
+	}
+    }
 
     //printf("run compressors...\n");
 
@@ -438,6 +448,12 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 		out_peak[port] = oa;
 	    }
 	}
+    }
+
+    /* We've got the the end of the processing, so update the actions */
+
+    for (band = 0; band < XO_NBANDS; band++) {
+	xo_band_action[band] = xo_band_action_pending[band];
     }
 
     return 0;
@@ -517,6 +533,13 @@ void process_set_ws_boost(float val)
 	ws_boost_wet = 1.0f;
 	ws_boost_a = val;
     }
+}
+
+void process_set_xo_band_action(int band, int action)
+{
+    assert(action == ACTIVE || action == MUTE || action == BYPASS);
+
+    xo_band_action_pending[band] = action;
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.h,v 1.20 2004/01/19 20:31:07 jdepner Exp $
+ *  $Id: process.h,v 1.21 2004/01/27 12:36:49 theno23 Exp $
  */
 
 #ifndef PROCESS_H
@@ -50,6 +50,10 @@
 #define SPEC_POST_EQ   1
 #define SPEC_POST_COMP 2
 #define SPEC_OUTPUT    3
+
+#define ACTIVE	0
+#define MUTE    1
+#define BYPASS  2
 
 extern const jack_nframes_t dsp_block_size;
 extern float sample_rate;
