@@ -8,6 +8,10 @@
 					   be a factor of BINS */
 #define BANDS 30
 
+#define UPPER_SPECTRUM_DB  3.0
+#define LOWER_SPECTRUM_DB  -60.0
+#define SPECTRUM_RANGE_DB  (UPPER_SPECTRUM_DB - LOWER_SPECTRUM_DB)
+
 #include "plugin.h"
 #include "compressor.h"
 #include "limiter.h"

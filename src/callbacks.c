@@ -23,8 +23,10 @@
 
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
 
-#define EQ_INTERP (BINS / 2 - 1)
-#define EQ_INTRVL (EQ_INTERP / (EQ_BANDS + 1))
+#define EQ_INTERP                     (BINS / 2 - 1)
+#define EQ_INTRVL                     (EQ_INTERP / (EQ_BANDS + 1))
+#define XOVER_HANDLE_SIZE             8
+#define XOVER_HANDLE_HALF_SIZE        (XOVER_HANDLE_SIZE / 2)
 
 /* vi:set ts=8 sts=4 sw=4: */
 
@@ -57,7 +59,9 @@ static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
                        comp_end_y[3];
 static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0, 
                        EQ_length = 0, comp_realized[3] = {0, 0, 0}, 
-                       EQ_cleared = 1, EQ_realized = 0, xover_active = 0;
+                       EQ_cleared = 1, EQ_realized = 0, xover_active = 0,
+                       xover_handle_fa, xover_handle_fb, EQ_drag_fa = 0,
+                       EQ_drag_fb = 0;
 
 
 void
@@ -525,11 +529,21 @@ draw_EQ_curve ()
     x1 = NINT (((log10 (xover_fa) - l_low2mid_adj->lower) / 
         EQ_curve_range_x) * EQ_curve_width);
     gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE, 0, 
+        XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE, 
+        EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+    xover_handle_fa = x1;
 
     gdk_gc_set_foreground (EQ_gc, &blue);
     x1 = NINT (((log10 (xover_fb) - l_low2mid_adj->lower) / 
         EQ_curve_range_x) * EQ_curve_width);
     gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE, 0, 
+        XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE, 
+        EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+    xover_handle_fb = x1;
 
     
     /*  If we've messed with the graphics EQ sliders, recompute the splined 
@@ -632,7 +646,7 @@ on_EQ_curve_event_box_motion_notify_event
 {
     static int     prev_x = -1, prev_y = -1;
     int            x, y, size;
-    float          freq, gain;
+    float          freq, gain, s_gain;
     char           coords[20];
 
 
@@ -652,7 +666,12 @@ on_EQ_curve_event_box_motion_notify_event
             (double) EQ_curve_height) * EQ_curve_range_y) + 
             l_eqb1_adj->lower;
 
-        sprintf (coords, "%dHz , %ddb", NINT (freq), NINT (gain));
+        s_gain = -(SPECTRUM_RANGE_DB - (((((double) EQ_curve_height - 
+            (double) y) / (double) EQ_curve_height) * SPECTRUM_RANGE_DB) + 
+            UPPER_SPECTRUM_DB));
+
+        sprintf (coords, "%dHz , EQ : %ddb , Spectrum : %ddb", NINT (freq), NINT (gain), 
+            NINT (s_gain));
         gtk_label_set_text (l_EQ_curve_lbl, coords);
 
 
@@ -683,6 +702,16 @@ on_EQ_curve_event_box_motion_notify_event
                 EQ_input_points++;
               }
           }
+        else if (EQ_drag_fa)
+          {
+            freq = log10f (freq);
+            gtk_range_set_value ((GtkRange *) l_low2mid, freq);
+          }
+        else if (EQ_drag_fb)
+          {
+            freq = log10f (freq);
+            gtk_range_set_value ((GtkRange *) l_mid2high, freq);
+          }
 
         prev_x = x;
         prev_y = y;
@@ -699,13 +728,33 @@ on_EQ_curve_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
+    int    diffx_fa, diffx_fb;
+
+
     switch (event->button)
       {
 
-        /*  Button 1 - start drawing.  */
+        /*  Button 1 - start drawing or grab and slide the xover bars.  */
 
       case 1:
-        EQ_drawing = 1;
+        diffx_fa = abs (event->x - xover_handle_fa);
+        diffx_fb = abs (event->x - xover_handle_fb);
+        if (diffx_fa <= XOVER_HANDLE_HALF_SIZE && (event->y <= XOVER_HANDLE_SIZE ||
+            event->y >= EQ_curve_height - XOVER_HANDLE_SIZE))
+          {
+            EQ_drag_fa = 1;
+            xover_active = 1;
+          }
+        else if (diffx_fb <= XOVER_HANDLE_HALF_SIZE && (event->y <= XOVER_HANDLE_SIZE ||
+            event->y >= EQ_curve_height - XOVER_HANDLE_SIZE))
+          {
+            EQ_drag_fb = 1;
+            xover_active = 1;
+          }
+        else
+          {
+            EQ_drawing = 1;
+          }
         break;
 
       default:
@@ -725,6 +774,10 @@ on_EQ_curve_event_box_button_release_event
     float               *x = NULL, *y = NULL;
     int                 i, j, i_start = 0, i_end = 0, size;
 
+
+    xover_active = 0;
+    EQ_drag_fa = 0;
+    EQ_drag_fb = 0;
 
     switch (event->button)
       {

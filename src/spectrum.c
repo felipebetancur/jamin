@@ -45,7 +45,8 @@ void bind_spectrum()
     vbox = gtk_vbox_new(FALSE, 1);
     gtk_widget_show(vbox);
     gtk_box_pack_start(GTK_BOX(hbox), vbox, TRUE, TRUE, 0);
-    mscale = gtk_meterscale_new(GTK_METERSCALE_RIGHT, -60.0, 3.0);
+    mscale = gtk_meterscale_new(GTK_METERSCALE_RIGHT, LOWER_SPECTRUM_DB, 
+                                UPPER_SPECTRUM_DB);
     gtk_widget_show(mscale);
     gtk_box_pack_start(GTK_BOX(vbox), mscale, TRUE, TRUE, 0);
     label = make_mini_label(" ");
@@ -57,8 +58,10 @@ void bind_spectrum()
 	gtk_widget_show(vbox);
 	gtk_box_pack_start(GTK_BOX(hbox), vbox, TRUE, TRUE, 0);
 
-	adjustment[i] = GTK_ADJUSTMENT(gtk_adjustment_new(-60.0, -60.0, 3.0,
-		    0.0, 0.0, 0.0));
+	adjustment[i] = GTK_ADJUSTMENT(gtk_adjustment_new(LOWER_SPECTRUM_DB, 
+                                                          LOWER_SPECTRUM_DB, 
+                                                          UPPER_SPECTRUM_DB,
+                                                          0.0, 0.0, 0.0));
 	meter = gtk_meter_new(adjustment[i], GTK_METER_UP);
 	//gtk_widget_set_usize(GTK_WIDGET(meter), 14, -1);
 	gtk_meter_set_warn_point(GTK_METER(meter), 0.0);
@@ -73,7 +76,8 @@ void bind_spectrum()
     vbox = gtk_vbox_new(FALSE, 1);
     gtk_widget_show(vbox);
     gtk_box_pack_start(GTK_BOX(hbox), vbox, TRUE, TRUE, 0);
-    mscale = gtk_meterscale_new(GTK_METERSCALE_LEFT, -60.0, 3.0);
+    mscale = gtk_meterscale_new(GTK_METERSCALE_LEFT, LOWER_SPECTRUM_DB, 
+                                UPPER_SPECTRUM_DB);
     gtk_widget_show(mscale);
     gtk_box_pack_start(GTK_BOX(vbox), mscale, TRUE, TRUE, 0);
     label = make_mini_label(" ");
