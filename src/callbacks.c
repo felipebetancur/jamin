@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.125 2004/01/18 11:28:54 jdepner Exp $
+ *  $Id: callbacks.c,v 1.126 2004/01/18 14:08:22 theno23 Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1200,6 +1200,7 @@ void
 on_new1_activate                       (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
+	s_load_session(NULL);
 }
 
 

@@ -1,4 +1,9 @@
-2004-01-13  Steve Harris  <steve@plugin.org.uk>
+2004-01-18  Steve Harris  <steve@plugin.org.uk>
+
+	* callbacks.c (on_new1_activate): now calls s_load_session with NULL
+	  to load default session file.
+
+2002-01-13  Steve Harris  <steve@plugin.org.uk>
 
 	* hdeq.c (hdeq_low2mid_set, hdeq_mid2high_set, comp_curve_box_motion):
 	  replace stack allocated char arrays with pointers and
