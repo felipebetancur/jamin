@@ -75,14 +75,6 @@ on_comp_kn_3_value_changed             (GtkRange        *range,
                                         gpointer         user_data);
 
 void
-on_geq_min_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
-                                        gpointer         user_data);
-
-void
-on_geq_max_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
-                                        gpointer         user_data);
-
-void
 on_lim_out_trim_scale_value_changed        (GtkRange        *range,
                                         gpointer         user_data);
 
@@ -278,22 +270,6 @@ on_button11_clicked                    (GtkButton       *button,
 
 void
 on_button12_clicked                    (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
-on_pre_eq_activate                     (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_post_eq_activate                    (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_post_compressor_activate            (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_output_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
 void
@@ -987,43 +963,6 @@ void
 on_options1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
-void
-on_eq_options1_activate                (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_preferences1_activate               (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_spectrum_freq_spinbutton_value_changed
-                                        (GtkSpinButton   *spinbutton,
-                                        gpointer         user_data);
-
-void
-on_eq_options_close_clicked            (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
-on_crossfade_spinbutton_value_changed  (GtkSpinButton   *spinbutton,
-                                        gpointer         user_data);
-
-void
-on_preferences_close_clicked           (GtkButton       *button,
-                                        gpointer         user_data);
-
-gboolean
-on_eq_options_event_box_enter_notify_event
-                                        (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data);
-
-gboolean
-on_preferences_event_box_enter_notify_event
-                                        (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data);
-
 gboolean
 on_text_focus_in_event                 (GtkWidget       *widget,
                                         GdkEventFocus   *event,
@@ -1209,14 +1148,6 @@ on_reset_all_colors1_activate          (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
 void
-on_FFT_Crossover_clicked               (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
-on_IIR_Crossover_clicked               (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
 on_ft_bias_a_value_changed             (GtkRange        *range,
                                         gpointer         user_data);
 
@@ -1250,4 +1181,67 @@ on_ft_bias_b_hp_value_changed          (GtkRange        *range,
 
 void
 on_about_closebutton_clicked           (GtkButton       *button,
+                                        gpointer         user_data);
+
+gboolean
+on_text_focus_in_event                 (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data);
+
+gboolean
+on_text_focus_out_event                (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data);
+
+void
+on_MinGainSpin_value_changed           (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data);
+
+void
+on_MaxGainSpin_value_changed           (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data);
+
+void
+on_CrossfadeTimeSpin_value_changed     (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data);
+
+void
+on_pre_eq_activate                     (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_post_eq_activate                    (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_post_compressor_activate            (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_output2_activate                    (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_UpdateFrequencySpin_value_changed   (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data);
+
+void
+on_pref_close_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+
+gboolean
+on_pref_enter_notify_event             (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+void
+on_FFTButton_clicked                   (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_IIRButton_clicked                   (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_preferences1_activate               (GtkMenuItem     *menuitem,
                                         gpointer         user_data);

@@ -39,6 +39,7 @@
 #include "process.h"
 #include "compressor-ui.h"
 #include "state.h"
+#include "spectrum.h"
 #include "gtkmeter.h"
 
 
@@ -49,13 +50,14 @@ the color you want (fuschia, puce, chartreuse, whatever) just press OK.\n"
 };
 
 
-static GtkWidget         *preferences_dialog, *color_dialog, *colorsel;
+static GtkWidget         *pref_dialog, *color_dialog, *colorsel;
 static GdkColormap       *colormap = NULL;
 static GdkColor          color[COLORS];
 static int               color_id;
-static GtkSpinButton     *ct_spin;
+static GtkSpinButton     *ct_spin, *lgain_spin, *ugain_spin, *spec_freq_spin;
 static GtkRadioButton    *iir_button, *fft_button;
 static GtkToggleButton   *t_iir, *t_fft;
+static GtkMenu           *l_menu3;
 
 
 static void color_ok_callback (GtkWidget *w, gpointer user_data);
@@ -87,27 +89,26 @@ void preferences_init()
     unsigned short  i, j, k;
 
 
-    preferences_dialog = create_preferences_dialog ();
+    pref_dialog = create_pref_dialog ();
 
-    ct_spin = GTK_SPIN_BUTTON (lookup_widget (preferences_dialog, 
-                                              "crossfade_spinbutton"));
+    lgain_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, 
+                                                "MinGainSpin"));
+    ugain_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, 
+                                                "MaxGainSpin"));
+    spec_freq_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, 
+                                                "UpdateFrequencySpin"));
+    l_menu3 = GTK_MENU (lookup_widget (pref_dialog, "menu3"));
 
-    iir_button = GTK_RADIO_BUTTON (lookup_widget (preferences_dialog, 
-						   "IIR_Crossover"));
-    fft_button = GTK_RADIO_BUTTON (lookup_widget (preferences_dialog, 
-						   "FFT_Crossover"));
+
+    ct_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, 
+                                              "CrossfadeTimeSpin"));
+
+    iir_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, 
+						   "IIRButton"));
+    fft_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, 
+						   "FFTButton"));
     t_iir = &iir_button->check_button.toggle_button;
     t_fft = &fft_button->check_button.toggle_button;
-
-    if (process_get_crossover_type() == IIR)
-      {
-	gtk_toggle_button_set_active (t_iir, TRUE);
-      }
-    else
-      {
-	gtk_toggle_button_set_active (t_fft, TRUE);
-      }
-
 
     color_dialog = create_colorselectiondialog1 ();
 
@@ -267,19 +268,43 @@ void set_color (GdkColor *color, unsigned short red, unsigned short green,
 }
 
 
-/*  Pop up the preferences dialog.  */
+/*  Pop up the EQ options dialog.  */
 
-void popup_preferences_dialog (int updown)
+void popup_pref_dialog (int updown)
 {
+  /*  Pop up on 1.  */
+
   if (updown)
     {
       gtk_spin_button_set_value (ct_spin, s_get_crossfade_time());
 
-      gtk_widget_show (preferences_dialog);
+      gtk_spin_button_set_value (lgain_spin, hdeq_get_lower_gain ());
+      gtk_spin_button_set_value (ugain_spin, hdeq_get_upper_gain ());
+      gtk_spin_button_set_value (spec_freq_spin, get_spectrum_freq ());
+
+      gtk_menu_set_active (l_menu3, process_get_spec_mode());
+
+      if (process_get_crossover_type() == IIR)
+	{
+	  gtk_toggle_button_set_active (t_iir, TRUE);
+	  gtk_toggle_button_set_active (t_fft, FALSE);
+	}
+      else
+	{
+	  gtk_toggle_button_set_active (t_iir, FALSE);
+	  gtk_toggle_button_set_active (t_fft, TRUE);
+	}
+
+
+      gtk_widget_show (pref_dialog);
     }
+
+
+  /*  Pop down on 0.  */
+
   else
     {
-      gtk_widget_hide (preferences_dialog);
+      gtk_widget_hide (pref_dialog);
     }
 }
 

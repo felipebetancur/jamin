@@ -118,7 +118,7 @@ void interpolate (float, int, float, float, int *, float *, float *, float *,
 /* vi:set ts=8 sts=4 sw=4: */
 
 static GtkHScale       *l_low2mid, *l_mid2high;
-static GtkWidget       *l_comp[3], *eq_options_dialog;
+static GtkWidget       *l_comp[3];
 static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_comp_lbl[3], 
                        *l_EQ_curve_lbl, *l_c_curve_lbl[3];
 static GtkDrawingArea  *l_EQ_curve, *l_comp_curve[3];
@@ -150,8 +150,6 @@ static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0,
                        EQ_notch_index[NOTCHES], EQ_notch_flag[NOTCHES];
 static guint           notebook1_page = 0;
 static gboolean        hdeq_ready = FALSE;
-static GtkSpinButton   *lgain_spin, *ugain_spin, *spec_freq_spin;
-static GtkMenu         *l_menu1;
 
 
 /*  Given the frequency this returns the nearest array index in the X direction
@@ -202,20 +200,6 @@ void clean_quit ()
 void bind_hdeq ()
 {
     int    i;
-
-
-    /*  Create the options dialog for later popup use.  */
-
-    eq_options_dialog = create_eq_options_dialog();
-
-
-    lgain_spin = GTK_SPIN_BUTTON (lookup_widget (eq_options_dialog, 
-                                                "geq_min_gain_spinner"));
-    ugain_spin = GTK_SPIN_BUTTON (lookup_widget (eq_options_dialog, 
-                                                "geq_max_gain_spinner"));
-    spec_freq_spin = GTK_SPIN_BUTTON (lookup_widget (eq_options_dialog, 
-                                                "spectrum_freq_spinbutton"));
-    l_menu1 = GTK_MENU (lookup_widget (eq_options_dialog, "menu1"));
 
 
     /*  Looking up the widgets we'll need to work with based on the name
@@ -2243,34 +2227,6 @@ void hdeq_set_xover ()
     
     hdeq_low2mid_init ();
     hdeq_mid2high_init ();
-}
-
-
-/*  Pop up the EQ options dialog.  */
-
-void popup_EQ_options_dialog (int updown)
-{
-  /*  Pop up on 1.  */
-
-  if (updown)
-    {
-      gtk_spin_button_set_value (lgain_spin, EQ_gain_lower);
-      gtk_spin_button_set_value (ugain_spin, EQ_gain_upper);
-      gtk_spin_button_set_value (spec_freq_spin, get_spectrum_freq ());
-
-      gtk_menu_set_active (l_menu1, process_get_spec_mode());
-
-
-      gtk_widget_show (eq_options_dialog);
-    }
-
-
-  /*  Pop down on 0.  */
-
-  else
-    {
-      gtk_widget_hide (eq_options_dialog);
-    }
 }
 
 

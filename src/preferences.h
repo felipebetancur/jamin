@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: preferences.h,v 1.8 2004/10/23 11:35:22 jdepner Exp $
+ *  $Id: preferences.h,v 1.9 2005/01/30 20:06:20 jdepner Exp $
  */
 
 #ifndef PREFERENCES_H
@@ -40,7 +40,7 @@ void preferences_init();
 GdkColor *get_color (int color_id);
 void set_color (GdkColor *color, unsigned short red, unsigned short green, 
                 unsigned short blue);
-void popup_preferences_dialog (int updown);
+void popup_pref_dialog (int updown);
 void popup_color_dialog (int id);
 void pref_force_color_change ();
 void pref_write_jamin_defaults ();
