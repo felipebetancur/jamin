@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2003 Jan C. Depner, Jack O'Quin, Steve Harris
+ *  Copyright (C) 2003 Jan C. Depner, Steve Harris
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: spectrum.c,v 1.10 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: spectrum.c,v 1.11 2003/11/19 15:43:38 theno23 Exp $
  */
 
 #include <math.h>
