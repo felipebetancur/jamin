@@ -910,8 +910,8 @@ on_EQ_curve_event_box_motion_notify_event
               {
                 if (EQ_notch_drag[i])
                   {
-                    /*  Set to 2 for shift and button 2, will raise and lower 
-                        notch gain.  */
+                    /*  If we're shifted we're raising or lowering notch 
+                        gain.  */
 
                     if (event->state & GDK_SHIFT_MASK)
                       {
@@ -1116,7 +1116,11 @@ on_EQ_curve_event_box_button_press_event
     switch (event->button)
       {
 
-        /*  Button 1 - start drawing or end drawing.  */
+        /*  Button 1 - start drawing or end drawing unless we're over a notch
+            or xover handle in which case we will be grabbing and sliding the
+            handle in the X direction.  Shift button 1 is for grabbing and 
+            sliding in the Y direction (notch/shelf filters only - look at the
+            motion  callback).  */
 
       case 1:
 
@@ -1124,23 +1128,95 @@ on_EQ_curve_event_box_button_press_event
 
         if (!EQ_drawing)
           {
-            /*  Save the first point so we can do real narrow EQ changes.  */
+            /*  Checking for position over xover bar or notch handles.  */
 
-            size = (EQ_input_points + 1) * sizeof (float);
-            EQ_xinput = (float *) realloc (EQ_xinput, size);
-            EQ_yinput = (float *) realloc (EQ_yinput, size);
-
-            if (EQ_yinput == NULL)
+            diffx_fa = abs (ex - xover_handle_fa);
+            diffx_fb = abs (ex - xover_handle_fb);
+            if (diffx_fa <= XOVER_HANDLE_HALF_SIZE && 
+                (ey <= XOVER_HANDLE_SIZE ||
+                ey >= EQ_curve_height - XOVER_HANDLE_SIZE))
               {
-                perror (_("Allocating EQ_yinput in callbacks.c"));
-                clean_quit ();
+                EQ_drag_fa = 1;
+                xover_active = 1;
               }
+            else if (diffx_fb <= XOVER_HANDLE_HALF_SIZE && 
+                (ey <= XOVER_HANDLE_SIZE || 
+                ey >= EQ_curve_height - XOVER_HANDLE_SIZE))
+              {
+                EQ_drag_fb = 1;
+                xover_active = 1;
+              }
+            else
+              {
+                for (i = 0 ; i < NOTCHES ; i++)
+                  {
+                    diff_notch[0] = abs (ex - EQ_notch_handle[0][1][i]);
+                    diff_notch[1] = abs (ey - EQ_notch_handle[1][1][i]);
 
-            EQ_xinput[EQ_input_points] = (float) ex;
-            EQ_yinput[EQ_input_points] = (float) ey;
-            EQ_input_points++;
+                    if (diff_notch[0] <= NOTCH_HANDLE_HALF_WIDTH &&
+                        diff_notch[1] <= NOTCH_HANDLE_HALF_HEIGHT)
+                      {
+                        EQ_notch_drag[i] = 1;
+                        xover_active = 1;
+                        break;
+                      }
 
-            EQ_drawing = 1;
+
+                    if (i && i < NOTCHES - 1)
+                      {
+                        diff_notch[0] = abs (ex - EQ_notch_handle[0][0][i]);
+                        diff_notch[1] = abs (ey - EQ_notch_handle[1][0][i]);
+
+                        if (diff_notch[0] <= NOTCH_HANDLE_HALF_WIDTH &&
+                            diff_notch[1] <= NOTCH_HANDLE_HALF_HEIGHT)
+                          {
+                            EQ_notch_Q_drag[i] = 1;
+                            xover_active = 1;
+
+                            break;
+                          }
+
+
+                        diff_notch[0] = abs (ex - EQ_notch_handle[0][2][i]);
+                        diff_notch[1] = abs (ey - EQ_notch_handle[1][2][i]);
+
+                        if (diff_notch[0] <= NOTCH_HANDLE_HALF_WIDTH &&
+                            diff_notch[1] <= NOTCH_HANDLE_HALF_HEIGHT)
+                          {
+                            EQ_notch_Q_drag[i] = 1;
+                            xover_active = 1;
+
+                            break;
+                          }
+                      }
+                  }
+
+
+                /*  If we aren't over a handle we must be starting to draw 
+                    the curve so mark the starting point.  */
+
+                if (!xover_active)
+                  {
+                    /*  Save the first point so we can do real narrow EQ 
+                        changes.  */
+
+                    size = (EQ_input_points + 1) * sizeof (float);
+                    EQ_xinput = (float *) realloc (EQ_xinput, size);
+                    EQ_yinput = (float *) realloc (EQ_yinput, size);
+
+                    if (EQ_yinput == NULL)
+                      {
+                        perror (_("Allocating EQ_yinput in callbacks.c"));
+                        clean_quit ();
+                      }
+
+                    EQ_xinput[EQ_input_points] = (float) ex;
+                    EQ_yinput[EQ_input_points] = (float) ey;
+                    EQ_input_points++;
+
+                    EQ_drawing = 1;
+                  }
+              }
           }
 
 
@@ -1280,77 +1356,6 @@ on_EQ_curve_event_box_button_press_event
           }
         break;
 
-
-        /*  Button 2 is for grabbing and sliding handles in the
-            X direction.  Shift button 2 is for grabbing and sliding in
-            the Y direction (notch/shelf filters only - look at the motion
-            callback).  */
-
-      case 2:
-
-        /*  Checking for position over xover bar or notch handles.  */
-
-        diffx_fa = abs (ex - xover_handle_fa);
-        diffx_fb = abs (ex - xover_handle_fb);
-        if (diffx_fa <= XOVER_HANDLE_HALF_SIZE && (ey <= XOVER_HANDLE_SIZE ||
-            ey >= EQ_curve_height - XOVER_HANDLE_SIZE))
-          {
-            EQ_drag_fa = 1;
-            xover_active = 1;
-          }
-        else if (diffx_fb <= XOVER_HANDLE_HALF_SIZE && 
-            (ey <= XOVER_HANDLE_SIZE || 
-            ey >= EQ_curve_height - XOVER_HANDLE_SIZE))
-          {
-            EQ_drag_fb = 1;
-            xover_active = 1;
-          }
-        else
-          {
-            for (i = 0 ; i < NOTCHES ; i++)
-              {
-                diff_notch[0] = abs (ex - EQ_notch_handle[0][1][i]);
-                diff_notch[1] = abs (ey - EQ_notch_handle[1][1][i]);
-
-                if (diff_notch[0] <= NOTCH_HANDLE_HALF_WIDTH &&
-                    diff_notch[1] <= NOTCH_HANDLE_HALF_HEIGHT)
-                  {
-                    EQ_notch_drag[i] = 1;
-                    xover_active = 1;
-                    break;
-                  }
-
-
-                if (i && i < NOTCHES - 1)
-                  {
-                    diff_notch[0] = abs (ex - EQ_notch_handle[0][0][i]);
-                    diff_notch[1] = abs (ey - EQ_notch_handle[1][0][i]);
-
-                    if (diff_notch[0] <= NOTCH_HANDLE_HALF_WIDTH &&
-                        diff_notch[1] <= NOTCH_HANDLE_HALF_HEIGHT)
-                      {
-                        EQ_notch_Q_drag[i] = 1;
-                        xover_active = 1;
-
-                        break;
-                      }
-
-
-                    diff_notch[0] = abs (ex - EQ_notch_handle[0][2][i]);
-                    diff_notch[1] = abs (ey - EQ_notch_handle[1][2][i]);
-
-                    if (diff_notch[0] <= NOTCH_HANDLE_HALF_WIDTH &&
-                        diff_notch[1] <= NOTCH_HANDLE_HALF_HEIGHT)
-                      {
-                        EQ_notch_Q_drag[i] = 1;
-                        xover_active = 1;
-
-                        break;
-                      }
-                  }
-              }
-          }
-        break;
 
       default:
         break;
