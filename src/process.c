@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.36 2003/12/20 22:01:13 theno23 Exp $
+ *  $Id: process.c,v 1.37 2003/12/21 03:31:16 joq Exp $
  */
 
 #include <math.h>
@@ -268,12 +268,13 @@ void run_eq(unsigned int port, unsigned int in_ptr)
     }
 }
 
+#define EPSILON 0.0000001f		/* small positive number */
 float bin_peak_read_and_clear(int bin)
 {
     float ret = bin_peak[bin];
     const float fix = 2.0f / ((float) BINS * (float) OVER_SAMP);
 
-    bin_peak[bin] = 0.0f;
+    bin_peak[bin] = EPSILON;		/* don't take log(0.0) */
 
     return ret * fix;
 }
