@@ -5,3 +5,4 @@ src/interface.c
 src/callbacks.c
 src/support.c
 src/io-menu.c
+src/io.c
