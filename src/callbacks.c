@@ -1873,35 +1873,6 @@ on_low_knee_lbl_realize                (GtkWidget       *widget,
 
 
 void
-on_comp_kn_1_value_changed             (GtkRange        *range,
-                                        gpointer         user_data)
-{
-    double              value;
-
-
-    /*  Make sure it exists before we set it.  */
-
-    if (l_low_knee_lbl == NULL) return;
-
-
-    value = gtk_range_get_value (range);
-
-    if (value == 0.5)
-      {
-        gtk_label_set_label (l_low_knee_lbl, _("Knee"));
-      }
-    else if (value < 0.5)
-      {
-        gtk_label_set_label (l_low_knee_lbl, _("Hard"));
-      }
-    else
-      {
-        gtk_label_set_label (l_low_knee_lbl, _("Soft"));
-      }
-}
-
-
-void
 on_mid_knee_lbl_realize                (GtkWidget       *widget,
                                         gpointer         user_data)
 {
@@ -1910,68 +1881,10 @@ on_mid_knee_lbl_realize                (GtkWidget       *widget,
 
 
 void
-on_comp_kn_2_value_changed             (GtkRange        *range,
-                                        gpointer         user_data)
-{
-    double              value;
-
-
-    /*  Make sure it exists before we set it.  */
-
-    if (l_mid_knee_lbl == NULL) return;
-
-
-    value = gtk_range_get_value (range);
-
-    if (value == 0.5)
-      {
-        gtk_label_set_label (l_mid_knee_lbl, _("Knee"));
-      }
-    else if (value < 0.5)
-      {
-        gtk_label_set_label (l_mid_knee_lbl, _("Hard"));
-      }
-    else
-      {
-        gtk_label_set_label (l_mid_knee_lbl, _("Soft"));
-      }
-}
-
-
-void
 on_high_knee_lbl_realize               (GtkWidget       *widget,
                                         gpointer         user_data)
 {
     l_high_knee_lbl = (GtkLabel *) widget;
-}
-
-
-void
-on_comp_kn_3_value_changed             (GtkRange        *range,
-                                        gpointer         user_data)
-{
-    double              value;
-
-
-    /*  Make sure it exists before we set it.  */
-
-    if (l_high_knee_lbl == NULL) return;
-
-
-    value = gtk_range_get_value (range);
-
-    if (value == 0.5)
-      {
-        gtk_label_set_label (l_high_knee_lbl, _("Knee"));
-      }
-    else if (value < 0.5)
-      {
-        gtk_label_set_label (l_high_knee_lbl, _("Hard"));
-      }
-    else
-      {
-        gtk_label_set_label (l_high_knee_lbl, _("Soft"));
-      }
 }
 
 
