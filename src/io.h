@@ -11,11 +11,9 @@
 
 extern jack_client_t *client;		/* JACK client structure */
 
-void io_set_latency(int latency_source, jack_nframes_t delay);
-void io_set_granularity(jack_nframes_t block_size);
-
-void io_init(int argc, char *argv[]);
 void io_activate();
 void io_cleanup();
+void io_init(int argc, char *argv[]);
+void io_set_latency(int latency_source, jack_nframes_t delay);
 
 #endif

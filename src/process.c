@@ -61,19 +61,17 @@ fftwf_plan plan_rc = NULL, plan_cr = NULL;
 float sample_rate = 0.0f;
 
 /* Desired block size for calling process_signal(). */
-const jack_nframes_t step_size = BINS / OVER_SAMP;
+const jack_nframes_t dsp_block_size = BINS / OVER_SAMP;
 
 void run_eq(unsigned int port, unsigned int in_pos);
 void run_width(int xo_band, float *left, float *right, int nframes);
 
-void process_init(float fs, int buffer_size)
+void process_init(float fs)
 {
     float centre = 25.0f;
     unsigned int i, j, band;
 
     sample_rate = fs;
-
-    io_set_granularity(step_size);
 
     for (i = 0; i < BANDS; i++) {
 	band_f[i] = centre;
@@ -140,8 +138,8 @@ void process_init(float fs, int buffer_size)
     /* This compressor is specifically stereo, so there are always two
      * channels. */
     for (band = 0; band < XO_NBANDS; band++) {
-	out_tmp[CHANNEL_L][band] = calloc(step_size, sizeof(float));
-	out_tmp[CHANNEL_R][band] = calloc(step_size, sizeof(float));
+	out_tmp[CHANNEL_L][band] = calloc(dsp_block_size, sizeof(float));
+	out_tmp[CHANNEL_R][band] = calloc(dsp_block_size, sizeof(float));
 	compressors[band].handle = plugin_instantiate(comp_plugin, fs);
 	comp_connect(comp_plugin, &compressors[band],
 		     out_tmp[CHANNEL_L][band], out_tmp[CHANNEL_R][band]);
@@ -242,7 +240,7 @@ int process_signal(jack_nframes_t nframes,
 		   jack_default_audio_sample_t *out[])
 {
     unsigned int pos, port;
-    const unsigned int latency = BINS - step_size;
+    const unsigned int latency = BINS - dsp_block_size;
     static unsigned int in_ptr = 0;
     static unsigned int n_calc_pt = BINS - (BINS / OVER_SAMP);
 
@@ -282,7 +280,7 @@ int process_signal(jack_nframes_t nframes,
 		run_eq(CHANNEL_R, in_ptr);
 	    }
 	    /* Work out when we can run it again */
-	    n_calc_pt = (in_ptr + step_size) & BUF_MASK;
+	    n_calc_pt = (in_ptr + dsp_block_size) & BUF_MASK;
 	}
     }
 

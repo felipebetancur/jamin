@@ -33,6 +33,7 @@
 #define SPEC_PRE_EQ  0
 #define SPEC_POST_EQ 1
 
+extern const jack_nframes_t dsp_block_size;
 extern float sample_rate;
 extern float xover_fa, xover_fb;
 extern float eq_coefs[];
@@ -51,7 +52,7 @@ void process_set_limiter_input_gain(float gain);
 
 void process_set_ws_boost(float val);
 
-void process_init(float fs, int buffer_size);
+void process_init(float fs);
 
 int process_signal(jack_nframes_t nframes, int nchannels,
 		   jack_default_audio_sample_t *in[],

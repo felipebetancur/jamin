@@ -107,8 +107,6 @@ int debug_level = DBG_OFF;		/* -v option */
 static volatile int dsp_state = DSP_INIT;
 
 static int have_dsp_thread = 0;		/* DSP thread exists? */
-static int use_dsp_thread = 0;		/* DSP thread currently in use? */
-static jack_nframes_t dsp_block_size;	/* DSP chunk granularity */
 static size_t dsp_block_bytes;		/* DSP chunk size in bytes */
 
 #define DSP_PRIORITY_DIFF 1	/* DSP thread priority difference */
@@ -298,32 +296,6 @@ void io_set_latency(int source, jack_nframes_t delay)
     if (DSP_STATE_NOT(DSP_INIT))
 	for (chan = 0; chan < nchannels; chan++)
 	    jack_port_set_latency(input_ports[chan], jst.latency);
-}
-
-
-/* io_set_granularity -- set desired I/O block size.
- *
- *  As currently implemented, this function can only be called with
- *  the DSP engine inactive.  The DSP engine also requires that this
- *  block_size be an even multiple or divisor of the JACK buffer size.
- */
-void io_set_granularity(jack_nframes_t block_size)
-{
-    IF_DEBUG(DBG_TERSE,
-	     io_trace("%s I/O granularity: %ld", PACKAGE, (long) block_size));
-
-    assert(DSP_STATE_IS(DSP_INIT|DSP_STOPPED));
-
-    if (DSP_STATE_NOT(DSP_STOPPED)) {
-	if (jst.buf_size % block_size != 0 &&
-	    block_size % jst.buf_size != 0) {
-	    io_errlog(EINVAL, "uneven DSP granularity: %ld",
-		      (long) block_size);
-	    return;
-	}
-    }
-    dsp_block_size = block_size;
-    dsp_block_bytes = block_size * sizeof(jack_default_audio_sample_t);
 }
 
 
@@ -555,7 +527,7 @@ int io_process(jack_nframes_t nframes, void *arg)
 	 * frames are available.  If there's some reason not to do
 	 * that, then process it here in smaller chunks.
 	 */
-	if (use_dsp_thread) 
+	if (have_dsp_thread)
 	    return_code = io_queue(nframes, nchannels, in, out);
 	else
 	    return_code = process_signal(nframes, nchannels, in, out);
@@ -581,6 +553,24 @@ int io_process(jack_nframes_t nframes, void *arg)
 
     IF_DEBUG(DBG_VERBOSE, io_trace("JACK process() end"));
 
+    return 0;
+}
+
+
+/* io_bufsize -- JACK buffer size callback.
+ *
+ *  Called in the JACK process thread when the global JACK buffer size
+ *  changes.  Not required to be realtime safe.
+ */
+int io_bufsize(jack_nframes_t nframes, void *arg)
+{
+    jst.buf_size = nframes;
+
+    IF_DEBUG(DBG_TERSE, io_trace("buffer size is %" PRIu32, nframes));
+
+    io_set_latency(LAT_BUFFERS,
+		   (have_dsp_thread &&
+		    (dsp_block_size > nframes)? dsp_block_size: 0));
     return 0;
 }
 
@@ -722,9 +712,9 @@ void io_init(int argc, char *argv[])
 
     if (dummy_mode) {
 	io_new_state(DSP_STOPPED);
-	jst.buf_size = 1024;
+	io_bufsize(1024, NULL);
 	jst.sample_rate = 48000;
-	process_init(48000.0f, 1024);
+	process_init(48000.0f);
 	return;
     }
 
@@ -739,16 +729,19 @@ void io_init(int argc, char *argv[])
 	exit(2);
     }
 
-    jst.buf_size = jack_get_buffer_size(client);
-    jst.sample_rate = jack_get_sample_rate(client);
-
+    /* set JACK callback functions */
     jack_set_process_callback(client, io_process, NULL);
     jack_on_shutdown(client, io_cleanup, NULL);
-    // JOQ: jack_set_buffer_size_callback(client, io_bufsize, NULL);
     // JOQ: jack_set_xrun_callback(client, io_xrun, NULL);
+    jack_set_buffer_size_callback(client, io_bufsize, NULL);
+
+    /* set initial buffer size and sample rate */
+    dsp_block_bytes = dsp_block_size * sizeof(jack_default_audio_sample_t);
+    io_bufsize(jack_get_buffer_size(client), NULL);
+    jst.sample_rate = jack_get_sample_rate(client);
 
     /* initialize process_signal() */
-    process_init((float) jst.sample_rate, jst.buf_size);
+    process_init((float) jst.sample_rate);
 }
 
 
@@ -961,13 +954,14 @@ void io_activate()
 	IF_DEBUG(DBG_TERSE, io_trace("no DSP thread created"));
 	have_dsp_thread = 0;
     }
-    use_dsp_thread = have_dsp_thread && (dsp_block_size > jst.buf_size);
     if (!have_dsp_thread)
 	io_new_state(DSP_RUNNING);
 
     /* If we run the DSP in a separate thread, there will be some
      * additional latency caused by the extra buffering. */
-    io_set_latency(LAT_BUFFERS, (use_dsp_thread? dsp_block_size: 0));
+    io_set_latency(LAT_BUFFERS,
+		   (have_dsp_thread &&
+		    (dsp_block_size > jst.buf_size)? dsp_block_size: 0));
     pthread_mutex_unlock(&lock_dsp);
 }
 
