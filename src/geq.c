@@ -1,0 +1,98 @@
+/* code to control the graphic eq's, swh */
+
+#include <stdio.h>
+#include <gtk/gtk.h>
+#include <math.h>
+
+#include "geq.h"
+#include "process.h"
+#include "io.h"
+#include "support.h"
+#include "main.h"
+
+GtkAdjustment *geqa[EQ_BANDS];
+
+/* Linear gain of the 1/3rd octave EQ bands */
+float geq_gains[EQ_BANDS + 1];
+/* Frequency of each band of the EQ */
+float geq_freqs[EQ_BANDS];
+
+int bin_base[BINS];
+int bin_delta[BINS];
+
+gboolean eqb_changed(GtkAdjustment *adj, gpointer user_data);
+void geq_set_gains();
+
+void bind_geq()
+{
+    char name[16];
+    unsigned int i, bin;
+    float last_bin, next_bin;
+    GtkWidget *scale;
+    double freq, cubr2, hz_per_bin = sample_rate / (double)BINS;
+
+    for (i=0; i<EQ_BANDS; i++) {
+	sprintf(name, "eqb%d", i+1);
+	scale = lookup_widget(main_window, name);
+	geqa[i] = gtk_range_get_adjustment(GTK_RANGE(scale));
+	gtk_signal_connect(geqa[i], "value-changed", GTK_SIGNAL_FUNC(eqb_changed), (gpointer)i+1);
+    }
+
+    freq = 25.0;
+    cubr2 = pow(2.0, 1.0/3.0); /* cube root of 3 */
+    for (i=0; i<EQ_BANDS; i++) {
+	geq_freqs[i] = freq;
+	freq *= cubr2;
+    }
+
+    for (i=0; i<BANDS + 1; i++) {
+	geq_gains[i] = 1.0f;
+    }
+
+    bin = 0;
+    while (bin <= geq_freqs[0] / hz_per_bin) {
+	bin_base[bin] = 0;
+	bin_delta[bin++] = 0.0f;
+    }
+
+    for (i = 1; i < BANDS - 1 && bin < (BINS / 2) - 1
+	 && geq_freqs[i+1] < sample_rate / 2; i++) {
+	last_bin = bin;
+	next_bin = geq_freqs[i+1] / hz_per_bin;
+	while (bin <= next_bin) {
+	    bin_base[bin] = i;
+	    bin_delta[bin] = (float)(bin-last_bin) / (float)(next_bin-last_bin);
+	    bin++;
+	}
+    }
+
+    for (; bin < (BINS / 2); bin++) {
+	bin_base[bin] = BANDS - 1;
+	bin_delta[bin] = 0.0f;
+    }
+
+    geq_set_gains();
+}
+
+void geq_set_gains()
+{
+    unsigned int bin;
+
+    eq_coefs[0] = 1.0f;
+    for (bin = 1; bin < (BINS/2 - 1); bin++) {
+	eq_coefs[bin] = ((1.0f-bin_delta[bin]) * geq_gains[bin_base[bin]])
+		         + (bin_delta[bin] * geq_gains[bin_base[bin]+1]);
+    }
+}
+
+gboolean eqb_changed(GtkAdjustment *adj, gpointer user_data)
+{
+    int band = (int)user_data;
+
+    geq_gains[band-1] = powf(10.0f, adj->value * 0.05f);
+    geq_set_gains();
+
+    return FALSE;
+}
+
+/* vi:set ts=8 sts=4 sw=4: */
