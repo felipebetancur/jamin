@@ -1316,7 +1316,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox101), alabel, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (alabel), GTK_JUSTIFY_LEFT);
 
-  label48 = gtk_label_new (_("32band EQ"));
+  label48 = gtk_label_new (_("30 band EQ"));
   gtk_widget_set_name (label48, "label48");
   gtk_widget_show (label48);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 1), label48);
@@ -2622,9 +2622,6 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) EQ_curve_lbl, "realize",
                     G_CALLBACK (on_EQ_curve_lbl_realize),
-                    NULL);
-  g_signal_connect ((gpointer) eqb1, "realize",
-                    G_CALLBACK (on_eqb1_realize),
                     NULL);
   g_signal_connect ((gpointer) geq_min_gain_spinner, "value_changed",
                     G_CALLBACK (on_geq_min_gain_spinner_value_changed),

@@ -60,13 +60,14 @@ int main(int argc, char *argv[])
     main_window = create_window1();
 
     /* bind the graphic equaliser sliders to adjustments */
-    gtk_widget_show(main_window);
     bind_geq();
+    gtk_widget_show(main_window);
     bind_intrim();
     bind_limiter();
     bind_compressors();
     bind_spectrum();
     bind_stereo();
+
 
     s_clear_history();
 

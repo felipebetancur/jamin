@@ -42,7 +42,6 @@ void interpolate (float, int, float, float, int *, float *, float *, float *,
 void draw_EQ_curve ();
 
 static GtkHScale       *l_low2mid, *l_mid2high;
-static GtkVScale       *l_eqb1;
 static GtkWidget       *l_low_comp, *l_mid_comp, *l_high_comp;
 static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_low_comp_lbl, 
                        *l_mid_comp_lbl, *l_high_comp_lbl, *l_EQ_curve_lbl,
@@ -55,7 +54,7 @@ static GdkColormap     *colormap;
 static GdkColor        white, grey, black, red, green, blue, comp_color[4];
 static GdkGC           *EQ_gc, *comp_gc[3];
 static PangoContext    *comp_pc[3], *EQ_pc;
-static GtkAdjustment   *l_low2mid_adj, *l_eqb1_adj;
+static GtkAdjustment   *l_low2mid_adj;
 static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
                        EQ_curve_height, EQ_xinterp[EQ_INTERP + 1], EQ_start, 
                        EQ_end, EQ_interval, EQ_yinterp[EQ_INTERP + 1], 
@@ -68,7 +67,8 @@ static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
                        EQ_freq_yinterp[EQ_INTERP + 1], 
                        EQ_notch_gain[NOTCHES] = {0.0, 0.0, 0.0, 0.0, 0.0},
                        EQ_x_notched[EQ_INTERP + 1], 
-                       EQ_y_notched[EQ_INTERP + 1];
+                       EQ_y_notched[EQ_INTERP + 1], EQ_gain_lower = -12.0, 
+                       EQ_gain_upper = 12.0;
 static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0, 
                        EQ_length = 0, comp_realized[3] = {0, 0, 0}, 
                        EQ_cleared = 1, EQ_realized = 0, xover_active = 0,
@@ -457,7 +457,7 @@ freq2xpix (float freq, int *x)
 void 
 gain2ypix (float gain, int *y)
 {
-    *y = EQ_curve_height - NINT (((gain - l_eqb1_adj->lower) / 
+    *y = EQ_curve_height - NINT (((gain - EQ_gain_lower) / 
                 EQ_curve_range_y) * EQ_curve_height);
 }
 
@@ -747,7 +747,7 @@ draw_EQ_curve ()
 
     inc = 10;
     if (EQ_curve_range_y < 10.0) inc = 1;
-    for (i = NINT (l_eqb1_adj->lower) ; i < NINT (l_eqb1_adj->upper) ; i++)
+    for (i = NINT (EQ_gain_lower) ; i < NINT (EQ_gain_upper) ; i++)
       {
         if (!(i % inc))
           {
@@ -806,6 +806,25 @@ draw_EQ_curve ()
       {
         interpolate (EQ_interval, EQ_BANDS, EQ_start, EQ_end, 
             &EQ_length, x, y, EQ_xinterp, EQ_yinterp);
+
+
+        /*  Reset all of the shelves/notches.  */
+
+        for (i = 0 ; i < NOTCHES ; i++)
+          {
+            EQ_notch_flag[i] = 0;
+            EQ_notch_gain[i] = 0.0;
+
+            if (!i || i == NOTCHES - 1)
+              {
+                EQ_notch_width[i] = 0;
+              }
+            else
+              {
+                EQ_notch_width[i] = 5;
+              }
+
+          }
 
         insert_notch ();
       }
@@ -918,9 +937,10 @@ on_EQ_curve_expose_event               (GtkWidget       *widget,
                                         gpointer         user_data)
 {
     l_low2mid_adj = gtk_range_get_adjustment ((GtkRange *) l_low2mid);
-    l_eqb1_adj = gtk_range_get_adjustment ((GtkRange *) l_eqb1);
+    //l_eqb1_adj = gtk_range_get_adjustment ((GtkRange *) l_eqb1);
     EQ_curve_range_x = l_low2mid_adj->upper - l_low2mid_adj->lower;
-    EQ_curve_range_y = l_eqb1_adj->upper - l_eqb1_adj->lower;
+
+    EQ_curve_range_y = EQ_gain_upper - EQ_gain_lower;
 
 
     /*  Since allocation width and height are inclusive we need to decrement
@@ -963,14 +983,6 @@ on_EQ_curve_lbl_realize                (GtkWidget       *widget,
                                         gpointer         user_data)
 {
     l_EQ_curve_lbl = (GtkLabel *) widget;
-}
-
-
-void
-on_eqb1_realize                        (GtkWidget       *widget,
-                                        gpointer         user_data)
-{
-    l_eqb1 = (GtkVScale *) widget;
 }
 
 
@@ -1053,7 +1065,7 @@ on_EQ_curve_event_box_motion_notify_event
 
         gain = ((((double) EQ_curve_height - (double) y) / 
             (double) EQ_curve_height) * EQ_curve_range_y) + 
-            l_eqb1_adj->lower;
+            EQ_gain_lower;
 
         s_gain = -(EQ_SPECTRUM_RANGE - (((((double) EQ_curve_height - 
             (double) y) / (double) EQ_curve_height) * EQ_SPECTRUM_RANGE)));
@@ -1120,7 +1132,7 @@ on_EQ_curve_event_box_motion_notify_event
                           {
                             EQ_notch_gain[i] = (((((double) EQ_curve_height - 
                                 (double) y) / (double) EQ_curve_height) * 
-                                EQ_curve_range_y) + l_eqb1_adj->lower) * 0.05;
+                                EQ_curve_range_y) + EQ_gain_lower) * 0.05;
 
                             drag = 1;
                             notch_flag = i;
@@ -1141,7 +1153,7 @@ on_EQ_curve_event_box_motion_notify_event
                                 EQ_notch_gain[i] = 
                                     (((((double) EQ_curve_height - 
                                     (double) y) / (double) EQ_curve_height) * 
-                                    EQ_curve_range_y) + l_eqb1_adj->lower) * 
+                                    EQ_curve_range_y) + EQ_gain_lower) * 
                                     0.05;
                                 EQ_notch_flag[i] = 1;
 
@@ -1488,7 +1500,7 @@ on_EQ_curve_event_box_button_press_event
 
                 EQ_yinput[i] = (((((double) EQ_curve_height - 
                     (double) EQ_yinput[i]) / (double) EQ_curve_height) * 
-                    EQ_curve_range_y) + l_eqb1_adj->lower) * 0.05;
+                    EQ_curve_range_y) + EQ_gain_lower) * 0.05;
               }
 
 
@@ -1797,8 +1809,8 @@ void
 on_geq_min_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
                                         gpointer         user_data)
 {
-    geq_set_range (gtk_spin_button_get_value (spinbutton), 
-        geq_get_adjustment(0)->upper);
+    EQ_gain_lower = gtk_spin_button_get_value (spinbutton);
+    geq_set_range (EQ_gain_lower, geq_get_adjustment(0)->upper);
 }
 
 
@@ -1806,8 +1818,8 @@ void
 on_geq_max_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
                                         gpointer         user_data)
 {
-    geq_set_range (geq_get_adjustment(0)->lower, 
-        gtk_spin_button_get_value (spinbutton));
+    EQ_gain_upper = gtk_spin_button_get_value (spinbutton);
+    geq_set_range (geq_get_adjustment(0)->lower, EQ_gain_upper);
 }
 
 

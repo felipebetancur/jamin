@@ -128,7 +128,7 @@ void spectrum_update()
     page = get_current_notebook1_page ();
     count = BINS / 2;
 
-    if (page == 3) {
+    if (page == 2) {
       for (i=0; i<BANDS; i++) {
         levels[i] = 0.0f;
       }
@@ -144,7 +144,7 @@ void spectrum_update()
         gtk_adjustment_set_value(adjustment[i], lin2db(levels[i]));
       }
     }
-    else if (page == 1) {
+    else if (page == 0) {
       for (i=0; i<count; i++) {
         single_levels[i] = bin_peak_read_and_clear(i);
       }
