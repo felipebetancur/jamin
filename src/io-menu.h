@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2003 Jan C. Depner
+ *  Copyright (C) 2003 Jan C. Depner, Jack O'Quin
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -11,13 +11,20 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.h,v 1.4 2003/11/24 05:02:09 joq Exp $
+ *  $Id: io-menu.h,v 1.5 2003/11/26 15:20:44 joq Exp $
  */
 
 #ifndef IO_MENU_H
 #define IO_MENU_H
 
-void bind_iomenu();
+/* Initialization.
+ *
+ *   The `input_ports' and `output_ports' are NULL-terminated lists.
+ */
+void iomenu_bind(GtkWidget *main_window, jack_client_t *client,
+		 jack_port_t *input_ports[], jack_port_t *output_ports[]);
+
+/* Ports menu item callback. */
 void iomenu_pull_down_ports();
 
 #endif

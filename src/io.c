@@ -123,8 +123,10 @@ static ringbuffer_t *out_rb[NCHANNELS];	/* output channel ring buffers */
 jack_status_t jst = {0};		/* current JACK status */
 jack_client_t *client;			/* JACK client structure */
 int nchannels = NCHANNELS;		/* actual number of channels */
-jack_port_t *input_ports[NCHANNELS];
-jack_port_t *output_ports[NCHANNELS];
+
+/* These arrays are NULL-terminated... */
+jack_port_t *input_ports[NCHANNELS+1] = {NULL};
+jack_port_t *output_ports[NCHANNELS+1] = {NULL};
 
 static char *in_names[NCHANNELS] = {"in_L", "in_R"};
 static char *out_names[NCHANNELS] = {"out_L", "out_R"};
