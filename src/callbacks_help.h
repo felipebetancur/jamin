@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.17 2004/01/03 14:14:10 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.18 2004/01/05 22:21:51 jdepner Exp $
  */
 
 char general_help[] = {
@@ -168,7 +168,9 @@ crossover faders or the crossover bars in the HDEQ.\n"
 
 
 char limiter_help[] = {
-"    Limiter help not yet available.\n"
+"    The lookahead limiter is a brickwall limiter that will not allow the \
+output to exceed the set level.  It \'looks ahead\' by the specified amount \
+in order to make a smooth transition as it nears the limit level.\n"
 };
 
 
@@ -178,7 +180,7 @@ char boost_help[] = {
 
 
 char output_help[] = {
-"    Output help not yet available.\n"
+"    Allows you to decrease the output level.  The upper level is 0dB.\n"
 };
 
 
