@@ -22,7 +22,7 @@ lim_settings limiter;
 float eq_coefs[BINS]; /* Linear gain of each FFT bin */
 float lim_peak[2];
 
-int global_bypass = 0;
+volatile int global_bypass = 0;		/* updated from GUI thread */
 
 float in_peak[NCHANNELS], out_peak[NCHANNELS];
 

@@ -3,7 +3,6 @@
 #include <stdio.h>
 
 #include "process.h"
-#include "io.h"
 #include "support.h"
 #include "main.h"
 #include "intrim.h"

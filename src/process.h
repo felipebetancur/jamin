@@ -33,12 +33,13 @@
 #define SPEC_PRE_EQ  0
 #define SPEC_POST_EQ 1
 
+extern float sample_rate;
 extern float xover_fa, xover_fb;
 extern float eq_coefs[];
 extern float in_peak[], out_peak[];
 extern float lim_peak[];
 
-extern int global_bypass;
+extern volatile int global_bypass;
 
 float bin_peak_read_and_clear(int bin);
 

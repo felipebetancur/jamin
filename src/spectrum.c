@@ -3,7 +3,6 @@
 #include <gtk/gtk.h>
 
 #include "support.h"
-#include "io.h"
 #include "main.h"
 #include "process.h"
 #include "gtkmeter.h"

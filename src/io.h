@@ -9,10 +9,10 @@
 #define LAT_LIMITER	2		/* Limiter */
 #define LAT_NSOURCES	3
 
+extern jack_client_t *client;		/* JACK client structure */
+
 void io_set_latency(int latency_source, jack_nframes_t delay);
 void io_set_granularity(jack_nframes_t block_size);
-
-extern float sample_rate;
 
 void io_init(int argc, char *argv[]);
 void io_activate();

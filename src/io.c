@@ -76,6 +76,7 @@
 #include "process.h"
 #include "plugin.h"
 #include "io.h"
+#include "transport.h"
 #include "jackstatus.h"
 #include "debug.h"
 
@@ -119,7 +120,7 @@ static ringbuffer_t *out_rb[NCHANNELS];	/* output channel ring buffers */
 
 /* JACK connection data */
 jack_status_t jst = {0};		/* current JACK status */
-static jack_client_t *client;		/* JACK client structure */
+jack_client_t *client;			/* JACK client structure */
 static int nchannels = NCHANNELS;	/* actual number of channels */
 static jack_port_t *input_ports[NCHANNELS];
 static jack_port_t *output_ports[NCHANNELS];
@@ -261,28 +262,13 @@ void io_new_state(int next)
 }
 
 
-/* io_get_status -- carefully copy JACK status structure */
+/* io_get_status -- collect current JACK status. */
 void io_get_status(jack_status_t *jp)
 {
-    int tries = 0;
-
-    /* Since "jst" is updated from the process() thread every
-     * buffer period, we must copy it carefully to avoid getting
-     * an incoherent hash of multiple versions. */
-    do {
-	/* Throttle the busy wait if we don't get the a clean
-	 * copy very quickly. */
-	if (tries > 10) {
-	    usleep(20);
-	    tries = 0;
-	}
-	*jp = jst;
-	tries++;
-
-    } while (jp->guard1 != jp->guard2);
-
+    transport_status(&jst.tinfo);
     if (client)
 	jp->cpu_load = jack_cpu_load(client);
+    *jp = jst;
 }
 
 
@@ -513,7 +499,7 @@ int io_queue(jack_nframes_t nframes, int nchannels,
     size_t nbytes = nframes * sizeof(jack_default_audio_sample_t);
     size_t count;
 
-    if (DSP_STATE_IS(DSP_ACTIVATING))
+    if (DSP_STATE_IS(DSP_ACTIVATING))	/* DSP thread not ready? */
 	return EBUSY;
 
     IF_DEBUG(DBG_VERBOSE, io_trace(" DSP input queued"));
@@ -522,11 +508,14 @@ int io_queue(jack_nframes_t nframes, int nchannels,
     for (chan = 0; chan < nchannels; chan++) {
 	count = ringbuffer_write(in_rb[chan], (void *) in[chan], nbytes);
 	if (count != nbytes) {		/* buffer overflow? */
+
 	    /* This is a realtime bug.  We have input audio with no
 	     * place to go.  The DSP thread is not keeping up, and
 	     * there's nothing we can do about it here. */
 	    IF_DEBUG(DBG_TERSE,
-		     io_trace("input overflow, %ld bytes written.", count));
+		     ((chan == 0)?
+		      io_trace("input overflow, %ld bytes written.", count):
+		      NULL));
 	    rc = ENOSPC;		/* out of space */
 	}
     } 
@@ -542,20 +531,20 @@ int io_queue(jack_nframes_t nframes, int nchannels,
 
 	    /* this is only legit if we're just starting up */
 	    if (DSP_STATE_NOT(DSP_STARTING|DSP_STOPPING)) {
+
 		/* This is a realtime bug.  We do not have output
 		 * audio when we need it.  The DSP thread is not
 		 * keeping up. */
 		IF_DEBUG(DBG_TERSE,
-			 io_trace("output underflow, %ld bytes read.", count));
+			 ((chan == 0)?
+			  io_trace("output underflow, %ld bytes read.", count):
+			  NULL));
 		rc = EPIPE;		/* broken pipe */
 	    }
 
 	    /* fill rest of JACK buffer with zeroes */
 	    if (count < nbytes) {
 		void *addr = ((void *) out[chan]) + count;
-		IF_DEBUG(DBG_TERSE,
-			 io_trace(" zero %ld bytes of output at 0x%lx.",
-				  nbytes-count, addr));
 		memset(addr, 0, nbytes-count);
 	    }
 	}
@@ -578,10 +567,7 @@ int io_process(jack_nframes_t nframes, void *arg)
 
     IF_DEBUG(DBG_VERBOSE, io_trace("JACK process() start"));
 
-    /* update JACK transport info */
-    jst.guard1 = jack_frame_time(client);
-    jack_get_transport_info(client, &jst.tinfo);
-    jst.guard2 = jst.guard1;		/* tinfo now consistent */
+    transport_control(nframes);		/* handle JACK transport */
 
     /* get input and output buffer addresses from JACK */
     for (chan = 0; chan < nchannels; chan++) {

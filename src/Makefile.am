@@ -33,7 +33,8 @@ jamin_SOURCES = \
 	spline.c \
 	state.c state.h \
 	stereo.c stereo.h \
-	support.c support.h
+	support.c support.h \
+	transport.c transport.h
 
 jamin_LDADD = @PACKAGE_LIBS@
 

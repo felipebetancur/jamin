@@ -20,6 +20,7 @@
 #include "gtkmeterscale.h"
 #include "state.h"
 #include "db.h"
+#include "transport.h"
 
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
 
@@ -2740,8 +2741,8 @@ rev_button                             (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-
-  return FALSE;
+    transport_rewind();
+    return FALSE;
 }
 
 
@@ -2750,8 +2751,8 @@ fwd_button                             (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-
-  return FALSE;
+    transport_play();
+    return FALSE;
 }
 
 
@@ -2760,8 +2761,8 @@ play_toggle                            (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-
-  return FALSE;
+    transport_play();
+    return FALSE;
 }
 
 
@@ -2770,10 +2771,6 @@ stop_toggle                            (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-
-  return FALSE;
+    transport_stop();
+    return FALSE;
 }
-
-
-
-
