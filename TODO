@@ -16,7 +16,8 @@ TODO (owner)
 - Commit documentation to CVS (Ron)
 - Finish context sensitive help verbiage (everyone)
 - set JACK port latencies correctly (Jack, Steve)
-- Correct for limiter latency in bypass
+- Correct for limiter latency in bypass (Steve)
+- fix crash on startup using gcc-2.95.4 (everyone)
 
 
 TO THINK ABOUT
