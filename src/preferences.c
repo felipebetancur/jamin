@@ -116,20 +116,19 @@ void preferences_init()
     pref_reset_all_colors ();
 
 
-    /*  Get user colors and possibly other things from the ~/.jamin-defaults 
+    /*  Get user colors and possibly other things from the jamin-defaults 
         file.  */
 
-    if (getenv ("HOME") != NULL)
+    if (jamin_dir)
       {
-        /*  I know this looks weird (doing the getenv twice) but if you
-            don't do it this way and it's null it will segfault on an SGI
-            IRIX system.  What difference does that make to us?  Probably
-            none but what the hell?  JCD  */
-
-        strcpy (file, getenv ("HOME"));
-        strcat (file, "/.jamin-defaults");
+        strcpy (file, jamin_dir);
+        strcat (file, "jamin-defaults");
       }
-     
+    else
+      {
+        return;
+      }
+
     if ((fp = fopen (file, "r")) != NULL)
       {
         /*  Read each entry.    */
@@ -353,10 +352,14 @@ void pref_write_jamin_defaults ()
     FILE     *fp = NULL;
 
 
-    if (getenv ("HOME") != NULL)
+    if (jamin_dir)
       {
-        strcpy (file, getenv ("HOME"));
-        strcat (file, "/.jamin-defaults");
+        strcpy (file, jamin_dir);
+        strcat (file, "jamin-defaults");
+      }
+    else
+      {
+        return;
       }
      
     if ((fp = fopen (file, "w")) != NULL)
