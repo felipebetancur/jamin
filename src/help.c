@@ -1,5 +1,5 @@
 /*
- *  help.c -- Help message dialog for the JAMin (JACK Audio Mastering 
+ *  help.c -- Message dialogs for the JAMin (JACK Audio Mastering 
  *            interface) program.
  *
  *  Copyright (C) 2003 Jan C. Depner.
@@ -34,21 +34,26 @@
 #include "help.h"
 
 
-static GtkWidget *help_dialog = NULL;
+static GtkWidget *message_dialog = NULL;
 
-void help_message (char *string)
+
+/*  Message types - GTK_MESSAGE_INFO, GTK_MESSAGE_WARNING, GTK_MESSAGE_ERROR */
+
+void message (GtkMessageType type, char *string)
 {
-    help_dialog = gtk_message_dialog_new ((GtkWindow *) main_window,
+    if (message_dialog != NULL) 
+      gtk_widget_destroy ((GtkWidget *) message_dialog);
+
+    message_dialog = gtk_message_dialog_new ((GtkWindow *) main_window,
                                           GTK_DIALOG_DESTROY_WITH_PARENT,
-                                          GTK_MESSAGE_INFO,
-                                          GTK_BUTTONS_CLOSE,
+                                          type, GTK_BUTTONS_CLOSE,
                                           "%s", string);
 
-    g_signal_connect_swapped (GTK_OBJECT (help_dialog), "response",
+    g_signal_connect_swapped (GTK_OBJECT (message_dialog), "response",
                            G_CALLBACK (gtk_widget_destroy),
-                           GTK_OBJECT (help_dialog));
+                           GTK_OBJECT (message_dialog));
 
-    gtk_widget_show (help_dialog);
+    gtk_widget_show (message_dialog);
 
 
     gdk_window_set_cursor (main_window->window, 

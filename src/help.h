@@ -11,14 +11,14 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: help.h,v 1.2 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: help.h,v 1.3 2004/01/13 23:35:06 jdepner Exp $
  */
 
 #ifndef HELP_H
 #define HELP_H
 
 
-void help_message (char *string);
+void message (GtkMessageType type, char *string);
 
 
 #endif

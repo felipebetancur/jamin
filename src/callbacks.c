@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.122 2004/01/08 15:59:33 jdepner Exp $
+ *  $Id: callbacks.c,v 1.123 2004/01/13 23:35:06 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -990,7 +990,7 @@ on_show_help                           (GtkWidget       *widget,
                                         GtkWidgetHelpType  help_type,
                                         gpointer         user_data)
 {
-    help_message (help_ptr);
+    message (GTK_MESSAGE_INFO, help_ptr);
 
     return FALSE;
 }
@@ -1297,7 +1297,7 @@ on_redo1_activate                       (GtkMenuItem     *menuitem,
 
 void general_help_callback ()
 {
-  help_message (general_help);
+    message (GTK_MESSAGE_INFO, general_help);
 }
 
 
@@ -1311,7 +1311,7 @@ on_about1_activate                     (GtkMenuItem     *menuitem,
 
   if ((splash = create_pixmap (main_window, "JAMin_splash.jpg")) == NULL)
     {
-      help_message (general_help);
+      message (GTK_MESSAGE_INFO, general_help);
     }
   else
     {
@@ -1342,7 +1342,7 @@ void
 on_about_prerequisites1_activate       (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  help_message (prerequisites_help);
+  message (GTK_MESSAGE_INFO, prerequisites_help);
 }
 
 
@@ -1383,7 +1383,7 @@ void
 on_help1_activate                      (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  help_message (help_help);
+  message (GTK_MESSAGE_INFO, help_help);
 }
 
 
@@ -1391,7 +1391,7 @@ void
 on_keys1_activate                      (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  help_message (keys_help);
+  message (GTK_MESSAGE_INFO, keys_help);
 }
 
 
