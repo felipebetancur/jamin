@@ -40,6 +40,7 @@
 void interpolate (float, int, float, float, int *, float *, float *, float *, 
                   float *);
 void draw_EQ_curve ();
+void set_EQ_curve_values (int, float);
 
 static GtkHScale       *l_low2mid, *l_mid2high;
 static GtkWidget       *l_low_comp, *l_mid_comp, *l_high_comp;
@@ -828,14 +829,15 @@ draw_EQ_curve ()
                 EQ_notch_width[i] = 5;
               }
 
-            s_set_value_ui (S_NOTCH_Q (i), (float) EQ_notch_width[i]);
-            s_set_value_ui (S_NOTCH_GAIN (i), EQ_notch_gain[i]);
-            s_set_value_ui (S_NOTCH_FLAG (i), (float) EQ_notch_flag[i]);
+	    s_set_description (S_NOTCH_GAIN (i) ,
+			       g_strdup_printf("Reset notch %d", i));
+            s_set_value_ns (S_NOTCH_GAIN (i), EQ_notch_gain[i]);
+            s_set_value_ns (S_NOTCH_Q (i), (float) EQ_notch_width[i]);
+            s_set_value_ns (S_NOTCH_FLAG (i), (float) EQ_notch_flag[i]);
           }
 
         insert_notch ();
       }
-
 
     /*  Plot the curve.  */
 
@@ -991,6 +993,8 @@ on_EQ_curve_realize                    (GtkWidget       *widget,
     EQ_start = log10 (l_geq_freqs[0]);
     EQ_end = log10 (l_geq_freqs[EQ_BANDS - 1]);
     EQ_interval = (EQ_end - EQ_start) / EQ_INTERP;
+
+    s_set_callback(S_NOTCH_GAIN(0), set_EQ_curve_values);
 
     EQ_realized = 1;
 }
@@ -1156,9 +1160,11 @@ on_EQ_curve_event_box_motion_notify_event
                             notch_flag = i;
                             EQ_notch_flag[i] = 1;
 
-                            s_set_value_ui (S_NOTCH_GAIN (i), 
+			    s_set_description (S_NOTCH_GAIN (i) ,
+			       g_strdup_printf("Move notch %d", i));
+                            s_set_value_ns (S_NOTCH_GAIN (i), 
                                 EQ_notch_gain[i]);
-                            s_set_value_ui (S_NOTCH_FLAG (i), 
+                            s_set_value_ns (S_NOTCH_FLAG (i), 
                                 (float) EQ_notch_flag[i]);
 
                             break;
@@ -1184,10 +1190,12 @@ on_EQ_curve_event_box_motion_notify_event
                                 drag = 1;
                                 notch_flag = i;
 
-                                s_set_value_ui (S_NOTCH_GAIN (i), 
+			        s_set_description (S_NOTCH_GAIN (i) ,
+			            g_strdup_printf("Move notch %d", i));
+                                s_set_value_ns (S_NOTCH_GAIN (i), 
                                     EQ_notch_gain[i]);
-                                s_set_value_ui (S_NOTCH_FREQ (i), freq);
-                                s_set_value_ui (S_NOTCH_FLAG (i), 
+                                s_set_value_ns (S_NOTCH_FREQ (i), freq);
+                                s_set_value_ns (S_NOTCH_FLAG (i), 
                                     (float) EQ_notch_flag[i]);
                               }
                             break;
@@ -1219,7 +1227,11 @@ on_EQ_curve_event_box_motion_notify_event
                             drag = 1;
                             notch_flag = i;
 
-                            s_set_value_ui (S_NOTCH_Q (i), 
+			    s_set_description (S_NOTCH_GAIN (i) ,
+			       g_strdup_printf("Move notch %d", i));
+			    s_set_value_ns (S_NOTCH_GAIN (i), 
+                                    EQ_notch_gain[i]);
+                            s_set_value_ns (S_NOTCH_Q (i), 
                                 (float) EQ_notch_width[i]);
                           }
                         break;
@@ -1442,11 +1454,13 @@ on_EQ_curve_event_box_button_press_event
                                 EQ_notch_width[i] = 5;
                               }
 
-                            s_set_value_ui (S_NOTCH_Q (i), 
-                                (float) EQ_notch_width[i]);
-                            s_set_value_ui (S_NOTCH_GAIN (i), 
+			    s_set_description (S_NOTCH_GAIN (i) ,
+			       g_strdup_printf("Reset notch %d", i));
+                            s_set_value_ns (S_NOTCH_GAIN (i), 
                                 EQ_notch_gain[i]);
-                            s_set_value_ui (S_NOTCH_FLAG (i), 
+                            s_set_value_ns (S_NOTCH_Q (i), 
+                                (float) EQ_notch_width[i]);
+                            s_set_value_ns (S_NOTCH_FLAG (i), 
                                 (float) EQ_notch_flag[i]);
 
                             insert_notch ();
@@ -1730,7 +1744,7 @@ on_EQ_curve_event_box_leave_notify_event
 
 
 void
-set_EQ_curve_values (GtkWidget *w, gpointer user_data)
+set_EQ_curve_values (int id, float value)
 {
     int i;
 
@@ -2671,8 +2685,10 @@ on_load_button_clicked                 (GtkButton       *button,
     g_signal_connect (GTK_OBJECT (file_selector->ok_button),
         "clicked", G_CALLBACK (s_load_session), file_selector);
 
+    /*
     g_signal_connect (GTK_OBJECT (file_selector->ok_button),
         "clicked", G_CALLBACK (set_EQ_curve_values), NULL);
+	*/
 
     g_signal_connect_swapped (GTK_OBJECT (file_selector->ok_button),
         "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);

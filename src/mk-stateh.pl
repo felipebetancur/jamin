@@ -45,6 +45,7 @@ void s_set_value_ui(int id, float value);
 void s_set_value(int id, float value, int time);
 void s_set_value_block(float *values, int base, int count);
 void s_set_value_no_history(int id, float value);
+void s_set_description(int id, const char *desc);
 void s_clear_history();
 void s_set_callback(int id, s_callback_func callback);
 void s_set_adjustment(int id, GtkAdjustment *adjustment);
@@ -72,10 +73,20 @@ print OUT <<EOB;
 
 extern float s_value[S_SIZE];
 
+/* fetch cureently used value */
+
 inline static float s_get_value(int id)
 {
 	return s_value[id];
 }
+
+/* set value with no side effects */
+
+inline static void s_set_value_ns(int id, float value)
+{
+	s_value[id] = value;
+}
+
 EOB
 
 $first = 1;

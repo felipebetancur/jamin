@@ -43,6 +43,11 @@ int main(int argc, char *argv[])
     textdomain(GETTEXT_PACKAGE);
 #endif
 
+    printf("JAMin " VERSION "\n");
+    printf("(c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker and P. Shirkey\n");
+    printf("This is free software, and you are welcome to redistribute it\n" 
+	   "under certain conditions; see the file COPYING for details.\n");
+
     /* look for the rcfile, if its there parse it */
     snprintf(rcfile, PATH_MAX, "%s/%s", getenv("HOME"), ".jamrc");
     if ((fd = open(rcfile, O_RDONLY)) >= 0) {	close(fd);

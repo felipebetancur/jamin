@@ -25,7 +25,6 @@ static s_callback_func  s_callback[S_SIZE];
 
 static s_state       *last_state = NULL;
 static int	      last_changed = S_NONE;
-static char          *last_description = NULL;
 
 static GList         *history = NULL;
 static GList         *undo_pos = NULL;
@@ -65,26 +64,31 @@ void s_set_adjustment(int id, GtkAdjustment *adjustment)
 
 void s_set_value_ui(int id, float value)
 {
+    s_value[id] = value;
+
     if (suppress_feedback) {
 	return;
     }
     assert(id >= 0 && id < S_SIZE);
 
-    if (last_changed != S_NONE && last_changed != id) {
-	s_history_add(g_strdup_printf("%s = %f", s_description[last_changed],
-		      s_value[last_changed]));
+    if (last_changed != id) {
+	s_history_add(g_strdup_printf("%s = %f", s_description[id],
+		      s_value[id]));
     }
-    if (last_description) {
-	s_history_add(last_description);
-	last_description = NULL;
-    }
-    s_value[id] = value;
+
+#if 0
+    /* This code is confusing in use, so I've removed it */
+
     if (value - MIN_CHANGE < last_state->value[id] &&
 	value + MIN_CHANGE > last_state->value[id]) {
 	last_changed = S_NONE;
     } else {
 	last_changed = id;
     }
+#else
+    last_changed = id;
+#endif
+
     if (s_callback[id]) {
 	(*s_callback[id])(id, value);
     }
@@ -181,6 +185,14 @@ static void s_set_events(int id, float value)
     }
 }
 
+void s_set_description(int id, const char *desc)
+{
+    if (last_changed != id) {
+	s_history_add(desc);
+    }
+    last_changed = id;
+}
+
 void s_save_session (GtkWidget *w, gpointer user_data)
 {
     const gchar      *filename;
@@ -227,8 +239,8 @@ void s_load_session (GtkWidget *w, gpointer user_data)
     handler = calloc(1, sizeof(xmlSAXHandler));
     handler->startElement = s_startElement;
     xmlSAXUserParseFile(handler, NULL, filename);
-    last_description = g_strdup_printf("Loaded %s", filename);
-    last_changed = S_NONE;
+    s_history_add(g_strdup_printf("Loaded %s", filename));
+    last_changed = S_LOAD;
     free(handler);
 }
 

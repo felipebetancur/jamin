@@ -1,4 +1,5 @@
 # symbol(card)	description
+load		Load file
 in-gain		Input gain
 in-pan		Input pan
 eq-gain(1024)	EQ Gain
