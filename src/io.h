@@ -10,7 +10,6 @@
 #define LAT_NSOURCES	3
 
 void io_set_latency(int latency_source, jack_nframes_t delay);
-
 void io_set_granularity(jack_nframes_t block_size);
 
 extern float sample_rate;

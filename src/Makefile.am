@@ -22,6 +22,7 @@ jamin_SOURCES = \
 	interface.c interface.h \
 	intrim.c intrim.h \
 	io.c io.h \
+	jackstatus.h \
 	limiter.h \
 	limiter-ui.c limiter-ui.h \
 	main.c main.h \

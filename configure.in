@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_INIT(configure.in)
-AM_INIT_AUTOMAKE(jamin, 0.2.7)
+AM_INIT_AUTOMAKE(jamin, 0.3.0)
 AM_CONFIG_HEADER(config.h)
 AM_MAINTAINER_MODE
 
@@ -9,19 +9,6 @@ AC_ISC_POSIX
 AC_PROG_CC
 AM_PROG_CC_STDC
 AC_HEADER_STDC
-
-dnl configure options
-with_threading=yes
-AC_ARG_ENABLE(threading,
-              [  --enable-threading       enable separate DSP thread],
-	      [ if test x$enable_threading = xno; then 
-		    with_threading=no;
-		fi ]
-)
-
-if test x$with_threading != xno ; then
-    AC_DEFINE(DSP_THREAD,,[Enable use of DSP thread]) ]
-fi
 
 dnl Checks for libraries.
 AC_CHECK_LIB([pthread], [pthread_self], , [AC_MSG_ERROR(You need libpthread installed)])

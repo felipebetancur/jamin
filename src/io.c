@@ -1,5 +1,5 @@
 /*
- *  io.c -- JAMIN I/O driver.
+ *  io.c -- JAMin I/O driver.
  *
  *  Copyright (C) 2003 Jack O'Quin.
  *  
@@ -28,10 +28,10 @@
  *  short for efficiently computing the FFT, signal processing should
  *  be done in the DSP thread, instead.
  *
- *  The DSP thread is created if the -t option was specified and the
- *  process is capable of creating a realtime thread.  Otherwise, all
- *  signal processing will be done in the JACK thread, regardless of
- *  buffer size.
+ *  The DSP thread is created if the -t option was not specified and
+ *  the process is capable of creating a realtime thread.  Otherwise,
+ *  all signal processing will be done in the JACK thread, regardless
+ *  of buffer size.
  *
  *  The JACK buffer size could change dynamically due to the
  *  jack_set_buffer_size_callback() function.  So, we do not assume
@@ -42,7 +42,7 @@
 
 /*  Changes to this file should be tested for these conditions...
  *
- *  with -t option, configured with --enable-dsp-thread
+ *  without -t option
  *	+ JACK running realtime (as root)
  *	   + JACK buffer size < DSP block size
  *	   + JACK buffer size >= DSP block size
@@ -51,7 +51,7 @@
  *	   + JACK buffer size >= DSP block size
  *	+ JACK not running realtime
  *
- *  without -t option, or without --enable-dsp-thread
+ *  with -t option
  *	+ JACK running realtime
  *	   + JACK buffer size < DSP block size
  *	   + JACK buffer size >= DSP block size
@@ -76,21 +76,16 @@
 #include "process.h"
 #include "plugin.h"
 #include "io.h"
+#include "jackstatus.h"
 #include "debug.h"
 
-/* list of valid JAMIN options */
-#ifdef DSP_THREAD
-char *jamin_options = "dFhTtvV";	/* includes -t */
-#else
-char *jamin_options = "dFhTvV";		/* without -t */
-#endif
-
+char *jamin_options = "dFhTtvV";	/* valid JAMin options */
 char *pname;				/* `basename $0` */
 int dummy_mode = 0;			/* -d option */
 int all_errors_fatal = 0;		/* -F option */
 int show_help = 0;			/* -h option */
-int thread_option = 0;			/* -t option */
 int trace_option = 0;			/* -T option */
+int thread_option = 1;			/* -t option */
 int debug_level = DBG_OFF;		/* -v option */
 
 /*  Synchronization within the DSP engine is managed as a finite state
@@ -112,7 +107,6 @@ static int have_dsp_thread = 0;		/* DSP thread exists? */
 static int use_dsp_thread = 0;		/* DSP thread currently in use? */
 static jack_nframes_t dsp_block_size;	/* DSP chunk granularity */
 static size_t dsp_block_bytes;		/* DSP chunk size in bytes */
-static jack_client_t *client;		/* JACK client structure */
 
 #define DSP_PRIORITY_DIFF 1	/* DSP thread priority difference */
 static pthread_t dsp_thread;	/* DSP thread handle */
@@ -124,9 +118,9 @@ static ringbuffer_t *in_rb[NCHANNELS];	/* input channel ring buffers */
 static ringbuffer_t *out_rb[NCHANNELS];	/* output channel ring buffers */
 
 /* JACK connection data */
+jack_status_t jst = {0};		/* current JACK status */
+static jack_client_t *client;		/* JACK client structure */
 static int nchannels = NCHANNELS;	/* actual number of channels */
-static jack_nframes_t jack_buf_size;
-static long jack_sample_rate;
 static jack_port_t *input_ports[NCHANNELS];
 static jack_port_t *output_ports[NCHANNELS];
 static char *in_names[NCHANNELS] = { "in_L", "in_R" };
@@ -267,10 +261,66 @@ void io_new_state(int next)
 }
 
 
+/* io_get_status -- carefully copy JACK status structure */
+void io_get_status(jack_status_t *jp)
+{
+    int tries = 0;
+
+    /* Since "jst" is updated from the process() thread every
+     * buffer period, we must copy it carefully to avoid getting
+     * an incoherent hash of multiple versions. */
+    do {
+	/* Throttle the busy wait if we don't get the a clean
+	 * copy very quickly. */
+	if (tries > 10) {
+	    usleep (20);
+	    tries = 0;
+	}
+	*jp = jst;
+	tries++;
+
+    } while (jp->guard1 != jp->guard2);
+
+    jp->cpu_load = jack_cpu_load(client);
+}
+
+
+void io_print_status()
+{
+    char *state;
+    jack_status_t j;
+
+    io_get_status(&j);
+
+    printf("JACK %s running realtime.\n", j.realtime? "is": "not");
+    printf("  buffer size: %ld\n", j.buf_size);
+    printf("  sample rate: %ld\n", j.sample_rate);
+    printf("  latency: %ld\n", j.latency);
+    printf("  CPU load: %.2f%%\n", j.cpu_load);
+    if (j.tinfo.valid & JackTransportState) {
+	switch (j.tinfo.transport_state) {
+	case JackTransportStopped:
+	    state = "Stopped";
+	    break;
+	case JackTransportRolling:
+	    state = "Rolling";
+	    break;
+	case JackTransportLooping:
+	    state = "Looping";
+	    break;
+	default:
+	    state = "[unknown]";
+	}
+    } else {
+	state = "[not valid]";
+    }
+    printf("  transport state: %s\n", state);
+}
+
+
 /* io_set_latency -- set DSP engine latencies. */
 void io_set_latency(int source, jack_nframes_t delay)
 {
-    static jack_nframes_t total_latency = 0;
     static jack_nframes_t latency_delay[LAT_NSOURCES] = {0};
     static char *latency_sources[LAT_NSOURCES] = {
 	"I/O Buffering",
@@ -286,13 +336,13 @@ void io_set_latency(int source, jack_nframes_t delay)
     IF_DEBUG(DBG_TERSE,
 	     io_trace("latency due to %s is %ld frames.",
 		      latency_sources[source], delay));
-    total_latency += delay - latency_delay[source];
+    jst.latency += delay - latency_delay[source];
     latency_delay[source] = delay;
 
     /* Set JACK port latencies (after the ports are connected). */
     if (DSP_STATE_NOT(DSP_INIT))
 	for (chan = 0; chan < nchannels; chan++)
-	    jack_port_set_latency(input_ports[chan], total_latency);
+	    jack_port_set_latency(input_ports[chan], jst.latency);
 }
 
 
@@ -300,7 +350,7 @@ void io_set_latency(int source, jack_nframes_t delay)
  *
  *  As currently implemented, this function can only be called with
  *  the DSP engine inactive.  The DSP engine also requires that this
- *  block_size be an even multiple or divisor of the jack_buf_size.
+ *  block_size be an even multiple or divisor of the JACK buffer size.
  */
 void io_set_granularity(jack_nframes_t block_size)
 {
@@ -310,8 +360,8 @@ void io_set_granularity(jack_nframes_t block_size)
     assert(DSP_STATE_IS(DSP_INIT|DSP_STOPPED));
 
     if (DSP_STATE_NOT(DSP_STOPPED)) {
-	if (jack_buf_size % block_size != 0 &&
-	    block_size % jack_buf_size != 0) {
+	if (jst.buf_size % block_size != 0 &&
+	    block_size % jst.buf_size != 0) {
 	    io_errlog(EINVAL, "uneven DSP granularity: %ld",
 		      (long) block_size);
 	    return;
@@ -527,6 +577,11 @@ int io_process(jack_nframes_t nframes, void *arg)
 
     IF_DEBUG(DBG_VERBOSE, io_trace("JACK process() start"));
 
+    /* update JACK transport info */
+    jst.guard1 = jack_frame_time(client);
+    jack_get_transport_info(client, &jst.tinfo);
+    jst.guard2 = jst.guard1;		/* tinfo now consistent */
+
     /* get input and output buffer addresses from JACK */
     for (chan = 0; chan < nchannels; chan++) {
 	in[chan] = jack_port_get_buffer(input_ports[chan], nframes);
@@ -666,15 +721,9 @@ void io_init(int argc, char *argv[])
 	case 'h':			/* show help */
 	    show_help = 1;
 	    break;
-#ifdef DSP_THREAD
-	case 't':			/* use DSP thread */
-	    thread_option = 1;
+	case 't':			/* no DSP thread */
+	    thread_option = 0;
 	    break;
-#else
-	case 't':			/* cant use DSP thread */
-	    fprintf(stderr, "Threading option is not enabled\n");
-	    break;
-#endif
 	case 'T':			/* list trace output */
 	    trace_option = 1;
 	    break;
@@ -682,7 +731,7 @@ void io_init(int argc, char *argv[])
 	    debug_level += 1;		/* increment output level */
 	    break;
 	case 'V':			/* version */
-	    printf("%s version %s\n", PACKAGE, VERSION);
+	    /* version info already printed */
 	    exit(9);
 	default:
 	    show_help = 1;
@@ -725,8 +774,8 @@ void io_init(int argc, char *argv[])
 		"%s: Cannot contact JACK server, is it running?\n", PACKAGE);
 	exit(2);
     }
-    jack_buf_size = jack_get_buffer_size(client);
-    jack_sample_rate = jack_get_sample_rate(client);
+    jst.buf_size = jack_get_buffer_size(client);
+    jst.sample_rate = jack_get_sample_rate(client);
 
     jack_set_process_callback(client, io_process, NULL);
     jack_on_shutdown(client, io_cleanup, NULL);
@@ -734,7 +783,7 @@ void io_init(int argc, char *argv[])
     // JOQ: jack_set_xrun_callback(client, io_xrun, NULL);
 
     /* initialize process_signal() */
-    process_init((float) jack_sample_rate, jack_buf_size);
+    process_init((float) jst.sample_rate, jst.buf_size);
 }
 
 
@@ -744,12 +793,6 @@ void io_init(int argc, char *argv[])
  */
 int io_create_dsp_thread()
 {
-
-#ifndef DSP_THREAD
-    return ENOSYS;			/* function not implemented */
-#else
-
-    int jack_realtime;			/* true if JACK is realtime */
     int rc;
     int policy;
     struct sched_param rt_param, my_param;
@@ -767,12 +810,12 @@ int io_create_dsp_thread()
 
     /* Check if JACK is running with --realtime option. */
 #ifdef HAVE_JACK_IS_REALTIME		/* requires libjack >= 0.70.5 */
-    jack_realtime = jack_is_realtime(client);
+    jst.realtime = jack_is_realtime(client);
 #else
-    jack_realtime = (policy == SCHED_FIFO);
+    jst.realtime = (policy == SCHED_FIFO);
 #endif
 
-    if (jack_realtime) {
+    if (jst.realtime) {
 	IF_DEBUG(DBG_TERSE,
 		 io_trace("JACK realtime priority = %d",
 			  rt_param.sched_priority));
@@ -867,7 +910,7 @@ int io_create_dsp_thread()
 	fprintf(stderr,
 		"%s: not permitted to create realtime DSP thread.\n"
 		"\tYou must run as root or use JACK capabilities.\n"
-		"\tContinuing operation, but ignoring -t option.\n", PACKAGE);
+		"\tContinuing operation, but with -t option.\n", PACKAGE);
 	IF_DEBUG(DBG_TERSE,
 		 io_trace("second pthread_create() returns %d\n", rc));
 	return rc;
@@ -877,8 +920,6 @@ int io_create_dsp_thread()
     sched_setscheduler(0, policy, &my_param);
     IF_DEBUG(DBG_TERSE, io_trace("DSP thread finally created"));
     return 0;
-
-#endif /* DSP_THREAD */
 }
 
 
@@ -953,7 +994,7 @@ void io_activate()
 	IF_DEBUG(DBG_TERSE, io_trace("no DSP thread created"));
 	have_dsp_thread = 0;
     }
-    use_dsp_thread = have_dsp_thread && (dsp_block_size > jack_buf_size);
+    use_dsp_thread = have_dsp_thread && (dsp_block_size > jst.buf_size);
     if (!have_dsp_thread)
 	io_new_state(DSP_RUNNING);
 
@@ -962,7 +1003,7 @@ void io_activate()
     io_set_latency(LAT_BUFFERS, (use_dsp_thread? dsp_block_size: 0));
     pthread_mutex_unlock(&lock_dsp);
 
-    return;
+    IF_DEBUG(DBG_TERSE, io_print_status());
 }
 
 /* vi:set ts=8 sts=4 sw=4: */
