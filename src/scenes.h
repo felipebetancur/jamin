@@ -17,7 +17,8 @@ void select_scene (int number, int button);
 int get_current_scene ();
 void set_scene (int scene_num);
 void clear_scene (int scene_num);
-void set_scene_name (int number, char *scene_name);
+const char *get_scene_name(int number);
+void set_scene_name (int number, const char *scene_name);
 void unset_scene_buttons ();
 s_state *get_scene (int number);
 

@@ -7,6 +7,7 @@
 
 #include "config.h"
 #include "state.h"
+#include "scenes.h"
 
 /* The smallest value that counts as a change, should be approximately
  * epsilon+delta */
@@ -203,8 +204,8 @@ void s_save_session (GtkWidget *w, gpointer user_data)
     const gchar      *filename;
     GtkFileSelection *file_selector = (GtkFileSelection *) user_data;
     xmlDocPtr doc;
-    xmlNodePtr rootnode, node;
-    unsigned int i;
+    xmlNodePtr rootnode, node, sc_node;
+    unsigned int i, j;
     char tmp[256];
 
     filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_selector));
@@ -216,6 +217,8 @@ void s_save_session (GtkWidget *w, gpointer user_data)
     xmlDocSetRootElement(doc, rootnode);
     node = xmlNewText("\n");
     xmlAddChild(rootnode, node);
+
+    /* Save current active state */
     for (i=0; i<S_SIZE; i++) {
 	node = xmlNewDocRawNode(doc, NULL, "parameter", NULL);
 	snprintf(tmp, 255, "%g", s_value[i]);
@@ -224,6 +227,36 @@ void s_save_session (GtkWidget *w, gpointer user_data)
 	xmlAddChild(rootnode, node);
 	node = xmlNewText("\n");
 	xmlAddChild(rootnode, node);
+    }
+
+    /* Save scenes */
+    for (j=0; j<NUM_SCENES; j++) {
+	s_state *st = get_scene(j);
+	sc_node = xmlNewDocRawNode(doc, NULL, "scene", NULL);
+	snprintf(tmp, 255, "%d", j);
+	xmlSetProp(sc_node, "number", tmp);
+	if (!st) {
+	    xmlAddChild(rootnode, sc_node);
+	    node = xmlNewText("\n");
+	    xmlAddChild(rootnode, node);
+	    continue;
+	}
+	xmlSetProp(sc_node, "name", get_scene_name(j));
+	node = xmlNewText("\n");
+	xmlAddChild(sc_node, node);
+	xmlAddChild(rootnode, sc_node);
+	node = xmlNewText("\n");
+	xmlAddChild(rootnode, node);
+
+	for (i=0; i<S_SIZE; i++) {
+	    node = xmlNewDocRawNode(doc, NULL, "parameter", NULL);
+	    snprintf(tmp, 255, "%g", st->value[i]);
+	    xmlSetProp(node, "name", s_symbol[i]);
+	    xmlSetProp(node, "value", tmp);
+	    xmlAddChild(sc_node, node);
+	    node = xmlNewText("\n");
+	    xmlAddChild(sc_node, node);
+	}
     }
     xmlSaveFile(filename, doc);
     xmlFreeDoc(doc);
@@ -237,13 +270,14 @@ void s_load_session (GtkWidget *w, gpointer user_data)
     const gchar      *filename;
     GtkFileSelection *file_selector = (GtkFileSelection *) user_data;
     xmlSAXHandlerPtr  handler;
+    int scene = -1;
 
     filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION
                                                 (file_selector));
 
     handler = calloc(1, sizeof(xmlSAXHandler));
     handler->startElement = s_startElement;
-    xmlSAXUserParseFile(handler, NULL, filename);
+    xmlSAXUserParseFile(handler, &scene, filename);
     s_history_add(g_strdup_printf("%s", filename));
     last_changed = S_LOAD;
     free(handler);
@@ -257,10 +291,30 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
     const xmlChar **p;
     unsigned int i, found = 0;
     const char *symbol = NULL, *value = NULL;
+    int *scene = (int *)user_data;
 
+    if (!strcmp(name, "scene")) {
+	const char *sname = NULL;
 
-    /* Check its the right element */
+	for (p=attrs; p && *p; p+=2) {
+	    if (!strcmp(*p, "name")) {
+		sname = *(p+1);
+	    } else if (!strcmp(*p, "number")) {
+		*scene = atoi(*(p+1));
+	    }
+	}
+
+	if (sname && *scene > -1) {
+	    set_scene(*scene);
+	    set_scene_name(*scene, sname);
+	}
+
+	return;
+    }
+
+    /* Check its a parameter element */
     if (strcmp(name, "parameter")) {
+	fprintf(stderr, "Unhandled element: %s\n", name);
 	return;
     }
 
@@ -276,12 +330,22 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
     /* Find the matching symbol, this is horribly inefficient */
     for (i=0; i<S_SIZE && !found; i++) {
 	if (!strcmp(symbol, s_symbol[i])) {
-	    s_value[i] = atof(value);
-	    suppress_feedback++;
-	    s_set_events(i, s_value[i]);
-	    suppress_feedback--;
+	    if (*scene == -1) {
+		s_value[i] = atof(value);
+		suppress_feedback++;
+		s_set_events(i, s_value[i]);
+		suppress_feedback--;
+	    } else {
+		s_state *st = get_scene(*scene);
+		if (st) {
+		    st->value[i] = atof(value);
+		} else {
+		    fprintf(stderr, "Bad scene number %d\n", *scene);
+		}
+	    }
 	    //printf("load %s = %g\n", symbol, s_value[i]);
 	    found = 1;
+	    break;
 	}
     }
     if (!found) {
