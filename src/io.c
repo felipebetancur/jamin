@@ -20,11 +20,9 @@ jack_client_t *client;
 
 int backend_init(int argc, char *argv[])
 {
-	unsigned int i;
 	int opt;
 	int show_help = 0;
 	char client_name[256];
-	char *ioports[4];
 
 	while ((opt = getopt(argc, argv, "h")) != -1) {
 		switch (opt) {
@@ -55,6 +53,14 @@ int backend_init(int argc, char *argv[])
 	process_init(sample_rate, jack_get_buffer_size(client));
 
 	jack_set_process_callback(client, process, 0);
+
+	return 0;
+}
+
+int backend_activate(int argc, char *argv[])
+{
+	char *ioports[4];
+	unsigned int i;
 
 	if (jack_activate(client)) {
 		fprintf (stderr, "cannot activate client");

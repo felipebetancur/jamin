@@ -11,56 +11,51 @@
 
 #include "interface.h"
 #include "support.h"
+#include "io.h"
 #include "geq.h"
 #include "intrim.h"
 #include "process.h"
 
 GtkWidget *main_window;
 
-void backend_init(int argc, char *argv[]);
 gboolean update_meters(gpointer data);
 void cleanup();
 
-int
-main (int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 
 #ifdef ENABLE_NLS
-  bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
-  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-  textdomain (GETTEXT_PACKAGE);
+    bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+    textdomain(GETTEXT_PACKAGE);
 #endif
 
-  gtk_rc_parse("/root/.jamrc");
-  gtk_set_locale ();
-  gtk_init (&argc, &argv);
-  backend_init(argc, argv);
-  
-  add_pixmap_directory (PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
+    gtk_rc_parse("/root/.jamrc");
+    gtk_set_locale();
+    gtk_init(&argc, &argv);
+    backend_init(argc, argv);
 
-  /*
-   * The following code was added by Glade to create one of each component
-   * (except popup menus), just so that you see something after building
-   * the project. Delete any components that you don't want shown initially.
-   */
-   
-  main_window = create_window1 ();
-  gtk_widget_show (main_window);
+    add_pixmap_directory(PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
 
-  /* bind the graphic equaliser sliders to adjustments */
-  bind_geq();
-  bind_intrim();
-  g_timeout_add(100, update_meters, NULL);
-  
-  gtk_main();
+    main_window = create_window1();
+    gtk_widget_show(main_window);
 
-  /* Disconnect from JACK and stuff */
-  cleanup();
+    /* bind the graphic equaliser sliders to adjustments */
+    bind_geq();
+    bind_intrim();
+    g_timeout_add(100, update_meters, NULL);
 
-  return 0;
+    backend_activate(argc, argv);
+
+    gtk_main();
+
+    /* Disconnect from JACK and stuff */
+    cleanup();
+
+    return 0;
 }
 
 gboolean update_meters(gpointer data)
 {
-	in_meter_value(in_peak);
+    in_meter_value(in_peak);
 }

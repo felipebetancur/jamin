@@ -26,21 +26,25 @@ void geq_set_gains();
 void bind_geq()
 {
     char name[16];
-    unsigned int i, bin;
+    int i, bin;
     float last_bin, next_bin;
     GtkWidget *scale;
     const double hz_per_bin = sample_rate / (double)BINS;
+    GtkTooltips *tooltips = gtk_tooltips_new();
+    char tip[255];
+
+    for (i=0; i<EQ_BANDS; i++) {
+	geq_freqs[i] = 1000.0 * pow(10.0, (double)(i-16) * 0.1);
+	/* printf("GEQ band %d = %g Hz\n", i, geq_freqs[i]); */
+    }
 
     for (i=0; i<EQ_BANDS; i++) {
 	sprintf(name, "eqb%d", i+1);
 	scale = lookup_widget(main_window, name);
+	snprintf(tip, 255, "%.0f Hz", floor(geq_freqs[i] + 0.5));
+	gtk_tooltips_set_tip(tooltips, scale, tip, NULL);
 	geqa[i] = gtk_range_get_adjustment(GTK_RANGE(scale));
 	gtk_signal_connect(geqa[i], "value-changed", GTK_SIGNAL_FUNC(eqb_changed), (gpointer)i+1);
-    }
-
-    for (i=0; i<EQ_BANDS; i++) {
-	geq_freqs[i] = 1000.0 * pow(10.0, (double)(i-16)/10.0);
-	printf("GEQ band %d = %g Hz", i, geq_freqs[i]);
     }
 
     for (i=0; i<BANDS + 1; i++) {

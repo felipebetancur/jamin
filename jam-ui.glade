@@ -107,7 +107,10 @@
 					  <property name="orientation">GTK_PROGRESS_BOTTOM_TO_TOP</property>
 					  <property name="fraction">0</property>
 					  <property name="pulse_step">0.1</property>
-					  <property name="text" translatable="yes"></property>
+					  <property name="activity_mode">False</property>
+					  <property name="show_text">False</property>
+					  <property name="text_xalign">0.5</property>
+					  <property name="text_yalign">0.5</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -168,6 +171,8 @@
 				      <property name="show_border">True</property>
 				      <property name="tab_pos">GTK_POS_TOP</property>
 				      <property name="scrollable">False</property>
+				      <property name="tab_hborder">2</property>
+				      <property name="tab_vborder">2</property>
 				      <property name="enable_popup">False</property>
 
 				      <child>
@@ -264,7 +269,7 @@
 							      <property name="tooltip" translatable="yes">31 Hz</property>
 
 							      <child>
-								<widget class="GtkVScale" id="eq2b">
+								<widget class="GtkVScale" id="eqb2">
 								  <property name="visible">True</property>
 								  <property name="can_focus">True</property>
 								  <property name="draw_value">True</property>
@@ -336,7 +341,7 @@
 							      <property name="tooltip" translatable="yes">39 Hz</property>
 
 							      <child>
-								<widget class="GtkVScale" id="eq3b">
+								<widget class="GtkVScale" id="eqb3">
 								  <property name="visible">True</property>
 								  <property name="can_focus">True</property>
 								  <property name="draw_value">True</property>
@@ -408,7 +413,7 @@
 							      <property name="tooltip" translatable="yes">50 Hz</property>
 
 							      <child>
-								<widget class="GtkVScale" id="eq4b">
+								<widget class="GtkVScale" id="eqb4">
 								  <property name="visible">True</property>
 								  <property name="can_focus">True</property>
 								  <property name="draw_value">True</property>
@@ -480,7 +485,7 @@
 							      <property name="tooltip" translatable="yes">62 Hz</property>
 
 							      <child>
-								<widget class="GtkVScale" id="eq5b">
+								<widget class="GtkVScale" id="eqb5">
 								  <property name="visible">True</property>
 								  <property name="can_focus">True</property>
 								  <property name="draw_value">True</property>
@@ -552,7 +557,7 @@
 							      <property name="tooltip" translatable="yes">79 Hz</property>
 
 							      <child>
-								<widget class="GtkVScale" id="eq6b">
+								<widget class="GtkVScale" id="eqb6">
 								  <property name="visible">True</property>
 								  <property name="can_focus">True</property>
 								  <property name="draw_value">True</property>
@@ -624,7 +629,7 @@
 							      <property name="tooltip" translatable="yes">100 Hz</property>
 
 							      <child>
-								<widget class="GtkVScale" id="eq7b">
+								<widget class="GtkVScale" id="eqb7">
 								  <property name="visible">True</property>
 								  <property name="can_focus">True</property>
 								  <property name="draw_value">True</property>
@@ -696,7 +701,7 @@
 							      <property name="tooltip" translatable="yes">125 Hz</property>
 
 							      <child>
-								<widget class="GtkVScale" id="eq8b">
+								<widget class="GtkVScale" id="eqb8">
 								  <property name="visible">True</property>
 								  <property name="can_focus">True</property>
 								  <property name="draw_value">True</property>
@@ -768,7 +773,7 @@
 							      <property name="tooltip" translatable="yes">158 Hz</property>
 
 							      <child>
-								<widget class="GtkVScale" id="eq9b">
+								<widget class="GtkVScale" id="eqb9">
 								  <property name="visible">True</property>
 								  <property name="can_focus">True</property>
 								  <property name="draw_value">True</property>
@@ -840,7 +845,7 @@
 							      <property name="tooltip" translatable="yes">200 Hz</property>
 
 							      <child>
-								<widget class="GtkVScale" id="eq10b">
+								<widget class="GtkVScale" id="eqb10">
 								  <property name="visible">True</property>
 								  <property name="can_focus">True</property>
 								  <property name="draw_value">True</property>
@@ -912,7 +917,7 @@
 							      <property name="tooltip" translatable="yes">251 Hz</property>
 
 							      <child>
-								<widget class="GtkVScale" id="eq11b">
+								<widget class="GtkVScale" id="eqb11">
 								  <property name="visible">True</property>
 								  <property name="can_focus">True</property>
 								  <property name="draw_value">True</property>
@@ -978,7 +983,7 @@
 							  <property name="tooltip" translatable="yes">317 Hz</property>
 
 							  <child>
-							    <widget class="GtkVScale" id="eq12b">
+							    <widget class="GtkVScale" id="eqb12">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">True</property>
@@ -1037,7 +1042,7 @@
 							  <property name="tooltip" translatable="yes">400 Hz</property>
 
 							  <child>
-							    <widget class="GtkVScale" id="eq13b">
+							    <widget class="GtkVScale" id="eqb13">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">True</property>
@@ -1096,7 +1101,7 @@
 							  <property name="tooltip" translatable="yes">503 Hz</property>
 
 							  <child>
-							    <widget class="GtkVScale" id="eq14b">
+							    <widget class="GtkVScale" id="eqb14">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">True</property>
@@ -1155,7 +1160,7 @@
 							  <property name="tooltip" translatable="yes">634 Hz</property>
 
 							  <child>
-							    <widget class="GtkVScale" id="eq15b">
+							    <widget class="GtkVScale" id="eqb15">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">True</property>
@@ -1214,7 +1219,7 @@
 							  <property name="tooltip" translatable="yes">800 Hz</property>
 
 							  <child>
-							    <widget class="GtkVScale" id="eq16b">
+							    <widget class="GtkVScale" id="eqb16">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">True</property>
@@ -1273,7 +1278,7 @@
 							  <property name="tooltip" translatable="yes">1000 Hz</property>
 
 							  <child>
-							    <widget class="GtkVScale" id="eq17b">
+							    <widget class="GtkVScale" id="eqb17">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">True</property>
@@ -1332,7 +1337,7 @@
 							  <property name="tooltip" translatable="yes">1200 Hz</property>
 
 							  <child>
-							    <widget class="GtkVScale" id="eq18b">
+							    <widget class="GtkVScale" id="eqb18">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">True</property>
@@ -1391,7 +1396,7 @@
 							  <property name="tooltip" translatable="yes">1500 Hz</property>
 
 							  <child>
-							    <widget class="GtkVScale" id="eq19b">
+							    <widget class="GtkVScale" id="eqb19">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">True</property>
@@ -1450,7 +1455,7 @@
 							  <property name="tooltip" translatable="yes">2000 Hz</property>
 
 							  <child>
-							    <widget class="GtkVScale" id="eq20b">
+							    <widget class="GtkVScale" id="eqb20">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">True</property>
@@ -1498,6 +1503,65 @@
 						  </child>
 
 						  <child>
+						    <widget class="GtkVBox" id="vbox100">
+						      <property name="visible">True</property>
+						      <property name="homogeneous">False</property>
+						      <property name="spacing">0</property>
+
+						      <child>
+							<widget class="GtkEventBox" id="eventbox49">
+							  <property name="visible">True</property>
+							  <property name="tooltip" translatable="yes">2000 Hz</property>
+
+							  <child>
+							    <widget class="GtkVScale" id="eqb21">
+							      <property name="visible">True</property>
+							      <property name="can_focus">True</property>
+							      <property name="draw_value">True</property>
+							      <property name="value_pos">GTK_POS_TOP</property>
+							      <property name="digits">0</property>
+							      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+							      <property name="inverted">True</property>
+							      <property name="adjustment">0 -70 24 1 6 0</property>
+							    </widget>
+							  </child>
+							</widget>
+							<packing>
+							  <property name="padding">0</property>
+							  <property name="expand">True</property>
+							  <property name="fill">True</property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="GtkLabel" id="label213">
+							  <property name="visible">True</property>
+							  <property name="label" translatable="yes">2K5</property>
+							  <property name="use_underline">False</property>
+							  <property name="use_markup">False</property>
+							  <property name="justify">GTK_JUSTIFY_LEFT</property>
+							  <property name="wrap">False</property>
+							  <property name="selectable">False</property>
+							  <property name="xalign">0.5</property>
+							  <property name="yalign">0.5</property>
+							  <property name="xpad">0</property>
+							  <property name="ypad">0</property>
+							</widget>
+							<packing>
+							  <property name="padding">0</property>
+							  <property name="expand">False</property>
+							  <property name="fill">False</property>
+							</packing>
+						      </child>
+						    </widget>
+						    <packing>
+						      <property name="padding">0</property>
+						      <property name="expand">True</property>
+						      <property name="fill">True</property>
+						    </packing>
+						  </child>
+
+						  <child>
 						    <widget class="GtkVBox" id="vbox71">
 						      <property name="visible">True</property>
 						      <property name="homogeneous">False</property>
@@ -1509,7 +1573,7 @@
 							  <property name="tooltip" translatable="yes">3200 Hz</property>
 
 							  <child>
-							    <widget class="GtkVScale" id="eq21b">
+							    <widget class="GtkVScale" id="eqb22">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">True</property>
@@ -1568,7 +1632,7 @@
 							  <property name="tooltip" translatable="yes">4000 Hz</property>
 
 							  <child>
-							    <widget class="GtkVScale" id="eq22b">
+							    <widget class="GtkVScale" id="eqb23">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">True</property>
@@ -1627,7 +1691,7 @@
 							  <property name="tooltip" translatable="yes">5000 Hz</property>
 
 							  <child>
-							    <widget class="GtkVScale" id="eq23b">
+							    <widget class="GtkVScale" id="eqb24">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">True</property>
@@ -1690,7 +1754,7 @@
 							      <property name="visible">True</property>
 
 							      <child>
-								<widget class="GtkVScale" id="eq24b">
+								<widget class="GtkVScale" id="eqb25">
 								  <property name="visible">True</property>
 								  <property name="can_focus">True</property>
 								  <property name="draw_value">True</property>
@@ -1751,7 +1815,7 @@
 							  <property name="tooltip" translatable="yes">8000 Hz</property>
 
 							  <child>
-							    <widget class="GtkVScale" id="eq25b">
+							    <widget class="GtkVScale" id="eqb26">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">True</property>
@@ -1810,7 +1874,7 @@
 							  <property name="tooltip" translatable="yes">10 KHz</property>
 
 							  <child>
-							    <widget class="GtkVScale" id="eq26b">
+							    <widget class="GtkVScale" id="eqb27">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">True</property>
@@ -1869,7 +1933,7 @@
 							  <property name="tooltip" translatable="yes">12 KHz</property>
 
 							  <child>
-							    <widget class="GtkVScale" id="eq27b">
+							    <widget class="GtkVScale" id="eqb28">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">True</property>
@@ -1928,7 +1992,7 @@
 							  <property name="tooltip" translatable="yes">16 KHz</property>
 
 							  <child>
-							    <widget class="GtkVScale" id="eq28b">
+							    <widget class="GtkVScale" id="eqb29">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">True</property>
@@ -1951,6 +2015,65 @@
 							<widget class="GtkLabel" id="label158">
 							  <property name="visible">True</property>
 							  <property name="label" translatable="yes">16K</property>
+							  <property name="use_underline">False</property>
+							  <property name="use_markup">False</property>
+							  <property name="justify">GTK_JUSTIFY_LEFT</property>
+							  <property name="wrap">False</property>
+							  <property name="selectable">False</property>
+							  <property name="xalign">0.5</property>
+							  <property name="yalign">0.5</property>
+							  <property name="xpad">0</property>
+							  <property name="ypad">0</property>
+							</widget>
+							<packing>
+							  <property name="padding">0</property>
+							  <property name="expand">False</property>
+							  <property name="fill">False</property>
+							</packing>
+						      </child>
+						    </widget>
+						    <packing>
+						      <property name="padding">0</property>
+						      <property name="expand">True</property>
+						      <property name="fill">True</property>
+						    </packing>
+						  </child>
+
+						  <child>
+						    <widget class="GtkVBox" id="vbox101">
+						      <property name="visible">True</property>
+						      <property name="homogeneous">False</property>
+						      <property name="spacing">0</property>
+
+						      <child>
+							<widget class="GtkEventBox" id="eventbox50">
+							  <property name="visible">True</property>
+							  <property name="tooltip" translatable="yes">2000 Hz</property>
+
+							  <child>
+							    <widget class="GtkVScale" id="eqb30">
+							      <property name="visible">True</property>
+							      <property name="can_focus">True</property>
+							      <property name="draw_value">True</property>
+							      <property name="value_pos">GTK_POS_TOP</property>
+							      <property name="digits">0</property>
+							      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+							      <property name="inverted">True</property>
+							      <property name="adjustment">0 -70 24 1 6 0</property>
+							    </widget>
+							  </child>
+							</widget>
+							<packing>
+							  <property name="padding">0</property>
+							  <property name="expand">True</property>
+							  <property name="fill">True</property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="GtkLabel" id="alabel">
+							  <property name="visible">True</property>
+							  <property name="label" translatable="yes">20K</property>
 							  <property name="use_underline">False</property>
 							  <property name="use_markup">False</property>
 							  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -4458,6 +4581,10 @@
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
+						  <property name="activity_mode">False</property>
+						  <property name="show_text">False</property>
+						  <property name="text_xalign">0.5</property>
+						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -4527,6 +4654,10 @@
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
+						  <property name="activity_mode">False</property>
+						  <property name="show_text">False</property>
+						  <property name="text_xalign">0.5</property>
+						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -4911,6 +5042,10 @@
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
+						  <property name="activity_mode">False</property>
+						  <property name="show_text">False</property>
+						  <property name="text_xalign">0.5</property>
+						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -4980,6 +5115,10 @@
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
+						  <property name="activity_mode">False</property>
+						  <property name="show_text">False</property>
+						  <property name="text_xalign">0.5</property>
+						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -5364,6 +5503,10 @@
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
+						  <property name="activity_mode">False</property>
+						  <property name="show_text">False</property>
+						  <property name="text_xalign">0.5</property>
+						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -5433,6 +5576,10 @@
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
+						  <property name="activity_mode">False</property>
+						  <property name="show_text">False</property>
+						  <property name="text_xalign">0.5</property>
+						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -5704,6 +5851,10 @@
 								      <property name="orientation">GTK_PROGRESS_BOTTOM_TO_TOP</property>
 								      <property name="fraction">0</property>
 								      <property name="pulse_step">0.1</property>
+								      <property name="activity_mode">False</property>
+								      <property name="show_text">False</property>
+								      <property name="text_xalign">0.5</property>
+								      <property name="text_yalign">0.5</property>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -5848,6 +5999,10 @@
 								      <property name="orientation">GTK_PROGRESS_BOTTOM_TO_TOP</property>
 								      <property name="fraction">0</property>
 								      <property name="pulse_step">0.1</property>
+								      <property name="activity_mode">False</property>
+								      <property name="show_text">False</property>
+								      <property name="text_xalign">0.5</property>
+								      <property name="text_yalign">0.5</property>
 								    </widget>
 								    <packing>
 								      <property name="padding">5</property>
