@@ -16,9 +16,7 @@ TODO (owner)
 - Commit documentation to CVS (Ron)
 - Finish context sensitive help verbiage (everyone)
 - set JACK port latencies correctly (Jack, Steve)
-- make output gain work (Steve)
 - make "boost" less awful (Steve)
-- make FFTW double warning scarier (Steve)
 
 
 TO THINK ABOUT
