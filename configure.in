@@ -28,6 +28,9 @@ AC_ARG_ENABLE(double-fft, [  --enable-double-fft Enable double precision fourier
 # Checks for libraries.
 AC_CHECK_LIB([pthread], [pthread_self],,
 	[AC_MSG_ERROR(You need libpthread installed)])
+AC_CHECK_FUNC(sched_getscheduler,,
+	[AC_MSG_ERROR(POSIX scheduler support not found)])
+
 PKG_CHECK_MODULES(JACK, jack >= 0.80.0)
 AC_CHECK_LIB(jack,jack_ringbuffer_create,
 	[AC_DEFINE(HAVE_JACK_RINGBUFFER,,[JACK has ringbuffer support])],)
