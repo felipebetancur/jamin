@@ -66,7 +66,10 @@ static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
                        comp_start_x[3], comp_start_y[3], comp_end_x[3], 
                        comp_end_y[3], EQ_freq_xinterp[EQ_INTERP + 1],
                        EQ_freq_yinterp[EQ_INTERP + 1], 
-                       EQ_notch_gain[NOTCHES] = {0.0, 0.0, 0.0, 0.0, 0.0};
+                       EQ_notch_gain[NOTCHES] = {0.0, 0.0, 0.0, 0.0, 0.0},
+                       EQ_x_notched[EQ_INTERP + 1], 
+                       EQ_y_notched[EQ_INTERP + 1], geq_min_gain = -12.0, 
+                       geq_max_gain = 12.0;
 static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0, 
                        EQ_length = 0, comp_realized[3] = {0, 0, 0}, 
                        EQ_cleared = 1, EQ_realized = 0, xover_active = 0,
@@ -562,6 +565,46 @@ void EQ_write_annotation (int x, int y, float db)
 }
 
 
+void 
+insert_notch ()
+{
+    int        i;
+
+
+    for (i = 0 ; i < EQ_length ; i++)
+      {
+        EQ_x_notched[i] = EQ_xinterp[i];
+        if (i <= EQ_notch_index[0])
+          {
+            EQ_y_notched[i] = EQ_yinterp[i] + EQ_notch_gain[0];
+          }
+        else if (i >= (EQ_notch_index[1] - EQ_notch_width[1]) &&
+                 i <= (EQ_notch_index[1] + EQ_notch_width[1]))
+          {
+            EQ_y_notched[i] = EQ_yinterp[i] + EQ_notch_gain[1];
+          }
+        else if (i >= (EQ_notch_index[2] - EQ_notch_width[2]) &&
+                 i <= (EQ_notch_index[2] + EQ_notch_width[2]))
+          {
+            EQ_y_notched[i] = EQ_yinterp[i] + EQ_notch_gain[2];
+          }
+        else if (i >= (EQ_notch_index[3] - EQ_notch_width[3]) &&
+                 i <= (EQ_notch_index[3] + EQ_notch_width[3]))
+          {
+            EQ_y_notched[i] = EQ_yinterp[i] + EQ_notch_gain[3];
+          }
+        else if (i >= EQ_notch_index[4])
+          {
+            EQ_y_notched[i] = EQ_yinterp[i] + EQ_notch_gain[4];
+          }
+        else
+          {
+            EQ_y_notched[i] = EQ_yinterp[i];
+          }
+      }
+}
+
+
 void
 draw_EQ_curve ()
 {
@@ -651,8 +694,13 @@ draw_EQ_curve ()
     /*  If we've messed with the graphics EQ sliders, recompute the splined 
         curve.  */
 
-    if (EQ_mod) interpolate (EQ_interval, EQ_BANDS, EQ_start, EQ_end, 
-        &EQ_length, x, y, EQ_xinterp, EQ_yinterp);
+    if (EQ_mod) 
+      {
+        interpolate (EQ_interval, EQ_BANDS, EQ_start, EQ_end, 
+            &EQ_length, x, y, EQ_xinterp, EQ_yinterp);
+
+        insert_notch ();
+      }
 
 
     /*  Plot the curve.  */
@@ -660,10 +708,17 @@ draw_EQ_curve ()
     gdk_gc_set_foreground (EQ_gc, &red);
     for (i = 0 ; i < EQ_length ; i++)
       {
+        /*
         x1 = NINT (((EQ_xinterp[i] - l_low2mid_adj->lower) / 
             EQ_curve_range_x) * EQ_curve_width);
 
         y1 = EQ_curve_height - NINT ((((EQ_yinterp[i] * 20.0) - 
+            l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
+        */
+        x1 = NINT (((EQ_x_notched[i] - l_low2mid_adj->lower) / 
+            EQ_curve_range_x) * EQ_curve_width);
+
+        y1 = EQ_curve_height - NINT ((((EQ_y_notched[i] * 20.0) - 
             l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
 
         if (i) gdk_draw_line (EQ_drawable, EQ_gc, x0, y0, x1, y1);
@@ -678,11 +733,17 @@ draw_EQ_curve ()
     for (i = 0 ; i < NOTCHES ; i++)
       {
         gdk_gc_set_foreground (EQ_gc, &green);
-
+        /*
         x1 = NINT (((EQ_xinterp[EQ_notch_index[i]] - l_low2mid_adj->lower) / 
             EQ_curve_range_x) * EQ_curve_width); 
 
         y1 = EQ_curve_height - NINT ((((EQ_yinterp[EQ_notch_index[i]] * 20.0) -
+            l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
+        */
+        x1 = NINT (((EQ_x_notched[EQ_notch_index[i]] - l_low2mid_adj->lower) / 
+            EQ_curve_range_x) * EQ_curve_width); 
+
+        y1 = EQ_curve_height - NINT ((((EQ_y_notched[EQ_notch_index[i]] * 20.0) -
             l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
 
         gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, 
@@ -693,8 +754,18 @@ draw_EQ_curve ()
             x1 - NOTCH_HANDLE_HALF_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
             NOTCH_HANDLE_WIDTH, NOTCH_HANDLE_HEIGHT);
 
-        EQ_notch_handle[0][1][i] = x1;
+        EQ_notch_handle[0][0][i] = EQ_notch_handle[0][1][i] = 
+            EQ_notch_handle[0][2][i]= x1;
         EQ_notch_handle[1][1][i] = y1;
+
+        if (!i)
+          {
+            EQ_notch_handle[0][0][i] = 0;
+          }
+        else
+          {
+            EQ_notch_handle[0][2][i] = EQ_curve_width;
+          }
 
 
         EQ_write_annotation (x1, y1, EQ_notch_gain[i]);
@@ -705,14 +776,20 @@ draw_EQ_curve ()
             gdk_gc_set_foreground (EQ_gc, &green);
 
             x0 = EQ_notch_index[i] - EQ_notch_width[i];
-            
+            /*
             x1 = NINT (((EQ_xinterp[x0] - l_low2mid_adj->lower) / 
+                EQ_curve_range_x) * EQ_curve_width); 
+            */
+            x1 = NINT (((EQ_x_notched[x0] - l_low2mid_adj->lower) / 
                 EQ_curve_range_x) * EQ_curve_width); 
 
             if (EQ_notch_handle[0][1][i] - x1 < NOTCH_HANDLE_HALF_WIDTH) 
                 x1 = EQ_notch_handle[0][1][i] - NOTCH_HANDLE_WIDTH;
-
+            /*
             y1 = EQ_curve_height - NINT ((((EQ_yinterp[x0] * 20.0) -
+                l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
+            */
+            y1 = EQ_curve_height - NINT ((((EQ_y_notched[x0] * 20.0) -
                 l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
 
             gdk_draw_arc (EQ_drawable, EQ_gc, TRUE, 
@@ -730,14 +807,20 @@ draw_EQ_curve ()
             gdk_gc_set_foreground (EQ_gc, &green);
 
             x0 = EQ_notch_index[i] + EQ_notch_width[i];
-            
+            /*            
             x1 = NINT (((EQ_xinterp[x0] - l_low2mid_adj->lower) / 
+                EQ_curve_range_x) * EQ_curve_width); 
+            */
+            x1 = NINT (((EQ_x_notched[x0] - l_low2mid_adj->lower) / 
                 EQ_curve_range_x) * EQ_curve_width); 
 
             if (x1 - EQ_notch_handle[0][1][i] < NOTCH_HANDLE_HALF_WIDTH) 
                 x1 = EQ_notch_handle[0][1][i] + NOTCH_HANDLE_WIDTH;
-
+            /*
             y1 = EQ_curve_height - NINT ((((EQ_yinterp[x0] * 20.0) -
+                l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
+            */
+            y1 = EQ_curve_height - NINT ((((EQ_y_notched[x0] * 20.0) -
                 l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
 
             gdk_draw_arc (EQ_drawable, EQ_gc, TRUE, 
@@ -915,12 +998,11 @@ on_EQ_curve_event_box_motion_notify_event
 
                     if (event->state & GDK_SHIFT_MASK)
                       {
-                        /*  Assuming +-90dbFS.  */
-
                         if (y>= 0 && y <= EQ_curve_height)
                           {
-                            EQ_notch_gain[i] = -90.0 + (180.0 * 
-                                ((EQ_curve_height - y) / EQ_curve_height));
+                            EQ_notch_gain[i] = geq_min_gain + ((geq_max_gain - 
+                                geq_min_gain) * ((EQ_curve_height - y) / 
+                                EQ_curve_height));
 
 
                             /*  We only need to rewrite the annotation, not
@@ -939,7 +1021,6 @@ on_EQ_curve_event_box_motion_notify_event
                         if (x >= 0 && x <= EQ_curve_width)
                           {
                             EQ_notch_index[i] = nearest_x (freq);
-                            draw_EQ_curve ();
                             drag = 1;
                             notch_flag = i;
                             break;
@@ -965,7 +1046,6 @@ on_EQ_curve_event_box_motion_notify_event
                           }
                         if (!EQ_notch_width[i]) EQ_notch_width[i] = 1;
 
-                        draw_EQ_curve ();
                         drag = 1;
                         notch_flag = i;
                         break;
@@ -974,9 +1054,14 @@ on_EQ_curve_event_box_motion_notify_event
               }
 
 
-            /*  If we're not dragging a notch filter...  */
+            /*  If we're dragging a notch filter...  */
 
-            if (!drag)
+            if (drag)
+              {
+                insert_notch ();
+                draw_EQ_curve ();
+              }
+            else
               {
                 /*  If we pass over any of the handles we want to change the
                     cursor.  */
@@ -1316,17 +1401,30 @@ on_EQ_curve_event_box_button_press_event
                 y, EQ_xinterp, EQ_yinterp);
 
 
+            /*  Make sure we have enough space.  */
+
+            size = EQ_length * sizeof (float);
+            x = (float *) realloc (x, size);
+            y = (float *) realloc (y, size);
+
+            if (y == NULL)
+              {
+                perror (_("Allocating y in callbacks.c"));
+                clean_quit ();
+              }
+
+
             /*  Recompute the splined curve in the freq domain for setting 
                 the eq_coefs.  */
 
-            for (i = 0 ; i < j ; i++)
-                x[i] = pow (10.0, (double) x[i]);
+            for (i = 0 ; i < EQ_length ; i++)
+                x[i] = pow (10.0, (double) EQ_xinterp[i]);
 
             interval = ((l_geq_freqs[EQ_BANDS - 1]) - l_geq_freqs[0]) / 
                 EQ_INTERP;
 
-            interpolate (interval, j, l_geq_freqs[0], 
-                l_geq_freqs[EQ_BANDS - 1], &EQ_length, x, y, 
+            interpolate (interval, EQ_length, l_geq_freqs[0], 
+                l_geq_freqs[EQ_BANDS - 1], &EQ_length, x, EQ_yinterp, 
                 EQ_freq_xinterp, EQ_freq_yinterp);
 
 
@@ -1335,6 +1433,11 @@ on_EQ_curve_event_box_button_press_event
 
 
             EQ_input_points = 0;
+
+
+            /*  Replace shelf and notch areas.  */
+
+            insert_notch ();
 
 
             /*  Set the graphic EQ sliders based on the hand-drawn curve.  */
@@ -1552,7 +1655,8 @@ void
 on_geq_min_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
                                         gpointer         user_data)
 {
-    geq_set_range (gtk_spin_button_get_value (spinbutton), geq_get_adjustment(0)->upper);
+    geq_min_gain = gtk_spin_button_get_value (spinbutton);
+    geq_set_range (geq_min_gain, geq_get_adjustment(0)->upper);
 }
 
 
@@ -1560,7 +1664,8 @@ void
 on_geq_max_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
                                         gpointer         user_data)
 {
-    geq_set_range (geq_get_adjustment(0)->lower, gtk_spin_button_get_value (spinbutton));
+    geq_max_gain = gtk_spin_button_get_value (spinbutton);
+    geq_set_range (geq_get_adjustment(0)->lower, geq_max_gain);
 }
 
 
