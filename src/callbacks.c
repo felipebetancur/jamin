@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.102 2003/11/21 02:16:55 joq Exp $
+ *  $Id: callbacks.c,v 1.103 2003/11/21 03:42:11 joq Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -45,6 +45,7 @@
 #include "state.h"
 #include "db.h"
 #include "status-ui.h"
+#include "io-menu.h"
 #include "transport.h"
 #include "scenes.h"
 #include "help.h"
@@ -1715,6 +1716,7 @@ on_ports1_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
     fprintf(stderr, "Ports menu selected.\n");
+    iomenu_scan_port_names();
 }
 
 /* Ports>In menu */

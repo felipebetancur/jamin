@@ -11,12 +11,13 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.h,v 1.2 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: io-menu.h,v 1.3 2003/11/21 03:42:11 joq Exp $
  */
 
 #ifndef IO_MENU_H
 #define IO_MENU_H
 
 void bind_iomenu();
+void iomenu_scan_port_names();
 
 #endif
