@@ -30,7 +30,7 @@ static inline void lim_connect(plugin *p, lim_settings *s, float *left, float
 
 	/* Make sure that it is set to something */
 	s->limit = 0.0f;
-	s->delay = 0.01f;
+	s->delay = 0.5f;
 }
 
 #endif

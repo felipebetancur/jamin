@@ -19,6 +19,7 @@ comp_settings compressors[3];
 lim_settings limiter;
 float eq_coefs[BINS]; /* Linear gain of each FFT bin */
 float in_trim_gain = 1.0f;
+float lim_peak[2];
 
 float in_peak;
 
@@ -36,7 +37,6 @@ static float *comp;
 static float *comp_tmp;
 static float *out_tmp[2][3];
 
-static float lim_peak[2];
 
 /* Data for plugins */
 plugin *comp_plugin, *lim_plugin;

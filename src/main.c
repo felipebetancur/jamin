@@ -20,6 +20,8 @@
 #include "support.h"
 #include "io.h"
 #include "geq.h"
+#include "limiter-ui.h"
+#include "compressor-ui.h"
 #include "intrim.h"
 #include "process.h"
 
@@ -58,6 +60,9 @@ int main(int argc, char *argv[])
     /* bind the graphic equaliser sliders to adjustments */
     bind_geq();
     bind_intrim();
+    bind_limiter();
+    bind_compressors();
+
     g_timeout_add(100, update_meters, NULL);
 
     backend_activate(argc, argv);
@@ -73,6 +78,8 @@ int main(int argc, char *argv[])
 gboolean update_meters(gpointer data)
 {
     in_meter_value(in_peak);
+    limiter_meters_update();
+    compressor_meters_update();
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

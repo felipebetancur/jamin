@@ -55,7 +55,7 @@
 		      <child>
 			<widget class="GtkVScale" id="in_trim_scale">
 			  <property name="width_request">30</property>
-			  <property name="height_request">215</property>
+			  <property name="height_request">200</property>
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="draw_value">True</property>
@@ -63,7 +63,7 @@
 			  <property name="digits">1</property>
 			  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 			  <property name="inverted">True</property>
-			  <property name="adjustment">0 -12 0 1 6 0</property>
+			  <property name="adjustment">0 -12 12 1 6 0</property>
 			  <signal name="value_changed" handler="on_in_trim_scale_value_changed" last_modification_time="Mon, 14 Apr 2003 17:05:35 GMT"/>
 			</widget>
 			<packing>
@@ -2072,7 +2072,7 @@
 			    <packing>
 			      <property name="padding">0</property>
 			      <property name="expand">False</property>
-			      <property name="fill">False</property>
+			      <property name="fill">True</property>
 			    </packing>
 			  </child>
 
@@ -3610,7 +3610,7 @@
 						      <property name="spacing">0</property>
 
 						      <child>
-							<widget class="GtkVScale" id="vscale38">
+							<widget class="GtkVScale" id="comp_ra_1">
 							  <property name="visible">True</property>
 							  <property name="can_focus">True</property>
 							  <property name="draw_value">True</property>
@@ -3649,7 +3649,7 @@
 						      </child>
 
 						      <child>
-							<widget class="GtkVScale" id="vscale39">
+							<widget class="GtkVScale" id="comp_kn_1">
 							  <property name="visible">True</property>
 							  <property name="can_focus">True</property>
 							  <property name="draw_value">True</property>
@@ -3724,7 +3724,7 @@
 						  </child>
 
 						  <child>
-						    <widget class="GtkVScale" id="vscale37">
+						    <widget class="GtkVScale" id="comp_ma_1">
 						      <property name="visible">True</property>
 						      <property name="can_focus">True</property>
 						      <property name="draw_value">True</property>
@@ -3743,7 +3743,7 @@
 						  </child>
 
 						  <child>
-						    <widget class="GtkVScale" id="vscale36">
+						    <widget class="GtkVScale" id="comp_th_1">
 						      <property name="visible">True</property>
 						      <property name="can_focus">True</property>
 						      <property name="draw_value">True</property>
@@ -3762,7 +3762,7 @@
 						  </child>
 
 						  <child>
-						    <widget class="GtkVScale" id="vscale35">
+						    <widget class="GtkVScale" id="comp_re_1">
 						      <property name="visible">True</property>
 						      <property name="can_focus">True</property>
 						      <property name="draw_value">True</property>
@@ -3781,7 +3781,7 @@
 						  </child>
 
 						  <child>
-						    <widget class="GtkVScale" id="vscale34">
+						    <widget class="GtkVScale" id="comp_at_1">
 						      <property name="visible">True</property>
 						      <property name="can_focus">True</property>
 						      <property name="draw_value">True</property>
@@ -3823,22 +3823,6 @@
 					      <property name="homogeneous">False</property>
 					      <property name="row_spacing">0</property>
 					      <property name="column_spacing">0</property>
-
-					      <child>
-						<widget class="GtkProgressBar" id="progressbar15">
-						  <property name="visible">True</property>
-						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
-						  <property name="fraction">0</property>
-						  <property name="pulse_step">0.1</property>
-						</widget>
-						<packing>
-						  <property name="left_attach">1</property>
-						  <property name="right_attach">2</property>
-						  <property name="top_attach">1</property>
-						  <property name="bottom_attach">2</property>
-						  <property name="y_options"></property>
-						</packing>
-					      </child>
 
 					      <child>
 						<widget class="GtkLabel" id="label76">
@@ -3895,7 +3879,23 @@
 					      </child>
 
 					      <child>
-						<widget class="GtkProgressBar" id="progressbar14">
+						<widget class="GtkProgressBar" id="comp_ga_1">
+						  <property name="visible">True</property>
+						  <property name="orientation">GTK_PROGRESS_RIGHT_TO_LEFT</property>
+						  <property name="fraction">0</property>
+						  <property name="pulse_step">0.1</property>
+						</widget>
+						<packing>
+						  <property name="left_attach">1</property>
+						  <property name="right_attach">2</property>
+						  <property name="top_attach">1</property>
+						  <property name="bottom_attach">2</property>
+						  <property name="y_options"></property>
+						</packing>
+					      </child>
+
+					      <child>
+						<widget class="GtkProgressBar" id="comp_le_1">
 						  <property name="visible">True</property>
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
@@ -3906,8 +3906,7 @@
 						  <property name="right_attach">2</property>
 						  <property name="top_attach">0</property>
 						  <property name="bottom_attach">1</property>
-						  <property name="x_options">fill</property>
-						  <property name="y_options">expand</property>
+						  <property name="y_options"></property>
 						</packing>
 					      </child>
 					    </widget>
@@ -4083,7 +4082,7 @@
 						      <property name="spacing">0</property>
 
 						      <child>
-							<widget class="GtkVScale" id="vscale47">
+							<widget class="GtkVScale" id="comp_ra_2">
 							  <property name="visible">True</property>
 							  <property name="can_focus">True</property>
 							  <property name="draw_value">True</property>
@@ -4122,7 +4121,7 @@
 						      </child>
 
 						      <child>
-							<widget class="GtkVScale" id="vscale48">
+							<widget class="GtkVScale" id="comp_kn_2">
 							  <property name="visible">True</property>
 							  <property name="can_focus">True</property>
 							  <property name="draw_value">True</property>
@@ -4173,7 +4172,7 @@
 						  </child>
 
 						  <child>
-						    <widget class="GtkVScale" id="vscale46">
+						    <widget class="GtkVScale" id="comp_ma_2">
 						      <property name="visible">True</property>
 						      <property name="can_focus">True</property>
 						      <property name="draw_value">True</property>
@@ -4192,7 +4191,7 @@
 						  </child>
 
 						  <child>
-						    <widget class="GtkVScale" id="vscale45">
+						    <widget class="GtkVScale" id="comp_th_2">
 						      <property name="visible">True</property>
 						      <property name="can_focus">True</property>
 						      <property name="draw_value">True</property>
@@ -4211,7 +4210,7 @@
 						  </child>
 
 						  <child>
-						    <widget class="GtkVScale" id="vscale44">
+						    <widget class="GtkVScale" id="comp_re_2">
 						      <property name="visible">True</property>
 						      <property name="can_focus">True</property>
 						      <property name="draw_value">True</property>
@@ -4230,7 +4229,7 @@
 						  </child>
 
 						  <child>
-						    <widget class="GtkVScale" id="vscale43">
+						    <widget class="GtkVScale" id="comp_at_2">
 						      <property name="visible">True</property>
 						      <property name="can_focus">True</property>
 						      <property name="draw_value">True</property>
@@ -4273,22 +4272,6 @@
 					      <property name="homogeneous">False</property>
 					      <property name="row_spacing">0</property>
 					      <property name="column_spacing">0</property>
-
-					      <child>
-						<widget class="GtkProgressBar" id="progressbar22">
-						  <property name="visible">True</property>
-						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
-						  <property name="fraction">0</property>
-						  <property name="pulse_step">0.1</property>
-						</widget>
-						<packing>
-						  <property name="left_attach">1</property>
-						  <property name="right_attach">2</property>
-						  <property name="top_attach">1</property>
-						  <property name="bottom_attach">2</property>
-						  <property name="y_options"></property>
-						</packing>
-					      </child>
 
 					      <child>
 						<widget class="GtkLabel" id="label92">
@@ -4345,7 +4328,23 @@
 					      </child>
 
 					      <child>
-						<widget class="GtkProgressBar" id="progressbar23">
+						<widget class="GtkProgressBar" id="comp_ga_2">
+						  <property name="visible">True</property>
+						  <property name="orientation">GTK_PROGRESS_RIGHT_TO_LEFT</property>
+						  <property name="fraction">0</property>
+						  <property name="pulse_step">0.1</property>
+						</widget>
+						<packing>
+						  <property name="left_attach">1</property>
+						  <property name="right_attach">2</property>
+						  <property name="top_attach">1</property>
+						  <property name="bottom_attach">2</property>
+						  <property name="y_options"></property>
+						</packing>
+					      </child>
+
+					      <child>
+						<widget class="GtkProgressBar" id="comp_le_2">
 						  <property name="visible">True</property>
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
@@ -4356,8 +4355,7 @@
 						  <property name="right_attach">2</property>
 						  <property name="top_attach">0</property>
 						  <property name="bottom_attach">1</property>
-						  <property name="x_options">fill</property>
-						  <property name="y_options">expand</property>
+						  <property name="y_options"></property>
 						</packing>
 					      </child>
 					    </widget>
@@ -4533,7 +4531,7 @@
 						      <property name="spacing">0</property>
 
 						      <child>
-							<widget class="GtkVScale" id="vscale22">
+							<widget class="GtkVScale" id="comp_ra_3">
 							  <property name="visible">True</property>
 							  <property name="can_focus">True</property>
 							  <property name="draw_value">True</property>
@@ -4572,7 +4570,7 @@
 						      </child>
 
 						      <child>
-							<widget class="GtkVScale" id="vscale23">
+							<widget class="GtkVScale" id="comp_kn_3">
 							  <property name="visible">True</property>
 							  <property name="can_focus">True</property>
 							  <property name="draw_value">True</property>
@@ -4623,7 +4621,7 @@
 						  </child>
 
 						  <child>
-						    <widget class="GtkVScale" id="vscale18">
+						    <widget class="GtkVScale" id="comp_at_3">
 						      <property name="visible">True</property>
 						      <property name="can_focus">True</property>
 						      <property name="draw_value">True</property>
@@ -4642,7 +4640,7 @@
 						  </child>
 
 						  <child>
-						    <widget class="GtkVScale" id="vscale19">
+						    <widget class="GtkVScale" id="comp_re_3">
 						      <property name="visible">True</property>
 						      <property name="can_focus">True</property>
 						      <property name="draw_value">True</property>
@@ -4661,7 +4659,7 @@
 						  </child>
 
 						  <child>
-						    <widget class="GtkVScale" id="vscale20">
+						    <widget class="GtkVScale" id="comp_th_3">
 						      <property name="visible">True</property>
 						      <property name="can_focus">True</property>
 						      <property name="draw_value">True</property>
@@ -4680,7 +4678,7 @@
 						  </child>
 
 						  <child>
-						    <widget class="GtkVScale" id="vscale21">
+						    <widget class="GtkVScale" id="comp_ma_3">
 						      <property name="visible">True</property>
 						      <property name="can_focus">True</property>
 						      <property name="draw_value">True</property>
@@ -4778,7 +4776,23 @@
 					      </child>
 
 					      <child>
-						<widget class="GtkProgressBar" id="progressbar21">
+						<widget class="GtkProgressBar" id="comp_ga_3">
+						  <property name="visible">True</property>
+						  <property name="orientation">GTK_PROGRESS_RIGHT_TO_LEFT</property>
+						  <property name="fraction">0</property>
+						  <property name="pulse_step">0.1</property>
+						</widget>
+						<packing>
+						  <property name="left_attach">1</property>
+						  <property name="right_attach">2</property>
+						  <property name="top_attach">1</property>
+						  <property name="bottom_attach">2</property>
+						  <property name="y_options"></property>
+						</packing>
+					      </child>
+
+					      <child>
+						<widget class="GtkProgressBar" id="comp_le_3">
 						  <property name="visible">True</property>
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
@@ -4789,23 +4803,6 @@
 						  <property name="right_attach">2</property>
 						  <property name="top_attach">0</property>
 						  <property name="bottom_attach">1</property>
-						  <property name="x_options">fill</property>
-						  <property name="y_options">expand</property>
-						</packing>
-					      </child>
-
-					      <child>
-						<widget class="GtkProgressBar" id="progressbar20">
-						  <property name="visible">True</property>
-						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
-						  <property name="fraction">0</property>
-						  <property name="pulse_step">0.1</property>
-						</widget>
-						<packing>
-						  <property name="left_attach">1</property>
-						  <property name="right_attach">2</property>
-						  <property name="top_attach">1</property>
-						  <property name="bottom_attach">2</property>
 						  <property name="y_options"></property>
 						</packing>
 					      </child>
@@ -4869,33 +4866,69 @@
 			  <property name="spacing">0</property>
 
 			  <child>
-			    <widget class="GtkHBox" id="hbox7">
-			      <property name="width_request">490</property>
-			      <property name="height_request">147</property>
+			    <widget class="GtkFrame" id="frame11">
 			      <property name="visible">True</property>
-			      <property name="homogeneous">False</property>
-			      <property name="spacing">0</property>
+			      <property name="label_xalign">0.5</property>
+			      <property name="label_yalign">0.5</property>
+			      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
 
 			      <child>
-				<widget class="GtkVBox" id="vbox104">
-				  <property name="width_request">330</property>
-				  <property name="height_request">26</property>
+				<widget class="GtkDrawingArea" id="drawingarea3">
+				  <property name="width_request">140</property>
+				  <property name="height_request">140</property>
+				  <property name="visible">True</property>
+				</widget>
+			      </child>
+
+			      <child>
+				<widget class="GtkLabel" id="label220">
+				  <property name="visible">True</property>
+				  <property name="label" translatable="yes">Compressor curves</property>
+				  <property name="use_underline">False</property>
+				  <property name="use_markup">False</property>
+				  <property name="justify">GTK_JUSTIFY_LEFT</property>
+				  <property name="wrap">False</property>
+				  <property name="selectable">False</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				</widget>
+				<packing>
+				  <property name="type">label_item</property>
+				</packing>
+			      </child>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">True</property>
+			      <property name="fill">True</property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkFrame" id="frame10">
+			      <property name="visible">True</property>
+			      <property name="label_xalign">0.5</property>
+			      <property name="label_yalign">0.5</property>
+			      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+
+			      <child>
+				<widget class="GtkVBox" id="vbox105">
 				  <property name="visible">True</property>
 				  <property name="homogeneous">False</property>
 				  <property name="spacing">0</property>
 
 				  <child>
-				    <widget class="GtkLabel" id="label215">
-				      <property name="width_request">136</property>
-				      <property name="height_request">18</property>
+				    <widget class="GtkLabel" id="label219">
 				      <property name="visible">True</property>
-				      <property name="label" translatable="yes">Compressors gain graph</property>
+				      <property name="label" translatable="yes">  Input</property>
 				      <property name="use_underline">False</property>
 				      <property name="use_markup">False</property>
-				      <property name="justify">GTK_JUSTIFY_LEFT</property>
+				      <property name="justify">GTK_JUSTIFY_CENTER</property>
 				      <property name="wrap">False</property>
 				      <property name="selectable">False</property>
-				      <property name="xalign">0.5</property>
+				      <property name="xalign">0</property>
 				      <property name="yalign">0.5</property>
 				      <property name="xpad">0</property>
 				      <property name="ypad">0</property>
@@ -4903,254 +4936,130 @@
 				    <packing>
 				      <property name="padding">0</property>
 				      <property name="expand">False</property>
-				      <property name="fill">True</property>
+				      <property name="fill">False</property>
 				    </packing>
 				  </child>
 
 				  <child>
-				    <widget class="GtkCurve" id="curve1">
+				    <widget class="GtkProgressBar" id="lim_in_meter">
 				      <property name="visible">True</property>
-				      <property name="min_x">0</property>
-				      <property name="max_x">1</property>
-				      <property name="min_y">0</property>
-				      <property name="max_y">1</property>
+				      <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
+				      <property name="fraction">0</property>
+				      <property name="pulse_step">0.1</property>
 				    </widget>
 				    <packing>
 				      <property name="padding">0</property>
-				      <property name="expand">True</property>
-				      <property name="fill">True</property>
+				      <property name="expand">False</property>
+				      <property name="fill">False</property>
+				    </packing>
+				  </child>
+
+				  <child>
+				    <widget class="GtkLabel" id="label218">
+				      <property name="visible">True</property>
+				      <property name="label" translatable="yes">  Lookahead (ms)</property>
+				      <property name="use_underline">False</property>
+				      <property name="use_markup">False</property>
+				      <property name="justify">GTK_JUSTIFY_LEFT</property>
+				      <property name="wrap">False</property>
+				      <property name="selectable">False</property>
+				      <property name="xalign">0</property>
+				      <property name="yalign">0.5</property>
+				      <property name="xpad">0</property>
+				      <property name="ypad">0</property>
+				    </widget>
+				    <packing>
+				      <property name="padding">0</property>
+				      <property name="expand">False</property>
+				      <property name="fill">False</property>
+				    </packing>
+				  </child>
+
+				  <child>
+				    <widget class="GtkHScale" id="lim_lh_scale">
+				      <property name="visible">True</property>
+				      <property name="can_focus">True</property>
+				      <property name="draw_value">True</property>
+				      <property name="value_pos">GTK_POS_LEFT</property>
+				      <property name="digits">0</property>
+				      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+				      <property name="inverted">False</property>
+				      <property name="adjustment">500 50 2000 0 0 0</property>
+				    </widget>
+				    <packing>
+				      <property name="padding">0</property>
+				      <property name="expand">False</property>
+				      <property name="fill">False</property>
+				    </packing>
+				  </child>
+
+				  <child>
+				    <widget class="GtkProgressBar" id="lim_att_meter">
+				      <property name="visible">True</property>
+				      <property name="orientation">GTK_PROGRESS_RIGHT_TO_LEFT</property>
+				      <property name="fraction">0</property>
+				      <property name="pulse_step">0.1</property>
+				    </widget>
+				    <packing>
+				      <property name="padding">0</property>
+				      <property name="expand">False</property>
+				      <property name="fill">False</property>
+				    </packing>
+				  </child>
+
+				  <child>
+				    <widget class="GtkLabel" id="label217">
+				      <property name="visible">True</property>
+				      <property name="label" translatable="yes">  Output</property>
+				      <property name="use_underline">False</property>
+				      <property name="use_markup">False</property>
+				      <property name="justify">GTK_JUSTIFY_LEFT</property>
+				      <property name="wrap">False</property>
+				      <property name="selectable">False</property>
+				      <property name="xalign">0</property>
+				      <property name="yalign">0.5</property>
+				      <property name="xpad">0</property>
+				      <property name="ypad">0</property>
+				    </widget>
+				    <packing>
+				      <property name="padding">0</property>
+				      <property name="expand">False</property>
+				      <property name="fill">False</property>
+				    </packing>
+				  </child>
+
+				  <child>
+				    <widget class="GtkProgressBar" id="lim_out_meter">
+				      <property name="visible">True</property>
+				      <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
+				      <property name="fraction">0</property>
+				      <property name="pulse_step">0.1</property>
+				    </widget>
+				    <packing>
+				      <property name="padding">0</property>
+				      <property name="expand">False</property>
+				      <property name="fill">False</property>
 				    </packing>
 				  </child>
 				</widget>
-				<packing>
-				  <property name="padding">3</property>
-				  <property name="expand">True</property>
-				  <property name="fill">True</property>
-				</packing>
 			      </child>
 
 			      <child>
-				<widget class="GtkFrame" id="frame3">
+				<widget class="GtkLabel" id="label216">
 				  <property name="visible">True</property>
-				  <property name="label_xalign">0</property>
-				  <property name="label_yalign">0.5</property>
-				  <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
-
-				  <child>
-				    <widget class="GtkVBox" id="vbox-limiter">
-				      <property name="visible">True</property>
-				      <property name="homogeneous">False</property>
-				      <property name="spacing">0</property>
-
-				      <child>
-					<widget class="GtkHBox" id="hbox16">
-					  <property name="visible">True</property>
-					  <property name="homogeneous">False</property>
-					  <property name="spacing">0</property>
-
-					  <child>
-					    <widget class="GtkHSeparator" id="hseparator5">
-					      <property name="width_request">1</property>
-					      <property name="height_request">5</property>
-					      <property name="visible">True</property>
-					    </widget>
-					    <packing>
-					      <property name="padding">0</property>
-					      <property name="expand">True</property>
-					      <property name="fill">True</property>
-					    </packing>
-					  </child>
-
-					  <child>
-					    <widget class="GtkLabel" id="label63">
-					      <property name="visible">True</property>
-					      <property name="label" translatable="yes">Limiter</property>
-					      <property name="use_underline">False</property>
-					      <property name="use_markup">False</property>
-					      <property name="justify">GTK_JUSTIFY_LEFT</property>
-					      <property name="wrap">False</property>
-					      <property name="selectable">False</property>
-					      <property name="xalign">0.5</property>
-					      <property name="yalign">0.5</property>
-					      <property name="xpad">0</property>
-					      <property name="ypad">0</property>
-					    </widget>
-					    <packing>
-					      <property name="padding">5</property>
-					      <property name="expand">False</property>
-					      <property name="fill">False</property>
-					    </packing>
-					  </child>
-
-					  <child>
-					    <widget class="GtkHSeparator" id="hseparator6">
-					      <property name="width_request">1</property>
-					      <property name="height_request">5</property>
-					      <property name="visible">True</property>
-					    </widget>
-					    <packing>
-					      <property name="padding">0</property>
-					      <property name="expand">True</property>
-					      <property name="fill">True</property>
-					    </packing>
-					  </child>
-					</widget>
-					<packing>
-					  <property name="padding">0</property>
-					  <property name="expand">False</property>
-					  <property name="fill">False</property>
-					</packing>
-				      </child>
-
-				      <child>
-					<widget class="GtkVBox" id="vbox102">
-					  <property name="visible">True</property>
-					  <property name="homogeneous">False</property>
-					  <property name="spacing">0</property>
-
-					  <child>
-					    <widget class="GtkVBox" id="vbox33">
-					      <property name="visible">True</property>
-					      <property name="homogeneous">False</property>
-					      <property name="spacing">0</property>
-
-					      <child>
-						<widget class="GtkLabel" id="label80">
-						  <property name="visible">True</property>
-						  <property name="label" translatable="yes">Lookahead</property>
-						  <property name="use_underline">False</property>
-						  <property name="use_markup">False</property>
-						  <property name="justify">GTK_JUSTIFY_LEFT</property>
-						  <property name="wrap">False</property>
-						  <property name="selectable">False</property>
-						  <property name="xalign">0.5</property>
-						  <property name="yalign">0.5</property>
-						  <property name="xpad">0</property>
-						  <property name="ypad">0</property>
-						</widget>
-						<packing>
-						  <property name="padding">0</property>
-						  <property name="expand">False</property>
-						  <property name="fill">False</property>
-						</packing>
-					      </child>
-
-					      <child>
-						<widget class="GtkEventBox" id="eventbox51">
-						  <property name="visible">True</property>
-
-						  <child>
-						    <widget class="GtkHScale" id="hscale1">
-						      <property name="visible">True</property>
-						      <property name="can_focus">True</property>
-						      <property name="draw_value">True</property>
-						      <property name="value_pos">GTK_POS_TOP</property>
-						      <property name="digits">1</property>
-						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-						      <property name="inverted">False</property>
-						      <property name="adjustment">0 0 0 0 0 0</property>
-						    </widget>
-						  </child>
-						</widget>
-						<packing>
-						  <property name="padding">0</property>
-						  <property name="expand">True</property>
-						  <property name="fill">True</property>
-						</packing>
-					      </child>
-					    </widget>
-					    <packing>
-					      <property name="padding">0</property>
-					      <property name="expand">True</property>
-					      <property name="fill">True</property>
-					    </packing>
-					  </child>
-
-					  <child>
-					    <widget class="GtkVBox" id="vbox34">
-					      <property name="visible">True</property>
-					      <property name="homogeneous">False</property>
-					      <property name="spacing">0</property>
-
-					      <child>
-						<widget class="GtkLabel" id="label81">
-						  <property name="visible">True</property>
-						  <property name="label" translatable="yes">Output</property>
-						  <property name="use_underline">False</property>
-						  <property name="use_markup">False</property>
-						  <property name="justify">GTK_JUSTIFY_LEFT</property>
-						  <property name="wrap">False</property>
-						  <property name="selectable">False</property>
-						  <property name="xalign">0.5</property>
-						  <property name="yalign">0.5</property>
-						  <property name="xpad">0</property>
-						  <property name="ypad">0</property>
-						</widget>
-						<packing>
-						  <property name="padding">0</property>
-						  <property name="expand">False</property>
-						  <property name="fill">False</property>
-						</packing>
-					      </child>
-
-					      <child>
-						<widget class="GtkEventBox" id="eventbox52">
-						  <property name="visible">True</property>
-
-						  <child>
-						    <widget class="GtkHScale" id="hscale2">
-						      <property name="visible">True</property>
-						      <property name="can_focus">True</property>
-						      <property name="draw_value">True</property>
-						      <property name="value_pos">GTK_POS_TOP</property>
-						      <property name="digits">1</property>
-						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-						      <property name="inverted">False</property>
-						      <property name="adjustment">0 0 0 0 0 0</property>
-						    </widget>
-						  </child>
-						</widget>
-						<packing>
-						  <property name="padding">0</property>
-						  <property name="expand">False</property>
-						  <property name="fill">False</property>
-						</packing>
-					      </child>
-
-					      <child>
-						<widget class="GtkProgressBar" id="progressbar24">
-						  <property name="visible">True</property>
-						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
-						  <property name="fraction">0</property>
-						  <property name="pulse_step">0.1</property>
-						</widget>
-						<packing>
-						  <property name="padding">0</property>
-						  <property name="expand">True</property>
-						  <property name="fill">False</property>
-						</packing>
-					      </child>
-					    </widget>
-					    <packing>
-					      <property name="padding">0</property>
-					      <property name="expand">True</property>
-					      <property name="fill">True</property>
-					    </packing>
-					  </child>
-					</widget>
-					<packing>
-					  <property name="padding">3</property>
-					  <property name="expand">True</property>
-					  <property name="fill">True</property>
-					</packing>
-				      </child>
-				    </widget>
-				  </child>
+				  <property name="label" translatable="yes">Limiter</property>
+				  <property name="use_underline">False</property>
+				  <property name="use_markup">False</property>
+				  <property name="justify">GTK_JUSTIFY_LEFT</property>
+				  <property name="wrap">False</property>
+				  <property name="selectable">False</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
 				</widget>
 				<packing>
-				  <property name="padding">0</property>
-				  <property name="expand">True</property>
-				  <property name="fill">True</property>
+				  <property name="type">label_item</property>
 				</packing>
 			      </child>
 			    </widget>
@@ -5223,7 +5132,7 @@
 			</widget>
 			<packing>
 			  <property name="padding">3</property>
-			  <property name="expand">True</property>
+			  <property name="expand">False</property>
 			  <property name="fill">True</property>
 			</packing>
 		      </child>

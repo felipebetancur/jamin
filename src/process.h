@@ -23,6 +23,7 @@ extern jack_port_t *output_ports[2];
 extern float xover_fa, xover_fb;
 extern float eq_coefs[];
 extern float in_trim_gain, in_peak;
+extern float lim_peak[];
 
 void process_init(float fs, int buffer_size);
 

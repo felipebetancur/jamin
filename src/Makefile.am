@@ -5,7 +5,7 @@ INCLUDES = \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	@PACKAGE_CFLAGS@
 
-jam_CFLAGS = -Wall -O6 -g -ffast-math
+jam_CFLAGS = -g -ffast-math
 
 bin_PROGRAMS = jam
 
@@ -22,7 +22,9 @@ jam_SOURCES = \
 	plugin.c plugin.h \
 	compressor.h \
 	limiter.h \
-	intrim.c intrim.h
+	intrim.c intrim.h \
+	limiter-ui.c limiter-ui.h \
+	compressor-ui.c compressor-ui.h
 
 
 jam_LDADD = @PACKAGE_LIBS@

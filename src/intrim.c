@@ -6,7 +6,8 @@
 #include "support.h"
 #include "main.h"
 
-GtkProgressBar *in_meter;
+static GtkProgressBar *in_meter;
+
 void in_meter_value(float amp);
 
 void bind_intrim()
