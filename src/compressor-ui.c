@@ -14,6 +14,8 @@ gboolean ra_changed(GtkAdjustment *adj, gpointer user_data);
 gboolean kn_changed(GtkAdjustment *adj, gpointer user_data);
 gboolean ma_changed(GtkAdjustment *adj, gpointer user_data);
 
+void redraw_graphs();
+
 static GtkAdjustment *adj_at[3];
 static GtkAdjustment *adj_re[3];
 static GtkAdjustment *adj_th[3];
@@ -54,6 +56,7 @@ void bind_compressors()
 gboolean at_changed(GtkAdjustment *adj, gpointer user_data)
 {
     compressors[(int)user_data].attack = adj->value;
+    redraw_graphs();
 
     return FALSE;
 }
@@ -61,6 +64,7 @@ gboolean at_changed(GtkAdjustment *adj, gpointer user_data)
 gboolean re_changed(GtkAdjustment *adj, gpointer user_data)
 {
     compressors[(int)user_data].release = adj->value;
+    redraw_graphs();
 
     return FALSE;
 }
@@ -68,6 +72,7 @@ gboolean re_changed(GtkAdjustment *adj, gpointer user_data)
 gboolean th_changed(GtkAdjustment *adj, gpointer user_data)
 {
     compressors[(int)user_data].threshold = adj->value;
+    redraw_graphs();
 
     return FALSE;
 }
@@ -75,6 +80,7 @@ gboolean th_changed(GtkAdjustment *adj, gpointer user_data)
 gboolean ra_changed(GtkAdjustment *adj, gpointer user_data)
 {
     compressors[(int)user_data].ratio = adj->value;
+    redraw_graphs();
 
     return FALSE;
 }
@@ -82,6 +88,7 @@ gboolean ra_changed(GtkAdjustment *adj, gpointer user_data)
 gboolean kn_changed(GtkAdjustment *adj, gpointer user_data)
 {
     compressors[(int)user_data].knee = adj->value;
+    redraw_graphs();
 
     return FALSE;
 }
@@ -89,6 +96,7 @@ gboolean kn_changed(GtkAdjustment *adj, gpointer user_data)
 gboolean ma_changed(GtkAdjustment *adj, gpointer user_data)
 {
     compressors[(int)user_data].makeup_gain = adj->value;
+    redraw_graphs();
 
     return FALSE;
 }
@@ -102,6 +110,26 @@ void compressor_meters_update()
 		iec_scale(compressors[i].amplitude) * 0.01f);
 	gtk_progress_bar_set_fraction(ga_meter[i],
 		1.0 - iec_scale(compressors[i].gain_red) * 0.01f);
+    }
+}
+
+void redraw_graphs()
+{
+    int i;
+    char *colours[3] = {"Red", "Green", "Blue"};
+    float x;
+
+    printf("\n");
+    for (i = 0; i < 3; i++) {
+	printf("band %d %s\n", i, colours[i]);
+	fflush(stdout);
+	for (x = -60.0f; x <= 0.0f; x += 0.5f) {
+	    /* should draw some lines */
+	    printf("(%f, %f)\n", x, eval_comp(compressors[i].threshold,
+					      compressors[i].ratio,
+					      compressors[i].knee, x));
+	}
+	printf("\n");
     }
 }
 
