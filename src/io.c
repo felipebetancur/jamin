@@ -70,7 +70,7 @@
 #include <errno.h>
 #include <assert.h>
 #include <jack/jack.h>
-#include <config.h>
+#include "config.h"
 
 #include "ringbuffer.h"
 #include "process.h"

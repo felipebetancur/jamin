@@ -33,9 +33,15 @@ print OUT <<EOB;
 
 typedef void(* s_callback_func)(int id, float value);
 
+typedef struct {
+	int id;
+	float value;
+} s_entry;
+
 void state_init();
 void s_set_value_ui(int id, float value);
 void s_set_value(int id, float value, int time);
+void s_set_value_block(float *values, int base, int count);
 void s_set_value_no_history(int id, float value);
 void s_clear_history();
 void s_set_callback(int id, s_callback_func callback);

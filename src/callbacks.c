@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-#  include <config.h>
+#  include "config.h"
 #endif
 
 #include <stdio.h>
@@ -711,7 +711,6 @@ insert_notch ()
       }
     */
 }
-
 
 void
 draw_EQ_curve ()

@@ -372,8 +372,6 @@ void process_set_stereo_width(int xo_band, float width)
      * later */
     sw_m_gain[xo_band] = cosf((width + 1.0f) * 0.78539815f) * 0.7071067811f;
     sw_s_gain[xo_band] = sinf((width + 1.0f) * 0.78539815f) * 0.7071067811f;
-
-    printf("[%d] mid = %f, side= %f\n", xo_band, sw_m_gain[xo_band], sw_s_gain[xo_band]);
 }
 
 void run_width(int xo_band, float *left, float *right, int nframes)

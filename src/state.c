@@ -92,6 +92,17 @@ void s_set_value(int id, float value, int duration)
     }
 }
 
+void s_set_value_block(float *values, int base, int count)
+{
+    int i;
+
+    for (i=0; i<count; i++) {
+	s_value[base+count] = values[i];
+    }
+    last_changed = base;
+    //s_set_events(base, values[i]);
+}
+
 void s_set_value_no_history(int id, float value)
 {
     suppress_feedback++;
