@@ -7,15 +7,11 @@
 
 #include "config.h"
 #include "state.h"
+#include "scenes.h"
 
 /* The smallest value that counts as a changei, should be aproximatly
  * epsilon+delta */
 #define MIN_CHANGE (FLT_EPSILON + FLT_EPSILON)
-
-typedef struct {
-    char *description;
-    float value[S_SIZE];
-} s_state;
 
 float                   s_value[S_SIZE];
 static float            s_target[S_SIZE];
@@ -32,7 +28,6 @@ static GList         *undo_pos = NULL;
 static int suppress_feedback = 0;
 
 static void s_history_add(const char *description);
-static void s_restore_state(s_state *state);
 static void s_set_events(int id, float value);
 void set_EQ_curve_values ();
 
@@ -172,7 +167,7 @@ void s_undo()
     set_EQ_curve_values ();
 }
 
-static void s_restore_state(s_state *state)
+void s_restore_state(s_state *state)
 {
     int i;
 
@@ -249,11 +244,13 @@ void s_load_session (GtkWidget *w, gpointer user_data)
     handler = calloc(1, sizeof(xmlSAXHandler));
     handler->startElement = s_startElement;
     xmlSAXUserParseFile(handler, NULL, filename);
-    s_history_add(g_strdup_printf("Loaded %s", filename));
+    s_history_add(g_strdup_printf("%s", filename));
     last_changed = S_LOAD;
     free(handler);
 
     set_EQ_curve_values ();
+
+    load_scene (last_state);
 }
 
 void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)

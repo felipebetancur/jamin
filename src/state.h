@@ -50,6 +50,13 @@ void s_suppress_pop();
 #define S_NOTCH_FLAG(n) (1069 + n)
 #define S_SIZE 1074
 
+typedef struct {
+    char *description;
+    float value[S_SIZE];
+} s_state;
+
+void s_restore_state(s_state * state);
+
 extern float s_value[S_SIZE];
 
 /* fetch cureently used value */

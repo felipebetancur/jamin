@@ -2820,4 +2820,3 @@ on_scene6_eventbox_button_press_event  (GtkWidget       *widget,
 
   return FALSE;
 }
-

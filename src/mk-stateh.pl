@@ -73,6 +73,13 @@ for $sym (@symbols) {
 print OUT <<EOB;
 #define S_SIZE $id
 
+typedef struct {
+    char *description;
+    float value[S_SIZE];
+} s_state;
+
+void s_restore_state(s_state *state);
+
 extern float s_value[S_SIZE];
 
 /* fetch cureently used value */

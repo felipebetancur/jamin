@@ -28,6 +28,7 @@
 #include "stereo.h"
 #include "state.h"
 #include "status-ui.h"
+#include "scenes.h"
 
 GtkWidget *main_window;
 
@@ -81,6 +82,7 @@ int main(int argc, char *argv[])
     bind_compressors();
     bind_spectrum();
     bind_stereo();
+    bind_scenes();
     s_clear_history();
 
 
