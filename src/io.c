@@ -788,10 +788,20 @@ int io_create_dsp_thread()
     }
 
     rc = pthread_create(&dsp_thread, &attributes, io_dsp_thread, NULL);
-    if (rc)
-	io_errlog(ECHILD, "DSP thread creation error: %d.", rc);
-    else
+    switch (rc) {
+    case 0:				/* success */
 	IF_DEBUG(DBG_TERSE, io_trace("DSP thread created"));
+	break;
+    case EPERM:				/* user error */
+	fprintf(stderr, "%s not permitted to create realtime DSP thread.\n",
+		PACKAGE);
+	fprintf(stderr,"You must run as root to use this method.\n");
+	// JOQ:                            ", or use JACK capabilites"
+	fprintf(stderr,"Continuing operation, but ignoring -t option.\n");
+	break;
+    default:				/* internal error */
+	io_errlog(ECHILD, "DSP thread creation error: %d.", rc);
+    }
     return rc;
 
 #endif /* DSP_THREAD */
