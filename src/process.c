@@ -5,6 +5,7 @@
 #include <fftw3.h>
 #include <assert.h>
 
+#include "config.h"
 #include "process.h"
 #include "compressor.h"
 #include "limiter.h"
@@ -15,6 +16,8 @@
 #define BUF_MASK   (BINS-1)		/* BINS is a power of two */
 
 #define LERP(f,a,b) ((a) + (f) * ((b) - (a)))
+
+typedef FFTW_TYPE fft_data;
 
 /* These values need to be controlled by the UI, somehow */
 float xover_fa = 207.0f;
@@ -31,15 +34,13 @@ float in_peak[NCHANNELS], out_peak[NCHANNELS];
 static float band_f[BANDS];
 static float gain_fix[BANDS];
 static float bin_peak[BINS];
-// Unused: static int peaks[BANDS];
-// Unused: static int ptime[BANDS];
 static int bands[BINS];
 static float in_buf[NCHANNELS][BINS];
 static float out_buf[NCHANNELS][XO_NBANDS][BINS];
 static float window[BINS];
-static float *real;
-static float *comp;
-static float *comp_tmp;
+static fft_data *real;
+static fft_data *comp;
+static fft_data *comp_tmp;
 static float *out_tmp[NCHANNELS][XO_NBANDS];
 static float sw_m_gain[XO_NBANDS];
 static float sw_s_gain[XO_NBANDS];
@@ -114,9 +115,9 @@ void process_init(float fs, int buffer_size)
     }
 
     /* Allocate space for FFT data */
-    real = fftwf_malloc(sizeof(float) * BINS);
-    comp = fftwf_malloc(sizeof(float) * BINS);
-    comp_tmp = fftwf_malloc(sizeof(float) * BINS);
+    real = fftwf_malloc(sizeof(fft_data) * BINS);
+    comp = fftwf_malloc(sizeof(fft_data) * BINS);
+    comp_tmp = fftwf_malloc(sizeof(fft_data) * BINS);
 
     plan_rc = fftwf_plan_r2r_1d(BINS, real, comp, FFTW_R2HC, FFTW_MEASURE);
     plan_cr = fftwf_plan_r2r_1d(BINS, comp_tmp, real, FFTW_HC2R, FFTW_MEASURE);
@@ -171,7 +172,7 @@ void run_eq(unsigned int port, unsigned int in_ptr)
 	peak_data = comp_tmp;
     }
 
-    memset(comp_tmp, 0, BINS * sizeof(float));
+    memset(comp_tmp, 0, BINS * sizeof(fft_data));
     targ_bin = xover_fa / sample_rate * (float) (BINS * 2);
     comp_tmp[0] = comp[0];
     for (i = 0; i < targ_bin && i < BINS / 2 - 1; i++) {
@@ -190,7 +191,7 @@ void run_eq(unsigned int port, unsigned int in_ptr)
 	    window[j];
     }
 
-    memset(comp_tmp, 0, BINS * sizeof(float));
+    memset(comp_tmp, 0, BINS * sizeof(fft_data));
     targ_bin = xover_fb / sample_rate * (float) (BINS * 2);
     for (; i < targ_bin && i < BINS / 2 - 1; i++) {
 	comp_tmp[i] = comp[i] * eq_coefs[i];
@@ -207,7 +208,7 @@ void run_eq(unsigned int port, unsigned int in_ptr)
 	    window[j];
     }
 
-    memset(comp_tmp, 0, BINS * sizeof(float));
+    memset(comp_tmp, 0, BINS * sizeof(fft_data));
     for (; i < BINS / 2 - 1; i++) {
 	comp_tmp[i] = comp[i] * eq_coefs[i];
 	comp_tmp[BINS - i] = comp[BINS - i] * eq_coefs[i];

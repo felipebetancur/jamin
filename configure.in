@@ -13,7 +13,13 @@ AC_HEADER_STDC
 dnl Checks for libraries.
 AC_CHECK_LIB([pthread], [pthread_self], , [AC_MSG_ERROR(You need libpthread installed)])
 PKG_CHECK_MODULES(JACK, jack >= 0.50.0)
-PKG_CHECK_MODULES(FFTW, fftw3f >= 3.0)
+dnl PKG_CHECK_MODULES(FFTW, fftw3f >= 3.0, AC_DEFINE(FFTW_TYPE, [double], [Datatype used by installed FFTW libraries]), [echo "Didn't find double FFTW libraries, but will also look for float"])
+dnl PKG_CHECK_MODULES(FFTW, fftw3 >= 3.0, AC_DEFINE(FFTW_TYPE, [float], [Datatype used by installed FFTW libraries]), [echo "Can't find float FFTW libraries"])
+
+PKG_CHECK_MODULES(FFTW, fftw3f >= 3.0, AC_DEFINE(FFTW_TYPE, [float], [Datatype used by installed FFTW libraries]), [
+	PKG_CHECK_MODULES(FFTW, fftw3 >= 3.0, [AC_DEFINE(FFTW_TYPE, [double], [Datatype used by installed FFTW libraries]) AC_MSG_WARN([Using double FFTs, may result in higher quality output, but will cause much higher CPU load])], [AC_MSG_ERROR([Didn't find any FFTW3 libraries])])
+])
+
 PKG_CHECK_MODULES(XML, libxml-2.0 >= 2.0)
 AC_CHECK_LIB([m], [sqrt], , [AC_MSG_ERROR(Can't find libm)])
 

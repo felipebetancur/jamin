@@ -207,6 +207,5 @@ settings by left clicking on the scene button.  A green button means that \
 the scene associated with this button is currently loaded.  A bright red \
 button means that scene settings are available for this button.  A dull red \
 button means that no settings have been saved for this scene button.  You can \
-clear settings from a button using the right click menu and the 'Clear' 
-entry.\n"
+clear settings from a button using the right click menu and the 'Clear' entry.\n"
 };
