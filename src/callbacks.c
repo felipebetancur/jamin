@@ -53,7 +53,8 @@ static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
                        comp_start_x[3], comp_start_y[3], comp_end_x[3], 
                        comp_end_y[3];
 static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0, 
-                       EQ_length = 0, comp_realized[3] = {0, 0, 0};
+                       EQ_length = 0, comp_realized[3] = {0, 0, 0}, 
+                       EQ_cleared = 1;
 
 
 void
@@ -361,6 +362,66 @@ eqb_mod                                (GtkAdjustment *adj, gpointer user_data)
 
 
 void
+draw_EQ_spectrum_curve (float single_levels[])
+{
+    static int     x[EQ_INTERP], y[EQ_INTERP];
+    int            i;
+    float          fix_y;
+    const float    fix = 2.0f / ((float) BINS * (float) OVER_SAMP);
+
+
+    /*  Don't update if we're drawing an EQ curve.  */
+
+    if (!EQ_drawing)
+      {
+        /*  Plot the curve.  */
+
+        gdk_gc_set_foreground (EQ_gc, &grey);
+        gdk_gc_set_function (EQ_gc, GDK_XOR);
+        gdk_gc_set_line_attributes (EQ_gc, 1, GDK_LINE_SOLID, GDK_CAP_BUTT,
+                                    GDK_JOIN_MITER);
+
+
+        /*  If we've just cleared (redrawn) the curve, don't erase the previous
+            line.  */
+
+        if (!EQ_cleared)
+          {
+            for (i = 1 ; i < EQ_INTERP ; i++)
+              {
+                gdk_draw_line (EQ_drawable, EQ_gc, x[i - 1], y[i - 1], 
+                    x[i], y[i]);
+              }
+          }
+
+
+        /*  Convert the single levels to db, plot, and save the pixel positions
+            so that we can erase them on the next pass.  */
+
+        for (i = 0 ; i < EQ_INTERP ; i++)
+          {
+            x[i] = NINT (((EQ_xinterp[i] - l_low2mid_adj->lower) / 
+                          EQ_curve_range_x) * EQ_curve_width);
+
+            fix_y = single_levels[i] / fix;
+            y[i] = NINT ((((log10f (fix_y) * 20.0) - (-60.0)) / (63.0)) * 
+                         EQ_curve_height);
+
+            if (i) gdk_draw_line (EQ_drawable, EQ_gc, x[i - 1], y[i - 1], 
+                                  x[i], y[i]);
+          }
+
+        gdk_gc_set_line_attributes (EQ_gc, 1, GDK_LINE_SOLID, GDK_CAP_BUTT,
+                                    GDK_JOIN_MITER);
+        gdk_gc_set_foreground (EQ_gc, &black);
+        gdk_gc_set_function (EQ_gc, GDK_COPY);
+
+        EQ_cleared = 0;
+      }
+}
+
+
+void
 draw_EQ_curve ()
 {
     int            i, x0 = 0, y0 = 0, x1, y1, inc;
@@ -369,6 +430,7 @@ draw_EQ_curve ()
 
     /*  Clear the curve drawing area.  */
 
+    EQ_cleared = 1;
     gdk_window_clear_area (EQ_drawable, 0, 0, EQ_curve_width, EQ_curve_height);
     gdk_gc_set_foreground (EQ_gc, &grey);
     gdk_gc_set_foreground (EQ_gc, &black);
@@ -420,9 +482,8 @@ draw_EQ_curve ()
         x1 = NINT (((EQ_xinterp[i] - l_low2mid_adj->lower) / 
             EQ_curve_range_x) * EQ_curve_width);
 
-        y1 = EQ_curve_height - NINT ((((EQ_yinterp[i] / 
-            0.05) - l_eqb1_adj->lower) / EQ_curve_range_y) * 
-            EQ_curve_height);
+        y1 = EQ_curve_height - NINT ((((EQ_yinterp[i] * 20.0) - 
+            l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
 
         if (i) gdk_draw_line (EQ_drawable, EQ_gc, x0, y0, x1, y1);
 

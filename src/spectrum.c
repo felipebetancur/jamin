@@ -20,6 +20,8 @@ static GtkAdjustment *adjustment[BANDS];
 
 static int bin_bands[BINS];
 static int band_bin[BANDS];
+static GtkWidget *notebook;
+
 
 void bind_spectrum()
 {
@@ -33,6 +35,7 @@ void bind_spectrum()
     float band_freq[BANDS];
     float band_bin_count[BANDS];
 
+    notebook = lookup_widget(main_window, "notebook1");
     root = lookup_widget(main_window, "spectrum_hbox");
     hbox = gtk_hbox_new(TRUE, 0);
     gtk_box_pack_start(GTK_BOX(root), hbox, FALSE, FALSE, 0);
@@ -111,23 +114,37 @@ void bind_spectrum()
 
 void spectrum_update()
 {
-    int i;
+    int i, page, count;
     float levels[BANDS];
     float single_levels[BINS/2];
 
-    for (i=0; i<BANDS; i++) {
-	levels[i] = 0.0f;
+    void draw_EQ_spectrum_curve (float *);
+
+
+    page = gtk_notebook_get_current_page ((GtkNotebook *) notebook);
+    count = BINS / 2;
+
+    if (page == 3) {
+      for (i=0; i<BANDS; i++) {
+        levels[i] = 0.0f;
+      }
+      for (i=0; i<count; i++) {
+        single_levels[i] = bin_peak_read_and_clear(i);
+        levels[bin_bands[i]] += single_levels[i];
+      }
+      for (i=0; i<BANDS; i++) {
+        if (band_bin[i] > 0) {
+          levels[i] = (single_levels[band_bin[i]] +
+                       single_levels[band_bin[i]+1]) * 0.5;
+        }
+        gtk_adjustment_set_value(adjustment[i], 20.0f * log10f(levels[i]));
+      }
     }
-    for (i=0; i<BINS/2; i++) {
-	single_levels[i] = bin_peak_read_and_clear(i);
-	levels[bin_bands[i]] += single_levels[i];
-    }
-    for (i=0; i<BANDS; i++) {
-	if (band_bin[i] > 0) {
-	    levels[i] = (single_levels[band_bin[i]] +
-		    single_levels[band_bin[i]+1]) * 0.5;
-	}
-	gtk_adjustment_set_value(adjustment[i], 20.0f * log10f(levels[i]));
+    else if (page == 1) {
+      for (i=0; i<count; i++) {
+        single_levels[i] = bin_peak_read_and_clear(i);
+      }
+      draw_EQ_spectrum_curve (single_levels);
     }
 }
 

@@ -12,8 +12,6 @@
 #include "io.h"
 
 #define BUF_MASK   (BINS-1)		/* BINS is a power of two */
-#define OVER_SAMP  8			/* buffer overlap count, must
-					   be a factor of BINS */
 
 /* These values need to be controlled by the UI, somehow */
 float xover_fa = 207.0f;

@@ -4,6 +4,8 @@
 #include <jack/jack.h>
 
 #define BINS  2048			/* must be power of two */
+#define OVER_SAMP  8			/* buffer overlap count, must
+					   be a factor of BINS */
 #define BANDS 30
 
 #include "plugin.h"
