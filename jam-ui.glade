@@ -1015,7 +1015,7 @@
 					      <property name="inverted">True</property>
 					      <property name="adjustment">0 -12 12 1 6 0</property>
 					      <signal name="value_changed" handler="on_in_trim_scale_value_changed" last_modification_time="Mon, 14 Apr 2003 17:05:35 GMT"/>
-					      <signal name="button_press_event" handler="scene_warning" last_modification_time="Wed, 10 Dec 2003 01:09:27 GMT"/>
+					      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 00:49:07 GMT"/>
 					    </widget>
 					  </child>
 					</widget>
@@ -1122,7 +1122,7 @@
 					  <property name="inverted">False</property>
 					  <property name="adjustment">0 -6 6 0.25 1 0</property>
 					  <signal name="value_changed" handler="on_pan_scale_value_changed" last_modification_time="Tue, 22 Apr 2003 11:42:34 GMT"/>
-					  <signal name="button_press_event" handler="scene_warning" last_modification_time="Wed, 10 Dec 2003 01:09:49 GMT"/>
+					  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 00:52:19 GMT"/>
 					</widget>
 				      </child>
 				    </widget>
@@ -4626,7 +4626,7 @@
 							  <property name="adjustment">0 -1 1 0.1 0.1 0</property>
 							  <signal name="value_changed" handler="on_hscale_1_l_value_changed" last_modification_time="Wed, 27 Aug 2003 20:29:44 GMT"/>
 							  <signal name="realize" handler="on_hscale_1_l_realize" last_modification_time="Wed, 27 Aug 2003 20:29:54 GMT"/>
-							  <signal name="button_press_event" handler="scene_warning" last_modification_time="Wed, 10 Dec 2003 01:01:06 GMT"/>
+							  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 00:52:35 GMT"/>
 							</widget>
 						      </child>
 						    </widget>
@@ -4681,7 +4681,7 @@
 							      <property name="inverted">False</property>
 							      <property name="adjustment">0 -6 6 0.25 1 0</property>
 							      <signal name="value_changed" handler="on_low_balance_scale_value_changed" last_modification_time="Sat, 03 Jan 2004 14:04:23 GMT"/>
-							      <signal name="button_press_event" handler="scene_warning" last_modification_time="Fri, 02 Jan 2004 23:44:05 GMT"/>
+							      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 00:52:46 GMT"/>
 							    </widget>
 							  </child>
 							</widget>
@@ -5274,7 +5274,7 @@
 							  <property name="adjustment">0 -1 1 0.1 0.1 0</property>
 							  <signal name="value_changed" handler="on_hscale_1_m_value_changed" last_modification_time="Wed, 27 Aug 2003 20:30:08 GMT"/>
 							  <signal name="realize" handler="on_hscale_1_m_realize" last_modification_time="Wed, 27 Aug 2003 20:30:15 GMT"/>
-							  <signal name="button_press_event" handler="scene_warning" last_modification_time="Wed, 10 Dec 2003 01:01:24 GMT"/>
+							  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 00:52:58 GMT"/>
 							</widget>
 						      </child>
 						    </widget>
@@ -5329,7 +5329,7 @@
 							      <property name="inverted">False</property>
 							      <property name="adjustment">0 -6 6 0.25 1 0</property>
 							      <signal name="value_changed" handler="on_mid_balance_scale_value_changed" last_modification_time="Sat, 03 Jan 2004 14:05:29 GMT"/>
-							      <signal name="button_press_event" handler="scene_warning" last_modification_time="Fri, 02 Jan 2004 23:44:05 GMT"/>
+							      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 00:53:09 GMT"/>
 							    </widget>
 							  </child>
 							</widget>
@@ -5922,7 +5922,7 @@
 							  <property name="adjustment">0 -1 1 0.1 0.1 0</property>
 							  <signal name="value_changed" handler="on_hscale_1_h_value_changed" last_modification_time="Wed, 27 Aug 2003 20:30:25 GMT"/>
 							  <signal name="realize" handler="on_hscale_1_h_realize" last_modification_time="Wed, 27 Aug 2003 20:30:32 GMT"/>
-							  <signal name="button_press_event" handler="scene_warning" last_modification_time="Wed, 10 Dec 2003 01:01:41 GMT"/>
+							  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 00:53:21 GMT"/>
 							</widget>
 						      </child>
 						    </widget>
@@ -5977,7 +5977,7 @@
 							      <property name="inverted">False</property>
 							      <property name="adjustment">0 -6 6 0.25 1 0</property>
 							      <signal name="value_changed" handler="on_high_balance_scale_value_changed" last_modification_time="Sat, 03 Jan 2004 14:06:24 GMT"/>
-							      <signal name="button_press_event" handler="scene_warning" last_modification_time="Fri, 02 Jan 2004 23:44:05 GMT"/>
+							      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 00:53:32 GMT"/>
 							    </widget>
 							  </child>
 							</widget>
@@ -6112,7 +6112,7 @@
 							  <property name="adjustment">0 -20 20 0 0 0</property>
 							  <signal name="value_changed" handler="on_lim_input_hscale_value_changed" last_modification_time="Sun, 11 May 2003 10:53:32 GMT"/>
 							  <signal name="realize" handler="on_lim_input_hscale_realize" last_modification_time="Sun, 11 May 2003 10:53:39 GMT"/>
-							  <signal name="button_press_event" handler="scene_warning" last_modification_time="Wed, 10 Dec 2003 00:59:32 GMT"/>
+							  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 00:53:43 GMT"/>
 							</widget>
 							<packing>
 							  <property name="padding">0</property>
@@ -6317,7 +6317,7 @@
 							  <property name="inverted">False</property>
 							  <property name="adjustment">0 -12 0 1 3 0</property>
 							  <signal name="value_changed" handler="on_lim_out_trim_scale_value_changed" last_modification_time="Wed, 09 Jul 2003 20:51:41 GMT"/>
-							  <signal name="button_press_event" handler="scene_warning" last_modification_time="Wed, 10 Dec 2003 00:59:48 GMT"/>
+							  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 00:53:54 GMT"/>
 							</widget>
 							<packing>
 							  <property name="left_attach">2</property>
@@ -6481,7 +6481,7 @@
 						      <property name="inverted">False</property>
 						      <property name="adjustment">0 0 10 0.25 1 0</property>
 						      <signal name="value_changed" handler="on_boost_scale_value_changed" last_modification_time="Thu, 10 Jul 2003 11:34:52 GMT"/>
-						      <signal name="button_press_event" handler="scene_warning" last_modification_time="Wed, 10 Dec 2003 01:00:15 GMT"/>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 00:54:04 GMT"/>
 						    </widget>
 						    <packing>
 						      <property name="padding">0</property>
@@ -6589,7 +6589,7 @@
 				  <property name="inverted">True</property>
 				  <property name="adjustment">0 -50 0 1 5 0</property>
 				  <signal name="value_changed" handler="on_out_trim_scale_value_changed" last_modification_time="Thu, 20 Nov 2003 18:51:50 GMT"/>
-				  <signal name="button_press_event" handler="scene_warning" last_modification_time="Wed, 10 Dec 2003 00:58:50 GMT"/>
+				  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 00:54:18 GMT"/>
 				</widget>
 				<packing>
 				  <property name="padding">0</property>

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.123 2004/01/13 23:35:06 jdepner Exp $
+ *  $Id: callbacks.c,v 1.124 2004/01/18 01:46:55 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1200,7 +1200,6 @@ void
 on_new1_activate                       (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-
 }
 
 
@@ -1672,6 +1671,19 @@ on_stereo_balance_event_box_enter_notify_event
                                         gpointer         user_data)
 {
   help_ptr = stereo_balance_help;
+
+  return FALSE;
+}
+
+
+gboolean
+reset_range                            (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  if (event->button == 3) gtk_range_set_value ((GtkRange *) widget, 0.0);
 
   return FALSE;
 }

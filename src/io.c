@@ -84,16 +84,15 @@
 #include "debug.h"
 #include "help.h"
 
-char *jamin_options = "dFf:n:hprTtvVs:";/* valid JAMin options */
-char *pname;				/* `basename $0` */
-int dummy_mode = 0;			/* -d option */
-int all_errors_fatal = 0;		/* -F option */
-int show_help = 0;			/* -h option */
-int connect_ports = 1;			/* -p option */
-int trace_option = 0;			/* -T option */
-int thread_option = 1;			/* -t option */
-int debug_level = DBG_OFF;		/* -v option */
-int spectrum_freq = 10; 		/* -s option */
+char *jamin_options = "dFf:n:hprTtvVs:c:";    /* valid JAMin options */
+char *pname;				      /* `basename $0` */
+int dummy_mode = 0;			      /* -d option */
+int all_errors_fatal = 0;		      /* -F option */
+int show_help = 0;			      /* -h option */
+int connect_ports = 1;			      /* -p option */
+int trace_option = 0;			      /* -T option */
+int thread_option = 1;			      /* -t option */
+int debug_level = DBG_OFF;		      /* -v option */
 
 static char *errstr;
 
@@ -694,11 +693,16 @@ gboolean check_file (char *optarg)
  *	DSP_INIT -> DSP_STOPPED		when -d command option set
  *	DSP_INIT <unchanged>		otherwise
  */
-int io_init(int argc, char *argv[])
+void io_init(int argc, char *argv[], int *spectrum_freq, float *crossfade_time)
 {
     int chan;
     int opt;
     char *client_name = NULL;
+
+
+    *spectrum_freq = 10;
+    *crossfade_time = 0.003;
+
 
     /* basename $0 */
     pname = strrchr(argv[0], '/');
@@ -722,8 +726,13 @@ int io_init(int argc, char *argv[])
 	    client_name = strdup(optarg);
 	    break;
 	case 's':			/* Set spectrum update frequency */
-	    sscanf (optarg, "%d", &spectrum_freq);
-            if (spectrum_freq < 0 || spectrum_freq > 10) spectrum_freq = 10;
+	    sscanf (optarg, "%d", spectrum_freq);
+            if (*spectrum_freq < 0 || *spectrum_freq > 10) *spectrum_freq = 10;
+	    break;
+	case 'c':			/* Set crossfade time */
+	    sscanf (optarg, "%f", crossfade_time);
+            if (*crossfade_time < 0.0 || *crossfade_time > 1.0) 
+              *crossfade_time = 0.003;
 	    break;
 	case 'h':			/* show help */
 	    show_help = 1;
@@ -775,6 +784,7 @@ int io_init(int argc, char *argv[])
                 "\t-h\tshow this help\n"
                 "\t-n name\tset JACK client name\n"
                 "\t-s freq\tset spectrum update frequency\n"
+                "\t-c time\tset crossfade time slice\n"
                 "\t-r\tuse example GTK resource file\n"
                 "\t-p\tdon't automatically connect JACK output ports\n"
                 "\t-v\tverbose output (use -vv... for more detail)\n"
@@ -789,12 +799,13 @@ int io_init(int argc, char *argv[])
 	exit(1);
     }
 
+
     if (dummy_mode) {
 	io_new_state(DSP_STOPPED);
 	io_bufsize(1024, NULL);
 	jst.sample_rate = 48000;
 	process_init(48000.0f);
-	return (spectrum_freq);
+	return;
     }
 
     /* register as a JACK client */
@@ -825,8 +836,6 @@ int io_init(int argc, char *argv[])
     process_init((float) jst.sample_rate);
 
     free(client_name);
-
-    return (spectrum_freq);
 }
 
 

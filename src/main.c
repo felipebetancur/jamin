@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.40 2004/01/17 20:54:30 jdepner Exp $
+ *  $Id: main.c,v 1.41 2004/01/18 01:46:55 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -63,6 +63,7 @@ int main(int argc, char *argv[])
 {
     char title[128];
     int spectrum_freq, sf = 0;
+    float crossfade_time;
 
 
 #ifdef ENABLE_NLS
@@ -79,11 +80,11 @@ int main(int argc, char *argv[])
     set_configuration_files();
     gtk_init(&argc, &argv);
 
-    spectrum_freq = io_init(argc, argv);
+    io_init(argc, argv, &spectrum_freq, &crossfade_time);
     if (spectrum_freq) sf = 1000 / spectrum_freq;
         
     resource_file_parse();
-    state_init();
+    state_init(crossfade_time);
     add_pixmap_directory(JAMIN_PIXMAP_DIR);
     main_window = create_window1();
 

@@ -856,3 +856,8 @@ gboolean
 on_stereo_balance_event_box_enter_notify_event (GtkWidget       *widget,
                                             GdkEventCrossing *event,
                                             gpointer         user_data);
+
+gboolean
+reset_range                            (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);

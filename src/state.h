@@ -12,7 +12,7 @@ typedef struct {
     float value;
 } s_entry;
 
-void state_init();
+void state_init(float ct);
 void s_set_value_ui(int id, float value);
 void s_set_value(int id, float value, int time);
 void s_set_value_block(float *values, int base, int count);

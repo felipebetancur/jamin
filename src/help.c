@@ -41,6 +41,8 @@ static GtkWidget *message_dialog = NULL;
 
 void message (GtkMessageType type, char *string)
 {
+    /*  If the dialog is already up, kill it.  */
+
     if (message_dialog != NULL) 
       gtk_widget_destroy ((GtkWidget *) message_dialog);
 
@@ -52,6 +54,16 @@ void message (GtkMessageType type, char *string)
     g_signal_connect_swapped (GTK_OBJECT (message_dialog), "response",
                            G_CALLBACK (gtk_widget_destroy),
                            GTK_OBJECT (message_dialog));
+
+
+    /*  This little callback goody is what sets message_dialog to NULL when it
+        is destroyed.  This makes it so that if we launch a bunch of error
+        messages it will destroy any that are already up.  We'll only get the
+        last message.  */
+
+    g_signal_connect (GTK_OBJECT (message_dialog), "destroy",
+                      G_CALLBACK (gtk_widget_destroyed),
+                      &message_dialog);
 
     gtk_widget_show (message_dialog);
 }

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.40 2004/01/17 20:54:30 jdepner Exp $
+ *  $Id: state.c,v 1.41 2004/01/18 01:46:56 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -58,6 +58,7 @@ static GList         *undo_pos = NULL;
 
 static int suppress_feedback = 0;
 static int saved_scene;
+static float crossfade_time = 0.003;
 
 static void s_set_events(int id, float value);
 void set_EQ_curve_values ();
@@ -67,9 +68,13 @@ void s_history_add(const char *description);
 
 static const gchar *filename = NULL;
 
-void state_init()
+void state_init(float ct)
 {
     unsigned int i;
+
+
+    crossfade_time = ct;
+
 
     for (i=0; i<S_SIZE; i++) {
 	s_value[i] = 0.0f;
@@ -315,9 +320,16 @@ void s_redo()
       }
 }
 
+
+/*  Negative time will use the default "crossfade tim" which may come from the
+    command line -c option.  */
+
 void s_crossfade_to_state(s_state *state, float time)
 {
     int i, duration;
+
+    if (time < 0.0) time = crossfade_time;
+
 
     /* printf("restore %s\n", state->description); */
     duration = (int)(sample_rate * time);
@@ -334,7 +346,7 @@ void s_crossfade_to_state(s_state *state, float time)
 
 void s_restore_state(s_state *state)
 {
-    s_crossfade_to_state (state, 0.003f);
+    s_crossfade_to_state (state, crossfade_time);
 }
 
 static void s_set_events(int id, float value)

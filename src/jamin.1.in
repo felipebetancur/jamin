@@ -42,6 +42,11 @@ Otherwise, use "jamin".
 Set the spectrum update frequency (per second).  The range is 1 to 10 
 with 10 as the default.  Set to 0 to disable spectrum update.
 .TP 
+\fB\-c\fR \fItime\fR
+.br 
+Set the crossfade time in seconds.  The range is 0.000 to 1.000 with 
+0.003 as the default.
+.TP 
 \fB\-p\fR
 .br 
 Don't automatically connect any JACK output ports.  Otherwise, connect

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.18 2004/01/05 22:21:51 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.19 2004/01/18 01:46:55 jdepner Exp $
  */
 
 char general_help[] = {
@@ -87,7 +87,9 @@ from left to right.\n\n\
     Over the crossover bar handles - left click and hold to drag the \
 crossover bars.\n\n\
     Over the notch handles - left click and hold to drag the notch center or \
-cuttoff frequency and gain.  <Ctrl>-left click will reset the notch to 0.\n\n\
+cuttoff frequency and gain.  <Ctrl>-left click will reset the notch to 0.  If \
+you hold the shift key while adjusting the notch handle it will only move in \
+the Y (gain) direction.\n\n\
     Over the notch width handle - left click and hold to widen or narrow the \
 notches, except the high and low cutoff notches which have no width handles.\n"
 };
@@ -114,7 +116,8 @@ notch settings in the HDEQ.\n"
 
 char input_help[] = {
 "    The input section allows you to set the input gain to the JAMin system.  \
-You can also pan the input left or right.\n"
+You can also pan the input left or right.  Clicking the right mouse button on \
+the gain/balance control will reset the value to 0.0/centre.\n"
 };
 
 
@@ -154,7 +157,8 @@ char stereo_help[] = {
 signal for each of the three bands.  The bands are defined by the crossovers \
 that can be set using the crossover faders or the crossover bars in the \
 HDEQ.  More negative values decrease the 'width' while positive values \
-increase the 'width'.\n"
+increase the 'width'.  Clicking the right mouse button on the stereo width \
+control will reset the value to 0.0.\n"
 };
 
 
@@ -163,24 +167,30 @@ char stereo_balance_help[] = {
 set of frequencies defined by the crossover locations.  That is, the balance \
 for each of the three bands, low, mid, and high, can be shifted left or \
 right.   The bands are defined by the crossovers that can be set using the \
-crossover faders or the crossover bars in the HDEQ.\n"
+crossover faders or the crossover bars in the HDEQ.  Clicking the right mouse \
+button on the stereo balance control will reset the value to 0.0.\n"
 };
 
 
 char limiter_help[] = {
 "    The lookahead limiter is a brickwall limiter that will not allow the \
 output to exceed the set level.  It \'looks ahead\' by the specified amount \
-in order to make a smooth transition as it nears the limit level.\n"
+in order to make a smooth transition as it nears the limit level.  Clicking \
+the right mouse button on the limiter control will reset the value to 0.0.\n"
 };
 
 
 char boost_help[] = {
-"    Boost help not yet available.\n"
+"    The boost control allows the user to add 'tube like' gain to the output \
+signal.  Use to taste (New England bland to Cajun spicy).  Clicking the right \
+mouse button on the boost control will reset the value to 0.0.\n"
 };
 
 
 char output_help[] = {
-"    Allows you to decrease the output level.  The upper level is 0dB.\n"
+"    The output control allows you to decrease the output level.  The upper \
+level is 0dB.  Clicking the right mouse button on the output control will \
+reset the value to 0.0.\n"
 };
 
 
