@@ -11,6 +11,7 @@
 #include "main.h"
 
 GtkAdjustment *geqa[EQ_BANDS];
+GtkRange *geqr[EQ_BANDS];
 
 /* Linear gain of the 1/3rd octave EQ bands */
 float geq_gains[EQ_BANDS + 1];
@@ -29,7 +30,6 @@ void bind_geq()
     char name[16];
     int i, bin;
     float last_bin, next_bin;
-    GtkWidget *scale;
     const double hz_per_bin = sample_rate / (double)BINS;
     GtkTooltips *tooltips = gtk_tooltips_new();
     char tip[255];
@@ -41,10 +41,10 @@ void bind_geq()
 
     for (i=0; i<EQ_BANDS; i++) {
 	sprintf(name, "eqb%d", i+1);
-	scale = lookup_widget(main_window, name);
+	geqr[i] = lookup_widget(main_window, name);
 	snprintf(tip, 255, "%'.0f Hz", floor(geq_freqs[i] + 0.5));
-	gtk_tooltips_set_tip(tooltips, scale, tip, NULL);
-	geqa[i] = gtk_range_get_adjustment(GTK_RANGE(scale));
+	gtk_tooltips_set_tip(tooltips, geqr[i], tip, NULL);
+	geqa[i] = gtk_range_get_adjustment(GTK_RANGE(geqr[i]));
         gtk_signal_connect(geqa[i], "value-changed", GTK_SIGNAL_FUNC(eqb_mod), NULL);
 	gtk_signal_connect(geqa[i], "value-changed", GTK_SIGNAL_FUNC(eqb_changed), (gpointer)i+1);
     }
@@ -91,15 +91,56 @@ void geq_set_gains()
 
 void geq_set_sliders(int length, float x[], float y[])
 {
-    /*  This is where Steve does the voodoo.  */
-    int i;
+    int i, j;
 
-    for (i = 0 ; i < length ; i++)
+
+    if (length != BINS / 2 - 1)
       {
-        fprintf(stderr,"%s %d %d %f %f\n",__FILE__,__LINE__,i,pow(10.0,x[i]),pow(10.0,y[i]));
+        fprintf (stderr, 
+            "Splined length %d does not match BINS / 2 - 1 (%d)\n", length,
+             BINS / 2 - 1);
+      }
+    else
+      {
+        /*  Set eq_coefs using linear gain values.  */
+
+        for (i = 0 ; i < length ; i++)
+          {
+            eq_coefs[i] = pow (10.0, y[i]);
+          }
+
+
+        /*  Convert to db and set the faders in the graphic EQ.  */
+
+        j = length / (EQ_BANDS + 1);
+        for (i = 0 ; i < EQ_BANDS ; i++)
+          {
+            gtk_adjustment_set_value (geqa[i], y[i * j] / 0.05);
+          }
       }
 }
 
+void geq_set_range(double min, double max)
+{
+    int             i;
+
+    for (i = 0 ; i < EQ_BANDS ; i++)
+      {
+        gtk_range_set_range (geqr[i], min, max);
+      }
+}
+
+void geq_get_freqs_and_gains(float *freqs, float *gains)
+{
+    int              i;
+
+    for (i = 0 ; i < EQ_BANDS ; i++)
+      {
+        freqs[i] = geq_freqs[i];
+        gains[i] = geq_gains[i];
+      }
+}
+    
 gboolean eqb_changed(GtkAdjustment *adj, gpointer user_data)
 {
     int band = (int)user_data;

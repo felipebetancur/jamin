@@ -263,6 +263,23 @@ create_window1 (void)
   GtkWidget *handlebox1;
   GtkWidget *drawingarea4;
   GtkWidget *label78;
+  GtkWidget *vbox122;
+  GtkWidget *frame12;
+  GtkWidget *hbox35;
+  GtkWidget *hbox36;
+  GtkWidget *label249;
+  GtkObject *geq_min_gain_spinner_adj;
+  GtkWidget *geq_min_gain_spinner;
+  GtkWidget *hbox37;
+  GtkWidget *label250;
+  GtkObject *geq_max_gain_spinner_adj;
+  GtkWidget *geq_max_gain_spinner;
+  GtkWidget *graphic_lbl;
+  GtkWidget *frame13;
+  GtkWidget *parametric_lbl;
+  GtkWidget *frame14;
+  GtkWidget *spectrum_lbl;
+  GtkWidget *eq_options_lbl;
   GtkWidget *cross_lbl;
   GtkWidget *table14;
   GtkWidget *low2mid;
@@ -462,7 +479,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox41), eventbox3, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox3, _("25 Hz"), NULL);
 
-  eqb1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (-0, -24, 24, 1, 6, 0)));
+  eqb1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb1, "eqb1");
   gtk_widget_show (eqb1);
   gtk_container_add (GTK_CONTAINER (eventbox3), eqb1);
@@ -491,7 +508,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox52), eventbox4, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox4, _("31 Hz"), NULL);
 
-  eqb2 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb2 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb2, "eqb2");
   gtk_widget_show (eqb2);
   gtk_container_add (GTK_CONTAINER (eventbox4), eqb2);
@@ -520,7 +537,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox53), eventbox5, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox5, _("39 Hz"), NULL);
 
-  eqb3 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb3 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb3, "eqb3");
   gtk_widget_show (eqb3);
   gtk_container_add (GTK_CONTAINER (eventbox5), eqb3);
@@ -549,7 +566,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox54), eventbox6, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox6, _("50 Hz"), NULL);
 
-  eqb4 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb4 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb4, "eqb4");
   gtk_widget_show (eqb4);
   gtk_container_add (GTK_CONTAINER (eventbox6), eqb4);
@@ -578,7 +595,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox55), eventbox7, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox7, _("62 Hz"), NULL);
 
-  eqb5 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb5 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb5, "eqb5");
   gtk_widget_show (eqb5);
   gtk_container_add (GTK_CONTAINER (eventbox7), eqb5);
@@ -607,7 +624,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox56), eventbox8, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox8, _("79 Hz"), NULL);
 
-  eqb6 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb6 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb6, "eqb6");
   gtk_widget_show (eqb6);
   gtk_container_add (GTK_CONTAINER (eventbox8), eqb6);
@@ -636,7 +653,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox57), eventbox9, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox9, _("100 Hz"), NULL);
 
-  eqb7 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb7 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb7, "eqb7");
   gtk_widget_show (eqb7);
   gtk_container_add (GTK_CONTAINER (eventbox9), eqb7);
@@ -665,7 +682,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox58), eventbox10, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox10, _("125 Hz"), NULL);
 
-  eqb8 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb8 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb8, "eqb8");
   gtk_widget_show (eqb8);
   gtk_container_add (GTK_CONTAINER (eventbox10), eqb8);
@@ -694,7 +711,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox59), eventbox11, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox11, _("158 Hz"), NULL);
 
-  eqb9 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb9 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb9, "eqb9");
   gtk_widget_show (eqb9);
   gtk_container_add (GTK_CONTAINER (eventbox11), eqb9);
@@ -723,7 +740,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox60), eventbox12, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox12, _("200 Hz"), NULL);
 
-  eqb10 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb10 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb10, "eqb10");
   gtk_widget_show (eqb10);
   gtk_container_add (GTK_CONTAINER (eventbox12), eqb10);
@@ -752,7 +769,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox61), eventbox13, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox13, _("251 Hz"), NULL);
 
-  eqb11 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb11 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb11, "eqb11");
   gtk_widget_show (eqb11);
   gtk_container_add (GTK_CONTAINER (eventbox13), eqb11);
@@ -776,7 +793,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox62), eventbox14, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox14, _("317 Hz"), NULL);
 
-  eqb12 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb12 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb12, "eqb12");
   gtk_widget_show (eqb12);
   gtk_container_add (GTK_CONTAINER (eventbox14), eqb12);
@@ -800,7 +817,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox63), eventbox15, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox15, _("400 Hz"), NULL);
 
-  eqb13 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb13 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb13, "eqb13");
   gtk_widget_show (eqb13);
   gtk_container_add (GTK_CONTAINER (eventbox15), eqb13);
@@ -824,7 +841,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox64), eventbox16, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox16, _("503 Hz"), NULL);
 
-  eqb14 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb14 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb14, "eqb14");
   gtk_widget_show (eqb14);
   gtk_container_add (GTK_CONTAINER (eventbox16), eqb14);
@@ -848,7 +865,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox65), eventbox17, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox17, _("634 Hz"), NULL);
 
-  eqb15 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb15 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb15, "eqb15");
   gtk_widget_show (eqb15);
   gtk_container_add (GTK_CONTAINER (eventbox17), eqb15);
@@ -872,7 +889,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox66), eventbox18, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox18, _("800 Hz"), NULL);
 
-  eqb16 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb16 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb16, "eqb16");
   gtk_widget_show (eqb16);
   gtk_container_add (GTK_CONTAINER (eventbox18), eqb16);
@@ -896,7 +913,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox67), eventbox19, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox19, _("1000 Hz"), NULL);
 
-  eqb17 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb17 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb17, "eqb17");
   gtk_widget_show (eqb17);
   gtk_container_add (GTK_CONTAINER (eventbox19), eqb17);
@@ -920,7 +937,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox68), eventbox20, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox20, _("1200 Hz"), NULL);
 
-  eqb18 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb18 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb18, "eqb18");
   gtk_widget_show (eqb18);
   gtk_container_add (GTK_CONTAINER (eventbox20), eqb18);
@@ -944,7 +961,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox69), eventbox21, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox21, _("1500 Hz"), NULL);
 
-  eqb19 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb19 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb19, "eqb19");
   gtk_widget_show (eqb19);
   gtk_container_add (GTK_CONTAINER (eventbox21), eqb19);
@@ -968,7 +985,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox70), eventbox22, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox22, _("2000 Hz"), NULL);
 
-  eqb20 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb20 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb20, "eqb20");
   gtk_widget_show (eqb20);
   gtk_container_add (GTK_CONTAINER (eventbox22), eqb20);
@@ -992,7 +1009,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox100), eventbox49, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox49, _("2000 Hz"), NULL);
 
-  eqb21 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb21 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb21, "eqb21");
   gtk_widget_show (eqb21);
   gtk_container_add (GTK_CONTAINER (eventbox49), eqb21);
@@ -1016,7 +1033,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox71), eventbox23, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox23, _("3200 Hz"), NULL);
 
-  eqb22 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb22 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb22, "eqb22");
   gtk_widget_show (eqb22);
   gtk_container_add (GTK_CONTAINER (eventbox23), eqb22);
@@ -1040,7 +1057,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox72), eventbox24, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox24, _("4000 Hz"), NULL);
 
-  eqb23 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb23 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb23, "eqb23");
   gtk_widget_show (eqb23);
   gtk_container_add (GTK_CONTAINER (eventbox24), eqb23);
@@ -1064,7 +1081,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox73), eventbox25, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox25, _("5000 Hz"), NULL);
 
-  eqb24 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb24 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb24, "eqb24");
   gtk_widget_show (eqb24);
   gtk_container_add (GTK_CONTAINER (eventbox25), eqb24);
@@ -1093,7 +1110,7 @@ create_window1 (void)
   gtk_widget_show (eventbox27);
   gtk_container_add (GTK_CONTAINER (eventbox26), eventbox27);
 
-  eqb25 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb25 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb25, "eqb25");
   gtk_widget_show (eqb25);
   gtk_container_add (GTK_CONTAINER (eventbox27), eqb25);
@@ -1117,7 +1134,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox75), eventbox28, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox28, _("8000 Hz"), NULL);
 
-  eqb26 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb26 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb26, "eqb26");
   gtk_widget_show (eqb26);
   gtk_container_add (GTK_CONTAINER (eventbox28), eqb26);
@@ -1141,7 +1158,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox76), eventbox29, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox29, _("10 KHz"), NULL);
 
-  eqb27 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb27 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb27, "eqb27");
   gtk_widget_show (eqb27);
   gtk_container_add (GTK_CONTAINER (eventbox29), eqb27);
@@ -1165,7 +1182,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox77), eventbox30, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox30, _("12 KHz"), NULL);
 
-  eqb28 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb28 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb28, "eqb28");
   gtk_widget_show (eqb28);
   gtk_container_add (GTK_CONTAINER (eventbox30), eqb28);
@@ -1189,7 +1206,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox80), eventbox31, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox31, _("16 KHz"), NULL);
 
-  eqb29 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb29 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb29, "eqb29");
   gtk_widget_show (eqb29);
   gtk_container_add (GTK_CONTAINER (eventbox31), eqb29);
@@ -1213,7 +1230,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox101), eventbox50, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox50, _("2000 Hz"), NULL);
 
-  eqb30 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -24, 24, 1, 6, 0)));
+  eqb30 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb30, "eqb30");
   gtk_widget_show (eqb30);
   gtk_container_add (GTK_CONTAINER (eventbox50), eqb30);
@@ -1760,6 +1777,91 @@ create_window1 (void)
   gtk_widget_show (label78);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 3), label78);
   gtk_label_set_justify (GTK_LABEL (label78), GTK_JUSTIFY_LEFT);
+
+  vbox122 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox122, "vbox122");
+  gtk_widget_show (vbox122);
+  gtk_container_add (GTK_CONTAINER (notebook1), vbox122);
+
+  frame12 = gtk_frame_new (NULL);
+  gtk_widget_set_name (frame12, "frame12");
+  gtk_widget_show (frame12);
+  gtk_box_pack_start (GTK_BOX (vbox122), frame12, TRUE, TRUE, 0);
+
+  hbox35 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox35, "hbox35");
+  gtk_widget_show (hbox35);
+  gtk_container_add (GTK_CONTAINER (frame12), hbox35);
+
+  hbox36 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox36, "hbox36");
+  gtk_widget_show (hbox36);
+  gtk_box_pack_start (GTK_BOX (hbox35), hbox36, TRUE, TRUE, 0);
+
+  label249 = gtk_label_new (_("Minimum Gain"));
+  gtk_widget_set_name (label249, "label249");
+  gtk_widget_show (label249);
+  gtk_box_pack_start (GTK_BOX (hbox36), label249, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label249), GTK_JUSTIFY_LEFT);
+
+  geq_min_gain_spinner_adj = gtk_adjustment_new (-12, -70, 0, 1, 10, 10);
+  geq_min_gain_spinner = gtk_spin_button_new (GTK_ADJUSTMENT (geq_min_gain_spinner_adj), 1, 0);
+  gtk_widget_set_name (geq_min_gain_spinner, "geq_min_gain_spinner");
+  gtk_widget_show (geq_min_gain_spinner);
+  gtk_box_pack_start (GTK_BOX (hbox36), geq_min_gain_spinner, TRUE, TRUE, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (geq_min_gain_spinner), TRUE);
+
+  hbox37 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox37, "hbox37");
+  gtk_widget_show (hbox37);
+  gtk_box_pack_start (GTK_BOX (hbox35), hbox37, TRUE, TRUE, 0);
+
+  label250 = gtk_label_new (_("Maximum Gain"));
+  gtk_widget_set_name (label250, "label250");
+  gtk_widget_show (label250);
+  gtk_box_pack_start (GTK_BOX (hbox37), label250, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label250), GTK_JUSTIFY_LEFT);
+
+  geq_max_gain_spinner_adj = gtk_adjustment_new (12, 0, 70, 1, 10, 10);
+  geq_max_gain_spinner = gtk_spin_button_new (GTK_ADJUSTMENT (geq_max_gain_spinner_adj), 1, 0);
+  gtk_widget_set_name (geq_max_gain_spinner, "geq_max_gain_spinner");
+  gtk_widget_show (geq_max_gain_spinner);
+  gtk_box_pack_start (GTK_BOX (hbox37), geq_max_gain_spinner, TRUE, TRUE, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (geq_max_gain_spinner), TRUE);
+
+  graphic_lbl = gtk_label_new (_("Graphic"));
+  gtk_widget_set_name (graphic_lbl, "graphic_lbl");
+  gtk_widget_show (graphic_lbl);
+  gtk_frame_set_label_widget (GTK_FRAME (frame12), graphic_lbl);
+  gtk_label_set_justify (GTK_LABEL (graphic_lbl), GTK_JUSTIFY_LEFT);
+
+  frame13 = gtk_frame_new (NULL);
+  gtk_widget_set_name (frame13, "frame13");
+  gtk_widget_show (frame13);
+  gtk_box_pack_start (GTK_BOX (vbox122), frame13, TRUE, TRUE, 0);
+
+  parametric_lbl = gtk_label_new (_("Parametric"));
+  gtk_widget_set_name (parametric_lbl, "parametric_lbl");
+  gtk_widget_show (parametric_lbl);
+  gtk_frame_set_label_widget (GTK_FRAME (frame13), parametric_lbl);
+  gtk_label_set_justify (GTK_LABEL (parametric_lbl), GTK_JUSTIFY_LEFT);
+
+  frame14 = gtk_frame_new (NULL);
+  gtk_widget_set_name (frame14, "frame14");
+  gtk_widget_show (frame14);
+  gtk_box_pack_start (GTK_BOX (vbox122), frame14, TRUE, TRUE, 0);
+
+  spectrum_lbl = gtk_label_new (_("Spectrum"));
+  gtk_widget_set_name (spectrum_lbl, "spectrum_lbl");
+  gtk_widget_show (spectrum_lbl);
+  gtk_frame_set_label_widget (GTK_FRAME (frame14), spectrum_lbl);
+  gtk_label_set_justify (GTK_LABEL (spectrum_lbl), GTK_JUSTIFY_LEFT);
+
+  eq_options_lbl = gtk_label_new (_("EQ Options"));
+  gtk_widget_set_name (eq_options_lbl, "eq_options_lbl");
+  gtk_widget_show (eq_options_lbl);
+  gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 4), eq_options_lbl);
+  gtk_label_set_justify (GTK_LABEL (eq_options_lbl), GTK_JUSTIFY_LEFT);
 
   cross_lbl = gtk_label_new (_("Crossover"));
   gtk_widget_set_name (cross_lbl, "cross_lbl");
@@ -2523,6 +2625,12 @@ create_window1 (void)
   g_signal_connect ((gpointer) EQ_curve_lbl, "realize",
                     G_CALLBACK (on_EQ_curve_lbl_realize),
                     NULL);
+  g_signal_connect ((gpointer) geq_min_gain_spinner, "value_changed",
+                    G_CALLBACK (on_geq_min_gain_spinner_value_changed),
+                    NULL);
+  g_signal_connect ((gpointer) geq_max_gain_spinner, "value_changed",
+                    G_CALLBACK (on_geq_max_gain_spinner_value_changed),
+                    NULL);
   g_signal_connect ((gpointer) low2mid, "value_changed",
                     G_CALLBACK (on_low2mid_value_changed),
                     NULL);
@@ -2822,6 +2930,21 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, handlebox1, "handlebox1");
   GLADE_HOOKUP_OBJECT (window1, drawingarea4, "drawingarea4");
   GLADE_HOOKUP_OBJECT (window1, label78, "label78");
+  GLADE_HOOKUP_OBJECT (window1, vbox122, "vbox122");
+  GLADE_HOOKUP_OBJECT (window1, frame12, "frame12");
+  GLADE_HOOKUP_OBJECT (window1, hbox35, "hbox35");
+  GLADE_HOOKUP_OBJECT (window1, hbox36, "hbox36");
+  GLADE_HOOKUP_OBJECT (window1, label249, "label249");
+  GLADE_HOOKUP_OBJECT (window1, geq_min_gain_spinner, "geq_min_gain_spinner");
+  GLADE_HOOKUP_OBJECT (window1, hbox37, "hbox37");
+  GLADE_HOOKUP_OBJECT (window1, label250, "label250");
+  GLADE_HOOKUP_OBJECT (window1, geq_max_gain_spinner, "geq_max_gain_spinner");
+  GLADE_HOOKUP_OBJECT (window1, graphic_lbl, "graphic_lbl");
+  GLADE_HOOKUP_OBJECT (window1, frame13, "frame13");
+  GLADE_HOOKUP_OBJECT (window1, parametric_lbl, "parametric_lbl");
+  GLADE_HOOKUP_OBJECT (window1, frame14, "frame14");
+  GLADE_HOOKUP_OBJECT (window1, spectrum_lbl, "spectrum_lbl");
+  GLADE_HOOKUP_OBJECT (window1, eq_options_lbl, "eq_options_lbl");
   GLADE_HOOKUP_OBJECT (window1, cross_lbl, "cross_lbl");
   GLADE_HOOKUP_OBJECT (window1, table14, "table14");
   GLADE_HOOKUP_OBJECT (window1, low2mid, "low2mid");

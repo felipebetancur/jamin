@@ -43,23 +43,7 @@ on_in_trim_scale_value_changed         (GtkRange        *range,
                                         gpointer         user_data);
 
 void
-on_low2mid2_value_changed              (GtkRange        *range,
-                                        gpointer         user_data);
-
-void
-on_low2mid2_realize                    (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
 on_low2mid_lbl_realize                 (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_mid2high2_value_changed             (GtkRange        *range,
-                                        gpointer         user_data);
-
-void
-on_mid2high2_realize                   (GtkWidget       *widget,
                                         gpointer         user_data);
 
 void
@@ -67,43 +51,7 @@ on_mid2high_lbl_realize                (GtkWidget       *widget,
                                         gpointer         user_data);
 
 void
-on_low2mid_value_changed               (GtkRange        *range,
-                                        gpointer         user_data);
-
-void
-on_low2mid_realize                     (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_mid2high_value_changed              (GtkRange        *range,
-                                        gpointer         user_data);
-
-void
-on_mid2high_realize                    (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_low2mid_realize                     (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_mid2high2_realize                   (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_mid2high_realize                    (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
 on_label_Low_realize                   (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_label94_realize                     (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_label68_realize                     (GtkWidget       *widget,
                                         gpointer         user_data);
 
 void
@@ -184,6 +132,14 @@ on_mid_knee_lbl_realize                (GtkWidget       *widget,
 
 void
 on_high_knee_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_geq_min_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data);
+
+void
+on_geq_max_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
                                         gpointer         user_data);
 
 void

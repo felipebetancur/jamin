@@ -15,8 +15,8 @@
 #include "process.h"
 
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
-#define EQ_INTRVL 10
-#define EQ_INTERP ((EQ_BANDS + 1) * EQ_INTRVL)
+#define EQ_INTERP (BINS / 2 - 1)
+#define EQ_INTRVL (EQ_INTERP / (EQ_BANDS + 1))
 
 
 void interpolate (float, int, float, float, int *, float *, float *, float *, 
@@ -32,13 +32,14 @@ static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_low_comp_lbl,
 static GtkDrawingArea  *l_EQ_curve;
 static GdkDrawable     *EQ_drawable;
 static GdkColormap     *colormap;
-static GdkColor        white, black;
+static GdkColor        white, black, red, green, blue;
 static GdkGC           *norm_gc;
 static GtkAdjustment   *l_low2mid_adj, *l_eqb1_adj;
 static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
                        EQ_curve_height, EQ_xinterp[EQ_INTERP + 1], EQ_start, 
                        EQ_end, EQ_interval, EQ_yinterp[EQ_INTERP + 1], 
-                       *EQ_xinput = NULL, *EQ_yinput = NULL;
+                       *EQ_xinput = NULL, *EQ_yinput = NULL, 
+                       l_geq_freqs[EQ_BANDS], l_geq_gains[EQ_BANDS];
 static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0, 
                        EQ_length = 0;
 
@@ -309,6 +310,24 @@ on_window1_show                        (GtkWidget       *widget,
     black.blue = 0;
 
     gdk_colormap_alloc_color (colormap, &black, FALSE, TRUE);
+
+    red.red = 65535;
+    red.green = 0;
+    red.blue = 0;
+
+    gdk_colormap_alloc_color (colormap, &red, FALSE, TRUE);
+
+    green.red = 0;
+    green.green = 65535;
+    green.blue = 0;
+
+    gdk_colormap_alloc_color (colormap, &green, FALSE, TRUE);
+
+    blue.red = 0;
+    blue.green = 0;
+    blue.blue = 0;
+
+    gdk_colormap_alloc_color (colormap, &blue, FALSE, TRUE);
 }
 
 
@@ -333,7 +352,7 @@ eqb_mod                                (GtkAdjustment *adj, gpointer user_data)
 void
 draw_EQ_curve ()
 {
-    int            i, x0 = 0, y0 = 0, x1, y1;
+    int            i, x0 = 0, y0 = 0, x1, y1, inc;
     float          x[EQ_BANDS], y[EQ_BANDS];
 
 
@@ -347,15 +366,30 @@ draw_EQ_curve ()
 
     /*  Draw the grid lines.  */
 
+    geq_get_freqs_and_gains (l_geq_freqs, l_geq_gains);
+
     for (i = 0 ; i < EQ_BANDS ; i++)
       {
-        x[i] = log10 (geq_freqs[i]);
-        y[i] = log10 (geq_gains[i]);
+        x[i] = log10 (l_geq_freqs[i]);
+        y[i] = log10 (l_geq_gains[i]);
 
         x1 = NINT (((x[i] - l_low2mid_adj->lower) / EQ_curve_range_x) * 
             EQ_curve_width);
 
         gdk_draw_line (EQ_drawable, norm_gc, x1, 0, x1, EQ_curve_height);
+      }
+
+    inc = 10;
+    if (EQ_curve_range_y < 10.0) inc = 1;
+    for (i = NINT (l_eqb1_adj->lower) ; i < NINT (l_eqb1_adj->upper) ; i++)
+      {
+        if (!(i % inc))
+          {
+            y1 = EQ_curve_height - NINT (((i - l_eqb1_adj->lower) / 
+                EQ_curve_range_y) * EQ_curve_height);
+
+            gdk_draw_line (EQ_drawable, norm_gc, 0, y1, EQ_curve_width, y1);
+          }
       }
 
 
@@ -368,6 +402,9 @@ draw_EQ_curve ()
 
     /*  Plot the curve.  */
 
+    gdk_gc_set_foreground (norm_gc, &red);
+    gdk_gc_set_line_attributes (norm_gc, 2, GDK_LINE_SOLID, GDK_CAP_BUTT,
+        GDK_JOIN_MITER);
     for (i = 0 ; i < EQ_length ; i++)
       {
         x1 = NINT (((EQ_xinterp[i] - l_low2mid_adj->lower) / 
@@ -382,6 +419,9 @@ draw_EQ_curve ()
         x0 = x1;
         y0 = y1;
       }
+    gdk_gc_set_line_attributes (norm_gc, 1, GDK_LINE_SOLID, GDK_CAP_BUTT,
+        GDK_JOIN_MITER);
+    gdk_gc_set_foreground (norm_gc, &black);
 
     EQ_mod = 0;
 }
@@ -415,8 +455,10 @@ on_EQ_curve_realize                    (GtkWidget       *widget,
 
     norm_gc = widget->style->fg_gc[GTK_WIDGET_STATE (widget)];
 
-    EQ_start = log10 (geq_freqs[0]);
-    EQ_end = log10 (geq_freqs[EQ_BANDS - 1]);
+    geq_get_freqs_and_gains (l_geq_freqs, l_geq_gains);
+
+    EQ_start = log10 (l_geq_freqs[0]);
+    EQ_end = log10 (l_geq_freqs[EQ_BANDS - 1]);
     EQ_interval = (EQ_end - EQ_start) / EQ_INTERP;
 }
 
@@ -437,7 +479,7 @@ on_eqb1_realize                        (GtkWidget       *widget,
 }
 
 
-gboolean
+gboolean 
 on_EQ_curve_event_box_motion_notify_event
                                         (GtkWidget       *widget,
                                         GdkEventMotion  *event,
@@ -453,7 +495,7 @@ on_EQ_curve_event_box_motion_notify_event
     y = NINT (event->y);
 
 
-    /*  We only want to updatethings if we've actually moved the cursor.  */
+    /*  We only want to update things if we've actually moved the cursor.  */
 
     if (x != prev_x || y != prev_y)
       {
@@ -658,7 +700,8 @@ on_EQ_curve_event_box_button_release_event
         EQ_input_points = 0;
 
 
-        /*  Set the graphic EQ sliders based on the curve.  */
+        /*  Set the graphic EQ sliders and the EQ settings based on the 
+            hand-drawn curve.  */
 
         geq_set_sliders (EQ_length, EQ_xinterp, EQ_yinterp);
 
@@ -701,6 +744,11 @@ on_comp_kn_1_value_changed             (GtkRange        *range,
     double              value;
 
 
+    /*  Make sure it exists before we set it.  */
+
+    if (l_low_knee_lbl == NULL) return;
+
+
     value = gtk_range_get_value (range);
 
     if (value == 0.5)
@@ -731,6 +779,11 @@ on_comp_kn_2_value_changed             (GtkRange        *range,
                                         gpointer         user_data)
 {
     double              value;
+
+
+    /*  Make sure it exists before we set it.  */
+
+    if (l_mid_knee_lbl == NULL) return;
 
 
     value = gtk_range_get_value (range);
@@ -765,6 +818,11 @@ on_comp_kn_3_value_changed             (GtkRange        *range,
     double              value;
 
 
+    /*  Make sure it exists before we set it.  */
+
+    if (l_high_knee_lbl == NULL) return;
+
+
     value = gtk_range_get_value (range);
 
     if (value == 0.5)
@@ -780,6 +838,23 @@ on_comp_kn_3_value_changed             (GtkRange        *range,
         gtk_label_set_label (l_high_knee_lbl, "Soft");
       }
 }
+
+
+void
+on_geq_min_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data)
+{
+    geq_set_range (gtk_spin_button_get_value (spinbutton), l_eqb1_adj->upper);
+}
+
+
+void
+on_geq_max_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data)
+{
+    geq_set_range (l_eqb1_adj->lower, gtk_spin_button_get_value (spinbutton));
+}
+
 
 void
 on_out_trim_scale_value_changed        (GtkRange        *range,

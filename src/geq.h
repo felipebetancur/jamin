@@ -5,10 +5,7 @@
 
 void bind_geq();
 void geq_set_sliders(int length, float x[], float y[]);
-
-/* Linear gain of the 1/3rd octave EQ bands */
-extern float geq_gains[];
-/* Frequency of each band of the EQ */
-extern float geq_freqs[];
+void geq_set_range(double min, double max);
+void geq_get_freqs_and_gains(float *freqs, float *gains);
 
 #endif
