@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: stereo.c,v 1.4 2004/01/03 12:43:28 theno23 Exp $
+ *  $Id: stereo.c,v 1.5 2004/01/03 13:57:44 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -26,7 +26,7 @@ void stereo_pan_cb(int id, float value);
 
 
 static GtkLabel *band_pan_label[3];
-
+static GtkRange *band_pan_scale[3];
 
 void update_band_pan_label(int band, float balance)
 {
@@ -47,15 +47,23 @@ void bind_stereo()
 {
     int i;
 
+
     band_pan_label[0] = GTK_LABEL(lookup_widget(main_window, "low_pan_label"));
     band_pan_label[1] = GTK_LABEL(lookup_widget(main_window, "mid_pan_label"));
     band_pan_label[2] = GTK_LABEL(lookup_widget(main_window, "high_pan_label"));
+
+    band_pan_scale[0] = GTK_RANGE(lookup_widget(main_window, "low_pan_scale"));
+    band_pan_scale[1] = GTK_RANGE(lookup_widget(main_window, "mid_pan_scale"));
+    band_pan_scale[2] = GTK_RANGE(lookup_widget(main_window, "high_pan_scale"));
+
 
     for (i = 0; i < 3; i++) {
 	s_set_callback(S_STEREO_WIDTH(i), stereo_cb);
 	process_set_stereo_width(i, 0.0f);
 
         s_set_callback(S_STEREO_PAN(i), stereo_pan_cb);
+        s_set_adjustment(S_STEREO_PAN(i), 
+                         gtk_range_get_adjustment(band_pan_scale[i]));
 	process_set_stereo_balance(i, 0.0f);
         update_band_pan_label(i, 0.0);
     }

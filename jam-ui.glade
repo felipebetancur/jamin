@@ -4640,7 +4640,7 @@
 						  <child>
 						    <widget class="GtkHBox" id="low_pan_hbox">
 						      <property name="visible">True</property>
-						      <property name="homogeneous">False</property>
+						      <property name="homogeneous">True</property>
 						      <property name="spacing">0</property>
 
 						      <child>
@@ -5288,7 +5288,7 @@
 						  <child>
 						    <widget class="GtkHBox" id="mid_pan_hbox">
 						      <property name="visible">True</property>
-						      <property name="homogeneous">False</property>
+						      <property name="homogeneous">True</property>
 						      <property name="spacing">0</property>
 
 						      <child>
@@ -5936,7 +5936,7 @@
 						  <child>
 						    <widget class="GtkHBox" id="high_pan_hbox">
 						      <property name="visible">True</property>
-						      <property name="homogeneous">False</property>
+						      <property name="homogeneous">True</property>
 						      <property name="spacing">0</property>
 
 						      <child>

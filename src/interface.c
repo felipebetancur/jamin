@@ -2487,7 +2487,7 @@ create_window1 (void)
   gtk_scale_set_value_pos (GTK_SCALE (hscale_1_l), GTK_POS_LEFT);
   gtk_scale_set_digits (GTK_SCALE (hscale_1_l), 2);
 
-  low_pan_hbox = gtk_hbox_new (FALSE, 0);
+  low_pan_hbox = gtk_hbox_new (TRUE, 0);
   gtk_widget_set_name (low_pan_hbox, "low_pan_hbox");
   gtk_widget_show (low_pan_hbox);
   gtk_box_pack_start (GTK_BOX (vbox_l), low_pan_hbox, TRUE, TRUE, 0);
@@ -2751,7 +2751,7 @@ create_window1 (void)
   gtk_scale_set_value_pos (GTK_SCALE (hscale_1_m), GTK_POS_LEFT);
   gtk_scale_set_digits (GTK_SCALE (hscale_1_m), 2);
 
-  mid_pan_hbox = gtk_hbox_new (FALSE, 0);
+  mid_pan_hbox = gtk_hbox_new (TRUE, 0);
   gtk_widget_set_name (mid_pan_hbox, "mid_pan_hbox");
   gtk_widget_show (mid_pan_hbox);
   gtk_box_pack_start (GTK_BOX (vbox_m), mid_pan_hbox, TRUE, TRUE, 0);
@@ -3015,7 +3015,7 @@ create_window1 (void)
   gtk_scale_set_value_pos (GTK_SCALE (hscale_1_h), GTK_POS_LEFT);
   gtk_scale_set_digits (GTK_SCALE (hscale_1_h), 2);
 
-  high_pan_hbox = gtk_hbox_new (FALSE, 0);
+  high_pan_hbox = gtk_hbox_new (TRUE, 0);
   gtk_widget_set_name (high_pan_hbox, "high_pan_hbox");
   gtk_widget_show (high_pan_hbox);
   gtk_box_pack_start (GTK_BOX (vbox_h), high_pan_hbox, TRUE, TRUE, 0);

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.118 2004/01/03 00:52:34 jdepner Exp $
+ *  $Id: callbacks.c,v 1.119 2004/01/03 13:57:44 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1631,7 +1631,6 @@ void
 on_low_pan_scale_value_changed         (GtkRange        *range,
                                         gpointer         user_data)
 {
-  /* Do something for low band pan */
   s_set_value_ui(S_STEREO_PAN(0), gtk_range_get_adjustment(range)->value);
 }
 
@@ -1640,7 +1639,6 @@ void
 on_mid_pan_scale_value_changed         (GtkRange        *range,
                                         gpointer         user_data)
 {
-  /* Do something for mid band pan */
   s_set_value_ui(S_STEREO_PAN(1), gtk_range_get_adjustment(range)->value);
 }
 
@@ -1649,7 +1647,6 @@ void
 on_high_pan_scale_value_changed        (GtkRange        *range,
                                         gpointer         user_data)
 {
-  /* Do something for high band pan */
   s_set_value_ui(S_STEREO_PAN(2), gtk_range_get_adjustment(range)->value);
 }
 
