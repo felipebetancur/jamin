@@ -36,7 +36,6 @@
 
 static GtkWidget *help_dialog = NULL;
 
-
 void help_message (char *string)
 {
     help_dialog = gtk_message_dialog_new ((GtkWindow *) main_window,

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.115 2003/12/21 19:38:06 jdepner Exp $
+ *  $Id: callbacks.c,v 1.116 2003/12/21 21:17:19 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1323,16 +1323,54 @@ on_redo1_activate                       (GtkMenuItem     *menuitem,
   s_redo();
 }
 
+
+void general_help_callback ()
+{
+  help_message (general_help);
+}
+
+
 void
 on_about1_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
   GtkImage     *splash;
+  GdkPixbuf    *pixbuf;
+  GtkWidget    *splash_dialog;
+  gchar        title[128];
+  GError       *error = NULL;
 
-  splash = (GtkImage *) gtk_image_new_from_file ("/usr/local/share/jamin/JAMin54.jpg");
 
-  
-  help_message (general_help);
+  if ((pixbuf = 
+       gdk_pixbuf_new_from_file ("/usr/local/share/jamin/JAMin_splash.jpg",
+                                 &error)) == NULL)
+    {
+      help_message (general_help);
+    }
+  else
+    {
+      splash = (GtkImage *) gtk_image_new_from_pixbuf (pixbuf);
+
+      sprintf (title, "%s %s", PACKAGE, VERSION);
+      splash_dialog = 
+        gtk_dialog_new_with_buttons (title, (GtkWindow *) main_window,
+                                     GTK_DIALOG_DESTROY_WITH_PARENT,
+                                     "More...", GTK_RESPONSE_NONE,
+                                     NULL);
+
+      g_signal_connect_swapped (GTK_OBJECT (splash_dialog), "response",
+                                G_CALLBACK (general_help_callback),
+                                GTK_OBJECT (splash_dialog));
+
+      g_signal_connect_swapped (GTK_OBJECT (splash_dialog), "response",
+                                G_CALLBACK (gtk_widget_destroy),
+                                GTK_OBJECT (splash_dialog));
+
+      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (splash_dialog)->vbox),
+                         (GtkWidget *) splash);
+
+      gtk_widget_show_all (splash_dialog);
+    }
 }
 
 
