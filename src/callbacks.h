@@ -560,11 +560,6 @@ on_help_button_clicked                 (GtkButton       *button,
                                         gpointer         user_data);
 
 gboolean
-on_window1_button_press_event          (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data);
-
-gboolean
 on_EQ_curve_event_box_enter_notify_event
                                         (GtkWidget       *widget,
                                         GdkEventCrossing *event,

@@ -1994,7 +1994,7 @@ create_window1 (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_label_set_justify (GTK_LABEL (label291), GTK_JUSTIFY_LEFT);
 
-  label292 = gtk_label_new (_("%"));
+  label292 = gtk_label_new (_("r"));
   gtk_widget_set_name (label292, "label292");
   gtk_widget_show (label292);
   gtk_table_attach (GTK_TABLE (table24), label292, 3, 4, 0, 1,
@@ -2270,7 +2270,7 @@ create_window1 (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_label_set_justify (GTK_LABEL (label305), GTK_JUSTIFY_LEFT);
 
-  label306 = gtk_label_new (_("%"));
+  label306 = gtk_label_new (_("r"));
   gtk_widget_set_name (label306, "label306");
   gtk_widget_show (label306);
   gtk_table_attach (GTK_TABLE (table25), label306, 3, 4, 0, 1,
@@ -2545,7 +2545,7 @@ create_window1 (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_label_set_justify (GTK_LABEL (label311), GTK_JUSTIFY_LEFT);
 
-  label312 = gtk_label_new (_("%"));
+  label312 = gtk_label_new (_("r"));
   gtk_widget_set_name (label312, "label312");
   gtk_widget_show (label312);
   gtk_table_attach (GTK_TABLE (table26), label312, 3, 4, 0, 1,
@@ -3158,9 +3158,6 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) window1, "show",
                     G_CALLBACK (on_window1_show),
-                    NULL);
-  g_signal_connect ((gpointer) window1, "button_press_event",
-                    G_CALLBACK (on_window1_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) window1, "show_help",
                     G_CALLBACK (on_show_help),

@@ -221,6 +221,9 @@ void clear_scene ()
     gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[menu_scene]), 
                           "Right click for menu", NULL);
 
+    gtk_image_set_from_stock (l_scene[menu_scene], GTK_STOCK_NO, 
+                              GTK_ICON_SIZE_BUTTON);
+
     scene_loaded[menu_scene] = FALSE;
 }
 
