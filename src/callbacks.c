@@ -21,6 +21,7 @@
 #include "state.h"
 
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
+
 #define EQ_INTERP (BINS / 2 - 1)
 #define EQ_INTRVL (EQ_INTERP / (EQ_BANDS + 1))
 
@@ -28,6 +29,7 @@
 
 void interpolate (float, int, float, float, int *, float *, float *, float *, 
                   float *);
+void draw_EQ_curve ();
 
 static GtkHScale       *l_low2mid, *l_mid2high;
 static GtkVScale       *l_eqb1;
@@ -54,7 +56,7 @@ static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
                        comp_end_y[3];
 static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0, 
                        EQ_length = 0, comp_realized[3] = {0, 0, 0}, 
-                       EQ_cleared = 1;
+                       EQ_cleared = 1, EQ_realized = 0, xover_active = 0;
 
 
 void
@@ -63,6 +65,7 @@ on_low2mid_value_changed               (GtkRange        *range,
 {
     double          value, other_value,lvalue, mvalue, hvalue;
     char            label[6];
+
 
     value = gtk_range_get_value (range);
     other_value = gtk_range_get_value ((GtkRange *) l_mid2high);
@@ -120,6 +123,8 @@ on_low2mid_value_changed               (GtkRange        *range,
     mvalue = pow (10.0, value);
     sprintf (label, "Low : %d - %d", NINT (lvalue), NINT (mvalue));
     gtk_label_set_label (l_low_comp_lbl, label);
+
+    draw_EQ_curve ();
 }
 
 
@@ -185,6 +190,52 @@ on_mid2high_value_changed              (GtkRange        *range,
     hvalue = pow (10.0, l_low2mid_adj->upper);
     sprintf (label, "High : %d - %d", NINT (mvalue), NINT (hvalue));
     gtk_label_set_label (l_high_comp_lbl, label);
+
+    draw_EQ_curve ();
+}
+
+
+gboolean
+on_low2mid_button_press_event          (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+    xover_active = 1;
+
+    return FALSE;
+}
+
+
+gboolean
+on_low2mid_button_release_event        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+    xover_active = 0;
+
+    return FALSE;
+}
+
+
+gboolean
+on_mid2high2_button_press_event        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+    xover_active = 1;
+
+    return FALSE;
+}
+
+
+gboolean
+on_mid2high2_button_release_event      (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+    xover_active = 0;
+
+    return FALSE;
 }
 
 
@@ -372,7 +423,7 @@ draw_EQ_spectrum_curve (float single_levels[])
 
     /*  Don't update if we're drawing an EQ curve.  */
 
-    if (!EQ_drawing)
+    if (!EQ_drawing && !xover_active)
       {
         /*  Plot the curve.  */
 
@@ -428,6 +479,9 @@ draw_EQ_curve ()
     float          x[EQ_BANDS], y[EQ_BANDS];
 
 
+    if (!EQ_realized) return;
+
+
     /*  Clear the curve drawing area.  */
 
     EQ_cleared = 1;
@@ -465,6 +519,22 @@ draw_EQ_curve ()
       }
 
 
+    /*  Add the crossover bars.  */
+
+    gdk_gc_set_line_attributes (EQ_gc, 2, GDK_LINE_SOLID, GDK_CAP_BUTT,
+        GDK_JOIN_MITER);
+
+    gdk_gc_set_foreground (EQ_gc, &red);
+    x1 = NINT (((log10 (xover_fa) - l_low2mid_adj->lower) / 
+        EQ_curve_range_x) * EQ_curve_width);
+    gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
+
+    gdk_gc_set_foreground (EQ_gc, &blue);
+    x1 = NINT (((log10 (xover_fb) - l_low2mid_adj->lower) / 
+        EQ_curve_range_x) * EQ_curve_width);
+    gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
+
+    
     /*  If we've messed with the graphics EQ sliders, recompute the splined 
         curve.  */
 
@@ -537,6 +607,7 @@ on_EQ_curve_realize                    (GtkWidget       *widget,
     EQ_start = log10 (l_geq_freqs[0]);
     EQ_end = log10 (l_geq_freqs[EQ_BANDS - 1]);
     EQ_interval = (EQ_end - EQ_start) / EQ_INTERP;
+    EQ_realized = 1;
 }
 
 

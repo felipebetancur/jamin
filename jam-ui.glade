@@ -3859,6 +3859,8 @@
 			      <property name="adjustment">2.22462 1.39794 4.30103 0.01 0.1 0</property>
 			      <signal name="value_changed" handler="on_low2mid_value_changed" last_modification_time="Mon, 14 Apr 2003 21:20:06 GMT"/>
 			      <signal name="realize" handler="on_low2mid_realize" last_modification_time="Mon, 14 Apr 2003 21:24:52 GMT"/>
+			      <signal name="button_press_event" handler="on_low2mid_button_press_event" last_modification_time="Fri, 09 May 2003 02:29:30 GMT"/>
+			      <signal name="button_release_event" handler="on_low2mid_button_release_event" last_modification_time="Fri, 09 May 2003 02:29:38 GMT"/>
 			    </widget>
 			    <packing>
 			      <property name="left_attach">1</property>
@@ -3880,6 +3882,8 @@
 			      <property name="adjustment">3.20204 1.39794 4.30103 0.01 0.1 0</property>
 			      <signal name="value_changed" handler="on_mid2high_value_changed" last_modification_time="Mon, 14 Apr 2003 21:20:24 GMT"/>
 			      <signal name="realize" handler="on_mid2high_realize" last_modification_time="Mon, 14 Apr 2003 21:32:47 GMT"/>
+			      <signal name="button_press_event" handler="on_mid2high2_button_press_event" last_modification_time="Fri, 09 May 2003 02:29:48 GMT"/>
+			      <signal name="button_release_event" handler="on_mid2high2_button_release_event" last_modification_time="Fri, 09 May 2003 02:29:52 GMT"/>
 			    </widget>
 			    <packing>
 			      <property name="left_attach">1</property>

@@ -379,3 +379,23 @@ on_lim_lh_scale_value_changed          (GtkRange        *range,
 void
 on_release_val_label_realize           (GtkWidget       *widget,
                                         gpointer         user_data);
+
+gboolean
+on_low2mid_button_press_event          (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_low2mid_button_release_event        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_mid2high2_button_press_event        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_mid2high2_button_release_event      (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
