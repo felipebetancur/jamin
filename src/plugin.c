@@ -11,19 +11,21 @@ static char *plugin_path;
 void plugin_init()
 {
 	if (getenv("LADSPA_PATH")) {
-		plugin_path = strdup(getenv("LADSPA_PATH"));
+		plugin_path = getenv("LADSPA_PATH");
 	} else {
-		plugin_path = strdup("/usr/local/lib/ladspa:/usr/lib/ladspa");
+		plugin_path = "/usr/local/lib/ladspa:/usr/lib/ladspa";
 	}
 }
 
 plugin *plugin_load(char *file)
 {
 	char *dir;
+	char *path_tok;
 	char path[512];
 	void *dl;
 
-	for (dir = strtok(plugin_path, ":"); dir; dir = strtok(NULL, ":")) {
+	path_tok = strdup(plugin_path);
+	for (dir = strtok(path_tok, ":"); dir; dir = strtok(NULL, ":")) {
 		snprintf(path, 511, "%s/%s", dir, file);
 		if ((dl = dlopen(path, RTLD_LAZY))) {
 			plugin *ret = malloc(sizeof(plugin));
@@ -37,6 +39,7 @@ plugin *plugin_load(char *file)
 		}
 	}
 	fprintf(stderr, "Cannot find plugin '%s'\n", file);
+	free(path_tok);
 
 	return NULL;
 }

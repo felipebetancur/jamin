@@ -82,7 +82,7 @@
 #include "state.h"
 #include "debug.h"
 
-char *jamin_options = "dFf:hpTtvV";	/* valid JAMin options */
+char *jamin_options = "dFf:n:hpTtvV";	/* valid JAMin options */
 char *pname;				/* `basename $0` */
 int dummy_mode = 0;			/* -d option */
 int all_errors_fatal = 0;		/* -F option */
@@ -669,7 +669,7 @@ void io_init(int argc, char *argv[])
 {
     int chan;
     int opt;
-    char client_name[256];
+    char *client_name = NULL;
 
     /* basename $0 */
     pname = strrchr(argv[0], '/');
@@ -688,6 +688,9 @@ void io_init(int argc, char *argv[])
 	    break;
 	case 'f':
 	    s_set_filename(optarg);
+	    break;
+	case 'n':			/* Set JACK client name */
+	    client_name = strdup(optarg);
 	    break;
 	case 'h':			/* show help */
 	    show_help = 1;
@@ -734,6 +737,7 @@ void io_init(int argc, char *argv[])
                 "\nuser options:\n"
                 "\t-p\tdon't automatically connect to jack ports\n"
                 "\t-f file\tload session file on startup\n"
+                "\t-n name\tset AJCK client name\n"
                 "\t-V\tprint version\n"
                 "\t-h\tshow this help\n"
                 "\ndeveloper options:\n"
@@ -756,7 +760,9 @@ void io_init(int argc, char *argv[])
     }
 
     /* register as a JACK client */
-    snprintf(client_name, 255, PACKAGE);
+    if (!client_name) {
+	client_name = strdup(PACKAGE);
+    }
     printf("Registering as %s\n", client_name);
 
     client = jack_client_new(client_name);
@@ -779,6 +785,8 @@ void io_init(int argc, char *argv[])
 
     /* initialize process_signal() */
     process_init((float) jst.sample_rate);
+
+    free(client_name);
 }
 
 

@@ -370,6 +370,9 @@ void s_load_session (const char *fname)
 	filename = NULL;
     }
 
+    if (scene > -1) {
+	set_scene(1);
+    }
 
     hdeq_set_xover ();
     set_EQ_curve_values ();
