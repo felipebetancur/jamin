@@ -647,12 +647,6 @@ on_spectrum_options_eventbox_enter_notify_event
                                         gpointer         user_data);
 
 gboolean
-on_crossover_label_eventbox_enter_notify_event
-                                        (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data);
-
-gboolean
 on_status_label_eventbox_enter_notify_event
                                         (GtkWidget       *widget,
                                         GdkEventCrossing *event,

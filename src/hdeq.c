@@ -1,4 +1,3 @@
-
 /*
  *  hdeq.c -- Hand drawn EQ, crossover, and compressor graph interface for
  *            the JAMin (JACK Audio Mastering interface) program.
@@ -77,7 +76,6 @@ static GtkWidget       *l_comp[3];
 static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_comp_lbl[3], 
                        *l_EQ_curve_lbl, *l_c_curve_lbl[3];
 static GtkDrawingArea  *l_EQ_curve, *l_comp_curve[3];
-static GtkNotebook     *notebook1;
 static GdkDrawable     *EQ_drawable, *comp_drawable[3];
 static GdkColormap     *colormap = NULL;
 static GdkColor        white, black, comp_color[4], EQ_back_color, 
@@ -112,6 +110,7 @@ static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0,
                        EQ_notch_index[NOTCHES] = {20, NOTCH_INT, 2 * NOTCH_INT,
                        3 * NOTCH_INT, EQ_INTERP - 20}, 
                        EQ_notch_flag[NOTCHES] = {0, 0, 0, 0, 0};
+static guint           notebook1_page = 0;
 
 
 /*  Clear out the hand drawn EQ curves on exit.  */
@@ -174,9 +173,6 @@ void bind_hdeq ()
                                                  "mid_curve_lbl"));
     l_c_curve_lbl[2] = GTK_LABEL (lookup_widget (main_window, 
                                                  "high_curve_lbl"));
-
-    notebook1 = GTK_NOTEBOOK (lookup_widget (main_window, "notebook1"));
-
 
     set_color (&white, 65535, 65535, 65535);
     set_color (&black, 0, 0, 0);
@@ -2033,10 +2029,19 @@ void comp_box_enter (int i)
 }
 
 
+/*  Saving the current notebook page on a switch, see callbacks.c.  This saves
+    us querying the GUI 10 times per second from spectrum_update.  */
+
+void hdeq_notebook1_set_page (guint page_num)
+{
+    notebook1_page = page_num;
+}
+
+
 /*  Return the current notebook page - 0 = hdeq, 1 = geq, 2 = spectrum,
     3 = options.  */
 
 int get_current_notebook1_page ()
 {
-    return (gtk_notebook_get_current_page (notebook1));
+    return (notebook1_page);
 }

@@ -2661,7 +2661,7 @@
 		      <child>
 			<widget class="GtkEventBox" id="crossover_label_eventbox">
 			  <property name="visible">True</property>
-			  <signal name="enter_notify_event" handler="on_crossover_label_eventbox_enter_notify_event" last_modification_time="Mon, 21 Jul 2003 00:48:19 GMT"/>
+			  <signal name="enter_notify_event" handler="on_crossover_eventbox_enter_notify_event" last_modification_time="Tue, 22 Jul 2003 23:14:44 GMT"/>
 
 			  <child>
 			    <widget class="GtkHBox" id="hbox48">

@@ -1179,18 +1179,6 @@ on_spectrum_options_eventbox_enter_notify_event
 
 
 gboolean
-on_crossover_label_eventbox_enter_notify_event
-                                        (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data)
-{
-    help_ptr = crossover_label_help;
-
-    return FALSE;
-}
-
-
-gboolean
 on_status_label_eventbox_enter_notify_event
                                         (GtkWidget       *widget,
                                         GdkEventCrossing *event,
@@ -1287,4 +1275,3 @@ on_notebook1_switch_page               (GtkNotebook     *notebook,
 {
     hdeq_notebook1_set_page (page_num);
 }
-

@@ -34,9 +34,10 @@ Mass Ave, Cambridge, MA 02139, USA.\n"
 
 char help_help[] = {
 "    Context specific help can be obtained by moving the mouse pointer into \
-one of the tool areas (compressor, EQ, limiter, input, etc) and pressing \
-<Shift><F1>.  Pressing <Shift><F1> while the cursor is over the Help button \
-will cause the general JAMin help message to be displayed.\n"
+one of the tool areas (compressor, EQ, limiter, input, etc) or over any of \
+the individual buttons (Help, Quit, Undo, etc) and pressing <Shift><F1>.  \
+Pressing <Shift><F1> while the cursor is over the Help button will cause the \
+general JAMin help message to be displayed.\n"
 };
 
 
@@ -76,13 +77,17 @@ char quit_help[] = {
 
 
 char geq_help[] = {
-"    The graphic EQ can be used to set gain for specific bands of the audio \
-spectrum.  The center of the band is annotated at the bottom of each fader.\n"
+"    The graphic EQ (GEQ) can be used to set gain for specific bands of the \
+audio spectrum.  The center of the band is annotated at the bottom of each \
+fader.  Setting a fader in the GEQ will override all changes made in the HDEQ \
+and cause that curve to be redrawn.  It will not override the parametric \
+notch settings in the HDEQ.\n"
 };
 
 
 char input_help[] = {
-"    Input help not yet available.\n"
+"    The input section allows you to set the input gain to the JAMin system.  \
+You can also pan the input left or right.\n"
 };
 
 
@@ -92,17 +97,37 @@ char spectrum_help[] = {
 
 
 char comp_curve_help[] = {
-"    Comp curve help not yet available.\n"
+"    The compressor curves show a graphical representation of the compression \
+for each compressor band.  The bands are defined by the crossover that can \
+be set using the crossover faders or the crossover bars in the HDEQ.  The \
+X-axis shows the input in db while the Y-axis shows the output in db.  The \
+scale is from -60 to 0 in X and -60 to +30 in Y.\n"
 };
 
 
 char comp_help[] = {
-"    Comp help not yet available.\n"
+"    The compressors allow you to set compression parameters for each \
+compressor band.  The bands are defined by the crossover that can be set \
+using the crossover faders or the crossover bars in the HDEQ.  The parameters \
+are, from left to right:\n\n\
+    A - attack in milliseconds\n\
+    R - release in milliseconds\n\
+    T - threshold in db\n\
+    r - compression ratio (N:1)\n\
+    K - knee (0.0 [hard] to 1.0 [soft])\n\
+    M - makeup gain in db\n\
+    AM - automatic makeup gain computation\n\n\
+    A full explanation of the use of these parameters is covered in the user \
+manual.\n"
 };
 
 
 char stereo_help[] = {
-"    Stereo help not yet available.\n"
+"    The stereo width controls define the apparent 'wideness' of the stereo \
+signal for each of the three bands.  The bands are defined by the crossover \
+that can be set using the crossover faders or the crossover bars in the \
+HDEQ.  More negative values decrease the 'width' while positive values \
+increase the 'width'.\n"
 };
 
 
@@ -127,17 +152,15 @@ char output_help[] = {
 
 
 char eq_options_help[] = {
-"    EQ options help not yet available.\n"
+"    These allow you to set the upper and lower gain values for both the HDEQ \
+and the GEQ.\n"
 };
 
 
 char spectrum_options_help[] = {
-"    Spectrum options help not yet available.\n"
-};
-
-
-char crossover_label_help[] = {
-"    Crossover label help not yet available.\n"
+"    This allows you to set the input to the spectrum computation for both \
+the Spectrum window and the HDEQ.  The default is Post EQ.  The other options \
+are Pre EQ, Post compressor, and Output.\n"
 };
 
 
@@ -157,20 +180,33 @@ char bypass_help[] = {
 
 
 char load_help[] = {
-"    Load help not yet available.\n"
+"    The load button allows you to load saved settings.  The default \
+directory for JAMin settings files (compressed XML) is ~/.jam.\n"
 };
 
 
 char save_help[] = {
-"    Save help not yet available.\n"
+"    The save button allows you to save the JAMin settings.  The default \
+directory for JAMin settings files (compressed XML) is ~/.jam.\n"
 };
 
 
 char undo_help[] = {
-"    Undo help not yet available.\n"
+"    Use this button to undo the most recent changes to the JAMin \
+parameters.\n"
 };
 
 
 char scenes_help[] = {
-"    Scenes help not yet available.\n"
+"    Scenes are used to save and recall an entire group of JAMin parameter \
+settings during a session.  After setting all of the parameters for a \
+specific section of music (verse, chorus, bridge) you can right click on a \
+scene button, use the menu to 'Set' that scene, then use the text box to \
+enter a name for that scene (Back Alley Fugue - verse).  You can recall these \
+settings by left clicking on the scene button.  A green button means that \
+the scene associated with this button is currently loaded.  A bright red \
+button means that scene settings are available for this button.  A dull red \
+button means that no settings have been saved for this scene button.  You can \
+clear settings from a button using the right click menu and the 'Clear' 
+entry.\n"
 };

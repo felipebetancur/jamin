@@ -27,6 +27,7 @@ void comp_curve_realize (GtkWidget *widget, int i);
 void comp_curve_box_motion (int i, GdkEventMotion  *event);
 void comp_box_leave (int i);
 void comp_box_enter (int i);
+void hdeq_notebook1_set_page (guint page_num);
 int get_current_notebook1_page ();
 
 

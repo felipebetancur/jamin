@@ -3229,7 +3229,7 @@ create_window1 (void)
                     G_CALLBACK (on_output_activate),
                     NULL);
   g_signal_connect ((gpointer) crossover_label_eventbox, "enter_notify_event",
-                    G_CALLBACK (on_crossover_label_eventbox_enter_notify_event),
+                    G_CALLBACK (on_crossover_eventbox_enter_notify_event),
                     NULL);
   g_signal_connect ((gpointer) crossover_eventbox, "enter_notify_event",
                     G_CALLBACK (on_crossover_eventbox_enter_notify_event),
