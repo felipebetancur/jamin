@@ -1,683 +1,936 @@
-# translation of ru.po to Russian
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) 2003 THE PACKAGE'S COPYRIGHT HOLDER
-# Alexandre Prokoudine <avp@altlinux.ru>, 2003.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: ru\n"
-"POT-Creation-Date: 2003-12-04 02:06+0000\n"
-"PO-Revision-Date: 2003-12-22 20:29+0300\n"
-"Last-Translator: Alexandre Prokoudine <avp@altlinux.ru>\n"
+"Project-Id-Version: JAMin 0.9.0\n"
+"POT-Creation-Date: 2004-05-17 23:02-0500\n"
+"PO-Revision-Date: 2004-05-18 15:43+0300\n"
+"Last-Translator: Alexandre Prokoudine <techwriter@land.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
-"X-Generator: KBabel 1.0.2\n"
 
-#: src/interface.c:498
-msgid "JAM"
-msgstr "JAM"
+#: src/interface.c:537
+msgid "JAMin"
+msgstr "JAMin"
 
-#: src/interface.c:510
+#: src/interface.c:556
 msgid "_File"
 msgstr "_Файл"
 
-#: src/interface.c:534
+#: src/interface.c:580
 msgid "Save _As"
 msgstr "Сохранить _как"
 
-#: src/interface.c:558
+#: src/interface.c:604
 msgid "_Edit"
 msgstr "_Правка"
 
-#: src/interface.c:567
+#: src/interface.c:613
 msgid "_Undo"
 msgstr "_Отменить"
 
-#: src/interface.c:580
+#: src/interface.c:626
 msgid "_Redo"
 msgstr "_Повторить"
 
-#: src/interface.c:608
-msgid "_Delete"
-msgstr "_Удалить"
-
-#: src/interface.c:621
+#: src/interface.c:639
 msgid "Ports"
 msgstr "Порты"
 
-#: src/interface.c:630
+#: src/interface.c:644
+msgid "_Options"
+msgstr "_Настроить"
+
+#: src/interface.c:653
+msgid "E_Q options"
+msgstr "На_стройки EQ"
+
+#: src/interface.c:668
 msgid "_Help"
-msgstr "_Помощь"
+msgstr "По_мощь"
 
-#: src/interface.c:639
+#: src/interface.c:677
 msgid "_General"
-msgstr "_Основная справка"
+msgstr "_Общие"
 
-#: src/interface.c:652
+#: src/interface.c:690
 msgid "_Keys"
-msgstr "_Горячие клавиши"
+msgstr "_Клавиши"
 
-#: src/interface.c:671
+#: src/interface.c:709
 msgid "About _JAMin"
-msgstr "О_JAMin"
+msgstr "_О JAMin"
 
-#: src/interface.c:708
-msgid "rewind transport"
-msgstr "перемотать транспорт назад"
-
-#: src/interface.c:721
-msgid "play transport"
-msgstr "воспроизвести транспорт"
-
-#: src/interface.c:734
-msgid "stop transport"
-msgstr "остановить транспорт"
-
-#: src/interface.c:747
-msgid "fast forward transport"
-msgstr "перемотать транспорт вперёд"
+#: src/interface.c:722
+msgid "About Prerequisites"
+msgstr "О предпосылках"
 
 #: src/interface.c:759
+msgid "rewind transport"
+msgstr "перемотать назад"
+
+#: src/interface.c:772
+msgid "backward transport"
+msgstr "в начало"
+
+#: src/interface.c:785
+msgid "play transport"
+msgstr "воспроизвести"
+
+#: src/interface.c:798
+msgid "pause transport"
+msgstr "приостановить"
+
+#: src/interface.c:811
+msgid "forward transport"
+msgstr "перемотать вперёд"
+
+#: src/interface.c:823
 msgid "HH:MM:SS:xx"
 msgstr "ЧЧ:ММ:СС:xx"
 
-#: src/interface.c:770
+#: src/interface.c:834
 msgid "Stopped | some CPU | some frames | 96000 Hz | Focus - something"
-msgstr ""
-"Остановлено·|·сколько-то·CPU·|·сколько-то фреймов·|·96000·Гц·|·Что-то в "
-"фокусе"
+msgstr "Остановлено·|·сколько-то·CPU·|·сколько-то выборок·|·96000·Гц·|·Что-то в фокусе"
 
-#: src/interface.c:803 src/interface.c:827 src/interface.c:851
-#: src/interface.c:875 src/interface.c:899 src/interface.c:923
+#: src/interface.c:857
+msgid "Scenes"
+msgstr "Сцены"
+
+#: src/interface.c:873
+#: src/interface.c:884
+#: src/interface.c:895
+#: src/interface.c:906
+msgid "Don't change this pixmap!!!"
+msgstr "Не меняйте это изображение!!!"
+
+#: src/interface.c:917
+#: src/interface.c:928
+#: src/interface.c:939
+#: src/interface.c:950
+#: src/interface.c:961
+#: src/interface.c:972
+#: src/interface.c:983
+#: src/interface.c:994
+#: src/interface.c:1005
+#: src/interface.c:1016
+#: src/interface.c:1027
+#: src/interface.c:1038
+#: src/interface.c:1049
+#: src/interface.c:1060
+#: src/interface.c:1071
+#: src/interface.c:1082
 msgid "Right click for menu"
-msgstr "Здесь есть меню, вызываемое правой кнопкой мыши"
+msgstr "Меню под правой кнопкой мыши"
 
-#: src/interface.c:815
-msgid "Scene 1 name"
-msgstr "Имя сцены 1"
-
-#: src/interface.c:816
-msgid "Scene 1"
-msgstr "Сцена 1"
-
-#: src/interface.c:839
-msgid "Scene 2 name"
-msgstr "Имя·сцены·2"
-
-#: src/interface.c:840
-msgid "Scene 2"
-msgstr "Сцена 2"
-
-#: src/interface.c:863
-msgid "Scene 3 name"
-msgstr "Имя·сцены·3"
-
-#: src/interface.c:864
-msgid "Scene 3"
-msgstr "Сцена 3"
-
-#: src/interface.c:887
-msgid "Scene 4 name"
-msgstr "Имя·сцены·4"
-
-#: src/interface.c:888
-msgid "Scene 4"
-msgstr "Сцена 4"
-
-#: src/interface.c:911
-msgid "Scene 5 name"
-msgstr "Имя·сцены·5"
-
-#: src/interface.c:912
-msgid "Scene 5"
-msgstr "Сцена 5"
-
-#: src/interface.c:935
-msgid "Scene 6 name"
-msgstr "Имя·сцены·6"
-
-#: src/interface.c:936
-msgid "Scene 6"
-msgstr "Сцена 6"
-
-#: src/interface.c:992
+#: src/interface.c:1145
 msgid "Input Gain"
-msgstr "Усиление на входе"
+msgstr "Входное усиление"
 
-#: src/interface.c:1024
+#: src/interface.c:1177
 msgid "pan_label"
-msgstr "метка панорамы"
+msgstr "пан_метка"
 
-#: src/interface.c:1034
+#: src/interface.c:1187
 msgid "Input Balance"
-msgstr "Баланс на входе"
+msgstr "Входной баланс"
 
-#: src/interface.c:1043 src/interface.c:2985
+#: src/interface.c:1196
+#: src/interface.c:3227
 msgid "Input"
 msgstr "Вход"
 
-#: src/interface.c:1094
+#: src/interface.c:1247
 msgid "HDEQ"
 msgstr "HDEQ"
 
-#: src/interface.c:1124
+#: src/interface.c:1277
 msgid "25 Hz"
 msgstr "25 Гц"
 
-#: src/interface.c:1133
+#: src/interface.c:1286
 msgid "25"
 msgstr "25"
 
-#: src/interface.c:1153
+#: src/interface.c:1306
 msgid "31 Hz"
 msgstr "31 Гц"
 
-#: src/interface.c:1162
+#: src/interface.c:1315
 msgid "31"
 msgstr "31"
 
-#: src/interface.c:1182
+#: src/interface.c:1335
 msgid "39 Hz"
 msgstr "39 Гц"
 
-#: src/interface.c:1191
+#: src/interface.c:1344
 msgid "39"
 msgstr "39"
 
-#: src/interface.c:1211
+#: src/interface.c:1364
 msgid "50 Hz"
 msgstr "50 Гц"
 
-#: src/interface.c:1220
+#: src/interface.c:1373
 msgid "50"
 msgstr "50"
 
-#: src/interface.c:1240
+#: src/interface.c:1393
 msgid "62 Hz"
 msgstr "62 Гц"
 
-#: src/interface.c:1249
+#: src/interface.c:1402
 msgid "62"
 msgstr "62"
 
-#: src/interface.c:1269
+#: src/interface.c:1422
 msgid "79 Hz"
 msgstr "79 Гц"
 
-#: src/interface.c:1278
+#: src/interface.c:1431
 msgid "79"
 msgstr "79"
 
-#: src/interface.c:1298
+#: src/interface.c:1451
 msgid "100 Hz"
 msgstr "100 Гц"
 
-#: src/interface.c:1307
+#: src/interface.c:1460
 msgid "100"
 msgstr "100"
 
-#: src/interface.c:1327
+#: src/interface.c:1480
 msgid "125 Hz"
 msgstr "125 Гц"
 
-#: src/interface.c:1336
+#: src/interface.c:1489
 msgid "125"
 msgstr "125"
 
-#: src/interface.c:1356
+#: src/interface.c:1509
 msgid "158 Hz"
 msgstr "158 Гц"
 
-#: src/interface.c:1365
+#: src/interface.c:1518
 msgid "158"
 msgstr "158"
 
-#: src/interface.c:1385
+#: src/interface.c:1538
 msgid "200 Hz"
 msgstr "200 Гц"
 
-#: src/interface.c:1394
+#: src/interface.c:1547
 msgid "200"
 msgstr "200"
 
-#: src/interface.c:1414
+#: src/interface.c:1567
 msgid "251 Hz"
 msgstr "251 Гц"
 
-#: src/interface.c:1423
+#: src/interface.c:1576
 msgid "251"
 msgstr "251"
 
-#: src/interface.c:1438
+#: src/interface.c:1591
 msgid "317 Hz"
 msgstr "317 Гц"
 
-#: src/interface.c:1447
+#: src/interface.c:1600
 msgid "317"
 msgstr "317"
 
-#: src/interface.c:1462
+#: src/interface.c:1615
 msgid "400 Hz"
 msgstr "400 Гц"
 
-#: src/interface.c:1471
+#: src/interface.c:1624
 msgid "400"
 msgstr "400"
 
-#: src/interface.c:1486
+#: src/interface.c:1639
 msgid "503 Hz"
 msgstr "503 Гц"
 
-#: src/interface.c:1495
+#: src/interface.c:1648
 msgid "503"
 msgstr "503"
 
-#: src/interface.c:1510
+#: src/interface.c:1663
 msgid "634 Hz"
-msgstr "634 Гц"
+msgstr "634 гц"
 
-#: src/interface.c:1519
+#: src/interface.c:1672
 msgid "634"
 msgstr "634"
 
-#: src/interface.c:1534
+#: src/interface.c:1687
 msgid "800 Hz"
 msgstr "800 Гц"
 
-#: src/interface.c:1543
+#: src/interface.c:1696
 msgid "800"
 msgstr "800"
 
-#: src/interface.c:1558
+#: src/interface.c:1711
 msgid "1000 Hz"
 msgstr "1000 Гц"
 
-#: src/interface.c:1567
+#: src/interface.c:1720
 msgid "1k"
 msgstr "1к"
 
-#: src/interface.c:1582
+#: src/interface.c:1735
 msgid "1200 Hz"
 msgstr "1200 Гц"
 
-#: src/interface.c:1591
+#: src/interface.c:1744
 msgid "1k2"
 msgstr "1к2"
 
-#: src/interface.c:1606
+#: src/interface.c:1759
 msgid "1500 Hz"
 msgstr "1500 Гц"
 
-#: src/interface.c:1615
+#: src/interface.c:1768
 msgid "1k5"
 msgstr "1к5"
 
-#: src/interface.c:1630 src/interface.c:1654 src/interface.c:1875
+#: src/interface.c:1783
+#: src/interface.c:1807
+#: src/interface.c:2028
 msgid "2000 Hz"
 msgstr "2000 Гц"
 
-#: src/interface.c:1639
+#: src/interface.c:1792
 msgid "2k"
 msgstr "2к"
 
-#: src/interface.c:1663
+#: src/interface.c:1816
 msgid "2k5"
 msgstr "2к5"
 
-#: src/interface.c:1678
+#: src/interface.c:1831
 msgid "3200 Hz"
 msgstr "3200 Гц"
 
-#: src/interface.c:1687
+#: src/interface.c:1840
 msgid "3k2"
 msgstr "3к2"
 
-#: src/interface.c:1702
+#: src/interface.c:1855
 msgid "4000 Hz"
 msgstr "4000 Гц"
 
-#: src/interface.c:1711
+#: src/interface.c:1864
 msgid "4k"
 msgstr "4к"
 
-#: src/interface.c:1726
+#: src/interface.c:1879
 msgid "5000 Hz"
 msgstr "5000 Гц"
 
-#: src/interface.c:1735
+#: src/interface.c:1888
 msgid "5k"
 msgstr "5к"
 
-#: src/interface.c:1750
+#: src/interface.c:1903
 msgid "6000 Hz"
 msgstr "6000 Гц"
 
-#: src/interface.c:1764
+#: src/interface.c:1917
 msgid "6k"
 msgstr "6к"
 
-#: src/interface.c:1779
+#: src/interface.c:1932
 msgid "8000 Hz"
 msgstr "8000 Гц"
 
-#: src/interface.c:1788
+#: src/interface.c:1941
 msgid "8k"
 msgstr "8к"
 
-#: src/interface.c:1803
+#: src/interface.c:1956
 msgid "10 KHz"
-msgstr "10 КГц"
+msgstr "10 кГц"
 
-#: src/interface.c:1812
+#: src/interface.c:1965
 msgid "10k"
 msgstr "10к"
 
-#: src/interface.c:1827
+#: src/interface.c:1980
 msgid "12 KHz"
-msgstr "12 КГц"
+msgstr "12 кГц"
 
-#: src/interface.c:1836
+#: src/interface.c:1989
 msgid "12k"
 msgstr "12к"
 
-#: src/interface.c:1851
+#: src/interface.c:2004
 msgid "16 KHz"
-msgstr "16 КГц"
+msgstr "16 кГц"
 
-#: src/interface.c:1860
+#: src/interface.c:2013
 msgid "16k"
 msgstr "16к"
 
-#: src/interface.c:1884
+#: src/interface.c:2037
 msgid "20k"
-msgstr "20к"
+msgstr "20 к"
 
-#: src/interface.c:1890
+#: src/interface.c:2043
 msgid "30 band EQ"
-msgstr "30-полосный эквалайзер"
+msgstr "30-полосный EQ"
 
-#: src/interface.c:1912 src/interface.c:2140
+#: src/interface.c:2065
+#: src/interface.c:4855
 msgid "Spectrum"
 msgstr "Спектр"
 
-#: src/interface.c:1941 src/interface.c:1975 src/interface.c:2009
+#: src/interface.c:2094
+#: src/interface.c:2128
+#: src/interface.c:2162
 msgid "X=input db , Y=output db"
 msgstr "X=Дб на входе , Y=Дб на выходе"
 
-#: src/interface.c:1954
+#: src/interface.c:2107
 msgid "Low"
-msgstr " Низкие "
+msgstr "Низкие"
 
-#: src/interface.c:1988
+#: src/interface.c:2141
 msgid "Mid"
-msgstr " Средние "
+msgstr "Средние"
 
-#: src/interface.c:2022
+#: src/interface.c:2175
 msgid "High"
-msgstr " Высокие "
+msgstr "Высокие"
 
-#: src/interface.c:2027
+#: src/interface.c:2180
 msgid "Compressor curves"
 msgstr "Кривые компрессора"
 
-#: src/interface.c:2058
-msgid "Minimum Gain"
-msgstr "Мин. чувствительность"
+#: src/interface.c:2196
+msgid "EQ bypass"
+msgstr "Обход EQ"
 
-#: src/interface.c:2076
-msgid "Maximum Gain"
-msgstr "Макс. чувствительность"
-
-#: src/interface.c:2089
-msgid "Graphic"
-msgstr ""
-
-#: src/interface.c:2118
-msgid "Pre EQ"
-msgstr "До эквализации"
-
-#: src/interface.c:2123
-msgid "Post EQ"
-msgstr "После·эквализации"
-
-#: src/interface.c:2128
-msgid "Post compressor"
-msgstr "После компрессора"
-
-#: src/interface.c:2133 src/interface.c:3211
-msgid "Output"
-msgstr "Выход"
-
-#: src/interface.c:2146
-msgid "EQ Options"
-msgstr "Параметры EQ"
-
-#: src/interface.c:2162 src/interface.c:2176
+#: src/interface.c:2211
+#: src/interface.c:2225
 msgid "00000"
 msgstr "00000"
 
-#: src/interface.c:2170
+#: src/interface.c:2219
 msgid "Crossover"
 msgstr "Кроссовер"
 
-#: src/interface.c:2200
+#: src/interface.c:2249
 msgid "Low to Mid Band Crossover"
-msgstr "Кроссовер от нижних до средних"
+msgstr "Кроссовер низких--средних"
 
-#: src/interface.c:2214
+#: src/interface.c:2263
 msgid "Mid to High Band Crossover"
-msgstr "Кроссовер от средних до высоких"
+msgstr "Кроссовер средних--высоких"
 
-#: src/interface.c:2280 src/interface.c:2515 src/interface.c:2750
+#: src/interface.c:2340
+#: src/interface.c:2639
+#: src/interface.c:2938
 msgid "A"
-msgstr ""
+msgstr "A"
 
-#: src/interface.c:2290 src/interface.c:2525 src/interface.c:2760
+#: src/interface.c:2350
+#: src/interface.c:2649
+#: src/interface.c:2948
 msgid "Attack"
 msgstr "Атака"
 
-#: src/interface.c:2305 src/interface.c:2540 src/interface.c:2775
+#: src/interface.c:2370
+#: src/interface.c:2669
+#: src/interface.c:2968
 msgid "R"
-msgstr ""
+msgstr "R"
 
-#: src/interface.c:2315 src/interface.c:2550 src/interface.c:2785
-#: src/interface.c:3023
+#: src/interface.c:2380
+#: src/interface.c:2679
+#: src/interface.c:2978
+#: src/interface.c:3307
 msgid "Release"
 msgstr "Затухание"
 
-#: src/interface.c:2330 src/interface.c:2565 src/interface.c:2800
+#: src/interface.c:2400
+#: src/interface.c:2699
+#: src/interface.c:2998
 msgid "T"
-msgstr ""
+msgstr "T"
 
-#: src/interface.c:2340 src/interface.c:2575 src/interface.c:2810
+#: src/interface.c:2410
+#: src/interface.c:2709
+#: src/interface.c:3008
 msgid "Threshold"
 msgstr "Порог"
 
-#: src/interface.c:2354 src/interface.c:2589 src/interface.c:2824
+#: src/interface.c:2429
+#: src/interface.c:2728
+#: src/interface.c:3027
 msgid "r"
-msgstr ""
+msgstr "r"
 
-#: src/interface.c:2364 src/interface.c:2599 src/interface.c:2834
+#: src/interface.c:2439
+#: src/interface.c:2738
+#: src/interface.c:3037
 msgid "Ratio"
-msgstr "Коэфф."
+msgstr "Коэффициент"
 
-#: src/interface.c:2378 src/interface.c:2613 src/interface.c:2848
+#: src/interface.c:2458
+#: src/interface.c:2757
+#: src/interface.c:3056
 msgid "K"
-msgstr ""
+msgstr "K"
 
-#: src/interface.c:2388 src/interface.c:2623 src/interface.c:2858
+#: src/interface.c:2468
+#: src/interface.c:2767
+#: src/interface.c:3066
 msgid "Knee"
-msgstr "Колено"
+msgstr "Изгиб"
 
-#: src/interface.c:2402 src/interface.c:2637 src/interface.c:2872
+#: src/interface.c:2487
+#: src/interface.c:2786
+#: src/interface.c:3085
 msgid "M"
-msgstr ""
+msgstr "M"
 
-#: src/interface.c:2418 src/interface.c:2653 src/interface.c:2888
+#: src/interface.c:2503
+#: src/interface.c:2802
+#: src/interface.c:3101
 msgid "Makeup"
-msgstr ""
+msgstr "Мэйк-ап"
 
-#: src/interface.c:2431 src/interface.c:2666 src/interface.c:2901
+#: src/interface.c:2516
+#: src/interface.c:2815
+#: src/interface.c:3114
 msgid "Auto makeup"
-msgstr ""
+msgstr "Автомэйк-ап"
 
-#: src/interface.c:2433 src/interface.c:2668 src/interface.c:2903
+#: src/interface.c:2518
+#: src/interface.c:2817
+#: src/interface.c:3116
 msgid "AM"
-msgstr ""
+msgstr "AM"
 
-#: src/interface.c:2445 src/interface.c:2680 src/interface.c:2915
+#: src/interface.c:2530
+#: src/interface.c:2829
+#: src/interface.c:3128
 msgid "Level"
 msgstr "Уровень"
 
-#: src/interface.c:2462 src/interface.c:2697 src/interface.c:2932
+#: src/interface.c:2547
+#: src/interface.c:2846
+#: src/interface.c:3145
 msgid "Gain"
-msgstr "Чувств."
-
-#: src/interface.c:2468
-msgid "Low Band Stereo Width"
-msgstr "Стереопанорама нижних"
-
-#: src/interface.c:2477
-msgid "Low : 00000 - 00000"
-msgstr "Низкие : 00000 - 00000"
-
-#: src/interface.c:2703
-msgid "Mid Band Stereo Width"
-msgstr "Стереопанорама средних"
-
-#: src/interface.c:2712
-msgid "Mid : 00000 - 00000"
-msgstr "Средние : 00000 - 00000"
-
-#: src/interface.c:2938
-msgid "High Band Stereo Width"
-msgstr "Стереопанорама высоких"
-
-#: src/interface.c:2947
-msgid "High : 00000 - 00000"
-msgstr "Высокие : 00000 - 00000"
-
-#: src/interface.c:3032
-msgid "Limit"
-msgstr "Ограничение"
-
-#: src/interface.c:3041
-msgid "----"
-msgstr "----"
-
-#: src/interface.c:3051
-msgid "1.000 ms"
-msgstr "1.000·мс"
-
-#: src/interface.c:3110
-msgid "Limiter"
-msgstr "Ограничитель"
-
-#: src/interface.c:3131
-msgid "Amount "
-msgstr "Кол-во "
-
-#: src/interface.c:3143
-msgid "Boost"
 msgstr "Усиление"
 
-#: src/interface.c:3205
+#: src/interface.c:2558
+msgid "Low Band Stereo Width"
+msgstr "Стереобаза низких"
+
+#: src/interface.c:2578
+#: src/interface.c:2877
+#: src/interface.c:3176
+msgid "Solo"
+msgstr "Соло"
+
+#: src/interface.c:2582
+msgid "Low Band Solo"
+msgstr "Соло низких"
+
+#: src/interface.c:2584
+#: src/interface.c:2883
+#: src/interface.c:3182
+#: src/interface.c:3462
 msgid "Bypass"
 msgstr "Обход"
 
-#: src/interface.c:4122
+#: src/interface.c:2588
+msgid "Low Band Bypass"
+msgstr "Обход низких"
+
+#: src/interface.c:2590
+msgid "Low : 00000 - 00000"
+msgstr "Низкие : 00000 - 00000"
+
+#: src/interface.c:2857
+msgid "Mid Band Stereo Width"
+msgstr "Стереобаза средних"
+
+#: src/interface.c:2881
+msgid "Mid Band Solo"
+msgstr "Соло средних"
+
+#: src/interface.c:2887
+msgid "Mid Band Bypass"
+msgstr "Обход средних"
+
+#: src/interface.c:2889
+msgid "Mid : 00000 - 00000"
+msgstr "Средние : 00000 - 00000"
+
+#: src/interface.c:3156
+msgid "High Band Stereo Width"
+msgstr "Стереобаза высоких"
+
+#: src/interface.c:3180
+msgid "High Band Solo"
+msgstr "Соло высоких"
+
+#: src/interface.c:3186
+msgid "High Band Bypass"
+msgstr "Обход высоких"
+
+#: src/interface.c:3188
+msgid "High : 00000 - 00000"
+msgstr "Высокие : 00000 - 00000"
+
+#: src/interface.c:3267
+msgid "----"
+msgstr "----"
+
+#: src/interface.c:3277
+msgid "1.000 ms"
+msgstr "1,00 мс"
+
+#: src/interface.c:3316
+msgid "Limit"
+msgstr "Граница"
+
+#: src/interface.c:3360
+msgid "Limiter bypass"
+msgstr "Обход ограничителя"
+
+#: src/interface.c:3365
+msgid "Limiter"
+msgstr "Ограничитель"
+
+#: src/interface.c:3387
+msgid "Amount "
+msgstr "На сколько"
+
+#: src/interface.c:3399
+msgid "Boost"
+msgstr "Подъём"
+
+#: src/interface.c:3468
+#: src/interface.c:4829
+msgid "Output"
+msgstr "Выход"
+
+#: src/interface.c:4619
 msgid "Set"
 msgstr "Установить"
 
-#: src/interface.c:4126
+#: src/interface.c:4623
 msgid "Assign settings to button"
-msgstr "Назначить установки клавише"
+msgstr "Настроить клавишу"
 
-#: src/interface.c:4133
+#: src/interface.c:4630
 msgid "Clear"
 msgstr "Очистить"
 
-#: src/interface.c:4137
+#: src/interface.c:4634
 msgid "Clear settings from button"
-msgstr "Удалить установки для клавиши"
+msgstr "Удалить настройки клавиши"
 
-#: src/support.c:90 src/support.c:114
+#: src/interface.c:4641
+msgid "Name"
+msgstr "Имя"
+
+#: src/interface.c:4645
+msgid "Set scene name"
+msgstr "Указать имя сцены"
+
+#: src/interface.c:4716
+msgid "Eq options"
+msgstr "Параметры EQ"
+
+#: src/interface.c:4752
+msgid "Minimum Gain"
+msgstr "Минимальное усиление"
+
+#: src/interface.c:4771
+msgid "Maximum Gain"
+msgstr "Максимальное усиление"
+
+#: src/interface.c:4785
+msgid "Graphic"
+msgstr "Графический"
+
+#: src/interface.c:4814
+msgid "Pre EQ"
+msgstr "До эквализации"
+
+#: src/interface.c:4819
+msgid "Post EQ"
+msgstr "После эквализации"
+
+#: src/interface.c:4824
+msgid "Post compressor"
+msgstr "После компрессора"
+
+#: src/interface.c:4841
+msgid "Update frequency"
+msgstr "Частота обновления"
+
+#: src/interface.c:4852
+msgid "Spectrum update frequency (Hz)"
+msgstr "Частота обновления спектра (Гц)"
+
+#: src/interface.c:5018
+msgid "Preferences"
+msgstr "Настройки"
+
+#: src/interface.c:5047
+msgid "Crossfade time"
+msgstr "Вреям кроссфейда"
+
+#: src/interface.c:5066
+msgid "Low Band Compressor"
+msgstr "Компрессор низких"
+
+#: src/interface.c:5076
+msgid "Mid Band Compressor"
+msgstr "Компрессор средних"
+
+#: src/interface.c:5086
+msgid "High Band Compressor"
+msgstr "Компрессор высоких"
+
+#: src/interface.c:5102
+msgid "Ganged Controls"
+msgstr "Объединённые органы управления"
+
+#: src/interface.c:5118
+msgid "Parametric Handles"
+msgstr "Параметрические органы управления"
+
+#: src/interface.c:5128
+msgid "HDEQ Curve"
+msgstr "Кривая HDEQ"
+
+#: src/interface.c:5138
+msgid "HDEQ Grid"
+msgstr "Сетка HDEQ"
+
+#: src/interface.c:5148
+msgid "HDEQ Background"
+msgstr "Фон HDEQ"
+
+#: src/interface.c:5164
+msgid "Text"
+msgstr "Текст"
+
+#: src/interface.c:5180
+msgid "Meter Normal"
+msgstr "Обычный уровень"
+
+#: src/interface.c:5190
+msgid "Meter Warning"
+msgstr "Уровень предупреждения"
+
+#: src/interface.c:5200
+msgid "Meter Over"
+msgstr "Превышение уровня"
+
+#: src/interface.c:5210
+msgid "Meter Peak"
+msgstr "Пик уровня"
+
+#: src/interface.c:5226
+msgid "Reset All Colors"
+msgstr "Сбросить все цвета"
+
+#: src/interface.c:5238
+msgid "Colors"
+msgstr "Цвета"
+
+#: src/interface.c:5376
+msgid "Select Color"
+msgstr "Выбрать цвет"
+
+#: src/interface.c:5422
+msgid "Scene X Name"
+msgstr "Имя сцены X"
+
+#: src/support.c:90
+#: src/support.c:114
 #, c-format
 msgid "Couldn't find pixmap file: %s"
-msgstr "Не удалось загрузить файл изображения: %s"
+msgstr "Не удалось найти изображение: %s"
 
-#~ msgid "     "
-#~ msgstr "     "
+#: src/io-menu.c:88
+#, c-format
+msgid "iomenu error: %s\n"
+msgstr "ошибка iomenu: %s\n"
 
-#~ msgid "db"
-#~ msgstr "Дб"
+#: src/io-menu.c:111
+#: src/io-menu.c:118
+#: src/io-menu.c:185
+#: src/io-menu.c:231
+#, c-format
+msgid "connecting port %s to %s\n"
+msgstr "порт %s соединяется с %s\n"
 
-#~ msgid "Hz"
-#~ msgstr "Гц"
+#: src/io-menu.c:114
+#, c-format
+msgid "unable to connect from %s\n"
+msgstr "не удаётся соединить из %s\n"
 
-#~ msgid "slope"
-#~ msgstr "наклон"
+#: src/io-menu.c:121
+#, c-format
+msgid "unable to connect to %s\n"
+msgstr "не удаётся соединить с %s\n"
 
-#~ msgid "Band 1 gain"
-#~ msgstr "Чувств. полосы 1"
+#: src/io-menu.c:137
+#: src/io-menu.c:144
+#: src/io-menu.c:175
+#: src/io-menu.c:221
+#, c-format
+msgid "disconnecting port %s from %s\n"
+msgstr "порт %s отсоединяется от %s\n"
 
-#~ msgid "Band 1 frequency"
-#~ msgstr "Частота полосы 1"
+#: src/io-menu.c:140
+#: src/io-menu.c:147
+#, c-format
+msgid "unable to disconnect port %s\n"
+msgstr "не удаётся отсоединить порт %s\n"
 
-#~ msgid "oct"
-#~ msgstr "окт"
+#: src/io-menu.c:179
+#: src/io-menu.c:225
+#, c-format
+msgid "unable to disconnect %s from %s\n"
+msgstr "не удаётся отсоединить %s от %s\n"
 
-#~ msgid "Band 1 bandwidth"
-#~ msgstr "Ширина полосы 1"
+#: src/io-menu.c:189
+#: src/io-menu.c:235
+#, c-format
+msgid "unable to connect %s to %s\n"
+msgstr "не удаётся соединить %s с %s\n"
 
-#~ msgid "Band 1"
-#~ msgstr "Полоса 1"
+#: src/io-menu.c:367
+msgid "Groups"
+msgstr "Группы"
 
-#~ msgid "Band 2 gain"
-#~ msgstr "Чувств. полосы 2"
+#: src/io-menu.c:564
+msgid "In"
+msgstr "Вх."
 
-#~ msgid "Band 2 frequency"
-#~ msgstr "Частота полосы 2"
+#: src/io-menu.c:567
+msgid "Out"
+msgstr "Вых."
 
-#~ msgid "Band 2 bandwidth"
-#~ msgstr "Ширина полосы 2"
+#: src/io.c:225
+#, c-format
+msgid "%s internal error %d: %s\n"
+msgstr "%s внутренняя ошибка %d: %s\n"
 
-#~ msgid "Band 2"
-#~ msgstr "Полоса 2"
+#: src/io.c:227
+#, c-format
+msgid " Terminating due to -F option.\n"
+msgstr " Завершение ввиду параметра -F.\n"
 
-#~ msgid "Band 3 gain"
-#~ msgstr "Чувств. полосы 3"
+#: src/io.c:677
+#, c-format
+msgid ""
+"File %s : %s\n"
+"Using default."
+msgstr ""
+"Файл %s : %s\n"
+"Используется стандартный."
 
-#~ msgid "Band 3 frequency"
-#~ msgstr "Частота полосы 3"
+#: src/io.c:792
+#, c-format
+msgid ""
+"Usage: %s [-%s] [inport1 inport2 [outport1 outport2]]\n"
+"\n"
+"user options:\n"
+"\t-f file\tload session file on startup\n"
+"\t-h\tshow this help\n"
+"\t-n name\tset JACK client name\n"
+"\t-s freq\tset spectrum update frequency\n"
+"\t-c time\tset crossfade time\n"
+"\t-r\tuse example GTK resource file\n"
+"\t-p\tdon't automatically connect JACK output ports\n"
+"\t-v\tverbose output (use -vv... for more detail)\n"
+"\t-V\tprint version and quit\n"
+"\n"
+"developer options:\n"
+"\t-d\tdummy mode (don't connect to jackd)\n"
+"\t-F\ttreat all errors as fatal\n"
+"\t-T\tprint trace buffer\n"
+"\t-t\tdon't start DSP thread\n"
+"\n"
+msgstr ""
+"Использование: %s [-%s] [вход.порт1 вход.порт2 [выход.порт1 выход.порт2]]\n"
+"\n"
+"ключи для пользователей :\n"
+"\t-f файл\tзагрузить при старте файл сцены\n"
+"\t-h\tпоказать эту справку\n"
+"\t-n имя\tустановить имя JACK-клиента\n"
+"\t-s частота\tустановить частоту обновления спектра\n"
+"\t-c время\tустановить время кроссфейда\n"
+"\t-r\tиспользовать дополнительную GTK-тему\n"
+"\t-p\tне соединяться с портами выхода JACK автоматически\n"
+"\t-v\tподробный вывод (использовать -vv... для ещё более подробного вывода)\n"
+"\t-V\tпоказать версию программы и выйти\n"
+"\n"
+"ключи для разработчиков:\n"
+"\t-d\t\"придуривающийся\" режим (не соединяться с jackd)\n"
+"\t-F\tсчитать все ошибки фатальными\n"
+"\t-T\tпечатать буфер трейса\n"
+"\t-t\tне запускать DSP-нить\n"
+"\n"
 
-#~ msgid "Band 3 bandwidth"
-#~ msgstr "Ширина полосы 3"
+#: src/io.c:829
+#, c-format
+msgid "%s: Cannot contact JACK server, is it running?\n"
+msgstr "%s: Не удаётся соединиться с JACK-сервером. Он запущен?\n"
 
-#~ msgid "Band 3"
-#~ msgstr "Полоса 3"
+#: src/io.c:972
+#, c-format
+msgid ""
+"%s: not permitted to create realtime DSP thread.\n"
+"\tYou must run as root or use JACK capabilities.\n"
+"\tContinuing operation, but with -t option.\n"
+msgstr ""
+"%s: не разрешено создавать DSP-нить в реальном времени.\n"
+"\tНеобходимо запустить программу с правами \n"
+"\tсуперпользователя или с JACK capabilities.\n"
+"\tВыполнение операции продолжается с ключом -t.\n"
 
-#~ msgid "Parametric"
-#~ msgstr "Параметрический EQ"
+#: src/io.c:1022
+#, c-format
+msgid "%s: Cannot register JACK ports."
+msgstr "%s: Не удаётся зарегистрировать JACK-порты."
 
-#~ msgid "auto"
-#~ msgstr "авто"
+#: src/io.c:1028
+#, c-format
+msgid "%s: Cannot activate JACK client."
+msgstr "%s: Не удаётся активировать JACK-клиент."
 
-#~ msgid "  Input"
-#~ msgstr "  Вход"
+#: src/io.c:1050
+msgid "No physical playback ports found"
+msgstr ""
+"Не найдено ни одного физического \n"
+"порта воспроизведения"
 
-#~ msgid "  Lookahead (ms)"
-#~ msgstr "  Предварительный просмотр (мс)"
+#: src/io.c:1062
+#, c-format
+msgid "Cannot connect input port \"%s\"\n"
+msgstr "Не удаётся подсоединить порт входа \"%s\"\n"
 
-#~ msgid "  Output"
-#~ msgstr "  Выход"
-
-#~ msgid "Load"
-#~ msgstr "Загрузить"
-
-#~ msgid "Quit"
-#~ msgstr "Выйти"
+#: src/io.c:1072
+#, c-format
+msgid "Cannot connect output port \"%s\"\n"
+msgstr "Не удаётся подсоединить порт выхода \"%s\"\n"
 
