@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: transport.h,v 1.5 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: transport.h,v 1.6 2003/12/17 04:13:36 joq Exp $
  */
 
 #ifndef TRANSPORT_H
@@ -25,7 +25,8 @@ double transport_get_time();
 
 /* UI functions */
 void transport_play();
-void transport_set_position(jack_nframes_t frame);
+void transport_skip(double skip);
+void transport_set_time(double time);
 void transport_stop();
 void transport_toggle_play();
 

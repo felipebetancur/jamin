@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.111 2003/12/12 18:08:00 jdepner Exp $
+ *  $Id: callbacks.c,v 1.112 2003/12/17 04:13:36 joq Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -798,7 +798,7 @@ rewind_transport                       (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-    transport_set_position(0);
+    transport_skip(-5.0);
     return FALSE;
 }
 
@@ -809,7 +809,7 @@ forward_transport                      (GtkWidget       *widget,
                                         gpointer         user_data)
 {
 
-    transport_set_position(1000000000);
+    transport_skip(5.0);
     return FALSE;
 }
 
@@ -1409,15 +1409,20 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
         /*  Rewind  */
 
-      case GDK_less:
-	transport_set_position(0);
+      case GDK_Home:
+	transport_set_time(0.0);
         break;
 
+	/*  Skip backward */
 
-        /*  FF  */
+      case GDK_less:
+	transport_skip(-5.0);
+        break;
+
+        /*  Skip forward  */
 
       case GDK_greater:
-	transport_set_position(1000000000);
+	transport_skip(5.0);
         break;
 
 

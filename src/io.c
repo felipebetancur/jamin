@@ -513,10 +513,6 @@ int io_process(jack_nframes_t nframes, void *arg)
 
     IF_DEBUG(DBG_VERBOSE, io_trace("JACK process() start"));
 
-#ifndef NEW_JACK_TRANSPORT
-    transport_control(nframes);		/* handle JACK transport */
-#endif /* NEW_JACK_TRANSPORT */
-
     /* get input and output buffer addresses from JACK */
     for (chan = 0; chan < nchannels; chan++) {
 	in[chan] = jack_port_get_buffer(input_ports[chan], nframes);
@@ -816,11 +812,7 @@ int io_create_dsp_thread()
     }
 
     /* Check if JACK is running with --realtime option. */
-#ifdef HAVE_JACK_IS_REALTIME		/* requires libjack >= 0.70.5 */
     jst.realtime = jack_is_realtime(client);
-#else
-    jst.realtime = (policy == SCHED_FIFO);
-#endif
 
     if (jst.realtime) {
 	IF_DEBUG(DBG_TERSE,
