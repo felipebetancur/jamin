@@ -293,10 +293,12 @@ void io_set_latency(int source, jack_nframes_t delay)
     jst.latency += delay - latency_delay[source];
     latency_delay[source] = delay;
 
-    /* Set JACK port latencies (after the ports are connected). */
-    if (DSP_STATE_NOT(DSP_INIT))
-	for (chan = 0; chan < nchannels; chan++)
+    /* Set JACK port latencies (after ports connected). */
+    if (DSP_STATE_NOT(DSP_INIT|DSP_STOPPED))
+	for (chan = 0; chan < nchannels; chan++) {
 	    jack_port_set_latency(input_ports[chan], jst.latency);
+	    jack_port_set_latency(output_ports[chan], jst.latency);
+	}
 }
 
 

@@ -123,7 +123,10 @@ jack_transport_state_t transport_get_state()
 {
 #ifdef NEW_JACK_TRANSPORT
 
-    return jack_transport_query(client, NULL);
+    if (client)
+	return jack_transport_query(client, NULL);
+    else
+	return JackTransportStopped;
 
 #else /* old JACK transport interface */
 
@@ -138,9 +141,12 @@ double transport_get_time()
 #ifdef NEW_JACK_TRANSPORT
     jack_position_t pos;
 
-    jack_transport_query(client, &pos);
-
-    return pos.frame / (double) pos.frame_rate;
+    if (client) {
+	jack_transport_query(client, &pos);
+	return pos.frame / (double) pos.frame_rate;
+    } else {
+	return 0.0;
+    }
 
 #else /* old JACK transport interface */
 
@@ -154,7 +160,8 @@ void transport_play()
 {
 #ifdef NEW_JACK_TRANSPORT
 
-    jack_transport_start(client);
+    if (client)
+	jack_transport_start(client);
 
 #else /* old JACK transport interface */
 
@@ -184,7 +191,8 @@ void transport_stop()
 {
 #ifdef NEW_JACK_TRANSPORT
 
-    jack_transport_stop(client);
+    if (client)
+	jack_transport_stop(client);
 
 #else /* old JACK transport interface */
 
