@@ -125,9 +125,9 @@ void compressor_meters_update()
     }
 }
 
-void comp_get_settings(int i, comp_settings *comp)
+comp_settings comp_get_settings(int i)
 {
-    *comp = compressors[i];
+    return (compressors[i]);
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

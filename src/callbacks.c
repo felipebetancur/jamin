@@ -13,7 +13,6 @@
 #include "interface.h"
 #include "support.h"
 #include "process.h"
-#include "compressor.h"
 #include "intrim.h"
 
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
@@ -30,12 +29,14 @@ static GtkVScale       *l_eqb1;
 static GtkWidget       *l_low_comp, *l_mid_comp, *l_high_comp;
 static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_low_comp_lbl, 
                        *l_mid_comp_lbl, *l_high_comp_lbl, *l_EQ_curve_lbl,
-                       *l_low_knee_lbl, *l_mid_knee_lbl, *l_high_knee_lbl;
+                       *l_low_knee_lbl, *l_mid_knee_lbl, *l_high_knee_lbl,
+                       *l_low_curve_lbl, *l_mid_curve_lbl, *l_high_curve_lbl;
 static GtkDrawingArea  *l_EQ_curve, *l_comp_curve[3];
 static GdkDrawable     *EQ_drawable, *comp_drawable[3];
 static GdkColormap     *colormap;
 static GdkColor        white, black, red, green, blue;
 static GdkGC           *EQ_gc, *comp_gc[3];
+static PangoContext    *comp_pc[3];
 static GtkAdjustment   *l_low2mid_adj, *l_eqb1_adj;
 static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
                        EQ_curve_height, EQ_xinterp[EQ_INTERP + 1], EQ_start, 
@@ -294,6 +295,7 @@ on_window1_show                        (GtkWidget       *widget,
     on_low2mid_value_changed ((GtkRange *) l_low2mid, NULL);
 
     on_mid2high_value_changed ((GtkRange *) l_mid2high, NULL);
+
 
     colormap = gdk_colormap_get_system ();
 
@@ -714,6 +716,18 @@ on_EQ_curve_event_box_button_release_event
 }
 
 
+gboolean
+on_EQ_curve_event_box_leave_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+    gtk_label_set_text (l_EQ_curve_lbl, "                ");
+
+    return FALSE;
+}
+
+
 void
 on_bypass_button_toggled               (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
@@ -883,10 +897,35 @@ on_pan_scale_value_changed             (GtkRange        *range,
 }
 
 
+void comp_write_annotation (int i, char string[20])
+{
+    PangoLayout    *pl;
+    PangoRectangle ink_rect;
+
+
+    /*  Clear the annotation area.  */
+
+    pl = pango_layout_new (comp_pc[i]);  
+    pango_layout_set_text (pl, "-99 , -99", -1);
+    pango_layout_get_pixel_extents (pl, &ink_rect, NULL);
+
+    gdk_gc_set_foreground (comp_gc[i], &white);
+    gdk_draw_rectangle (comp_drawable[i], comp_gc[i], TRUE, 3, 3, 
+        ink_rect.width + 5, ink_rect.height + 5);
+    gdk_gc_set_foreground (comp_gc[i], &black);
+
+    pl = pango_layout_new (comp_pc[i]);  
+    pango_layout_set_text (pl, string, -1);
+
+
+    gdk_draw_layout (comp_drawable[i], comp_gc[i], 5, 5, pl);
+}
+
+
 void
 draw_comp_curve (int i)
 {
-    int              x0, y0 = 0.0, x1 = 0.0, y1 = 0.0;
+    int              j, x0, y0 = 0.0, x1 = 0.0, y1 = 0.0;
     float            x, y;
     comp_settings    comp;
 
@@ -900,6 +939,48 @@ draw_comp_curve (int i)
     gdk_draw_rectangle (comp_drawable[i], comp_gc[i], TRUE, 0, 0, 
         comp_curve_width[i], comp_curve_height[i]);
     gdk_gc_set_foreground (comp_gc[i], &black);
+    gdk_gc_set_line_attributes (comp_gc[i], 1, GDK_LINE_SOLID, GDK_CAP_BUTT, 
+        GDK_JOIN_MITER);
+
+
+    /*  Plot the grid lines.  */
+
+    for (j = NINT (comp_start_x[i]) ; j <= NINT (comp_end_x[i]) ; j++)
+      {
+        if (!(j % 10))
+          {
+            x1 = NINT (((float) (j - comp_start_x[i]) / 
+                comp_curve_range_x[i]) * comp_curve_width[i]);
+
+            gdk_draw_line (comp_drawable[i], comp_gc[i], x1, 0, x1, 
+                comp_curve_height[i]);
+          }
+      }
+
+    for (j = NINT (comp_start_y[i]) ; j <= NINT (comp_end_y[i]) ; j++)
+      {
+        if (!(j % 10))
+          {
+            if (!j)
+              {
+                gdk_gc_set_line_attributes (comp_gc[i], 2, GDK_LINE_SOLID, 
+                    GDK_CAP_BUTT, GDK_JOIN_MITER);
+              }
+            else
+              {
+                gdk_gc_set_line_attributes (comp_gc[i], 1, GDK_LINE_SOLID, 
+                    GDK_CAP_BUTT, GDK_JOIN_MITER);
+              }
+
+            y1 = comp_curve_height[i] - NINT (((float) (j - comp_start_y[i]) / 
+                comp_curve_range_y[i]) * comp_curve_height[i]);
+
+            gdk_draw_line (comp_drawable[i], comp_gc[i], 0, y1, 
+                comp_curve_width[i], y1);
+          }
+      }
+
+    comp_write_annotation (i, " ");
 
 
     /*  Plot the curves.  */
@@ -922,7 +1003,7 @@ draw_comp_curve (int i)
         break;
       }
 
-    comp_get_settings (i, &comp);
+    comp = comp_get_settings (i);
 
     x0 = 999.0;
     for (x = comp_start_x[i] ; x <= comp_end_x[i] ; x += 0.5f) 
@@ -957,11 +1038,7 @@ comp_curve_expose (GtkWidget *widget, int i)
     comp_curve_width[i] = widget->allocation.width;
     comp_curve_height[i] = widget->allocation.height;
 
-    comp_realized[i] = 1;
-
     draw_comp_curve (i);
-
-    return FALSE;
 }
 
 
@@ -980,8 +1057,13 @@ comp_curve_realize (GtkWidget *widget, int i)
     comp_curve_range_x[i] = comp_end_x[i] - comp_start_x[i];
     comp_curve_range_y[i] = comp_end_y[i] - comp_start_y[i];
 
-
     comp_gc[i] = widget->style->fg_gc[GTK_WIDGET_STATE (widget)];
+
+
+    comp_pc[i] = gtk_widget_get_pango_context (widget);
+
+
+    comp_realized[i] = 1;
 }
 
 
@@ -1050,15 +1132,16 @@ comp_curve_box_motion (int i, GdkEventMotion  *event)
     char           coords[20];
 
 
-    x = comp_start_x[i] + (((double) event->x / 
-        (double) comp_curve_width[i]) * comp_curve_range_x[i]);
+    x = comp_start_x[i] + (((float) event->x / 
+        (float) comp_curve_width[i]) * comp_curve_range_x[i]);
 
 
-    y = ((((double) comp_curve_height[i] - (double) event->y) / 
-            (double) comp_curve_height[i]) * comp_curve_range_y[i]) + 
-            comp_start_y[i];
+    y = comp_start_y[i] + ((((float) comp_curve_height[i] - (float) event->y) /
+        (float) comp_curve_height[i]) * comp_curve_range_y[i]);
 
-    /*  Print the coordinates in the box somewhere.  Maybe tomorrow.  */
+
+    sprintf (coords, "%d , %d    ", NINT (x), NINT (y));
+    comp_write_annotation (i, coords);
 }
 
 
@@ -1093,3 +1176,116 @@ on_high_curve_box_motion_notify_event  (GtkWidget       *widget,
 
     return FALSE;
 }
+
+gboolean
+on_low_curve_box_leave_notify_event    (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+    comp_write_annotation (0, " ");
+
+    gtk_widget_modify_fg ((GtkWidget *) l_low_comp_lbl, GTK_STATE_NORMAL, 
+        NULL);
+    gtk_widget_modify_fg ((GtkWidget *) l_low_curve_lbl, GTK_STATE_NORMAL, 
+        NULL);
+
+    return FALSE;
+}
+
+
+gboolean
+on_mid_curve_box_leave_notify_event    (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+    comp_write_annotation (1, " ");
+
+    gtk_widget_modify_fg ((GtkWidget *) l_mid_comp_lbl, GTK_STATE_NORMAL, 
+        NULL);
+    gtk_widget_modify_fg ((GtkWidget *) l_mid_curve_lbl, GTK_STATE_NORMAL, 
+        NULL);
+
+    return FALSE;
+}
+
+
+gboolean
+on_high_curve_box_leave_notify_event   (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+    comp_write_annotation (2, " ");
+
+    gtk_widget_modify_fg ((GtkWidget *) l_high_comp_lbl, GTK_STATE_NORMAL,
+        NULL);
+    gtk_widget_modify_fg ((GtkWidget *) l_high_curve_lbl, GTK_STATE_NORMAL, 
+        NULL);
+
+    return FALSE;
+}
+
+gboolean
+on_low_curve_box_enter_notify_event    (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+    gtk_widget_modify_fg ((GtkWidget *) l_low_comp_lbl, GTK_STATE_NORMAL, 
+        &red);
+    gtk_widget_modify_fg ((GtkWidget *) l_low_curve_lbl, GTK_STATE_NORMAL, 
+        &red);
+
+    return FALSE;
+}
+
+
+void
+on_low_curve_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    l_low_curve_lbl = (GtkLabel *) widget;
+}
+
+
+gboolean
+on_mid_curve_box_enter_notify_event    (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+    gtk_widget_modify_fg ((GtkWidget *) l_mid_comp_lbl, GTK_STATE_NORMAL, 
+        &green);
+    gtk_widget_modify_fg ((GtkWidget *) l_mid_curve_lbl, GTK_STATE_NORMAL, 
+        &green);
+
+    return FALSE;
+}
+
+
+void
+on_mid_curve_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    l_mid_curve_lbl = (GtkLabel *) widget;
+}
+
+
+gboolean
+on_high_curve_box_enter_notify_event   (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+    gtk_widget_modify_fg ((GtkWidget *) l_high_comp_lbl, GTK_STATE_NORMAL, 
+        &blue);
+    gtk_widget_modify_fg ((GtkWidget *) l_high_curve_lbl, GTK_STATE_NORMAL, 
+        &blue);
+
+    return FALSE;
+}
+
+
+void
+on_high_curve_lbl_realize              (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    l_high_curve_lbl = (GtkLabel *) widget;
+}
+

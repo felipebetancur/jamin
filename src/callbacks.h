@@ -191,3 +191,99 @@ gboolean
 on_high_curve_box_motion_notify_event  (GtkWidget       *widget,
                                         GdkEventMotion  *event,
                                         gpointer         user_data);
+
+gboolean
+on_low_curve_box_leave_notify_event    (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_mid_curve_box_leave_notify_event    (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_high_curve_box_leave_notify_event   (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_low_curve_box_leave_notify_event    (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_low_curve_box_motion_notify_event   (GtkWidget       *widget,
+                                        GdkEventMotion  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_mid_curve_box_leave_notify_event    (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_mid_curve_box_motion_notify_event   (GtkWidget       *widget,
+                                        GdkEventMotion  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_high_curve_box_leave_notify_event   (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_high_curve_box_motion_notify_event  (GtkWidget       *widget,
+                                        GdkEventMotion  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_EQ_curve_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_EQ_curve_event_box_button_release_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_EQ_curve_event_box_leave_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_EQ_curve_event_box_motion_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventMotion  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_low_curve_box_enter_notify_event    (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+void
+on_low_curve_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+gboolean
+on_mid_curve_box_enter_notify_event    (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+void
+on_mid_curve_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+gboolean
+on_high_curve_box_enter_notify_event   (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+void
+on_high_curve_lbl_realize              (GtkWidget       *widget,
+                                        gpointer         user_data);

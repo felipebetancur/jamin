@@ -56,7 +56,6 @@ static inline void comp_connect(plugin *p, comp_settings *s, float *left, float
 	s->makeup_gain = 0.0f;
 }
 
-
-void comp_get_settings(int i, comp_settings *comp);
+comp_settings comp_get_settings(int i);
 
 #endif

@@ -180,8 +180,9 @@ create_window1 (void)
   GtkWidget *alabel;
   GtkWidget *label47;
   GtkWidget *vbox99;
-  GtkWidget *EQ_curve_event_box;
   GtkWidget *frame9;
+  GtkWidget *EQ_curve_event_box;
+  GtkWidget *alignment6;
   GtkWidget *EQ_curve;
   GtkWidget *EQ_curve_lbl;
   GtkWidget *label48;
@@ -371,16 +372,19 @@ create_window1 (void)
   GtkWidget *label_High;
   GtkWidget *hbox28;
   GtkWidget *hbox38;
-  GtkWidget *low_curve_box;
   GtkWidget *comp1_frame;
+  GtkWidget *low_curve_box;
+  GtkWidget *alignment3;
   GtkWidget *comp1_curve;
   GtkWidget *low_curve_lbl;
-  GtkWidget *mid_curve_box;
   GtkWidget *frame17;
+  GtkWidget *mid_curve_box;
+  GtkWidget *alignment4;
   GtkWidget *comp2_curve;
   GtkWidget *mid_curve_lbl;
-  GtkWidget *high_curve_box;
   GtkWidget *frame18;
+  GtkWidget *high_curve_box;
+  GtkWidget *alignment5;
   GtkWidget *comp3_curve;
   GtkWidget *high_curve_lbl;
   GtkWidget *notebook2;
@@ -1296,21 +1300,25 @@ create_window1 (void)
   gtk_container_add (GTK_CONTAINER (notebook1), vbox99);
   gtk_widget_set_size_request (vbox99, 30, 160);
 
-  EQ_curve_event_box = gtk_event_box_new ();
-  gtk_widget_set_name (EQ_curve_event_box, "EQ_curve_event_box");
-  gtk_widget_show (EQ_curve_event_box);
-  gtk_box_pack_start (GTK_BOX (vbox99), EQ_curve_event_box, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, EQ_curve_event_box, _("Left button-start, Middle button-abort, Right button-accept"), NULL);
-
   frame9 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame9, "frame9");
   gtk_widget_show (frame9);
-  gtk_container_add (GTK_CONTAINER (EQ_curve_event_box), frame9);
+  gtk_box_pack_start (GTK_BOX (vbox99), frame9, TRUE, TRUE, 0);
+
+  EQ_curve_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (EQ_curve_event_box, "EQ_curve_event_box");
+  gtk_widget_show (EQ_curve_event_box);
+  gtk_container_add (GTK_CONTAINER (frame9), EQ_curve_event_box);
+
+  alignment6 = gtk_alignment_new (0.5, 0.5, 1, 1);
+  gtk_widget_set_name (alignment6, "alignment6");
+  gtk_widget_show (alignment6);
+  gtk_container_add (GTK_CONTAINER (EQ_curve_event_box), alignment6);
 
   EQ_curve = gtk_drawing_area_new ();
   gtk_widget_set_name (EQ_curve, "EQ_curve");
   gtk_widget_show (EQ_curve);
-  gtk_container_add (GTK_CONTAINER (frame9), EQ_curve);
+  gtk_container_add (GTK_CONTAINER (alignment6), EQ_curve);
   gtk_widget_set_events (EQ_curve, GDK_POINTER_MOTION_MASK);
 
   EQ_curve_lbl = gtk_label_new (_("     "));
@@ -2528,63 +2536,81 @@ create_window1 (void)
   gtk_widget_show (hbox38);
   gtk_box_pack_start (GTK_BOX (hbox28), hbox38, TRUE, TRUE, 0);
 
-  low_curve_box = gtk_event_box_new ();
-  gtk_widget_set_name (low_curve_box, "low_curve_box");
-  gtk_widget_show (low_curve_box);
-  gtk_box_pack_start (GTK_BOX (hbox38), low_curve_box, TRUE, TRUE, 0);
-  gtk_widget_set_events (low_curve_box, GDK_POINTER_MOTION_MASK);
-
   comp1_frame = gtk_frame_new (NULL);
   gtk_widget_set_name (comp1_frame, "comp1_frame");
   gtk_widget_show (comp1_frame);
-  gtk_container_add (GTK_CONTAINER (low_curve_box), comp1_frame);
+  gtk_box_pack_start (GTK_BOX (hbox38), comp1_frame, TRUE, TRUE, 0);
+
+  low_curve_box = gtk_event_box_new ();
+  gtk_widget_set_name (low_curve_box, "low_curve_box");
+  gtk_widget_show (low_curve_box);
+  gtk_container_add (GTK_CONTAINER (comp1_frame), low_curve_box);
+  gtk_tooltips_set_tip (tooltips, low_curve_box, _("X=input db , Y=output db"), NULL);
+  gtk_widget_set_events (low_curve_box, GDK_POINTER_MOTION_MASK);
+
+  alignment3 = gtk_alignment_new (0.5, 0.5, 1, 1);
+  gtk_widget_set_name (alignment3, "alignment3");
+  gtk_widget_show (alignment3);
+  gtk_container_add (GTK_CONTAINER (low_curve_box), alignment3);
 
   comp1_curve = gtk_drawing_area_new ();
   gtk_widget_set_name (comp1_curve, "comp1_curve");
   gtk_widget_show (comp1_curve);
-  gtk_container_add (GTK_CONTAINER (comp1_frame), comp1_curve);
+  gtk_container_add (GTK_CONTAINER (alignment3), comp1_curve);
 
   low_curve_lbl = gtk_label_new (_("Low"));
   gtk_widget_set_name (low_curve_lbl, "low_curve_lbl");
   gtk_widget_show (low_curve_lbl);
   gtk_frame_set_label_widget (GTK_FRAME (comp1_frame), low_curve_lbl);
 
-  mid_curve_box = gtk_event_box_new ();
-  gtk_widget_set_name (mid_curve_box, "mid_curve_box");
-  gtk_widget_show (mid_curve_box);
-  gtk_box_pack_start (GTK_BOX (hbox38), mid_curve_box, TRUE, TRUE, 0);
-  gtk_widget_set_events (mid_curve_box, GDK_POINTER_MOTION_MASK);
-
   frame17 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame17, "frame17");
   gtk_widget_show (frame17);
-  gtk_container_add (GTK_CONTAINER (mid_curve_box), frame17);
+  gtk_box_pack_start (GTK_BOX (hbox38), frame17, TRUE, TRUE, 0);
+
+  mid_curve_box = gtk_event_box_new ();
+  gtk_widget_set_name (mid_curve_box, "mid_curve_box");
+  gtk_widget_show (mid_curve_box);
+  gtk_container_add (GTK_CONTAINER (frame17), mid_curve_box);
+  gtk_tooltips_set_tip (tooltips, mid_curve_box, _("X=input db , Y=output db"), NULL);
+  gtk_widget_set_events (mid_curve_box, GDK_POINTER_MOTION_MASK);
+
+  alignment4 = gtk_alignment_new (0.5, 0.5, 1, 1);
+  gtk_widget_set_name (alignment4, "alignment4");
+  gtk_widget_show (alignment4);
+  gtk_container_add (GTK_CONTAINER (mid_curve_box), alignment4);
 
   comp2_curve = gtk_drawing_area_new ();
   gtk_widget_set_name (comp2_curve, "comp2_curve");
   gtk_widget_show (comp2_curve);
-  gtk_container_add (GTK_CONTAINER (frame17), comp2_curve);
+  gtk_container_add (GTK_CONTAINER (alignment4), comp2_curve);
 
   mid_curve_lbl = gtk_label_new (_("Mid"));
   gtk_widget_set_name (mid_curve_lbl, "mid_curve_lbl");
   gtk_widget_show (mid_curve_lbl);
   gtk_frame_set_label_widget (GTK_FRAME (frame17), mid_curve_lbl);
 
-  high_curve_box = gtk_event_box_new ();
-  gtk_widget_set_name (high_curve_box, "high_curve_box");
-  gtk_widget_show (high_curve_box);
-  gtk_box_pack_start (GTK_BOX (hbox38), high_curve_box, TRUE, TRUE, 0);
-  gtk_widget_set_events (high_curve_box, GDK_POINTER_MOTION_MASK);
-
   frame18 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame18, "frame18");
   gtk_widget_show (frame18);
-  gtk_container_add (GTK_CONTAINER (high_curve_box), frame18);
+  gtk_box_pack_start (GTK_BOX (hbox38), frame18, TRUE, TRUE, 0);
+
+  high_curve_box = gtk_event_box_new ();
+  gtk_widget_set_name (high_curve_box, "high_curve_box");
+  gtk_widget_show (high_curve_box);
+  gtk_container_add (GTK_CONTAINER (frame18), high_curve_box);
+  gtk_tooltips_set_tip (tooltips, high_curve_box, _("X=input db , Y=output db"), NULL);
+  gtk_widget_set_events (high_curve_box, GDK_POINTER_MOTION_MASK);
+
+  alignment5 = gtk_alignment_new (0.5, 0.5, 1, 1);
+  gtk_widget_set_name (alignment5, "alignment5");
+  gtk_widget_show (alignment5);
+  gtk_container_add (GTK_CONTAINER (high_curve_box), alignment5);
 
   comp3_curve = gtk_drawing_area_new ();
   gtk_widget_set_name (comp3_curve, "comp3_curve");
   gtk_widget_show (comp3_curve);
-  gtk_container_add (GTK_CONTAINER (frame18), comp3_curve);
+  gtk_container_add (GTK_CONTAINER (alignment5), comp3_curve);
 
   high_curve_lbl = gtk_label_new (_("High"));
   gtk_widget_set_name (high_curve_lbl, "high_curve_lbl");
@@ -2729,14 +2755,17 @@ create_window1 (void)
   g_signal_connect ((gpointer) eqb1, "realize",
                     G_CALLBACK (on_eqb1_realize),
                     NULL);
-  g_signal_connect ((gpointer) EQ_curve_event_box, "motion_notify_event",
-                    G_CALLBACK (on_EQ_curve_event_box_motion_notify_event),
-                    NULL);
   g_signal_connect ((gpointer) EQ_curve_event_box, "button_press_event",
                     G_CALLBACK (on_EQ_curve_event_box_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) EQ_curve_event_box, "button_release_event",
                     G_CALLBACK (on_EQ_curve_event_box_button_release_event),
+                    NULL);
+  g_signal_connect ((gpointer) EQ_curve_event_box, "leave_notify_event",
+                    G_CALLBACK (on_EQ_curve_event_box_leave_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) EQ_curve_event_box, "motion_notify_event",
+                    G_CALLBACK (on_EQ_curve_event_box_motion_notify_event),
                     NULL);
   g_signal_connect ((gpointer) EQ_curve, "expose_event",
                     G_CALLBACK (on_EQ_curve_expose_event),
@@ -2807,8 +2836,14 @@ create_window1 (void)
   g_signal_connect ((gpointer) label_High, "realize",
                     G_CALLBACK (on_label_High_realize),
                     NULL);
+  g_signal_connect ((gpointer) low_curve_box, "leave_notify_event",
+                    G_CALLBACK (on_low_curve_box_leave_notify_event),
+                    NULL);
   g_signal_connect ((gpointer) low_curve_box, "motion_notify_event",
                     G_CALLBACK (on_low_curve_box_motion_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) low_curve_box, "enter_notify_event",
+                    G_CALLBACK (on_low_curve_box_enter_notify_event),
                     NULL);
   g_signal_connect ((gpointer) comp1_curve, "expose_event",
                     G_CALLBACK (on_comp1_curve_expose_event),
@@ -2816,8 +2851,17 @@ create_window1 (void)
   g_signal_connect ((gpointer) comp1_curve, "realize",
                     G_CALLBACK (on_comp1_curve_realize),
                     NULL);
+  g_signal_connect ((gpointer) low_curve_lbl, "realize",
+                    G_CALLBACK (on_low_curve_lbl_realize),
+                    NULL);
+  g_signal_connect ((gpointer) mid_curve_box, "leave_notify_event",
+                    G_CALLBACK (on_mid_curve_box_leave_notify_event),
+                    NULL);
   g_signal_connect ((gpointer) mid_curve_box, "motion_notify_event",
                     G_CALLBACK (on_mid_curve_box_motion_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) mid_curve_box, "enter_notify_event",
+                    G_CALLBACK (on_mid_curve_box_enter_notify_event),
                     NULL);
   g_signal_connect ((gpointer) comp2_curve, "expose_event",
                     G_CALLBACK (on_comp2_curve_expose_event),
@@ -2825,14 +2869,26 @@ create_window1 (void)
   g_signal_connect ((gpointer) comp2_curve, "realize",
                     G_CALLBACK (on_comp2_curve_realize),
                     NULL);
+  g_signal_connect ((gpointer) mid_curve_lbl, "realize",
+                    G_CALLBACK (on_mid_curve_lbl_realize),
+                    NULL);
+  g_signal_connect ((gpointer) high_curve_box, "leave_notify_event",
+                    G_CALLBACK (on_high_curve_box_leave_notify_event),
+                    NULL);
   g_signal_connect ((gpointer) high_curve_box, "motion_notify_event",
                     G_CALLBACK (on_high_curve_box_motion_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) high_curve_box, "enter_notify_event",
+                    G_CALLBACK (on_high_curve_box_enter_notify_event),
                     NULL);
   g_signal_connect ((gpointer) comp3_curve, "expose_event",
                     G_CALLBACK (on_comp3_curve_expose_event),
                     NULL);
   g_signal_connect ((gpointer) comp3_curve, "realize",
                     G_CALLBACK (on_comp3_curve_realize),
+                    NULL);
+  g_signal_connect ((gpointer) high_curve_lbl, "realize",
+                    G_CALLBACK (on_high_curve_lbl_realize),
                     NULL);
   g_signal_connect ((gpointer) out_trim_scale, "value_changed",
                     G_CALLBACK (on_out_trim_scale_value_changed),
@@ -2996,8 +3052,9 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, alabel, "alabel");
   GLADE_HOOKUP_OBJECT (window1, label47, "label47");
   GLADE_HOOKUP_OBJECT (window1, vbox99, "vbox99");
-  GLADE_HOOKUP_OBJECT (window1, EQ_curve_event_box, "EQ_curve_event_box");
   GLADE_HOOKUP_OBJECT (window1, frame9, "frame9");
+  GLADE_HOOKUP_OBJECT (window1, EQ_curve_event_box, "EQ_curve_event_box");
+  GLADE_HOOKUP_OBJECT (window1, alignment6, "alignment6");
   GLADE_HOOKUP_OBJECT (window1, EQ_curve, "EQ_curve");
   GLADE_HOOKUP_OBJECT (window1, EQ_curve_lbl, "EQ_curve_lbl");
   GLADE_HOOKUP_OBJECT (window1, label48, "label48");
@@ -3185,16 +3242,19 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, label_High, "label_High");
   GLADE_HOOKUP_OBJECT (window1, hbox28, "hbox28");
   GLADE_HOOKUP_OBJECT (window1, hbox38, "hbox38");
-  GLADE_HOOKUP_OBJECT (window1, low_curve_box, "low_curve_box");
   GLADE_HOOKUP_OBJECT (window1, comp1_frame, "comp1_frame");
+  GLADE_HOOKUP_OBJECT (window1, low_curve_box, "low_curve_box");
+  GLADE_HOOKUP_OBJECT (window1, alignment3, "alignment3");
   GLADE_HOOKUP_OBJECT (window1, comp1_curve, "comp1_curve");
   GLADE_HOOKUP_OBJECT (window1, low_curve_lbl, "low_curve_lbl");
-  GLADE_HOOKUP_OBJECT (window1, mid_curve_box, "mid_curve_box");
   GLADE_HOOKUP_OBJECT (window1, frame17, "frame17");
+  GLADE_HOOKUP_OBJECT (window1, mid_curve_box, "mid_curve_box");
+  GLADE_HOOKUP_OBJECT (window1, alignment4, "alignment4");
   GLADE_HOOKUP_OBJECT (window1, comp2_curve, "comp2_curve");
   GLADE_HOOKUP_OBJECT (window1, mid_curve_lbl, "mid_curve_lbl");
-  GLADE_HOOKUP_OBJECT (window1, high_curve_box, "high_curve_box");
   GLADE_HOOKUP_OBJECT (window1, frame18, "frame18");
+  GLADE_HOOKUP_OBJECT (window1, high_curve_box, "high_curve_box");
+  GLADE_HOOKUP_OBJECT (window1, alignment5, "alignment5");
   GLADE_HOOKUP_OBJECT (window1, comp3_curve, "comp3_curve");
   GLADE_HOOKUP_OBJECT (window1, high_curve_lbl, "high_curve_lbl");
   GLADE_HOOKUP_OBJECT (window1, notebook2, "notebook2");
