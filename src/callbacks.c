@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.112 2003/12/17 04:13:36 joq Exp $
+ *  $Id: callbacks.c,v 1.113 2003/12/21 05:03:01 joq Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -773,28 +773,8 @@ on_mid_meter_lbl_realize               (GtkWidget       *widget,
 
 }
 
-
 gboolean
-play_toggle                            (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data)
-{
-    transport_play();
-    return FALSE;
-}
-
-
-gboolean
-stop_toggle                            (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data)
-{
-    transport_stop();
-    return FALSE;
-}
-
-gboolean
-rewind_transport                       (GtkWidget       *widget,
+backward_transport                     (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
@@ -808,10 +788,40 @@ forward_transport                      (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-
     transport_skip(5.0);
     return FALSE;
 }
+
+
+gboolean
+play_transport                         (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+    transport_play();
+    return FALSE;
+}
+
+
+gboolean
+rewind_transport                       (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+    transport_set_time(0.0);
+    return FALSE;
+}
+
+
+gboolean
+stop_transport                         (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+    transport_stop();
+    return FALSE;
+}
+
 
 void
 on_boost_scale_value_changed           (GtkRange        *range,

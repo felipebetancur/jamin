@@ -302,7 +302,7 @@
 		<widget class="GtkTable" id="transport_controls">
 		  <property name="visible">True</property>
 		  <property name="n_rows">1</property>
-		  <property name="n_columns">4</property>
+		  <property name="n_columns">5</property>
 		  <property name="homogeneous">True</property>
 		  <property name="row_spacing">0</property>
 		  <property name="column_spacing">26</property>
@@ -334,15 +334,15 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkEventBox" id="play_button">
+		    <widget class="GtkEventBox" id="backward_button">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">play transport</property>
-		      <signal name="button_press_event" handler="play_toggle" last_modification_time="Fri, 27 Jun 2003 05:45:51 GMT"/>
+		      <property name="tooltip" translatable="yes">backward transport</property>
+		      <signal name="button_press_event" handler="backward_transport" last_modification_time="Sun, 21 Dec 2003 03:45:09 GMT"/>
 
 		      <child>
-			<widget class="GtkImage" id="play">
+			<widget class="GtkImage" id="backward">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-go-forward</property>
+			  <property name="stock">gtk-go-back</property>
 			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
@@ -361,15 +361,15 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkEventBox" id="stop_button">
+		    <widget class="GtkEventBox" id="play_button">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">stop transport</property>
-		      <signal name="button_press_event" handler="stop_toggle" last_modification_time="Fri, 27 Jun 2003 05:45:39 GMT"/>
+		      <property name="tooltip" translatable="yes">play transport</property>
+		      <signal name="button_press_event" handler="play_transport" last_modification_time="Sun, 21 Dec 2003 03:45:36 GMT"/>
 
 		      <child>
-			<widget class="GtkImage" id="stop">
+			<widget class="GtkImage" id="play">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-stop</property>
+			  <property name="stock">gtk-jump-to</property>
 			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
@@ -388,15 +388,15 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkEventBox" id="forward_button">
+		    <widget class="GtkEventBox" id="stop_button">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">fast forward transport</property>
-		      <signal name="button_press_event" handler="forward_transport" last_modification_time="Fri, 27 Jun 2003 05:48:14 GMT"/>
+		      <property name="tooltip" translatable="yes">stop transport</property>
+		      <signal name="button_press_event" handler="stop_transport" last_modification_time="Sun, 21 Dec 2003 03:45:47 GMT"/>
 
 		      <child>
-			<widget class="GtkImage" id="ffwd">
+			<widget class="GtkImage" id="stop">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-goto-last</property>
+			  <property name="stock">gtk-stop</property>
 			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
@@ -408,6 +408,33 @@
 		    <packing>
 		      <property name="left_attach">3</property>
 		      <property name="right_attach">4</property>
+		      <property name="top_attach">0</property>
+		      <property name="bottom_attach">1</property>
+		      <property name="y_options">fill</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkEventBox" id="forward_button">
+		      <property name="visible">True</property>
+		      <property name="tooltip" translatable="yes">forward transport</property>
+		      <signal name="button_press_event" handler="forward_transport" last_modification_time="Sun, 21 Dec 2003 03:43:20 GMT"/>
+
+		      <child>
+			<widget class="GtkImage" id="forward">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-go-forward</property>
+			  <property name="icon_size">4</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		    <packing>
+		      <property name="left_attach">4</property>
+		      <property name="right_attach">5</property>
 		      <property name="top_attach">0</property>
 		      <property name="bottom_attach">1</property>
 		      <property name="y_options">fill</property>

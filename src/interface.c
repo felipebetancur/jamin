@@ -64,12 +64,14 @@ create_window1 (void)
   GtkWidget *transport_controls;
   GtkWidget *rewind_button;
   GtkWidget *rewind;
+  GtkWidget *backward_button;
+  GtkWidget *backward;
   GtkWidget *play_button;
   GtkWidget *play;
   GtkWidget *stop_button;
   GtkWidget *stop;
   GtkWidget *forward_button;
-  GtkWidget *ffwd;
+  GtkWidget *forward;
   GtkWidget *vseparator1;
   GtkWidget *time_label;
   GtkWidget *vseparator2;
@@ -670,7 +672,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (top_hbox), transport_controls_eventbox, FALSE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (transport_controls_eventbox), 10);
 
-  transport_controls = gtk_table_new (1, 4, TRUE);
+  transport_controls = gtk_table_new (1, 5, TRUE);
   gtk_widget_set_name (transport_controls, "transport_controls");
   gtk_widget_show (transport_controls);
   gtk_container_add (GTK_CONTAINER (transport_controls_eventbox), transport_controls);
@@ -689,15 +691,28 @@ create_window1 (void)
   gtk_widget_show (rewind);
   gtk_container_add (GTK_CONTAINER (rewind_button), rewind);
 
+  backward_button = gtk_event_box_new ();
+  gtk_widget_set_name (backward_button, "backward_button");
+  gtk_widget_show (backward_button);
+  gtk_table_attach (GTK_TABLE (transport_controls), backward_button, 1, 2, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (GTK_FILL), 0, 0);
+  gtk_tooltips_set_tip (tooltips, backward_button, _("backward transport"), NULL);
+
+  backward = gtk_image_new_from_stock ("gtk-go-back", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (backward, "backward");
+  gtk_widget_show (backward);
+  gtk_container_add (GTK_CONTAINER (backward_button), backward);
+
   play_button = gtk_event_box_new ();
   gtk_widget_set_name (play_button, "play_button");
   gtk_widget_show (play_button);
-  gtk_table_attach (GTK_TABLE (transport_controls), play_button, 1, 2, 0, 1,
+  gtk_table_attach (GTK_TABLE (transport_controls), play_button, 2, 3, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
   gtk_tooltips_set_tip (tooltips, play_button, _("play transport"), NULL);
 
-  play = gtk_image_new_from_stock ("gtk-go-forward", GTK_ICON_SIZE_BUTTON);
+  play = gtk_image_new_from_stock ("gtk-jump-to", GTK_ICON_SIZE_BUTTON);
   gtk_widget_set_name (play, "play");
   gtk_widget_show (play);
   gtk_container_add (GTK_CONTAINER (play_button), play);
@@ -705,7 +720,7 @@ create_window1 (void)
   stop_button = gtk_event_box_new ();
   gtk_widget_set_name (stop_button, "stop_button");
   gtk_widget_show (stop_button);
-  gtk_table_attach (GTK_TABLE (transport_controls), stop_button, 2, 3, 0, 1,
+  gtk_table_attach (GTK_TABLE (transport_controls), stop_button, 3, 4, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
   gtk_tooltips_set_tip (tooltips, stop_button, _("stop transport"), NULL);
@@ -718,15 +733,15 @@ create_window1 (void)
   forward_button = gtk_event_box_new ();
   gtk_widget_set_name (forward_button, "forward_button");
   gtk_widget_show (forward_button);
-  gtk_table_attach (GTK_TABLE (transport_controls), forward_button, 3, 4, 0, 1,
+  gtk_table_attach (GTK_TABLE (transport_controls), forward_button, 4, 5, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_tooltips_set_tip (tooltips, forward_button, _("fast forward transport"), NULL);
+  gtk_tooltips_set_tip (tooltips, forward_button, _("forward transport"), NULL);
 
-  ffwd = gtk_image_new_from_stock ("gtk-goto-last", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_set_name (ffwd, "ffwd");
-  gtk_widget_show (ffwd);
-  gtk_container_add (GTK_CONTAINER (forward_button), ffwd);
+  forward = gtk_image_new_from_stock ("gtk-go-forward", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (forward, "forward");
+  gtk_widget_show (forward);
+  gtk_container_add (GTK_CONTAINER (forward_button), forward);
 
   vseparator1 = gtk_vseparator_new ();
   gtk_widget_set_name (vseparator1, "vseparator1");
@@ -3245,11 +3260,14 @@ create_window1 (void)
   g_signal_connect ((gpointer) rewind_button, "button_press_event",
                     G_CALLBACK (rewind_transport),
                     NULL);
+  g_signal_connect ((gpointer) backward_button, "button_press_event",
+                    G_CALLBACK (backward_transport),
+                    NULL);
   g_signal_connect ((gpointer) play_button, "button_press_event",
-                    G_CALLBACK (play_toggle),
+                    G_CALLBACK (play_transport),
                     NULL);
   g_signal_connect ((gpointer) stop_button, "button_press_event",
-                    G_CALLBACK (stop_toggle),
+                    G_CALLBACK (stop_transport),
                     NULL);
   g_signal_connect ((gpointer) forward_button, "button_press_event",
                     G_CALLBACK (forward_transport),
@@ -3678,12 +3696,14 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, transport_controls, "transport_controls");
   GLADE_HOOKUP_OBJECT (window1, rewind_button, "rewind_button");
   GLADE_HOOKUP_OBJECT (window1, rewind, "rewind");
+  GLADE_HOOKUP_OBJECT (window1, backward_button, "backward_button");
+  GLADE_HOOKUP_OBJECT (window1, backward, "backward");
   GLADE_HOOKUP_OBJECT (window1, play_button, "play_button");
   GLADE_HOOKUP_OBJECT (window1, play, "play");
   GLADE_HOOKUP_OBJECT (window1, stop_button, "stop_button");
   GLADE_HOOKUP_OBJECT (window1, stop, "stop");
   GLADE_HOOKUP_OBJECT (window1, forward_button, "forward_button");
-  GLADE_HOOKUP_OBJECT (window1, ffwd, "ffwd");
+  GLADE_HOOKUP_OBJECT (window1, forward, "forward");
   GLADE_HOOKUP_OBJECT (window1, vseparator1, "vseparator1");
   GLADE_HOOKUP_OBJECT (window1, time_label, "time_label");
   GLADE_HOOKUP_OBJECT (window1, vseparator2, "vseparator2");

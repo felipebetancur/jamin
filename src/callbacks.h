@@ -808,3 +808,23 @@ gboolean
 scene_warning                          (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
+
+gboolean
+backward_transport                     (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+play_transport                         (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+stop_transport                         (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+forward_transport                      (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
