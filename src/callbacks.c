@@ -436,6 +436,42 @@ eqb_mod (GtkAdjustment *adj, gpointer user_data)
 
 
 void
+logfreq2xpix (float log_freq, int *x)
+{
+    *x = NINT (((log_freq - l_low2mid_adj->lower) / EQ_curve_range_x) * 
+        EQ_curve_width);
+}
+
+
+void 
+freq2xpix (float freq, int *x)
+{
+    float log_freq;
+
+    log_freq = log10f (freq);
+    logfreq2xpix (log_freq, x);
+}
+
+
+void 
+gain2ypix (float gain, int *y)
+{
+    *y = EQ_curve_height - NINT (((gain - l_eqb1_adj->lower) / 
+                EQ_curve_range_y) * EQ_curve_height);
+}
+
+
+void
+loggain2ypix (float log_gain, int *y)
+{
+    float gain;
+
+    gain = log_gain * 20.0;
+    gain2ypix (gain, y);
+}
+
+
+void
 draw_EQ_spectrum_curve (float single_levels[])
 {
     static int     x[EQ_INTERP], y[EQ_INTERP];
@@ -479,8 +515,7 @@ draw_EQ_spectrum_curve (float single_levels[])
             freq = l_geq_freqs[0] + (float) i * step;
 
 
-            x[i] = NINT (((log10(freq) - l_low2mid_adj->lower) /
-                          EQ_curve_range_x) * EQ_curve_width);
+            freq2xpix (freq, &x[i]);
 
 
             /*  Most of the single_level values will be in the -90.0db to 
@@ -529,78 +564,32 @@ nearest_x (float freq)
 void 
 insert_notch ()
 {
-    int        i;
+    int        i, j;
+
 
     for (i = 0 ; i < EQ_length ; i++)
       {
         EQ_x_notched[i] = EQ_xinterp[i];
-        if (EQ_notch_gain[0] != 0.0 && i <= EQ_notch_index[0])
+        EQ_y_notched[i] = EQ_yinterp[i];
+
+        for (j = 0 ; j < NOTCHES ; j++)
           {
-            EQ_y_notched[i] = EQ_notch_gain[0];
-          }
-        else if (EQ_notch_gain[1] != 0.0 && 
-            i >= (EQ_notch_index[1] - EQ_notch_width[1]) &&
-            i <= (EQ_notch_index[1] + EQ_notch_width[1]))
-          {
-            EQ_y_notched[i] = EQ_notch_gain[1];
-          }
-        else if (EQ_notch_gain[2] != 0.0 && 
-            i >= (EQ_notch_index[2] - EQ_notch_width[2]) &&
-            i <= (EQ_notch_index[2] + EQ_notch_width[2]))
-          {
-            EQ_y_notched[i] = EQ_notch_gain[2];
-          }
-        else if (EQ_notch_gain[3] != 0.0 && 
-            i >= (EQ_notch_index[3] - EQ_notch_width[3]) &&
-            i <= (EQ_notch_index[3] + EQ_notch_width[3]))
-          {
-            EQ_y_notched[i] = EQ_notch_gain[3];
-          }
-        else if (EQ_notch_gain[4] != 0.0 && i >= EQ_notch_index[4])
-          {
-            EQ_y_notched[i] = EQ_notch_gain[4];
-          }
-        else
-          {
-            EQ_y_notched[i] = EQ_yinterp[i];
+            if (!j || j == NOTCHES - 1)
+              {
+                if (EQ_notch_gain[j] != 0.0 && i <= EQ_notch_index[j])
+                    EQ_y_notched[i] = EQ_notch_gain[j];
+              }
+            else
+              {
+                if (EQ_notch_gain[j] != 0.0 && 
+                    i >= (EQ_notch_index[j] - EQ_notch_width[j]) &&
+                    i <= (EQ_notch_index[j] + EQ_notch_width[j]))
+                  {
+                    EQ_y_notched[i] = EQ_notch_gain[j];
+                  }
+              }
           }
       }
-}
-
-
-void
-logfreq2xpix (float log_freq, int *x)
-{
-    *x = NINT (((log_freq - l_low2mid_adj->lower) / EQ_curve_range_x) * 
-        EQ_curve_width);
-}
-
-
-void 
-freq2xpix (float freq, int *x)
-{
-    float log_freq;
-
-    log_freq = log10f (freq);
-    logfreq2xpix (log_freq, x);
-}
-
-
-void 
-gain2ypix (float gain, int *y)
-{
-    *y = EQ_curve_height - NINT (((gain - l_eqb1_adj->lower) / 
-                EQ_curve_range_y) * EQ_curve_height);
-}
-
-
-void
-loggain2ypix (float log_gain, int *y)
-{
-    float gain;
-
-    gain = log_gain * 20.0;
-    gain2ypix (gain, y);
 }
 
 
@@ -861,6 +850,56 @@ on_eqb1_realize                        (GtkWidget       *widget,
 }
 
 
+int 
+check_notch (int notch, int new, int q)
+{
+    int         j, k, left, right, width, ret;
+
+
+    ret = 1;
+
+    if (!notch)
+      {
+        j = EQ_notch_index[notch + 1] - EQ_notch_width[notch + 1];
+        if (new >= j) ret = 0;
+      }
+    else if (notch == NOTCHES - 1)
+      {
+        k = EQ_notch_index[notch - 1] + EQ_notch_width[notch - 1];
+        if (new <= k) ret = 0;
+      }
+    else
+      {
+        j = EQ_notch_index[notch - 1] + EQ_notch_width[notch - 1];
+        k = EQ_notch_index[notch + 1] - EQ_notch_width[notch + 1];
+        if (q == 1)
+          {
+            left = new;
+            width = EQ_notch_index[notch] - left;
+            right = left + 2 * width;
+
+            if (EQ_notch_index[notch] - left < 1) ret = 0;
+          }
+        else if (q == 2)
+          {
+            right = new;
+            width = right - EQ_notch_index[notch];
+            left = right - 2 * width;
+
+            if (right - EQ_notch_index[notch] < 1) ret = 0;
+          }
+        else
+          {
+            left = new - EQ_notch_width[notch];
+            right = new + EQ_notch_width[notch];
+          }
+        if (left <= j || right >= k) ret = 0;
+      }
+
+    return (ret);
+}
+
+
 gboolean 
 on_EQ_curve_event_box_motion_notify_event
                                         (GtkWidget       *widget,
@@ -968,9 +1007,13 @@ on_EQ_curve_event_box_motion_notify_event
                       {
                         if (x >= 0 && x <= EQ_curve_width)
                           {
-                            EQ_notch_index[i] = nearest_x (freq);
-                            drag = 1;
-                            notch_flag = i;
+                            j = nearest_x (freq);
+                            if (check_notch (i, j, 0))
+                              {
+                                EQ_notch_index[i] = nearest_x (freq);
+                                drag = 1;
+                                notch_flag = i;
+                              }
                             break;
                           }
                       }
@@ -984,18 +1027,22 @@ on_EQ_curve_event_box_motion_notify_event
                     if (x >= 0 && x <= EQ_curve_width)
                       {
                         j = nearest_x (freq);
-                        if (EQ_notch_index[i] > j)
+                        if (check_notch (i, j, EQ_notch_Q_drag[i]))
                           {
-                            EQ_notch_width[i] = EQ_notch_index[i] - j;
-                          }
-                        else
-                          {
-                            EQ_notch_width[i] = j - EQ_notch_index[i];
-                          }
-                        if (!EQ_notch_width[i]) EQ_notch_width[i] = 1;
+                            /*  Left bracket is 1, right bracket is 2.  */
 
-                        drag = 1;
-                        notch_flag = i;
+                            if (EQ_notch_Q_drag[i] == 1)
+                              {
+                                EQ_notch_width[i] = EQ_notch_index[i] - j;
+                              }
+                            else
+                              {
+                                EQ_notch_width[i] = j - EQ_notch_index[i];
+                              }
+
+                            drag = 1;
+                            notch_flag = i;
+                          }
                         break;
                       }
                   }
@@ -1216,6 +1263,8 @@ on_EQ_curve_event_box_button_press_event
                         if (diff_notch[0] <= NOTCH_HANDLE_HALF_WIDTH &&
                             diff_notch[1] <= NOTCH_HANDLE_HALF_HEIGHT)
                           {
+                            /*  Left bracket is a 1.  */
+
                             EQ_notch_Q_drag[i] = 1;
                             xover_active = 1;
 
@@ -1229,7 +1278,9 @@ on_EQ_curve_event_box_button_press_event
                         if (diff_notch[0] <= NOTCH_HANDLE_HALF_WIDTH &&
                             diff_notch[1] <= NOTCH_HANDLE_HALF_HEIGHT)
                           {
-                            EQ_notch_Q_drag[i] = 1;
+                            /*  Right bracket is a 2.  */
+
+                            EQ_notch_Q_drag[i] = 2;
                             xover_active = 1;
 
                             break;
