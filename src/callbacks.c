@@ -4,6 +4,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <time.h>
+#include <sys/times.h>
 #include <errno.h>
 #include <math.h>
 #include <string.h>
@@ -34,6 +37,7 @@
 #define NOTCH_HANDLE_HALF_WIDTH       (NOTCH_HANDLE_WIDTH / 2)
 #define NOTCHES                       5
 #define NOTCH_INT                     ((int) ((EQ_INTERP + 1) / (NOTCHES - 1)))
+#define MOTION_CLOCK_DIFF             ((int) (sysconf (_SC_CLK_TCK) * 0.05))
 
 
 /* vi:set ts=8 sts=4 sw=4: */
@@ -1077,10 +1081,23 @@ on_EQ_curve_event_box_motion_notify_event
 {
     static int     prev_x = -1, prev_y = -1, current_cursor = -1;
     int            i, j, x, y, size, diffx_fa, diffx_fb, diff_notch[2], 
-                   cursor, drag, notch_flag = -1, lo, hi;
+                   cursor, drag, notch_flag = -1, lo, hi, clock_diff;
     float          freq, gain, s_gain;
     char           coords[20];
+    clock_t        new_clock;
+    static clock_t old_clock = -1;
+    struct tms     buf;
 
+
+
+    /*  Timing delay so we don't get five bazillion calls.  */
+
+    new_clock = times (&buf);
+    clock_diff = abs (new_clock - old_clock);
+
+    if (clock_diff < MOTION_CLOCK_DIFF) return FALSE;
+
+    old_clock = new_clock;
 
 
     x = NINT (event->x);
