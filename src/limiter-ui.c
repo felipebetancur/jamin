@@ -32,7 +32,7 @@ void bind_limiter()
 
 gboolean lh_changed(GtkAdjustment *adj, gpointer user_data)
 {
-    limiter.delay = adj->value * 0.0001f;
+    limiter.delay = adj->value * 0.001f;
 
     return FALSE;
 }
