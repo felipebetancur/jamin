@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.28 2003/12/12 15:04:01 theno23 Exp $
+ *  $Id: state.c,v 1.29 2003/12/17 17:26:16 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -47,6 +47,7 @@ static GList         *history = NULL;
 static GList         *undo_pos = NULL;
 
 static int suppress_feedback = 0;
+static int saved_scene;
 
 static void s_set_events(int id, float value);
 void set_EQ_curve_values ();
@@ -378,6 +379,7 @@ void s_load_session (const char *fname)
 {
     xmlSAXHandlerPtr handler;
     int scene = -1;
+    saved_scene = -1;
 
     unset_scene_buttons ();
 
@@ -395,6 +397,18 @@ void s_load_session (const char *fname)
     s_history_add(g_strdup_printf("%s", filename));
     last_changed = S_LOAD;
     free(handler);
+
+
+    /*  This is the active scene.  */
+
+    if (saved_scene < 100)
+      {
+        set_scene (saved_scene);
+      }
+    else
+      {
+        set_num_scene_warning_button(saved_scene);
+      }
 
     if (!fname) {
 	filename = NULL;
@@ -432,10 +446,16 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 	    }
 	}
 
+
+        /*  Set the active scene number to be set after parsing all of the
+            scenes in the XML file.  */
+
 	if (active) {
+            saved_scene = *scene;
 	    set_scene(*scene);
 	}
 	if (changed) {
+            saved_scene = *scene + 100;
 	    set_num_scene_warning_button(changed_scene_no(*scene));
 	}
 
