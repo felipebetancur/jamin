@@ -15,8 +15,6 @@ TODO (owner)
 
 - Change all uses of JAM to JAMin
 - Commit documentation to CVS (Ron)
-- Make save and load work with multiple scenes (Steve)
-- Morph settings on scene changes (Jan/Steve)
 - Finish context sensitive help verbiage (everyone)
 - copyright headers in source code file (everyone)
 - move option parsing from io.c to main.c (Jack)
@@ -36,6 +34,8 @@ TO THINK ABOUT
 
 CLOSED (date)
 
+- Morph settings on scene changes (2003/06/30)
+- Make save and load work with multiple scenes (2003/06/30)
 - remove use of <asm/atomic.h> (2003/06/03)
 - capabilites support for DSP thread (2003/06/15)
 - AUTHORS file (2003/06/16)

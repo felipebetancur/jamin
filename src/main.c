@@ -87,14 +87,15 @@ int main(int argc, char *argv[])
     bind_stereo();
     bind_scenes();
     s_clear_history();
-    /* If the filename has been set, load it */
-    s_load_session(NULL);
-
 
     /* start I/O processing, then run GTK main loop, until "quit" */
 
     io_activate();
     g_timeout_add(100, update_meters, NULL);
+
+    /* If the filename has been set, load it */
+    s_load_session(NULL);
+
     gtk_main();
     io_cleanup();
 

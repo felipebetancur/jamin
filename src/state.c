@@ -90,6 +90,8 @@ void s_set_value_ui(int id, float value)
     if (last_changed != id) {
 	s_history_add(g_strdup_printf("%s = %f", s_description[id],
 		      s_value[id]));
+    } else {
+	last_state->value[id] = value;
     }
 
 #if 0
@@ -161,6 +163,11 @@ static void s_history_add(const char *description)
     ns = malloc(sizeof(s_state));
     ns->description = (char *)description;
     memcpy(ns->value, s_value, S_SIZE * sizeof(float));
+    if (undo_pos) {
+	while (undo_pos->next) {
+	    g_list_remove_all(history, undo_pos->next);
+	}
+    }
     history = g_list_append(history, ns);
     undo_pos = g_list_last(history);
     /* printf("add %s\n", description); */
@@ -172,8 +179,26 @@ void s_undo()
     if (!undo_pos) {
 	return;
     }
-    s_restore_state((s_state *)undo_pos->data);
     undo_pos = g_list_previous(undo_pos);
+    if (!undo_pos) {
+	return;
+    }
+    s_restore_state((s_state *)undo_pos->data);
+
+    set_EQ_curve_values ();
+}
+
+void s_redo() 
+{
+    if (undo_pos) {
+	undo_pos = g_list_next(undo_pos);
+    } else {
+	undo_pos = history;
+    }
+    if (!undo_pos) {
+	return;
+    }
+    s_restore_state((s_state *)undo_pos->data);
 
     set_EQ_curve_values ();
 }
@@ -183,7 +208,25 @@ void s_restore_state(s_state *state)
     int i, duration;
 
     /* printf("restore %s\n", state->description); */
-    duration = (int)sample_rate;
+    /* crossfade in 3ms, sounds a bit better */
+    duration = (int)(sample_rate * 0.003f);
+    suppress_feedback++;
+    for (i=0; i<S_SIZE; i++) {
+	/* set the target and duration for crosssfade, but set the controls to
+	 * the endpoint */
+	s_target[i] = state->value[i];
+	s_duration[i] = duration;
+	//s_set_events(i, state->value[i]);
+    }
+    suppress_feedback--;
+}
+
+void s_crossfade_to_state(s_state *state, float time)
+{
+    int i, duration;
+
+    /* printf("restore %s\n", state->description); */
+    duration = (int)(sample_rate * time);
     suppress_feedback++;
     for (i=0; i<S_SIZE; i++) {
 	/* set the target and duration for crosssfade, but set the controls to
@@ -310,7 +353,7 @@ void s_load_session (const char *fname)
 	filename = fname;
     }
     if (!filename) {
-	return;
+	filename = PACKAGE_DATA_DIR "/jamin/examples/default.jam";
     }
     s_update_title();
 
@@ -320,6 +363,10 @@ void s_load_session (const char *fname)
     s_history_add(g_strdup_printf("%s", filename));
     last_changed = S_LOAD;
     free(handler);
+
+    if (!fname) {
+	filename = NULL;
+    }
 
     unset_scene_buttons ();
     set_EQ_curve_values ();
@@ -331,6 +378,10 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
     unsigned int i, found = 0;
     const char *symbol = NULL, *value = NULL;
     int *scene = (int *)user_data;
+
+    if (!strcmp(name, "jam-param-list")) {
+	return;
+    }
 
     if (!strcmp(name, "scene")) {
 	const char *sname = NULL;

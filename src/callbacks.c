@@ -1470,6 +1470,10 @@ on_window1_key_press_event             (GtkWidget       *widget,
             s_undo();
             break;
 
+          case GDK_r:
+            s_redo();
+            break;
+
           case GDK_q:
             on_quit_button_clicked (NULL, NULL);
             break;
@@ -1817,6 +1821,20 @@ on_quit1_activate                      (GtkMenuItem     *menuitem,
     clean_quit();
 }
 
+
+void
+on_undo1_activate                       (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  s_undo();
+}
+
+void
+on_redo1_activate                       (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  s_redo();
+}
 
 void
 on_cut1_activate                       (GtkMenuItem     *menuitem,

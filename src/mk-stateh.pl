@@ -50,6 +50,7 @@ void s_clear_history();
 void s_set_callback(int id, s_callback_func callback);
 void s_set_adjustment(int id, GtkAdjustment *adjustment);
 void s_undo();
+void s_redo();
 void s_save_session_from_ui (GtkWidget *w, gpointer user_data);
 void s_save_session (const char *fname);
 void s_load_session_from_ui (GtkWidget *w, gpointer user_data);
@@ -85,6 +86,7 @@ typedef struct {
 } s_state;
 
 void s_restore_state(s_state *state);
+void s_crossfade_to_state(s_state *state, float time);
 
 extern float s_value[S_SIZE];
 

@@ -756,6 +756,14 @@ on_quit1_activate                      (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
 void
+on_undo1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_redo1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
 on_cut1_activate                       (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 

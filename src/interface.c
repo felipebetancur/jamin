@@ -42,6 +42,8 @@ create_window1 (void)
   GtkWidget *quit1;
   GtkWidget *menuitem2;
   GtkWidget *menu3;
+  GtkWidget *undo1;
+  GtkWidget *redo1;
   GtkWidget *cut1;
   GtkWidget *copy1;
   GtkWidget *paste1;
@@ -515,6 +517,16 @@ create_window1 (void)
   menu3 = gtk_menu_new ();
   gtk_widget_set_name (menu3, "menu3");
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem2), menu3);
+
+  undo1 = gtk_image_menu_item_new_with_mnemonic (_("undo"));
+  gtk_widget_set_name (undo1, "undo1");
+  gtk_widget_show (undo1);
+  gtk_container_add (GTK_CONTAINER (menu3), undo1);
+
+  redo1 = gtk_image_menu_item_new_with_mnemonic (_("redo"));
+  gtk_widget_set_name (redo1, "redo1");
+  gtk_widget_show (redo1);
+  gtk_container_add (GTK_CONTAINER (menu3), redo1);
 
   cut1 = gtk_image_menu_item_new_with_mnemonic (_("gtk-cut"));
   gtk_widget_set_name (cut1, "cut1");
@@ -2972,6 +2984,12 @@ create_window1 (void)
   g_signal_connect ((gpointer) quit1, "activate",
                     G_CALLBACK (on_quit1_activate),
                     NULL);
+  g_signal_connect ((gpointer) undo1, "activate",
+                    G_CALLBACK (on_undo1_activate),
+                    NULL);
+  g_signal_connect ((gpointer) redo1, "activate",
+                    G_CALLBACK (on_redo1_activate),
+                    NULL);
   g_signal_connect ((gpointer) cut1, "activate",
                     G_CALLBACK (on_cut1_activate),
                     NULL);
@@ -3296,6 +3314,8 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, quit1, "quit1");
   GLADE_HOOKUP_OBJECT (window1, menuitem2, "menuitem2");
   GLADE_HOOKUP_OBJECT (window1, menu3, "menu3");
+  GLADE_HOOKUP_OBJECT (window1, undo1, "undo1");
+  GLADE_HOOKUP_OBJECT (window1, redo1, "redo1");
   GLADE_HOOKUP_OBJECT (window1, cut1, "cut1");
   GLADE_HOOKUP_OBJECT (window1, copy1, "copy1");
   GLADE_HOOKUP_OBJECT (window1, paste1, "paste1");

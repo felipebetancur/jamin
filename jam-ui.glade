@@ -101,6 +101,24 @@
 		<widget class="GtkMenu" id="menu3">
 
 		  <child>
+		    <widget class="GtkImageMenuItem" id="undo1">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">undo</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_undo1_activate" last_modification_time="Fri, 15 Aug 2003 14:49:10 GMT"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="redo1">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">redo</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_redo1_activate" last_modification_time="Fri, 15 Aug 2003 14:49:10 GMT"/>
+		    </widget>
+		  </child>
+
+		  <child>
 		    <widget class="GtkImageMenuItem" id="cut1">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">gtk-cut</property>

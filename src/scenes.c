@@ -93,7 +93,7 @@ void select_scene (int number, int button)
 
                     current_scene = i;
 
-                    s_restore_state (&scene_state[i]);
+                    s_crossfade_to_state (&scene_state[i], 1.0f);
 
                     set_EQ_curve_values ();
                   }
