@@ -37,6 +37,11 @@ including some developer options not intended for normal users.
 Set JACK \fIclientname\fR used to identify input and output ports.
 Otherwise, use "jamin".
 .TP 
+\fB\-s\fR \fIfrequency\fR
+.br 
+Set the spectrum update frequency (per second).  The range is 1 to 10 
+with 10 as the default.  Set to 0 to disable spectrum update.
+.TP 
 \fB\-p\fR
 .br 
 Don't automatically connect any JACK output ports.  Otherwise, connect

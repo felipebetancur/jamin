@@ -84,7 +84,7 @@
 #include "debug.h"
 #include "help.h"
 
-char *jamin_options = "dFf:n:hprTtvV"; /* valid JAMin options */
+char *jamin_options = "dFf:n:hprTtvVs:";/* valid JAMin options */
 char *pname;				/* `basename $0` */
 int dummy_mode = 0;			/* -d option */
 int all_errors_fatal = 0;		/* -F option */
@@ -93,6 +93,7 @@ int connect_ports = 1;			/* -p option */
 int trace_option = 0;			/* -T option */
 int thread_option = 1;			/* -t option */
 int debug_level = DBG_OFF;		/* -v option */
+int spectrum_freq = 10; 		/* -s option */
 
 static char *errstr;
 
@@ -693,7 +694,7 @@ gboolean check_file (char *optarg)
  *	DSP_INIT -> DSP_STOPPED		when -d command option set
  *	DSP_INIT <unchanged>		otherwise
  */
-void io_init(int argc, char *argv[])
+int io_init(int argc, char *argv[])
 {
     int chan;
     int opt;
@@ -719,6 +720,10 @@ void io_init(int argc, char *argv[])
             break;
 	case 'n':			/* Set JACK client name */
 	    client_name = strdup(optarg);
+	    break;
+	case 's':			/* Set spectrum update frequency */
+	    sscanf (optarg, "%d", &spectrum_freq);
+            if (spectrum_freq < 0 || spectrum_freq > 10) spectrum_freq = 10;
 	    break;
 	case 'h':			/* show help */
 	    show_help = 1;
@@ -769,6 +774,7 @@ void io_init(int argc, char *argv[])
                 "\t-f file\tload session file on startup\n"
                 "\t-h\tshow this help\n"
                 "\t-n name\tset JACK client name\n"
+                "\t-s freq\tset spectrum update frequency\n"
                 "\t-r\tuse example GTK resource file\n"
                 "\t-p\tdon't automatically connect JACK output ports\n"
                 "\t-v\tverbose output (use -vv... for more detail)\n"
@@ -788,7 +794,7 @@ void io_init(int argc, char *argv[])
 	io_bufsize(1024, NULL);
 	jst.sample_rate = 48000;
 	process_init(48000.0f);
-	return;
+	return (spectrum_freq);
     }
 
     /* register as a JACK client */
@@ -819,6 +825,8 @@ void io_init(int argc, char *argv[])
     process_init((float) jst.sample_rate);
 
     free(client_name);
+
+    return (spectrum_freq);
 }
 
 

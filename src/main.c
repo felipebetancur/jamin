@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.39 2004/01/10 05:19:17 joq Exp $
+ *  $Id: main.c,v 1.40 2004/01/17 20:54:30 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -56,11 +56,14 @@ char *resource_file = NULL;		/* GTK resource file */
 char user_default_session[PATH_MAX];	/* user's default session name */
 
 static gboolean update_meters(gpointer data);
+gboolean spectrum_update(gpointer data);
 static void set_configuration_files(void);
 
 int main(int argc, char *argv[])
 {
     char title[128];
+    int spectrum_freq, sf = 0;
+
 
 #ifdef ENABLE_NLS
     bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
@@ -75,7 +78,10 @@ int main(int argc, char *argv[])
 
     set_configuration_files();
     gtk_init(&argc, &argv);
-    io_init(argc, argv);
+
+    spectrum_freq = io_init(argc, argv);
+    if (spectrum_freq) sf = 1000 / spectrum_freq;
+        
     resource_file_parse();
     state_init();
     add_pixmap_directory(JAMIN_PIXMAP_DIR);
@@ -103,7 +109,17 @@ int main(int argc, char *argv[])
     /* start I/O processing, then run GTK main loop, until "quit" */
 
     io_activate();
-    g_timeout_add(100, update_meters, NULL);
+
+
+    /* start the meter update.  */
+
+    g_timeout_add (100, update_meters, NULL);
+
+
+    /* start the spectrum update unless the frequency is set to 0.  */
+
+    if (sf) g_timeout_add (sf, spectrum_update, NULL);
+
 
     /* If the filename has been set, load it */
     s_load_session(NULL);
@@ -168,7 +184,7 @@ static gboolean update_meters(gpointer data)
     out_meter_value(out_peak);
     limiter_meters_update();
     compressor_meters_update();
-    spectrum_update();
+    /*spectrum_update();*/
     s_crossfade_ui();
     status_set_time(main_window);
 

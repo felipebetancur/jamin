@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.39 2004/01/10 13:09:19 theno23 Exp $
+ *  $Id: state.c,v 1.40 2004/01/17 20:54:30 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -32,6 +32,7 @@
 #include "process.h"
 #include "scenes.h"
 #include "hdeq.h"
+#include "help.h"
 
 /* A scene value to indicate that loading failed */
 #define LOAD_ERROR -2
@@ -46,6 +47,8 @@ static int              s_duration[S_SIZE];
 static int              s_changed[S_SIZE];
 static GtkAdjustment   *s_adjustment[S_SIZE];
 static s_callback_func  s_callback[S_SIZE];
+static char             *errstr = NULL;
+
 
 static s_state       *last_state = NULL;
 static int	      last_changed = S_NONE;
@@ -374,8 +377,10 @@ void s_save_session (const char *fname)
 	s_update_title();
     }
     if (!filename) {
-	fprintf(stderr, "No filename found at %s:%d, not saving\n", __FILE__,
-		__LINE__);
+	errstr = g_strdup_printf("No filename found at %s:%d, not saving\n",
+                                 __FILE__, __LINE__);
+	message (GTK_MESSAGE_WARNING, errstr);
+	free(errstr);
     }
 
     /*  Need to save this scene number.  */
@@ -473,21 +478,20 @@ void s_load_session (const char *fname)
 	filename = default_session;
     }
 
-    /* Check file exists */
+    /* Check to see if file is readable */
     if ((fd = open(filename, O_RDONLY)) >= 0) {
 	close(fd);
     } else {
-	char *errstr = NULL;
-
 	errstr = g_strdup_printf("Error opening '%s'", filename);
-	perror(errstr);
+	message (GTK_MESSAGE_WARNING, errstr);
+        perror(errstr);
 	free(errstr);
 
 	if (fname == NULL) {
 	    exit(1);
 	}
     }
-	
+
     s_update_title();
 
     handler = calloc(1, sizeof(xmlSAXHandler));
@@ -498,7 +502,10 @@ void s_load_session (const char *fname)
     xmlSAXUserParseFile(handler, &scene, filename);
 
     if (scene == LOAD_ERROR) {
-	fprintf(stderr, "Loading failed\n");
+	errstr = g_strdup_printf("Loading file '%s' failed", filename);
+	message (GTK_MESSAGE_WARNING, errstr);
+        perror(errstr);
+	free(errstr);
 	return;
     }
 
@@ -579,8 +586,9 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 
     /* Check its a parameter element */
     if (strcmp(name, "parameter")) {
-	fprintf(stderr, "Unhandled element: %s\n", name);
-	return;
+	errstr = g_strdup_printf("Unhandled element: %s\n", name);
+	message (GTK_MESSAGE_WARNING, errstr);
+	free(errstr);
     }
 
     /* Find the name and value attributes */
@@ -605,7 +613,9 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 		if (st) {
 		    st->value[i] = atof(value);
 		} else {
-		    fprintf(stderr, "Bad scene number %d\n", *scene);
+                  errstr = g_strdup_printf("Bad scene number %d\n", *scene);
+                  message (GTK_MESSAGE_WARNING, errstr);
+                  free(errstr);
 		}
 	    }
 	    //printf("load %s = %g\n", symbol, s_value[i]);
@@ -614,7 +624,9 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 	}
     }
     if (!found) {
-	fprintf(stderr, "Unknown symbol: %s\n", *p);
+      errstr = g_strdup_printf("Unknown symbol: %s\n", *p);
+      message (GTK_MESSAGE_WARNING, errstr);
+      free(errstr);
     }
 }
 

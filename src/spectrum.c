@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: spectrum.c,v 1.11 2003/11/19 15:43:38 theno23 Exp $
+ *  $Id: spectrum.c,v 1.12 2004/01/17 20:54:30 jdepner Exp $
  */
 
 #include <math.h>
@@ -130,7 +130,7 @@ void bind_spectrum()
     }
 }
 
-void spectrum_update()
+gboolean spectrum_update(gpointer data)
 {
     int i, page, count;
     float levels[BANDS];
@@ -165,6 +165,8 @@ void spectrum_update()
       }
       draw_EQ_spectrum_curve (single_levels);
     }
+
+    return (TRUE);
 }
 
 GtkWidget *make_mini_label(const char *text)

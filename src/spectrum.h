@@ -11,13 +11,13 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: spectrum.h,v 1.2 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: spectrum.h,v 1.3 2004/01/17 20:54:30 jdepner Exp $
  */
 
 #ifndef SPECTRUM_H
 #define SPECTRUM_H
 
 void bind_spectrum();
-void spectrum_update();
+gboolean spectrum_update(gpointer data);
 
 #endif

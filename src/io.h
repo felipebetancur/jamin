@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io.h,v 1.10 2003/11/24 05:02:09 joq Exp $
+ *  $Id: io.h,v 1.11 2004/01/17 20:54:30 jdepner Exp $
  */
 
 #ifndef IO_H
@@ -32,7 +32,7 @@ extern jack_port_t *output_ports[];
 
 void io_activate();
 void io_cleanup();
-void io_init(int argc, char *argv[]);
+int io_init(int argc, char *argv[]);
 void io_set_latency(int latency_source, jack_nframes_t delay);
 
 #endif
