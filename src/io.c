@@ -110,7 +110,6 @@ static int have_dsp_thread = 0;		/* DSP thread exists? */
 static int use_dsp_thread = 0;		/* DSP thread currently in use? */
 static jack_nframes_t dsp_block_size;	/* DSP chunk granularity */
 static jack_client_t *client;		/* JACK client structure */
-static int jack_realtime;		/* true if JACK is realtime */
 
 #define DSP_PRIORITY_DIFF 1	/* DSP thread priority difference */
 static pthread_t dsp_thread;	/* DSP thread handle */
@@ -671,6 +670,12 @@ void io_init(int argc, char *argv[])
  */
 int io_create_dsp_thread()
 {
+
+#ifndef DSP_THREAD
+    return ENOSYS;			/* function not implemented */
+#else
+
+    int jack_realtime;			/* true if JACK is realtime */
     int rc;
     int sched_policy;
     struct sched_param rt_param;
@@ -728,6 +733,7 @@ int io_create_dsp_thread()
     else
 	IF_DEBUG(DBG_TERSE, io_trace("DSP thread created"));
     return rc;
+#endif /* DSP_THREAD */
 }
 
 
