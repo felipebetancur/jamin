@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.156 2004/11/03 17:41:20 jdepner Exp $
+ *  $Id: callbacks.c,v 1.157 2004/11/03 20:38:43 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -60,7 +60,7 @@ static char             *help_ptr = NULL, scene_name_text[100];
 static gboolean         text_focus = FALSE, force_keypress_help = FALSE;
 static GtkToggleButton  *l_solo_button[XO_NBANDS], *l_bypass_button[XO_NBANDS];
 static int              hot_scene = 0;
-static GtkWidget        *scene_name_dialog;
+static GtkWidget        *scene_name_dialog, *about_dialog;
 static GtkEntry         *l_scene_name_entry;
 
 
@@ -189,6 +189,8 @@ on_window1_show                        (GtkWidget       *widget,
                                                        "high_bypass"));
 
   scene_name_dialog = create_scene_name_dialog ();
+
+  about_dialog = create_about_dialog ();
 
   l_scene_name_entry = GTK_ENTRY (lookup_widget (scene_name_dialog, 
                                                  "scene_name_entry"));
@@ -1452,36 +1454,7 @@ void
 on_about1_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  GtkWidget    *splash = NULL, *splash_dialog;
-  gchar        title[128];
-
-
-  if ((splash = create_pixmap (main_window, "JAMin_splash.jpg")) == NULL)
-    {
-      message (GTK_MESSAGE_INFO, _(general_help));
-    }
-  else
-    {
-      sprintf (title, "%s %s", PACKAGE, VERSION);
-      splash_dialog = 
-        gtk_dialog_new_with_buttons (title, (GtkWindow *) main_window,
-                                     GTK_DIALOG_DESTROY_WITH_PARENT,
-                                     _("More..."), GTK_RESPONSE_NONE,
-                                     NULL);
-
-      g_signal_connect_swapped (GTK_OBJECT (splash_dialog), "response",
-                                G_CALLBACK (general_help_callback),
-                                GTK_OBJECT (splash_dialog));
-
-      g_signal_connect_swapped (GTK_OBJECT (splash_dialog), "response",
-                                G_CALLBACK (gtk_widget_destroy),
-                                GTK_OBJECT (splash_dialog));
-
-      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (splash_dialog)->vbox),
-                         (GtkWidget *) splash);
-
-      gtk_widget_show_all (splash_dialog);
-    }
+  gtk_widget_show (about_dialog);
 }
 
 
@@ -2672,5 +2645,13 @@ on_ft_bias_b_hp_value_changed          (GtkRange        *range,
 #ifdef FILTER_TUNING
   ft_bias_b_hp_val = gtk_range_get_adjustment(GTK_RANGE(range))->value;
 #endif
+}
+
+
+void
+on_about_closebutton_clicked           (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_hide (about_dialog);
 }
 
