@@ -748,7 +748,7 @@ on_save_button_clicked                 (GtkButton       *button,
 
     if (getenv ("HOME") != NULL)
       {
-        snprintf (string, 511, "%s/.jam/", getenv ("HOME"));
+        snprintf (string, sizeof(string), "%s/.jam/", getenv ("HOME"));
         gtk_file_selection_set_filename (file_selector, string);
       }
 
@@ -780,7 +780,7 @@ on_load_button_clicked                 (GtkButton       *button,
 
     if (getenv ("HOME") != NULL)
       {
-        sprintf (string, "%s/.jam/", getenv ("HOME"));
+        snprintf (string, sizeof(string), "%s/.jam/", getenv ("HOME"));
         gtk_file_selection_set_filename (file_selector, string);
       }
 
@@ -855,7 +855,7 @@ rewind_transport                       (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-    transport_rewind();
+    transport_set_position(0);
     return FALSE;
 }
 
@@ -866,7 +866,7 @@ forward_transport                      (GtkWidget       *widget,
                                         gpointer         user_data)
 {
 
-    transport_rewind();
+    transport_set_position(1000000000);
     return FALSE;
 }
 
@@ -1326,6 +1326,14 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
       case GDK_space:
 	transport_toggle_play();
+        return FALSE;
+
+      case GDK_Home:
+	transport_set_position(0);
+        return FALSE;
+
+      case GDK_End:
+	transport_set_position(1000000000);
         return FALSE;
 
       case GDK_1:

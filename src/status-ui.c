@@ -37,50 +37,61 @@ void status_update(GtkWidget *main_window)
 {
     char *state_msg, *rt;
     gchar string[256];
-    
     jack_status_t j;
 
     io_get_status(&j);
 
     if (!j.active)
 	state_msg = "Disconnected";
-    else if (j.tinfo.valid & JackTransportState) {
-	switch (j.tinfo.transport_state) {
+    else
+	switch (transport_get_state()) {
 	case JackTransportStopped:
 	    state_msg = "Stopped";
 	    break;
-	case JackTransportRolling:
-	    state_msg = "Rolling";
+
+#ifdef HAVE_JACK_TRANSPORT_PLAY
+
+	case JackTransportStarting:
+	    state_msg = "Starting";
 	    break;
+
+#else /* old JACK transport interface */
+
 	case JackTransportLooping:
 	    state_msg = "Looping";
 	    break;
+
+#endif /* HAVE_JACK_TRANSPORT_PLAY */
+
+	case JackTransportRolling:
+	    state_msg = "Rolling";
+	    break;
+
 	default:
 	    state_msg = "[unknown]";
 	}
-    } else
-	state_msg = "";
+
 
     if (j.realtime)
-      rt = " : Realtime";
+	rt = "  |  Realtime";
     else
-      rt = "";
+	rt = "";
 
     snprintf(string, sizeof(string), 
-             "%s : %4.1f%% CPU : %ld frames : %ld Hz%s  :  Focus - %s",
+             "%s  |  %4.1f%% CPU  |  %ld frames  |  %ld Hz%s  |  Focus - %s",
              state_msg, j.cpu_load, j.buf_size, j.sample_rate, rt, 
              focus_string);
 
     if (l_status_label == NULL)
-      l_status_label = GTK_LABEL (lookup_widget (main_window, "status_label"));
+	    l_status_label =
+		    GTK_LABEL(lookup_widget(main_window, "status_label"));
 
-    gtk_label_set_text (l_status_label, string);
+    gtk_label_set_text(l_status_label, string);
 }
 
 
-void status_set_focus (GtkWidget *main_window, char *string)
+void status_set_focus(GtkWidget *main_window, char *string)
 {
-    strcpy (focus_string, string);
-
-    status_update (main_window);
+    strncpy(focus_string, string, sizeof(focus_string));
+    status_update(main_window);
 }

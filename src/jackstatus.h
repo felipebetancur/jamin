@@ -10,7 +10,6 @@ typedef struct {
     float	cpu_load;
     jack_nframes_t buf_size;
     jack_nframes_t latency;
-    jack_transport_info_t tinfo;
 } jack_status_t;
 
 void io_get_status(jack_status_t *jp);

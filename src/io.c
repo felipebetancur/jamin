@@ -265,10 +265,9 @@ void io_new_state(int next)
 /* io_get_status -- collect current JACK status. */
 void io_get_status(jack_status_t *jp)
 {
-    transport_status(&jst.tinfo);
-    *jp = jst;
     if (client)
-	jp->cpu_load = jack_cpu_load(client);
+	jst.cpu_load = jack_cpu_load(client);
+    *jp = jst;
 }
 
 
@@ -535,7 +534,9 @@ int io_process(jack_nframes_t nframes, void *arg)
 
     IF_DEBUG(DBG_VERBOSE, io_trace("JACK process() start"));
 
+#ifndef HAVE_JACK_TRANSPORT_PLAY
     transport_control(nframes);		/* handle JACK transport */
+#endif /* HAVE_JACK_TRANSPORT_PLAY */
 
     /* get input and output buffer addresses from JACK */
     for (chan = 0; chan < nchannels; chan++) {

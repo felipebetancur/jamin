@@ -20,6 +20,7 @@
 
 #include <config.h>
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include <jack/jack.h>
 
@@ -27,6 +28,11 @@
 #include "jackstatus.h"
 #include "io.h"
 #include "transport.h"
+
+
+#ifndef HAVE_JACK_TRANSPORT_PLAY
+
+/**************** old JACK transport interface ****************/
 
 
 volatile int jamin_is_timebase_master = 0;
@@ -70,44 +76,6 @@ void transport_control(jack_nframes_t nframes)
 }
 
 
-/******************* user interface functions *******************/
-
-/* These functions are all called from a GUI thread.  So, their
- * interaction with the DSP engine and its threads needs to be
- * thread-safe.
- */
-
-
-/* transport_status -- carefully copy JACK transport status.
- *
- *  Can be called from any non-realtime thread.
- */
-void transport_status(jack_transport_info_t *jp)
-{
-    guarded_transport_info_t tmp;	/* temporary guarded copy */
-    int tries = 0;
-
-    /* Since "tpt" is updated from the process() thread every
-     * buffer period, we must copy it carefully to avoid getting
-     * an incoherent hash of multiple versions. */
-    do {
-	/* Throttle the busy wait if we don't get the a clean
-	 * copy very quickly. */
-	if (tries > 10) {
-	    usleep(20);			/* not if realtime! */
-	    tries = 0;
-	}
-	tmp = tpt;
-	tries++;
-
-    } while (tmp.guard1 != tmp.guard2);
-
-    *jp = (jack_transport_info_t) tmp.info;
-}
-
-
-#ifndef HAVE_JACK_TRANSPORT_PLAY
-
 /* transport_master -- take over as timebase master, if possible.
  *
  *  This logic isn't completely air-tight, but should serve until
@@ -130,13 +98,40 @@ static int transport_master()
 
 	    /* begin updating transport info */
 	    tpt.info.valid = (JackTransportState|JackTransportPosition);
-	}
+
+	} else
+	    IF_DEBUG(DBG_TERSE,
+		     fprintf(stderr,"Not timebase master.\n"));
     }
 
     return jamin_is_timebase_master;
 }
 
 #endif /* HAVE_JACK_TRANSPORT_PLAY */
+
+
+/******************* user interface functions *******************/
+
+/* These functions are all called from a GUI thread.  So, their
+ * interaction with the DSP engine and its threads needs to be
+ * thread-safe.
+ */
+
+
+jack_transport_state_t transport_get_state()
+{
+#ifdef HAVE_JACK_TRANSPORT_PLAY
+
+    jack_position_t pos;
+    return jack_transport_query(client, &pos);
+
+#else /* old JACK transport interface */
+
+    return tpt.info.transport_state;
+
+#endif /* HAVE_JACK_TRANSPORT_PLAY */
+}
+
 
 void transport_play()
 {
@@ -151,48 +146,28 @@ void transport_play()
 	tpt.info.transport_state = JackTransportRolling;
 	IF_DEBUG(DBG_TERSE,
 		 fprintf(stderr,"Transport started.\n"));
-    } else {
-	IF_DEBUG(DBG_TERSE,
-		 fprintf(stderr,"Not transport master.\n"));
     }
 
 #endif /* HAVE_JACK_TRANSPORT_PLAY */
 }
 
 
-void transport_rewind()
+void transport_set_position(jack_nframes_t frame)
 {
 #ifdef HAVE_JACK_TRANSPORT_PLAY
 
-    //JOQ: jack_transport_reposition(client, pos);
-    IF_DEBUG(DBG_TERSE, fprintf(stderr,"Transport NOT rewound (yet)!\n"));
+    jack_transport_goto_frame(client, frame);
+    IF_DEBUG(DBG_TERSE,
+	     fprintf(stderr, "Transport positioned to frame %ld\n", frame));
 
 #else /* old JACK transport interface */
 
     if (transport_master()) {
-	tpt.info.transport_state = JackTransportStopped;
-	tpt.info.frame = 0;
+	tpt.info.frame = frame;
 	IF_DEBUG(DBG_TERSE,
-		 fprintf(stderr,"Transport rewound.\n"));
-    } else {
-	IF_DEBUG(DBG_TERSE,
-		 fprintf(stderr,"Not transport master.\n"));
+		 fprintf(stderr, "Transport positioned to frame %ld\n",
+			 frame));
     }
-
-#endif /* HAVE_JACK_TRANSPORT_PLAY */
-}
-
-
-static jack_transport_state_t transport_state()
-{
-#ifdef HAVE_JACK_TRANSPORT_PLAY
-
-    jack_position_t pos;
-    return jack_transport_query(client, &pos);
-
-#else /* old JACK transport interface */
-
-    return tpt.info.transport_state;
 
 #endif /* HAVE_JACK_TRANSPORT_PLAY */
 }
@@ -209,11 +184,7 @@ void transport_stop()
 
     if (transport_master()) {
 	tpt.info.transport_state = JackTransportStopped;
-	IF_DEBUG(DBG_TERSE,
-		 fprintf(stderr,"Transport stopped.\n"));
-    } else {
-	IF_DEBUG(DBG_TERSE,
-		 fprintf(stderr,"Not transport master.\n"));
+	IF_DEBUG(DBG_TERSE, fprintf(stderr,"Transport stopped.\n"));
     }
 
 #endif /* HAVE_JACK_TRANSPORT_PLAY */
@@ -222,7 +193,7 @@ void transport_stop()
 
 void transport_toggle_play()
 {
-    if (transport_state() == JackTransportStopped)
+    if (transport_get_state() == JackTransportStopped)
 	transport_play();
     else
 	transport_stop();

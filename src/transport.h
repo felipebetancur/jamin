@@ -4,11 +4,11 @@
 #include <jack/transport.h>
 
 void transport_control(jack_nframes_t nframes);
-void transport_status(jack_transport_info_t *jp);
+jack_transport_state_t transport_get_state();
 
 /* UI functions */
 void transport_play();
-void transport_rewind();
+void transport_set_position(jack_nframes_t frame);
 void transport_stop();
 void transport_toggle_play();
 
