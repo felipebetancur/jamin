@@ -1,3 +1,9 @@
+2004-05-08  Steve Harris  <steve@plugin.org.uk>
+
+	* controller/*: added a controller plugin. Creates thread to send OSC
+	  messages to the JAMin application. Causes segfaults in jack-rack when
+	  its removed, works in applyplugin, ecamegapedal and ardour.
+
 2004-05-06  Steve Harris  <steve@plugin.org.uk>
 
 	* state.c, compressor-ui.c: added global settings to XML file. all

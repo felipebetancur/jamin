@@ -17,23 +17,40 @@
 
       #define EXITV -999
 
+      //#define DEBUG 1
+
+      static int scene = -1;
+      static int thread_created = 0;
+      static pthread_t thread;
+
       static void *controller_thread(void *p)
       {
-	volatile int *scene = p;
 	int last_scene = -1;
       	lo_address address = lo_address_new(NULL, "4444");
 
 	printf("THREAD\n");
 
-	while (*scene != EXITV) {
-	  if (last_scene != *scene) {
-	    last_scene = *scene;
-	    lo_send(address, "/scene", "i", last_scene);
+	while (scene != EXITV) {
+#ifdef DEBUG
+printf(". %d\n", scene);
+#endif
+	  if (last_scene != scene) {
+	    last_scene = scene;
+	    if (last_scene > 0 && last_scene <= NUM_SCENES) {
+	      lo_send(address, "/scene", "i", last_scene);
+	    }
 	  }
-	  usleep(100);
+#ifdef DEBUG
+	  usleep(1000000);
+#else
+	  usleep(10000);
+#endif
 	}
 
-	//printf("DONE\n");
+	lo_address_free(address);
+#ifdef DEBUG
+printf("DONE\n");
+#endif
 
 	return NULL;
       }
@@ -44,19 +61,27 @@
     <name>JAMin Controller</name>
 
     <callback event="instantiate"><![CDATA[
-      thread = malloc(sizeof(pthread_t));
-      pthread_create(thread, NULL, controller_thread, &(plugin_data->scene));
+#ifdef DEBUG
+printf("instantiate called\n");
+#endif
       scene = -1;
+      if (!thread_created) {
+	thread_created = 1;
+	pthread_create(&thread, NULL, controller_thread, NULL);
+      }
     ]]></callback>
 
     <callback event="activate"><![CDATA[
+#ifdef DEBUG
+printf("activate called\n");
+#endif
       scene = -1;
     ]]></callback>
 
     <callback event="run"><![CDATA[
       unsigned long pos;
 
-      plugin_data->scene = (int)(scene_cont + 0.5f);
+      scene = (int)(scene_cont + 0.5f);
 
       if (input != output) {
         for (pos = 0; pos < sample_count; pos++) {
@@ -66,7 +91,12 @@
     ]]></callback>
 
     <callback event="cleanup"><![CDATA[
-      plugin_data->scene = EXITV;
+#ifdef DEBUG
+printf("cleanup called\n");
+#endif
+      scene = EXITV;
+      thread_created = 0;
+      //pthread_cancel(thread);
     ]]></callback>
 
     <port label="scene_cont" dir="input" type="control" hint="default_1,integer">
@@ -82,8 +112,5 @@
     <port label="output" dir="output" type="audio">
       <name>Output</name>
     </port>
-
-    <instance-data label="scene" type="int" />
-    <instance-data label="thread" type="pthread_t *" />
   </plugin>
 </ladspa>
