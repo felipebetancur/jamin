@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.34 2003/12/11 18:28:52 jdepner Exp $
+ *  $Id: main.c,v 1.35 2003/12/21 11:42:31 theno23 Exp $
  */
 
 /*
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     gtk_init(&argc, &argv);
     io_init(argc, argv);
     state_init();
-    add_pixmap_directory(PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
+    add_pixmap_directory(PACKAGE_DATA_DIR "/jamin");
     main_window = create_window1();
 
     snprintf(title, sizeof(title), PACKAGE " " VERSION);
