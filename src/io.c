@@ -95,7 +95,7 @@ int connect_ports = 1;			      /* -p option */
 int trace_option = 0;			      /* -T option */
 int thread_option = 1;			      /* -t option */
 int debug_level = DBG_OFF;		      /* -v option */
-
+char session_file[PATH_MAX];		      /* -f option */
 static char *errstr;
 
 /*  Synchronization within the DSP engine is managed as a finite state
@@ -723,7 +723,10 @@ void io_init(int argc, char *argv[])
 	    all_errors_fatal = 1;
 	    break;
 	case 'f':
-            if (check_file (optarg)) s_set_filename(optarg);
+            if (check_file(optarg)) {
+		strncpy(session_file, optarg, sizeof(session_file));
+		s_set_filename(session_file);
+	    }
             break;
 	case 'n':			/* Set JACK client name */
 	    client_name = strdup(optarg);
