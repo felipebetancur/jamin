@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JAMin 0.9.5cvs\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: jamin-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-02-07 10:42+0000\n"
-"PO-Revision-Date: 2005-03-09 14:44+0300\n"
+"PO-Revision-Date: 2005-04-01 17:56-0600\n"
 "Last-Translator: Alexandre Prokoudine <avp@lrn.ru>\n"
 "Language-Team:  <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -431,7 +431,7 @@ msgstr "_Повторить"
 
 #: src/interface.c:641
 msgid "_Ports"
-msgstr "_Порты"
+msgstr "П_орты"
 
 #: src/interface.c:646
 msgid "_Help"
