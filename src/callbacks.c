@@ -102,7 +102,9 @@ on_low2mid_value_changed               (GtkRange        *range,
 
     if (value >= other_value)
       {
+	s_suppress_push();
         gtk_range_set_value ((GtkRange *) l_mid2high, value);
+	s_suppress_pop();
         gtk_widget_set_sensitive (l_mid_comp, FALSE);
       }
     else
@@ -171,7 +173,9 @@ on_mid2high_value_changed              (GtkRange        *range,
 
     if (value <= other_value)
       {
+	s_suppress_push();
         gtk_range_set_value ((GtkRange *) l_low2mid, value);
+	s_suppress_pop();
         gtk_widget_set_sensitive (l_mid_comp, FALSE);
       }
     else

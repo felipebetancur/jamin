@@ -52,6 +52,8 @@ void s_set_adjustment(int id, GtkAdjustment *adjustment);
 void s_undo();
 void s_save_session (GtkWidget *w, gpointer user_data);
 void s_load_session (GtkWidget *w, gpointer user_data);
+void s_suppress_push();
+void s_suppress_pop();
 
 #define S_NONE -1
 EOB

@@ -48,6 +48,16 @@ void state_init()
     s_history_add("Initial state");
 }
 
+void s_suppress_push()
+{
+    suppress_feedback++;
+}
+
+void s_suppress_pop()
+{
+    suppress_feedback--;
+}
+
 void s_set_callback(int id, s_callback_func callback)
 {
     assert(id >= 0 && id < S_SIZE);
