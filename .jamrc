@@ -203,8 +203,8 @@ widget_class "GtkWindow" style "steelgrey"
 # comps and limiter colors
 widget_class "*Gtk*Box" style "steelgrey"
 
-#widget_class "GtkDialog" style "gold"
-#widget_class "GtkFileSelection" style "gold"
+widget_class "*Gtk*Dialog" style "steelgrey"
+widget_class "GtkFileSelection" style "steelgrey"
 
 # fader colors
 widget_class "*Gtk*Scale" style "thai-gold"
