@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.133 2004/02/17 00:05:11 jdepner Exp $
+ *  $Id: callbacks.c,v 1.134 2004/02/17 11:25:05 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -2056,18 +2056,33 @@ on_solo_toggled                    (GtkToggleButton *togglebutton,
   gboolean solo;
 
 
+  /*  Check for ANY soloed band.  */
+
   solo = FALSE;
   for (i = 0 ; i < XO_NBANDS ; i++)
     {
       if (gtk_toggle_button_get_active (l_solo_button[i])) solo = TRUE;
     }
 
+
+  /*  If a band has been soloed...  */
+
   if (solo)
     {
+
+      /*  Check each band's solo and bypass buttons.  */
+
       for (i = 0 ; i < XO_NBANDS ; i++)
         {
+
+          /*  If it's soloed...  */
+
           if (gtk_toggle_button_get_active (l_solo_button[i]))
             {
+
+              /*  If it's bypassed set it to BYPASS otherwise set it 
+                  ACTIVE.  */
+
               if (gtk_toggle_button_get_active (l_bypass_button[i]))
                 {
                   process_set_xo_band_action (i, BYPASS);
@@ -2077,12 +2092,19 @@ on_solo_toggled                    (GtkToggleButton *togglebutton,
                   process_set_xo_band_action (i, ACTIVE);
                 }
             }
+
+          /*  If it's not soloed, MUTE it.  */
+
           else
             {
               process_set_xo_band_action (i, MUTE);
             }
         }
     }
+
+  /*  If no bands have been soloed then check all band bypass buttons and 
+      set to either BYPASS or ACTIVE.  */
+
   else
     {
       for (i = 0 ; i < XO_NBANDS ; i++)
@@ -2107,13 +2129,23 @@ bypass (int band, gboolean toggled)
   gboolean solo;
 
 
+  /*  Check for ANY soloed band.  */
+
   solo = FALSE;
   for (i = 0 ; i < XO_NBANDS ; i++)
     {
       if (gtk_toggle_button_get_active (l_solo_button[i])) solo = TRUE;
     }
 
-  if (!solo || (solo && gtk_toggle_button_get_active (l_solo_button[band])))
+
+  /*  We only want to set BYPASS or ACTIVE if no bands have been soloed or if
+      this band has been soloed.  Otherwise we just leave the buttons as they 
+      are since, if this band is not soloed and another is, this band needs to
+      remain MUTE.  Whenever the next solo change happens (the only thing that
+      can unmute this band) we'll set this band to BYPASS or ACTIVE based on 
+      the settings of it's buttons.  */
+
+  if (!solo || gtk_toggle_button_get_active (l_solo_button[band]))
     {
       if (toggled)
         {
