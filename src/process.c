@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.55 2004/05/30 18:48:01 theno23 Exp $
+ *  $Id: process.c,v 1.56 2004/06/06 12:14:09 theno23 Exp $
  */
 
 #include <math.h>
@@ -424,10 +424,6 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	}
     }
 
-    //XXX plugin_run(lim_plugin, limiter.handle, nframes);
-
-    //printf("run limiter...\n");
-
     for (port = 0; port < nchannels; port++) {
 	const float a = ws_boost_a * 0.3;
 	const float gain_corr = 1.0 / LERP(ws_boost_wet, 1.0,
@@ -438,6 +434,8 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	    out[port][pos] = LERP(ws_boost_wet, x, sinf(x * a)) * gain_corr;
 	}
     }
+
+    plugin_run(lim_plugin, limiter.handle, nframes);
 
     /* Keep a buffer of old input data, incase we need it for bypass */
     for (port = 0; port < nchannels; port++) {
