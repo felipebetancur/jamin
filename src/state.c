@@ -349,6 +349,8 @@ void s_load_session (const char *fname)
     xmlSAXHandlerPtr handler;
     int scene = -1;
 
+    unset_scene_buttons ();
+
     if (fname) {
 	filename = fname;
     }
@@ -368,7 +370,7 @@ void s_load_session (const char *fname)
 	filename = NULL;
     }
 
-    unset_scene_buttons ();
+
     set_EQ_curve_values ();
 }
 

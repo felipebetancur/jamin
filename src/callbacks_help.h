@@ -202,12 +202,13 @@ JAMin:\n\n\
 \t<\t\t-\tPosition transport to beginning\n\
 \t>\t\t-\tPosition transport to end\n\
 \t1-6\t\t-\tSelect scene 1-6\n\
-\t<Ctrl>-h\t-\tGeneral help\n\
-\t<Ctrl>-k\t-\tKeyboard accelerator help (this screen)\n\
-\t<Ctrl>-u\t-\tUndo\n\
-\t<Ctrl>-r\t-\tRedo\n\
 \t<Ctrl>-o\t-\tOpen session file\n\
 \t<Ctrl>-s\t-\tSave to current session file\n\
 \t<Ctrl>-a\t-\tSave session file as new session file\n\
-\t<Ctrl>-q\t-\tQuit\n"
+\t<Ctrl>-q\t-\tQuit\n\
+\t<Ctrl>-u\t-\tUndo\n\
+\t<Ctrl>-r\t-\tRedo\n\
+\t<Ctrl>-h\t-\tGeneral help\n\
+\t<Ctrl>-k\t-\tKeyboard accelerator help (this screen)\n\
+\t<Ctrl>-j\t-\tAbout JAMin\n"
 };

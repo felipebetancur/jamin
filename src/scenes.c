@@ -283,6 +283,7 @@ void clear_scene (int scene_num)
 void unset_scene_buttons ()
 {
     int         i;
+    char        name[20];
 
 
     current_scene = -1;
@@ -290,5 +291,12 @@ void unset_scene_buttons ()
       {
         gtk_image_set_from_stock (l_scene[i], GTK_STOCK_NO, 
                                   GTK_ICON_SIZE_BUTTON);
+
+        scene_loaded[i] = FALSE;
+
+        gtk_widget_set_sensitive ((GtkWidget *) l_scene[i], FALSE);
+
+        sprintf (name, "Scene %1d", i + 1);
+        gtk_entry_set_text (l_scene_name[i], name);
       }
 }
