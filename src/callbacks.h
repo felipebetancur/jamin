@@ -599,12 +599,6 @@ on_spectrum_options_eventbox_enter_notify_event
                                         gpointer         user_data);
 
 gboolean
-on_status_label_eventbox_enter_notify_event
-                                        (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data);
-
-gboolean
 on_transport_controls_eventbox_enter_notify_event
                                         (GtkWidget       *widget,
                                         GdkEventCrossing *event,
@@ -630,16 +624,6 @@ gboolean
 on_window1_key_press_event             (GtkWidget       *widget,
                                         GdkEventKey     *event,
                                         gpointer         user_data);
-
-gboolean
-on_scene_name_focus_in_event          (GtkWidget       *widget,
-                                       GdkEventFocus   *event,
-                                       gpointer         user_data);
-
-gboolean
-on_scene_name_focus_out_event         (GtkWidget       *widget,
-                                       GdkEventFocus   *event,
-                                       gpointer         user_data);
 
 void
 on_new1_activate                       (GtkMenuItem     *menuitem,
@@ -968,4 +952,71 @@ gboolean
 on_comp_ma_label_3_event_box_button_press_event
                                         (GtkWidget       *widget,
                                         GdkEventButton  *event,
+                                        gpointer         user_data);
+
+void
+on_options1_activate                   (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_eq_options1_activate                (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_preferences1_activate               (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_spectrum_freq_spinbutton_value_changed
+                                        (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data);
+
+void
+on_eq_options_close_clicked            (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_crossfade_spinbutton_value_changed  (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data);
+
+void
+on_low_band_color_button_clicked       (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_mid_band_color_button_clicked       (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_high_band_color_button_clicked      (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_gang_highlight_color_button_clicked (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_preferences_close_clicked           (GtkButton       *button,
+                                        gpointer         user_data);
+
+gboolean
+on_eq_options_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_preferences_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_text_focus_in_event                 (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data);
+
+gboolean
+on_text_focus_out_event                (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
                                         gpointer         user_data);

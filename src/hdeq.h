@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: hdeq.h,v 1.7 2004/01/18 11:28:54 jdepner Exp $
+ *  $Id: hdeq.h,v 1.8 2004/01/19 20:31:06 jdepner Exp $
  */
 
 #ifndef HDEQ_H
@@ -37,6 +37,7 @@ void hdeq_curve_button_press (GdkEventButton *event);
 void hdeq_curve_button_release (GdkEventButton  *event);
 void hdeq_curve_set_label (char *string);
 void set_EQ_curve_values (int id, float value);
+void popup_EQ_options_dialog (int updown);
 void hdeq_set_lower_gain (float gain);
 void hdeq_set_upper_gain (float gain);
 void hdeq_set_xover ();

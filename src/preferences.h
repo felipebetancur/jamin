@@ -11,15 +11,21 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: spectrum.h,v 1.4 2004/01/19 20:31:07 jdepner Exp $
+ *  $Id: preferences.h,v 1.1 2004/01/19 20:31:07 jdepner Exp $
  */
 
-#ifndef SPECTRUM_H
-#define SPECTRUM_H
+#ifndef PREFERENCES_H
+#define PREFERENCES_H
 
-void bind_spectrum();
-gboolean spectrum_update(gpointer data);
-void set_spectrum_freq (int freq);
-void spectrum_timeout_check();
+
+void preferences_init();
+GdkColor *get_band_color (int band);
+void set_band_color (int band, GdkColor color);
+GdkColor *get_gang_color ();
+void set_gang_color (GdkColor color);
+void set_color (GdkColor *color, unsigned short red, unsigned short green, 
+                unsigned short blue);
+void popup_preferences_dialog (int updown);
+
 
 #endif

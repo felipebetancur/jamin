@@ -12,7 +12,7 @@ typedef struct {
     float value;
 } s_entry;
 
-void state_init(float ct);
+void state_init();
 void s_set_value_ui(int id, float value);
 void s_set_value(int id, float value, int time);
 void s_set_value_block(float *values, int base, int count);
@@ -32,6 +32,7 @@ void s_set_filename(const char *fname);
 void s_crossfade(const int nframes);
 void s_crossfade_ui();
 void s_suppress_push();
+void s_set_crossfade_time(float ct);
 void s_suppress_pop();
 int s_have_filename();
 

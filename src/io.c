@@ -81,6 +81,7 @@
 #include "transport.h"
 #include "jackstatus.h"
 #include "state.h"
+#include "spectrum.h"
 #include "debug.h"
 #include "help.h"
 
@@ -693,15 +694,16 @@ gboolean check_file (char *optarg)
  *	DSP_INIT -> DSP_STOPPED		when -d command option set
  *	DSP_INIT <unchanged>		otherwise
  */
-void io_init(int argc, char *argv[], int *spectrum_freq, float *crossfade_time)
+void io_init(int argc, char *argv[])
 {
     int chan;
-    int opt;
+    int opt, spectrum_freq;
+    float crossfade_time;
     char *client_name = NULL;
 
 
-    *spectrum_freq = 10;
-    *crossfade_time = 1.0;
+    spectrum_freq = 10;
+    crossfade_time = 1.0;
 
 
     /* basename $0 */
@@ -726,13 +728,13 @@ void io_init(int argc, char *argv[], int *spectrum_freq, float *crossfade_time)
 	    client_name = strdup(optarg);
 	    break;
 	case 's':			/* Set spectrum update frequency */
-	    sscanf (optarg, "%d", spectrum_freq);
-            if (*spectrum_freq < 0 || *spectrum_freq > 10) *spectrum_freq = 10;
+	    sscanf (optarg, "%d", &spectrum_freq);
+            if (spectrum_freq < 0 || spectrum_freq > 10) spectrum_freq = 10;
 	    break;
 	case 'c':			/* Set crossfade time */
-	    sscanf (optarg, "%f", crossfade_time);
-            if (*crossfade_time < 0.0 || *crossfade_time > 2.0) 
-              *crossfade_time = 1.0;
+	    sscanf (optarg, "%f", &crossfade_time);
+            if (crossfade_time < 0.0 || crossfade_time > 2.0) 
+              crossfade_time = 1.0;
 	    break;
 	case 'h':			/* show help */
 	    show_help = 1;
@@ -760,6 +762,11 @@ void io_init(int argc, char *argv[], int *spectrum_freq, float *crossfade_time)
 	    break;
 	}
     }
+
+
+    set_spectrum_freq (spectrum_freq);
+    s_set_crossfade_time (crossfade_time);
+
 
     if (connect_ports) {
 

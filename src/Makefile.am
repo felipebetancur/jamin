@@ -47,6 +47,7 @@ jamin_SOURCES = \
 	support.c support.h \
 	transport.c transport.h \
 	scenes.c scenes.h \
+	preferences.c preferences.h \
 	help.c help.h
 
 state.h: mk-stateh.pl state-vars.txt

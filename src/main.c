@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.41 2004/01/18 01:46:55 jdepner Exp $
+ *  $Id: main.c,v 1.42 2004/01/19 20:31:06 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -47,6 +47,8 @@
 #include "status-ui.h"
 #include "scenes.h"
 #include "help.h"
+#include "preferences.h"
+
 
 GtkWidget *main_window;
 char *jamin_dir = NULL;
@@ -59,11 +61,10 @@ static gboolean update_meters(gpointer data);
 gboolean spectrum_update(gpointer data);
 static void set_configuration_files(void);
 
+
 int main(int argc, char *argv[])
 {
     char title[128];
-    int spectrum_freq, sf = 0;
-    float crossfade_time;
 
 
 #ifdef ENABLE_NLS
@@ -80,11 +81,11 @@ int main(int argc, char *argv[])
     set_configuration_files();
     gtk_init(&argc, &argv);
 
-    io_init(argc, argv, &spectrum_freq, &crossfade_time);
-    if (spectrum_freq) sf = 1000 / spectrum_freq;
+    io_init(argc, argv);
         
     resource_file_parse();
-    state_init(crossfade_time);
+    state_init();
+    preferences_init();
     add_pixmap_directory(JAMIN_PIXMAP_DIR);
     main_window = create_window1();
 
@@ -107,23 +108,23 @@ int main(int argc, char *argv[])
     bind_scenes();
     s_clear_history();
 
+
     /* start I/O processing, then run GTK main loop, until "quit" */
 
     io_activate();
 
 
-    /* start the meter update.  */
+    /* start the meter update.  NOTE: Don't change this from 100 milliseconds
+       without modifying the spectrum and status updates which are depending
+       on it being 10/sec.  */
 
     g_timeout_add (100, update_meters, NULL);
 
 
-    /* start the spectrum update unless the frequency is set to 0.  */
-
-    if (sf) g_timeout_add (sf, spectrum_update, NULL);
-
-
     /* If the filename has been set, load it */
+
     s_load_session(NULL);
+
 
     gtk_main();
     io_cleanup();
@@ -185,7 +186,7 @@ static gboolean update_meters(gpointer data)
     out_meter_value(out_peak);
     limiter_meters_update();
     compressor_meters_update();
-    /*spectrum_update();*/
+    spectrum_timeout_check();
     s_crossfade_ui();
     status_set_time(main_window);
 

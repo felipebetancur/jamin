@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.38 2004/01/03 12:43:28 theno23 Exp $
+ *  $Id: process.c,v 1.39 2004/01/19 20:31:07 jdepner Exp $
  */
 
 #include <math.h>
@@ -465,6 +465,11 @@ void process_set_spec_mode(int mode)
     spectrum_mode = mode;
 
     set_scene_warning_button ();
+}
+
+int process_get_spec_mode()
+{
+  return (spectrum_mode);
 }
 
 void process_set_stereo_width(int xo_band, float width)

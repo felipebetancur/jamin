@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.42 2004/01/18 17:15:33 jdepner Exp $
+ *  $Id: state.c,v 1.43 2004/01/19 20:31:07 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -68,12 +68,9 @@ void s_history_add(const char *description);
 
 static const gchar *filename = NULL;
 
-void state_init(float ct)
+void state_init()
 {
     unsigned int i;
-
-
-    crossfade_time = ct;
 
 
     for (i=0; i<S_SIZE; i++) {
@@ -727,7 +724,16 @@ void s_set_filename(const char *fname)
     filename = fname;
 }
 
-unsigned int compute_state_crc (s_state *state)
+void s_set_crossfade_time(float ct)
+{
+  /*  We're faking them out here.  0.0 isn't really allowable but
+      most people would rather put in 0.0 instead of 0.001.  */
+
+  if (ct == 0.0) ct = 0.001;
+  crossfade_time = ct;
+}
+
+static unsigned int compute_state_crc (s_state *state)
 {
     unsigned int        checksum, i;
     unsigned char       *buf;

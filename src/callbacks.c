@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.128 2004/01/18 19:49:46 jdepner Exp $
+ *  $Id: callbacks.c,v 1.129 2004/01/19 20:31:06 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -48,6 +48,8 @@
 #include "io-menu.h"
 #include "transport.h"
 #include "scenes.h"
+#include "spectrum.h"
+#include "preferences.h"
 #include "help.h"
 
 
@@ -56,7 +58,6 @@
 
 static char *help_ptr = general_help;
 static gboolean text_focus = FALSE;
-
 
 void
 on_low2mid_value_changed               (GtkRange        *range,
@@ -164,6 +165,8 @@ on_window1_show                        (GtkWidget       *widget,
   crossover_init ();
 
   l_notebook1 = GTK_NOTEBOOK (lookup_widget (main_window, "notebook1"));
+
+  on_EQ_curve_event_box_leave_notify_event (NULL, NULL, NULL);  
 }
 
 
@@ -239,7 +242,23 @@ on_EQ_curve_event_box_leave_notify_event
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    hdeq_curve_set_label ("                ");
+  int mode = process_get_spec_mode();
+
+  switch (mode)
+    {
+    case SPEC_PRE_EQ:
+      hdeq_curve_set_label ("Pre EQ spectrum         ");
+      break;
+    case SPEC_POST_EQ:
+      hdeq_curve_set_label ("Post EQ spectrum        ");
+      break;
+    case SPEC_POST_COMP:
+      hdeq_curve_set_label ("Post compressor spectrum");
+      break;
+    case SPEC_OUTPUT:
+      hdeq_curve_set_label ("Output spectrum         ");
+      break;
+    }
 
     return FALSE;
 }
@@ -267,8 +286,6 @@ on_geq_min_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
     hdeq_set_lower_gain (gain);
 
     geq_set_range (gain, geq_get_adjustment(0)->upper);
-
-    set_scene_warning_button ();
 }
 
 
@@ -284,8 +301,6 @@ on_geq_max_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
     hdeq_set_upper_gain (gain);
 
     geq_set_range (geq_get_adjustment(0)->lower, gain);
-
-    set_scene_warning_button ();
 }
 
 
@@ -625,7 +640,9 @@ void
 on_pre_eq_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-    process_set_spec_mode(SPEC_PRE_EQ);
+  process_set_spec_mode(SPEC_PRE_EQ);
+  on_EQ_curve_event_box_leave_notify_event (NULL, NULL, NULL);  
+
 }
 
 
@@ -633,7 +650,8 @@ void
 on_post_eq_activate                    (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-    process_set_spec_mode(SPEC_POST_EQ);
+  process_set_spec_mode(SPEC_POST_EQ);
+  on_EQ_curve_event_box_leave_notify_event (NULL, NULL, NULL);  
 }
 
 
@@ -641,7 +659,8 @@ void
 on_post_compressor_activate            (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-    process_set_spec_mode(SPEC_POST_COMP);
+  process_set_spec_mode(SPEC_POST_COMP);
+  on_EQ_curve_event_box_leave_notify_event (NULL, NULL, NULL);  
 }
 
 
@@ -649,7 +668,8 @@ void
 on_output_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-    process_set_spec_mode(SPEC_OUTPUT);
+  process_set_spec_mode(SPEC_OUTPUT);
+  on_EQ_curve_event_box_leave_notify_event (NULL, NULL, NULL);  
 }
 
 
@@ -1121,18 +1141,6 @@ on_spectrum_options_eventbox_enter_notify_event
 
 
 gboolean
-on_status_label_eventbox_enter_notify_event
-                                        (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data)
-{
-    help_ptr = status_label_help;
-
-    return FALSE;
-}
-
-
-gboolean
 on_transport_controls_eventbox_enter_notify_event
                                         (GtkWidget       *widget,
                                         GdkEventCrossing *event,
@@ -1173,26 +1181,6 @@ on_notebook1_switch_page               (GtkNotebook     *notebook,
                                         gpointer         user_data)
 {
     hdeq_notebook1_set_page (page_num);
-}
-
-
-gboolean
-on_scene_name_focus_in_event          (GtkWidget       *widget,
-                                       GdkEventFocus   *event,
-                                       gpointer         user_data)
-{
-    text_focus = TRUE;
-    return FALSE;
-}
-
-
-gboolean
-on_scene_name_focus_out_event         (GtkWidget       *widget,
-                                       GdkEventFocus   *event,
-                                       gpointer         user_data)
-{
-    text_focus = FALSE;
-    return FALSE;
 }
 
 
@@ -1524,6 +1512,7 @@ on_window1_key_press_event             (GtkWidget       *widget,
         break;
         */
 
+
         /*  Switch to tab 1 (HDEQ) unless we're getting help.  */
 
       case GDK_F1:
@@ -1550,13 +1539,6 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
       case GDK_F4:
         gtk_notebook_set_current_page (l_notebook1, 3);
-        break;
-
-
-        /*  Switch to tab 5 (EQ options)  */
-
-      case GDK_F5:
-        gtk_notebook_set_current_page (l_notebook1, 4);
         break;
 
 
@@ -1944,3 +1926,143 @@ on_comp_ma_label_3_event_box_button_press_event
 
   return FALSE;
 }
+
+
+void
+on_options1_activate                   (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_eq_options1_activate                (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_EQ_options_dialog (1);
+}
+
+
+void
+on_preferences1_activate               (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_preferences_dialog (1);
+}
+
+
+void
+on_spectrum_freq_spinbutton_value_changed
+                                        (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data)
+{
+  int freq = gtk_spin_button_get_value (spinbutton);
+
+  set_spectrum_freq (freq);
+}
+
+
+void
+on_eq_options_close_clicked            (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  popup_EQ_options_dialog (0);
+}
+
+
+void
+on_crossfade_spinbutton_value_changed  (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data)
+{
+  float ct = gtk_spin_button_get_value (spinbutton);
+
+  s_set_crossfade_time (ct);
+
+}
+
+
+void
+on_low_band_color_button_clicked       (GtkButton       *button,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_mid_band_color_button_clicked       (GtkButton       *button,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_high_band_color_button_clicked      (GtkButton       *button,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_gang_highlight_color_button_clicked (GtkButton       *button,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_preferences_close_clicked           (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  popup_preferences_dialog (0);
+}
+
+
+gboolean
+on_eq_options_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+  help_ptr = eq_options_help;
+
+  return FALSE;
+}
+
+
+gboolean
+on_preferences_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+  help_ptr = preferences_help;
+
+  return FALSE;
+}
+
+gboolean
+on_text_focus_in_event                 (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data)
+{
+  text_focus = TRUE;
+
+  return FALSE;
+}
+
+
+gboolean
+on_text_focus_out_event                (GtkWidget       *widget,
+                                        GdkEventFocus   *event,
+                                        gpointer         user_data)
+{
+  text_focus = FALSE;
+
+  return FALSE;
+}
+

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.h,v 1.19 2004/01/03 12:43:28 theno23 Exp $
+ *  $Id: process.h,v 1.20 2004/01/19 20:31:07 jdepner Exp $
  */
 
 #ifndef PROCESS_H
@@ -63,6 +63,8 @@ extern volatile int global_bypass;
 float bin_peak_read_and_clear(int bin);
 
 void process_set_spec_mode(int mode);
+
+int process_get_spec_mode();
 
 void process_set_stereo_width(int xo_band, float width);
 

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: spectrum.c,v 1.12 2004/01/17 20:54:30 jdepner Exp $
+ *  $Id: spectrum.c,v 1.13 2004/01/19 20:31:07 jdepner Exp $
  */
 
 #include <math.h>
@@ -36,7 +36,8 @@ static GtkAdjustment *adjustment[BANDS];
 
 static int bin_bands[BINS];
 static int band_bin[BANDS];
-
+static gboolean timeout_ret = TRUE;
+static int spectrum_freq = 10, timeout_countdown = 0;
 
 void bind_spectrum()
 {
@@ -166,8 +167,45 @@ gboolean spectrum_update(gpointer data)
       draw_EQ_spectrum_curve (single_levels);
     }
 
-    return (TRUE);
+    return (timeout_ret);
 }
+
+
+/*  This is a bit weird.  We want the timeout (above) to return FALSE so it
+    will kill itself (if it's running).  We want to make sure that it's dead
+    before we restart it with a new timeout.  What's happening here is that
+    we're setting a flag that will start a countdown in spectrum_timeout_check.
+    That function is called by update_meters (every 100 milliseconds).  We
+    let it countdown for 1100 ms to make sure that spectrum_update has killed
+    itself and then we start a new timeout at the new frequency.  It would be
+    much easier if there was a g_timeout_remove ;-)  JCD  */
+
+void set_spectrum_freq (int freq)
+{
+  timeout_ret = FALSE;
+  timeout_countdown = 11;
+  spectrum_freq = freq;
+}
+
+
+void spectrum_timeout_check()
+{
+  int milliseconds;
+
+
+  if (spectrum_freq && timeout_countdown)
+    {
+      timeout_countdown--;
+
+      if (!timeout_countdown) 
+        {
+            timeout_ret = TRUE;
+            milliseconds = 1000 / spectrum_freq;
+            g_timeout_add (milliseconds, spectrum_update, NULL);
+        }
+    }
+}
+
 
 GtkWidget *make_mini_label(const char *text)
 {

@@ -13,8 +13,12 @@ TO BE DECIDED (owner)
 
 TODO (owner)
 
-- commit documentation to CVS (Ron)
-- finish context sensitive help verbiage (everyone)
+- options pulldown menu for spectrum, crossfade, EQ options (Jan)
+- remove EQ options window and move functionality to options pulldown (Jan)
+- save options to startup file (Jan, Steve)
+- save compressor control ganging with state (Steve)
+- color editor for GUI highlights/text colors (Jan)
+- commit mastering documentation to CVS (Ron)
 - set JACK port latencies correctly (Jack, Steve)
 - error and debug message rationalization (???)
 	IF_DEBUG(), -v option, error dialogue
@@ -61,3 +65,4 @@ CLOSED (date)
 - fix crash on startup using gcc-2.95.4 (2003/12/13)
 - Correct for limiter latency in bypass (2003/12/??)
 - XML parser error/warning reporting (2004/01/10
+- finish context sensitive help verbiage (2004/01/18)

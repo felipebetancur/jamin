@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.22 2004/01/18 19:49:46 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.23 2004/01/19 20:31:06 jdepner Exp $
  */
 
 char general_help[] = {
@@ -207,8 +207,17 @@ reset the value to 0.0.\n"
 
 
 char eq_options_help[] = {
-"    These allow you to set the upper and lower gain values for both the HDEQ \
-and the GEQ.\n"
+"    This dialog allows you to set the upper and lower gain values for both \
+the HDEQ and the GEQ.  You can also set the spectrum source and update \
+frequency.\n"
+};
+
+
+char preferences_help[] = {
+"    This dialog allows you to set the crossfade time (for transitioning \
+between states).  You can also set the colors to be used for the low, mid, \
+and high band compressor curves and text as well as the ganged compressor \
+control highlight color.\n"
 };
 
 
@@ -219,13 +228,13 @@ are Pre EQ, Post compressor, and Output.\n"
 };
 
 
-char status_label_help[] = {
-"    This is information on the system and transport status.\n"
-};
-
-
 char transport_controls_help[] = {
-"    Transport controls help not yet available.\n"
+"    The transport controls give you the usual tape transport type controls.  \
+These are useful if you are using other JACK enabled applications that honor \
+the JACK transport control functions (ecamegapedal, Ardour). Note that there \
+is no stop button (use pause). Some JACK and system status information is \
+available to the right of the transport buttons.  The fast forward and \
+reverse buttonsa will move the transport forward or back by five seconds.\n"
 };
 
 

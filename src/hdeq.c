@@ -46,6 +46,7 @@
 #include "db.h"
 #include "transport.h"
 #include "scenes.h"
+#include "preferences.h"
 
 
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
@@ -72,15 +73,13 @@ static void draw_EQ_curve ();
 /* vi:set ts=8 sts=4 sw=4: */
 
 static GtkHScale       *l_low2mid, *l_mid2high;
-static GtkWidget       *l_comp[3];
+static GtkWidget       *l_comp[3], *eq_options_dialog;
 static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_comp_lbl[3], 
                        *l_EQ_curve_lbl, *l_c_curve_lbl[3];
 static GtkDrawingArea  *l_EQ_curve, *l_comp_curve[3];
 static GdkDrawable     *EQ_drawable, *comp_drawable[3];
-static GdkColormap     *colormap = NULL;
-static GdkColor        white, black, band_color[4], EQ_back_color, 
-                       EQ_fore_color, EQ_spectrum_color, EQ_grid_color, 
-                       EQ_notch_color;
+static GdkColor        white, black, EQ_back_color, EQ_fore_color, 
+                       EQ_spectrum_color, EQ_grid_color, EQ_notch_color;
 static GdkGC           *EQ_gc, *comp_gc[3];
 static PangoContext    *comp_pc[3], *EQ_pc;
 static GtkAdjustment   *l_low2mid_adj;
@@ -114,7 +113,6 @@ static guint           notebook1_page = 0;
 static gboolean        hdeq_ready = FALSE;
 
 
-
 /*  Clear out the hand drawn EQ curves on exit.  */
 
 void clean_quit ()
@@ -126,32 +124,14 @@ void clean_quit ()
 }
 
 
-GdkColor *get_band_color (int band)
-{
-  return (&band_color[band]);
-}
-
-
-/*  Generic color setting.  */
-
-static void set_color (GdkColor *color, unsigned short red, 
-                       unsigned short green, unsigned short blue)
-{
-    if (colormap == NULL) colormap = gdk_colormap_get_system ();
-
-    color->red = red;
-    color->green = green;
-    color->blue = blue;
-
-    gdk_colormap_alloc_color (colormap, color, FALSE, TRUE);
-}
-
-
 /*  Setup widget bindings based on names from glade-2.  DON'T CHANGE WIDGET
     NAMES in glade-2 without checking first.  */
 
 void bind_hdeq ()
 {
+    eq_options_dialog = create_eq_options_dialog();
+
+
     l_low2mid = GTK_HSCALE (lookup_widget (main_window, "low2mid"));
     l_mid2high = GTK_HSCALE (lookup_widget (main_window, "mid2high"));
     l_low2mid_lbl = GTK_LABEL (lookup_widget (main_window, "low2mid_lbl"));
@@ -186,10 +166,6 @@ void bind_hdeq ()
     set_color (&white, 65535, 65535, 65535);
     set_color (&black, 0, 0, 0);
     set_color (&EQ_notch_color, 65535, 65535, 0);
-    set_color (&band_color[0], 60000, 0, 0);
-    set_color (&band_color[1], 0, 50000, 0);
-    set_color (&band_color[2], 0, 0, 60000);
-    set_color (&band_color[3], 0, 0, 0);
     set_color (&EQ_back_color, 0, 21611, 0);
     set_color (&EQ_fore_color, 65535, 65535, 65535);
     set_color (&EQ_grid_color, 0, 36611, 0);
@@ -712,6 +688,7 @@ static void draw_EQ_curve ()
     float          x[EQ_BANDS], y[EQ_BANDS];
 
 
+
     /*  If we're not visible, go away.  */
 
     if (!EQ_realized) return;
@@ -784,7 +761,7 @@ static void draw_EQ_curve ()
     gdk_gc_set_line_attributes (EQ_gc, 2, GDK_LINE_SOLID, GDK_CAP_BUTT,
         GDK_JOIN_MITER);
 
-    gdk_gc_set_foreground (EQ_gc, &band_color[0]);
+    gdk_gc_set_foreground (EQ_gc, get_band_color (0));
     freq2xpix (xover_fa, &x1);
     gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE,
@@ -802,7 +779,7 @@ static void draw_EQ_curve ()
     xover_handle_fa = x1;
 
 
-    gdk_gc_set_foreground (EQ_gc, &band_color[2]);
+    gdk_gc_set_foreground (EQ_gc, get_band_color (2));
     freq2xpix (xover_fb, &x1);
     gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE,
@@ -1867,11 +1844,33 @@ void hdeq_set_xover ()
 }
 
 
+/*  Pop up the EQ options dialog.  */
+
+void popup_EQ_options_dialog (int updown)
+{
+  if (updown)
+    {
+      gtk_widget_show (eq_options_dialog);
+    }
+  else
+    {
+      gtk_widget_hide (eq_options_dialog);
+    }
+}
+
+
 /*  Set the lower gain limit for the hdeq and the geq.  */
 
 void hdeq_set_lower_gain (float gain)
 {
   EQ_gain_lower = gain;
+
+  l_low2mid_adj = gtk_range_get_adjustment ((GtkRange *) l_low2mid);
+  EQ_curve_range_x = l_low2mid_adj->upper - l_low2mid_adj->lower;
+
+  EQ_curve_range_y = EQ_gain_upper - EQ_gain_lower;
+
+  draw_EQ_curve ();
 
   set_scene_warning_button ();
 }
@@ -1882,6 +1881,13 @@ void hdeq_set_lower_gain (float gain)
 void hdeq_set_upper_gain (float gain)
 {
   EQ_gain_upper = gain;
+
+  l_low2mid_adj = gtk_range_get_adjustment ((GtkRange *) l_low2mid);
+  EQ_curve_range_x = l_low2mid_adj->upper - l_low2mid_adj->lower;
+
+  EQ_curve_range_y = EQ_gain_upper - EQ_gain_lower;
+
+  draw_EQ_curve ();
 
   set_scene_warning_button ();
 }
@@ -1976,7 +1982,7 @@ void draw_comp_curve (int i)
 
     gdk_gc_set_line_attributes (comp_gc[i], 2, GDK_LINE_SOLID, GDK_CAP_BUTT,
         GDK_JOIN_MITER);
-    gdk_gc_set_foreground (comp_gc[i], &band_color[i]);
+    gdk_gc_set_foreground (comp_gc[i], get_band_color (i));
 
 
     comp = comp_get_settings (i);
@@ -2071,9 +2077,9 @@ void comp_curve_box_motion (int i, GdkEventMotion  *event)
 void comp_box_leave (int i)
 {
     gtk_widget_modify_fg ((GtkWidget *) l_comp_lbl[i], GTK_STATE_NORMAL, 
-                          &band_color[3]);
+                          get_band_color (3));
     gtk_widget_modify_fg ((GtkWidget *) l_c_curve_lbl[i], GTK_STATE_NORMAL, 
-                          &band_color[3]);
+                          get_band_color (3));
 }
 
 
@@ -2083,9 +2089,9 @@ void comp_box_leave (int i)
 void comp_box_enter (int i)
 {
     gtk_widget_modify_fg ((GtkWidget *) l_comp_lbl[i], GTK_STATE_NORMAL, 
-                          &band_color[i]);
+                          get_band_color (i));
     gtk_widget_modify_fg ((GtkWidget *) l_c_curve_lbl[i], GTK_STATE_NORMAL, 
-                          &band_color[i]);
+                          get_band_color (i));
 }
 
 
