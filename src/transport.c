@@ -158,8 +158,8 @@ void transport_set_position(jack_nframes_t frame)
 
     jack_transport_locate(client, frame);
     IF_DEBUG(DBG_TERSE,
-	     fprintf(stderr, "Transport positioned to frame %" PRIuLEAST32
-		     "\n", frame));
+	     fprintf(stderr, "Transport positioned to frame %" PRIu32 "\n",
+		     frame));
 
 #else /* old JACK transport interface */
 
