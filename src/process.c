@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.42 2004/02/17 00:05:12 jdepner Exp $
+ *  $Id: process.c,v 1.43 2004/02/17 23:01:35 theno23 Exp $
  */
 
 #include <math.h>
@@ -220,7 +220,7 @@ void run_eq(unsigned int port, unsigned int in_ptr)
     }
 
     memset(comp_tmp, 0, BINS * sizeof(fft_data));
-    targ_bin = xover_fa / sample_rate * (float) (BINS * 2);
+    targ_bin = xover_fa / sample_rate * ((float)BINS + 0.5f);
     comp_tmp[0] = comp[0] * eq_coefs[0];
     if (comp_tmp[0] > bin_peak[0]) bin_peak[0] = comp_tmp[0];
     
@@ -244,7 +244,7 @@ void run_eq(unsigned int port, unsigned int in_ptr)
     }
 
     memset(comp_tmp, 0, BINS * sizeof(fft_data));
-    targ_bin = xover_fb / sample_rate * (float) (BINS * 2);
+    targ_bin = xover_fb / sample_rate * ((float)BINS + 0.5f);
     for (; i < targ_bin && i < BINS / 2 - 1; i++) {
 	const float eq_gain = xo_band_action[XO_MID] == MUTE ? 0.0f :
 				eq_coefs[i];
