@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.33 2003/12/10 18:33:17 jdepner Exp $
+ *  $Id: main.c,v 1.34 2003/12/11 18:28:52 jdepner Exp $
  */
 
 /*
@@ -57,8 +57,6 @@ int main(int argc, char *argv[])
 {
     char rcfile[PATH_MAX], title[128];
     int fd;
-
-    void callbacks_main_ready ();
 
 #ifdef ENABLE_NLS
     bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
