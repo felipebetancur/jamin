@@ -1,3 +1,8 @@
+2004-02-17  Steve Harris  <steve@plugin.org.uk>
+
+	* process.c (run_eq): fixed off-by-one-octave bug in frequency ->
+	  bin mappings
+
 2004-01-27  Steve Harris  <steve@plugin.org.uk>
 
 	* process.c (process, run_eq): added functions to control
