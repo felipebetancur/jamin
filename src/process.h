@@ -3,25 +3,27 @@
 
 #include <jack/jack.h>
 
-#define BINS  2048
+#define BINS  2048			/* must be power of two */
 #define BANDS 30
 
 #include "plugin.h"
 #include "compressor.h"
 #include "limiter.h"
 
+/* number of input and output channels */
+#define NCHANNELS 2
+
+/* crossover bands */
 #define XO_LOW  0
 #define XO_MID  1
 #define XO_HIGH 2
+#define XO_NBANDS 3
 
 #define LIM_PEAK_IN  0
 #define LIM_PEAK_OUT 1
 
 #define SPEC_PRE_EQ  0
 #define SPEC_POST_EQ 1
-
-extern jack_port_t *input_ports[2];
-extern jack_port_t *output_ports[2];
 
 extern float xover_fa, xover_fb;
 extern float eq_coefs[];
@@ -44,7 +46,7 @@ int process_signal(jack_nframes_t nframes, int nchannels,
 
 float eval_comp(float thresh, float ratio, float knee, float in);
 
-extern comp_settings compressors[3];
+extern comp_settings compressors[XO_NBANDS];
 extern lim_settings limiter;
 
 extern plugin *comp_plugin;

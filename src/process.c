@@ -9,46 +9,50 @@
 #include "limiter.h"
 #include "geq.h"
 #include "intrim.h"
+#include "io.h"
 
-#define BUF_MASK   (BINS-1)
-#define OVER_SAMP  8
+#define BUF_MASK   (BINS-1)		/* BINS is a power of two */
+#define OVER_SAMP  8			/* buffer overlap count, must
+					   be a factor of BINS */
 
 /* These values need to be controlled by the UI, somehow */
 float xover_fa = 207.0f;
 float xover_fb = 2048.0f;
-comp_settings compressors[3];
+comp_settings compressors[XO_NBANDS];
 lim_settings limiter;
 float eq_coefs[BINS]; /* Linear gain of each FFT bin */
 float lim_peak[2];
 
 int global_bypass = 0;
 
-float in_peak[2], out_peak[2];
+float in_peak[NCHANNELS], out_peak[NCHANNELS];
 
 static float band_f[BANDS];
 static float gain_fix[BANDS];
 static float bin_peak[BINS];
-static int peaks[BANDS];
-static int ptime[BANDS];
+// Unused: static int peaks[BANDS];
+// Unused: static int ptime[BANDS];
 static int bands[BINS];
-static float in_buf[2][BINS];
-static float out_buf[2][3][BINS];
+static float in_buf[NCHANNELS][BINS];
+static float out_buf[NCHANNELS][XO_NBANDS][BINS];
 static float window[BINS];
 static float *real;
 static float *comp;
 static float *comp_tmp;
-static float *out_tmp[2][3];
+static float *out_tmp[NCHANNELS][XO_NBANDS];
 
 static int spectrum_mode = SPEC_PRE_EQ;
 
 /* Data for plugins */
 plugin *comp_plugin, *lim_plugin;
-int lim_connected = 0;
 
 /* FFTW data */
 fftwf_plan plan_rc = NULL, plan_cr = NULL;
 
 float sample_rate = 0.0f;
+
+/* Desired block size for calling process_signal(). */
+const jack_nframes_t step_size = BINS / OVER_SAMP;
 
 void run_eq(unsigned int port, unsigned int in_pos);
 
@@ -59,10 +63,12 @@ void process_init(float fs, int buffer_size)
 
     sample_rate = fs;
 
+    io_set_granularity(step_size);
+
     for (i = 0; i < BANDS; i++) {
 	band_f[i] = centre;
 	//printf("band %d = %fHz\n", i, centre);
-	centre *= 1.25992105f;	// Go up a thrid of an octave
+	centre *= 1.25992105f;		/* up a third of an octave */
 	gain_fix[i] = 0.0f;
     }
 
@@ -128,16 +134,16 @@ void process_init(float fs, int buffer_size)
     out_tmp[0][XO_HIGH] = calloc(buffer_size, sizeof(float));
     out_tmp[1][XO_HIGH] = calloc(buffer_size, sizeof(float));
 
-    compressors[0].handle = plugin_instantiate(comp_plugin, fs);
-    comp_connect(comp_plugin, &compressors[0], out_tmp[0][XO_LOW],
+    compressors[XO_LOW].handle = plugin_instantiate(comp_plugin, fs);
+    comp_connect(comp_plugin, &compressors[XO_LOW], out_tmp[0][XO_LOW],
 		 out_tmp[1][XO_LOW]);
 
-    compressors[1].handle = plugin_instantiate(comp_plugin, fs);
-    comp_connect(comp_plugin, &compressors[1], out_tmp[0][XO_MID],
+    compressors[XO_MID].handle = plugin_instantiate(comp_plugin, fs);
+    comp_connect(comp_plugin, &compressors[XO_MID], out_tmp[0][XO_MID],
 		 out_tmp[1][XO_MID]);
 
-    compressors[2].handle = plugin_instantiate(comp_plugin, fs);
-    comp_connect(comp_plugin, &compressors[2], out_tmp[0][XO_HIGH],
+    compressors[XO_HIGH].handle = plugin_instantiate(comp_plugin, fs);
+    comp_connect(comp_plugin, &compressors[XO_HIGH], out_tmp[0][XO_HIGH],
 		 out_tmp[1][XO_HIGH]);
 
     limiter.handle = plugin_instantiate(lim_plugin, fs);
@@ -234,16 +240,11 @@ int process_signal(jack_nframes_t nframes,
 		   jack_default_audio_sample_t *out[])
 {
     unsigned int pos, port;
-    const unsigned int step_size = BINS / OVER_SAMP;
     const unsigned int latency = BINS - step_size;
     static unsigned int in_ptr = 0;
     static unsigned int n_calc_pt = BINS - (BINS / OVER_SAMP);
 
-    if (!lim_connected) {
-	lim_connect(lim_plugin, &limiter, out[0], out[1]);
-	lim_connected = 1;
-	//printf("connected the limiter...\n");
-    }
+    lim_connect(lim_plugin, &limiter, out[0], out[1]);
 
     for (pos = 0; pos < nframes; pos++) {
 	const unsigned int op = (in_ptr - latency) & BUF_MASK;
@@ -266,10 +267,11 @@ int process_signal(jack_nframes_t nframes,
 
 	in_ptr = (in_ptr + 1) & BUF_MASK;
 
-	if (in_ptr == n_calc_pt && !global_bypass) {
-	    run_eq(0, in_ptr);
-	    run_eq(1, in_ptr);
-
+	if (in_ptr == n_calc_pt) {	/* time to do the FFT? */
+	    if (!global_bypass) {
+		run_eq(0, in_ptr);
+		run_eq(1, in_ptr);
+	    }
 	    n_calc_pt = (in_ptr + step_size) & BUF_MASK;
 	}
     }

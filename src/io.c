@@ -3,47 +3,100 @@
 #include <math.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <jack/jack.h>
 #include <getopt.h>
 #include <assert.h>
 
 #include "process.h"
 #include "plugin.h"
+#include "io.h"
 
-void make_channel(jack_client_t * client, int i, char *port_name);
 void cleanup(void);
 
-jack_port_t *input_ports[2];
-jack_port_t *output_ports[2];
 jack_client_t *client;
 
 static int dummy_mode = 0;
 
-#define NCHANNELS 2
+static int nchannels = NCHANNELS;	/* actual number of channels */
+static jack_port_t *input_ports[NCHANNELS];
+static jack_port_t *output_ports[NCHANNELS];
+static char *in_names[NCHANNELS] = { "in_L", "in_R" };
+static char *out_names[NCHANNELS] = { "out_L", "out_R" };
 
-/* io_handler -- JACK process callback.
- *
- *   Runs as a high-priority realtime thread.  CANNOT EVER WAIT.
- */
-int io_handler(jack_nframes_t nframes, void *arg)
+/* I/O system latencies */
+static jack_nframes_t total_latency = 0;
+static jack_nframes_t latency_delay[LAT_NSOURCES] = {0};
+static char *latency_sources[LAT_NSOURCES] = {
+    "I/O Buffering",
+    "Fourier Transform",
+    "Limiter"
+};
+
+void io_set_latency(int source, jack_nframes_t delay)
+{
+    if (source < 0 || source >= LAT_NSOURCES) {
+	printf("JAM internal error: unknown latency source.\n");
+	return;
+    }
+
+    printf("Latency due to %s is %ld frames.\n",
+	   latency_sources[source], delay);
+    total_latency += delay - latency_delay[source];
+    latency_delay[source] = delay;
+}
+
+static jack_nframes_t io_block_size;
+
+/* io_set_granularity -- set desired I/O block size.
+   Must be called *before* starting the JACK process thread.
+*/
+void io_set_granularity(jack_nframes_t block_size)
+{
+    printf("JAM I/O granularity is %ld frames.\n", block_size);
+    io_block_size = block_size;
+}
+
+/* io_process -- JACK process callback.
+   Runs as a high-priority realtime thread.  CANNOT EVER WAIT.
+*/
+int io_process(jack_nframes_t nframes, void *arg)
 {
     jack_default_audio_sample_t *in[NCHANNELS], *out[NCHANNELS];
     int chan;
+    int return_code = 0;		/* 0 means success */
 
-    for (chan = 0; chan < NCHANNELS; chan++) {
-
-	/* the ports must be registered */
+    /* get input and output buffer addresses from JACK */
+    for (chan = 0; chan < nchannels; chan++) {
 	assert(input_ports[chan] && output_ports[chan]);
-
-	in[chan] = (jack_default_audio_sample_t *)
-	    jack_port_get_buffer(input_ports[chan], nframes);
-	out[chan] = (jack_default_audio_sample_t *)
-	    jack_port_get_buffer(output_ports[chan], nframes);
+	in[chan] = jack_port_get_buffer(input_ports[chan], nframes);
+	out[chan] = jack_port_get_buffer(output_ports[chan], nframes);
     }
 
-    /* Call the DSP directly, for now.  Soon, we'll collect multiple
-     * buffers for processing in a separate DSP thread. */
-    return process_signal(nframes, NCHANNELS, in, out);
+    assert(io_block_size);
+    if (nframes < io_block_size) {
+	/* JACK buffer is smaller than desired DSP granularity.  Soon,
+	   we will dispatch a separate thread to handle this case,
+	   queuing buffers to it until there are io_block_size frames
+	   available.  For now, just process it one small chunks at a
+	   time.
+	 */
+	return process_signal(nframes, nchannels, in, out);
+    }
+
+    assert(nframes % io_block_size == 0);
+    while (nframes >= io_block_size)  {
+
+	int rc = process_signal(io_block_size, nchannels, in, out);
+	if (rc != 0)
+	    return_code = rc;
+
+	for (chan = 0; chan < nchannels; chan++) {
+	    in[chan] += io_block_size;
+	    out[chan] += io_block_size;
+	}
+	nframes -= io_block_size;
+    }
+
+    return return_code;
 }
 
 int backend_init(int argc, char *argv[])
@@ -88,9 +141,10 @@ int backend_init(int argc, char *argv[])
     }
     printf("Registering as %s\n", client_name);
 
-    process_init((float) jack_get_sample_rate(client), jack_get_buffer_size(client));
+    process_init((float) jack_get_sample_rate(client),
+		 jack_get_buffer_size(client));
 
-    jack_set_process_callback(client, io_handler, 0);
+    jack_set_process_callback(client, io_process, NULL);
 
     return 0;
 }
@@ -99,23 +153,26 @@ int backend_activate(int argc, char *argv[])
 {
     char *ioports[4];
     unsigned int i;
+    int chan;
 
     if (dummy_mode) {
 	return 0;
     }
 
-    input_ports[0] = jack_port_register(client, "in_L",
-					JACK_DEFAULT_AUDIO_TYPE,
-					JackPortIsInput, 0);
-    input_ports[1] =
-	jack_port_register(client, "in_R", JACK_DEFAULT_AUDIO_TYPE,
-			   JackPortIsInput, 0);
-    output_ports[0] =
-	jack_port_register(client, "out_L", JACK_DEFAULT_AUDIO_TYPE,
-			   JackPortIsOutput, 0);
-    output_ports[1] =
-	jack_port_register(client, "out_R", JACK_DEFAULT_AUDIO_TYPE,
-			   JackPortIsOutput, 0);
+    for (chan = 0; chan < nchannels; chan++) {
+	input_ports[chan] =
+	    jack_port_register(client, in_names[chan],
+			       JACK_DEFAULT_AUDIO_TYPE,
+			       JackPortIsInput, 0);
+	// jack_port_set_latency(input_ports[chan], total_latency);
+	output_ports[chan] =
+	    jack_port_register(client, out_names[chan],
+			       JACK_DEFAULT_AUDIO_TYPE,
+			       JackPortIsOutput, 0);
+    }
+
+    // JOQ: allocate DSP buffers
+    // JOQ: create DSP thread
 
     /* Note: All ports MUST already be registered. */
     if (jack_activate(client)) {
