@@ -156,7 +156,7 @@ void transport_set_position(jack_nframes_t frame)
 {
 #ifdef NEW_JACK_TRANSPORT
 
-    jack_transport_goto_frame(client, frame);
+    jack_transport_locate(client, frame);
     IF_DEBUG(DBG_TERSE,
 	     fprintf(stderr, "Transport positioned to frame %ld\n", frame));
 
