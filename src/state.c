@@ -103,8 +103,8 @@ void s_set_value_block(float *values, int base, int count)
 {
     int i;
 
-    for (i=0; i<count; i++) {
-	s_value[base+count] = values[i];
+    for (i = 0 ; i < count ; i++) {
+	s_value[base + i] = values[i];
     }
     last_changed = base;
     //s_set_events(base, values[i]);
@@ -146,11 +146,16 @@ static void s_history_add(const char *description)
 }
 
 void s_undo() {
+    void set_EQ_curve_values ();
+
+
     if (!undo_pos) {
 	return;
     }
     s_restore_state((s_state *)undo_pos->data);
     undo_pos = g_list_previous(undo_pos);
+
+    set_EQ_curve_values ();
 }
 
 static void s_restore_state(s_state *state)
@@ -233,6 +238,7 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
     unsigned int i, found = 0;
     const char *symbol = NULL, *value = NULL;
 
+
     /* Check its the right element */
     if (strcmp(name, "parameter")) {
 	return;
@@ -253,7 +259,6 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 	    s_value[i] = atof(value);
 	    suppress_feedback++;
 	    s_set_events(i, s_value[i]);
-fprintf(stderr,"%s %d %s %d %f\n",__FILE__,__LINE__,s_symbol[i],i,s_value[i]);
 	    suppress_feedback--;
 	    //printf("load %s = %g\n", symbol, s_value[i]);
 	    found = 1;

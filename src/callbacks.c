@@ -807,6 +807,11 @@ draw_EQ_curve ()
             &EQ_length, x, y, EQ_xinterp, EQ_yinterp);
 
 
+        /*  Save state of the EQ curve.  */
+
+        s_set_value_block (EQ_yinterp, S_EQ_GAIN(0), EQ_length);
+
+
         /*  Reset all of the shelves/notches.  */
 
         for (i = 0 ; i < NOTCHES ; i++)
@@ -824,6 +829,8 @@ draw_EQ_curve ()
               }
 
             s_set_value_ui (S_NOTCH_Q (i), (float) EQ_notch_width[i]);
+            s_set_value_ui (S_NOTCH_GAIN (i), EQ_notch_gain[i]);
+            s_set_value_ui (S_NOTCH_FLAG (i), (float) EQ_notch_flag[i]);
           }
 
         insert_notch ();
@@ -1151,6 +1158,8 @@ on_EQ_curve_event_box_motion_notify_event
 
                             s_set_value_ui (S_NOTCH_GAIN (i), 
                                 EQ_notch_gain[i]);
+                            s_set_value_ui (S_NOTCH_FLAG (i), 
+                                (float) EQ_notch_flag[i]);
 
                             break;
                           }
@@ -1178,6 +1187,8 @@ on_EQ_curve_event_box_motion_notify_event
                                 s_set_value_ui (S_NOTCH_GAIN (i), 
                                     EQ_notch_gain[i]);
                                 s_set_value_ui (S_NOTCH_FREQ (i), freq);
+                                s_set_value_ui (S_NOTCH_FLAG (i), 
+                                    (float) EQ_notch_flag[i]);
                               }
                             break;
                           }
@@ -1422,9 +1433,6 @@ on_EQ_curve_event_box_button_press_event
                             EQ_notch_flag[i] = 0;
                             EQ_notch_gain[i] = 0.0;
 
-                            s_set_value_ui (S_NOTCH_GAIN (i), 
-                                    (float) EQ_notch_gain[i]);
-
                             if (!i || i == NOTCHES - 1)
                               {
                                 EQ_notch_width[i] = 0;
@@ -1436,6 +1444,10 @@ on_EQ_curve_event_box_button_press_event
 
                             s_set_value_ui (S_NOTCH_Q (i), 
                                 (float) EQ_notch_width[i]);
+                            s_set_value_ui (S_NOTCH_GAIN (i), 
+                                EQ_notch_gain[i]);
+                            s_set_value_ui (S_NOTCH_FLAG (i), 
+                                (float) EQ_notch_flag[i]);
 
                             insert_notch ();
                             set_EQ ();
@@ -1611,6 +1623,11 @@ on_EQ_curve_event_box_button_press_event
             if (y) free (y);
 
 
+            /*  Save state of the EQ curve.  */
+
+            s_set_value_block (EQ_yinterp, S_EQ_GAIN(0), EQ_length);
+
+
             EQ_input_points = 0;
 
 
@@ -1709,6 +1726,49 @@ on_EQ_curve_event_box_leave_notify_event
     gtk_label_set_text (l_EQ_curve_lbl, "                ");
 
     return FALSE;
+}
+
+
+void
+set_EQ_curve_values (GtkWidget *w, gpointer user_data)
+{
+    int i;
+
+
+    for (i = 0 ; i < EQ_INTERP ; i++)
+      {
+        EQ_yinterp[i] = s_get_value (S_EQ_GAIN (0) + i);
+      }
+
+
+    for (i = 0 ; i < NOTCHES ; i++)
+      {
+        EQ_notch_flag[i] = NINT (s_get_value (S_NOTCH_FLAG (i)));
+        if (EQ_notch_flag[i])
+          {
+            EQ_notch_width[i] = NINT (s_get_value (S_NOTCH_Q (i)));
+            EQ_notch_index[i] = nearest_x (s_get_value (S_NOTCH_FREQ (i)));
+            EQ_notch_gain[i] = s_get_value (S_NOTCH_GAIN (i));
+          }
+      }
+
+
+    /*  Replace shelf and notch areas.  */
+
+    insert_notch ();
+
+
+    /*  Set the GEQ faders and the EQ coefs.  */
+
+    set_EQ ();
+
+
+    EQ_mod = 0;
+
+
+    /*  Redraw the curve.  */
+
+    draw_EQ_curve ();
 }
 
 
@@ -2611,6 +2671,9 @@ on_load_button_clicked                 (GtkButton       *button,
     g_signal_connect (GTK_OBJECT (file_selector->ok_button),
         "clicked", G_CALLBACK (s_load_session), file_selector);
 
+    g_signal_connect (GTK_OBJECT (file_selector->ok_button),
+        "clicked", G_CALLBACK (set_EQ_curve_values), NULL);
+
     g_signal_connect_swapped (GTK_OBJECT (file_selector->ok_button),
         "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
 
@@ -2619,4 +2682,3 @@ on_load_button_clicked                 (GtkButton       *button,
 
     gtk_widget_show ((GtkWidget *) file_selector);
 }
-

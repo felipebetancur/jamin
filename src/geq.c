@@ -29,7 +29,6 @@ float bin_delta[BINS];
 gboolean eqb_changed(GtkAdjustment *adj, gpointer user_data);
 gboolean eqb_mod(GtkAdjustment *adj, gpointer user_data);
 void geq_set_gains();
-void eqg_changed(int id, float value);
 
 void bind_geq()
 {
@@ -82,18 +81,6 @@ void bind_geq()
     }
 
     geq_set_gains();
-    s_set_callback(S_EQ_GAIN(0), eqg_changed);
-}
-
-void eqg_changed(int id, float value)
-{
-    unsigned int i;
-
-    for (i = 0; i < BINS/2 -1; i++) {
-	eq_coefs[i] = s_get_value(id+i);
-    }
-    /* XXX need to restore the values used by draw_EQ_curve() */
-    draw_EQ_curve();
 }
 
 void geq_set_gains()
@@ -128,20 +115,11 @@ void geq_set_coefs (int length, float x[], float y[])
         eq_coefs[0] = 1.0f;
         for (i = 1 ; i < length ; i++) 
           {
-#if 0
-	    Jan, can you check this is OK please - steve
-
-            eq_coefs[i] = ((1.0f - bin_delta[i]) * pow (10.0, (double) y[i])) +
-              (bin_delta[i] * pow (10.0, (double) y[i + 1]));
-
-	    I think it should be:
-#endif
-
             eq_coefs[i] = powf (10.0f, y[i]);
-	    s_set_value_block(eq_coefs, S_EQ_GAIN(0), length);
           }
       }
 }
+
 
 void geq_set_sliders(int length, float x[], float y[])
 {

@@ -42,7 +42,8 @@ void s_load_session(GtkWidget * w, gpointer user_data);
 #define S_NOTCH_GAIN(n) (1052 + n)
 #define S_NOTCH_FREQ(n) (1057 + n)
 #define S_NOTCH_Q(n) (1062 + n)
-#define S_SIZE 1067
+#define S_NOTCH_FLAG(n) (1067 + n)
+#define S_SIZE 1072
 
 extern float s_value[S_SIZE];
 
@@ -322,7 +323,9 @@ static const char *const s_description[S_SIZE] = {
 	"Notch gain 4", "Notch gain 5", "Notch frequency 1",
 	"Notch frequency 2", "Notch frequency 3", "Notch frequency 4",
 	"Notch frequency 5", "Notch Q 1", "Notch Q 2", "Notch Q 3",
-	"Notch Q 4", "Notch Q 5"
+	"Notch Q 4", "Notch Q 5", "Notch active flag 1",
+	"Notch active flag 2", "Notch active flag 3",
+	"Notch active flag 4", "Notch active flag 5"
 };
 
 static const char *const s_symbol[S_SIZE] = {
@@ -586,7 +589,9 @@ static const char *const s_symbol[S_SIZE] = {
 	"lim-input", "lim-time", "lim-limit", "notch-gain0", "notch-gain1",
 	"notch-gain2", "notch-gain3", "notch-gain4", "notch-freq0",
 	"notch-freq1", "notch-freq2", "notch-freq3", "notch-freq4",
-	"notch-q0", "notch-q1", "notch-q2", "notch-q3", "notch-q4"
+	"notch-q0", "notch-q1", "notch-q2", "notch-q3", "notch-q4",
+	"notch-flag0", "notch-flag1", "notch-flag2", "notch-flag3",
+	"notch-flag4"
 };
 
 #endif
