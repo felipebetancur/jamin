@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: compressor-ui.c,v 1.24 2004/05/06 14:27:34 jdepner Exp $
+ *  $Id: compressor-ui.c,v 1.25 2004/05/06 19:04:39 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -137,7 +137,7 @@ void bind_compressors()
 
         prev_value_at[i] = -1.0;
         prev_value_re[i] = -1.0;
-        prev_value_th[i] = -1.0;
+        prev_value_th[i] = 1.0;
         prev_value_ra[i] = -1.0;
         prev_value_kn[i] = -1.0;
         prev_value_ma[i] = -1.0;
@@ -251,7 +251,7 @@ void th_changed(int id, float value)
 
   if (!suspend_gang && gang_th[i])
     {
-      if (prev_value_th[i] > 0.0)
+      if (prev_value_th[i] < 0.0)
         {
           diff = value - prev_value_th[i];
         }
@@ -586,7 +586,7 @@ void comp_gang_th (int band)
       gang_th[band] = FALSE;
       gtk_widget_modify_fg ((GtkWidget *) lab_th[band], GTK_STATE_NORMAL, 
                             get_color (TEXT_COLOR));
-      prev_value_th[band] = -1.0;
+      prev_value_th[band] = 1.0;
     }
   else
     {
