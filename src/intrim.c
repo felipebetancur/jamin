@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: intrim.c,v 1.12 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: intrim.c,v 1.13 2003/11/20 21:19:55 theno23 Exp $
  */
 
 #include <gtk/gtk.h>
@@ -31,9 +31,11 @@ static GtkAdjustment *in_meter_adj[2], *out_meter_adj[2];
 static GtkLabel	*pan_label;
 
 void intrim_cb(int id, float value);
+void outtrim_cb(int id, float value);
 void inpan_cb(int id, float value);
 
 float in_gain[2] = {1.0f, 1.0f};
+float out_gain = 1.0f;
 float in_trim_gain = 1.0f;
 float in_pan_gain[2] = {1.0f, 1.0f};
 
@@ -58,6 +60,10 @@ void bind_intrim()
 
     s_set_callback(S_IN_GAIN, intrim_cb);
     s_set_adjustment(S_IN_GAIN, gtk_range_get_adjustment(GTK_RANGE(lookup_widget(main_window, "in_trim_scale"))));
+
+    s_set_callback(S_OUT_GAIN, outtrim_cb);
+    s_set_adjustment(S_OUT_GAIN, gtk_range_get_adjustment(GTK_RANGE(lookup_widget(main_window, "out_trim_scale"))));
+
     s_set_callback(S_IN_PAN, inpan_cb);
     s_set_adjustment(S_IN_PAN, gtk_range_get_adjustment(GTK_RANGE(lookup_widget(main_window, "pan_scale"))));
 }
@@ -67,6 +73,11 @@ void intrim_cb(int id, float value)
     in_trim_gain = db2lin(value);
     in_gain[0] = in_trim_gain * in_pan_gain[0];
     in_gain[1] = in_trim_gain * in_pan_gain[1];
+}
+
+void outtrim_cb(int id, float value)
+{
+    out_gain = db2lin(value);
 }
 
 void inpan_cb(int id, float value)

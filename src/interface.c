@@ -3641,6 +3641,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) output_eventbox, "enter_notify_event",
                     G_CALLBACK (on_output_eventbox_enter_notify_event),
                     NULL);
+  g_signal_connect ((gpointer) out_trim_scale, "value_changed",
+                    G_CALLBACK (on_out_trim_scale_value_changed),
+                    NULL);
   g_signal_connect ((gpointer) bypass_button, "toggled",
                     G_CALLBACK (on_bypass_button_toggled),
                     NULL);

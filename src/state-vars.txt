@@ -1,6 +1,7 @@
 # symbol(card)	description
 load		Load file
 in-gain		Input gain
+out-gain	Output gain
 in-pan		Input pan
 eq-gain(1024)	EQ Gain
 xover-freq(2)	Crossover frequency

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.99 2003/11/19 15:28:16 theno23 Exp $
+ *  $Id: callbacks.c,v 1.100 2003/11/20 21:19:55 theno23 Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1692,21 +1692,6 @@ on_ports1_activate                     (GtkMenuItem     *menuitem,
 }
 
 
-void
-on_in1_activate                        (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-
-}
-
-
-void
-on_left1_activate                      (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-
-}
-
 
 void
 on_right1_activate                     (GtkMenuItem     *menuitem,
@@ -1732,10 +1717,36 @@ on_left2_activate                      (GtkMenuItem     *menuitem,
 }
 
 
+
+void
+on_in1_activate                        (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_left1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+
+}
+
+
+
 void
 on_right2_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
 
+}
+
+
+void
+on_out_trim_scale_value_changed        (GtkRange        *range,
+                                        gpointer         user_data)
+{
+    s_set_value_ui(S_OUT_GAIN, gtk_range_get_adjustment(range)->value);
 }
 

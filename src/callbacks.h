@@ -834,3 +834,35 @@ on_left2_activate                      (GtkMenuItem     *menuitem,
 void
 on_right2_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
+
+void
+on_ports1_activate                     (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_in1_activate                        (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_left1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_right1_activate                     (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_out1_activate                       (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_left2_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_right2_activate                     (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_out_trim_scale_value_changed        (GtkRange        *range,
+                                        gpointer         user_data);

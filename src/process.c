@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.26 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: process.c,v 1.27 2003/11/20 21:19:55 theno23 Exp $
  */
 
 #include <math.h>
@@ -342,7 +342,7 @@ int process_signal(jack_nframes_t nframes,
 
     for (port = 0; port < nchannels; port++) {
 	for (pos = 0; pos < nframes; pos++) {
-	    const float x = out[port][pos];
+	    const float x = out[port][pos] * out_gain;
 	    const float a = ws_boost_a;
 	    out[port][pos] = LERP(ws_boost_wet, x,
 		    x * (fabs(x) + a)/(x*x + (a - 1.0f) * fabs(x) + 1.0f) );
