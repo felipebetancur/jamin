@@ -1,18 +1,19 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# translation of ru.po to Russian
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Alexandre Prokoudine <techwriter@land.ru>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: JAMin 0.9.0\n"
+"Project-Id-Version: ru\n"
 "POT-Creation-Date: 2004-05-17 23:02-0500\n"
-"PO-Revision-Date: 2004-07-26 11:45+0300\n"
-"Last-Translator: Alexandre Prokoudine <avp@altlinux.ru>\n"
+"PO-Revision-Date: 2004-10-02 06:31+0400\n"
+"Last-Translator: Alexandre Prokoudine <techwriter@land.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
 
 #: src/interface.c:537
 msgid "JAMin"
@@ -40,15 +41,15 @@ msgstr "_Повторить"
 
 #: src/interface.c:639
 msgid "Ports"
-msgstr "Порты"
+msgstr "П_орты"
 
 #: src/interface.c:644
 msgid "_Options"
-msgstr "_Настройки"
+msgstr "Н_астройки"
 
 #: src/interface.c:653
 msgid "E_Q options"
-msgstr "На_стройки EQ"
+msgstr "На_строить EQ"
 
 #: src/interface.c:668
 msgid "_Help"
@@ -56,7 +57,7 @@ msgstr "По_мощь"
 
 #: src/interface.c:677
 msgid "_General"
-msgstr "_Общие"
+msgstr "Пункты _меню"
 
 #: src/interface.c:690
 msgid "_Keys"
@@ -68,7 +69,7 @@ msgstr "_О JAMin"
 
 #: src/interface.c:722
 msgid "About Prerequisites"
-msgstr "О предпосылках"
+msgstr "_Смежные проекты"
 
 #: src/interface.c:759
 msgid "rewind transport"
@@ -658,7 +659,7 @@ msgstr "Указать имя сцены"
 
 #: src/interface.c:4716
 msgid "Eq options"
-msgstr "Параметры EQ"
+msgstr "Настройки EQ"
 
 #: src/interface.c:4752
 msgid "Minimum Gain"
@@ -698,7 +699,7 @@ msgstr "Настройки"
 
 #: src/interface.c:5047
 msgid "Crossfade time"
-msgstr "Вреям кроссфейда"
+msgstr "Длительность кроссфейда"
 
 #: src/interface.c:5066
 msgid "Low Band Compressor"
@@ -952,7 +953,7 @@ msgstr "    График частотного спектра отображае�
 
 #: src/callbacks_help.h:156
 msgid "    The compressor curves show a graphical representation of the compression for each compressor band.  The bands are defined by the crossover that can be set using the crossover faders or the crossover bars in the HDEQ.  The X-axis shows the input in db while the Y-axis shows the output in db.  The scale is from -60 to 0 in X and -60 to +30 in Y.\n"
-msgstr ""
+msgstr "    Кривые компрессора графически отображают компрессию для каждой полосы.  Полосы определяются при помощи кроссовера путём установки фейдеров кроссовера в HDEQ.  По оси X откладывается значение уровня громкости на входе (в Дб), а по оси Y - уровень громкости на выходе (в Дб).  Возможен диапазон от -60 до 0 по оси X и от -60 до +30 по оси Y.\n"
 
 #: src/callbacks_help.h:165
 msgid ""
@@ -969,7 +970,7 @@ msgid ""
 "    A full explanation of the use of these parameters is covered in the user manual.\n"
 "    Compressor controls can be \"ganged\" by clicking on the control label in the desired compressor band windows.  When they are ganged moving one control will move all other ganged controls by the same amount.  To ungang just click on the label again.  The labels change to the band color to indicate that they are ganged.\n"
 msgstr ""
-"    Здесь можно указать различные параметры компрессии для каждой полосы.  Полпосы определяются при помощи кроссовера путём установки фейдеров в HDEQ.  Вот эти параметры:\n"
+"    Здесь можно указать различные параметры компрессии для каждой полосы.  Полосы определяются при помощи кроссовера путём установки фейдеров в HDEQ.  Вот эти параметры:\n"
 "\n"
 "    A - атака в миллисекундах\n"
 "    R - затухание в миллисекундах\n"
@@ -984,7 +985,7 @@ msgstr ""
 
 #: src/callbacks_help.h:187
 msgid "    The stereo width controls define the apparent 'wideness' of the stereo signal for each of the three bands.  The bands are defined by the crossovers that can be set using the crossover faders or the crossover bars in the HDEQ.  More negative values decrease the 'width' while positive values increase the 'width'.  Clicking the right mouse button on the stereo width control will reset the value to 0.0.\n"
-msgstr ""
+msgstr "    Таким регулятором настраивается ширина стереобазы для каждой из трёх полос (сами полосы определяются при помощи кроссовера путём установки фейдеров кроссовера в HDEQ).  Чем меньше значение, тем \"уже\" стереобаза и наоборот. Щелчком правой кнопкой мыши по регулятору значение сбрасывается в 0.0.\n"
 
 #: src/callbacks_help.h:197
 msgid "    The lookahead limiter is a brickwall limiter that will not allow the output to exceed the set level.  It 'looks ahead' by the specified amount in order to make a smooth transition as it nears the limit level.  Clicking the right mouse button on the input or limit control will reset the value to 0.0.\n"
@@ -992,7 +993,7 @@ msgstr ""
 
 #: src/callbacks_help.h:206
 msgid "    The boost control allows the user to add 'tube like' gain to the output signal.  Use to taste (New England mild to Cajun spicy).  Clicking the right mouse button on the boost control will reset the value to 0.0.\n"
-msgstr ""
+msgstr "    Этот регулятор усиления позволяет усилить выходной сигнал, используя \"электроламповый\" алгоритм.  Использовать строго по вкусу.  Щелчком правой кнопкой мыши по регулятору значение сбрасывается в 0.0.\n"
 
 #: src/callbacks_help.h:213
 msgid "    The output control allows you to decrease the output level.  The upper level is 0dB.  Clicking the right mouse button on the output control will reset the value to 0.0.\n"
@@ -1000,7 +1001,7 @@ msgstr "    Регулятор выхода позволяет уменьшит�
 
 #: src/callbacks_help.h:220
 msgid "    The EQ Options dialog allows you to set the minimum and maximum gain level in dB for both the HDEQ and GEQ.  You can also set the source of the spectrum for both the HDEQ and spectrum windows.  Spectrum update frequency can be set here as well.  Up to 10 per second (default) and down to 0 (disabled).\n"
-msgstr ""
+msgstr "В диалоге \"Настройки EQ\" можно указать минимальный и максимальный уровни (в Дб) для HDEQ и GEQ.  Вы можете указать источник обсчёта спектра для окон HDEQ и спектрального анализа.  Здесь также указывается частота обновления спектрограммы: от 0 (.е. отключено) до 10 (по умолчанию( раз в секунду.\n"
 
 #: src/callbacks_help.h:229
 msgid "    Colors may be changed in the Options->Preferences dialog.  These colors are saved in the file $HOME/.jamin-defaults.  This is done whenever you exit from JAMin.  You can actually edit this file and change the colors by hand.  They are just RGB values in the 0-65535 range but it's much easier to use the GUI ;-).  You may also set the crossfade time in this dialog (see the man page for more information on crossfade time).\n"
@@ -1033,7 +1034,7 @@ msgstr "    Эта кнопка позволяет включить обход  
 
 #: src/callbacks_help.h:298
 msgid "    The solo buttons allow you to listen to selected bands while muting the other bands.  Selecting two of the solo buttons effectively mutes the remaining band.  The per band bypass buttons allow you to bypass compression on the selected bands.\n"
-msgstr ""
+msgstr "При помощи кнопки \"Соло\" можно оставить звучащей только одну полосу. Включение режима \"соло\" для любых двух полос означает звучание только этих полос и отключение оставшейся третьей.  Кнопки \"Обход\" позволяют отключить обработку компрессией на выбранных полосах.\n"
 
 #: src/callbacks_help.h:306
 msgid "    This button allows you to bypass limiting.  It has no effect on any of the other controls.\n"
@@ -1072,7 +1073,7 @@ msgstr ""
 "    Для многих действий в JAMin есть горячие клавиши:\n"
 "\n"
 "\tb\t\t\t-\tОбход\n"
-"\tSpace\t\t-\tВоспроизведение или пауза\n"
+"\tSpace\t\t-\tВоспроизвеcти или приостановить\n"
 "\tHome\t\t-\tПеремотать на начало\n"
 "\t<\t\t\t-\tПеремотать на 5 секунд назад.\n"
 "\t>\t\t\t-\tПеремотать на 5 секунд вперёд.\n"
@@ -1093,7 +1094,7 @@ msgstr ""
 " \t\t\t\t\tcurves\n"
 "\tF5\t\t\t-\tПерейти во вкладку EQ \n"
 " \t\t\t\t\tПараметры\n"
-"\t<Ctrl>-k\t\t-\tСправка по горячих клавишам\n"
+"\t<Ctrl>-k\t\t-\tСправка по горячим клавишам\n"
 " \t\t\t\t\t (которая сейчас отображается)\n"
 "\t<Ctrl>-j\t\t-\tО JAMin\n"
 
