@@ -24,7 +24,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.c,v 1.24 2004/04/08 15:37:37 joq Exp $
+ *  $Id: io-menu.c,v 1.25 2004/04/19 04:43:39 joq Exp $
  */
 
 #include <stdlib.h>
@@ -288,24 +288,25 @@ static int
 iomenu_check_input(const char *group)
 {
     const char **gports;
-    int rc = FALSE;
 
     if (client) {
-	    gports = jack_get_ports(client, group, JACK_DEFAULT_AUDIO_TYPE,
-				    JackPortIsOutput);
-	    if (gports) {
-		    int i;
-		    for (i = 0; input_ports[i] && gports[i]; ++i) {
-			    if (jack_port_connected_to(input_ports[i],
-						       gports[i])) {
-				    rc = TRUE;
-				    break;
-			    }
+	gports = jack_get_ports(client, group, JACK_DEFAULT_AUDIO_TYPE,
+				JackPortIsOutput);
+	if (gports) {
+	    int i, j;
+	    for (i = 0; input_ports[i]; ++i) {
+		for (j = 0; gports[j]; ++j) {
+		    if (jack_port_connected_to(input_ports[i],
+					       gports[j])) {
+			free(gports);
+			return TRUE;
 		    }
-		    free(gports);
+		}
 	    }
+	    free(gports);
+	}
     }
-    return rc;
+    return FALSE;
 }
 
 /* return TRUE if any output port is connected to this group */
@@ -313,25 +314,27 @@ static int
 iomenu_check_output(const char *group)
 {
     const char **gports;
-    int rc = FALSE;
 
     if (client) {
-	    gports = jack_get_ports(client, group, JACK_DEFAULT_AUDIO_TYPE,
-				    JackPortIsInput);
-	    if (gports) {
-		    int i;
-		    for (i = 0; output_ports[i] && gports[i]; ++i) {
-			    if (jack_port_connected_to(output_ports[i],
-						       gports[i])) {
-				    rc = TRUE;
-				    break;
-			    }
+	gports = jack_get_ports(client, group, JACK_DEFAULT_AUDIO_TYPE,
+				JackPortIsInput);
+	if (gports) {
+	    int i, j;
+	    for (i = 0; input_ports[i]; ++i) {
+		for (j = 0; gports[j]; ++j) {
+		    if (jack_port_connected_to(output_ports[i],
+					       gports[j])) {
+			free(gports);
+			return TRUE;
 		    }
-		    free(gports);
+		}
 	    }
+	    free(gports);
+	}
     }
-    return rc;
+    return FALSE;
 }
+
 
 /* add a group of JACK ports to the interface
  *
