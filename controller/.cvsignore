@@ -1,4 +1,8 @@
+*.la
+*.lo
 *.so.c
 .deps
+.libs
 Makefile
 Makefile.in
+jamincont_1912.c

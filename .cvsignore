@@ -8,5 +8,7 @@ config.log
 config.status
 configure
 jamin-*.tar.gz
+libtool
+ltmain.sh
 stamp-h.in
 stamp-h1

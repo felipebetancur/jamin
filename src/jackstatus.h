@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: jackstatus.h,v 1.7 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: jackstatus.h,v 1.8 2004/10/16 02:12:25 joq Exp $
  */
 
 #ifndef JACKSTATUS_H
@@ -27,8 +27,8 @@ typedef struct {
     jack_nframes_t sample_rate;
     jack_nframes_t buf_size;
     jack_nframes_t latency;
-} jack_status_t;
+} io_jack_status_t;
 
-void io_get_status(jack_status_t *jp);
+void io_get_status(io_jack_status_t *jp);
 
 #endif

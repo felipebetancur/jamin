@@ -38,7 +38,7 @@ void status_update(GtkWidget *main_window)
 {
     char *state_msg, *rt;
     gchar string[256];
-    jack_status_t j;
+    io_jack_status_t j;
 
     io_get_status(&j);
 

@@ -130,7 +130,7 @@ static jack_ringbuffer_t *in_rb[NCHANNELS];  /* input channel buffers */
 static jack_ringbuffer_t *out_rb[NCHANNELS]; /* output channel buffers */
 
 /* JACK connection data */
-jack_status_t jst = {0};		/* current JACK status */
+io_jack_status_t jst = {0};		/* current JACK status */
 jack_client_t *client;			/* JACK client structure */
 int nchannels = NCHANNELS;		/* actual number of channels */
 
@@ -277,7 +277,7 @@ void io_new_state(int next)
 
 
 /* io_get_status -- collect current JACK status. */
-void io_get_status(jack_status_t *jp)
+void io_get_status(io_jack_status_t *jp)
 {
     if (client)
 	jst.cpu_load = jack_cpu_load(client);
