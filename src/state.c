@@ -90,9 +90,8 @@ void s_set_value_ui(int id, float value)
     if (last_changed != id) {
 	s_history_add(g_strdup_printf("%s = %f", s_description[id],
 		      s_value[id]));
-    } else {
-	last_state->value[id] = value;
     }
+    last_state->value[id] = value;
 
 #if 0
     /* This code is confusing in use, so I've removed it - swh */
@@ -191,14 +190,15 @@ void s_undo()
 void s_redo() 
 {
     if (undo_pos) {
-	undo_pos = g_list_next(undo_pos);
+	if (undo_pos->next) {
+	    undo_pos = g_list_next(undo_pos);
+	    s_restore_state((s_state *)undo_pos->data);
+	}
     } else {
 	undo_pos = history;
+	undo_pos = g_list_next(undo_pos);
+	s_restore_state((s_state *)undo_pos->data);
     }
-    if (!undo_pos) {
-	return;
-    }
-    s_restore_state((s_state *)undo_pos->data);
 
     set_EQ_curve_values ();
 }

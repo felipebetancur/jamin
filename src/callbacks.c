@@ -1593,10 +1593,11 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
 
         /*  Redo  */
-
+/*
       case GDK_r:
         if (state == GDK_CONTROL_MASK) s_redo ();
         break;
+*/
 
 
         /*  Save As session  */
