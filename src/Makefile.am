@@ -36,6 +36,7 @@ jamin_SOURCES = \
 	stereo.c stereo.h \
 	support.c support.h \
 	transport.c transport.h
+	status-ui.c status-ui.h
 
 jamin_LDADD = @PACKAGE_LIBS@
 

@@ -584,3 +584,7 @@ forward_transport                      (GtkWidget       *widget,
 void
 on_low_knee_lbl_realize                (GtkWidget       *widget,
                                         gpointer         user_data);
+
+void
+on_boost_scale_value_changed           (GtkRange        *range,
+                                        gpointer         user_data);

@@ -14,6 +14,8 @@
 
 #define BUF_MASK   (BINS-1)		/* BINS is a power of two */
 
+#define LERP(f,a,b) ((a) + (f) * ((b) - (a)))
+
 /* These values need to be controlled by the UI, somehow */
 float xover_fa = 207.0f;
 float xover_fb = 2048.0f;
@@ -42,6 +44,9 @@ static float *out_tmp[NCHANNELS][XO_NBANDS];
 static float sw_m_gain[XO_NBANDS];
 static float sw_s_gain[XO_NBANDS];
 static float limiter_gain = 1.0f;
+
+static float ws_boost_wet = 0.0f;
+static float ws_boost_a = 1.0f;
 
 static int spectrum_mode = SPEC_POST_EQ;
 
@@ -316,6 +321,15 @@ int process_signal(jack_nframes_t nframes,
 
     //printf("run limiter...\n");
 
+    for (port = 0; port < nchannels; port++) {
+	for (pos = 0; pos < nframes; pos++) {
+	    const float x = out[port][pos];
+	    const float a = ws_boost_a;
+	    out[port][pos] = LERP(ws_boost_wet, x,
+		    x * (fabs(x) + a)/(x*x + (a - 1.0f) * fabs(x) + 1.0f) );
+	}
+    }
+
     /* If bypass is on override all the stuff done by the crossover section,
      * limiter and so on */
     if (global_bypass) {
@@ -390,6 +404,17 @@ void run_width(int xo_band, float *left, float *right, int nframes)
 void process_set_limiter_input_gain(float gain)
 {
         limiter_gain = gain;
+}
+
+void process_set_ws_boost(float val)
+{
+    if (val < 1.0f) {
+	ws_boost_wet = val;
+	ws_boost_a = 1.0f;
+    } else {
+	ws_boost_wet = 1.0f;
+	ws_boost_a = val;
+    }
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

@@ -49,6 +49,8 @@ void process_set_stereo_width(int xo_band, float width);
 
 void process_set_limiter_input_gain(float gain);
 
+void process_set_ws_boost(float val);
+
 void process_init(float fs, int buffer_size);
 
 int process_signal(jack_nframes_t nframes, int nchannels,

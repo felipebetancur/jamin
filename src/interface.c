@@ -404,6 +404,11 @@ create_window1 (void)
   GtkWidget *custom20;
   GtkWidget *lim_out_meter;
   GtkWidget *limiterlabel;
+  GtkWidget *frame26;
+  GtkWidget *hbox53;
+  GtkWidget *label316;
+  GtkWidget *boost_scale;
+  GtkWidget *boost_label;
   GtkWidget *hbox51;
   GtkWidget *outmeter_l;
   GtkWidget *hbox52;
@@ -2800,6 +2805,34 @@ create_window1 (void)
   gtk_frame_set_label_widget (GTK_FRAME (frame25), limiterlabel);
   gtk_label_set_justify (GTK_LABEL (limiterlabel), GTK_JUSTIFY_LEFT);
 
+  frame26 = gtk_frame_new (NULL);
+  gtk_widget_set_name (frame26, "frame26");
+  gtk_widget_show (frame26);
+  gtk_box_pack_start (GTK_BOX (right_bottom_vbox), frame26, FALSE, TRUE, 0);
+
+  hbox53 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox53, "hbox53");
+  gtk_widget_show (hbox53);
+  gtk_container_add (GTK_CONTAINER (frame26), hbox53);
+
+  label316 = gtk_label_new (_("Amount "));
+  gtk_widget_set_name (label316, "label316");
+  gtk_widget_show (label316);
+  gtk_box_pack_start (GTK_BOX (hbox53), label316, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label316), GTK_JUSTIFY_LEFT);
+
+  boost_scale = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 10, 0.25, 1, 0)));
+  gtk_widget_set_name (boost_scale, "boost_scale");
+  gtk_widget_show (boost_scale);
+  gtk_box_pack_start (GTK_BOX (hbox53), boost_scale, TRUE, TRUE, 0);
+  gtk_scale_set_value_pos (GTK_SCALE (boost_scale), GTK_POS_LEFT);
+
+  boost_label = gtk_label_new (_("Boost"));
+  gtk_widget_set_name (boost_label, "boost_label");
+  gtk_widget_show (boost_label);
+  gtk_frame_set_label_widget (GTK_FRAME (frame26), boost_label);
+  gtk_label_set_justify (GTK_LABEL (boost_label), GTK_JUSTIFY_LEFT);
+
   hbox51 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox51, "hbox51");
   gtk_widget_show (hbox51);
@@ -3101,6 +3134,9 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) lim_out_trim_scale, "value_changed",
                     G_CALLBACK (on_lim_out_trim_scale_value_changed),
+                    NULL);
+  g_signal_connect ((gpointer) boost_scale, "value_changed",
+                    G_CALLBACK (on_boost_scale_value_changed),
                     NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
@@ -3477,6 +3513,11 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, custom20, "custom20");
   GLADE_HOOKUP_OBJECT (window1, lim_out_meter, "lim_out_meter");
   GLADE_HOOKUP_OBJECT (window1, limiterlabel, "limiterlabel");
+  GLADE_HOOKUP_OBJECT (window1, frame26, "frame26");
+  GLADE_HOOKUP_OBJECT (window1, hbox53, "hbox53");
+  GLADE_HOOKUP_OBJECT (window1, label316, "label316");
+  GLADE_HOOKUP_OBJECT (window1, boost_scale, "boost_scale");
+  GLADE_HOOKUP_OBJECT (window1, boost_label, "boost_label");
   GLADE_HOOKUP_OBJECT (window1, hbox51, "hbox51");
   GLADE_HOOKUP_OBJECT (window1, outmeter_l, "outmeter_l");
   GLADE_HOOKUP_OBJECT (window1, hbox52, "hbox52");

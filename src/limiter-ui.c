@@ -12,10 +12,10 @@
 void li_changed(int id, float value);
 void lh_changed(int id, float value);
 void ll_changed(int id, float value);
+void boost_changed(int id, float value);
 
 static GtkAdjustment *lh_adj, *ll_adj;
 static GtkLabel *lh_label, *ll_label;
-
 
 static GtkMeter *in_meter, *att_meter, *out_meter;
 static GtkAdjustment *in_meter_adj, *att_meter_adj, *out_meter_adj;
@@ -39,7 +39,7 @@ void bind_limiter()
     s_set_callback(S_LIM_LIMIT, ll_changed);
 
     s_set_value(S_LIM_INPUT, 0.0f, 0);
-    s_set_value(S_LIM_TIME, 1.0f, 0);
+    s_set_value(S_LIM_TIME,  1.0f, 0);
     s_set_value(S_LIM_LIMIT, 0.0f, 0);
 
     in_meter = GTK_METER(lookup_widget(main_window, "lim_in_meter"));
@@ -48,6 +48,11 @@ void bind_limiter()
     in_meter_adj = gtk_meter_get_adjustment(in_meter);
     att_meter_adj = gtk_meter_get_adjustment(att_meter);
     out_meter_adj = gtk_meter_get_adjustment(out_meter);
+
+    /* Handle waveshaper boost stuff */
+    scale = lookup_widget(main_window, "boost_scale");
+    s_set_adjustment(S_BOOST, gtk_range_get_adjustment(GTK_RANGE(scale)));
+    s_set_callback(S_BOOST, boost_changed);
 }
 
 void li_changed(int id, float value)
@@ -78,6 +83,11 @@ void ll_changed(int id, float value)
 	        
     snprintf(text, 255, "%.1f dB", value);
     gtk_label_set_text(ll_label, text);
+}
+
+void boost_changed(int id, float value)
+{
+    process_set_ws_boost(value);
 }
 
 void limiter_meters_update()

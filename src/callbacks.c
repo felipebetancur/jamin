@@ -2744,3 +2744,12 @@ forward_transport                      (GtkWidget       *widget,
     transport_rewind();
     return FALSE;
 }
+
+void
+on_boost_scale_value_changed           (GtkRange        *range,
+                                        gpointer         user_data)
+{
+	s_set_value_ui(S_BOOST,
+			gtk_range_get_adjustment(GTK_RANGE(range))->value);
+}
+
