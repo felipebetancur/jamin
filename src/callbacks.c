@@ -25,6 +25,7 @@
 
 #define EQ_INTERP                     (BINS / 2 - 1)
 #define EQ_INTRVL                     (EQ_INTERP / (EQ_BANDS + 1))
+#define EQ_SPECTRUM_RANGE             90.0
 #define XOVER_HANDLE_SIZE             8
 #define XOVER_HANDLE_HALF_SIZE        (XOVER_HANDLE_SIZE / 2)
 
@@ -121,12 +122,12 @@ on_low2mid_value_changed               (GtkRange        *range,
     /*  Set the compressor labels.  */
 
     hvalue = pow (10.0, other_value);
-    sprintf (label, "Mid : %d - %d", NINT (lvalue), NINT (hvalue));
+    sprintf (label, _("Mid : %d - %d"), NINT (lvalue), NINT (hvalue));
     gtk_label_set_label (l_mid_comp_lbl, label);
 
     lvalue = pow (10.0, l_low2mid_adj->lower);
     mvalue = pow (10.0, value);
-    sprintf (label, "Low : %d - %d", NINT (lvalue), NINT (mvalue));
+    sprintf (label, _("Low : %d - %d"), NINT (lvalue), NINT (mvalue));
     gtk_label_set_label (l_low_comp_lbl, label);
 
     draw_EQ_curve ();
@@ -189,11 +190,11 @@ on_mid2high_value_changed              (GtkRange        *range,
     /*  Set the compressor labels.  */
 
     lvalue = pow (10.0, other_value);
-    sprintf (label, "Mid : %d - %d", NINT (lvalue), NINT (mvalue));
+    sprintf (label, _("Mid : %d - %d"), NINT (lvalue), NINT (mvalue));
     gtk_label_set_label (l_mid_comp_lbl, label);
 
     hvalue = pow (10.0, l_low2mid_adj->upper);
-    sprintf (label, "High : %d - %d", NINT (mvalue), NINT (hvalue));
+    sprintf (label, _("High : %d - %d"), NINT (mvalue), NINT (hvalue));
     gtk_label_set_label (l_high_comp_lbl, label);
 
     draw_EQ_curve ();
@@ -457,7 +458,12 @@ draw_EQ_spectrum_curve (float single_levels[])
             x[i] = NINT (((EQ_xinterp[i] - l_low2mid_adj->lower) / 
                           EQ_curve_range_x) * EQ_curve_width);
 
-            y[i] = NINT (-(lin2db(single_levels[i]) / 90.0f) * EQ_curve_height);
+
+            /*  Most of the single_level values will be in the -90.0db to 
+                -20.0db range.  We're using -90.0db to 0.0db as our range.  */
+
+            y[i] = NINT (-(lin2db(single_levels[i]) / EQ_SPECTRUM_RANGE) * 
+                EQ_curve_height);
 
             if (i) gdk_draw_line (EQ_drawable, EQ_gc, x[i - 1], y[i - 1], 
                                   x[i], y[i]);
@@ -666,11 +672,10 @@ on_EQ_curve_event_box_motion_notify_event
             (double) EQ_curve_height) * EQ_curve_range_y) + 
             l_eqb1_adj->lower;
 
-        s_gain = -(SPECTRUM_RANGE_DB - (((((double) EQ_curve_height - 
-            (double) y) / (double) EQ_curve_height) * SPECTRUM_RANGE_DB) + 
-            UPPER_SPECTRUM_DB));
+        s_gain = -(EQ_SPECTRUM_RANGE - (((((double) EQ_curve_height - 
+            (double) y) / (double) EQ_curve_height) * EQ_SPECTRUM_RANGE)));
 
-        sprintf (coords, "%dHz , EQ : %ddb , Spectrum : %ddb", NINT (freq), NINT (gain), 
+        sprintf (coords, _("%dHz , EQ : %ddb , Spectrum : %ddb"), NINT (freq), NINT (gain), 
             NINT (s_gain));
         gtk_label_set_text (l_EQ_curve_lbl, coords);
 
@@ -693,7 +698,7 @@ on_EQ_curve_event_box_motion_notify_event
 
                 if (EQ_yinput == NULL)
                   {
-                    perror ("Allocating EQ_yinput in callbacks.c");
+                    perror (_("Allocating EQ_yinput in callbacks.c"));
                     clean_quit ();
                   }
 
@@ -847,7 +852,7 @@ on_EQ_curve_event_box_button_release_event
 
             if (y == NULL)
               {
-                perror ("Allocating y in callbacks.c");
+                perror (_("Allocating y in callbacks.c"));
                 clean_quit ();
               }
 
@@ -864,7 +869,7 @@ on_EQ_curve_event_box_button_release_event
 
             if (y == NULL)
               {
-                perror ("Allocating y in callbacks.c");
+                perror (_("Allocating y in callbacks.c"));
                 clean_quit ();
               }
 
@@ -963,15 +968,15 @@ on_comp_kn_1_value_changed             (GtkRange        *range,
 
     if (value == 0.5)
       {
-        gtk_label_set_label (l_low_knee_lbl, "Knee");
+        gtk_label_set_label (l_low_knee_lbl, _("Knee"));
       }
     else if (value < 0.5)
       {
-        gtk_label_set_label (l_low_knee_lbl, "Hard");
+        gtk_label_set_label (l_low_knee_lbl, _("Hard"));
       }
     else
       {
-        gtk_label_set_label (l_low_knee_lbl, "Soft");
+        gtk_label_set_label (l_low_knee_lbl, _("Soft"));
       }
 }
 
@@ -1000,15 +1005,15 @@ on_comp_kn_2_value_changed             (GtkRange        *range,
 
     if (value == 0.5)
       {
-        gtk_label_set_label (l_mid_knee_lbl, "Knee");
+        gtk_label_set_label (l_mid_knee_lbl, _("Knee"));
       }
     else if (value < 0.5)
       {
-        gtk_label_set_label (l_mid_knee_lbl, "Hard");
+        gtk_label_set_label (l_mid_knee_lbl, _("Hard"));
       }
     else
       {
-        gtk_label_set_label (l_mid_knee_lbl, "Soft");
+        gtk_label_set_label (l_mid_knee_lbl, _("Soft"));
       }
 }
 
@@ -1037,15 +1042,15 @@ on_comp_kn_3_value_changed             (GtkRange        *range,
 
     if (value == 0.5)
       {
-        gtk_label_set_label (l_high_knee_lbl, "Knee");
+        gtk_label_set_label (l_high_knee_lbl, _("Knee"));
       }
     else if (value < 0.5)
       {
-        gtk_label_set_label (l_high_knee_lbl, "Hard");
+        gtk_label_set_label (l_high_knee_lbl, _("Hard"));
       }
     else
       {
-        gtk_label_set_label (l_high_knee_lbl, "Soft");
+        gtk_label_set_label (l_high_knee_lbl, _("Soft"));
       }
 }
 
