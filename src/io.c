@@ -629,11 +629,13 @@ void io_cleanup()
     };	
 
     if (DSP_STATE_IS(DSP_STOPPING)) {
+	jack_client_t *client_save = client;
 
-	jack_client_close(client);	/* leave the jack graph */
-	jst.active = 0;
+	/* MUST stop using JACK services before jack_client_close() */
 	client = NULL;
+	jst.active = 0;
 	io_new_state(DSP_STOPPED);
+	jack_client_close(client_save);	/* leave the jack graph */
 
 	/* free the ring buffers */
 	for (chan = 0; chan < nchannels; chan++) {
