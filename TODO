@@ -16,7 +16,7 @@ TODO (owner)
 - Commit documentation to CVS (Ron)
 - Finish context sensitive help verbiage (everyone)
 - set JACK port latencies correctly (Jack, Steve)
-- make "boost" less awful (Steve)
+- Correct for limiter latency in bypass
 
 
 TO THINK ABOUT
@@ -49,3 +49,4 @@ CLOSED (date)
 - fix xover points and undo interaction (2003/11/19)
 - make output gain work (2003/12/02)
 - make FFTW double warning scarier (2003/12/02)
+- make "boost" less awful (2003/12/03)
