@@ -122,11 +122,12 @@ static ringbuffer_t *out_rb[NCHANNELS];	/* output channel ring buffers */
 /* JACK connection data */
 jack_status_t jst = {0};		/* current JACK status */
 jack_client_t *client;			/* JACK client structure */
-static int nchannels = NCHANNELS;	/* actual number of channels */
-static jack_port_t *input_ports[NCHANNELS];
-static jack_port_t *output_ports[NCHANNELS];
-static char *in_names[NCHANNELS] = { "in_L", "in_R" };
-static char *out_names[NCHANNELS] = { "out_L", "out_R" };
+int nchannels = NCHANNELS;		/* actual number of channels */
+jack_port_t *input_ports[NCHANNELS];
+jack_port_t *output_ports[NCHANNELS];
+
+static char *in_names[NCHANNELS] = {"in_L", "in_R"};
+static char *out_names[NCHANNELS] = {"out_L", "out_R"};
 static char *iports[NCHANNELS] = {"", ""};
 static char *oports[NCHANNELS] = {"alsa_pcm:playback_1", "alsa_pcm:playback_2"};
 
@@ -296,7 +297,6 @@ void io_set_latency(int source, jack_nframes_t delay)
     /* Set JACK port latencies (after ports connected). */
     if (DSP_STATE_NOT(DSP_INIT|DSP_STOPPED))
 	for (chan = 0; chan < nchannels; chan++) {
-	    jack_port_set_latency(input_ports[chan], jst.latency);
 	    jack_port_set_latency(output_ports[chan], jst.latency);
 	}
 }

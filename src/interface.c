@@ -52,16 +52,8 @@ create_window1 (void)
   GtkWidget *paste1;
   GtkWidget *delete1;
   GtkWidget *image168;
-  GtkWidget *ports1;
-  GtkWidget *ports1_menu;
-  GtkWidget *in1;
-  GtkWidget *in1_menu;
-  GtkWidget *left_in;
-  GtkWidget *right_in;
-  GtkWidget *out1;
-  GtkWidget *out1_menu;
-  GtkWidget *left_out;
-  GtkWidget *right_out;
+  GtkWidget *jack_ports;
+  GtkWidget *jack_ports_menu;
   GtkWidget *menuitem4;
   GtkWidget *menuitem4_menu;
   GtkWidget *help1;
@@ -626,52 +618,14 @@ create_window1 (void)
   gtk_widget_show (image168);
   gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (delete1), image168);
 
-  ports1 = gtk_menu_item_new_with_mnemonic (_("Ports"));
-  gtk_widget_set_name (ports1, "ports1");
-  gtk_widget_show (ports1);
-  gtk_container_add (GTK_CONTAINER (menubar1), ports1);
+  jack_ports = gtk_menu_item_new_with_mnemonic (_("Ports"));
+  gtk_widget_set_name (jack_ports, "jack_ports");
+  gtk_widget_show (jack_ports);
+  gtk_container_add (GTK_CONTAINER (menubar1), jack_ports);
 
-  ports1_menu = gtk_menu_new ();
-  gtk_widget_set_name (ports1_menu, "ports1_menu");
-  gtk_menu_item_set_submenu (GTK_MENU_ITEM (ports1), ports1_menu);
-
-  in1 = gtk_menu_item_new_with_mnemonic (_("In"));
-  gtk_widget_set_name (in1, "in1");
-  gtk_widget_show (in1);
-  gtk_container_add (GTK_CONTAINER (ports1_menu), in1);
-
-  in1_menu = gtk_menu_new ();
-  gtk_widget_set_name (in1_menu, "in1_menu");
-  gtk_menu_item_set_submenu (GTK_MENU_ITEM (in1), in1_menu);
-
-  left_in = gtk_menu_item_new_with_mnemonic (_("Left"));
-  gtk_widget_set_name (left_in, "left_in");
-  gtk_widget_show (left_in);
-  gtk_container_add (GTK_CONTAINER (in1_menu), left_in);
-
-  right_in = gtk_menu_item_new_with_mnemonic (_("Right"));
-  gtk_widget_set_name (right_in, "right_in");
-  gtk_widget_show (right_in);
-  gtk_container_add (GTK_CONTAINER (in1_menu), right_in);
-
-  out1 = gtk_menu_item_new_with_mnemonic (_("Out"));
-  gtk_widget_set_name (out1, "out1");
-  gtk_widget_show (out1);
-  gtk_container_add (GTK_CONTAINER (ports1_menu), out1);
-
-  out1_menu = gtk_menu_new ();
-  gtk_widget_set_name (out1_menu, "out1_menu");
-  gtk_menu_item_set_submenu (GTK_MENU_ITEM (out1), out1_menu);
-
-  left_out = gtk_menu_item_new_with_mnemonic (_("Left"));
-  gtk_widget_set_name (left_out, "left_out");
-  gtk_widget_show (left_out);
-  gtk_container_add (GTK_CONTAINER (out1_menu), left_out);
-
-  right_out = gtk_menu_item_new_with_mnemonic (_("Right"));
-  gtk_widget_set_name (right_out, "right_out");
-  gtk_widget_show (right_out);
-  gtk_container_add (GTK_CONTAINER (out1_menu), right_out);
+  jack_ports_menu = gtk_menu_new ();
+  gtk_widget_set_name (jack_ports_menu, "jack_ports_menu");
+  gtk_menu_item_set_submenu (GTK_MENU_ITEM (jack_ports), jack_ports_menu);
 
   menuitem4 = gtk_menu_item_new_with_mnemonic (_("_Help"));
   gtk_widget_set_name (menuitem4, "menuitem4");
@@ -3305,26 +3259,8 @@ create_window1 (void)
   g_signal_connect ((gpointer) delete1, "activate",
                     G_CALLBACK (on_delete1_activate),
                     NULL);
-  g_signal_connect ((gpointer) ports1, "activate",
-                    G_CALLBACK (on_ports1_activate),
-                    NULL);
-  g_signal_connect ((gpointer) in1, "activate",
-                    G_CALLBACK (on_in1_activate),
-                    NULL);
-  g_signal_connect ((gpointer) left_in, "activate",
-                    G_CALLBACK (on_left1_activate),
-                    NULL);
-  g_signal_connect ((gpointer) right_in, "activate",
-                    G_CALLBACK (on_right1_activate),
-                    NULL);
-  g_signal_connect ((gpointer) out1, "activate",
-                    G_CALLBACK (on_out1_activate),
-                    NULL);
-  g_signal_connect ((gpointer) left_out, "activate",
-                    G_CALLBACK (on_left2_activate),
-                    NULL);
-  g_signal_connect ((gpointer) right_out, "activate",
-                    G_CALLBACK (on_right2_activate),
+  g_signal_connect ((gpointer) jack_ports, "activate",
+                    G_CALLBACK (on_jack_ports_activate),
                     NULL);
   g_signal_connect ((gpointer) help1, "activate",
                     G_CALLBACK (on_help1_activate),
@@ -3729,16 +3665,8 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, paste1, "paste1");
   GLADE_HOOKUP_OBJECT (window1, delete1, "delete1");
   GLADE_HOOKUP_OBJECT (window1, image168, "image168");
-  GLADE_HOOKUP_OBJECT (window1, ports1, "ports1");
-  GLADE_HOOKUP_OBJECT (window1, ports1_menu, "ports1_menu");
-  GLADE_HOOKUP_OBJECT (window1, in1, "in1");
-  GLADE_HOOKUP_OBJECT (window1, in1_menu, "in1_menu");
-  GLADE_HOOKUP_OBJECT (window1, left_in, "left_in");
-  GLADE_HOOKUP_OBJECT (window1, right_in, "right_in");
-  GLADE_HOOKUP_OBJECT (window1, out1, "out1");
-  GLADE_HOOKUP_OBJECT (window1, out1_menu, "out1_menu");
-  GLADE_HOOKUP_OBJECT (window1, left_out, "left_out");
-  GLADE_HOOKUP_OBJECT (window1, right_out, "right_out");
+  GLADE_HOOKUP_OBJECT (window1, jack_ports, "jack_ports");
+  GLADE_HOOKUP_OBJECT (window1, jack_ports_menu, "jack_ports_menu");
   GLADE_HOOKUP_OBJECT (window1, menuitem4, "menuitem4");
   GLADE_HOOKUP_OBJECT (window1, menuitem4_menu, "menuitem4_menu");
   GLADE_HOOKUP_OBJECT (window1, help1, "help1");

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io.h,v 1.9 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: io.h,v 1.10 2003/11/24 05:02:09 joq Exp $
  */
 
 #ifndef IO_H
@@ -26,6 +26,9 @@
 #define LAT_NSOURCES	3
 
 extern jack_client_t *client;		/* JACK client structure */
+extern int nchannels;			/* actual number of channels */
+extern jack_port_t *input_ports[];
+extern jack_port_t *output_ports[];
 
 void io_activate();
 void io_cleanup();

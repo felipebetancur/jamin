@@ -211,78 +211,14 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkMenuItem" id="ports1">
+	    <widget class="GtkMenuItem" id="jack_ports">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">Ports</property>
 	      <property name="use_underline">True</property>
-	      <signal name="activate" handler="on_ports1_activate" last_modification_time="Wed, 19 Nov 2003 07:15:15 GMT"/>
+	      <signal name="activate" handler="on_jack_ports_activate" last_modification_time="Sun, 23 Nov 2003 16:21:35 GMT"/>
 
 	      <child>
-		<widget class="GtkMenu" id="ports1_menu">
-
-		  <child>
-		    <widget class="GtkMenuItem" id="in1">
-		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">In</property>
-		      <property name="use_underline">True</property>
-		      <signal name="activate" handler="on_in1_activate" last_modification_time="Wed, 19 Nov 2003 07:15:15 GMT"/>
-
-		      <child>
-			<widget class="GtkMenu" id="in1_menu">
-
-			  <child>
-			    <widget class="GtkMenuItem" id="left_in">
-			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Left</property>
-			      <property name="use_underline">True</property>
-			      <signal name="activate" handler="on_left1_activate" last_modification_time="Wed, 19 Nov 2003 07:17:02 GMT"/>
-			    </widget>
-			  </child>
-
-			  <child>
-			    <widget class="GtkMenuItem" id="right_in">
-			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Right</property>
-			      <property name="use_underline">True</property>
-			      <signal name="activate" handler="on_right1_activate" last_modification_time="Wed, 19 Nov 2003 07:17:02 GMT"/>
-			    </widget>
-			  </child>
-			</widget>
-		      </child>
-		    </widget>
-		  </child>
-
-		  <child>
-		    <widget class="GtkMenuItem" id="out1">
-		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">Out</property>
-		      <property name="use_underline">True</property>
-		      <signal name="activate" handler="on_out1_activate" last_modification_time="Wed, 19 Nov 2003 07:15:38 GMT"/>
-
-		      <child>
-			<widget class="GtkMenu" id="out1_menu">
-
-			  <child>
-			    <widget class="GtkMenuItem" id="left_out">
-			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Left</property>
-			      <property name="use_underline">True</property>
-			      <signal name="activate" handler="on_left2_activate" last_modification_time="Wed, 19 Nov 2003 07:17:02 GMT"/>
-			    </widget>
-			  </child>
-
-			  <child>
-			    <widget class="GtkMenuItem" id="right_out">
-			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Right</property>
-			      <property name="use_underline">True</property>
-			      <signal name="activate" handler="on_right2_activate" last_modification_time="Wed, 19 Nov 2003 07:17:02 GMT"/>
-			    </widget>
-			  </child>
-			</widget>
-		      </child>
-		    </widget>
-		  </child>
+		<widget class="GtkMenu" id="jack_ports_menu">
 		</widget>
 	      </child>
 	    </widget>

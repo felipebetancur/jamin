@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.104 2003/11/21 13:09:39 jdepner Exp $
+ *  $Id: callbacks.c,v 1.105 2003/11/24 05:02:08 joq Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1610,61 +1610,13 @@ on_window1_key_press_event             (GtkWidget       *widget,
     return FALSE;
 }
 
-/* Ports menu */
+/* JACK Ports menubar pulldown */
 void
-on_ports1_activate                     (GtkMenuItem     *menuitem,
+on_jack_ports_activate                 (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-    fprintf(stderr, "Ports menu selected.\n");
-    iomenu_scan_port_names();
-}
-
-/* Ports>In menu */
-void
-on_in1_activate                        (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-    fprintf(stderr, "Ports>In menu selected.\n");
-}
-
-/* Ports>In>Left menu */
-void
-on_left1_activate                      (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-    fprintf(stderr, "Ports>In>Left menu selected.\n");
-}
-
-/* Ports>In>Right menu */
-void
-on_right1_activate                     (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-    fprintf(stderr, "Ports>In>Right menu selected.\n");
-}
-
-/* Ports>Out menu */
-void
-on_out1_activate                       (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-    fprintf(stderr, "Ports>Out menu selected.\n");
-}
-
-/* Ports>Out>Left menu */
-void
-on_left2_activate                      (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-    fprintf(stderr, "Ports>Out>Left menu selected.\n");
-}
-
-/* Ports>Out>Right menu */
-void
-on_right2_activate                     (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-    fprintf(stderr, "Ports>Out>Right menu selected.\n");
+    // fprintf(stderr, "JACK Ports menu selected.\n");
+    iomenu_pull_down_ports();
 }
 
 void

@@ -822,3 +822,7 @@ gboolean
 on_comp_button_press_event             (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
+
+void
+on_jack_ports_activate                 (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
