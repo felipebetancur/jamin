@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2003 Jan C. Depner
+ *  Copyright (C) 2003 Patrick Shirkey
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.c,v 1.3 2003/11/19 15:43:38 theno23 Exp $
+ *  $Id: io-menu.c,v 1.4 2003/11/20 06:53:01 jdepner Exp $
  */
 
 /* The JACK i/o ports for each channel are defined here */
@@ -34,7 +34,6 @@ GtkWidget *in_menu_l, *in_menu_r, *out_menu_l, *out_menu_r;
 GtkWidget *in_menuitem_l, *in_menuitem_r, *out_menuitem_l, *out_menuitem_r;
 GtkWidget *in_item_l, *in_item_r, *out_item_l, *out_item_r;
 
-static jack_client_t *client;
 const char **outports, **inports;
 unsigned int i;
 
@@ -43,13 +42,16 @@ unsigned int i;
 void bind_iomenu()
 {
     char in_lname[256], in_rname[256], out_lname[256], out_rname[256];
-//    inports = jack_get_ports(client, NULL, NULL, 0);
+    const char **port_list;
 
- //	for (i = 0; inports[i]; ++i) {
-//		printf ("%s\n", inports[i]);
-//	}
-//  const char *port_list[];
-//  port_list = jack_get_ports(client, NULL, JACK_DEFAULT_AUDIO_TYPE, 0);
+    inports = jack_get_ports (client, NULL, NULL, 0);
+
+    for (i = 0; inports[i]; ++i) {
+    	printf ("%s\n", inports[i]);
+    }
+    port_list = jack_get_ports(client, NULL, JACK_DEFAULT_AUDIO_TYPE, 0);
+
+
 /* Input ports */
 
 
