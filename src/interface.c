@@ -371,7 +371,7 @@ create_window1 (void)
   GtkWidget *label_High;
   GtkWidget *hbox28;
   GtkWidget *frame11;
-  GtkWidget *drawingarea3;
+  GtkWidget *comp_curve;
   GtkWidget *label220;
   GtkWidget *notebook2;
   GtkWidget *limiter_frame;
@@ -2519,11 +2519,11 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (hbox28), frame11, TRUE, TRUE, 0);
   gtk_frame_set_label_align (GTK_FRAME (frame11), 0.5, 0.5);
 
-  drawingarea3 = gtk_drawing_area_new ();
-  gtk_widget_set_name (drawingarea3, "drawingarea3");
-  gtk_widget_show (drawingarea3);
-  gtk_container_add (GTK_CONTAINER (frame11), drawingarea3);
-  gtk_widget_set_size_request (drawingarea3, 140, 140);
+  comp_curve = gtk_drawing_area_new ();
+  gtk_widget_set_name (comp_curve, "comp_curve");
+  gtk_widget_show (comp_curve);
+  gtk_container_add (GTK_CONTAINER (frame11), comp_curve);
+  gtk_widget_set_size_request (comp_curve, 140, 140);
 
   label220 = gtk_label_new (_("Compressor curves"));
   gtk_widget_set_name (label220, "label220");
@@ -2678,9 +2678,6 @@ create_window1 (void)
   g_signal_connect ((gpointer) EQ_curve_event_box, "button_release_event",
                     G_CALLBACK (on_EQ_curve_event_box_button_release_event),
                     NULL);
-  g_signal_connect ((gpointer) EQ_curve, "configure_event",
-                    G_CALLBACK (on_EQ_curve_configure_event),
-                    NULL);
   g_signal_connect ((gpointer) EQ_curve, "expose_event",
                     G_CALLBACK (on_EQ_curve_expose_event),
                     NULL);
@@ -2749,6 +2746,12 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) label_High, "realize",
                     G_CALLBACK (on_label_High_realize),
+                    NULL);
+  g_signal_connect ((gpointer) comp_curve, "expose_event",
+                    G_CALLBACK (on_comp_curve_expose_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_curve, "realize",
+                    G_CALLBACK (on_comp_curve_realize),
                     NULL);
   g_signal_connect ((gpointer) out_trim_scale, "value_changed",
                     G_CALLBACK (on_out_trim_scale_value_changed),
@@ -3101,7 +3104,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, label_High, "label_High");
   GLADE_HOOKUP_OBJECT (window1, hbox28, "hbox28");
   GLADE_HOOKUP_OBJECT (window1, frame11, "frame11");
-  GLADE_HOOKUP_OBJECT (window1, drawingarea3, "drawingarea3");
+  GLADE_HOOKUP_OBJECT (window1, comp_curve, "comp_curve");
   GLADE_HOOKUP_OBJECT (window1, label220, "label220");
   GLADE_HOOKUP_OBJECT (window1, notebook2, "notebook2");
   GLADE_HOOKUP_OBJECT (window1, limiter_frame, "limiter_frame");

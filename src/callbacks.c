@@ -13,6 +13,7 @@
 #include "interface.h"
 #include "support.h"
 #include "process.h"
+#include "compressor.h"
 #include "intrim.h"
 
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
@@ -30,19 +31,22 @@ static GtkWidget       *l_low_comp, *l_mid_comp, *l_high_comp;
 static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_low_comp_lbl, 
                        *l_mid_comp_lbl, *l_high_comp_lbl, *l_EQ_curve_lbl,
                        *l_low_knee_lbl, *l_mid_knee_lbl, *l_high_knee_lbl;
-static GtkDrawingArea  *l_EQ_curve;
-static GdkDrawable     *EQ_drawable;
+static GtkDrawingArea  *l_EQ_curve, *l_comp_curve;
+static GdkDrawable     *EQ_drawable, *comp_drawable;
 static GdkColormap     *colormap;
 static GdkColor        white, black, red, green, blue;
-static GdkGC           *norm_gc;
+static GdkGC           *EQ_gc, *comp_gc;
 static GtkAdjustment   *l_low2mid_adj, *l_eqb1_adj;
 static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
                        EQ_curve_height, EQ_xinterp[EQ_INTERP + 1], EQ_start, 
                        EQ_end, EQ_interval, EQ_yinterp[EQ_INTERP + 1], 
                        *EQ_xinput = NULL, *EQ_yinput = NULL, 
-                       l_geq_freqs[EQ_BANDS], l_geq_gains[EQ_BANDS];
+                       l_geq_freqs[EQ_BANDS], l_geq_gains[EQ_BANDS], 
+                       comp_curve_range_x, comp_curve_range_y, 
+                       comp_curve_width, comp_curve_height, comp_start_x,
+                       comp_start_y, comp_end_x;
 static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0, 
-                       EQ_length = 0;
+                       EQ_length = 0, comp_realized = 0;
 
 
 void
@@ -318,18 +322,9 @@ on_window1_show                        (GtkWidget       *widget,
 
     blue.red = 0;
     blue.green = 0;
-    blue.blue = 0;
+    blue.blue = 655350;
 
     gdk_colormap_alloc_color (colormap, &blue, FALSE, TRUE);
-}
-
-
-gboolean
-on_EQ_curve_configure_event            (GtkWidget       *widget,
-                                        GdkEventConfigure *event,
-                                        gpointer         user_data)
-{ 
-    return FALSE;
 }
 
 
@@ -351,10 +346,10 @@ draw_EQ_curve ()
 
     /*  Clear the curve drawing area.  */
 
-    gdk_gc_set_foreground (norm_gc, &white);
-    gdk_draw_rectangle (EQ_drawable, norm_gc, TRUE, 0, 0, EQ_curve_width, 
+    gdk_gc_set_foreground (EQ_gc, &white);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, 0, 0, EQ_curve_width, 
         EQ_curve_height);
-    gdk_gc_set_foreground (norm_gc, &black);
+    gdk_gc_set_foreground (EQ_gc, &black);
 
 
     /*  Draw the grid lines.  */
@@ -369,7 +364,7 @@ draw_EQ_curve ()
         x1 = NINT (((x[i] - l_low2mid_adj->lower) / EQ_curve_range_x) * 
             EQ_curve_width);
 
-        gdk_draw_line (EQ_drawable, norm_gc, x1, 0, x1, EQ_curve_height);
+        gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
       }
 
     inc = 10;
@@ -381,7 +376,7 @@ draw_EQ_curve ()
             y1 = EQ_curve_height - NINT (((i - l_eqb1_adj->lower) / 
                 EQ_curve_range_y) * EQ_curve_height);
 
-            gdk_draw_line (EQ_drawable, norm_gc, 0, y1, EQ_curve_width, y1);
+            gdk_draw_line (EQ_drawable, EQ_gc, 0, y1, EQ_curve_width, y1);
           }
       }
 
@@ -395,8 +390,8 @@ draw_EQ_curve ()
 
     /*  Plot the curve.  */
 
-    gdk_gc_set_foreground (norm_gc, &red);
-    gdk_gc_set_line_attributes (norm_gc, 2, GDK_LINE_SOLID, GDK_CAP_BUTT,
+    gdk_gc_set_foreground (EQ_gc, &red);
+    gdk_gc_set_line_attributes (EQ_gc, 2, GDK_LINE_SOLID, GDK_CAP_BUTT,
         GDK_JOIN_MITER);
     for (i = 0 ; i < EQ_length ; i++)
       {
@@ -407,14 +402,14 @@ draw_EQ_curve ()
             0.05) - l_eqb1_adj->lower) / EQ_curve_range_y) * 
             EQ_curve_height);
 
-        if (i) gdk_draw_line (EQ_drawable, norm_gc, x0, y0, x1, y1);
+        if (i) gdk_draw_line (EQ_drawable, EQ_gc, x0, y0, x1, y1);
 
         x0 = x1;
         y0 = y1;
       }
-    gdk_gc_set_line_attributes (norm_gc, 1, GDK_LINE_SOLID, GDK_CAP_BUTT,
+    gdk_gc_set_line_attributes (EQ_gc, 1, GDK_LINE_SOLID, GDK_CAP_BUTT,
         GDK_JOIN_MITER);
-    gdk_gc_set_foreground (norm_gc, &black);
+    gdk_gc_set_foreground (EQ_gc, &black);
 
     EQ_mod = 0;
 }
@@ -452,7 +447,7 @@ on_EQ_curve_realize                    (GtkWidget       *widget,
 
     EQ_drawable = widget->window;
 
-    norm_gc = widget->style->fg_gc[GTK_WIDGET_STATE (widget)];
+    EQ_gc = widget->style->fg_gc[GTK_WIDGET_STATE (widget)];
 
     geq_get_freqs_and_gains (l_geq_freqs, l_geq_gains);
 
@@ -518,7 +513,7 @@ on_EQ_curve_event_box_motion_notify_event
 
             if (!EQ_input_points || x > EQ_xinput[EQ_input_points - 1])
               {
-                if (EQ_input_points) gdk_draw_line (EQ_drawable, norm_gc, 
+                if (EQ_input_points) gdk_draw_line (EQ_drawable, EQ_gc, 
                     NINT (EQ_xinput[EQ_input_points - 1]), 
                     NINT (EQ_yinput[EQ_input_points - 1]), x, y);
 
@@ -872,6 +867,7 @@ on_in_trim_scale_value_changed         (GtkRange        *range,
     in_gain[1] = in_trim_gain * in_pan_gain[1];
 }
 
+
 void
 on_pan_scale_value_changed             (GtkRange        *range,
                                         gpointer         user_data)
@@ -884,3 +880,109 @@ on_pan_scale_value_changed             (GtkRange        *range,
     in_gain[1] = in_trim_gain * in_pan_gain[1];
     update_pan_label(balance);
 }
+
+
+void
+draw_comp_curve ()
+{
+    int              i, x0, y0 = 0.0, x1 = 0.0, y1 = 0.0;
+    float            x, y;
+    comp_settings    comp;
+
+
+    if (!comp_realized) return;
+
+
+    /*  Clear the curve drawing area.  */
+
+    gdk_gc_set_foreground (comp_gc, &white);
+    gdk_draw_rectangle (comp_drawable, comp_gc, TRUE, 0, 0, comp_curve_width, 
+        comp_curve_height);
+    gdk_gc_set_foreground (comp_gc, &black);
+
+
+    /*  Plot the curves.  */
+
+    gdk_gc_set_line_attributes (comp_gc, 2, GDK_LINE_SOLID, GDK_CAP_BUTT,
+        GDK_JOIN_MITER);
+    for (i = 0 ; i < 3 ; i++)
+      {
+        switch (i)
+          {
+          case 0:
+            gdk_gc_set_foreground (comp_gc, &red);
+            break;
+
+          case 1:
+            gdk_gc_set_foreground (comp_gc, &green);
+            break;
+
+          case 2:
+            gdk_gc_set_foreground (comp_gc, &blue);
+            break;
+          }
+
+        comp_get_settings (i, &comp);
+
+        x0 = 999.0;
+	for (x = comp_start_x ; x <= comp_end_x ; x += 0.5f) 
+          {
+            x1 = NINT (((x - comp_start_x) / comp_curve_range_x) * 
+                comp_curve_width);
+
+            y = eval_comp (comp.threshold, comp.ratio, comp.knee, x);
+
+            y1 = comp_curve_height - NINT (((y - comp_start_y) / 
+                comp_curve_range_y) * comp_curve_height);
+
+            if (x0 != 999.0) 
+                gdk_draw_line (comp_drawable, comp_gc, x0, y0, x1, y1);
+
+            x0 = x1;
+            y0 = y1;
+          }
+      }
+    gdk_gc_set_line_attributes (comp_gc, 1, GDK_LINE_SOLID, GDK_CAP_BUTT,
+        GDK_JOIN_MITER);
+    gdk_gc_set_foreground (comp_gc, &black);
+}
+
+
+gboolean
+on_comp_curve_expose_event             (GtkWidget       *widget,
+                                        GdkEventExpose  *event,
+                                        gpointer         user_data)
+{
+    comp_curve_range_x = 60.0;
+    comp_curve_range_y = 60.0;
+
+
+    /*  Since we're doing inclusive plots on the compressor curves we'll
+        not decrement the width and height.  */
+
+    comp_curve_width = widget->allocation.width;
+    comp_curve_height = widget->allocation.height;
+
+    comp_realized = 1;
+
+    draw_comp_curve ();
+
+    return FALSE;
+}
+
+
+void
+on_comp_curve_realize                  (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    l_comp_curve = (GtkDrawingArea *) widget;
+
+    comp_drawable = widget->window;
+
+    comp_start_x = -60.0;
+    comp_end_x = 0.0;
+    comp_start_y = -60.0;
+
+    comp_gc = widget->style->fg_gc[GTK_WIDGET_STATE (widget)];
+}
+

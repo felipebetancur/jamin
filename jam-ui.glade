@@ -2192,7 +2192,6 @@
 				    <widget class="GtkDrawingArea" id="EQ_curve">
 				      <property name="visible">True</property>
 				      <property name="events">GDK_POINTER_MOTION_MASK</property>
-				      <signal name="configure_event" handler="on_EQ_curve_configure_event" last_modification_time="Wed, 16 Apr 2003 20:41:52 GMT"/>
 				      <signal name="expose_event" handler="on_EQ_curve_expose_event" last_modification_time="Wed, 16 Apr 2003 20:41:58 GMT"/>
 				      <signal name="realize" handler="on_EQ_curve_realize" last_modification_time="Wed, 16 Apr 2003 20:42:05 GMT"/>
 				    </widget>
@@ -5358,10 +5357,12 @@
 			      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
 
 			      <child>
-				<widget class="GtkDrawingArea" id="drawingarea3">
+				<widget class="GtkDrawingArea" id="comp_curve">
 				  <property name="width_request">140</property>
 				  <property name="height_request">140</property>
 				  <property name="visible">True</property>
+				  <signal name="expose_event" handler="on_comp_curve_expose_event" last_modification_time="Tue, 22 Apr 2003 22:56:53 GMT"/>
+				  <signal name="realize" handler="on_comp_curve_realize" last_modification_time="Tue, 22 Apr 2003 22:56:59 GMT"/>
 				</widget>
 			      </child>
 

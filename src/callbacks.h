@@ -149,3 +149,17 @@ on_out_trim_scale_value_changed        (GtkRange        *range,
 void
 on_pan_scale_value_changed             (GtkRange        *range,
                                         gpointer         user_data);
+
+gboolean
+on_comp_curve_configure_event          (GtkWidget       *widget,
+                                        GdkEventConfigure *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_curve_expose_event             (GtkWidget       *widget,
+                                        GdkEventExpose  *event,
+                                        gpointer         user_data);
+
+void
+on_comp_curve_realize                  (GtkWidget       *widget,
+                                        gpointer         user_data);
