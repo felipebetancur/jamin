@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.11 2003/11/21 13:09:39 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.12 2003/12/01 12:09:22 kotau Exp $
  */
 
 char general_help[] = {
@@ -228,7 +228,7 @@ JAMin:\n\n\
 \tF1\t\t-\tSet the notebook tab to HDEQ\n\
 \tF2\t\t-\tSet the notebook tab to 30 band EQ\n\
 \tF3\t\t-\tSet the notebook tab to Spectrum\n\
-\tF4\t\t-\tSet the notebook tab to Compressor curves\n\
+\tF4\t\t-\tSet the notebook tab to Compressor \n \t\t\t\tcurves\n\
 \tF5\t\t-\tSet the notebook tab to the EQ Options\n\
 \t<Ctrl>-k\t-\tKeyboard accelerator help (this screen)\n\
 \t<Ctrl>-j\t-\tAbout JAMin\n"
