@@ -9,7 +9,7 @@ INCLUDES = \
 # TODO: figure out how to optimize hdeq if gcc version is not 2.95
 
 noinst_LIBRARIES	= libnopt.a
-libnopt_a_SOURCES	= interface.c interface.h hdeq.c hdeq.h
+libnopt_a_SOURCES	= interface.c interface.h
 libnopt_a_CFLAGS	= -g @JAMIN_CFLAGS@
 
 jamin_CFLAGS		= @CFLAGS_OPT@ @JAMIN_CFLAGS@
@@ -27,6 +27,7 @@ jamin_SOURCES = \
 	geq.c geq.h \
 	gtkmeter.c gtkmeter.h \
 	gtkmeterscale.c gtkmeterscale.h \
+	hdeq.c hdeq.h \
 	intrim.c intrim.h \
 	io.c io.h \
 	io-menu.c io-menu.h \
