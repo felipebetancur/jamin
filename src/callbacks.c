@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.101 2003/11/21 01:30:20 jdepner Exp $
+ *  $Id: callbacks.c,v 1.102 2003/11/21 02:16:55 joq Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1709,64 +1709,61 @@ on_window1_key_press_event             (GtkWidget       *widget,
     return FALSE;
 }
 
+/* Ports menu */
 void
 on_ports1_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-
+    fprintf(stderr, "Ports menu selected.\n");
 }
 
-
-
-void
-on_right1_activate                     (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-
-}
-
-
-void
-on_out1_activate                       (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-
-}
-
-
-void
-on_left2_activate                      (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-
-}
-
-
-
+/* Ports>In menu */
 void
 on_in1_activate                        (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-
+    fprintf(stderr, "Ports>In menu selected.\n");
 }
 
-
+/* Ports>In>Left menu */
 void
 on_left1_activate                      (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-
+    fprintf(stderr, "Ports>In>Left menu selected.\n");
 }
 
+/* Ports>In>Right menu */
+void
+on_right1_activate                     (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+    fprintf(stderr, "Ports>In>Right menu selected.\n");
+}
 
+/* Ports>Out menu */
+void
+on_out1_activate                       (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+    fprintf(stderr, "Ports>Out menu selected.\n");
+}
 
+/* Ports>Out>Left menu */
+void
+on_left2_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+    fprintf(stderr, "Ports>Out>Left menu selected.\n");
+}
+
+/* Ports>Out>Right menu */
 void
 on_right2_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-
+    fprintf(stderr, "Ports>Out>Right menu selected.\n");
 }
-
 
 void
 on_out_trim_scale_value_changed        (GtkRange        *range,
@@ -1776,4 +1773,3 @@ on_out_trim_scale_value_changed        (GtkRange        *range,
 
     set_scene_warning_button ();
 }
-

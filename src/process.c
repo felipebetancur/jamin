@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.28 2003/11/21 01:30:20 jdepner Exp $
+ *  $Id: process.c,v 1.29 2003/11/21 02:16:55 joq Exp $
  */
 
 #include <math.h>
@@ -27,6 +27,7 @@
 #include "compressor.h"
 #include "limiter.h"
 #include "geq.h"
+#include "scenes.h"
 #include "intrim.h"
 #include "io.h"
 

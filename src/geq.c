@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: geq.c,v 1.25 2003/11/21 01:30:20 jdepner Exp $
+ *  $Id: geq.c,v 1.26 2003/11/21 02:16:55 joq Exp $
  */
 
 /* code to control the graphic eq's, swh */
@@ -27,6 +27,7 @@
 #include "main.h"
 #include "db.h"
 #include "state.h"
+#include "scenes.h"
 #include "callbacks.h"
 
 GtkAdjustment *geqa[EQ_BANDS];
