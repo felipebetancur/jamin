@@ -2471,7 +2471,7 @@ make_mscale (gchar *widget_name, gchar *string1, gchar *string2,
 }
 
 void
-on_autoutton1_toggled                  (GtkToggleButton *togglebutton,
+on_autobutton1_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
     comp_set_auto(0, gtk_toggle_button_get_active(togglebutton));
@@ -2479,7 +2479,7 @@ on_autoutton1_toggled                  (GtkToggleButton *togglebutton,
 
 
 void
-on_autoutton2_toggled                  (GtkToggleButton *togglebutton,
+on_autobutton2_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
     comp_set_auto(1, gtk_toggle_button_get_active(togglebutton));
@@ -2487,7 +2487,7 @@ on_autoutton2_toggled                  (GtkToggleButton *togglebutton,
 
 
 void
-on_autoutton3_toggled                  (GtkToggleButton *togglebutton,
+on_autobutton3_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
     comp_set_auto(2, gtk_toggle_button_get_active(togglebutton));
@@ -2763,4 +2763,16 @@ rewind_transport                       (GtkWidget       *widget,
     transport_rewind();
     return FALSE;
 }
+
+
+gboolean
+forward_transport                      (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+
+    transport_rewind();
+    return FALSE;
+}
+
 

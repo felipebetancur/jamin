@@ -548,3 +548,55 @@ gboolean
 rewind_transport                       (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
+
+void
+on_autobutton1_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_autobutton2_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_autobutton3_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_autobutton1_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_autobutton2_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_autobutton3_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+gboolean
+play_toggle                            (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+stop_toggle                            (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+foward_transport                       (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+forward_transport                      (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+void
+on_comp_kn_1_value_changed             (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_low_knee_lbl_realize                (GtkWidget       *widget,
+                                        gpointer         user_data);
