@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: limiter-ui.h,v 1.2 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: limiter-ui.h,v 1.3 2005/02/06 23:31:12 jdepner Exp $
  */
 
 #ifndef LIMITER_UI_H
@@ -19,5 +19,7 @@
 
 void bind_limiter();
 void limiter_meters_update();
+void limiter_inmeter_reset_peak ();
+void limiter_outmeter_reset_peak ();
 
 #endif

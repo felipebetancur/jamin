@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: limiter-ui.c,v 1.15 2004/12/02 16:40:56 jdepner Exp $
+ *  $Id: limiter-ui.c,v 1.16 2005/02/06 23:31:12 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -117,6 +117,17 @@ void limiter_meters_update()
     gtk_adjustment_set_value(in_meter_adj, peak_in);
     gtk_adjustment_set_value(att_meter_adj, atten);
     gtk_adjustment_set_value(out_meter_adj, peak_out);
+}
+
+void limiter_inmeter_reset_peak ()
+{
+  gtk_meter_reset_peak (in_meter);
+}
+
+void limiter_outmeter_reset_peak ()
+{
+  gtk_meter_reset_peak (att_meter);
+  gtk_meter_reset_peak (out_meter);
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

@@ -1245,3 +1245,26 @@ on_IIRButton_clicked                   (GtkButton       *button,
 void
 on_preferences1_activate               (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
+
+gboolean
+on_inmeter_eventbox_button_press_event (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_outmeter_eventbox_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_lim_in_meter_eventbox_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_lim_out_meter_eventbox_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);

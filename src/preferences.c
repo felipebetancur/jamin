@@ -497,5 +497,5 @@ void pref_reset_all_colors ()
   set_color (&color[METER_NORMAL_COLOR], 0, 60000, 0);
   set_color (&color[METER_WARNING_COLOR], 50000, 55000, 0);
   set_color (&color[METER_OVER_COLOR], 60000, 0, 0);
-  set_color (&color[METER_PEAK_COLOR], 60000, 60000, 0);
+  set_color (&color[METER_PEAK_COLOR], 0, 0, 60000);
 }

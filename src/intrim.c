@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: intrim.c,v 1.14 2004/12/02 16:40:56 jdepner Exp $
+ *  $Id: intrim.c,v 1.15 2005/02/06 23:31:11 jdepner Exp $
  */
 
 #include <gtk/gtk.h>
@@ -117,6 +117,18 @@ void update_pan_label(float balance)
       sprintf(tmp, _("centre"));
     }
     gtk_label_set_label(pan_label, tmp);
+}
+
+void intrim_inmeter_reset_peak ()
+{
+  gtk_meter_reset_peak (in_meter[0]);
+  gtk_meter_reset_peak (in_meter[1]);
+}
+
+void intrim_outmeter_reset_peak ()
+{
+  gtk_meter_reset_peak (out_meter[0]);
+  gtk_meter_reset_peak (out_meter[1]);
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

@@ -134,6 +134,8 @@ create_window1 (void)
   GtkWidget *hbox14;
   GtkWidget *in_trim_scale_event_box;
   GtkWidget *in_trim_scale;
+  GtkWidget *inmeter_eventbox;
+  GtkWidget *inmeter_hbox;
   GtkWidget *inmeter_l;
   GtkWidget *custom15;
   GtkWidget *inmeter_r;
@@ -488,6 +490,7 @@ create_window1 (void)
   GtkWidget *hbox40;
   GtkWidget *label258;
   GtkWidget *lim_input_hscale;
+  GtkWidget *lim_in_meter_eventbox;
   GtkWidget *vbox158;
   GtkWidget *custom19;
   GtkWidget *lim_in_meter;
@@ -498,6 +501,7 @@ create_window1 (void)
   GtkWidget *lim_out_trim_scale;
   GtkWidget *label218;
   GtkWidget *label217;
+  GtkWidget *lim_out_meter_eventbox;
   GtkWidget *vbox159;
   GtkWidget *lim_att_meter;
   GtkWidget *custom20;
@@ -510,8 +514,9 @@ create_window1 (void)
   GtkWidget *output_eventbox;
   GtkWidget *hbox51;
   GtkWidget *out_trim_scale;
+  GtkWidget *outmeter_eventbox;
+  GtkWidget *outmeter_hbox;
   GtkWidget *outmeter_l;
-  GtkWidget *hbox52;
   GtkWidget *outscale_L;
   GtkWidget *outmeter_r;
   GtkWidget *bypass_button;
@@ -1123,10 +1128,20 @@ create_window1 (void)
   gtk_container_add (GTK_CONTAINER (in_trim_scale_event_box), in_trim_scale);
   gtk_range_set_inverted (GTK_RANGE (in_trim_scale), TRUE);
 
+  inmeter_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (inmeter_eventbox, "inmeter_eventbox");
+  gtk_widget_show (inmeter_eventbox);
+  gtk_box_pack_start (GTK_BOX (hbox14), inmeter_eventbox, FALSE, TRUE, 0);
+
+  inmeter_hbox = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (inmeter_hbox, "inmeter_hbox");
+  gtk_widget_show (inmeter_hbox);
+  gtk_container_add (GTK_CONTAINER (inmeter_eventbox), inmeter_hbox);
+
   inmeter_l = make_meter ("inmeter_l", NULL, NULL, -60, 6);
   gtk_widget_set_name (inmeter_l, "inmeter_l");
   gtk_widget_show (inmeter_l);
-  gtk_box_pack_start (GTK_BOX (hbox14), inmeter_l, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (inmeter_hbox), inmeter_l, TRUE, TRUE, 0);
   gtk_widget_set_size_request (inmeter_l, 15, 0);
   GTK_WIDGET_UNSET_FLAGS (inmeter_l, GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (inmeter_l, GTK_CAN_DEFAULT);
@@ -1134,7 +1149,7 @@ create_window1 (void)
   custom15 = make_mscale ("custom15", "left right", NULL, -60, 6);
   gtk_widget_set_name (custom15, "custom15");
   gtk_widget_show (custom15);
-  gtk_box_pack_start (GTK_BOX (hbox14), custom15, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (inmeter_hbox), custom15, TRUE, TRUE, 0);
   gtk_widget_set_size_request (custom15, 10, 0);
   GTK_WIDGET_UNSET_FLAGS (custom15, GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (custom15, GTK_CAN_DEFAULT);
@@ -1142,7 +1157,7 @@ create_window1 (void)
   inmeter_r = make_meter ("inmeter_r", NULL, NULL, -60, 6);
   gtk_widget_set_name (inmeter_r, "inmeter_r");
   gtk_widget_show (inmeter_r);
-  gtk_box_pack_start (GTK_BOX (hbox14), inmeter_r, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (inmeter_hbox), inmeter_r, TRUE, TRUE, 0);
   gtk_widget_set_size_request (inmeter_r, 15, 0);
   GTK_WIDGET_UNSET_FLAGS (inmeter_r, GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (inmeter_r, GTK_CAN_DEFAULT);
@@ -3219,10 +3234,15 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (hbox40), lim_input_hscale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (lim_input_hscale), GTK_POS_LEFT);
 
+  lim_in_meter_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (lim_in_meter_eventbox, "lim_in_meter_eventbox");
+  gtk_widget_show (lim_in_meter_eventbox);
+  gtk_box_pack_start (GTK_BOX (vbox105), lim_in_meter_eventbox, TRUE, FALSE, 0);
+
   vbox158 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox158, "vbox158");
   gtk_widget_show (vbox158);
-  gtk_box_pack_start (GTK_BOX (vbox105), vbox158, TRUE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (lim_in_meter_eventbox), vbox158);
   gtk_container_set_border_width (GTK_CONTAINER (vbox158), 1);
 
   custom19 = make_mscale ("custom19", "bottom", NULL, -40, 6);
@@ -3305,10 +3325,15 @@ create_window1 (void)
   gtk_label_set_justify (GTK_LABEL (label217), GTK_JUSTIFY_LEFT);
   gtk_misc_set_alignment (GTK_MISC (label217), 0, 0.5);
 
+  lim_out_meter_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (lim_out_meter_eventbox, "lim_out_meter_eventbox");
+  gtk_widget_show (lim_out_meter_eventbox);
+  gtk_box_pack_start (GTK_BOX (vbox105), lim_out_meter_eventbox, TRUE, FALSE, 0);
+
   vbox159 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox159, "vbox159");
   gtk_widget_show (vbox159);
-  gtk_box_pack_start (GTK_BOX (vbox105), vbox159, TRUE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (lim_out_meter_eventbox), vbox159);
   gtk_container_set_border_width (GTK_CONTAINER (vbox159), 1);
 
   lim_att_meter = make_meter ("lim_att_meter", "left", NULL, -20, 0);
@@ -3379,23 +3404,28 @@ create_window1 (void)
   gtk_widget_set_size_request (out_trim_scale, 35, 55);
   gtk_range_set_inverted (GTK_RANGE (out_trim_scale), TRUE);
 
+  outmeter_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (outmeter_eventbox, "outmeter_eventbox");
+  gtk_widget_show (outmeter_eventbox);
+  gtk_box_pack_start (GTK_BOX (hbox51), outmeter_eventbox, TRUE, TRUE, 0);
+
+  outmeter_hbox = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (outmeter_hbox, "outmeter_hbox");
+  gtk_widget_show (outmeter_hbox);
+  gtk_container_add (GTK_CONTAINER (outmeter_eventbox), outmeter_hbox);
+
   outmeter_l = make_meter ("outmeter_l", "up", NULL, -60, 6);
   gtk_widget_set_name (outmeter_l, "outmeter_l");
   gtk_widget_show (outmeter_l);
-  gtk_box_pack_start (GTK_BOX (hbox51), outmeter_l, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (outmeter_hbox), outmeter_l, TRUE, TRUE, 0);
   gtk_widget_set_size_request (outmeter_l, 15, 0);
   GTK_WIDGET_UNSET_FLAGS (outmeter_l, GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (outmeter_l, GTK_CAN_DEFAULT);
 
-  hbox52 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (hbox52, "hbox52");
-  gtk_widget_show (hbox52);
-  gtk_box_pack_start (GTK_BOX (hbox51), hbox52, TRUE, TRUE, 0);
-
   outscale_L = make_mscale ("outscale_L", "left right", NULL, -60, 6);
   gtk_widget_set_name (outscale_L, "outscale_L");
   gtk_widget_show (outscale_L);
-  gtk_box_pack_start (GTK_BOX (hbox52), outscale_L, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (outmeter_hbox), outscale_L, TRUE, TRUE, 0);
   gtk_widget_set_size_request (outscale_L, 10, 0);
   GTK_WIDGET_UNSET_FLAGS (outscale_L, GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (outscale_L, GTK_CAN_DEFAULT);
@@ -3403,7 +3433,7 @@ create_window1 (void)
   outmeter_r = make_meter ("outmeter_r", "up", NULL, -60, 6);
   gtk_widget_set_name (outmeter_r, "outmeter_r");
   gtk_widget_show (outmeter_r);
-  gtk_box_pack_start (GTK_BOX (hbox51), outmeter_r, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (outmeter_hbox), outmeter_r, TRUE, TRUE, 0);
   gtk_widget_set_size_request (outmeter_r, 15, 0);
   GTK_WIDGET_UNSET_FLAGS (outmeter_r, GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (outmeter_r, GTK_CAN_DEFAULT);
@@ -3560,6 +3590,9 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) in_trim_scale, "button_press_event",
                     G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) inmeter_eventbox, "button_press_event",
+                    G_CALLBACK (on_inmeter_eventbox_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) pan_scale, "value_changed",
                     G_CALLBACK (on_pan_scale_value_changed),
@@ -4002,6 +4035,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) lim_input_hscale, "button_press_event",
                     G_CALLBACK (reset_range),
                     NULL);
+  g_signal_connect ((gpointer) lim_in_meter_eventbox, "button_press_event",
+                    G_CALLBACK (on_lim_in_meter_eventbox_button_press_event),
+                    NULL);
   g_signal_connect ((gpointer) release_val_label, "realize",
                     G_CALLBACK (on_release_val_label_realize),
                     NULL);
@@ -4017,6 +4053,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) lim_out_trim_scale, "button_press_event",
                     G_CALLBACK (reset_range),
                     NULL);
+  g_signal_connect ((gpointer) lim_out_meter_eventbox, "button_press_event",
+                    G_CALLBACK (on_lim_out_meter_eventbox_button_press_event),
+                    NULL);
   g_signal_connect ((gpointer) limiter_bypass_event_box, "enter_notify_event",
                     G_CALLBACK (on_limiter_bypass_event_box_enter_notify_event),
                     NULL);
@@ -4031,6 +4070,9 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) out_trim_scale, "button_press_event",
                     G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) outmeter_eventbox, "button_press_event",
+                    G_CALLBACK (on_outmeter_eventbox_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) bypass_button, "toggled",
                     G_CALLBACK (on_bypass_button_toggled),
@@ -4144,6 +4186,8 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, hbox14, "hbox14");
   GLADE_HOOKUP_OBJECT (window1, in_trim_scale_event_box, "in_trim_scale_event_box");
   GLADE_HOOKUP_OBJECT (window1, in_trim_scale, "in_trim_scale");
+  GLADE_HOOKUP_OBJECT (window1, inmeter_eventbox, "inmeter_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, inmeter_hbox, "inmeter_hbox");
   GLADE_HOOKUP_OBJECT (window1, inmeter_l, "inmeter_l");
   GLADE_HOOKUP_OBJECT (window1, custom15, "custom15");
   GLADE_HOOKUP_OBJECT (window1, inmeter_r, "inmeter_r");
@@ -4498,6 +4542,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, hbox40, "hbox40");
   GLADE_HOOKUP_OBJECT (window1, label258, "label258");
   GLADE_HOOKUP_OBJECT (window1, lim_input_hscale, "lim_input_hscale");
+  GLADE_HOOKUP_OBJECT (window1, lim_in_meter_eventbox, "lim_in_meter_eventbox");
   GLADE_HOOKUP_OBJECT (window1, vbox158, "vbox158");
   GLADE_HOOKUP_OBJECT (window1, custom19, "custom19");
   GLADE_HOOKUP_OBJECT (window1, lim_in_meter, "lim_in_meter");
@@ -4508,6 +4553,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, lim_out_trim_scale, "lim_out_trim_scale");
   GLADE_HOOKUP_OBJECT (window1, label218, "label218");
   GLADE_HOOKUP_OBJECT (window1, label217, "label217");
+  GLADE_HOOKUP_OBJECT (window1, lim_out_meter_eventbox, "lim_out_meter_eventbox");
   GLADE_HOOKUP_OBJECT (window1, vbox159, "vbox159");
   GLADE_HOOKUP_OBJECT (window1, lim_att_meter, "lim_att_meter");
   GLADE_HOOKUP_OBJECT (window1, custom20, "custom20");
@@ -4520,8 +4566,9 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, output_eventbox, "output_eventbox");
   GLADE_HOOKUP_OBJECT (window1, hbox51, "hbox51");
   GLADE_HOOKUP_OBJECT (window1, out_trim_scale, "out_trim_scale");
+  GLADE_HOOKUP_OBJECT (window1, outmeter_eventbox, "outmeter_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, outmeter_hbox, "outmeter_hbox");
   GLADE_HOOKUP_OBJECT (window1, outmeter_l, "outmeter_l");
-  GLADE_HOOKUP_OBJECT (window1, hbox52, "hbox52");
   GLADE_HOOKUP_OBJECT (window1, outscale_L, "outscale_L");
   GLADE_HOOKUP_OBJECT (window1, outmeter_r, "outmeter_r");
   GLADE_HOOKUP_OBJECT (window1, bypass_button, "bypass_button");

@@ -1177,49 +1177,69 @@
 				      </child>
 
 				      <child>
-					<widget class="Custom" id="inmeter_l">
-					  <property name="width_request">15</property>
-					  <property name="height_request">0</property>
+					<widget class="GtkEventBox" id="inmeter_eventbox">
 					  <property name="visible">True</property>
-					  <property name="creation_function">make_meter</property>
-					  <property name="int1">-60</property>
-					  <property name="int2">6</property>
-					  <property name="last_modification_time">Sat, 26 Apr 2003 00:20:38 GMT</property>
-					</widget>
-					<packing>
-					  <property name="padding">0</property>
-					  <property name="expand">False</property>
-					  <property name="fill">True</property>
-					</packing>
-				      </child>
+					  <signal name="button_press_event" handler="on_inmeter_eventbox_button_press_event" last_modification_time="Sun, 06 Feb 2005 23:35:28 GMT"/>
 
-				      <child>
-					<widget class="Custom" id="custom15">
-					  <property name="width_request">10</property>
-					  <property name="height_request">0</property>
-					  <property name="visible">True</property>
-					  <property name="creation_function">make_mscale</property>
-					  <property name="string1">left right</property>
-					  <property name="int1">-60</property>
-					  <property name="int2">6</property>
-					  <property name="last_modification_time">Sat, 26 Apr 2003 19:56:11 GMT</property>
-					</widget>
-					<packing>
-					  <property name="padding">0</property>
-					  <property name="expand">False</property>
-					  <property name="fill">True</property>
-					</packing>
-				      </child>
+					  <child>
+					    <widget class="GtkHBox" id="inmeter_hbox">
+					      <property name="visible">True</property>
+					      <property name="homogeneous">False</property>
+					      <property name="spacing">0</property>
 
-				      <child>
-					<widget class="Custom" id="inmeter_r">
-					  <property name="width_request">15</property>
-					  <property name="height_request">0</property>
-					  <property name="visible">True</property>
-					  <property name="creation_function">make_meter</property>
-					  <property name="int1">-60</property>
-					  <property name="int2">6</property>
-					  <property name="last_modification_time">Sat, 26 Apr 2003 00:30:52 GMT</property>
+					      <child>
+						<widget class="Custom" id="inmeter_l">
+						  <property name="width_request">15</property>
+						  <property name="height_request">0</property>
+						  <property name="visible">True</property>
+						  <property name="creation_function">make_meter</property>
+						  <property name="int1">-60</property>
+						  <property name="int2">6</property>
+						  <property name="last_modification_time">Sat, 26 Apr 2003 00:20:38 GMT</property>
+						</widget>
+						<packing>
+						  <property name="padding">0</property>
+						  <property name="expand">True</property>
+						  <property name="fill">True</property>
+						</packing>
+					      </child>
+
+					      <child>
+						<widget class="Custom" id="custom15">
+						  <property name="width_request">10</property>
+						  <property name="height_request">0</property>
+						  <property name="visible">True</property>
+						  <property name="creation_function">make_mscale</property>
+						  <property name="string1">left right</property>
+						  <property name="int1">-60</property>
+						  <property name="int2">6</property>
+						  <property name="last_modification_time">Sat, 26 Apr 2003 19:56:11 GMT</property>
+						</widget>
+						<packing>
+						  <property name="padding">0</property>
+						  <property name="expand">True</property>
+						  <property name="fill">True</property>
+						</packing>
+					      </child>
+
+					      <child>
+						<widget class="Custom" id="inmeter_r">
+						  <property name="width_request">15</property>
+						  <property name="height_request">0</property>
+						  <property name="visible">True</property>
+						  <property name="creation_function">make_meter</property>
+						  <property name="int1">-60</property>
+						  <property name="int2">6</property>
+						  <property name="last_modification_time">Sat, 26 Apr 2003 00:30:52 GMT</property>
+						</widget>
+						<packing>
+						  <property name="padding">0</property>
+						  <property name="expand">True</property>
+						  <property name="fill">True</property>
+						</packing>
+					      </child>
+					    </widget>
+					  </child>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -6273,46 +6293,53 @@
 					      </child>
 
 					      <child>
-						<widget class="GtkVBox" id="vbox158">
-						  <property name="border_width">1</property>
+						<widget class="GtkEventBox" id="lim_in_meter_eventbox">
 						  <property name="visible">True</property>
-						  <property name="homogeneous">False</property>
-						  <property name="spacing">0</property>
+						  <signal name="button_press_event" handler="on_lim_in_meter_eventbox_button_press_event" last_modification_time="Sun, 06 Feb 2005 23:47:57 GMT"/>
 
 						  <child>
-						    <widget class="Custom" id="custom19">
-						      <property name="width_request">0</property>
-						      <property name="height_request">12</property>
+						    <widget class="GtkVBox" id="vbox158">
+						      <property name="border_width">1</property>
 						      <property name="visible">True</property>
-						      <property name="creation_function">make_mscale</property>
-						      <property name="string1">bottom</property>
-						      <property name="int1">-40</property>
-						      <property name="int2">6</property>
-						      <property name="last_modification_time">Sun, 04 May 2003 10:53:13 GMT</property>
-						    </widget>
-						    <packing>
-						      <property name="padding">0</property>
-						      <property name="expand">True</property>
-						      <property name="fill">True</property>
-						    </packing>
-						  </child>
+						      <property name="homogeneous">False</property>
+						      <property name="spacing">0</property>
 
-						  <child>
-						    <widget class="Custom" id="lim_in_meter">
-						      <property name="width_request">0</property>
-						      <property name="height_request">12</property>
-						      <property name="visible">True</property>
-						      <property name="creation_function">make_meter</property>
-						      <property name="string1">right</property>
-						      <property name="int1">-40</property>
-						      <property name="int2">6</property>
-						      <property name="last_modification_time">Sat, 26 Apr 2003 11:30:07 GMT</property>
+						      <child>
+							<widget class="Custom" id="custom19">
+							  <property name="width_request">0</property>
+							  <property name="height_request">12</property>
+							  <property name="visible">True</property>
+							  <property name="creation_function">make_mscale</property>
+							  <property name="string1">bottom</property>
+							  <property name="int1">-40</property>
+							  <property name="int2">6</property>
+							  <property name="last_modification_time">Sun, 04 May 2003 10:53:13 GMT</property>
+							</widget>
+							<packing>
+							  <property name="padding">0</property>
+							  <property name="expand">True</property>
+							  <property name="fill">True</property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="Custom" id="lim_in_meter">
+							  <property name="width_request">0</property>
+							  <property name="height_request">12</property>
+							  <property name="visible">True</property>
+							  <property name="creation_function">make_meter</property>
+							  <property name="string1">right</property>
+							  <property name="int1">-40</property>
+							  <property name="int2">6</property>
+							  <property name="last_modification_time">Sat, 26 Apr 2003 11:30:07 GMT</property>
+							</widget>
+							<packing>
+							  <property name="padding">0</property>
+							  <property name="expand">True</property>
+							  <property name="fill">True</property>
+							</packing>
+						      </child>
 						    </widget>
-						    <packing>
-						      <property name="padding">0</property>
-						      <property name="expand">True</property>
-						      <property name="fill">True</property>
-						    </packing>
 						  </child>
 						</widget>
 						<packing>
@@ -6481,64 +6508,71 @@
 					      </child>
 
 					      <child>
-						<widget class="GtkVBox" id="vbox159">
-						  <property name="border_width">1</property>
+						<widget class="GtkEventBox" id="lim_out_meter_eventbox">
 						  <property name="visible">True</property>
-						  <property name="homogeneous">False</property>
-						  <property name="spacing">0</property>
+						  <signal name="button_press_event" handler="on_lim_out_meter_eventbox_button_press_event" last_modification_time="Sun, 06 Feb 2005 23:48:41 GMT"/>
 
 						  <child>
-						    <widget class="Custom" id="lim_att_meter">
-						      <property name="width_request">0</property>
-						      <property name="height_request">12</property>
+						    <widget class="GtkVBox" id="vbox159">
+						      <property name="border_width">1</property>
 						      <property name="visible">True</property>
-						      <property name="creation_function">make_meter</property>
-						      <property name="string1">left</property>
-						      <property name="int1">-20</property>
-						      <property name="int2">0</property>
-						      <property name="last_modification_time">Sat, 26 Apr 2003 11:28:24 GMT</property>
-						    </widget>
-						    <packing>
-						      <property name="padding">0</property>
-						      <property name="expand">True</property>
-						      <property name="fill">True</property>
-						    </packing>
-						  </child>
+						      <property name="homogeneous">False</property>
+						      <property name="spacing">0</property>
 
-						  <child>
-						    <widget class="Custom" id="custom20">
-						      <property name="width_request">0</property>
-						      <property name="height_request">10</property>
-						      <property name="visible">True</property>
-						      <property name="creation_function">make_mscale</property>
-						      <property name="string1">top bottom</property>
-						      <property name="int1">-20</property>
-						      <property name="int2">0</property>
-						      <property name="last_modification_time">Sun, 04 May 2003 10:53:13 GMT</property>
-						    </widget>
-						    <packing>
-						      <property name="padding">0</property>
-						      <property name="expand">True</property>
-						      <property name="fill">True</property>
-						    </packing>
-						  </child>
+						      <child>
+							<widget class="Custom" id="lim_att_meter">
+							  <property name="width_request">0</property>
+							  <property name="height_request">12</property>
+							  <property name="visible">True</property>
+							  <property name="creation_function">make_meter</property>
+							  <property name="string1">left</property>
+							  <property name="int1">-20</property>
+							  <property name="int2">0</property>
+							  <property name="last_modification_time">Sat, 26 Apr 2003 11:28:24 GMT</property>
+							</widget>
+							<packing>
+							  <property name="padding">0</property>
+							  <property name="expand">True</property>
+							  <property name="fill">True</property>
+							</packing>
+						      </child>
 
-						  <child>
-						    <widget class="Custom" id="lim_out_meter">
-						      <property name="width_request">0</property>
-						      <property name="height_request">12</property>
-						      <property name="visible">True</property>
-						      <property name="creation_function">make_meter</property>
-						      <property name="string1">right</property>
-						      <property name="int1">-20</property>
-						      <property name="int2">0</property>
-						      <property name="last_modification_time">Sat, 26 Apr 2003 02:30:54 GMT</property>
+						      <child>
+							<widget class="Custom" id="custom20">
+							  <property name="width_request">0</property>
+							  <property name="height_request">10</property>
+							  <property name="visible">True</property>
+							  <property name="creation_function">make_mscale</property>
+							  <property name="string1">top bottom</property>
+							  <property name="int1">-20</property>
+							  <property name="int2">0</property>
+							  <property name="last_modification_time">Sun, 04 May 2003 10:53:13 GMT</property>
+							</widget>
+							<packing>
+							  <property name="padding">0</property>
+							  <property name="expand">True</property>
+							  <property name="fill">True</property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="Custom" id="lim_out_meter">
+							  <property name="width_request">0</property>
+							  <property name="height_request">12</property>
+							  <property name="visible">True</property>
+							  <property name="creation_function">make_meter</property>
+							  <property name="string1">right</property>
+							  <property name="int1">-20</property>
+							  <property name="int2">0</property>
+							  <property name="last_modification_time">Sat, 26 Apr 2003 02:30:54 GMT</property>
+							</widget>
+							<packing>
+							  <property name="padding">0</property>
+							  <property name="expand">True</property>
+							  <property name="fill">True</property>
+							</packing>
+						      </child>
 						    </widget>
-						    <packing>
-						      <property name="padding">0</property>
-						      <property name="expand">True</property>
-						      <property name="fill">True</property>
-						    </packing>
 						  </child>
 						</widget>
 						<packing>
@@ -6677,64 +6711,71 @@
 			      </child>
 
 			      <child>
-				<widget class="Custom" id="outmeter_l">
-				  <property name="width_request">15</property>
-				  <property name="height_request">0</property>
+				<widget class="GtkEventBox" id="outmeter_eventbox">
 				  <property name="visible">True</property>
-				  <property name="creation_function">make_meter</property>
-				  <property name="string1">up</property>
-				  <property name="int1">-60</property>
-				  <property name="int2">6</property>
-				  <property name="last_modification_time">Sat, 26 Apr 2003 02:44:13 GMT</property>
-				</widget>
-				<packing>
-				  <property name="padding">0</property>
-				  <property name="expand">True</property>
-				  <property name="fill">True</property>
-				</packing>
-			      </child>
-
-			      <child>
-				<widget class="GtkHBox" id="hbox52">
-				  <property name="visible">True</property>
-				  <property name="homogeneous">False</property>
-				  <property name="spacing">0</property>
+				  <signal name="button_press_event" handler="on_outmeter_eventbox_button_press_event" last_modification_time="Sun, 06 Feb 2005 23:46:34 GMT"/>
 
 				  <child>
-				    <widget class="Custom" id="outscale-L">
-				      <property name="width_request">10</property>
-				      <property name="height_request">0</property>
+				    <widget class="GtkHBox" id="outmeter_hbox">
 				      <property name="visible">True</property>
-				      <property name="creation_function">make_mscale</property>
-				      <property name="string1">left right</property>
-				      <property name="int1">-60</property>
-				      <property name="int2">6</property>
-				      <property name="last_modification_time">Sat, 26 Apr 2003 19:38:54 GMT</property>
-				    </widget>
-				    <packing>
-				      <property name="padding">0</property>
-				      <property name="expand">True</property>
-				      <property name="fill">True</property>
-				    </packing>
-				  </child>
-				</widget>
-				<packing>
-				  <property name="padding">0</property>
-				  <property name="expand">True</property>
-				  <property name="fill">True</property>
-				</packing>
-			      </child>
+				      <property name="homogeneous">False</property>
+				      <property name="spacing">0</property>
 
-			      <child>
-				<widget class="Custom" id="outmeter_r">
-				  <property name="width_request">15</property>
-				  <property name="height_request">0</property>
-				  <property name="visible">True</property>
-				  <property name="creation_function">make_meter</property>
-				  <property name="string1">up</property>
-				  <property name="int1">-60</property>
-				  <property name="int2">6</property>
-				  <property name="last_modification_time">Sat, 26 Apr 2003 02:44:13 GMT</property>
+				      <child>
+					<widget class="Custom" id="outmeter_l">
+					  <property name="width_request">15</property>
+					  <property name="height_request">0</property>
+					  <property name="visible">True</property>
+					  <property name="creation_function">make_meter</property>
+					  <property name="string1">up</property>
+					  <property name="int1">-60</property>
+					  <property name="int2">6</property>
+					  <property name="last_modification_time">Sat, 26 Apr 2003 02:44:13 GMT</property>
+					</widget>
+					<packing>
+					  <property name="padding">0</property>
+					  <property name="expand">True</property>
+					  <property name="fill">True</property>
+					</packing>
+				      </child>
+
+				      <child>
+					<widget class="Custom" id="outscale-L">
+					  <property name="width_request">10</property>
+					  <property name="height_request">0</property>
+					  <property name="visible">True</property>
+					  <property name="creation_function">make_mscale</property>
+					  <property name="string1">left right</property>
+					  <property name="int1">-60</property>
+					  <property name="int2">6</property>
+					  <property name="last_modification_time">Sat, 26 Apr 2003 19:38:54 GMT</property>
+					</widget>
+					<packing>
+					  <property name="padding">0</property>
+					  <property name="expand">True</property>
+					  <property name="fill">True</property>
+					</packing>
+				      </child>
+
+				      <child>
+					<widget class="Custom" id="outmeter_r">
+					  <property name="width_request">15</property>
+					  <property name="height_request">0</property>
+					  <property name="visible">True</property>
+					  <property name="creation_function">make_meter</property>
+					  <property name="string1">up</property>
+					  <property name="int1">-60</property>
+					  <property name="int2">6</property>
+					  <property name="last_modification_time">Sat, 26 Apr 2003 02:44:13 GMT</property>
+					</widget>
+					<packing>
+					  <property name="padding">0</property>
+					  <property name="expand">True</property>
+					  <property name="fill">True</property>
+					</packing>
+				      </child>
+				    </widget>
+				  </child>
 				</widget>
 				<packing>
 				  <property name="padding">0</property>

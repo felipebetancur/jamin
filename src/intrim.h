@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: intrim.h,v 1.5 2003/11/20 21:19:55 theno23 Exp $
+ *  $Id: intrim.h,v 1.6 2005/02/06 23:31:11 jdepner Exp $
  */
 
 #ifndef INTRIM_H
@@ -21,6 +21,8 @@ void bind_intrim();
 void in_meter_value(float amp[]);
 void out_meter_value(float amp[]);
 void update_pan_label(float balance);
+void intrim_inmeter_reset_peak();
+void intrim_outmeter_reset_peak();
 
 extern float in_gain[], out_gain;
 extern float in_trim_gain;

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.38 2004/10/23 11:26:58 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.39 2005/02/06 23:31:09 jdepner Exp $
  */
 
 #include "support.h"
@@ -143,14 +143,17 @@ mouse button on a GEQ control will reset the value to 0.0.\n")
 char input_help[] = {N_(
 "    The input section allows you to set the input gain to the JAMin system.  \
 You can also pan the input left or right.  Clicking the right mouse button on \
-the gain/balance control will reset the value to 0.0/centre.\n")
+the gain/balance control will reset the value to 0.0/centre.  Clicking the \
+right mouse button on the meters will reset the peak indicator to the current \
+level.\n")
 };
 
 
 char spectrum_help[] = {N_(
 "    The spectrum display shows the power spectrum of the signal in bands \
 that correspond to the frequency bands in the 30 band EQ (GEQ). In addition \
-it displays the maximum value reached for each band as a yellow line.\n")
+it displays the maximum value reached for each band as a (by default) blue \
+line.\n")
 };
 
 
@@ -204,7 +207,8 @@ char limiter_help[] = {N_(
 output to exceed the set level.  It \'looks ahead\' by the specified amount \
 in order to make a smooth transition as it nears the limit level.  Clicking \
 the right mouse button on the input or limit control will reset the value to \
-0.0.\n")
+0.0.  Clicking the right mouse button on the input or limit meters will \
+reset the peak indicator to the current level.\n")
 };
 
 
@@ -218,7 +222,8 @@ mouse button on the boost control will reset the value to 0.0.\n")
 char output_help[] = {N_(
 "    The output control allows you to decrease the output level.  The upper \
 level is 0dB.  Clicking the right mouse button on the output control will \
-reset the value to 0.0.\n")
+reset the value to 0.0.  Clicking the right mouse button on the meter will \
+reset the peak indicator to the current level.\n")
 };
 
 

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.159 2005/01/30 20:06:17 jdepner Exp $
+ *  $Id: callbacks.c,v 1.160 2005/02/06 23:31:08 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -2636,3 +2636,51 @@ on_IIRButton_clicked                   (GtkButton       *button,
 {
   process_set_crossover_type (IIR);
 }
+
+
+gboolean
+on_inmeter_eventbox_button_press_event (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  if (event->button == 3) intrim_inmeter_reset_peak ();
+
+  return FALSE;
+}
+
+
+gboolean
+on_outmeter_eventbox_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  if (event->button == 3) intrim_outmeter_reset_peak ();
+
+  return FALSE;
+}
+
+
+gboolean
+on_lim_in_meter_eventbox_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  if (event->button == 3) limiter_inmeter_reset_peak ();
+
+  return FALSE;
+}
+
+
+gboolean
+on_lim_out_meter_eventbox_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  if (event->button == 3) limiter_outmeter_reset_peak ();
+
+  return FALSE;
+}
+
