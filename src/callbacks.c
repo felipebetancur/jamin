@@ -665,7 +665,7 @@ on_release_val_label_realize           (GtkWidget       *widget,
 }
 
 void
-on_hscale2_value_changed               (GtkRange        *range,
+on_hscale_1_l_value_changed               (GtkRange        *range,
                                         gpointer         user_data)
 {
 	s_set_value_ui(S_STEREO_WIDTH(0),
@@ -674,7 +674,7 @@ on_hscale2_value_changed               (GtkRange        *range,
 
 
 void
-on_hscale2_realize                     (GtkWidget       *widget,
+on_hscale_1_l_realize                     (GtkWidget       *widget,
                                         gpointer         user_data)
 {
 	s_set_adjustment(S_STEREO_WIDTH(0),
@@ -683,7 +683,7 @@ on_hscale2_realize                     (GtkWidget       *widget,
 
 
 void
-on_hscale3_value_changed               (GtkRange        *range,
+on_hscale_1_m_value_changed               (GtkRange        *range,
                                         gpointer         user_data)
 {
 	s_set_value_ui(S_STEREO_WIDTH(1),
@@ -693,7 +693,7 @@ on_hscale3_value_changed               (GtkRange        *range,
 
 
 void
-on_hscale3_realize                     (GtkWidget       *widget,
+on_hscale_1_m_realize                     (GtkWidget       *widget,
                                         gpointer         user_data)
 {
 	s_set_adjustment(S_STEREO_WIDTH(1),
@@ -702,7 +702,7 @@ on_hscale3_realize                     (GtkWidget       *widget,
 
 
 void
-on_hscale4_value_changed               (GtkRange        *range,
+on_hscale_1_h_value_changed               (GtkRange        *range,
                                         gpointer         user_data)
 {
 	s_set_value_ui(S_STEREO_WIDTH(2),
@@ -711,7 +711,7 @@ on_hscale4_value_changed               (GtkRange        *range,
 
 
 void
-on_hscale4_realize                     (GtkWidget       *widget,
+on_hscale_1_h_realize                     (GtkWidget       *widget,
                                         gpointer         user_data)
 {
 	s_set_adjustment(S_STEREO_WIDTH(2),

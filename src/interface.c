@@ -3216,28 +3216,28 @@ create_window1 (void)
                     G_CALLBACK (on_autobutton_l_toggled),
                     NULL);
   g_signal_connect ((gpointer) hscale_1_l, "value_changed",
-                    G_CALLBACK (on_hscale3_value_changed),
+                    G_CALLBACK (on_hscale_1_l_value_changed),
                     NULL);
   g_signal_connect ((gpointer) hscale_1_l, "realize",
-                    G_CALLBACK (on_hscale3_realize),
+                    G_CALLBACK (on_hscale_1_l_realize),
                     NULL);
   g_signal_connect ((gpointer) autobutton_m, "toggled",
                     G_CALLBACK (on_autobutton_m_toggled),
                     NULL);
   g_signal_connect ((gpointer) hscale_1_m, "value_changed",
-                    G_CALLBACK (on_hscale3_value_changed),
+                    G_CALLBACK (on_hscale_1_m_value_changed),
                     NULL);
   g_signal_connect ((gpointer) hscale_1_m, "realize",
-                    G_CALLBACK (on_hscale3_realize),
+                    G_CALLBACK (on_hscale_1_m_realize),
                     NULL);
   g_signal_connect ((gpointer) autobutton_h, "toggled",
                     G_CALLBACK (on_autobutton_h_toggled),
                     NULL);
   g_signal_connect ((gpointer) hscale_1_h, "value_changed",
-                    G_CALLBACK (on_hscale3_value_changed),
+                    G_CALLBACK (on_hscale_1_h_value_changed),
                     NULL);
   g_signal_connect ((gpointer) hscale_1_h, "realize",
-                    G_CALLBACK (on_hscale3_realize),
+                    G_CALLBACK (on_hscale_1_h_realize),
                     NULL);
   g_signal_connect ((gpointer) limiter_eventbox, "enter_notify_event",
                     G_CALLBACK (on_limiter_eventbox_enter_notify_event),

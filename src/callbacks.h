@@ -329,30 +329,6 @@ on_mid2high_button_release_event      (GtkWidget       *widget,
                                         gpointer         user_data);
 
 void
-on_hscale2_value_changed               (GtkRange        *range,
-                                        gpointer         user_data);
-
-void
-on_hscale2_realize                     (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_hscale3_value_changed               (GtkRange        *range,
-                                        gpointer         user_data);
-
-void
-on_hscale3_realize                     (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_hscale4_value_changed               (GtkRange        *range,
-                                        gpointer         user_data);
-
-void
-on_hscale4_realize                     (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
 on_lim_input_hscale_value_changed      (GtkRange        *range,
                                         gpointer         user_data);
 
@@ -806,4 +782,28 @@ on_graph_tb_pressed                    (GtkButton       *button,
 gboolean
 on_cc_window_delete_event              (GtkWidget       *widget,
                                         GdkEvent        *event,
+                                        gpointer         user_data);
+
+void
+on_hscale_1_l_value_changed            (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_hscale_1_l_realize                  (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_hscale_1_m_value_changed            (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_hscale_1_m_realize                  (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_hscale_1_h_value_changed            (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_hscale_1_h_realize                  (GtkWidget       *widget,
                                         gpointer         user_data);

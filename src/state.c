@@ -159,7 +159,7 @@ static void s_history_add(const char *description)
     memcpy(ns->value, s_value, S_SIZE * sizeof(float));
     history = g_list_append(history, ns);
     undo_pos = g_list_last(history);
-    printf("add %s\n", description);
+    /* printf("add %s\n", description); */
     last_state = ns;
 }
 
@@ -178,7 +178,7 @@ void s_restore_state(s_state *state)
 {
     int i, duration;
 
-    printf("restore %s\n", state->description);
+    /* printf("restore %s\n", state->description); */
     duration = (int)sample_rate;
     suppress_feedback++;
     for (i=0; i<S_SIZE; i++) {

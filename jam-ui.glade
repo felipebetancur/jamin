@@ -4395,8 +4395,8 @@
 						  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						  <property name="inverted">False</property>
 						  <property name="adjustment">0 -1 1 0.1 0.1 0</property>
-						  <signal name="value_changed" handler="on_hscale3_value_changed" last_modification_time="Sun, 11 May 2003 09:12:55 GMT"/>
-						  <signal name="realize" handler="on_hscale3_realize" last_modification_time="Sun, 11 May 2003 09:13:03 GMT"/>
+						  <signal name="value_changed" handler="on_hscale_1_l_value_changed" last_modification_time="Wed, 27 Aug 2003 20:29:44 GMT"/>
+						  <signal name="realize" handler="on_hscale_1_l_realize" last_modification_time="Wed, 27 Aug 2003 20:29:54 GMT"/>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -4908,8 +4908,8 @@
 						  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						  <property name="inverted">False</property>
 						  <property name="adjustment">0 -1 1 0.1 0.1 0</property>
-						  <signal name="value_changed" handler="on_hscale3_value_changed" last_modification_time="Sun, 11 May 2003 09:12:55 GMT"/>
-						  <signal name="realize" handler="on_hscale3_realize" last_modification_time="Sun, 11 May 2003 09:13:03 GMT"/>
+						  <signal name="value_changed" handler="on_hscale_1_m_value_changed" last_modification_time="Wed, 27 Aug 2003 20:30:08 GMT"/>
+						  <signal name="realize" handler="on_hscale_1_m_realize" last_modification_time="Wed, 27 Aug 2003 20:30:15 GMT"/>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -5421,8 +5421,8 @@
 						  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						  <property name="inverted">False</property>
 						  <property name="adjustment">0 -1 1 0.1 0.1 0</property>
-						  <signal name="value_changed" handler="on_hscale3_value_changed" last_modification_time="Sun, 11 May 2003 09:12:55 GMT"/>
-						  <signal name="realize" handler="on_hscale3_realize" last_modification_time="Sun, 11 May 2003 09:13:03 GMT"/>
+						  <signal name="value_changed" handler="on_hscale_1_h_value_changed" last_modification_time="Wed, 27 Aug 2003 20:30:25 GMT"/>
+						  <signal name="realize" handler="on_hscale_1_h_realize" last_modification_time="Wed, 27 Aug 2003 20:30:32 GMT"/>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
