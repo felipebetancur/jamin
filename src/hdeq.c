@@ -144,8 +144,8 @@ static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0,
                        EQ_length = 0, comp_realized[3] = {0, 0, 0}, 
                        EQ_cleared = 1, EQ_realized = 0, xover_active = 0,
                        xover_handle_l2m, xover_handle_m2h, EQ_drag_l2m = 0,
-                       EQ_drag_m2h = 0, EQ_partial = 0, part_x[2], part_y[2],
-                       EQ_notch_drag[NOTCHES], EQ_notch_Q_drag[NOTCHES],
+                       EQ_drag_m2h = 0, EQ_exposed = 0, EQ_notch_drag[NOTCHES],
+                       EQ_notch_Q_drag[NOTCHES], 
                        EQ_notch_handle[2][3][NOTCHES], EQ_notch_width[NOTCHES],
                        EQ_notch_index[NOTCHES], EQ_notch_flag[NOTCHES];
 static guint           notebook1_page = 0;
@@ -576,6 +576,12 @@ void draw_EQ_spectrum_curve (float single_levels[])
 
     if (!EQ_drawing && !xover_active)
       {
+        /*  If we've just had an expose event we want to make sure that we
+            redraw the entire screen.  */
+
+        if(EQ_exposed) draw_EQ_curve ();
+
+
         /*  Plot the curve in the XOR graphics plane so we can erase it by
             drawing it a second time.  */
 
@@ -586,26 +592,20 @@ void draw_EQ_spectrum_curve (float single_levels[])
 
 
         /*  If we've just cleared (redrawn) the curve, don't erase the previous
-            line.  This doesn't work completely correctly in the case of
-            expose callbacks.  I'm not sure what the disconnect is.  The 
-            EQ_partial flag is used if we've done a partial expose.  */
+            line.  */
 
-        if (EQ_partial || !EQ_cleared)
+        if (!EQ_exposed && !EQ_cleared)
           {
             /*  Since we're in the XOR graphics plane we're erasing by XOR'ing
                 a second copy over the first (i.e. redrawing).  */
 
             for (i = 1 ; i < EQ_INTERP ; i++)
               {
-                if (!EQ_partial || x[i] < part_x[0] || x[i] > part_x[1] ||
-                    y[i] < part_y[0] || y[i] > part_y[1])
-                  {
-                    gdk_draw_line (EQ_drawable, EQ_gc, x[i - 1], y[i - 1], 
-                                   x[i], y[i]);
-                  }
+                gdk_draw_line (EQ_drawable, EQ_gc, x[i - 1], y[i - 1], x[i], 
+                               y[i]);
               }
           }
-        EQ_partial = 0;
+        EQ_exposed = 0;
 
 
         /*  Convert the single levels to db, plot, and save the pixel positions
@@ -1170,22 +1170,10 @@ void hdeq_curve_exposed (GtkWidget *widget, GdkEventExpose *event)
     EQ_curve_height = widget->allocation.height - 1;
 
 
-    /*  If we only get part of the window exposed we don't want to redraw the
-        entire spectrum.  */
+    /*  Set the flag to let the spectrum drawing function that we've just
+        been exposed (oh my).  */
 
-    if (event->area.height != widget->allocation.height ||
-        event->area.width != widget->allocation.width ||
-        event->area.x != widget->allocation.x ||
-        event->area.y != widget->allocation.y) EQ_partial = 1;
-
-    part_x[0] = event->area.x;
-    part_y[0] = event->area.y;
-    part_x[1] = part_x[0] + event->area.width;
-    part_y[1] = part_y[0] + event->area.height;
-
-
-    /*  Redraw the curve.  */
-
+    EQ_exposed = 1;
     draw_EQ_curve ();
 
 
