@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.c,v 1.5 2003/11/20 19:30:03 kotau Exp $
+ *  $Id: io-menu.c,v 1.6 2003/11/20 19:56:25 jdepner Exp $
  */
 
 /* The JACK i/o ports for each channel are defined here */
@@ -54,12 +54,12 @@ GtkWidget   *menuitem,
 	    *out_item_ll[256], 
 	    *out_item_rr[256];
 
-GList *group_in_l = NULL;
-GList *group_in_r = NULL;
-GList *group_out_l = NULL;
-GList *group_out_r = NULL;
+GSList *group_in_l = NULL;
+GSList *group_in_r = NULL;
+GSList *group_out_l = NULL;
+GSList *group_out_r = NULL;
 
-char **outports, **inports;
+const char **outports, **inports;
 unsigned int i;
 
 
@@ -70,7 +70,7 @@ void bind_iomenu()
 
 /* Find Generic ports menuitem */
 
-	snprintf(name, 255, "ports");
+	snprintf(name, 255, "ports1");
 	menuitem = lookup_widget(main_window, name);
 	
 /* In/Out menu items */
