@@ -294,6 +294,9 @@ create_window1 (void)
   GtkWidget *comp3_curve;
   GtkWidget *high_curve_lbl;
   GtkWidget *label317;
+  GtkWidget *hbox59;
+  GtkWidget *eq_bypass_event_box;
+  GtkWidget *eq_bypass;
   GtkWidget *crossover_label_eventbox;
   GtkWidget *hbox48;
   GtkWidget *low2mid_lbl;
@@ -359,6 +362,7 @@ create_window1 (void)
   GtkWidget *low_balance_hbox;
   GtkWidget *low_balance_label;
   GtkWidget *low_balance_scale;
+  GtkWidget *low_band_button_event_box;
   GtkWidget *low_band_button_hbox;
   GtkWidget *low_solo;
   GtkWidget *low_bypass;
@@ -412,6 +416,7 @@ create_window1 (void)
   GtkWidget *mid_balance_hbox;
   GtkWidget *mid_balance_label;
   GtkWidget *mid_balance_scale;
+  GtkWidget *mid_band_button_event_box;
   GtkWidget *mid_band_button_hbox;
   GtkWidget *mid_solo;
   GtkWidget *mid_bypass;
@@ -465,6 +470,7 @@ create_window1 (void)
   GtkWidget *high_balance_hbox;
   GtkWidget *high_balance_label;
   GtkWidget *high_balance_scale;
+  GtkWidget *high_band_button_event_box;
   GtkWidget *high_band_button_hbox;
   GtkWidget *high_solo;
   GtkWidget *high_bypass;
@@ -491,6 +497,8 @@ create_window1 (void)
   GtkWidget *lim_att_meter;
   GtkWidget *custom20;
   GtkWidget *lim_out_meter;
+  GtkWidget *limiter_bypass_event_box;
+  GtkWidget *limiter_bypass;
   GtkWidget *limiterlabel;
   GtkWidget *boost_eventbox;
   GtkWidget *frame26;
@@ -2075,10 +2083,25 @@ create_window1 (void)
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 3), label317);
   gtk_label_set_justify (GTK_LABEL (label317), GTK_JUSTIFY_LEFT);
 
+  hbox59 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox59, "hbox59");
+  gtk_widget_show (hbox59);
+  gtk_box_pack_start (GTK_BOX (vbox78), hbox59, FALSE, FALSE, 0);
+
+  eq_bypass_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (eq_bypass_event_box, "eq_bypass_event_box");
+  gtk_widget_show (eq_bypass_event_box);
+  gtk_box_pack_start (GTK_BOX (hbox59), eq_bypass_event_box, FALSE, FALSE, 0);
+
+  eq_bypass = gtk_check_button_new_with_mnemonic (_("EQ bypass"));
+  gtk_widget_set_name (eq_bypass, "eq_bypass");
+  gtk_widget_show (eq_bypass);
+  gtk_container_add (GTK_CONTAINER (eq_bypass_event_box), eq_bypass);
+
   crossover_label_eventbox = gtk_event_box_new ();
   gtk_widget_set_name (crossover_label_eventbox, "crossover_label_eventbox");
   gtk_widget_show (crossover_label_eventbox);
-  gtk_box_pack_start (GTK_BOX (vbox78), crossover_label_eventbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox59), crossover_label_eventbox, TRUE, TRUE, 0);
 
   hbox48 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox48, "hbox48");
@@ -2465,10 +2488,15 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (low_balance_hbox), low_balance_scale, TRUE, TRUE, 0);
   gtk_scale_set_draw_value (GTK_SCALE (low_balance_scale), FALSE);
 
+  low_band_button_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (low_band_button_event_box, "low_band_button_event_box");
+  gtk_widget_show (low_band_button_event_box);
+  gtk_box_pack_start (GTK_BOX (low_band_vbox), low_band_button_event_box, TRUE, TRUE, 0);
+
   low_band_button_hbox = gtk_hbox_new (TRUE, 0);
   gtk_widget_set_name (low_band_button_hbox, "low_band_button_hbox");
   gtk_widget_show (low_band_button_hbox);
-  gtk_box_pack_start (GTK_BOX (low_band_vbox), low_band_button_hbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (low_band_button_event_box), low_band_button_hbox);
 
   low_solo = gtk_check_button_new_with_mnemonic (_("Solo"));
   gtk_widget_set_name (low_solo, "low_solo");
@@ -2782,10 +2810,15 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (mid_balance_hbox), mid_balance_scale, TRUE, TRUE, 0);
   gtk_scale_set_draw_value (GTK_SCALE (mid_balance_scale), FALSE);
 
+  mid_band_button_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (mid_band_button_event_box, "mid_band_button_event_box");
+  gtk_widget_show (mid_band_button_event_box);
+  gtk_box_pack_start (GTK_BOX (mid_band_vbox), mid_band_button_event_box, TRUE, TRUE, 0);
+
   mid_band_button_hbox = gtk_hbox_new (TRUE, 0);
   gtk_widget_set_name (mid_band_button_hbox, "mid_band_button_hbox");
   gtk_widget_show (mid_band_button_hbox);
-  gtk_box_pack_start (GTK_BOX (mid_band_vbox), mid_band_button_hbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (mid_band_button_event_box), mid_band_button_hbox);
 
   mid_solo = gtk_check_button_new_with_mnemonic (_("Solo"));
   gtk_widget_set_name (mid_solo, "mid_solo");
@@ -3099,10 +3132,15 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (high_balance_hbox), high_balance_scale, TRUE, TRUE, 0);
   gtk_scale_set_draw_value (GTK_SCALE (high_balance_scale), FALSE);
 
+  high_band_button_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (high_band_button_event_box, "high_band_button_event_box");
+  gtk_widget_show (high_band_button_event_box);
+  gtk_box_pack_start (GTK_BOX (high_band_vbox), high_band_button_event_box, TRUE, TRUE, 0);
+
   high_band_button_hbox = gtk_hbox_new (TRUE, 0);
   gtk_widget_set_name (high_band_button_hbox, "high_band_button_hbox");
   gtk_widget_show (high_band_button_hbox);
-  gtk_box_pack_start (GTK_BOX (high_band_vbox), high_band_button_hbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (high_band_button_event_box), high_band_button_hbox);
 
   high_solo = gtk_check_button_new_with_mnemonic (_("Solo"));
   gtk_widget_set_name (high_solo, "high_solo");
@@ -3282,6 +3320,16 @@ create_window1 (void)
   gtk_widget_set_size_request (lim_out_meter, 0, 12);
   GTK_WIDGET_UNSET_FLAGS (lim_out_meter, GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (lim_out_meter, GTK_CAN_DEFAULT);
+
+  limiter_bypass_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (limiter_bypass_event_box, "limiter_bypass_event_box");
+  gtk_widget_show (limiter_bypass_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox105), limiter_bypass_event_box, FALSE, FALSE, 0);
+
+  limiter_bypass = gtk_check_button_new_with_mnemonic (_("Limiter bypass"));
+  gtk_widget_set_name (limiter_bypass, "limiter_bypass");
+  gtk_widget_show (limiter_bypass);
+  gtk_container_add (GTK_CONTAINER (limiter_bypass_event_box), limiter_bypass);
 
   limiterlabel = gtk_label_new (_("Limiter"));
   gtk_widget_set_name (limiterlabel, "limiterlabel");
@@ -3722,6 +3770,12 @@ create_window1 (void)
   g_signal_connect ((gpointer) comp3_curve, "realize",
                     G_CALLBACK (on_comp3_curve_realize),
                     NULL);
+  g_signal_connect ((gpointer) eq_bypass_event_box, "enter_notify_event",
+                    G_CALLBACK (on_eq_bypass_event_box_enter_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) eq_bypass, "toggled",
+                    G_CALLBACK (on_eq_bypass_toggled),
+                    NULL);
   g_signal_connect ((gpointer) crossover_label_eventbox, "enter_notify_event",
                     G_CALLBACK (on_crossover_eventbox_enter_notify_event),
                     NULL);
@@ -3821,6 +3875,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) low_balance_scale, "button_press_event",
                     G_CALLBACK (reset_range),
                     NULL);
+  g_signal_connect ((gpointer) low_band_button_event_box, "enter_notify_event",
+                    G_CALLBACK (on_band_button_event_box_enter_notify_event),
+                    NULL);
   g_signal_connect ((gpointer) low_solo, "toggled",
                     G_CALLBACK (on_solo_toggled),
                     NULL);
@@ -3898,6 +3955,9 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) mid_balance_scale, "button_press_event",
                     G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) mid_band_button_event_box, "enter_notify_event",
+                    G_CALLBACK (on_band_button_event_box_enter_notify_event),
                     NULL);
   g_signal_connect ((gpointer) mid_solo, "toggled",
                     G_CALLBACK (on_solo_toggled),
@@ -3977,6 +4037,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) high_balance_scale, "button_press_event",
                     G_CALLBACK (reset_range),
                     NULL);
+  g_signal_connect ((gpointer) high_band_button_event_box, "enter_notify_event",
+                    G_CALLBACK (on_band_button_event_box_enter_notify_event),
+                    NULL);
   g_signal_connect ((gpointer) high_solo, "toggled",
                     G_CALLBACK (on_solo_toggled),
                     NULL);
@@ -4009,6 +4072,12 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) lim_out_trim_scale, "button_press_event",
                     G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) limiter_bypass_event_box, "enter_notify_event",
+                    G_CALLBACK (on_limiter_bypass_event_box_enter_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) limiter_bypass, "toggled",
+                    G_CALLBACK (on_limiter_bypass_toggled),
                     NULL);
   g_signal_connect ((gpointer) boost_eventbox, "enter_notify_event",
                     G_CALLBACK (on_boost_eventbox_enter_notify_event),
@@ -4301,6 +4370,9 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, comp3_curve, "comp3_curve");
   GLADE_HOOKUP_OBJECT (window1, high_curve_lbl, "high_curve_lbl");
   GLADE_HOOKUP_OBJECT (window1, label317, "label317");
+  GLADE_HOOKUP_OBJECT (window1, hbox59, "hbox59");
+  GLADE_HOOKUP_OBJECT (window1, eq_bypass_event_box, "eq_bypass_event_box");
+  GLADE_HOOKUP_OBJECT (window1, eq_bypass, "eq_bypass");
   GLADE_HOOKUP_OBJECT (window1, crossover_label_eventbox, "crossover_label_eventbox");
   GLADE_HOOKUP_OBJECT (window1, hbox48, "hbox48");
   GLADE_HOOKUP_OBJECT (window1, low2mid_lbl, "low2mid_lbl");
@@ -4366,6 +4438,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, low_balance_hbox, "low_balance_hbox");
   GLADE_HOOKUP_OBJECT (window1, low_balance_label, "low_balance_label");
   GLADE_HOOKUP_OBJECT (window1, low_balance_scale, "low_balance_scale");
+  GLADE_HOOKUP_OBJECT (window1, low_band_button_event_box, "low_band_button_event_box");
   GLADE_HOOKUP_OBJECT (window1, low_band_button_hbox, "low_band_button_hbox");
   GLADE_HOOKUP_OBJECT (window1, low_solo, "low_solo");
   GLADE_HOOKUP_OBJECT (window1, low_bypass, "low_bypass");
@@ -4419,6 +4492,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, mid_balance_hbox, "mid_balance_hbox");
   GLADE_HOOKUP_OBJECT (window1, mid_balance_label, "mid_balance_label");
   GLADE_HOOKUP_OBJECT (window1, mid_balance_scale, "mid_balance_scale");
+  GLADE_HOOKUP_OBJECT (window1, mid_band_button_event_box, "mid_band_button_event_box");
   GLADE_HOOKUP_OBJECT (window1, mid_band_button_hbox, "mid_band_button_hbox");
   GLADE_HOOKUP_OBJECT (window1, mid_solo, "mid_solo");
   GLADE_HOOKUP_OBJECT (window1, mid_bypass, "mid_bypass");
@@ -4472,6 +4546,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, high_balance_hbox, "high_balance_hbox");
   GLADE_HOOKUP_OBJECT (window1, high_balance_label, "high_balance_label");
   GLADE_HOOKUP_OBJECT (window1, high_balance_scale, "high_balance_scale");
+  GLADE_HOOKUP_OBJECT (window1, high_band_button_event_box, "high_band_button_event_box");
   GLADE_HOOKUP_OBJECT (window1, high_band_button_hbox, "high_band_button_hbox");
   GLADE_HOOKUP_OBJECT (window1, high_solo, "high_solo");
   GLADE_HOOKUP_OBJECT (window1, high_bypass, "high_bypass");
@@ -4498,6 +4573,8 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, lim_att_meter, "lim_att_meter");
   GLADE_HOOKUP_OBJECT (window1, custom20, "custom20");
   GLADE_HOOKUP_OBJECT (window1, lim_out_meter, "lim_out_meter");
+  GLADE_HOOKUP_OBJECT (window1, limiter_bypass_event_box, "limiter_bypass_event_box");
+  GLADE_HOOKUP_OBJECT (window1, limiter_bypass, "limiter_bypass");
   GLADE_HOOKUP_OBJECT (window1, limiterlabel, "limiterlabel");
   GLADE_HOOKUP_OBJECT (window1, boost_eventbox, "boost_eventbox");
   GLADE_HOOKUP_OBJECT (window1, frame26, "frame26");

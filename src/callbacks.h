@@ -1110,3 +1110,29 @@ on_high_bypass_toggled                 (GtkToggleButton *togglebutton,
 void
 on_solo_toggled                        (GtkToggleButton *togglebutton,
                                         gpointer         user_data);
+
+gboolean
+on_eq_bypass_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+void
+on_eq_bypass_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+gboolean
+on_band_button_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+void
+on_limiter_bypass_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+gboolean
+on_limiter_bypass_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);

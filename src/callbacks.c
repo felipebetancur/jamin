@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.134 2004/02/17 11:25:05 jdepner Exp $
+ *  $Id: callbacks.c,v 1.135 2004/02/22 12:55:56 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -2181,3 +2181,55 @@ on_high_bypass_toggled                  (GtkToggleButton *togglebutton,
 {
   bypass (2, gtk_toggle_button_get_active (togglebutton));
 }
+
+gboolean
+on_eq_bypass_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+  help_ptr = eq_bypass_help;
+
+  return FALSE;
+}
+
+
+void
+on_eq_bypass_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+
+}
+
+
+gboolean
+on_band_button_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+  help_ptr = band_button_help;
+
+  return FALSE;
+}
+
+
+void
+on_limiter_bypass_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+
+}
+
+
+gboolean
+on_limiter_bypass_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+  help_ptr = limiter_bypass_help;
+
+  return FALSE;
+}
+

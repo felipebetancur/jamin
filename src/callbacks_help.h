@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.23 2004/01/19 20:31:06 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.24 2004/02/22 12:55:59 jdepner Exp $
  */
 
 char general_help[] = {
@@ -265,6 +265,26 @@ using the scene button menus).  Pressing <Alt>-1 will assign the current \
 settings to scene button 1 (you still need to set the name).  The CTRL \
 modifier can be used to clear a scene button.  Pressing <Ctrl>-1 will clear \
 that scene button.\n"
+};
+
+
+char eq_bypass_help[] = {
+"    This button allows you to bypass all EQ processing.  It will have no \
+effect on any of the other controls.\n"
+};
+
+
+char band_button_help[] = {
+"    The solo buttons allow you to listen to selected bands while muting the \
+other bands.  Selecting two of the solo buttons effectively mutes the \
+remaining band.  The per band bypass buttons allow you to bypass compression \
+on the selected bands.\n"
+};
+
+
+char limiter_bypass_help[] = {
+"    This button allows you to bypass limiting.  It has no effect on any of \
+the other controls.\n"
 };
 
 
