@@ -62,11 +62,6 @@ int backend_activate(int argc, char *argv[])
 	char *ioports[4];
 	unsigned int i;
 
-	if (jack_activate(client)) {
-		fprintf (stderr, "cannot activate client");
-		exit(1);
-	}
-
 	input_ports[0] = jack_port_register(client, "in_L",
 			JACK_DEFAULT_AUDIO_TYPE, JackPortIsInput, 0);
 	input_ports[1] = jack_port_register(client, "in_R",
@@ -75,6 +70,12 @@ int backend_activate(int argc, char *argv[])
 			JACK_DEFAULT_AUDIO_TYPE, JackPortIsOutput, 0);
 	output_ports[1] = jack_port_register(client, "out_R",
 			JACK_DEFAULT_AUDIO_TYPE, JackPortIsOutput, 0);
+
+	/* Note: All ports MUST already be registered. */
+	if (jack_activate(client)) {
+		fprintf (stderr, "cannot activate client");
+		exit(1);
+	}
 
 	if (argc == 5) {
 		for (i=0; i<4; i++) {

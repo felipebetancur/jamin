@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <jack/jack.h>
 #include <fftw3.h>
+#include <assert.h>
 
 #include "process.h"
 #include "compressor.h"
@@ -217,11 +218,9 @@ int process(jack_nframes_t nframes, void *arg)
     static unsigned int n_calc_pt = BINS - (BINS / OVER_SAMP);
     jack_default_audio_sample_t *in[2], *out[2];
 
-    /* just incase the ports aren't registered */
-    if (input_ports[0] == 0 || input_ports[1] == 0) {
-	return 0;
-    }
-    //printf("we seem to have some ports...\n");
+    /* the ports must be registered */
+    assert(input_ports[0] && input_ports[1] &&
+	   output_ports[0] && output_ports[1]);
 
     in[0] = (jack_default_audio_sample_t *)
 	jack_port_get_buffer(input_ports[0], nframes);
