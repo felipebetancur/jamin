@@ -68,7 +68,7 @@ elsewhere, if desired.
 .TP
 .B ~/.jamin/default.jam
 If this session file exists, it is loaded by default on startup, except
-when overriden by the \fB\-f\fR option.
+when overridden by the \fB\-f\fR option.
 
 .SH "EXAMPLES"
 .PP 
