@@ -21,6 +21,7 @@
 #include <config.h>
 #include <stdio.h>
 #include <string.h>
+#include <inttypes.h>
 #include <unistd.h>
 #include <jack/jack.h>
 
@@ -122,8 +123,7 @@ jack_transport_state_t transport_get_state()
 {
 #ifdef NEW_JACK_TRANSPORT
 
-    jack_position_t pos;
-    return jack_transport_query(client, &pos);
+    return jack_transport_query(client, NULL);
 
 #else /* old JACK transport interface */
 
@@ -138,7 +138,7 @@ void transport_play()
 #ifdef NEW_JACK_TRANSPORT
 
     jack_transport_start(client);
-    IF_DEBUG(DBG_TERSE, fprintf(stderr,"Transport started!\n"));
+    IF_DEBUG(DBG_TERSE, fprintf(stderr,"Transport started.\n"));
 
 #else /* old JACK transport interface */
 
@@ -158,7 +158,8 @@ void transport_set_position(jack_nframes_t frame)
 
     jack_transport_locate(client, frame);
     IF_DEBUG(DBG_TERSE,
-	     fprintf(stderr, "Transport positioned to frame %ld\n", frame));
+	     fprintf(stderr, "Transport positioned to frame %" PRIuLEAST32
+		     "\n", frame));
 
 #else /* old JACK transport interface */
 
@@ -178,7 +179,7 @@ void transport_stop()
 #ifdef NEW_JACK_TRANSPORT
 
     jack_transport_stop(client);
-    IF_DEBUG(DBG_TERSE, fprintf(stderr,"Transport stopped!\n"));
+    IF_DEBUG(DBG_TERSE, fprintf(stderr,"Transport stopped.\n"));
 
 #else /* old JACK transport interface */
 

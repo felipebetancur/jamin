@@ -20,6 +20,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <inttypes.h>
 #include <gtk/gtk.h>
 #include <jack/jack.h>
 #include <config.h>
@@ -77,8 +78,8 @@ void status_update(GtkWidget *main_window)
     else
 	rt = "";
 
-    snprintf(string, sizeof(string), 
-             "%s  |  %4.1f%% CPU  |  %ld frames  |  %ld Hz%s  |  Focus - %s",
+    snprintf(string, sizeof(string), "%s  |  %4.1f%% CPU  |  %" PRIuLEAST32
+	     " frames  |  %" PRIuLEAST32 " Hz%s  |  Focus - %s",
              state_msg, j.cpu_load, j.buf_size, j.sample_rate, rt, 
              focus_string);
 
