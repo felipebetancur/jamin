@@ -56,7 +56,8 @@ int s_have_filename();
 #define S_NOTCH_FREQ(n) (1060 + n)
 #define S_NOTCH_Q(n) (1065 + n)
 #define S_NOTCH_FLAG(n) (1070 + n)
-#define S_SIZE 1075
+#define S_STEREO_PAN(n) (1075 + n)
+#define S_SIZE 1078
 
 typedef struct {
     char *description;
@@ -356,7 +357,8 @@ static const char *const s_description[S_SIZE] = {
 	"Notch frequency 4", "Notch frequency 5", "Notch Q 1", "Notch Q 2",
 	"Notch Q 3", "Notch Q 4", "Notch Q 5", "Notch active flag 1",
 	"Notch active flag 2", "Notch active flag 3",
-	"Notch active flag 4", "Notch active flag 5"
+	"Notch active flag 4", "Notch active flag 5", "Stereo pan 1",
+	"Stereo pan 2", "Stereo pan 3"
 };
 
 static const char *const s_symbol[S_SIZE] = {
@@ -622,7 +624,8 @@ static const char *const s_symbol[S_SIZE] = {
 	"notch-gain4", "notch-freq0", "notch-freq1", "notch-freq2",
 	"notch-freq3", "notch-freq4", "notch-q0", "notch-q1", "notch-q2",
 	"notch-q3", "notch-q4", "notch-flag0", "notch-flag1",
-	"notch-flag2", "notch-flag3", "notch-flag4"
+	"notch-flag2", "notch-flag3", "notch-flag4", "stereo-pan0",
+	"stereo-pan1", "stereo-pan2"
 };
 
 #endif

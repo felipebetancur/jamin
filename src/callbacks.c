@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.117 2003/12/24 18:47:17 jdepner Exp $
+ *  $Id: callbacks.c,v 1.118 2004/01/03 00:52:34 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1054,28 +1054,6 @@ on_comp_curve_eventbox_enter_notify_event
 
 
 gboolean
-on_comp_eventbox_enter_notify_event    (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data)
-{
-    help_ptr = comp_help;
-
-    return FALSE;
-}
-
-
-gboolean
-on_stereo_eventbox_enter_notify_event  (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data)
-{
-    help_ptr = stereo_help;
-
-    return FALSE;
-}
-
-
-gboolean
 on_limiter_eventbox_enter_notify_event (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
@@ -1644,6 +1622,68 @@ scene_warning                          (GtkWidget       *widget,
                                         gpointer         user_data)
 {
   set_scene_warning_button ();
+
+  return FALSE;
+}
+
+
+void
+on_low_pan_scale_value_changed         (GtkRange        *range,
+                                        gpointer         user_data)
+{
+  /* Do something for low band pan */
+  s_set_value_ui(S_STEREO_PAN(0), gtk_range_get_adjustment(range)->value);
+}
+
+
+void
+on_mid_pan_scale_value_changed         (GtkRange        *range,
+                                        gpointer         user_data)
+{
+  /* Do something for mid band pan */
+  s_set_value_ui(S_STEREO_PAN(1), gtk_range_get_adjustment(range)->value);
+}
+
+
+void
+on_high_pan_scale_value_changed        (GtkRange        *range,
+                                        gpointer         user_data)
+{
+  /* Do something for high band pan */
+  s_set_value_ui(S_STEREO_PAN(2), gtk_range_get_adjustment(range)->value);
+}
+
+
+gboolean
+on_comp_event_box_enter_notify_event (GtkWidget       *widget,
+                                      GdkEventCrossing *event,
+                                      gpointer         user_data)
+{
+  help_ptr = comp_help;
+
+  return FALSE;
+}
+
+
+gboolean
+on_stereo_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+  help_ptr = stereo_help;
+
+  return FALSE;
+}
+
+
+gboolean
+on_stereo_pan_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+  help_ptr = stereo_pan_help;
 
   return FALSE;
 }

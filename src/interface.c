@@ -332,6 +332,7 @@ create_window1 (void)
   GtkWidget *low_comp_event_box;
   GtkWidget *frame_l;
   GtkWidget *vbox_l;
+  GtkWidget *comp_l_event_box;
   GtkWidget *comp_l;
   GtkWidget *slider_hbox_l;
   GtkWidget *vbox_1_l;
@@ -366,10 +367,15 @@ create_window1 (void)
   GtkWidget *comp_ga_1;
   GtkWidget *low_stereo_event_box;
   GtkWidget *hscale_1_l;
+  GtkWidget *low_pan_hbox;
+  GtkWidget *low_pan_label;
+  GtkWidget *low_pan_event_box;
+  GtkWidget *low_pan_scale;
   GtkWidget *label_freq_l;
   GtkWidget *mid_comp_event_box;
   GtkWidget *frame_m;
   GtkWidget *vbox_m;
+  GtkWidget *comp_m_event_box;
   GtkWidget *comp_m;
   GtkWidget *slider_hbox_m;
   GtkWidget *vbox_1_m;
@@ -404,10 +410,15 @@ create_window1 (void)
   GtkWidget *comp_ga_2;
   GtkWidget *mid_stereo_event_box;
   GtkWidget *hscale_1_m;
+  GtkWidget *mid_pan_hbox;
+  GtkWidget *mid_pan_label;
+  GtkWidget *mid_pan_event_box;
+  GtkWidget *mid_pan_scale;
   GtkWidget *label_freq_m;
   GtkWidget *high_comp_event_box;
   GtkWidget *frame_h;
   GtkWidget *vbox_h;
+  GtkWidget *comp_h_event_box;
   GtkWidget *comp_h;
   GtkWidget *slider_hbox_h;
   GtkWidget *vbox_1_h;
@@ -442,6 +453,10 @@ create_window1 (void)
   GtkWidget *comp_ga_3;
   GtkWidget *high_stereo_event_box;
   GtkWidget *hscale_1_h;
+  GtkWidget *high_pan_hbox;
+  GtkWidget *high_pan_label;
+  GtkWidget *high_pan_event_box;
+  GtkWidget *high_pan_scale;
   GtkWidget *label_freq_h;
   GtkWidget *right_mid_vbox;
   GtkWidget *right_bottom_vbox;
@@ -2253,10 +2268,15 @@ create_window1 (void)
   gtk_widget_show (vbox_l);
   gtk_container_add (GTK_CONTAINER (frame_l), vbox_l);
 
+  comp_l_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_l_event_box, "comp_l_event_box");
+  gtk_widget_show (comp_l_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_l), comp_l_event_box, TRUE, TRUE, 0);
+
   comp_l = gtk_vbox_new (FALSE, 1);
   gtk_widget_set_name (comp_l, "comp_l");
   gtk_widget_show (comp_l);
-  gtk_box_pack_start (GTK_BOX (vbox_l), comp_l, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_l_event_box), comp_l);
   gtk_widget_set_size_request (comp_l, 192, 119);
 
   slider_hbox_l = gtk_hbox_new (FALSE, 0);
@@ -2463,8 +2483,32 @@ create_window1 (void)
   gtk_widget_set_name (hscale_1_l, "hscale_1_l");
   gtk_widget_show (hscale_1_l);
   gtk_container_add (GTK_CONTAINER (low_stereo_event_box), hscale_1_l);
-  gtk_widget_set_size_request (hscale_1_l, 37, 36);
+  gtk_widget_set_size_request (hscale_1_l, 37, 20);
+  gtk_scale_set_value_pos (GTK_SCALE (hscale_1_l), GTK_POS_LEFT);
   gtk_scale_set_digits (GTK_SCALE (hscale_1_l), 2);
+
+  low_pan_hbox = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (low_pan_hbox, "low_pan_hbox");
+  gtk_widget_show (low_pan_hbox);
+  gtk_box_pack_start (GTK_BOX (vbox_l), low_pan_hbox, TRUE, TRUE, 0);
+
+  low_pan_label = gtk_label_new (_("centre"));
+  gtk_widget_set_name (low_pan_label, "low_pan_label");
+  gtk_widget_show (low_pan_label);
+  gtk_box_pack_start (GTK_BOX (low_pan_hbox), low_pan_label, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (low_pan_label), GTK_JUSTIFY_LEFT);
+
+  low_pan_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (low_pan_event_box, "low_pan_event_box");
+  gtk_widget_show (low_pan_event_box);
+  gtk_box_pack_start (GTK_BOX (low_pan_hbox), low_pan_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, low_pan_event_box, _("Low Band Stereo Pan"), NULL);
+
+  low_pan_scale = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -6, 6, 0.25, 1, 0)));
+  gtk_widget_set_name (low_pan_scale, "low_pan_scale");
+  gtk_widget_show (low_pan_scale);
+  gtk_container_add (GTK_CONTAINER (low_pan_event_box), low_pan_scale);
+  gtk_scale_set_draw_value (GTK_SCALE (low_pan_scale), FALSE);
 
   label_freq_l = gtk_label_new (_("Low : 00000 - 00000"));
   gtk_widget_set_name (label_freq_l, "label_freq_l");
@@ -2488,10 +2532,15 @@ create_window1 (void)
   gtk_widget_show (vbox_m);
   gtk_container_add (GTK_CONTAINER (frame_m), vbox_m);
 
+  comp_m_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_m_event_box, "comp_m_event_box");
+  gtk_widget_show (comp_m_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_m), comp_m_event_box, TRUE, TRUE, 0);
+
   comp_m = gtk_vbox_new (FALSE, 1);
   gtk_widget_set_name (comp_m, "comp_m");
   gtk_widget_show (comp_m);
-  gtk_box_pack_start (GTK_BOX (vbox_m), comp_m, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_m_event_box), comp_m);
   gtk_widget_set_size_request (comp_m, 192, 119);
 
   slider_hbox_m = gtk_hbox_new (FALSE, 0);
@@ -2698,8 +2747,32 @@ create_window1 (void)
   gtk_widget_set_name (hscale_1_m, "hscale_1_m");
   gtk_widget_show (hscale_1_m);
   gtk_container_add (GTK_CONTAINER (mid_stereo_event_box), hscale_1_m);
-  gtk_widget_set_size_request (hscale_1_m, 37, 36);
+  gtk_widget_set_size_request (hscale_1_m, 37, 20);
+  gtk_scale_set_value_pos (GTK_SCALE (hscale_1_m), GTK_POS_LEFT);
   gtk_scale_set_digits (GTK_SCALE (hscale_1_m), 2);
+
+  mid_pan_hbox = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (mid_pan_hbox, "mid_pan_hbox");
+  gtk_widget_show (mid_pan_hbox);
+  gtk_box_pack_start (GTK_BOX (vbox_m), mid_pan_hbox, TRUE, TRUE, 0);
+
+  mid_pan_label = gtk_label_new (_("centre"));
+  gtk_widget_set_name (mid_pan_label, "mid_pan_label");
+  gtk_widget_show (mid_pan_label);
+  gtk_box_pack_start (GTK_BOX (mid_pan_hbox), mid_pan_label, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (mid_pan_label), GTK_JUSTIFY_LEFT);
+
+  mid_pan_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (mid_pan_event_box, "mid_pan_event_box");
+  gtk_widget_show (mid_pan_event_box);
+  gtk_box_pack_start (GTK_BOX (mid_pan_hbox), mid_pan_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, mid_pan_event_box, _("Mid Band Stereo Pan"), NULL);
+
+  mid_pan_scale = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -6, 6, 0.25, 1, 0)));
+  gtk_widget_set_name (mid_pan_scale, "mid_pan_scale");
+  gtk_widget_show (mid_pan_scale);
+  gtk_container_add (GTK_CONTAINER (mid_pan_event_box), mid_pan_scale);
+  gtk_scale_set_draw_value (GTK_SCALE (mid_pan_scale), FALSE);
 
   label_freq_m = gtk_label_new (_("Mid : 00000 - 00000"));
   gtk_widget_set_name (label_freq_m, "label_freq_m");
@@ -2723,10 +2796,15 @@ create_window1 (void)
   gtk_widget_show (vbox_h);
   gtk_container_add (GTK_CONTAINER (frame_h), vbox_h);
 
+  comp_h_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_h_event_box, "comp_h_event_box");
+  gtk_widget_show (comp_h_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_h), comp_h_event_box, TRUE, TRUE, 0);
+
   comp_h = gtk_vbox_new (FALSE, 1);
   gtk_widget_set_name (comp_h, "comp_h");
   gtk_widget_show (comp_h);
-  gtk_box_pack_start (GTK_BOX (vbox_h), comp_h, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_h_event_box), comp_h);
   gtk_widget_set_size_request (comp_h, 192, 119);
 
   slider_hbox_h = gtk_hbox_new (FALSE, 0);
@@ -2933,8 +3011,32 @@ create_window1 (void)
   gtk_widget_set_name (hscale_1_h, "hscale_1_h");
   gtk_widget_show (hscale_1_h);
   gtk_container_add (GTK_CONTAINER (high_stereo_event_box), hscale_1_h);
-  gtk_widget_set_size_request (hscale_1_h, 37, 36);
+  gtk_widget_set_size_request (hscale_1_h, 37, 20);
+  gtk_scale_set_value_pos (GTK_SCALE (hscale_1_h), GTK_POS_LEFT);
   gtk_scale_set_digits (GTK_SCALE (hscale_1_h), 2);
+
+  high_pan_hbox = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (high_pan_hbox, "high_pan_hbox");
+  gtk_widget_show (high_pan_hbox);
+  gtk_box_pack_start (GTK_BOX (vbox_h), high_pan_hbox, TRUE, TRUE, 0);
+
+  high_pan_label = gtk_label_new (_("centre"));
+  gtk_widget_set_name (high_pan_label, "high_pan_label");
+  gtk_widget_show (high_pan_label);
+  gtk_box_pack_start (GTK_BOX (high_pan_hbox), high_pan_label, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (high_pan_label), GTK_JUSTIFY_LEFT);
+
+  high_pan_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (high_pan_event_box, "high_pan_event_box");
+  gtk_widget_show (high_pan_event_box);
+  gtk_box_pack_start (GTK_BOX (high_pan_hbox), high_pan_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, high_pan_event_box, _("High Band Stereo Pan"), NULL);
+
+  high_pan_scale = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -6, 6, 0.25, 1, 0)));
+  gtk_widget_set_name (high_pan_scale, "high_pan_scale");
+  gtk_widget_show (high_pan_scale);
+  gtk_container_add (GTK_CONTAINER (high_pan_event_box), high_pan_scale);
+  gtk_scale_set_draw_value (GTK_SCALE (high_pan_scale), FALSE);
 
   label_freq_h = gtk_label_new (_("High : 00000 - 00000"));
   gtk_widget_set_name (label_freq_h, "label_freq_h");
@@ -3500,6 +3602,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) frame_l, "enter_notify_event",
                     G_CALLBACK (on_frame_l_enter_notify_event),
                     NULL);
+  g_signal_connect ((gpointer) comp_l_event_box, "enter_notify_event",
+                    G_CALLBACK (on_comp_event_box_enter_notify_event),
+                    NULL);
   g_signal_connect ((gpointer) comp_at_1, "button_press_event",
                     G_CALLBACK (scene_warning),
                     NULL);
@@ -3521,6 +3626,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) autobutton_l, "toggled",
                     G_CALLBACK (on_autobutton_l_toggled),
                     NULL);
+  g_signal_connect ((gpointer) low_stereo_event_box, "enter_notify_event",
+                    G_CALLBACK (on_stereo_event_box_enter_notify_event),
+                    NULL);
   g_signal_connect ((gpointer) hscale_1_l, "value_changed",
                     G_CALLBACK (on_hscale_1_l_value_changed),
                     NULL);
@@ -3528,6 +3636,15 @@ create_window1 (void)
                     G_CALLBACK (on_hscale_1_l_realize),
                     NULL);
   g_signal_connect ((gpointer) hscale_1_l, "button_press_event",
+                    G_CALLBACK (scene_warning),
+                    NULL);
+  g_signal_connect ((gpointer) low_pan_event_box, "enter_notify_event",
+                    G_CALLBACK (on_stereo_pan_event_box_enter_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) low_pan_scale, "value_changed",
+                    G_CALLBACK (on_low_pan_scale_value_changed),
+                    NULL);
+  g_signal_connect ((gpointer) low_pan_scale, "button_press_event",
                     G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) mid_comp_event_box, "enter_notify_event",
@@ -3538,6 +3655,9 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) frame_m, "enter_notify_event",
                     G_CALLBACK (on_frame_m_enter_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_m_event_box, "enter_notify_event",
+                    G_CALLBACK (on_comp_event_box_enter_notify_event),
                     NULL);
   g_signal_connect ((gpointer) comp_at_2, "button_press_event",
                     G_CALLBACK (scene_warning),
@@ -3560,6 +3680,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) autobutton_m, "toggled",
                     G_CALLBACK (on_autobutton_m_toggled),
                     NULL);
+  g_signal_connect ((gpointer) mid_stereo_event_box, "enter_notify_event",
+                    G_CALLBACK (on_stereo_event_box_enter_notify_event),
+                    NULL);
   g_signal_connect ((gpointer) hscale_1_m, "value_changed",
                     G_CALLBACK (on_hscale_1_m_value_changed),
                     NULL);
@@ -3567,6 +3690,15 @@ create_window1 (void)
                     G_CALLBACK (on_hscale_1_m_realize),
                     NULL);
   g_signal_connect ((gpointer) hscale_1_m, "button_press_event",
+                    G_CALLBACK (scene_warning),
+                    NULL);
+  g_signal_connect ((gpointer) mid_pan_event_box, "enter_notify_event",
+                    G_CALLBACK (on_stereo_pan_event_box_enter_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) mid_pan_scale, "value_changed",
+                    G_CALLBACK (on_mid_pan_scale_value_changed),
+                    NULL);
+  g_signal_connect ((gpointer) mid_pan_scale, "button_press_event",
                     G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) high_comp_event_box, "enter_notify_event",
@@ -3577,6 +3709,9 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) frame_h, "enter_notify_event",
                     G_CALLBACK (on_frame_h_enter_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_h_event_box, "enter_notify_event",
+                    G_CALLBACK (on_comp_event_box_enter_notify_event),
                     NULL);
   g_signal_connect ((gpointer) comp_at_3, "button_press_event",
                     G_CALLBACK (scene_warning),
@@ -3599,6 +3734,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) autobutton_h, "toggled",
                     G_CALLBACK (on_autobutton_h_toggled),
                     NULL);
+  g_signal_connect ((gpointer) high_stereo_event_box, "enter_notify_event",
+                    G_CALLBACK (on_stereo_event_box_enter_notify_event),
+                    NULL);
   g_signal_connect ((gpointer) hscale_1_h, "value_changed",
                     G_CALLBACK (on_hscale_1_h_value_changed),
                     NULL);
@@ -3606,6 +3744,15 @@ create_window1 (void)
                     G_CALLBACK (on_hscale_1_h_realize),
                     NULL);
   g_signal_connect ((gpointer) hscale_1_h, "button_press_event",
+                    G_CALLBACK (scene_warning),
+                    NULL);
+  g_signal_connect ((gpointer) high_pan_event_box, "enter_notify_event",
+                    G_CALLBACK (on_stereo_pan_event_box_enter_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) high_pan_scale, "value_changed",
+                    G_CALLBACK (on_high_pan_scale_value_changed),
+                    NULL);
+  g_signal_connect ((gpointer) high_pan_scale, "button_press_event",
                     G_CALLBACK (scene_warning),
                     NULL);
   g_signal_connect ((gpointer) limiter_eventbox, "enter_notify_event",
@@ -3962,6 +4109,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, low_comp_event_box, "low_comp_event_box");
   GLADE_HOOKUP_OBJECT (window1, frame_l, "frame_l");
   GLADE_HOOKUP_OBJECT (window1, vbox_l, "vbox_l");
+  GLADE_HOOKUP_OBJECT (window1, comp_l_event_box, "comp_l_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_l, "comp_l");
   GLADE_HOOKUP_OBJECT (window1, slider_hbox_l, "slider_hbox_l");
   GLADE_HOOKUP_OBJECT (window1, vbox_1_l, "vbox_1_l");
@@ -3996,10 +4144,15 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, comp_ga_1, "comp_ga_1");
   GLADE_HOOKUP_OBJECT (window1, low_stereo_event_box, "low_stereo_event_box");
   GLADE_HOOKUP_OBJECT (window1, hscale_1_l, "hscale_1_l");
+  GLADE_HOOKUP_OBJECT (window1, low_pan_hbox, "low_pan_hbox");
+  GLADE_HOOKUP_OBJECT (window1, low_pan_label, "low_pan_label");
+  GLADE_HOOKUP_OBJECT (window1, low_pan_event_box, "low_pan_event_box");
+  GLADE_HOOKUP_OBJECT (window1, low_pan_scale, "low_pan_scale");
   GLADE_HOOKUP_OBJECT (window1, label_freq_l, "label_freq_l");
   GLADE_HOOKUP_OBJECT (window1, mid_comp_event_box, "mid_comp_event_box");
   GLADE_HOOKUP_OBJECT (window1, frame_m, "frame_m");
   GLADE_HOOKUP_OBJECT (window1, vbox_m, "vbox_m");
+  GLADE_HOOKUP_OBJECT (window1, comp_m_event_box, "comp_m_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_m, "comp_m");
   GLADE_HOOKUP_OBJECT (window1, slider_hbox_m, "slider_hbox_m");
   GLADE_HOOKUP_OBJECT (window1, vbox_1_m, "vbox_1_m");
@@ -4034,10 +4187,15 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, comp_ga_2, "comp_ga_2");
   GLADE_HOOKUP_OBJECT (window1, mid_stereo_event_box, "mid_stereo_event_box");
   GLADE_HOOKUP_OBJECT (window1, hscale_1_m, "hscale_1_m");
+  GLADE_HOOKUP_OBJECT (window1, mid_pan_hbox, "mid_pan_hbox");
+  GLADE_HOOKUP_OBJECT (window1, mid_pan_label, "mid_pan_label");
+  GLADE_HOOKUP_OBJECT (window1, mid_pan_event_box, "mid_pan_event_box");
+  GLADE_HOOKUP_OBJECT (window1, mid_pan_scale, "mid_pan_scale");
   GLADE_HOOKUP_OBJECT (window1, label_freq_m, "label_freq_m");
   GLADE_HOOKUP_OBJECT (window1, high_comp_event_box, "high_comp_event_box");
   GLADE_HOOKUP_OBJECT (window1, frame_h, "frame_h");
   GLADE_HOOKUP_OBJECT (window1, vbox_h, "vbox_h");
+  GLADE_HOOKUP_OBJECT (window1, comp_h_event_box, "comp_h_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_h, "comp_h");
   GLADE_HOOKUP_OBJECT (window1, slider_hbox_h, "slider_hbox_h");
   GLADE_HOOKUP_OBJECT (window1, vbox_1_h, "vbox_1_h");
@@ -4072,6 +4230,10 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, comp_ga_3, "comp_ga_3");
   GLADE_HOOKUP_OBJECT (window1, high_stereo_event_box, "high_stereo_event_box");
   GLADE_HOOKUP_OBJECT (window1, hscale_1_h, "hscale_1_h");
+  GLADE_HOOKUP_OBJECT (window1, high_pan_hbox, "high_pan_hbox");
+  GLADE_HOOKUP_OBJECT (window1, high_pan_label, "high_pan_label");
+  GLADE_HOOKUP_OBJECT (window1, high_pan_event_box, "high_pan_event_box");
+  GLADE_HOOKUP_OBJECT (window1, high_pan_scale, "high_pan_scale");
   GLADE_HOOKUP_OBJECT (window1, label_freq_h, "label_freq_h");
   GLADE_HOOKUP_OBJECT (window1, right_mid_vbox, "right_mid_vbox");
   GLADE_HOOKUP_OBJECT (window1, right_bottom_vbox, "right_bottom_vbox");

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.15 2003/12/22 00:01:00 joq Exp $
+ *  $Id: callbacks_help.h,v 1.16 2004/01/03 00:52:34 jdepner Exp $
  */
 
 char general_help[] = {
@@ -155,6 +155,15 @@ signal for each of the three bands.  The bands are defined by the crossover \
 that can be set using the crossover faders or the crossover bars in the \
 HDEQ.  More negative values decrease the 'width' while positive values \
 increase the 'width'.\n"
+};
+
+
+char stereo_pan_help[] = {
+"    The stereo pan controls allow the user to pan the set of frequencies \
+defined by the crossover locations.  That is, each of the three bands, low, \
+mid, and high, can be panned left or right.   The bands are defined by the \
+crossover that can be set using the crossover faders or the crossover bars in \
+the HDEQ.\n"
 };
 
 

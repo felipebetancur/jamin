@@ -567,16 +567,6 @@ on_comp_curve_eventbox_enter_notify_event
                                         gpointer         user_data);
 
 gboolean
-on_comp_eventbox_enter_notify_event    (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data);
-
-gboolean
-on_stereo_eventbox_enter_notify_event  (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data);
-
-gboolean
 on_limiter_eventbox_enter_notify_event (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data);
@@ -837,4 +827,49 @@ toggle_transport_pause                 (GtkWidget       *widget,
 gboolean
 pause_transport_toggle                 (GtkWidget       *widget,
                                         GdkEventButton  *event,
+                                        gpointer         user_data);
+
+void
+on_low_pan_scale_value_changed         (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_mid_pan_scale_value_changed         (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_high_pan_scale_value_changed        (GtkRange        *range,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_event_box_enter_notify_event (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_stereo_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_stereo_pan_event_box_enter_notify_event (GtkWidget       *widget,
+                                            GdkEventCrossing *event,
+                                            gpointer         user_data);
+
+
+gboolean
+on_comp_event_box_enter_notify_event   (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_stereo_event_box_enter_notify_event (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_stereo_pan_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
                                         gpointer         user_data);

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.31 2003/12/21 19:38:06 jdepner Exp $
+ *  $Id: state.c,v 1.32 2004/01/03 00:52:34 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -199,7 +199,7 @@ void s_undo()
 
     unsigned int compute_state_crc (s_state *state);
 
-
+fprintf(stderr,"%s %d %p\n",__FILE__,__LINE__,undo_pos);
     if (!undo_pos) {
 	return;
     }
@@ -218,7 +218,11 @@ void s_undo()
         crc[0] = compute_state_crc (st[0]);
         crc[1] = compute_state_crc (st[1]);
 
-        if (crc[0] == crc[1]) set_scene (scene);
+        if (crc[0] == crc[1]) 
+          {
+            set_scene (scene);
+            fprintf(stderr,"%s %d SETTING SCENE\n",__FILE__,__LINE__);
+          }
       }
 
     set_EQ_curve_values ();
