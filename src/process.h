@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.h,v 1.21 2004/01/27 12:36:49 theno23 Exp $
+ *  $Id: process.h,v 1.22 2004/01/27 12:41:14 theno23 Exp $
  */
 
 #ifndef PROCESS_H
@@ -85,6 +85,8 @@ int process_signal(jack_nframes_t nframes, int nchannels,
 		   jack_default_audio_sample_t *out[]);
 
 float eval_comp(float thresh, float ratio, float knee, float in);
+
+void process_set_xo_band_action(int band, int action);
 
 extern comp_settings compressors[XO_NBANDS];
 extern lim_settings limiter;
