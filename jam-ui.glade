@@ -6369,7 +6369,7 @@
 							  <property name="digits">0</property>
 							  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							  <property name="inverted">False</property>
-							  <property name="adjustment">1 -3 2.17609 0.1 1 0</property>
+							  <property name="adjustment">1 0 2.17609 0.1 1 0</property>
 							  <signal name="value_changed" handler="on_lim_lh_scale_value_changed" last_modification_time="Sun, 04 May 2003 11:10:02 GMT"/>
 							  <signal name="button_press_event" handler="scene_warning" last_modification_time="Wed, 10 Dec 2003 01:00:02 GMT"/>
 							</widget>

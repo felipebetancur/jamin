@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.54 2004/05/02 09:52:43 theno23 Exp $
+ *  $Id: process.c,v 1.55 2004/05/30 18:48:01 theno23 Exp $
  */
 
 #include <math.h>
@@ -424,7 +424,7 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	}
     }
 
-    plugin_run(lim_plugin, limiter.handle, nframes);
+    //XXX plugin_run(lim_plugin, limiter.handle, nframes);
 
     //printf("run limiter...\n");
 
