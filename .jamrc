@@ -69,6 +69,18 @@ style "steel"
 
 }
 
+style "steelgrey"
+{
+  #This sets the padding around the window to the pixmap specified.
+  #bg_pixmap[<STATE>] = "<pixmap filename>"
+   	bg[NORMAL] = { 0.5, 0.5, 0.5 }
+   	bg[ACTIVE] = { 0.5, 0.5, 0.5 }
+   	bg[PRELIGHT] = { 0.5, 0.5, 0.5 }
+   	bg[INSENSITIVE] = { 0.5, 0.5, 0.5 }
+   	bg[SELECTED] = { 0.5, 0.5, 0.5 }
+
+}
+
 
 style "thai-gold"
 {
@@ -128,7 +140,7 @@ style "toggle_button" = "button"
   # bg_pixmap[NORMAL] = "<parent>"
 }
 
-style "radio_button" = "steel"
+style "radio_button" = "steelgrey"
 {
   fg[NORMAL] = { 0, 0, 0 }
   fg[ACTIVE] = { 0, 0, 0 }
@@ -140,7 +152,7 @@ style "radio_button" = "steel"
 
 # This sets the text for everything except the faders and buttons.
 
-style "text" = "steel"
+style "text" = "steelgrey"
 {
 	fg[NORMAL] = { 0.74, 0.85, 0.93 }	# sky blue
 	fg[ACTIVE] = { 0.74, 0.85, 0.93 }
@@ -186,10 +198,10 @@ style "ruler"
 # Only need to change these next two to get a different bg color
 
 # main window colors
-widget_class "GtkWindow" style "steel"
+widget_class "GtkWindow" style "steelgrey"
 
 # comps and limiter colors
-widget_class "*Gtk*Box" style "steel"
+widget_class "*Gtk*Box" style "steelgrey"
 
 #widget_class "GtkDialog" style "gold"
 #widget_class "GtkFileSelection" style "gold"
