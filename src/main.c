@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.36 2004/01/07 16:31:14 theno23 Exp $
+ *  $Id: main.c,v 1.37 2004/01/07 22:55:54 joq Exp $
  */
 
 /*
@@ -53,15 +53,17 @@
 #include "help.h"
 
 GtkWidget *main_window;
+char *jamin_dir;
+char *default_session = NULL;
 
-gboolean update_meters(gpointer data);
+char user_default_session[PATH_MAX];	/* user's default session name */
+
+static gboolean update_meters(gpointer data);
+static void set_configuration_files(void);
 
 int main(int argc, char *argv[])
 {
-    char rcfile[PATH_MAX], title[128];
-    int fd;
-    DIR *dtest;
-    char *settings_dir;
+    char title[128];
 
 #ifdef ENABLE_NLS
     bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
@@ -74,38 +76,12 @@ int main(int argc, char *argv[])
     printf("This is free software, and you are welcome to redistribute it\n" 
 	   "under certain conditions; see the file COPYING for details.\n");
 
-
-    /* look for the rcfile, if its there parse it */
-
-    snprintf(rcfile, PATH_MAX, "%s/%s", getenv("HOME"), ".jamrc");
-    if ((fd = open(rcfile, O_RDONLY)) >= 0) {
-	close(fd);
-	printf("Using jamrc file: %s\n", rcfile);
-	gtk_rc_parse(rcfile);
-    }
-
-    settings_dir = g_strdup_printf("%s/%s", getenv("HOME"), SETTINGS_DIR);
-    if ((dtest = opendir(settings_dir))) {
-fprintf(stderr, ".jamin exists and is a dir\n");
-	closedir(dtest);
-    } else {
-	if (errno == ENOTDIR) {
-	    fprintf(stderr, "%s exists, but its not a directory\n", settings_dir);
-	} else if (errno == ENOENT) {
-	    fprintf(stderr, "%s does not exist, creating it...\n", settings_dir);
-	    if (mkdir(settings_dir, 0755) != 0) {
-		perror("Failed to create dir");
-	    }
-	} else {
-	    fprintf(stderr, "Unknown error trying to stat %s\n", settings_dir);
-	}
-    }
-
+    set_configuration_files();
     gtk_set_locale();
     gtk_init(&argc, &argv);
     io_init(argc, argv);
     state_init();
-    add_pixmap_directory(PACKAGE_DATA_DIR "/jamin");
+    add_pixmap_directory(JAMIN_PIXMAP_DIR);
     main_window = create_window1();
 
     snprintf(title, sizeof(title), PACKAGE " " VERSION);
@@ -141,8 +117,77 @@ fprintf(stderr, ".jamin exists and is a dir\n");
     return 0;
 }
 
+static void set_configuration_files(void)
+{
+    DIR *dtest;
+    int no_rcfile = 1;
+    int fd;
+    char *home_dir = getenv("HOME");
 
-gboolean update_meters(gpointer data)
+    if (home_dir)
+	jamin_dir = g_strdup_printf("%s/%s/", home_dir, JAMIN_DIR);
+    else
+	jamin_dir = NULL;
+
+    if ((dtest = opendir(jamin_dir))) {
+	fprintf(stderr, JAMIN_DIR " exists and is a directory\n");
+	closedir(dtest);
+    } else {
+	if (errno == ENOTDIR) {
+	    fprintf(stderr, "%s exists, but its not a directory\n", jamin_dir);
+	    jamin_dir = NULL;
+	} else if (errno == ENOENT) {
+	    fprintf(stderr, "%s does not exist, creating it...\n", jamin_dir);
+	    if (mkdir(jamin_dir, 0755) != 0) {
+		perror("Failed to create dir");
+		jamin_dir = NULL;
+	    }
+	} else {
+	    fprintf(stderr, "Unknown error trying to stat %s\n", jamin_dir);
+	    jamin_dir = NULL;
+	}
+    }
+
+    /* look for a user-defined GTK rc file, and parse it */
+    if (jamin_dir) {
+	char rcfile[PATH_MAX];
+	snprintf(rcfile, PATH_MAX, "%s%s", jamin_dir, JAMIN_UI);
+	if ((fd = open(rcfile, O_RDONLY)) >= 0) {
+	    close(fd);
+	    printf("Using " JAMIN_UI " file %s\n", rcfile);
+	    gtk_rc_parse(rcfile);
+	    no_rcfile = 0;
+	}
+    }
+
+    /* look up system-defined GTK rc file, and use it */
+    if (no_rcfile) {
+	if ((fd = open(JAMIN_EXAMPLES_DIR JAMIN_UI, O_RDONLY)) >= 0) {
+	    close(fd);
+	    printf("Using system " JAMIN_UI " file\n");
+	    gtk_rc_parse(JAMIN_EXAMPLES_DIR JAMIN_UI);
+	    no_rcfile = 0;
+	}
+    }
+
+    /* see if user has defined a default.jam */
+    if (jamin_dir) {
+	snprintf(user_default_session, PATH_MAX,
+		 "%s%s", jamin_dir, JAMIN_DEFAULT);
+	if ((fd = open(user_default_session, O_RDONLY)) >= 0) {
+	    close(fd);
+	    default_session = user_default_session;
+	}
+    }
+
+    /* if not, use the system-defined default */
+    if (default_session == NULL) {
+	default_session = JAMIN_EXAMPLES_DIR JAMIN_DEFAULT;
+    }
+    printf("Using default session file %s\n", default_session);
+}
+
+static gboolean update_meters(gpointer data)
 {
     static unsigned int count = 1;
 

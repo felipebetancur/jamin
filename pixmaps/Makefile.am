@@ -7,4 +7,4 @@ EXTRA_DIST = brushed-steel.png \
 
 pixmap_DATA = $(EXTRA_DIST)
 
-pixmapdir = $(datadir)/jamin
+pixmapdir = $(datadir)/jamin/pixmaps

@@ -23,8 +23,9 @@ For the latest JAMin information, see
 .TP 
 \fB\-f\fR \fIfilename\fR
 .br 
-Load session file \fIfilename\fR on startup.  Otherwise, use some
-system-provided default settings.
+Load session file \fIfilename\fR on startup.  If no session file is
+specified, JAMin loads "~/.jamin/default.jam" if that exists, or
+else uses some system-provided default settings.
 .TP 
 \fB\-h\fR
 .br 
@@ -47,6 +48,27 @@ Print verbose output.  Use \fB\-vv\fR or \fB\-vvv\fR for more detail.
 .TP 
 \fB\-V\fR
 Print version and copyright information, then quit.
+
+.SH FILES
+.TP
+.B ~/.jamin
+Directory containing per-user JAMin data.  Created automatically if
+it does not already exist.
+.TP
+.B ~/.jamin/jamin_ui
+Definitions for GTK user interface customization.  An empty jamin_ui
+file causes GTK to use its system defaults.  If this file does not
+exist, JAMin uses ${prefix}/share/jamin/examples/jamin_ui.  If you
+want to customize that file, copy it to ~/.jamin/jamin_ui and make
+changes there.
+.TP
+.B ~/.jamin/*.jam
+Normal location for user-defined session files.  They can be stored
+elsewhere, if desired.
+.TP
+.B ~/.jamin/default.jam
+If this session file exists, it is loaded by default on startup, except
+when overriden by the \fB\-f\fR option.
 
 .SH "EXAMPLES"
 .PP 

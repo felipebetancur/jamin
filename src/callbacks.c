@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.120 2004/01/03 14:14:10 jdepner Exp $
+ *  $Id: callbacks.c,v 1.121 2004/01/07 22:55:54 joq Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1209,17 +1209,13 @@ on_open1_activate                      (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
     GtkFileSelection    *file_selector;
-    gchar               string[512];
-
 
     file_selector = 
        (GtkFileSelection *) gtk_file_selection_new ("Select a session file");
 
-    if (getenv ("HOME") != NULL)
-      {
-        snprintf (string, sizeof(string), "%s/.jam/", getenv ("HOME"));
-        gtk_file_selection_set_filename (file_selector, string);
-      }
+    if (jamin_dir) {
+        gtk_file_selection_set_filename (file_selector, jamin_dir);
+    }
 
     gtk_file_selection_complete (file_selector, "*.jam");
 
@@ -1241,17 +1237,13 @@ on_save_as1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
     GtkFileSelection    *file_selector;
-    gchar               *string;
-
 
     file_selector = 
        (GtkFileSelection *) gtk_file_selection_new ("Select a session file");
 
-    if (getenv ("HOME") != NULL)
-      {
-        string = g_strdup_printf("%s/.jam/", getenv ("HOME"));
-        gtk_file_selection_set_filename (file_selector, string);
-      }
+    if (jamin_dir) {
+	gtk_file_selection_set_filename (file_selector, jamin_dir);
+    }
 
     gtk_file_selection_complete (file_selector, "*.jam");
 

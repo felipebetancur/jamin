@@ -1,10 +1,7 @@
 # pixmap_path "<dir 1>:<dir 2>:<dir 3>:..."
 #
-#
-# Change this path or link it to your pixmaps dir
-#
 
- pixmap_path "/usr/local/src/1music/jack/jam/jam/pixmaps"
+pixmap_path "@prefix@/share/jamin/pixmaps"
  
 #
 # style <name> [= <name>]

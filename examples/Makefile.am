@@ -1,4 +1,4 @@
-EXTRA_DIST = default.jam
+EXTRA_DIST = default.jam jamin_ui
 
 example_DATA = $(EXTRA_DIST)
 

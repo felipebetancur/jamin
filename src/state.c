@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.35 2004/01/06 09:24:06 theno23 Exp $
+ *  $Id: state.c,v 1.36 2004/01/07 22:55:54 joq Exp $
  */
 
 #include <stdio.h>
@@ -419,8 +419,8 @@ void s_load_session (const char *fname)
     if (fname) {
 	filename = fname;
     }
-    if (!filename) {
-	filename = PACKAGE_DATA_DIR "/jamin/examples/default.jam";
+    if (filename == NULL) {
+	filename = default_session;
     }
     s_update_title();
 
