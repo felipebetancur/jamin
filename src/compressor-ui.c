@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: compressor-ui.c,v 1.26 2004/06/06 11:27:47 jdepner Exp $
+ *  $Id: compressor-ui.c,v 1.27 2004/06/28 22:59:48 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -194,9 +194,11 @@ void at_changed(int id, float value)
               draw_comp_curve(j);
             }
         }
-      prev_value_at[i] = value;
     }
                   
+  prev_value_at[i] = value;
+
+
   compressors[i].attack = value;
   draw_comp_curve(i);
 }
@@ -239,9 +241,11 @@ void re_changed(int id, float value)
               draw_comp_curve(j);
             }
         }
-      prev_value_re[i] = value;
     }
                   
+  prev_value_re[i] = value;
+
+
   compressors[i].release = value;
   draw_comp_curve(i);
 }
@@ -289,9 +293,11 @@ void th_changed(int id, float value)
               gtk_meter_set_warn_point(le_meter[j], new_value);
             }
         }
-      prev_value_th[i] = value;
     }
                   
+  prev_value_th[i] = value;
+
+
   compressors[i].threshold = value;
   if (auto_gain[i]) {
     calc_auto_gain(i);
@@ -344,9 +350,11 @@ void ra_changed(int id, float value)
               gtk_meter_set_warn_point(le_meter[j], new_value);
             }
         }
-      prev_value_ra[i] = value;
     }
                   
+  prev_value_ra[i] = value;
+
+
   compressors[i].ratio = value;
   if (auto_gain[i]) {
     calc_auto_gain(i);
@@ -394,9 +402,11 @@ void kn_changed(int id, float value)
               draw_comp_curve(j);
             }
         }
-      prev_value_kn[i] = value;
     }
                   
+  prev_value_kn[i] = value;
+
+
   compressors[i].knee = value * 10.0f;
   draw_comp_curve(i);
 }
@@ -446,9 +456,11 @@ void ma_changed(int id, float value)
             }
 
         }
-      prev_value_ma[i] = value;
     }
                   
+  prev_value_ma[i] = value;
+
+
   compressors[i].makeup_gain = value;
 
   val = g_strdup_printf ("%04.1f", value);
