@@ -65,6 +65,12 @@
 #define MOTION_CLOCK_DIFF             ((int) (sysconf (_SC_CLK_TCK) * 0.05))
 
 
+/*  Number of points used for the falloff in high/low pass notches.  You can
+    make the slope shallower by increasing this or steeper by decreasing.  */
+
+#define NOTCH_PASS_WIDTH              75
+
+
 void interpolate (float, int, float, float, int *, float *, float *, float *, 
                   float *);
 
@@ -602,7 +608,7 @@ void reset_hdeq ()
 
 static void insert_notch ()
 {
-    int        i, j, ndx, left, right, length;
+    int        i, j, ndx, left, right, length, slide;
     float      x[5], y[5];
 
 
@@ -620,23 +626,14 @@ static void insert_notch ()
             if (!j)
               {
                 ndx = EQ_notch_index[j];
-                /*
-                for (i = 0 ; i < ndx - 10 ; i++)
+                slide = MAX (0, (ndx - NOTCH_PASS_WIDTH));
+
+                for (i = 0 ; i < slide ; i++)
                     EQ_y_notched[i] = EQ_notch_gain[j];
 
-                x[0] = EQ_x_notched[ndx - 10];
+                x[0] = EQ_x_notched[slide];
                 y[0] = EQ_notch_gain[j];
-                x[1] = EQ_x_notched[ndx - 9];
-                y[1] = EQ_notch_gain[j];
-                x[2] = EQ_x_notched[ndx - 1];
-                y[2] = EQ_y_notched[ndx - 1];
-                x[3] = EQ_x_notched[ndx];
-                y[3] = EQ_y_notched[ndx];
-                */
-
-                x[0] = EQ_x_notched[0];
-                y[0] = EQ_notch_gain[j];
-                x[1] = EQ_x_notched[1];
+                x[1] = EQ_x_notched[slide + 1];
                 y[1] = EQ_notch_gain[j];
                 x[2] = EQ_x_notched[ndx - 1];
                 y[2] = EQ_y_notched[ndx - 1];
@@ -644,32 +641,23 @@ static void insert_notch ()
                 y[3] = EQ_y_notched[ndx];
 
                 interpolate (EQ_interval, 4, x[0], x[3], &length, x, 
-                    y, &EQ_x_notched[0], &EQ_y_notched[0]);
+                    y, &EQ_x_notched[slide], &EQ_y_notched[slide]);
               }
             else if (j == NOTCHES - 1)
               {
                 ndx = EQ_notch_index[j];
-                /*
-                for (i = ndx + 10 ; i < EQ_length ; i++)
+                slide = MIN ((ndx + NOTCH_PASS_WIDTH), (EQ_length - 1));
+
+                for (i = slide ; i < EQ_length ; i++)
                     EQ_y_notched[i] = EQ_notch_gain[j];
 
                 x[0] = EQ_x_notched[ndx];
                 y[0] = EQ_y_notched[ndx];
                 x[1] = EQ_x_notched[ndx + 1];
                 y[1] = EQ_y_notched[ndx + 1];
-                x[2] = EQ_x_notched[ndx + 9];
+                x[2] = EQ_x_notched[slide - 1];
                 y[2] = EQ_notch_gain[j];
-                x[3] = EQ_x_notched[ndx + 10];
-                y[3] = EQ_notch_gain[j];
-                */
-
-                x[0] = EQ_x_notched[ndx];
-                y[0] = EQ_y_notched[ndx];
-                x[1] = EQ_x_notched[ndx + 1];
-                y[1] = EQ_y_notched[ndx + 1];
-                x[2] = EQ_x_notched[EQ_length - 2];
-                y[2] = EQ_notch_gain[j];
-                x[3] = EQ_x_notched[EQ_length - 1];
+                x[3] = EQ_x_notched[slide];
                 y[3] = EQ_notch_gain[j];
 
                 interpolate (EQ_interval, 4, x[0], x[3], &length, x, 
