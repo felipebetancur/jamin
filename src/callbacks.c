@@ -28,6 +28,7 @@
 #include "gtkmeterscale.h"
 #include "state.h"
 #include "db.h"
+#include "status-ui.h"
 #include "transport.h"
 #include "scenes.h"
 #include "help.h"
@@ -1322,7 +1323,10 @@ on_window1_key_press_event             (GtkWidget       *widget,
         tmp = gtk_toggle_button_get_active (bypass);
         gtk_toggle_button_set_active (bypass, (!tmp));
         return FALSE;
-        break;
+
+      case GDK_space:
+	transport_toggle_play();
+        return FALSE;
 
       case GDK_1:
       case GDK_KP_1:
@@ -1372,31 +1376,26 @@ on_window1_key_press_event             (GtkWidget       *widget,
         focus = MAIN_BUTTONS;
         status_set_focus (main_window, "Main buttons");
         return FALSE;
-        break;
 
       case GDK_I:
         focus = INPUT;
         status_set_focus (main_window, "Input");
         return FALSE;
-        break;
 
       case GDK_D:
         focus = HDEQ;
         status_set_focus (main_window, "HDEQ");
         return FALSE;
-        break;
 
       case GDK_E:
         focus = EQ_OPTIONS;
         status_set_focus (main_window, "EQ options");
         return FALSE;
-        break;
 
       case GDK_L:
         focus = LOW;
         status_set_focus (main_window, "Low compressor");
         return FALSE;
-        break;
 
       case GDK_M:
         focus = MID;
@@ -1408,13 +1407,11 @@ on_window1_key_press_event             (GtkWidget       *widget,
         focus = HIGH;
         status_set_focus (main_window, "High compressor");
         return FALSE;
-        break;
 
       case GDK_O:
         focus = OUTPUT;
         status_set_focus (main_window, "Output");
         return FALSE;
-        break;
       }
 
 
@@ -1589,7 +1586,6 @@ on_window1_key_press_event             (GtkWidget       *widget,
         break;
 
       }
-
 
 
     fprintf(stderr,"%s %d %x %x %d\n",__FILE__,__LINE__, key, state, scene);

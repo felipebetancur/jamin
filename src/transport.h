@@ -10,5 +10,6 @@ void transport_status(jack_transport_info_t *jp);
 void transport_play();
 void transport_rewind();
 void transport_stop();
+void transport_toggle_play();
 
 #endif /* TRANSPORT_H */

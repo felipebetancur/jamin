@@ -18,6 +18,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include <config.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <jack/jack.h>
@@ -26,6 +27,7 @@
 #include "jackstatus.h"
 #include "io.h"
 #include "transport.h"
+
 
 volatile int jamin_is_timebase_master = 0;
 
@@ -104,12 +106,14 @@ void transport_status(jack_transport_info_t *jp)
 }
 
 
+#ifndef HAVE_JACK_TRANSPORT_PLAY
+
 /* transport_master -- take over as timebase master, if possible.
  *
  *  This logic isn't completely air-tight, but should serve until
  *  there is a cleaner JACK transport design.
  */
-int transport_master()
+static int transport_master()
 {
     if (jamin_is_timebase_master)
 	return 1;			/* I already am master */
@@ -132,9 +136,17 @@ int transport_master()
     return jamin_is_timebase_master;
 }
 
+#endif /* HAVE_JACK_TRANSPORT_PLAY */
 
 void transport_play()
 {
+#ifdef HAVE_JACK_TRANSPORT_PLAY
+
+    jack_transport_play(client);
+    IF_DEBUG(DBG_TERSE, fprintf(stderr,"Transport started!\n"));
+
+#else /* old JACK transport interface */
+
     if (transport_master()) {
 	tpt.info.transport_state = JackTransportRolling;
 	IF_DEBUG(DBG_TERSE,
@@ -143,11 +155,20 @@ void transport_play()
 	IF_DEBUG(DBG_TERSE,
 		 fprintf(stderr,"Not transport master.\n"));
     }
+
+#endif /* HAVE_JACK_TRANSPORT_PLAY */
 }
 
 
 void transport_rewind()
 {
+#ifdef HAVE_JACK_TRANSPORT_PLAY
+
+    //JOQ: jack_transport_reposition(client, pos);
+    IF_DEBUG(DBG_TERSE, fprintf(stderr,"Transport NOT rewound (yet)!\n"));
+
+#else /* old JACK transport interface */
+
     if (transport_master()) {
 	tpt.info.transport_state = JackTransportStopped;
 	tpt.info.frame = 0;
@@ -157,11 +178,35 @@ void transport_rewind()
 	IF_DEBUG(DBG_TERSE,
 		 fprintf(stderr,"Not transport master.\n"));
     }
+
+#endif /* HAVE_JACK_TRANSPORT_PLAY */
+}
+
+
+static jack_transport_state_t transport_state()
+{
+#ifdef HAVE_JACK_TRANSPORT_PLAY
+
+    jack_position_t pos;
+    return jack_transport_query(client, &pos);
+
+#else /* old JACK transport interface */
+
+    return tpt.info.transport_state;
+
+#endif /* HAVE_JACK_TRANSPORT_PLAY */
 }
 
 
 void transport_stop()
 {
+#ifdef HAVE_JACK_TRANSPORT_PLAY
+
+    jack_transport_stop(client);
+    IF_DEBUG(DBG_TERSE, fprintf(stderr,"Transport stopped!\n"));
+
+#else /* old JACK transport interface */
+
     if (transport_master()) {
 	tpt.info.transport_state = JackTransportStopped;
 	IF_DEBUG(DBG_TERSE,
@@ -170,4 +215,15 @@ void transport_stop()
 	IF_DEBUG(DBG_TERSE,
 		 fprintf(stderr,"Not transport master.\n"));
     }
+
+#endif /* HAVE_JACK_TRANSPORT_PLAY */
+}
+
+
+void transport_toggle_play()
+{
+    if (transport_state() == JackTransportStopped)
+	transport_play();
+    else
+	transport_stop();
 }
