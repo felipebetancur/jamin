@@ -161,3 +161,27 @@ on_EQ_curve_event_box_button_release_event
 void
 on_bypass_button_toggled               (GtkToggleButton *togglebutton,
                                         gpointer         user_data);
+
+void
+on_comp_kn_1_value_changed             (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_comp_kn_2_value_changed             (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_comp_kn_3_value_changed             (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_low_knee_lbl_realize                (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_mid_knee_lbl_realize                (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_high_knee_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data);

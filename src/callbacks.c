@@ -27,7 +27,8 @@ static GtkHScale       *l_low2mid, *l_mid2high;
 static GtkVScale       *l_eqb1;
 static GtkWidget       *l_low_comp, *l_mid_comp, *l_high_comp;
 static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_low_comp_lbl, 
-                       *l_mid_comp_lbl, *l_high_comp_lbl, *l_EQ_curve_lbl;
+                       *l_mid_comp_lbl, *l_high_comp_lbl, *l_EQ_curve_lbl,
+                       *l_low_knee_lbl, *l_mid_knee_lbl, *l_high_knee_lbl;
 static GtkDrawingArea  *l_EQ_curve;
 static GdkDrawable     *EQ_drawable;
 static GdkColormap     *colormap;
@@ -682,3 +683,100 @@ on_bypass_button_toggled               (GtkToggleButton *togglebutton,
 	global_bypass = gtk_toggle_button_get_active(togglebutton);
 }
 
+
+
+
+void
+on_low_knee_lbl_realize                (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    l_low_knee_lbl = (GtkLabel *) widget;
+}
+
+
+void
+on_comp_kn_1_value_changed             (GtkRange        *range,
+                                        gpointer         user_data)
+{
+    double              value;
+
+
+    value = gtk_range_get_value (range);
+
+    if (value == 0.5)
+      {
+        gtk_label_set_label (l_low_knee_lbl, "Knee");
+      }
+    else if (value < 0.5)
+      {
+        gtk_label_set_label (l_low_knee_lbl, "Hard");
+      }
+    else
+      {
+        gtk_label_set_label (l_low_knee_lbl, "Soft");
+      }
+}
+
+
+void
+on_mid_knee_lbl_realize                (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    l_mid_knee_lbl = (GtkLabel *) widget;
+}
+
+
+void
+on_comp_kn_2_value_changed             (GtkRange        *range,
+                                        gpointer         user_data)
+{
+    double              value;
+
+
+    value = gtk_range_get_value (range);
+
+    if (value == 0.5)
+      {
+        gtk_label_set_label (l_mid_knee_lbl, "Knee");
+      }
+    else if (value < 0.5)
+      {
+        gtk_label_set_label (l_mid_knee_lbl, "Hard");
+      }
+    else
+      {
+        gtk_label_set_label (l_mid_knee_lbl, "Soft");
+      }
+}
+
+
+void
+on_high_knee_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    l_high_knee_lbl = (GtkLabel *) widget;
+}
+
+
+void
+on_comp_kn_3_value_changed             (GtkRange        *range,
+                                        gpointer         user_data)
+{
+    double              value;
+
+
+    value = gtk_range_get_value (range);
+
+    if (value == 0.5)
+      {
+        gtk_label_set_label (l_high_knee_lbl, "Knee");
+      }
+    else if (value < 0.5)
+      {
+        gtk_label_set_label (l_high_knee_lbl, "Hard");
+      }
+    else
+      {
+        gtk_label_set_label (l_high_knee_lbl, "Soft");
+      }
+}

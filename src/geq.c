@@ -92,6 +92,12 @@ void geq_set_gains()
 void geq_set_sliders(int length, float x[], float y[])
 {
     /*  This is where Steve does the voodoo.  */
+    int i;
+
+    for (i = 0 ; i < length ; i++)
+      {
+        fprintf(stderr,"%s %d %d %f %f\n",__FILE__,__LINE__,i,pow(10.0,x[i]),pow(10.0,y[i]));
+      }
 }
 
 gboolean eqb_changed(GtkAdjustment *adj, gpointer user_data)

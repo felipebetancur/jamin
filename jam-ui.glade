@@ -79,10 +79,6 @@
 			  <property name="orientation">GTK_PROGRESS_BOTTOM_TO_TOP</property>
 			  <property name="fraction">0</property>
 			  <property name="pulse_step">0.1</property>
-			  <property name="activity_mode">False</property>
-			  <property name="show_text">False</property>
-			  <property name="text_xalign">0.5</property>
-			  <property name="text_yalign">0.5</property>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>
@@ -142,8 +138,6 @@
 		      <property name="show_border">True</property>
 		      <property name="tab_pos">GTK_POS_TOP</property>
 		      <property name="scrollable">False</property>
-		      <property name="tab_hborder">2</property>
-		      <property name="tab_vborder">2</property>
 		      <property name="enable_popup">False</property>
 
 		      <child>
@@ -186,7 +180,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">-0 -70 24 1 6 0</property>
+					      <property name="adjustment">-0 -24 24 1 6 0</property>
 					      <signal name="realize" handler="on_eqb1_realize" last_modification_time="Wed, 16 Apr 2003 20:44:03 GMT"/>
 					    </widget>
 					  </child>
@@ -252,7 +246,7 @@
 						  <property name="digits">0</property>
 						  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						  <property name="inverted">True</property>
-						  <property name="adjustment">0 -70 24 1 6 0</property>
+						  <property name="adjustment">0 -24 24 1 6 0</property>
 						</widget>
 					      </child>
 					    </widget>
@@ -324,7 +318,7 @@
 						  <property name="digits">0</property>
 						  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						  <property name="inverted">True</property>
-						  <property name="adjustment">0 -70 24 1 6 0</property>
+						  <property name="adjustment">0 -24 24 1 6 0</property>
 						</widget>
 					      </child>
 					    </widget>
@@ -396,7 +390,7 @@
 						  <property name="digits">0</property>
 						  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						  <property name="inverted">True</property>
-						  <property name="adjustment">0 -70 24 1 6 0</property>
+						  <property name="adjustment">0 -24 24 1 6 0</property>
 						</widget>
 					      </child>
 					    </widget>
@@ -468,7 +462,7 @@
 						  <property name="digits">0</property>
 						  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						  <property name="inverted">True</property>
-						  <property name="adjustment">0 -70 24 1 6 0</property>
+						  <property name="adjustment">0 -24 24 1 6 0</property>
 						</widget>
 					      </child>
 					    </widget>
@@ -540,7 +534,7 @@
 						  <property name="digits">0</property>
 						  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						  <property name="inverted">True</property>
-						  <property name="adjustment">0 -70 24 1 6 0</property>
+						  <property name="adjustment">0 -24 24 1 6 0</property>
 						</widget>
 					      </child>
 					    </widget>
@@ -612,7 +606,7 @@
 						  <property name="digits">0</property>
 						  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						  <property name="inverted">True</property>
-						  <property name="adjustment">0 -70 24 1 6 0</property>
+						  <property name="adjustment">0 -24 24 1 6 0</property>
 						</widget>
 					      </child>
 					    </widget>
@@ -684,7 +678,7 @@
 						  <property name="digits">0</property>
 						  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						  <property name="inverted">True</property>
-						  <property name="adjustment">0 -70 24 1 6 0</property>
+						  <property name="adjustment">0 -24 24 1 6 0</property>
 						</widget>
 					      </child>
 					    </widget>
@@ -756,7 +750,7 @@
 						  <property name="digits">0</property>
 						  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						  <property name="inverted">True</property>
-						  <property name="adjustment">0 -70 24 1 6 0</property>
+						  <property name="adjustment">0 -24 24 1 6 0</property>
 						</widget>
 					      </child>
 					    </widget>
@@ -828,7 +822,7 @@
 						  <property name="digits">0</property>
 						  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						  <property name="inverted">True</property>
-						  <property name="adjustment">0 -70 24 1 6 0</property>
+						  <property name="adjustment">0 -24 24 1 6 0</property>
 						</widget>
 					      </child>
 					    </widget>
@@ -900,7 +894,7 @@
 						  <property name="digits">0</property>
 						  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						  <property name="inverted">True</property>
-						  <property name="adjustment">0 -70 24 1 6 0</property>
+						  <property name="adjustment">0 -24 24 1 6 0</property>
 						</widget>
 					      </child>
 					    </widget>
@@ -966,7 +960,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -1025,7 +1019,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -1084,7 +1078,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -1143,7 +1137,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -1202,7 +1196,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -1261,7 +1255,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -1320,7 +1314,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -1379,7 +1373,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -1438,7 +1432,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -1497,7 +1491,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -1556,7 +1550,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -1615,7 +1609,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -1674,7 +1668,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -1737,7 +1731,7 @@
 						  <property name="digits">0</property>
 						  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						  <property name="inverted">True</property>
-						  <property name="adjustment">0 -70 24 1 6 0</property>
+						  <property name="adjustment">0 -24 24 1 6 0</property>
 						</widget>
 					      </child>
 					    </widget>
@@ -1798,7 +1792,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -1857,7 +1851,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -1916,7 +1910,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -1975,7 +1969,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -2034,7 +2028,7 @@
 					      <property name="digits">0</property>
 					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 					      <property name="inverted">True</property>
-					      <property name="adjustment">0 -70 24 1 6 0</property>
+					      <property name="adjustment">0 -24 24 1 6 0</property>
 					    </widget>
 					  </child>
 					</widget>
@@ -3821,7 +3815,7 @@
 						      </child>
 
 						      <child>
-							<widget class="GtkLabel" id="label75">
+							<widget class="GtkLabel" id="low_knee_lbl">
 							  <property name="visible">True</property>
 							  <property name="label" translatable="yes">Knee</property>
 							  <property name="use_underline">False</property>
@@ -3833,6 +3827,7 @@
 							  <property name="yalign">0.5</property>
 							  <property name="xpad">0</property>
 							  <property name="ypad">0</property>
+							  <signal name="realize" handler="on_low_knee_lbl_realize" last_modification_time="Mon, 21 Apr 2003 00:04:45 GMT"/>
 							</widget>
 							<packing>
 							  <property name="padding">0</property>
@@ -3851,6 +3846,7 @@
 							  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							  <property name="inverted">True</property>
 							  <property name="adjustment">0 0 1 0 0 0</property>
+							  <signal name="value_changed" handler="on_comp_kn_1_value_changed" last_modification_time="Mon, 21 Apr 2003 00:00:07 GMT"/>
 							</widget>
 							<packing>
 							  <property name="padding">0</property>
@@ -4077,10 +4073,6 @@
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
-						  <property name="activity_mode">False</property>
-						  <property name="show_text">False</property>
-						  <property name="text_xalign">0.5</property>
-						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -4097,10 +4089,6 @@
 						  <property name="orientation">GTK_PROGRESS_RIGHT_TO_LEFT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
-						  <property name="activity_mode">False</property>
-						  <property name="show_text">False</property>
-						  <property name="text_xalign">0.5</property>
-						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -4301,7 +4289,7 @@
 						      </child>
 
 						      <child>
-							<widget class="GtkLabel" id="label91">
+							<widget class="GtkLabel" id="mid_knee_lbl">
 							  <property name="visible">True</property>
 							  <property name="label" translatable="yes">Knee</property>
 							  <property name="use_underline">False</property>
@@ -4313,6 +4301,7 @@
 							  <property name="yalign">0.5</property>
 							  <property name="xpad">0</property>
 							  <property name="ypad">0</property>
+							  <signal name="realize" handler="on_mid_knee_lbl_realize" last_modification_time="Mon, 21 Apr 2003 00:05:02 GMT"/>
 							</widget>
 							<packing>
 							  <property name="padding">0</property>
@@ -4331,6 +4320,7 @@
 							  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							  <property name="inverted">True</property>
 							  <property name="adjustment">0 0 1 0 0 0</property>
+							  <signal name="value_changed" handler="on_comp_kn_2_value_changed" last_modification_time="Mon, 21 Apr 2003 00:00:18 GMT"/>
 							</widget>
 							<packing>
 							  <property name="padding">0</property>
@@ -4534,10 +4524,6 @@
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
-						  <property name="activity_mode">False</property>
-						  <property name="show_text">False</property>
-						  <property name="text_xalign">0.5</property>
-						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -4554,10 +4540,6 @@
 						  <property name="orientation">GTK_PROGRESS_RIGHT_TO_LEFT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
-						  <property name="activity_mode">False</property>
-						  <property name="show_text">False</property>
-						  <property name="text_xalign">0.5</property>
-						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -4758,7 +4740,7 @@
 						      </child>
 
 						      <child>
-							<widget class="GtkLabel" id="label27">
+							<widget class="GtkLabel" id="high_knee_lbl">
 							  <property name="visible">True</property>
 							  <property name="label" translatable="yes">Knee</property>
 							  <property name="use_underline">False</property>
@@ -4770,6 +4752,7 @@
 							  <property name="yalign">0.5</property>
 							  <property name="xpad">0</property>
 							  <property name="ypad">0</property>
+							  <signal name="realize" handler="on_high_knee_lbl_realize" last_modification_time="Mon, 21 Apr 2003 00:05:19 GMT"/>
 							</widget>
 							<packing>
 							  <property name="padding">0</property>
@@ -4788,6 +4771,7 @@
 							  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							  <property name="inverted">True</property>
 							  <property name="adjustment">0 0 1 0 0 0</property>
+							  <signal name="value_changed" handler="on_comp_kn_3_value_changed" last_modification_time="Mon, 21 Apr 2003 00:00:25 GMT"/>
 							</widget>
 							<packing>
 							  <property name="padding">0</property>
@@ -4990,10 +4974,6 @@
 						  <property name="orientation">GTK_PROGRESS_RIGHT_TO_LEFT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
-						  <property name="activity_mode">False</property>
-						  <property name="show_text">False</property>
-						  <property name="text_xalign">0.5</property>
-						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -5010,10 +4990,6 @@
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
-						  <property name="activity_mode">False</property>
-						  <property name="show_text">False</property>
-						  <property name="text_xalign">0.5</property>
-						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -5163,10 +5139,6 @@
 				      <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 				      <property name="fraction">0</property>
 				      <property name="pulse_step">0.1</property>
-				      <property name="activity_mode">False</property>
-				      <property name="show_text">False</property>
-				      <property name="text_xalign">0.5</property>
-				      <property name="text_yalign">0.5</property>
 				    </widget>
 				    <packing>
 				      <property name="padding">0</property>
@@ -5220,10 +5192,6 @@
 				      <property name="orientation">GTK_PROGRESS_RIGHT_TO_LEFT</property>
 				      <property name="fraction">0</property>
 				      <property name="pulse_step">0.1</property>
-				      <property name="activity_mode">False</property>
-				      <property name="show_text">False</property>
-				      <property name="text_xalign">0.5</property>
-				      <property name="text_yalign">0.5</property>
 				    </widget>
 				    <packing>
 				      <property name="padding">0</property>
@@ -5259,10 +5227,6 @@
 				      <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 				      <property name="fraction">0</property>
 				      <property name="pulse_step">0.1</property>
-				      <property name="activity_mode">False</property>
-				      <property name="show_text">False</property>
-				      <property name="text_xalign">0.5</property>
-				      <property name="text_yalign">0.5</property>
 				    </widget>
 				    <packing>
 				      <property name="padding">0</property>
