@@ -660,6 +660,56 @@ void io_shutdown(void *arg)
 }
 
 
+/*  Silly little function to expand the ~ in case someone has slammed it up
+    against the option and the shell couldn't expand it.  I know, this is a
+    waste of time, but I was bored.  JCD    (there's probably already a
+    function written to do this I just didn't know what it was)  */
+
+void expand_tilde (char *option, char *optarg)
+{
+  int  i, j, k;
+  char fn[256], home[256];
+
+
+  if (strchr (optarg, '~'))
+    {
+      if (getenv ("HOME") != NULL)
+        {
+          strcpy (home, getenv ("HOME"));
+        }
+      else
+        {
+          fprintf (stderr, 
+                   "\nUsing ~ in path with %s option requires a space between the %s and the path\n", 
+                   option, option);
+          fprintf (stderr, 
+                   "or setting the $HOME environment variable.\n");
+          fprintf (stderr, "Terminating\n\n");
+          exit (-1);
+        }
+      k = 0;
+      for (i = 0 ; i < strlen (optarg) ; i++)
+        {
+          if (optarg[i] == '~')
+            {
+              for (j = 0 ; j < strlen (home) ; j++)
+                {
+                  fn[k] = home[j];
+                  k++;
+                }
+            }
+          else
+            {
+              fn[k] = optarg[i];
+              k++;
+            }
+        }
+      fn[k] = 0;
+      strcpy (optarg, fn);
+    }
+}
+
+
 /****************  Initialization  ****************/
 
 /* io_init -- initialize DSP engine.
@@ -671,8 +721,8 @@ void io_shutdown(void *arg)
 void io_init(int argc, char *argv[])
 {
     int chan;
-    int opt, i, j, k;
-    char *client_name = NULL, fn[256], home[256];
+    int opt;
+    char *client_name = NULL;
 
     /* basename $0 */
     pname = strrchr(argv[0], '/');
@@ -690,41 +740,7 @@ void io_init(int argc, char *argv[])
 	    all_errors_fatal = 1;
 	    break;
 	case 'f':
-          if (strchr (optarg, '~'))
-            {
-              if (getenv ("HOME") != NULL)
-                {
-                  strcpy (home, getenv ("HOME"));
-                }
-              else
-                {
-                  fprintf (stderr, 
-                           "\nUsing ~ in path with -f option requires a space between the -f and the path\n");
-                  fprintf (stderr, 
-                           "or setting the $HOME environment variable.\n");
-                  fprintf (stderr, "Terminating\n\n");
-                  exit (-1);
-                }
-              k = 0;
-              for (i = 0 ; i < strlen (optarg) ; i++)
-                {
-                  if (optarg[i] == '~')
-                    {
-                      for (j = 0 ; j < strlen (home) ; j++)
-                        {
-                          fn[k] = home[j];
-                          k++;
-                        }
-                    }
-                  else
-                    {
-                      fn[k] = optarg[i];
-                      k++;
-                    }
-                }
-              fn[k] = 0;
-              strcpy (optarg, fn);
-            }
+            expand_tilde ("-f", optarg);
             s_set_filename(optarg);
             break;
 	case 'n':			/* Set JACK client name */
@@ -737,41 +753,7 @@ void io_init(int argc, char *argv[])
 	    connect_ports = 0;
 	    break;
 	case 'r':			/* use GTK resource file */
-          if (strchr (optarg, '~'))
-            {
-              if (getenv ("HOME") != NULL)
-                {
-                  strcpy (home, getenv ("HOME"));
-                }
-              else
-                {
-                  fprintf (stderr, 
-                           "\nUsing ~ in path with -f option requires a space between the -f and the path\n");
-                  fprintf (stderr, 
-                           "or setting the $HOME environment variable.\n");
-                  fprintf (stderr, "Terminating\n\n");
-                  exit (-1);
-                }
-              k = 0;
-              for (i = 0 ; i < strlen (optarg) ; i++)
-                {
-                  if (optarg[i] == '~')
-                    {
-                      for (j = 0 ; j < strlen (home) ; j++)
-                        {
-                          fn[k] = home[j];
-                          k++;
-                        }
-                    }
-                  else
-                    {
-                      fn[k] = optarg[i];
-                      k++;
-                    }
-                }
-              fn[k] = 0;
-              strcpy (optarg, fn);
-            }
+            expand_tilde ("-r", optarg);
 	    resource_file_name(optarg);
 	    break;
 	case 't':			/* no DSP thread */
