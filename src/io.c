@@ -473,10 +473,12 @@ int io_queue(jack_nframes_t nframes, int nchannels,
 	    /* This is a realtime bug.  We have input audio with no
 	     * place to go.  The DSP thread is not keeping up, and
 	     * there's nothing we can do about it here. */
-	    io_errlog(ENOSPC, "input overflow, %ld bytes written.", count);
+	    IF_DEBUG(DBG_TERSE,
+		     io_errlog(ENOSPC, "input overflow, %ld bytes written.",
+			       count));
 	    rc = ENOSPC;		/* out of space */
 	}
-    }
+    } 
 
     /* if there is enough input, schedule the DSP thread */
     if (ringbuffer_read_space(in_rb[0]) >= dsp_block_bytes)
@@ -492,7 +494,9 @@ int io_queue(jack_nframes_t nframes, int nchannels,
 		/* This is a realtime bug.  We do not have output
 		 * audio when we need it.  The DSP thread is not
 		 * keeping up. */
-		io_errlog(EPIPE, "output underflow, %ld bytes read.", count);
+		IF_DEBUG(DBG_TERSE,
+			 io_errlog(EPIPE, "output underflow, %ld bytes read.",
+				   count));
 		rc = EPIPE;		/* broken pipe */
 	    }
 
@@ -796,7 +800,7 @@ int io_create_dsp_thread()
 	fprintf(stderr, "%s not permitted to create realtime DSP thread.\n",
 		PACKAGE);
 	fprintf(stderr,"You must run as root to use this method.\n");
-	// JOQ:                            ", or use JACK capabilites"
+	// JOQ:   ", or use JACK capabilites"
 	fprintf(stderr,"Continuing operation, but ignoring -t option.\n");
 	break;
     default:				/* internal error */
