@@ -1,7 +1,7 @@
 /*
  *  transport.c -- JACK transport control functions.
  *
- *  Copyright (C) 2003 Jack O'Quin.
+ *  Copyright (C) 2003 Jack O'Quin
  *  
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
