@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.160 2005/02/06 23:31:08 jdepner Exp $
+ *  $Id: callbacks.c,v 1.161 2005/02/16 13:57:22 joq Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -45,6 +45,7 @@
 #include "state.h"
 #include "db.h"
 #include "status-ui.h"
+#include "limiter-ui.h"
 #include "io-menu.h"
 #include "transport.h"
 #include "scenes.h"
