@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.c,v 1.9 2003/11/21 04:19:08 joq Exp $
+ *  $Id: io-menu.c,v 1.10 2003/11/21 04:42:54 joq Exp $
  */
 
 /* The JACK I/O ports for each channel are defined here */
@@ -41,11 +41,7 @@ GtkWidget   *menuitem,
 	    *in_item_l, 
 	    *in_item_r, 
 	    *out_item_l, 
-	    *out_item_r, 
-	    *in_item_ll[256], 
-	    *in_item_rr[256], 
-	    *out_item_ll[256], 
-	    *out_item_rr[256];
+	    *out_item_r;
 
 void bind_iomenu()
 {
@@ -122,36 +118,30 @@ iomenu_scan_port_names()
     if (in_menu_ll)
 	gtk_menu_item_remove_submenu(GTK_MENU_ITEM(in_item_l));
     in_menu_ll = gtk_menu_new();
-    gtk_menu_item_set_submenu (GTK_MENU_ITEM(in_item_l), in_menu_ll);
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(in_item_l), in_menu_ll);
 
     if (in_menu_rr)
 	gtk_menu_item_remove_submenu(GTK_MENU_ITEM(in_item_r));
     in_menu_rr = gtk_menu_new();
-    gtk_menu_item_set_submenu (GTK_MENU_ITEM(in_item_r), in_menu_rr);
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(in_item_r), in_menu_rr);
 
     if (outports)
 	free(outports);
-    outports = jack_get_ports (client, NULL, NULL, JackPortIsOutput);
+    outports = jack_get_ports(client, NULL, NULL, JackPortIsOutput);
 
     for (i = 0; outports[i]; ++i) {
 
-	in_item_ll[i] =
-	    gtk_radio_menu_item_new_with_label (group_in_l,
-						outports[i]);
-	group_in_l = gtk_radio_menu_item_get_group (
-	    GTK_RADIO_MENU_ITEM (in_item_ll));		
-	gtk_menu_shell_append (GTK_MENU_SHELL (in_menu_ll),
-			       in_item_ll[i]);
-	gtk_widget_show (in_item_ll[i]);
+	GtkWidget   *item;
 
-	in_item_rr[i] =
-	    gtk_radio_menu_item_new_with_label (group_in_r,
-						outports[i]);
-	group_in_r = gtk_radio_menu_item_get_group (
-	    GTK_RADIO_MENU_ITEM (in_item_rr));	
-	gtk_menu_shell_append (GTK_MENU_SHELL (in_menu_rr),
-			       in_item_rr[i]);
-	gtk_widget_show (in_item_rr[i]);
+	item = gtk_radio_menu_item_new_with_label(group_in_l, outports[i]);
+	group_in_l = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM (item));
+	gtk_menu_shell_append(GTK_MENU_SHELL(in_menu_ll), item);
+	gtk_widget_show (item);
+
+	item = gtk_radio_menu_item_new_with_label(group_in_r, outports[i]);
+	group_in_r = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM (item));
+	gtk_menu_shell_append(GTK_MENU_SHELL(in_menu_rr), item);
+	gtk_widget_show (item);
 
     }
 
@@ -160,31 +150,29 @@ iomenu_scan_port_names()
     if (out_menu_ll)
 	gtk_menu_item_remove_submenu(GTK_MENU_ITEM(out_item_l));
     out_menu_ll=gtk_menu_new();
-    gtk_menu_item_set_submenu (GTK_MENU_ITEM(out_item_l), out_menu_ll);	
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(out_item_l), out_menu_ll);	
 
     if (out_menu_rr)
 	gtk_menu_item_remove_submenu(GTK_MENU_ITEM(out_item_r));
     out_menu_rr=gtk_menu_new();
-    gtk_menu_item_set_submenu (GTK_MENU_ITEM(out_item_r), out_menu_rr);
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(out_item_r), out_menu_rr);
 
     if (inports)
 	free(inports);
-    inports = jack_get_ports (client, NULL, NULL, JackPortIsInput);
+    inports = jack_get_ports(client, NULL, NULL, JackPortIsInput);
 
     for (i = 0; inports[i]; ++i) {
+
+	GtkWidget   *item;
 	    
-	out_item_ll[i] =
-	    gtk_radio_menu_item_new_with_label (group_out_l, inports[i]);
-	group_out_l =
-	    gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM(in_item_ll));
-	gtk_menu_shell_append (GTK_MENU_SHELL (out_menu_ll), out_item_ll[i]);
-	gtk_widget_show (out_item_ll[i]);
+	item = gtk_radio_menu_item_new_with_label(group_out_l, inports[i]);
+	group_out_l = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(item));
+	gtk_menu_shell_append(GTK_MENU_SHELL (out_menu_ll), item);
+	gtk_widget_show(item);
 	
-	out_item_rr[i] =
-	    gtk_radio_menu_item_new_with_label (group_out_r, inports[i]);
-	group_out_r =
-	    gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM(in_item_ll));
-	gtk_menu_shell_append (GTK_MENU_SHELL (out_menu_rr), out_item_rr[i]);
-	gtk_widget_show (out_item_rr[i]);
+	item = gtk_radio_menu_item_new_with_label(group_out_r, inports[i]);
+	group_out_r = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(item));
+	gtk_menu_shell_append(GTK_MENU_SHELL (out_menu_rr), item);
+	gtk_widget_show(item);
     }	
 }
