@@ -381,9 +381,11 @@ void *io_dsp_thread(void *arg)
     /* The DSP lock is held whenever this thread is actually running. */
     pthread_mutex_lock(&lock_dsp);
 
-    io_new_state(DSP_STARTING);		/* allow queuing to begin */
+    /* This check is because we may already have shut down. */
+    if (DSP_STATE_IS(DSP_ACTIVATING))
+	io_new_state(DSP_STARTING);	/* allow queuing to begin */
 
-    do {
+    while (DSP_STATE_NOT(DSP_STOPPING)) {
 
 	/* process any buffers queued for DSP */
 	while (io_get_dsp_buffers(nchannels, in, out)) {
@@ -396,7 +398,7 @@ void *io_dsp_thread(void *arg)
 
 	    /* Advance the ring buffers.  This frees up the input
 	     * space and queues the output for the JACK process
-	     * thread */
+	     * thread. */
 	    for (chan = 0; chan < nchannels; chan++) {
 		ringbuffer_write_advance(out_rb[chan], dsp_block_bytes);
 		ringbuffer_read_advance(in_rb[chan], dsp_block_bytes);
@@ -414,7 +416,7 @@ void *io_dsp_thread(void *arg)
 
 	IF_DEBUG(DBG_NORMAL, io_trace("DSP thread wakeup"));
 
-    } while (DSP_STATE_NOT(DSP_STOPPING));
+    };
 
     pthread_mutex_unlock(&lock_dsp);
 
@@ -563,7 +565,7 @@ int io_process(jack_nframes_t nframes, void *arg)
 
     IF_DEBUG(DBG_VERBOSE, io_trace("JACK process() end"));
 
-    return return_code;
+    return 0;				/* JOQ: ignore return_code */
 }
 
 
@@ -594,10 +596,7 @@ void io_cleanup()
 	io_new_state(DSP_STOPPED);
 	break;
 
-    case DSP_ACTIVATING:		/* JACK shut down immediately? */
-	io_new_state(DSP_STOPPING);
-	break;
-
+    case DSP_ACTIVATING:
     case DSP_STARTING:
     case DSP_RUNNING:
 	if (have_dsp_thread) {
@@ -614,9 +613,9 @@ void io_cleanup()
 
     if (DSP_STATE_IS(DSP_STOPPING)) {
 
-	io_new_state(DSP_STOPPED);
 	jack_client_close(client);	/* leave the jack graph */
 	client = NULL;
+	io_new_state(DSP_STOPPED);
 
 	/* free the ring buffers */
 	for (chan = 0; chan < nchannels; chan++) {
