@@ -19,11 +19,10 @@ TODO (owner)
 - copyright headers in source code file (everyone)
 - move option parsing from io.c to main.c (Jack)
 - option to start up with no ports connected (Jack)
+- option for session name (Jack)
 - set JACK port latencies correctly (Jack, Steve)
-- README file
 - man page
 - add test script directory (Jack)
-- UI for reporting JACK status, including transport state
 - set hotkeys for most used stuff: volume/pan, tabs, transport
 
 
@@ -41,3 +40,5 @@ CLOSED (date)
 - add JACK transport position tracking (2003/06/17)
 - JACK transport master control (2003/06/25)
 - UI for JACK transport master (2003/06/25)
+- README file (2003/06/27)
+- UI for reporting JACK status, including transport state (2003/07/05)
