@@ -1,19 +1,24 @@
 # translation of ru.po to 
+# translation of ru.po to
 # This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER, 2004.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER, 2004, 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: ru\n"
+"Project-Id-Version: JAMin 0.9.5cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-06 13:35-0600\n"
-"PO-Revision-Date: 2005-01-06 13:49-0600\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2005-01-16 14:00-0600\n"
+"PO-Revision-Date: 2005-01-11 05:17+0300\n"
+"Last-Translator: Alexandre Prokoudine <avp@lrn.ru>\n"
 "Language-Team:  <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
 
 #: data/jamin.desktop.in.h:1
 msgid "JACK Audio Mastering interface"
@@ -609,7 +614,7 @@ msgstr "Отмеренная длина %d не совпадает с BINS / 2 -
 #: src/geq.c:245
 #, c-format
 msgid "jam error: Adjustment from out-of-range band %d requested\n"
-msgstr "Ошибка JAMin: хапрошена подстройка полосы %d вне зоны действия\n"
+msgstr "Ошибка JAMin: Запрошена подстройка полосы %d вне зоны действия\n"
 
 #: src/hdeq.c:361 src/hdeq.c:446
 #, c-format
@@ -669,7 +674,8 @@ msgid "_Redo"
 msgstr "_Повторить"
 
 #: src/interface.c:635
-msgid "Ports"
+#, fuzzy
+msgid "_Ports"
 msgstr "Порты"
 
 #: src/interface.c:640
@@ -1192,11 +1198,11 @@ msgstr "----"
 
 #: src/interface.c:3224
 msgid "1.000 ms"
-msgstr "1,00 мс"
+msgstr "1,000 мс"
 
 #: src/interface.c:3261
 msgid "Limit"
-msgstr "Граница"
+msgstr "Предел"
 
 #: src/interface.c:3304
 msgid "Limiter bypass"
@@ -1276,7 +1282,7 @@ msgstr "Настройки"
 
 #: src/interface.c:4955
 msgid "Crossfade time"
-msgstr "Вреям кроссфейда"
+msgstr "Время кроссфейда"
 
 #: src/interface.c:4973
 msgid "Low Band Compressor"
@@ -1403,11 +1409,10 @@ msgid "HPB rez"
 msgstr ""
 
 #: src/interface.c:5651
-#, fuzzy
 msgid "About JAMin"
 msgstr "_О JAMin"
 
-#: src/interface.c:5690
+#: src/interface.c:5689
 msgid ""
 "\n"
 "JAMin is the JACK Audio Mastering interface.  JAMin is designed to perform "
@@ -1425,11 +1430,11 @@ msgstr ""
 "полосный компрессор, 3-полосный контроллер стереопанорамы, lookahead-"
 "ограничитель (лимитер), усиление сигнала и некоторые другие."
 
-#: src/interface.c:5692
+#: src/interface.c:5691
 msgid "What Is JAMin"
 msgstr "О JAMin"
 
-#: src/interface.c:5712
+#: src/interface.c:5710
 msgid ""
 "\n"
 "Steve Harris is the JAMin principle author and team leader.\n"
@@ -1462,11 +1467,11 @@ msgstr ""
 "\n"
 "Александр Прокудин (на русский язык)\n"
 
-#: src/interface.c:5714
+#: src/interface.c:5712
 msgid "Developers"
 msgstr "Авторы"
 
-#: src/interface.c:5734
+#: src/interface.c:5731
 msgid ""
 "\n"
 "JAMin is released under the GNU General Public License and is copyright (c) "
@@ -1489,8 +1494,8 @@ msgstr ""
 "    JAMin выпущен под лицензией GNU General Public License. Авторские и "
 "смежные права: (c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, и P. "
 "Shirkey. \n"
-"    Это свободная программа; вы можете повторно распространять ее и/или "
-"модифицировать ее в соответствии с Универсальной Общественной Лицензией GNU, "
+"    Это свободная программа; вы можете повторно распространять её и/или "
+"модифицировать её в соответствии с Универсальной Общественной Лицензией GNU, "
 "опубликованной Фондом Свободного ПО; либо версии 2, либо (по вашему выбору) "
 "любой более поздней версии..\n"
 "    Эта программа распространяется в надежде, что она будет полезной, но БЕЗ "
@@ -1501,11 +1506,11 @@ msgstr ""
 "вместе с этой программой; если нет, напишите по адресу: Free Software "
 "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA."
 
-#: src/interface.c:5736
+#: src/interface.c:5733
 msgid "License"
 msgstr "Лицензия"
 
-#: src/interface.c:5756
+#: src/interface.c:5752
 msgid ""
 "\n"
 "Web site: <http://jamin.sourceforge.net>\n"
@@ -1521,24 +1526,24 @@ msgstr ""
 "\n"
 "Страница проекта: http://sourceforge.net/projects/jamin/"
 
-#: src/interface.c:5758
+#: src/interface.c:5754
 msgid "Online"
 msgstr "В Интернете"
 
 #: src/intrim.c:113
 #, c-format
 msgid "left %.0fdB"
-msgstr ""
+msgstr "слева %.0fДб"
 
 #: src/intrim.c:115
 #, c-format
 msgid "right %.0fdB"
-msgstr ""
+msgstr "справа %.0fДб"
 
 #: src/intrim.c:117
-#, fuzzy, c-format
+#, c-format
 msgid "centre"
-msgstr "Сцены"
+msgstr "по центру"
 
 #: src/io-menu.c:88
 #, c-format
@@ -1716,24 +1721,27 @@ msgstr "Не удаётся подсоединить порт выхода \"%s\
 msgid ""
 "(C) 2003-2005 J. Depner, S. Harris, J. O'Quin, R. Parker and P. Shirkey\n"
 msgstr ""
+"(C) 2003-2005 J. Depner, S. Harris, J. O'Quin, R. Parker и P. Shirkey\n"
 
 #: src/main.c:90
 msgid ""
 "This is free software, and you are welcome to redistribute it\n"
 "under certain conditions; see the file COPYING for details.\n"
 msgstr ""
+"Это свободное программное обеспечение, мы приветствуем его\n"
+" распространение на условиях, приведённых в файле COPYING.\n"
 
 #: src/status-ui.c:46
 msgid "Disconnected"
-msgstr ""
+msgstr "Отсоединено"
 
 #: src/status-ui.c:50
 msgid "Stopped"
-msgstr ""
+msgstr "Остановлено"
 
 #: src/status-ui.c:54
 msgid "Starting"
-msgstr ""
+msgstr "Запускается"
 
 #: src/status-ui.c:58
 msgid "Rolling"
@@ -1741,21 +1749,19 @@ msgstr ""
 
 #: src/status-ui.c:62
 msgid "[unknown]"
-msgstr ""
+msgstr "[неизвестно]"
 
 #: src/status-ui.c:67
 msgid "  |  RT"
-msgstr ""
+msgstr "  |  RT"
 
 #: src/status-ui.c:72
 #, c-format
 msgid "%s  |  %4.1f%% CPU  |  %d xruns  |  %<PRIu32> frames  |  %<PRIu32> Hz%s"
 msgstr ""
+"%s  |  %4.1f%% CPU  |  %d рассинхр.  |  %<PRIu32> выборок  |  %<PRIu32> Гц%s"
 
 #: src/support.c:90 src/support.c:114
 #, c-format
 msgid "Couldn't find pixmap file: %s"
 msgstr "Не удалось найти изображение: %s"
-
-#~ msgid "dialog1"
-#~ msgstr "О JAMin"
