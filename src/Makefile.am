@@ -6,8 +6,6 @@ INCLUDES = \
 	@PACKAGE_CFLAGS@
 
 # use a convenience library to build non-optimized sources.
-# TODO: figure out how to optimize hdeq if gcc version is not 2.95
-
 noinst_LIBRARIES	= libnopt.a
 libnopt_a_SOURCES	= interface.c interface.h
 libnopt_a_CFLAGS	= -g @JAMIN_CFLAGS@
