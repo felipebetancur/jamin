@@ -13,25 +13,16 @@ TO BE DECIDED (owner)
 
 TODO (owner)
 
-- Change all uses of JAM to JAMin
 - Commit documentation to CVS (Ron)
 - Finish context sensitive help verbiage (everyone)
-- copyright headers in source code file (everyone)
-- move option parsing from io.c to main.c (Jack)
-- option to start up with no ports connected (Jack)
-- option for session name (Jack)
 - set JACK port latencies correctly (Jack, Steve)
-- man page (Jan)
-- add test script directory (Jack)
-- finish hotkeys for most used stuff: volume/pan, tabs, transport (Jan)
-- decide to remove 30 band EQ? (Anyone)
-- fix xover points and undo interaction (Steve)
 
 
 TO THINK ABOUT
 
 - making the DocBook/XML documentation compatible with Yelp (Alexandre)
 - error and debug message rationalization, IF_DEBUG(), -v option
+- add test script directory (Jack)
 
 
 CLOSED (date)
@@ -46,3 +37,12 @@ CLOSED (date)
 - UI for JACK transport master (2003/06/25)
 - README file (2003/06/27)
 - UI for reporting JACK status, including transport state (2003/07/05)
+- Change all uses of JAM to JAMin (2003/11/19)
+- copyright headers in source code file (2003/11/19)
+- move option parsing from io.c to main.c (2003/11/19)
+- option to start up with no ports connected (2003/11/19)
+- option for session name (2003/11/19)
+- man page (2003/11/19)
+- finish hotkeys for most used stuff: volume/pan, tabs, transport (2003/11/19)
+- decide to remove 30 band EQ? (2003/11/19)
+- fix xover points and undo interaction (2003/11/19)
