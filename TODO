@@ -1,0 +1,37 @@
+=======================================================================
+*** TODO - A one file mini-bugzilla for JAMIN developers            ***
+=======================================================================
+
+(Modeled on the JACK TODO file, with thanks to Kai Vehmanen.)
+
+
+TO BE DECIDED (owner)
+
+- web site (Ron)
+- download site
+
+
+TODO (owner)
+
+- Change all uses of JAM to JAMIN
+- Commit documentation to CVS (Ron)
+- Save state/scene/settings (Jan)
+- source code copyright headers (everyone)
+- capabilites support for DSP thread (Jack)
+- option to start up with no ports connected (Jack)
+- set JACK port latencies correctly (Jack, Steve)
+- README file
+- AUTHORS file
+- man page
+
+
+TO THINK ABOUT
+
+- making the DocBook/XML documentation compatible with Yelp (avp)
+- error and debug message rationalization, IF_DEBUG(), -v option
+- JACK transport master control
+
+
+CLOSED (date, who, comment)
+
+- remove use of <asm/atomic.h> (2003/06/03, Jack, use volatile attribute)

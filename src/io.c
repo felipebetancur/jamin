@@ -69,7 +69,6 @@
 #include <getopt.h>
 #include <errno.h>
 #include <assert.h>
-#include <asm/atomic.h>
 #include <jack/jack.h>
 #include <config.h>
 
@@ -104,9 +103,10 @@ int debug_level = DBG_OFF;		/* -v option */
 #define DSP_STOPPING	020
 #define DSP_STOPPED	040
 
-#define DSP_STATE_IS(x)		(atomic_read(&dsp_state)&(x))
-#define DSP_STATE_NOT(x)	(atomic_read(&dsp_state)&(~(x)))
-static atomic_t dsp_state = ATOMIC_INIT(DSP_INIT);
+#define DSP_STATE_IS(x)		((dsp_state)&(x))
+#define DSP_STATE_NOT(x)	((dsp_state)&(~(x)))
+static volatile int dsp_state = DSP_INIT;
+
 static int have_dsp_thread = 0;		/* DSP thread exists? */
 static int use_dsp_thread = 0;		/* DSP thread currently in use? */
 static jack_nframes_t dsp_block_size;	/* DSP chunk granularity */
@@ -258,10 +258,10 @@ void io_new_state(int next)
     default:
     invalid:
 	io_errlog(EDEADLK, "invalid DSP state transition: 0%o -> 0%o.",
-		  atomic_read(&dsp_state), next);
+		  dsp_state, next);
 	return;				/* don't do it */
     }
-    atomic_set(&dsp_state, next);	/* change to new state */
+    dsp_state = next;			/* change to new state */
     IF_DEBUG(DBG_TERSE, io_trace("new DSP state: 0%o.", next));
 }
 
@@ -594,7 +594,7 @@ void io_cleanup()
 
     IF_DEBUG(DBG_TERSE, io_trace("shutting down I/O and DSP"));
 
-    switch (atomic_read(&dsp_state)) {
+    switch (dsp_state) {
 
     case DSP_INIT:			/* should not happen */
 	io_new_state(DSP_STOPPED);
