@@ -127,24 +127,18 @@ void geq_set_sliders(int length, float x[], float y[])
 
 
         /*  Set the faders in the graphic EQ.  First and last should be
-            exact since that's what we interpolated to.  Use linear 
-            interpolation for the others.  */
+            exact since that's what we splined to.  Use linear interpolation 
+            for the others.  */
 
         gtk_adjustment_set_value (geqa[0], y[0] / 0.05);
-        for (j = 1 ; j < EQ_BANDS - 1 ; j++)
+        for (j = 1, i = 0 ; j < EQ_BANDS - 1 ; j++)
           {
-            for (i = 0 ; i < length ; i++)
-              {
-                if (geq_freqs[j] <= x[i])
-                  {
-                    value = y[i - 1] + (y[i] - y[i - 1]) * ((geq_freqs[j] - 
-                        x[i - 1]) / (x[i] - x[i - 1]));
+            while (geq_freqs[j] > x[i]) i++;
 
-                    gtk_adjustment_set_value (geqa[j], value / 0.05);
+            value = y[i - 1] + (y[i] - y[i - 1]) * ((geq_freqs[j] - x[i - 1]) /
+                (x[i] - x[i - 1]));
 
-                    break;
-                  }
-              }
+            gtk_adjustment_set_value (geqa[j], value / 0.05);
           }
         gtk_adjustment_set_value (geqa[EQ_BANDS - 1], y[length - 1] / 0.05);
 
