@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.34 2004/01/05 23:00:54 theno23 Exp $
+ *  $Id: state.c,v 1.35 2004/01/06 09:24:06 theno23 Exp $
  */
 
 #include <stdio.h>
@@ -237,6 +237,7 @@ fprintf(stderr, "undo pos would be NULL, so no action\n");
       }
 
     set_EQ_curve_values ();
+    last_changed = S_LOAD;
 }
 
 void s_redo() 
