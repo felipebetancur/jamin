@@ -81,15 +81,16 @@
 
 /* list of valid JAMIN options */
 #ifdef DSP_THREAD
-char *jamin_options = "dfhtv";		/* includes -t */
+char *jamin_options = "dFhTtvV";	/* includes -t */
 #else
-char *jamin_options = "dfhv";		/* without -t */
+char *jamin_options = "dFhTvV";		/* without -t */
 #endif
 
 int dummy_mode = 0;			/* -d option */
-int all_errors_fatal = 0;		/* -f option */
+int all_errors_fatal = 0;		/* -F option */
 int show_help = 0;			/* -h option */
 int thread_option = 0;			/* -t option */
+int trace_option = 0;			/* -T option */
 int debug_level = DBG_OFF;		/* -v option */
 
 /*  Synchronization within the DSP engine is managed as a finite state
@@ -109,6 +110,7 @@ static atomic_t dsp_state = ATOMIC_INIT(DSP_INIT);
 static int have_dsp_thread = 0;		/* DSP thread exists? */
 static int use_dsp_thread = 0;		/* DSP thread currently in use? */
 static jack_nframes_t dsp_block_size;	/* DSP chunk granularity */
+static size_t dsp_block_bytes;		/* DSP chunk size in bytes */
 static jack_client_t *client;		/* JACK client structure */
 
 #define DSP_PRIORITY_DIFF 1	/* DSP thread priority difference */
@@ -137,25 +139,63 @@ static char *oports[NCHANNELS] = {"alsa_pcm:playback_1", "alsa_pcm:playback_2"};
 
 /* io_trace -- trace I/O activity.
  *
- *  This is only a stub.  The DSP engine has no business calling
- *  stdio.  Trace information needs to go in a buffer.  Since
- *  fprintf() is not realtime safe, it sometimes causes JACK to
- *  disconnect us as a client.
+ *  This function can be called from any thread, realtime or normal.
+ *  Since it never waits, we avoid the possible priority inversion of
+ *  a realtime thread waiting on a non-realtime one.
  */
+pthread_mutex_t io_trace_lock = PTHREAD_MUTEX_INITIALIZER;
+#define TR_BUFSIZE	256		/* must be power of 2 */
+#define TR_MSGSIZE	60
+struct io_trace_t {
+    jack_nframes_t timestamp;		/* JACK timestamp */
+    char message[TR_MSGSIZE];		/* trace message */
+};
+size_t tr_next = 0;			/* next tr_buf entry */
+struct io_trace_t tr_buf[TR_BUFSIZE] = {{0}};
+
 void io_trace(const char *fmt, ...)
 {
     va_list ap;
-    char buffer[300];
-    jack_nframes_t timestamp = 0;
 
-    va_start(ap, fmt);
-    vsnprintf(buffer, sizeof(buffer), fmt, ap);
-    va_end(ap);
+    /* if lock already held, skip this entry */
+    if (pthread_mutex_trylock(&io_trace_lock) == 0) {
 
-    if (client)
-	timestamp = jack_frame_time(client);
+	/* get frame time from JACK, if it is active. */
+	if (client)
+	    tr_buf[tr_next].timestamp = jack_frame_time(client);
+	else
+	    tr_buf[tr_next].timestamp = 0;
 
-    fprintf(stderr, "JAMIN trace [%lu] %s\n", timestamp, buffer);
+	/* format trace message */
+	va_start(ap, fmt);
+	vsnprintf(tr_buf[tr_next].message, TR_MSGSIZE, fmt, ap);
+	va_end(ap);
+
+	tr_next = (tr_next+1) & (TR_BUFSIZE-1);
+
+	pthread_mutex_unlock(&io_trace_lock);
+    }
+}
+
+/* io_list_trace -- list trace buffer contents
+ *
+ *  This must be called in a context where waiting is allowed.
+ */
+void io_list_trace()
+{
+    size_t t;
+
+    pthread_mutex_lock(&io_trace_lock);
+
+    t = tr_next;
+    do {
+	if (tr_buf[t].message[0] != '\0')
+	    fprintf(stderr, "%s trace [%ld]: %s\n", PACKAGE,
+		    tr_buf[t].timestamp, tr_buf[t].message);
+	t = (t+1) & (TR_BUFSIZE-1);
+    } while (t != tr_next);
+
+    pthread_mutex_unlock(&io_trace_lock);
 }
 
 
@@ -174,9 +214,13 @@ void io_errlog(int err, char *fmt, ...)
     vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
 
-    fprintf(stderr, "JAMIN internal error %d: %s\n", err, buffer);
-    if (all_errors_fatal)
+    IF_DEBUG(DBG_TERSE,
+	     io_trace("error %d: %s\n", err, buffer));
+    fprintf(stderr, "%s internal error %d: %s\n", PACKAGE, err, buffer);
+    if (all_errors_fatal) {
+	fprintf(stderr, " Terminating due to -F option.\n");
 	abort();
+    }
 }
 
 
@@ -260,7 +304,7 @@ void io_set_latency(int source, jack_nframes_t delay)
 void io_set_granularity(jack_nframes_t block_size)
 {
     IF_DEBUG(DBG_TERSE,
-	     io_trace("JAMIN I/O granularity: %ld", (long) block_size));
+	     io_trace("%s I/O granularity: %ld", PACKAGE, (long) block_size));
 
     assert(DSP_STATE_IS(DSP_INIT|DSP_STOPPED));
 
@@ -273,6 +317,7 @@ void io_set_granularity(jack_nframes_t block_size)
 	}
     }
     dsp_block_size = block_size;
+    dsp_block_bytes = block_size * sizeof(jack_default_audio_sample_t);
 }
 
 
@@ -291,8 +336,8 @@ int io_get_dsp_buffers(int nchannels,
     ringbuffer_data_t io_vec[2];
 
     for (chan = 0; chan < nchannels; chan++) {
-	if ((ringbuffer_read_space(in_rb[chan]) < dsp_block_size) ||
-	    (ringbuffer_write_space(out_rb[chan]) < dsp_block_size))
+	if ((ringbuffer_read_space(in_rb[chan]) < dsp_block_bytes) ||
+	    (ringbuffer_write_space(out_rb[chan]) < dsp_block_bytes))
 	    return 0;			/* not enough space */
 
 	/* Copy buffer pointers to in[] and out[].  If the ringbuffer
@@ -301,12 +346,12 @@ int io_get_dsp_buffers(int nchannels,
 	 * situation.  But, that's not implemented yet, hence the
 	 * asserts. */
 	ringbuffer_get_read_vector(in_rb[chan], io_vec);
-	in[chan] = io_vec[0].buf;
-	assert(io_vec[0].len >= dsp_block_size); /* must be contiguous */
+	in[chan] = (jack_default_audio_sample_t *) io_vec[0].buf;
+	assert(io_vec[0].len >= dsp_block_bytes); /* must be contiguous */
 	    
 	ringbuffer_get_write_vector(out_rb[chan], io_vec);
-	out[chan] = io_vec[0].buf;
-	assert(io_vec[0].len >= dsp_block_size); /* must be contiguous */
+	out[chan] = (jack_default_audio_sample_t *) io_vec[0].buf;
+	assert(io_vec[0].len >= dsp_block_bytes); /* must be contiguous */
     }
     return 1;				/* success */
 }
@@ -331,10 +376,6 @@ void *io_dsp_thread(void *arg)
     int chan;
     int rc;
 
-    // JOQ: We may need to touch some stack pages here, to ensure they
-    // are locked in memory.  We don't want to page fault on the first
-    // DSP cycle.
-
     IF_DEBUG(DBG_TERSE, io_trace("DSP thread start"));
 
     /* The DSP lock is held whenever this thread is actually running. */
@@ -357,8 +398,8 @@ void *io_dsp_thread(void *arg)
 	     * space and queues the output for the JACK process
 	     * thread */
 	    for (chan = 0; chan < nchannels; chan++) {
-		ringbuffer_write_advance(out_rb[chan], dsp_block_size);
-		ringbuffer_read_advance(in_rb[chan], dsp_block_size);
+		ringbuffer_write_advance(out_rb[chan], dsp_block_bytes);
+		ringbuffer_read_advance(in_rb[chan], dsp_block_bytes);
 	    }
 	    if (DSP_STATE_IS(DSP_STARTING))
 		io_new_state(DSP_RUNNING); /* output available */
@@ -410,12 +451,13 @@ void io_schedule()
  *  Runs as a high-priority realtime thread.  Cannot ever wait.
  */
 int io_queue(jack_nframes_t nframes, int nchannels,
-		    jack_default_audio_sample_t *in[NCHANNELS],
-		    jack_default_audio_sample_t *out[NCHANNELS])
+	     jack_default_audio_sample_t *in[NCHANNELS],
+	     jack_default_audio_sample_t *out[NCHANNELS])
 {
-    jack_nframes_t count;
     int chan;
     int rc = 0;
+    size_t nbytes = nframes * sizeof(jack_default_audio_sample_t);
+    size_t count;
 
     if (DSP_STATE_IS(DSP_ACTIVATING))
 	return EBUSY;
@@ -424,37 +466,39 @@ int io_queue(jack_nframes_t nframes, int nchannels,
 
     /* queue JACK input buffers for DSP thread */
     for (chan = 0; chan < nchannels; chan++) {
-	count = ringbuffer_write(in_rb[chan], in[chan], nframes);
-	if (count != nframes) {		/* buffer overflow? */
+	count = ringbuffer_write(in_rb[chan], (void *) in[chan], nbytes);
+	if (count != nbytes) {		/* buffer overflow? */
 	    /* This is a realtime bug.  We have input audio with no
 	     * place to go.  The DSP thread is not keeping up, and
 	     * there's nothing we can do about it here. */
-	    io_errlog(ENOSPC, "input overflow, %ld frames written.", count);
+	    io_errlog(ENOSPC, "input overflow, %ld bytes written.", count);
 	    rc = ENOSPC;		/* out of space */
 	}
     }
 
     /* if there is enough input, schedule the DSP thread */
-    if (ringbuffer_read_space(in_rb[0]) >= dsp_block_size)
+    if (ringbuffer_read_space(in_rb[0]) >= dsp_block_bytes)
 	io_schedule();
 
     /* dequeue the next buffer that has been completed */
     for (chan = 0; chan < nchannels; chan++) {
-	count = ringbuffer_read(out_rb[chan], out[chan], nframes);
-	if (count != nframes) {		/* not enough output? */
+	count = ringbuffer_read(out_rb[chan], (void *) out[chan], nbytes);
+	if (count != nbytes) {		/* not enough output? */
 
 	    /* this is only legit if we're just starting up */
 	    if (DSP_STATE_NOT(DSP_STARTING|DSP_STOPPING)) {
 		/* This is a realtime bug.  We do not have output
 		 * audio when we need it.  The DSP thread is not
 		 * keeping up. */
-		io_errlog(EPIPE, "output underflow, %ld frames read.", count);
+		io_errlog(EPIPE, "output underflow, %ld bytes read.", count);
 		rc = EPIPE;		/* broken pipe */
 	    }
 
 	    /* fill rest of JACK buffer with zeroes */
-	    while (count < nframes)
-		out[chan][count++] = (jack_default_audio_sample_t) 0.0;
+	    if (count < nbytes) {
+		void *addr = ((void *) out[chan]) + count;
+		memset(addr, 0, nbytes-count);
+	    }
 	}
     }
 
@@ -523,7 +567,9 @@ int io_process(jack_nframes_t nframes, void *arg)
 /* io_cleanup -- clean up all DSP I/O resources.
  *
  *  Called in main user interface thread after user requests "quit",
- *  or in JACK thread if shutdown callback invoked.
+ *  or in JACK thread if shutdown callback invoked.  JACK allows the
+ *  shutdown handler to wait, even though it runs in the process()
+ *  thread.
  *
  *  DSP engine state transitions:
  *      DSP_INIT	-> DSP_STOPPED
@@ -536,6 +582,8 @@ int io_process(jack_nframes_t nframes, void *arg)
 void io_cleanup()
 {
     int chan;
+
+    IF_DEBUG(DBG_TERSE, io_trace("%s shutting down I/O", PACKAGE));
 
     switch (atomic_read(&dsp_state)) {
 
@@ -575,6 +623,9 @@ void io_cleanup()
 		ringbuffer_free(out_rb[chan]);
 	}
     }
+
+    if (trace_option)
+	io_list_trace();		/* list trace buffer contents */
 }
 
 
@@ -597,7 +648,7 @@ void io_init(int argc, char *argv[])
 	case 'd':			/* dummy mode, no JACK */
 	    dummy_mode = 1;
 	    break;
-	case 'f':			/* all errors fatal */
+	case 'F':			/* all errors fatal */
 	    all_errors_fatal = 1;
 	    break;
 	case 'h':			/* show help */
@@ -608,9 +659,15 @@ void io_init(int argc, char *argv[])
 	    thread_option = 1;
 	    break;
 #endif
+	case 'T':			/* list trace output */
+	    trace_option = 1;
+	    break;
 	case 'v':			/* verbose */
 	    debug_level += 1;		/* increment output level */
 	    break;
+	case 'V':			/* version */
+	    printf("%s version %s\n", PACKAGE, VERSION);
+	    exit(9);
 	default:
 	    show_help = 1;
 	    break;
@@ -643,12 +700,13 @@ void io_init(int argc, char *argv[])
     }
 
     /* register as a JACK client */
-    snprintf(client_name, 255, "jamin");
+    snprintf(client_name, 255, PACKAGE);
     printf("Registering as %s\n", client_name);
 
     client = jack_client_new(client_name);
     if (client == 0) {
-	fprintf(stderr, "JAMIN: Cannot contact JACK server, is it running?\n");
+	fprintf(stderr,
+		"%s: Cannot contact JACK server, is it running?\n", PACKAGE);
 	exit(2);
     }
     jack_buf_size = jack_get_buffer_size(client);
@@ -733,6 +791,7 @@ int io_create_dsp_thread()
     else
 	IF_DEBUG(DBG_TERSE, io_trace("DSP thread created"));
     return rc;
+
 #endif /* DSP_THREAD */
 }
 
@@ -747,6 +806,7 @@ int io_create_dsp_thread()
 void io_activate()
 {
     int chan;
+    size_t bufsize;
 
     if (DSP_STATE_IS(DSP_STOPPED))
 	return;
@@ -765,7 +825,7 @@ void io_activate()
     }
 
     if (jack_activate(client)) {
-	fprintf(stderr, "JAMIN: Cannot activate JACK client.");
+	fprintf(stderr, "%s: Cannot activate JACK client.", PACKAGE);
 	exit(2);
     }
 
@@ -786,11 +846,12 @@ void io_activate()
      * running realtime, jack_activate() will already have called
      * mlockall() for this address space.  So, all we need to do is
      * touch all the pages in the buffers. */
+    bufsize = dsp_block_bytes * NCHUNKS;
     for (chan = 0; chan < nchannels; chan++) {
-	in_rb[chan] = ringbuffer_create(dsp_block_size * NCHUNKS);
-	memset(in_rb[chan]->buf, 0.0, in_rb[chan]->size);
-	out_rb[chan] = ringbuffer_create(dsp_block_size * NCHUNKS);
-	memset(out_rb[chan]->buf, 0.0, out_rb[chan]->size);
+	in_rb[chan] = ringbuffer_create(bufsize);
+	memset(in_rb[chan]->buf, 0, bufsize);
+	out_rb[chan] = ringbuffer_create(bufsize);
+	memset(out_rb[chan]->buf, 0, bufsize);
     }
 
     /* create DSP thread, if desired and able */

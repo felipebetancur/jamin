@@ -1,6 +1,6 @@
 /*
-  Copyright (C) 2003 Rohan Drape
   Copyright (C) 2000 Paul Davis
+  Copyright (C) 2003 Rohan Drape
     
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +25,7 @@
 #include <sys/mman.h>
 #include "ringbuffer.h"
 
-/* Create a new ringbuffer to hold at least `sz' samples of data. The
+/* Create a new ringbuffer to hold at least `sz' bytes of data. The
    actual buffer size is rounded up to the next power of two.  */
 
 ringbuffer_t *
@@ -82,14 +82,14 @@ ringbuffer_reset (ringbuffer_t * rb)
   rb->write_ptr = 0;
 }
 
-/* Return the number of samples available for reading.  This is the
-   number of samples in front of the read pointer and behind the write
+/* Return the number of bytes available for reading.  This is the
+   number of bytes in front of the read pointer and behind the write
    pointer.  */
 
-jack_nframes_t
+size_t
 ringbuffer_read_space (ringbuffer_t * rb)
 {
-  jack_nframes_t w, r;
+  size_t w, r;
 
   w = rb->write_ptr;
   r = rb->read_ptr;
@@ -101,14 +101,14 @@ ringbuffer_read_space (ringbuffer_t * rb)
   }
 }
 
-/* Return the number of samples available for writing.  This is the
-   number of samples in front of the write pointer and behind the read
+/* Return the number of bytes available for writing.  This is the
+   number of bytes in front of the write pointer and behind the read
    pointer.  */
 
-jack_nframes_t
+size_t
 ringbuffer_write_space (ringbuffer_t * rb)
 {
-  jack_nframes_t w, r;
+  size_t w, r;
 
   w = rb->write_ptr;
   r = rb->read_ptr;
@@ -122,18 +122,16 @@ ringbuffer_write_space (ringbuffer_t * rb)
   }
 }
 
-/* The copying data reader.  Copy at most `cnt' samples from `rb' to
-   `dest'.  Returns the actual number of samples copied. */
+/* The copying data reader.  Copy at most `cnt' bytes from `rb' to
+   `dest'.  Returns the actual number of bytes copied. */
 
-jack_nframes_t
-ringbuffer_read (ringbuffer_t * rb,
-		 jack_default_audio_sample_t *dest,
-		 jack_nframes_t cnt)
+size_t
+ringbuffer_read (ringbuffer_t * rb, char *dest, size_t cnt)
 {
-  jack_nframes_t free_cnt;
-  jack_nframes_t cnt2;
-  jack_nframes_t to_read;
-  jack_nframes_t n1, n2;
+  size_t free_cnt;
+  size_t cnt2;
+  size_t to_read;
+  size_t n1, n2;
 
   if ((free_cnt = ringbuffer_read_space (rb)) == 0) {
     return 0;
@@ -164,18 +162,16 @@ ringbuffer_read (ringbuffer_t * rb,
   return to_read;
 }
 
-/* The copying data writer.  Copy at most `cnt' samples to `rb' from
-   `src'.  Returns the actual number of samples copied. */
+/* The copying data writer.  Copy at most `cnt' bytes to `rb' from
+   `src'.  Returns the actual number of bytes copied. */
 
-jack_nframes_t
-ringbuffer_write (ringbuffer_t * rb,
-		  jack_default_audio_sample_t *src,
-		  jack_nframes_t cnt)
+size_t
+ringbuffer_write (ringbuffer_t * rb, char *src, size_t cnt)
 {
-  jack_nframes_t free_cnt;
-  jack_nframes_t cnt2;
-  jack_nframes_t to_write;
-  jack_nframes_t n1, n2;
+  size_t free_cnt;
+  size_t cnt2;
+  size_t to_write;
+  size_t n1, n2;
 
   if ((free_cnt = ringbuffer_write_space (rb)) == 0) {
     return 0;
@@ -209,7 +205,7 @@ ringbuffer_write (ringbuffer_t * rb,
 /* Advance the read pointer `cnt' places. */
 
 void
-ringbuffer_read_advance (ringbuffer_t * rb, jack_nframes_t cnt)
+ringbuffer_read_advance (ringbuffer_t * rb, size_t cnt)
 {
   rb->read_ptr += cnt;
   rb->read_ptr &= rb->size_mask;
@@ -218,7 +214,7 @@ ringbuffer_read_advance (ringbuffer_t * rb, jack_nframes_t cnt)
 /* Advance the write pointer `cnt' places. */
 
 void
-ringbuffer_write_advance (ringbuffer_t * rb, jack_nframes_t cnt)
+ringbuffer_write_advance (ringbuffer_t * rb, size_t cnt)
 {
   rb->write_ptr += cnt;
   rb->write_ptr &= rb->size_mask;
@@ -233,9 +229,9 @@ void
 ringbuffer_get_read_vector (ringbuffer_t * rb,
 			    ringbuffer_data_t * vec)
 {
-  jack_nframes_t free_cnt;
-  jack_nframes_t cnt2;
-  jack_nframes_t w, r;
+  size_t free_cnt;
+  size_t cnt2;
+  size_t w, r;
 
   w = rb->write_ptr;
   r = rb->read_ptr;
@@ -277,9 +273,9 @@ void
 ringbuffer_get_write_vector (ringbuffer_t * rb,
 			     ringbuffer_data_t * vec)
 {
-  jack_nframes_t free_cnt;
-  jack_nframes_t cnt2;
-  jack_nframes_t w, r;
+  size_t free_cnt;
+  size_t cnt2;
+  size_t w, r;
 
   w = rb->write_ptr;
   r = rb->read_ptr;
