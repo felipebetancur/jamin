@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.21 2004/01/18 17:15:33 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.22 2004/01/18 19:49:46 jdepner Exp $
  */
 
 char general_help[] = {
@@ -111,9 +111,10 @@ bars that are visible in the HDEQ serve as a visual reference.\n"
 char geq_help[] = {
 "    The graphic EQ (GEQ) can be used to set gain for specific bands of the \
 audio spectrum.  The center of the band is annotated at the bottom of each \
-fader.  Setting a fader in the GEQ will override all changes made in the HDEQ \
-and cause that curve to be redrawn.  It will not override the parametric \
-notch settings in the HDEQ.\n"
+fader.  Setting a fader in the GEQ will override the HDEQ in the immediate \
+vicinity of the changed fader and cause that curve to be redrawn.  It will \
+not override the parametric notch settings in the HDEQ.  Clicking the right \
+mouse button on a GEQ control will reset the value to 0.0.\n"
 };
 
 
@@ -186,13 +187,14 @@ char limiter_help[] = {
 "    The lookahead limiter is a brickwall limiter that will not allow the \
 output to exceed the set level.  It \'looks ahead\' by the specified amount \
 in order to make a smooth transition as it nears the limit level.  Clicking \
-the right mouse button on the limiter control will reset the value to 0.0.\n"
+the right mouse button on the input or limit control will reset the value to \
+0.0.\n"
 };
 
 
 char boost_help[] = {
 "    The boost control allows the user to add 'tube like' gain to the output \
-signal.  Use to taste (New England bland to Cajun spicy).  Clicking the right \
+signal.  Use to taste (New England mild to Cajun spicy).  Clicking the right \
 mouse button on the boost control will reset the value to 0.0.\n"
 };
 

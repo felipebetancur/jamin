@@ -3599,6 +3599,96 @@ create_window1 (void)
   g_signal_connect ((gpointer) geq_eventbox, "enter_notify_event",
                     G_CALLBACK (on_geq_eventbox_enter_notify_event),
                     NULL);
+  g_signal_connect ((gpointer) eqb1, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb2, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb3, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb4, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb5, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb6, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb7, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb8, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb9, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb10, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb11, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb12, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb13, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb14, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb15, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb16, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb17, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb18, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb19, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb20, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb21, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb22, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb23, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb24, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb25, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb26, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb27, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb28, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb29, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
+  g_signal_connect ((gpointer) eqb30, "button_press_event",
+                    G_CALLBACK (reset_range),
+                    NULL);
   g_signal_connect ((gpointer) spectrum_eventbox, "enter_notify_event",
                     G_CALLBACK (on_spectrum_eventbox_enter_notify_event),
                     NULL);

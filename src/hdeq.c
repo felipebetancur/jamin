@@ -619,6 +619,8 @@ void reset_hdeq ()
     EQ_notch_index[4] = EQ_INTERP - 20;
 
     set_EQ ();
+
+    draw_EQ_curve ();
 }
 
 

@@ -1323,6 +1323,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:20:39 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -1388,6 +1389,7 @@
 							  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							  <property name="inverted">True</property>
 							  <property name="adjustment">0 -12 12 1 6 0</property>
+							  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:20:52 GMT"/>
 							</widget>
 						      </child>
 						    </widget>
@@ -1460,6 +1462,7 @@
 							  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							  <property name="inverted">True</property>
 							  <property name="adjustment">0 -12 12 1 6 0</property>
+							  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:21:03 GMT"/>
 							</widget>
 						      </child>
 						    </widget>
@@ -1532,6 +1535,7 @@
 							  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							  <property name="inverted">True</property>
 							  <property name="adjustment">0 -12 12 1 6 0</property>
+							  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:21:15 GMT"/>
 							</widget>
 						      </child>
 						    </widget>
@@ -1604,6 +1608,7 @@
 							  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							  <property name="inverted">True</property>
 							  <property name="adjustment">0 -12 12 1 6 0</property>
+							  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:21:27 GMT"/>
 							</widget>
 						      </child>
 						    </widget>
@@ -1676,6 +1681,7 @@
 							  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							  <property name="inverted">True</property>
 							  <property name="adjustment">0 -12 12 1 6 0</property>
+							  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:21:37 GMT"/>
 							</widget>
 						      </child>
 						    </widget>
@@ -1748,6 +1754,7 @@
 							  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							  <property name="inverted">True</property>
 							  <property name="adjustment">0 -12 12 1 6 0</property>
+							  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:21:51 GMT"/>
 							</widget>
 						      </child>
 						    </widget>
@@ -1820,6 +1827,7 @@
 							  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							  <property name="inverted">True</property>
 							  <property name="adjustment">0 -12 12 1 6 0</property>
+							  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:22:06 GMT"/>
 							</widget>
 						      </child>
 						    </widget>
@@ -1892,6 +1900,7 @@
 							  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							  <property name="inverted">True</property>
 							  <property name="adjustment">0 -12 12 1 6 0</property>
+							  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:22:17 GMT"/>
 							</widget>
 						      </child>
 						    </widget>
@@ -1964,6 +1973,7 @@
 							  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							  <property name="inverted">True</property>
 							  <property name="adjustment">0 -12 12 1 6 0</property>
+							  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:22:27 GMT"/>
 							</widget>
 						      </child>
 						    </widget>
@@ -2036,6 +2046,7 @@
 							  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							  <property name="inverted">True</property>
 							  <property name="adjustment">0 -12 12 1 6 0</property>
+							  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:22:38 GMT"/>
 							</widget>
 						      </child>
 						    </widget>
@@ -2102,6 +2113,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:22:50 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -2161,6 +2173,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:23:01 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -2220,6 +2233,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:23:14 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -2279,6 +2293,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:23:24 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -2338,6 +2353,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:23:35 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -2397,6 +2413,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:23:47 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -2456,6 +2473,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:23:56 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -2515,6 +2533,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:24:06 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -2574,6 +2593,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:24:17 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -2633,6 +2653,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:24:30 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -2692,6 +2713,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:24:44 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -2751,6 +2773,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:24:55 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -2810,6 +2833,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:25:04 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -2873,6 +2897,7 @@
 							  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							  <property name="inverted">True</property>
 							  <property name="adjustment">0 -12 12 1 6 0</property>
+							  <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:25:16 GMT"/>
 							</widget>
 						      </child>
 						    </widget>
@@ -2934,6 +2959,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:25:26 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -2993,6 +3019,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:25:38 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -3052,6 +3079,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:25:48 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -3111,6 +3139,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:26:06 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
@@ -3170,6 +3199,7 @@
 						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						      <property name="inverted">True</property>
 						      <property name="adjustment">0 -12 12 1 6 0</property>
+						      <signal name="button_press_event" handler="reset_range" last_modification_time="Sun, 18 Jan 2004 19:26:17 GMT"/>
 						    </widget>
 						  </child>
 						</widget>
