@@ -85,6 +85,7 @@ char *jamin_options = "dFhTtvV";	/* includes -t */
 char *jamin_options = "dFhTvV";		/* without -t */
 #endif
 
+char *pname;				/* `basename $0` */
 int dummy_mode = 0;			/* -d option */
 int all_errors_fatal = 0;		/* -F option */
 int show_help = 0;			/* -h option */
@@ -474,8 +475,7 @@ int io_queue(jack_nframes_t nframes, int nchannels,
 	     * place to go.  The DSP thread is not keeping up, and
 	     * there's nothing we can do about it here. */
 	    IF_DEBUG(DBG_TERSE,
-		     io_errlog(ENOSPC, "input overflow, %ld bytes written.",
-			       count));
+		     io_trace("input overflow, %ld bytes written.", count));
 	    rc = ENOSPC;		/* out of space */
 	}
     } 
@@ -495,8 +495,7 @@ int io_queue(jack_nframes_t nframes, int nchannels,
 		 * audio when we need it.  The DSP thread is not
 		 * keeping up. */
 		IF_DEBUG(DBG_TERSE,
-			 io_errlog(EPIPE, "output underflow, %ld bytes read.",
-				   count));
+			 io_trace("output underflow, %ld bytes read.", count));
 		rc = EPIPE;		/* broken pipe */
 	    }
 
@@ -569,7 +568,7 @@ int io_process(jack_nframes_t nframes, void *arg)
 
     IF_DEBUG(DBG_VERBOSE, io_trace("JACK process() end"));
 
-    return 0;				/* JOQ: ignore return_code */
+    return 0;
 }
 
 
@@ -649,6 +648,13 @@ void io_init(int argc, char *argv[])
     int opt;
     char client_name[256];
 
+    /* basename $0 */
+    pname = strrchr(argv[0], '/');
+    if (pname == 0)
+	pname = argv[0];
+    else
+	pname++;
+
     while ((opt = getopt(argc, argv, jamin_options)) != -1) {
 	switch (opt) {
 	case 'd':			/* dummy mode, no JACK */
@@ -694,8 +700,8 @@ void io_init(int argc, char *argv[])
 
     if (show_help) {
 	fprintf(stderr,
-		"Usage %s: [<inport1> <inport2> [<outport1> <outport2>]]\n\n",
-		argv[0]);
+		"Usage: %s [-%s] [inport1 inport2 [outport1 outport2]]\n\n",
+		pname, jamin_options);
 	exit(1);
     }
 
@@ -741,15 +747,15 @@ int io_create_dsp_thread()
 
     int jack_realtime;			/* true if JACK is realtime */
     int rc;
-    int sched_policy;
-    struct sched_param rt_param;
+    int policy;
+    struct sched_param rt_param, my_param;
     pthread_attr_t attributes;
     pthread_attr_init(&attributes);
 
     /* Set priority and scheduling parameters based on the attributes
      * of the JACK client thread. */
     rc = pthread_getschedparam(jack_client_thread_id(client),
-			       &sched_policy, &rt_param);
+			       &policy, &rt_param);
     if (rc) {
 	io_errlog(EPERM, "cannot get JACK scheduling params, rc = %d.", rc);
 	return rc;
@@ -759,7 +765,7 @@ int io_create_dsp_thread()
 #ifdef HAVE_JACK_IS_REALTIME		/* requires libjack >= 0.70.5 */
     jack_realtime = jack_is_realtime(client);
 #else
-    jack_realtime = (sched_policy == SCHED_FIFO);
+    jack_realtime = (policy == SCHED_FIFO);
 #endif
 
     if (jack_realtime) {
@@ -773,7 +779,7 @@ int io_create_dsp_thread()
     } else
 	IF_DEBUG(DBG_TERSE, io_trace("JACK subsystem not realtime"));
 
-    rc = pthread_attr_setschedpolicy(&attributes, sched_policy);
+    rc = pthread_attr_setschedpolicy(&attributes, policy);
     if (rc) {
 	io_errlog(EPERM, "cannot set scheduling policy, rc = %d.", rc);
 	return rc;
@@ -791,22 +797,80 @@ int io_create_dsp_thread()
 	return rc;
     }
 
+    /* this should work, but using capabilities it often doesn't */
     rc = pthread_create(&dsp_thread, &attributes, io_dsp_thread, NULL);
-    switch (rc) {
-    case 0:				/* success */
+    if (rc == 0) {
 	IF_DEBUG(DBG_TERSE, io_trace("DSP thread created"));
-	break;
-    case EPERM:				/* user error */
-	fprintf(stderr, "%s not permitted to create realtime DSP thread.\n",
-		PACKAGE);
-	fprintf(stderr,"You must run as root to use this method.\n");
-	// JOQ:   ", or use JACK capabilites"
-	fprintf(stderr,"Continuing operation, but ignoring -t option.\n");
-	break;
-    default:				/* internal error */
-	io_errlog(ECHILD, "DSP thread creation error: %d.", rc);
+	return 0;
     }
-    return rc;
+    io_errlog(ECHILD, "first pthread_create() returns %d\n", rc);
+
+    /* The following comment was copied from jack/libjack/client.c
+     * along with most of this code... */
+
+    /* the version of glibc I've played with has a bug that makes
+       that code fail when running under a non-root user but with the
+       proper realtime capabilities (in short,  pthread_attr_setschedpolicy 
+       does not check for capabilities, only for the uid being
+       zero). Newer versions apparently have this fixed. This
+       workaround temporarily switches the client thread to the
+       proper scheduler and priority, then starts the realtime
+       thread so that it can inherit them and finally switches the
+       client thread back to what it was before. Sigh. For ardour
+       I have to check again and switch the thread explicitly to
+       realtime, don't know why or how to debug - nando
+    */
+
+    /* get current scheduler and parameters of the client process */
+    if ((policy = sched_getscheduler(0)) < 0) {
+	io_errlog(EPERM,
+		  "Cannot get current client scheduler: %s",
+		  strerror(errno));
+	return -1;
+    }
+
+    memset(&my_param, 0, sizeof(my_param));
+    if (sched_getparam(0, &my_param)) {
+	io_errlog(EPERM,
+		  "Cannot get current client scheduler parameters: %s",
+		  strerror(errno));
+	return -1;
+    }
+
+    /* temporarily change the client process to SCHED_FIFO so that
+       the realtime thread can inherit the scheduler and priority
+    */
+    if (sched_setscheduler(0, SCHED_FIFO, &rt_param)) {
+	io_errlog(EPERM, "Cannot temporarily set RT scheduling: %s",
+		  strerror(errno));
+	return -1;
+    }
+
+    /* prepare the attributes for the realtime thread */
+    pthread_attr_init(&attributes);
+    if ((pthread_attr_setscope(&attributes, PTHREAD_SCOPE_SYSTEM)) ||
+	(pthread_attr_setinheritsched(&attributes, PTHREAD_INHERIT_SCHED))) {
+	sched_setscheduler(0, policy, &my_param);
+	io_errlog(EPERM, "Cannot set RT thread attributes");
+	return -1;
+    }
+
+    /* create the RT thread */
+    rc = pthread_create(&dsp_thread, &attributes, io_dsp_thread, NULL);
+    if (rc != 0) {
+	sched_setscheduler(0, policy, &my_param);
+	fprintf(stderr,
+		"%s: not permitted to create realtime DSP thread.\n"
+		"\tYou must run as root or use JACK capabilities.\n"
+		"\tContinuing operation, but ignoring -t option.\n", PACKAGE);
+	io_errlog(ECHILD, "second pthread_create() returns %d\n", rc);
+	return rc;
+    }
+
+    /* return this thread to the scheduler it used before */
+    sched_setscheduler(0, policy, &my_param);
+    IF_DEBUG(DBG_TERSE, io_trace("DSP thread finally created"));
+    return 0;
 
 #endif /* DSP_THREAD */
 }

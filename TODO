@@ -17,17 +17,21 @@ TODO (owner)
 - Commit documentation to CVS (Ron)
 - Save state/scene/settings (Jan)
 - source code copyright headers (everyone)
-- capabilites support for DSP thread (Jack)
+- move option parsing from io.c to main.c (Jack)
 - option to start up with no ports connected (Jack)
 - set JACK port latencies correctly (Jack, Steve)
 - README file
 - AUTHORS file
 - man page
+- add test script directory (Jack)
+- add UI for reporting JACK status
+- add JACK transport position tracking (Jack)
+- add UI for reporting JACK transport status
 
 
 TO THINK ABOUT
 
-- making the DocBook/XML documentation compatible with Yelp (avp)
+- making the DocBook/XML documentation compatible with Yelp (Alexandre)
 - error and debug message rationalization, IF_DEBUG(), -v option
 - JACK transport master control
 
@@ -35,3 +39,4 @@ TO THINK ABOUT
 CLOSED (date, who, comment)
 
 - remove use of <asm/atomic.h> (2003/06/03, Jack, use volatile attribute)
+- capabilites support for DSP thread (2003/06/15, Jack)
