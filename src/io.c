@@ -1107,8 +1107,7 @@ void io_activate()
 
 	if (oports[0] == NULL) {	/* no output ports specified? */
 
-	    pports = jack_get_ports (client, ":playback", 
-				     JACK_DEFAULT_AUDIO_TYPE,
+	    pports = jack_get_ports (client, NULL, JACK_DEFAULT_AUDIO_TYPE,
 				     JackPortIsPhysical|JackPortIsInput);
 	    if (pports) {
 		/* use first `nchannels' physical playback ports */
