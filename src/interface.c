@@ -5728,7 +5728,7 @@ create_about_dialog (void)
 
   about_dialog = gtk_dialog_new ();
   gtk_widget_set_name (about_dialog, "about_dialog");
-  gtk_window_set_title (GTK_WINDOW (about_dialog), _("dialog1"));
+  gtk_window_set_title (GTK_WINDOW (about_dialog), _("About JAMin"));
 
   dialog_vbox3 = GTK_DIALOG (about_dialog)->vbox;
   gtk_widget_set_name (dialog_vbox3, "dialog_vbox3");
