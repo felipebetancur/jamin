@@ -569,7 +569,7 @@ static void set_EQ ()
         the eq_coefs.  */
 
     for (i = 0 ; i < EQ_length ; i++)
-        x[i] = pow (10.0, (double) EQ_x_notched[i]);
+        x[i] = powf (10.0f, EQ_x_notched[i]);
 
     interval = ((l_geq_freqs[EQ_BANDS - 1]) - l_geq_freqs[0]) / EQ_INTERP;
 

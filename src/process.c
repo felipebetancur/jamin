@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.46 2004/04/04 15:47:15 jdepner Exp $
+ *  $Id: process.c,v 1.47 2004/04/09 17:37:49 theno23 Exp $
  */
 
 #include <math.h>
@@ -31,6 +31,7 @@
 #include "intrim.h"
 #include "io.h"
 #include "db.h"
+#include "fsqrt.h"
 
 #define BUF_MASK   (BINS-1)		/* BINS is a power of two */
 
@@ -237,7 +238,7 @@ void run_eq(unsigned int port, unsigned int in_ptr)
 	comp_tmp[i] = comp[i] * eq_gain;
 	comp_tmp[BINS - i] = comp[BINS - i] * eq_gain;
 
-	peak = sqrtf(peak_data[i] * peak_data[i] + peak_data[BINS - i] *
+	peak = f_sqrt(peak_data[i] * peak_data[i] + peak_data[BINS - i] *
 		peak_data[BINS - i]);
 	if (peak > bin_peak[i]) {
 	    bin_peak[i] = peak;
@@ -261,7 +262,7 @@ void run_eq(unsigned int port, unsigned int in_ptr)
 
 	comp_tmp[i] = comp[i] * eq_gain;
 	comp_tmp[BINS - i] = comp[BINS - i] * eq_gain;
-	peak = sqrtf(peak_data[i] * peak_data[i] + peak_data[BINS - i] *
+	peak = f_sqrt(peak_data[i] * peak_data[i] + peak_data[BINS - i] *
 		peak_data[BINS - i]);
 	if (peak > bin_peak[i]) {
 	    bin_peak[i] = peak;
@@ -284,7 +285,7 @@ void run_eq(unsigned int port, unsigned int in_ptr)
 
 	comp_tmp[i] = comp[i] * eq_gain;
 	comp_tmp[BINS - i] = comp[BINS - i] * eq_gain;
-	peak = sqrtf(peak_data[i] * peak_data[i] + peak_data[BINS - i] *
+	peak = f_sqrt(peak_data[i] * peak_data[i] + peak_data[BINS - i] *
 		peak_data[BINS - i]);
 	if (peak > bin_peak[i]) {
 	    bin_peak[i] = peak;
