@@ -15,7 +15,7 @@ libnopt_a_CFLAGS	= -g @JAMIN_CFLAGS@
 jamin_CFLAGS		= @CFLAGS_OPT@ @JAMIN_CFLAGS@
 jamin_LDADD		= libnopt.a @PACKAGE_LIBS@ @JAMIN_LIBS@
 
-bin_PROGRAMS		= jamin
+bin_PROGRAMS		= jamin jamin-scene
 man_MANS		= jamin.1
 
 jamin_SOURCES = \
@@ -49,6 +49,10 @@ jamin_SOURCES = \
 	scenes.c scenes.h \
 	preferences.c preferences.h \
 	help.c help.h
+
+jamin_scene_CFLAGS = @OSC_CFLAGS@
+jamin_scene_LDADD = @OSC_LIBS@
+jamin_scene_SOURCES = jamin-scene.c
 
 state.h: mk-stateh.pl state-vars.txt
 	@echo "WARNING: Rebuilding state.h"

@@ -50,6 +50,8 @@ configure: error: era machines])])
 
 PKG_CHECK_MODULES(XML, libxml-2.0 >= 2.0)
 
+PKG_CHECK_MODULES(OSC, liblo >= 0.5)
+
 # On Mac OS X the float functions for <math.h> are in -lmx
 AC_CHECK_LIB([m], [sqrt],, [AC_MSG_ERROR(Can't find libm)])
 AC_CHECK_LIB(m, log10f,, [
@@ -69,9 +71,9 @@ dnl Add the languages which your application supports here.
 ALL_LINGUAS=""
 AM_GLIB_GNU_GETTEXT
 
-JAMIN_LIBS="$FFTW_LIBS $XML_LIBS $JACK_LIBS"
+JAMIN_LIBS="$FFTW_LIBS $XML_LIBS $JACK_LIBS $OSC_LIBS"
 AC_SUBST(JAMIN_LIBS)
-JAMIN_CFLAGS="-g $FFTW_CFLAGS $JACK_CFAGS $XML_CFLAGS"
+JAMIN_CFLAGS="-g $FFTW_CFLAGS $JACK_CFAGS $XML_CFLAGS $OSC_CFLAGS"
 AC_SUBST(JAMIN_CFLAGS)
 dnl Use -Wall if we have gcc.
 changequote(,)dnl

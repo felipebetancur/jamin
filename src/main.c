@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.48 2004/04/29 14:52:00 jdepner Exp $
+ *  $Id: main.c,v 1.49 2004/05/04 17:30:09 theno23 Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -28,6 +28,7 @@
 #include <limits.h>
 #include <errno.h>
 #include <dirent.h>
+#include <lo.h>
 
 #include "main.h"
 #include "interface.h"
@@ -60,11 +61,14 @@ char user_default_session[PATH_MAX];	/* user's default session name */
 static gboolean update_meters(gpointer data);
 static void set_configuration_files(void);
 
+void error(int num, const char *m, const char *path);
+int scene_handler(const char *path, const char *types, lo_arg **argv, int argc,
+                 void *data, void *user_data);
 
 int main(int argc, char *argv[])
 {
     char title[128];
-
+    lo_server_thread st;
 
 #ifdef ENABLE_NLS
     bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
@@ -109,6 +113,11 @@ int main(int argc, char *argv[])
 
     s_clear_history();
 
+    /* Create OSC server */
+
+    st = lo_server_thread_new("7770", error);
+    lo_server_thread_add_method(st, "/scene", "i", scene_handler, NULL);
+    lo_server_thread_start(st);
 
     /* start I/O processing, then run GTK main loop, until "quit" */
 
@@ -198,6 +207,23 @@ static gboolean update_meters(gpointer data)
 
 
     return TRUE;
+}
+
+/* receive OSC scene change message */
+
+int scene_handler(const char *path, const char *types, lo_arg **argv, int argc,
+                 void *data, void *user_data)
+{
+    if (argv[0]->i > 0 && argv[0]->i <= 20) {
+	set_scene(argv[0]->i - 1);
+    }
+
+    return 0;
+}
+
+void error(int num, const char *msg, const char *path)
+{
+    printf("liblo server error %d in path %s: %s\n", num, path, msg);
 }
 
 /* vi:set ts=8 sts=4 sw=4: */
