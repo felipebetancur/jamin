@@ -701,7 +701,7 @@ void io_init(int argc, char *argv[], int *spectrum_freq, float *crossfade_time)
 
 
     *spectrum_freq = 10;
-    *crossfade_time = 0.003;
+    *crossfade_time = 1.0;
 
 
     /* basename $0 */
@@ -731,8 +731,8 @@ void io_init(int argc, char *argv[], int *spectrum_freq, float *crossfade_time)
 	    break;
 	case 'c':			/* Set crossfade time */
 	    sscanf (optarg, "%f", crossfade_time);
-            if (*crossfade_time < 0.0 || *crossfade_time > 1.0) 
-              *crossfade_time = 0.003;
+            if (*crossfade_time < 0.0 || *crossfade_time > 2.0) 
+              *crossfade_time = 1.0;
 	    break;
 	case 'h':			/* show help */
 	    show_help = 1;
@@ -784,7 +784,7 @@ void io_init(int argc, char *argv[], int *spectrum_freq, float *crossfade_time)
                 "\t-h\tshow this help\n"
                 "\t-n name\tset JACK client name\n"
                 "\t-s freq\tset spectrum update frequency\n"
-                "\t-c time\tset crossfade time slice\n"
+                "\t-c time\tset crossfade time\n"
                 "\t-r\tuse example GTK resource file\n"
                 "\t-p\tdon't automatically connect JACK output ports\n"
                 "\t-v\tverbose output (use -vv... for more detail)\n"

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: compressor-ui.c,v 1.16 2004/01/18 11:28:54 jdepner Exp $
+ *  $Id: compressor-ui.c,v 1.17 2004/01/18 17:15:33 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -55,6 +55,9 @@ static int auto_gain[XO_BANDS];
 static GtkMeter *le_meter[XO_BANDS], *ga_meter[XO_BANDS];
 static GtkAdjustment *le_meter_adj[XO_BANDS], *ga_meter_adj[XO_BANDS];
 
+
+/*  Variables used for ganging the compressor controls.  */
+
 static GtkLabel *lab_at[XO_BANDS];
 static GtkLabel *lab_re[XO_BANDS];
 static GtkLabel *lab_th[XO_BANDS];
@@ -67,16 +70,40 @@ static gboolean gang_th[XO_BANDS];
 static gboolean gang_ra[XO_BANDS];
 static gboolean gang_kn[XO_BANDS];
 static gboolean gang_ma[XO_BANDS];
+static gdouble range_at[2][XO_BANDS];
+static gdouble range_re[2][XO_BANDS];
+static gdouble range_th[2][XO_BANDS];
+static gdouble range_ra[2][XO_BANDS];
+static gdouble range_kn[2][XO_BANDS];
+static gdouble range_ma[2][XO_BANDS];
+static gdouble prev_value_at[XO_BANDS];
+static gdouble prev_value_re[XO_BANDS];
+static gdouble prev_value_th[XO_BANDS];
+static gdouble prev_value_ra[XO_BANDS];
+static gdouble prev_value_kn[XO_BANDS];
+static gdouble prev_value_ma[XO_BANDS];
+static gulong sig_hand_at[XO_BANDS];
+static gulong sig_hand_re[XO_BANDS];
+static gulong sig_hand_th[XO_BANDS];
+static gulong sig_hand_ra[XO_BANDS];
+static gulong sig_hand_kn[XO_BANDS];
+static gulong sig_hand_ma[XO_BANDS];
 
 
 #define connect_scale(sym, i, member, state_id) \
+        gang_##sym[i] = FALSE; \
+	snprintf(name, 255, "comp_" # sym "_label_%d", i+1); \
+	lab_##sym[i] = GTK_LABEL(lookup_widget(main_window, name)); \
 	snprintf(name, 255, "comp_" # sym "_%d", i+1); \
 	scale = lookup_widget(main_window, name); \
 	adj_##sym[i] = gtk_range_get_adjustment(GTK_RANGE(scale)); \
-	s_set_callback(state_id, sym##_changed); \
+        range_##sym[0][i] = adj_##sym[i]->lower; \
+        range_##sym[1][i] = adj_##sym[i]->upper; \
+        prev_value_##sym[i] = adj_##sym[i]->value; \
+        s_set_callback(state_id, sym##_changed); \
 	s_set_adjustment(state_id, adj_##sym[i]); \
 	s_set_value(state_id, compressors[i].member, 0); \
-	g_signal_connect(G_OBJECT(adj_##sym[i]), "value-changed", G_CALLBACK(adj_cb), (gpointer)state_id); 
+	sig_hand_##sym[i] = g_signal_connect(G_OBJECT(adj_##sym[i]), "value-changed", G_CALLBACK(adj_cb), (gpointer)state_id); 
 
 	//g_signal_connect(G_OBJECT(adj_##sym[i]), "value-changed", G_CALLBACK(sym##_changed), (gpointer)i); 
 	//gtk_adjustment_set_value(adj_##sym[i], compressors[i].member);
@@ -89,26 +116,6 @@ void bind_compressors()
 
 
     for (i=0; i<XO_BANDS; i++) {
-        gang_at[i] = FALSE;
-        gang_re[i] = FALSE;
-        gang_th[i] = FALSE;
-        gang_ra[i] = FALSE;
-        gang_kn[i] = FALSE;
-        gang_ma[i] = FALSE;
-
-	snprintf(name, 255, "comp_at_label_%d", i+1);
-	lab_at[i] = GTK_LABEL(lookup_widget(main_window, name));
-	snprintf(name, 255, "comp_re_label_%d", i+1);
-	lab_re[i] = GTK_LABEL(lookup_widget(main_window, name));
-	snprintf(name, 255, "comp_th_label_%d", i+1);
-	lab_th[i] = GTK_LABEL(lookup_widget(main_window, name));
-	snprintf(name, 255, "comp_ra_label_%d", i+1);
-	lab_ra[i] = GTK_LABEL(lookup_widget(main_window, name));
-	snprintf(name, 255, "comp_kn_label_%d", i+1);
-	lab_kn[i] = GTK_LABEL(lookup_widget(main_window, name));
-	snprintf(name, 255, "comp_ma_label_%d", i+1);
-	lab_ma[i] = GTK_LABEL(lookup_widget(main_window, name));
-        
 	snprintf(name, 255, "comp_le_%d", i+1);
 	le_meter[i] = GTK_METER(lookup_widget(main_window, name));
 	le_meter_adj[i] = gtk_meter_get_adjustment(le_meter[i]);
@@ -138,51 +145,250 @@ gboolean adj_cb(GtkAdjustment *adj, gpointer p)
 
 void at_changed(int id, float value)
 {
-    compressors[id - S_COMP_ATTACK(0)].attack = value;
-    draw_comp_curve(id - S_COMP_ATTACK(0));
+  int          i, j;
+  gdouble      diff, new_value;
+
+
+  i = id - S_COMP_ATTACK(0);
+
+  if (gang_at[i])
+    {
+      diff = value - prev_value_at[i];
+
+      for (j = 0 ; j < XO_BANDS ; j++)
+        {
+          if (i != j && gang_at[j])
+            {
+              new_value = gtk_adjustment_get_value (adj_at[j]);
+              new_value += diff;
+              if (new_value >= range_at[0][j] && new_value <= range_at[1][j])
+                {
+                  g_signal_handler_block (adj_at[j], sig_hand_at[j]);
+
+                  gtk_adjustment_set_value (adj_at[j], new_value);
+                  compressors[j].attack = new_value;
+                  prev_value_at[j] = new_value;
+
+                  g_signal_handler_unblock (adj_at[j], sig_hand_at[j]);
+                }
+              draw_comp_curve(j);
+            }
+        }
+    }
+                  
+  compressors[i].attack = value;
+  prev_value_at[i] = value;
+  draw_comp_curve(i);
 }
 
 void re_changed(int id, float value)
 {
-    compressors[id - S_COMP_RELEASE(0)].release = value;
-    draw_comp_curve(id - S_COMP_RELEASE(0));
+  int          i, j;
+  gdouble      diff, new_value;
+
+
+  i = id - S_COMP_RELEASE(0);
+
+  if (gang_re[i])
+    {
+      diff = value - prev_value_re[i];
+
+      for (j = 0 ; j < XO_BANDS ; j++)
+        {
+          if (i != j && gang_re[j])
+            {
+              new_value = gtk_adjustment_get_value (adj_re[j]);
+              new_value += diff;
+              if (new_value >= range_re[0][j] && new_value <= range_re[1][j])
+                {
+                  g_signal_handler_block (adj_re[j], sig_hand_re[j]);
+
+                  gtk_adjustment_set_value (adj_re[j], new_value);
+                  compressors[j].release = new_value;
+                  prev_value_re[j] = new_value;
+
+                  g_signal_handler_unblock (adj_re[j], sig_hand_re[j]);
+                }
+              draw_comp_curve(j);
+            }
+        }
+    }
+                  
+  compressors[i].release = value;
+  prev_value_re[i] = value;
+  draw_comp_curve(i);
 }
 
 void th_changed(int id, float value)
 {
-    int band = id - S_COMP_THRESH(0);
+  int          i, j;
+  gdouble      diff, new_value;
 
-    compressors[band].threshold = value;
-    if (auto_gain[band]) {
-	calc_auto_gain(band);
-    } else {
-	draw_comp_curve(band);
+
+  i = id - S_COMP_THRESH(0);
+
+  if (gang_th[i])
+    {
+      diff = value - prev_value_th[i];
+
+      for (j = 0 ; j < XO_BANDS ; j++)
+        {
+          if (i != j && gang_th[j])
+            {
+              new_value = gtk_adjustment_get_value (adj_th[j]);
+              new_value += diff;
+              if (new_value >= range_th[0][j] && new_value <= range_th[1][j])
+                {
+                  g_signal_handler_block (adj_th[j], sig_hand_th[j]);
+
+                  gtk_adjustment_set_value (adj_th[j], new_value);
+                  compressors[j].threshold = new_value;
+                  prev_value_th[j] = new_value;
+
+                  g_signal_handler_unblock (adj_th[j], sig_hand_th[j]);
+                }
+              if (auto_gain[j]) {
+                calc_auto_gain(j);
+              } else {
+                draw_comp_curve(j);
+              }
+              gtk_meter_set_warn_point(le_meter[j], new_value);
+            }
+        }
     }
-    gtk_meter_set_warn_point(le_meter[band], value);
+                  
+  compressors[i].threshold = value;
+  prev_value_th[i] = value;
+  if (auto_gain[i]) {
+    calc_auto_gain(i);
+  } else {
+    draw_comp_curve(i);
+  }
+  gtk_meter_set_warn_point(le_meter[i], value);
 }
 
 void ra_changed(int id, float value)
 {
-    int band = id - S_COMP_RATIO(0);
+  int          i, j;
+  gdouble      diff, new_value;
 
-    compressors[band].ratio = value;
-    if (auto_gain[band]) {
-	calc_auto_gain(band);
-    } else {
-	draw_comp_curve(band);
+
+  i = id - S_COMP_RATIO(0);
+
+  if (gang_ra[i])
+    {
+      diff = value - prev_value_ra[i];
+
+      for (j = 0 ; j < XO_BANDS ; j++)
+        {
+          if (i != j && gang_ra[j])
+            {
+              new_value = gtk_adjustment_get_value (adj_ra[j]);
+              new_value += diff;
+              if (new_value >= range_ra[0][j] && new_value <= range_ra[1][j])
+                {
+                  g_signal_handler_block (adj_ra[j], sig_hand_ra[j]);
+
+                  gtk_adjustment_set_value (adj_ra[j], new_value);
+                  compressors[j].ratio = new_value;
+                  prev_value_ra[j] = new_value;
+
+                  g_signal_handler_unblock (adj_ra[j], sig_hand_ra[j]);
+                }
+              if (auto_gain[j]) {
+                calc_auto_gain(j);
+              } else {
+                draw_comp_curve(j);
+              }
+              gtk_meter_set_warn_point(le_meter[j], new_value);
+            }
+        }
     }
+                  
+  compressors[i].ratio = value;
+  prev_value_ra[i] = value;
+  if (auto_gain[i]) {
+    calc_auto_gain(i);
+  } else {
+    draw_comp_curve(i);
+  }
+  gtk_meter_set_warn_point(le_meter[i], value);
 }
 
 void kn_changed(int id, float value)
 {
-    compressors[id - S_COMP_KNEE(0)].knee = value * 9.0f + 1.0f;
-    draw_comp_curve(id - S_COMP_KNEE(0));
+  int          i, j;
+  gdouble      diff, new_value;
+
+
+  i = id - S_COMP_KNEE(0);
+
+  if (gang_kn[i])
+    {
+      diff = value - prev_value_kn[i];
+
+      for (j = 0 ; j < XO_BANDS ; j++)
+        {
+          if (i != j && gang_kn[j])
+            {
+              new_value = gtk_adjustment_get_value (adj_kn[j]);
+              new_value += diff;
+              if (new_value >= range_kn[0][j] && new_value <= range_kn[1][j])
+                {
+                  g_signal_handler_block (adj_kn[j], sig_hand_kn[j]);
+
+                  gtk_adjustment_set_value (adj_kn[j], new_value);
+                  compressors[j].knee = new_value;
+                  prev_value_kn[j] = new_value;
+
+                  g_signal_handler_unblock (adj_kn[j], sig_hand_kn[j]);
+                }
+              draw_comp_curve(j);
+            }
+        }
+    }
+                  
+  compressors[i].knee = value;
+  prev_value_kn[i] = value;
+  draw_comp_curve(i);
 }
 
 void ma_changed(int id, float value)
 {
-    compressors[id - S_COMP_MAKEUP(0)].makeup_gain = value;
-    draw_comp_curve(id - S_COMP_MAKEUP(0));
+  int          i, j;
+  gdouble      diff, new_value;
+
+
+  i = id - S_COMP_MAKEUP(0);
+
+  if (gang_ma[i])
+    {
+      diff = value - prev_value_ma[i];
+
+      for (j = 0 ; j < XO_BANDS ; j++)
+        {
+          if (i != j && gang_ma[j])
+            {
+              new_value = gtk_adjustment_get_value (adj_ma[j]);
+              new_value += diff;
+              if (new_value >= range_ma[0][j] && new_value <= range_ma[1][j])
+                {
+                  g_signal_handler_block (adj_ma[j], sig_hand_ma[j]);
+
+                  gtk_adjustment_set_value (adj_ma[j], new_value);
+                  compressors[j].makeup_gain = new_value;
+                  prev_value_ma[j] = new_value;
+
+                  g_signal_handler_unblock (adj_ma[j], sig_hand_ma[j]);
+                }
+              draw_comp_curve(j);
+            }
+        }
+    }
+                  
+  compressors[i].makeup_gain = value;
+  prev_value_ma[i] = value;
+  draw_comp_curve(i);
 }
 
 void calc_auto_gain(int i)

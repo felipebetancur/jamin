@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.41 2004/01/18 01:46:56 jdepner Exp $
+ *  $Id: state.c,v 1.42 2004/01/18 17:15:33 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -58,7 +58,7 @@ static GList         *undo_pos = NULL;
 
 static int suppress_feedback = 0;
 static int saved_scene;
-static float crossfade_time = 0.003;
+static float crossfade_time = 1.0;
 
 static void s_set_events(int id, float value);
 void set_EQ_curve_values ();
@@ -346,7 +346,7 @@ void s_crossfade_to_state(s_state *state, float time)
 
 void s_restore_state(s_state *state)
 {
-    s_crossfade_to_state (state, crossfade_time);
+    s_crossfade_to_state (state, 0.003);
 }
 
 static void s_set_events(int id, float value)

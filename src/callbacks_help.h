@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.20 2004/01/18 11:28:54 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.21 2004/01/18 17:15:33 jdepner Exp $
  */
 
 char general_help[] = {
@@ -125,7 +125,9 @@ the gain/balance control will reset the value to 0.0/centre.\n"
 
 
 char spectrum_help[] = {
-"    Spectrum help not yet available.\n"
+"    The spectrum display shows the power spectrum of the signal in bands \
+that correspond to the frequency bands in the 30 band EQ (GEQ). In addition \
+it displays the maximum value reached for each band as a yellow line.\n"
 };
 
 
@@ -151,7 +153,12 @@ are, from left to right:\n\n\
     M - makeup gain in db\n\
     AM - automatic makeup gain computation\n\n\
     A full explanation of the use of these parameters is covered in the user \
-manual.\n"
+manual.\n\
+    Compressor controls can be \"ganged\" by clicking on the control label in \
+the desired compressor band windows.  When they are ganged moving one control \
+will move all other ganged controls by the same amount.  To ungang just click \
+on the label again.  The labels change to the band color to indicate that \
+they are ganged.\n"
 };
 
 

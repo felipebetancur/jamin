@@ -44,8 +44,10 @@ with 10 as the default.  Set to 0 to disable spectrum update.
 .TP 
 \fB\-c\fR \fItime\fR
 .br 
-Set the crossfade time in seconds.  The range is 0.000 to 1.000 with 
-0.003 as the default.
+Set the crossfade time in seconds.  The range is 0.0 to 2.0 with 1.0 as 
+the default.  WARNING: fast crossfade times in combination with large 
+jack buffer sizes may introduce zipper noise to some signals (especially 
+sustained sounds in the bass range).
 .TP 
 \fB\-p\fR
 .br 

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.126 2004/01/18 14:08:22 theno23 Exp $
+ *  $Id: callbacks.c,v 1.127 2004/01/18 17:15:33 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1521,10 +1521,11 @@ on_window1_key_press_event             (GtkWidget       *widget,
         break;
         */
 
-        /*  Switch to tab 1 (HDEQ)  */
+        /*  Switch to tab 1 (HDEQ) unless we're getting help.  */
 
       case GDK_F1:
-        gtk_notebook_set_current_page (l_notebook1, 0);
+        if (state != GDK_SHIFT_MASK) 
+          gtk_notebook_set_current_page (l_notebook1, 0);
         break;
 
 
