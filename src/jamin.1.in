@@ -42,14 +42,12 @@ Otherwise, use "JAMin".
 Don't automatically connect any JACK output ports.  Otherwise, connect
 to "alsa_pcm:playback_1" and "alsa_pcm:playback_2".
 .TP 
-\fB\-r\fR[\fIresourcefile\fR]
+\fB\-r\fR
 .br 
-Load GTK resource information from \fIresourcefile\fR.  If the file
-name is present it must immediately follow the \fB\-r\fR with no
-intervening space.  If no name is given, use a system-provided JAMin
-resource file.  If the \fB\-r\fR option is not specified, look for a
-user-defined resource file in \fB~/.jamin/jamin_ui\fR.  Otherwise, use
-the system-wide GTK settings.
+Load GTK resource information from an example JAMin resource file.  If
+the \fB\-r\fR option is not specified, look for a user-defined
+resource file in \fB~/.jamin/jamin_ui\fR.  Otherwise, use the
+system-wide GTK settings.
 .TP 
 \fB\-v\fR
 .br 
@@ -66,8 +64,8 @@ it does not already exist.
 .TP
 .B ~/.jamin/jamin_ui
 Default resource file for GTK user interface customization, used when
-the \fB\-r\fR command option is not specified.  JAMin provides an
-example resource file in ${prefix}/share/jamin/examples/jamin_ui.  To
+the \fB\-r\fR command option is not specified.  JAMin provides a
+default resource file in ${prefix}/share/jamin/examples/jamin_ui.  To
 customize that file, copy it to ~/.jamin/jamin_ui and make changes.
 .TP
 .B ~/.jamin/*.jam
