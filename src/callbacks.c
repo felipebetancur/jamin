@@ -364,9 +364,8 @@ draw_EQ_curve ()
 
     /*  Clear the curve drawing area.  */
 
-    gdk_gc_set_foreground (EQ_gc, &white);
-    gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, 0, 0, EQ_curve_width, 
-        EQ_curve_height);
+    gdk_window_clear_area (EQ_drawable, 0, 0, EQ_curve_width, EQ_curve_height);
+    gdk_gc_set_foreground (EQ_gc, &grey);
     gdk_gc_set_foreground (EQ_gc, &black);
 
 
@@ -952,10 +951,8 @@ draw_comp_curve (int i)
 
     /*  Clear the curve drawing area.  */
 
-/*    gdk_gc_set_foreground (comp_gc[i], &white);
-    gdk_draw_rectangle (comp_drawable[i], comp_gc[i], TRUE, 0, 0, 
-        comp_curve_width[i], comp_curve_height[i]); */
-    gdk_window_clear_area (comp_drawable[i], 0, 0, comp_curve_width[i], comp_curve_height[i]);
+    gdk_window_clear_area (comp_drawable[i], 0, 0, comp_curve_width[i], 
+        comp_curve_height[i]);
     gdk_gc_set_foreground (comp_gc[i], &grey);
     gdk_gc_set_line_attributes (comp_gc[i], 1, GDK_LINE_SOLID, GDK_CAP_BUTT, 
         GDK_JOIN_MITER);
@@ -997,8 +994,6 @@ draw_comp_curve (int i)
                 comp_curve_width[i], y1);
           }
       }
-
-    //comp_write_annotation (i, " ");
 
 
     /*  Plot the curves.  */
@@ -1187,7 +1182,6 @@ on_low_curve_box_leave_notify_event    (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    //comp_write_annotation (0, " ");
     draw_comp_curve (0);
 
     gtk_widget_modify_fg ((GtkWidget *) l_low_comp_lbl, GTK_STATE_NORMAL, 
@@ -1204,7 +1198,6 @@ on_mid_curve_box_leave_notify_event    (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    //comp_write_annotation (1, " ");
     draw_comp_curve (1);
 
     gtk_widget_modify_fg ((GtkWidget *) l_mid_comp_lbl, GTK_STATE_NORMAL, 
@@ -1221,7 +1214,6 @@ on_high_curve_box_leave_notify_event   (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    //comp_write_annotation (2, " ");
     draw_comp_curve (2);
 
     gtk_widget_modify_fg ((GtkWidget *) l_high_comp_lbl, GTK_STATE_NORMAL,
