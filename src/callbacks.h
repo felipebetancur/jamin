@@ -755,10 +755,6 @@ void
 on_about1_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
-void
-on_graph_tb_pressed                    (GtkButton       *button,
-                                        gpointer         user_data);
-
 gboolean
 on_cc_window_delete_event              (GtkWidget       *widget,
                                         GdkEvent        *event,

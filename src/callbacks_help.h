@@ -209,6 +209,11 @@ JAMin:\n\n\
 \t<Ctrl>-u\t-\tUndo\n\
 \t<Ctrl>-r\t-\tRedo\n\
 \t<Ctrl>-h\t-\tGeneral help\n\
+\tF1\t\t-\tSet the notebook tab to HDEQ\n\
+\tF2\t\t-\tSet the notebook tab to 30 band EQ\n\
+\tF3\t\t-\tSet the notebook tab to Spectrum\n\
+\tF4\t\t-\tSet the notebook tab to Compressor curves\n\
+\tF5\t\t-\tSet the notebook tab to the EQ Options\n\
 \t<Ctrl>-k\t-\tKeyboard accelerator help (this screen)\n\
 \t<Ctrl>-j\t-\tAbout JAMin\n"
 };

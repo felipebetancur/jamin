@@ -39,8 +39,7 @@
 
 static char *help_ptr = general_help;
 static gboolean text_focus = FALSE;
-
-GtkButton *graph_tb = NULL;
+static GtkNotebook *l_notebook1;
 
 
 void
@@ -143,6 +142,8 @@ on_window1_show                        (GtkWidget       *widget,
                                         gpointer         user_data)
 {
     crossover_init ();
+
+    l_notebook1 = GTK_NOTEBOOK (lookup_widget (main_window, "notebook1"));
 }
 
 
@@ -1583,8 +1584,7 @@ on_window1_key_press_event             (GtkWidget       *widget,
         scene = 5;
         break;
 
-
-
+ 
         /*  Undo  */
 
       case GDK_u:
@@ -1598,6 +1598,41 @@ on_window1_key_press_event             (GtkWidget       *widget,
         if (state == GDK_CONTROL_MASK) s_redo ();
         break;
 */
+
+
+        /*  Switch to tab 1 (HDEQ)  */
+
+      case GDK_F1:
+        gtk_notebook_set_current_page (l_notebook1, 0);
+        break;
+
+
+        /*  Switch to tab 2 (30 band EQ)  */
+
+      case GDK_F2:
+        gtk_notebook_set_current_page (l_notebook1, 1);
+        break;
+
+
+        /*  Switch to tab 3 (Spectrum)  */
+
+      case GDK_F3:
+        gtk_notebook_set_current_page (l_notebook1, 2);
+        break;
+
+
+        /*  Switch to tab 4 (Compressor curves)  */
+
+      case GDK_F4:
+        gtk_notebook_set_current_page (l_notebook1, 3);
+        break;
+
+
+        /*  Switch to tab 5 (EQ options)  */
+
+      case GDK_F5:
+        gtk_notebook_set_current_page (l_notebook1, 4);
+        break;
 
 
         /*  Save As session  */

@@ -11,6 +11,7 @@
 #include "state.h"
 #include "process.h"
 #include "scenes.h"
+#include "hdeq.h"
 
 /* The smallest value that counts as a change, should be approximately
  * epsilon+delta */

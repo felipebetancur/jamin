@@ -174,6 +174,7 @@ void bind_hdeq ()
     l_c_curve_lbl[2] = GTK_LABEL (lookup_widget (main_window, 
                                                  "high_curve_lbl"));
 
+
     set_color (&white, 65535, 65535, 65535);
     set_color (&black, 0, 0, 0);
     set_color (&EQ_notch_color, 65535, 65535, 0);
