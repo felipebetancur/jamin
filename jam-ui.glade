@@ -4532,23 +4532,23 @@
 						      </child>
 
 						      <child>
-							<widget class="GtkHBox" id="low_band_buttons">
+							<widget class="GtkHBox" id="low_band_button_hbox">
 							  <property name="visible">True</property>
 							  <property name="homogeneous">True</property>
 							  <property name="spacing">0</property>
 
 							  <child>
-							    <widget class="GtkRadioButton" id="low_active">
+							    <widget class="GtkCheckButton" id="low_solo">
 							      <property name="visible">True</property>
-							      <property name="tooltip" translatable="yes">Low Band Active</property>
+							      <property name="tooltip" translatable="yes">Low Band Solo</property>
 							      <property name="can_focus">True</property>
-							      <property name="label" translatable="yes">Active</property>
+							      <property name="label" translatable="yes">Solo</property>
 							      <property name="use_underline">True</property>
 							      <property name="relief">GTK_RELIEF_NORMAL</property>
 							      <property name="active">False</property>
 							      <property name="inconsistent">False</property>
 							      <property name="draw_indicator">True</property>
-							      <signal name="toggled" handler="on_low_active_toggled" last_modification_time="Thu, 29 Jan 2004 11:23:36 GMT"/>
+							      <signal name="toggled" handler="on_solo_toggled" last_modification_time="Mon, 16 Feb 2004 23:50:16 GMT"/>
 							    </widget>
 							    <packing>
 							      <property name="padding">0</property>
@@ -4558,7 +4558,7 @@
 							  </child>
 
 							  <child>
-							    <widget class="GtkRadioButton" id="low_bypass">
+							    <widget class="GtkCheckButton" id="low_bypass">
 							      <property name="visible">True</property>
 							      <property name="tooltip" translatable="yes">Low Band Bypass</property>
 							      <property name="can_focus">True</property>
@@ -4568,29 +4568,7 @@
 							      <property name="active">False</property>
 							      <property name="inconsistent">False</property>
 							      <property name="draw_indicator">True</property>
-							      <property name="group">low_active</property>
-							      <signal name="toggled" handler="on_low_bypass_toggled" last_modification_time="Thu, 29 Jan 2004 11:28:45 GMT"/>
-							    </widget>
-							    <packing>
-							      <property name="padding">0</property>
-							      <property name="expand">False</property>
-							      <property name="fill">False</property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="GtkRadioButton" id="low_mute">
-							      <property name="visible">True</property>
-							      <property name="tooltip" translatable="yes">Low Band Mute</property>
-							      <property name="can_focus">True</property>
-							      <property name="label" translatable="yes">Mute</property>
-							      <property name="use_underline">True</property>
-							      <property name="relief">GTK_RELIEF_NORMAL</property>
-							      <property name="active">False</property>
-							      <property name="inconsistent">False</property>
-							      <property name="draw_indicator">True</property>
-							      <property name="group">low_active</property>
-							      <signal name="toggled" handler="on_low_mute_toggled" last_modification_time="Thu, 29 Jan 2004 11:29:11 GMT"/>
+							      <signal name="toggled" handler="on_low_bypass_toggled" last_modification_time="Mon, 16 Feb 2004 22:32:01 GMT"/>
 							    </widget>
 							    <packing>
 							      <property name="padding">0</property>
@@ -5311,23 +5289,23 @@
 						      </child>
 
 						      <child>
-							<widget class="GtkHBox" id="mid_band_buttons">
+							<widget class="GtkHBox" id="mid_band_button_hbox">
 							  <property name="visible">True</property>
 							  <property name="homogeneous">True</property>
 							  <property name="spacing">0</property>
 
 							  <child>
-							    <widget class="GtkRadioButton" id="mid_active">
+							    <widget class="GtkCheckButton" id="mid_solo">
 							      <property name="visible">True</property>
-							      <property name="tooltip" translatable="yes">Mid Band Active</property>
+							      <property name="tooltip" translatable="yes">Mid Band Solo</property>
 							      <property name="can_focus">True</property>
-							      <property name="label" translatable="yes">Active</property>
+							      <property name="label" translatable="yes">Solo</property>
 							      <property name="use_underline">True</property>
 							      <property name="relief">GTK_RELIEF_NORMAL</property>
 							      <property name="active">False</property>
 							      <property name="inconsistent">False</property>
 							      <property name="draw_indicator">True</property>
-							      <signal name="toggled" handler="on_mid_active_toggled" last_modification_time="Thu, 29 Jan 2004 11:26:48 GMT"/>
+							      <signal name="toggled" handler="on_solo_toggled" last_modification_time="Mon, 16 Feb 2004 23:50:23 GMT"/>
 							    </widget>
 							    <packing>
 							      <property name="padding">0</property>
@@ -5337,7 +5315,7 @@
 							  </child>
 
 							  <child>
-							    <widget class="GtkRadioButton" id="mid_bypass">
+							    <widget class="GtkCheckButton" id="mid_bypass">
 							      <property name="visible">True</property>
 							      <property name="tooltip" translatable="yes">Mid Band Bypass</property>
 							      <property name="can_focus">True</property>
@@ -5347,29 +5325,7 @@
 							      <property name="active">False</property>
 							      <property name="inconsistent">False</property>
 							      <property name="draw_indicator">True</property>
-							      <property name="group">mid_active</property>
-							      <signal name="toggled" handler="on_mid_bypass_toggled" last_modification_time="Thu, 29 Jan 2004 11:30:09 GMT"/>
-							    </widget>
-							    <packing>
-							      <property name="padding">0</property>
-							      <property name="expand">False</property>
-							      <property name="fill">False</property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="GtkRadioButton" id="mid_mute">
-							      <property name="visible">True</property>
-							      <property name="tooltip" translatable="yes">Mid Band Mute</property>
-							      <property name="can_focus">True</property>
-							      <property name="label" translatable="yes">Mute</property>
-							      <property name="use_underline">True</property>
-							      <property name="relief">GTK_RELIEF_NORMAL</property>
-							      <property name="active">False</property>
-							      <property name="inconsistent">False</property>
-							      <property name="draw_indicator">True</property>
-							      <property name="group">mid_active</property>
-							      <signal name="toggled" handler="on_mid_mute_toggled" last_modification_time="Thu, 29 Jan 2004 11:30:34 GMT"/>
+							      <signal name="toggled" handler="on_mid_bypass_toggled" last_modification_time="Mon, 16 Feb 2004 22:31:47 GMT"/>
 							    </widget>
 							    <packing>
 							      <property name="padding">0</property>
@@ -6090,23 +6046,23 @@
 						      </child>
 
 						      <child>
-							<widget class="GtkHBox" id="high_band_buttons">
+							<widget class="GtkHBox" id="high_band_button_hbox">
 							  <property name="visible">True</property>
 							  <property name="homogeneous">True</property>
 							  <property name="spacing">0</property>
 
 							  <child>
-							    <widget class="GtkRadioButton" id="high_active">
+							    <widget class="GtkCheckButton" id="high_solo">
 							      <property name="visible">True</property>
-							      <property name="tooltip" translatable="yes">High Band Active</property>
+							      <property name="tooltip" translatable="yes">High Band Solo</property>
 							      <property name="can_focus">True</property>
-							      <property name="label" translatable="yes">Active</property>
+							      <property name="label" translatable="yes">Solo</property>
 							      <property name="use_underline">True</property>
 							      <property name="relief">GTK_RELIEF_NORMAL</property>
 							      <property name="active">False</property>
 							      <property name="inconsistent">False</property>
 							      <property name="draw_indicator">True</property>
-							      <signal name="toggled" handler="on_high_active_toggled" last_modification_time="Thu, 29 Jan 2004 11:31:42 GMT"/>
+							      <signal name="toggled" handler="on_solo_toggled" last_modification_time="Mon, 16 Feb 2004 23:50:29 GMT"/>
 							    </widget>
 							    <packing>
 							      <property name="padding">0</property>
@@ -6116,7 +6072,7 @@
 							  </child>
 
 							  <child>
-							    <widget class="GtkRadioButton" id="high_bypass">
+							    <widget class="GtkCheckButton" id="high_bypass">
 							      <property name="visible">True</property>
 							      <property name="tooltip" translatable="yes">High Band Bypass</property>
 							      <property name="can_focus">True</property>
@@ -6126,29 +6082,7 @@
 							      <property name="active">False</property>
 							      <property name="inconsistent">False</property>
 							      <property name="draw_indicator">True</property>
-							      <property name="group">high_active</property>
-							      <signal name="toggled" handler="on_high_bypass_toggled" last_modification_time="Thu, 29 Jan 2004 11:32:07 GMT"/>
-							    </widget>
-							    <packing>
-							      <property name="padding">0</property>
-							      <property name="expand">False</property>
-							      <property name="fill">False</property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="GtkRadioButton" id="high_mute">
-							      <property name="visible">True</property>
-							      <property name="tooltip" translatable="yes">High Band Mute</property>
-							      <property name="can_focus">True</property>
-							      <property name="label" translatable="yes">Mute</property>
-							      <property name="use_underline">True</property>
-							      <property name="relief">GTK_RELIEF_NORMAL</property>
-							      <property name="active">False</property>
-							      <property name="inconsistent">False</property>
-							      <property name="draw_indicator">True</property>
-							      <property name="group">high_active</property>
-							      <signal name="toggled" handler="on_high_mute_toggled" last_modification_time="Thu, 29 Jan 2004 11:32:33 GMT"/>
+							      <signal name="toggled" handler="on_high_bypass_toggled" last_modification_time="Mon, 16 Feb 2004 22:33:17 GMT"/>
 							    </widget>
 							    <packing>
 							      <property name="padding">0</property>

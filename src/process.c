@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.41 2004/02/10 01:52:15 joq Exp $
+ *  $Id: process.c,v 1.42 2004/02/17 00:05:12 jdepner Exp $
  */
 
 #include <math.h>
@@ -534,7 +534,6 @@ void process_set_ws_boost(float val)
 	ws_boost_a = val;
     }
 }
-
 
 void process_set_xo_band_action(int band, int action)
 {

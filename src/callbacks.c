@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.132 2004/02/10 01:52:14 joq Exp $
+ *  $Id: callbacks.c,v 1.133 2004/02/17 00:05:11 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -56,8 +56,9 @@
 /* vi:set ts=8 sts=4 sw=4: */
 
 
-static char *help_ptr = general_help;
-static gboolean text_focus = FALSE;
+static char             *help_ptr = general_help;
+static gboolean         text_focus = FALSE;
+static GtkToggleButton  *l_solo_button[XO_NBANDS], *l_bypass_button[XO_NBANDS];
 
 
 void
@@ -167,7 +168,20 @@ on_window1_show                        (GtkWidget       *widget,
 
   l_notebook1 = GTK_NOTEBOOK (lookup_widget (main_window, "notebook1"));
 
-  on_EQ_curve_event_box_leave_notify_event (NULL, NULL, NULL);  
+  on_EQ_curve_event_box_leave_notify_event (NULL, NULL, NULL);
+
+  l_solo_button[0] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
+                                                       "low_solo"));
+  l_bypass_button[0] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
+                                                       "low_bypass"));
+  l_solo_button[1] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
+                                                       "mid_solo"));
+  l_bypass_button[1] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
+                                                       "mid_bypass"));
+  l_solo_button[2] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
+                                                       "high_solo"));
+  l_bypass_button[2] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
+                                                       "high_bypass"));
 }
 
 
@@ -2035,12 +2049,80 @@ on_text_focus_out_event                (GtkWidget       *widget,
 
 
 void
-on_low_active_toggled                  (GtkToggleButton *togglebutton,
-                                        gpointer         user_data)
+on_solo_toggled                    (GtkToggleButton *togglebutton,
+                                    gpointer         user_data)
 {
-  if (gtk_toggle_button_get_active (togglebutton))
+  int       i;
+  gboolean solo;
+
+
+  solo = FALSE;
+  for (i = 0 ; i < XO_NBANDS ; i++)
     {
-      process_set_xo_band_action (0, ACTIVE);
+      if (gtk_toggle_button_get_active (l_solo_button[i])) solo = TRUE;
+    }
+
+  if (solo)
+    {
+      for (i = 0 ; i < XO_NBANDS ; i++)
+        {
+          if (gtk_toggle_button_get_active (l_solo_button[i]))
+            {
+              if (gtk_toggle_button_get_active (l_bypass_button[i]))
+                {
+                  process_set_xo_band_action (i, BYPASS);
+                }
+              else
+                {
+                  process_set_xo_band_action (i, ACTIVE);
+                }
+            }
+          else
+            {
+              process_set_xo_band_action (i, MUTE);
+            }
+        }
+    }
+  else
+    {
+      for (i = 0 ; i < XO_NBANDS ; i++)
+        {
+          if (gtk_toggle_button_get_active (l_bypass_button[i]))
+            {
+              process_set_xo_band_action (i, BYPASS);
+            }
+          else
+            {
+              process_set_xo_band_action (i, ACTIVE);
+            }
+        }
+    }
+}
+
+
+void
+bypass (int band, gboolean toggled)
+{
+  int       i;
+  gboolean solo;
+
+
+  solo = FALSE;
+  for (i = 0 ; i < XO_NBANDS ; i++)
+    {
+      if (gtk_toggle_button_get_active (l_solo_button[i])) solo = TRUE;
+    }
+
+  if (!solo || (solo && gtk_toggle_button_get_active (l_solo_button[band])))
+    {
+      if (toggled)
+        {
+          process_set_xo_band_action (band, BYPASS);
+        }
+      else
+        {
+          process_set_xo_band_action (band, ACTIVE);
+        }
     }
 }
 
@@ -2049,32 +2131,7 @@ void
 on_low_bypass_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
-  if (gtk_toggle_button_get_active (togglebutton))
-    {
-      process_set_xo_band_action (0, BYPASS);
-    }
-}
-
-
-void
-on_low_mute_toggled                    (GtkToggleButton *togglebutton,
-                                        gpointer         user_data)
-{
-  if (gtk_toggle_button_get_active (togglebutton))
-    {
-      process_set_xo_band_action (0, MUTE);
-    }
-}
-
-
-void
-on_mid_active_toggled                  (GtkToggleButton *togglebutton,
-                                        gpointer         user_data)
-{
-  if (gtk_toggle_button_get_active (togglebutton))
-    {
-      process_set_xo_band_action (1, ACTIVE);
-    }
+  bypass (0, gtk_toggle_button_get_active (togglebutton));
 }
 
 
@@ -2082,52 +2139,13 @@ void
 on_mid_bypass_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
-  if (gtk_toggle_button_get_active (togglebutton))
-    {
-      process_set_xo_band_action (1, BYPASS);
-    }
+  bypass (1, gtk_toggle_button_get_active (togglebutton));
 }
 
 
 void
-on_mid_mute_toggled                    (GtkToggleButton *togglebutton,
-                                        gpointer         user_data)
+on_high_bypass_toggled                  (GtkToggleButton *togglebutton,
+                                         gpointer         user_data)
 {
-  if (gtk_toggle_button_get_active (togglebutton))
-    {
-      process_set_xo_band_action (1, MUTE);
-    }
-}
-
-
-void
-on_high_active_toggled                 (GtkToggleButton *togglebutton,
-                                        gpointer         user_data)
-{
-  if (gtk_toggle_button_get_active (togglebutton))
-    {
-      process_set_xo_band_action (2, ACTIVE);
-    }
-}
-
-
-void
-on_high_bypass_toggled                 (GtkToggleButton *togglebutton,
-                                        gpointer         user_data)
-{
-  if (gtk_toggle_button_get_active (togglebutton))
-    {
-      process_set_xo_band_action (2, BYPASS);
-    }
-}
-
-
-void
-on_high_mute_toggled                   (GtkToggleButton *togglebutton,
-                                        gpointer         user_data)
-{
-  if (gtk_toggle_button_get_active (togglebutton))
-    {
-      process_set_xo_band_action (2, MUTE);
-    }
+  bypass (2, gtk_toggle_button_get_active (togglebutton));
 }
