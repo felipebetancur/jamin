@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.33 2004/01/05 18:00:03 theno23 Exp $
+ *  $Id: state.c,v 1.34 2004/01/05 23:00:54 theno23 Exp $
  */
 
 #include <stdio.h>
@@ -178,26 +178,20 @@ void s_clear_history()
 void s_history_add(const char *description)
 {
     s_state *ns;
+    GList *it;
 
     ns = malloc(sizeof(s_state));
     ns->description = (char *)description;
     memcpy(ns->value, s_value, S_SIZE * sizeof(float));
 
     if (undo_pos) {
-	//XXX Known memeory leak (swh - 2004-01-05)
+	it = undo_pos->next;
+	while (it) {
+	    free(it->data);
+	    it = it->next;
+	}
 	undo_pos->next = NULL;
     }
-
-#if 0
-// BAD CODE
-    if (undo_pos) {
-	while (undo_pos->next) {
-fprintf(stderr, "%p (%s:%d)\n", undo_pos->next, __FILE__, __LINE__);
-	    undo_pos = undo_pos->next;
-	    g_list_remove_all(history, undo_pos);
-	}
-    }
-#endif
 
     history = g_list_append(history, ns);
     undo_pos = g_list_last(history);
