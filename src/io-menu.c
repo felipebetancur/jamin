@@ -24,7 +24,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.c,v 1.15 2003/11/26 15:20:44 joq Exp $
+ *  $Id: io-menu.c,v 1.16 2003/11/26 15:33:50 joq Exp $
  */
 
 #include <stdio.h>
@@ -159,20 +159,16 @@ iomenu_connection_item(jack_port_t *port, const char *connection_name)
 
 /* add a local JACK port to the interface
  *
- *  Creates a menu item for the `port', attaching it to the parent
- *  `menu'.  Attaches a submenu to this menu item containing a list of
- *  all the JACK ports to which this local port could possibly be
- *  connected.
+ *  Creates a menu item for the `port'.  Attaches a submenu to this
+ *  menu item containing a list of all the JACK ports to which this
+ *  local port could possibly be connected.
  */
-static void
-iomenu_add_port(GtkWidget *menu, jack_port_t *port)
+static GtkWidget *
+iomenu_port_item(jack_port_t *port)
 {
     GtkWidget *item;			/* menu item for port */
     GtkWidget *sub_menu;		/* connection submenu for this port */
     const char *port_name;
-
-    if (port == NULL)			/* unregistered port? */
-	return;
 
     port_name = jack_port_short_name(port);
     item = gtk_menu_item_new_with_label(port_name);
@@ -192,7 +188,7 @@ iomenu_add_port(GtkWidget *menu, jack_port_t *port)
 	}
     }
     gtk_widget_show(sub_menu);
-    iomenu_add_item(menu, item);
+    return item;
 }
 
 /* make an up-to-date list of JACK input and output port names
@@ -239,12 +235,14 @@ iomenu_pull_down_ports()
 
     /* create menu items for each input port */
     for (i = 0; iports_list[i]; ++i) {
-	iomenu_add_port(iports_menu, iports_list[i]);
+	iomenu_add_item(iports_menu,
+			iomenu_port_item(iports_list[i]));
     }
 
     /* create menu items for each output port */
     for (i = 0; oports_list[i]; ++i) {
-	iomenu_add_port(oports_menu, oports_list[i]);
+	iomenu_add_item(oports_menu,
+			iomenu_port_item(oports_list[i]));
     }
 
     gtk_widget_show(iports_menu);
