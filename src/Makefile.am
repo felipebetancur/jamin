@@ -50,7 +50,7 @@ state.h: mk-stateh.pl state-vars.txt
 	@echo "WARNING: Rebuilding state.h"
 	./mk-stateh.pl
 
-EXTRA_DIST = mk-stateh.pl
+EXTRA_DIST = mk-stateh.pl jamin.1
 
 quickly:
 	(cd .. && make quickly)
