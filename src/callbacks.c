@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.110 2003/12/11 22:35:15 jdepner Exp $
+ *  $Id: callbacks.c,v 1.111 2003/12/12 18:08:00 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1302,38 +1302,6 @@ on_redo1_activate                       (GtkMenuItem     *menuitem,
 {
   s_redo();
 }
-
-void
-on_cut1_activate                       (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-
-}
-
-
-void
-on_copy1_activate                      (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-
-}
-
-
-void
-on_paste1_activate                     (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-
-}
-
-
-void
-on_delete1_activate                    (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-
-}
-
 
 void
 on_about1_activate                     (GtkMenuItem     *menuitem,
