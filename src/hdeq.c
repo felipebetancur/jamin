@@ -1091,45 +1091,6 @@ void hdeq_curve_motion (GdkEventMotion *event)
         gtk_label_set_text (l_EQ_curve_lbl, coords);
 
 
-        /*  Set the compressor label colors based on which portion of the EQ
-            the cursor is in.  */
-
-        gtk_widget_modify_fg ((GtkWidget *) l_comp_lbl[0], GTK_STATE_NORMAL, 
-                              &comp_color[3]);
-        gtk_widget_modify_fg ((GtkWidget *) l_c_curve_lbl[0], GTK_STATE_NORMAL, 
-                              &comp_color[3]);
-        gtk_widget_modify_fg ((GtkWidget *) l_comp_lbl[1], GTK_STATE_NORMAL, 
-                              &comp_color[3]);
-        gtk_widget_modify_fg ((GtkWidget *) l_c_curve_lbl[1], GTK_STATE_NORMAL, 
-                              &comp_color[3]);
-        gtk_widget_modify_fg ((GtkWidget *) l_comp_lbl[2], GTK_STATE_NORMAL, 
-                              &comp_color[3]);
-        gtk_widget_modify_fg ((GtkWidget *) l_c_curve_lbl[2], 
-                              GTK_STATE_NORMAL, &comp_color[3]);
-
-        if (freq <= xover_fa)
-          {
-            gtk_widget_modify_fg ((GtkWidget *) l_comp_lbl[0], 
-                                  GTK_STATE_NORMAL, &comp_color[0]);
-            gtk_widget_modify_fg ((GtkWidget *) l_c_curve_lbl[0], 
-                                  GTK_STATE_NORMAL, &comp_color[0]);
-          }
-        else if (freq >= xover_fb)
-          {
-            gtk_widget_modify_fg ((GtkWidget *) l_comp_lbl[2], 
-                                  GTK_STATE_NORMAL, &comp_color[2]);
-            gtk_widget_modify_fg ((GtkWidget *) l_c_curve_lbl[2], 
-                                  GTK_STATE_NORMAL, &comp_color[2]);
-          }
-        else
-          {
-            gtk_widget_modify_fg ((GtkWidget *) l_comp_lbl[1], 
-                                  GTK_STATE_NORMAL, &comp_color[1]);
-            gtk_widget_modify_fg ((GtkWidget *) l_c_curve_lbl[1], 
-                                  GTK_STATE_NORMAL, &comp_color[1]);
-          }
-
-
         /*  If we're in the midst of drawing the curve...  */
 
         if (EQ_drawing)
