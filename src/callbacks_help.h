@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.13 2003/12/09 22:25:22 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.14 2003/12/11 22:35:16 jdepner Exp $
  */
 
 char general_help[] = {
@@ -155,11 +155,6 @@ signal for each of the three bands.  The bands are defined by the crossover \
 that can be set using the crossover faders or the crossover bars in the \
 HDEQ.  More negative values decrease the 'width' while positive values \
 increase the 'width'.\n"
-};
-
-
-char gain_meter_help[] = {
-"    Gain meter help not yet available.\n"
 };
 
 

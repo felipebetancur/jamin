@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.109 2003/12/10 18:33:17 jdepner Exp $
+ *  $Id: callbacks.c,v 1.110 2003/12/11 22:35:15 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1049,18 +1049,6 @@ on_stereo_eventbox_enter_notify_event  (GtkWidget       *widget,
                                         gpointer         user_data)
 {
     help_ptr = stereo_help;
-
-    return FALSE;
-}
-
-
-gboolean
-on_gain_meter_eventbox_enter_notify_event
-                                        (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data)
-{
-    help_ptr = gain_meter_help;
 
     return FALSE;
 }

@@ -577,12 +577,6 @@ on_stereo_eventbox_enter_notify_event  (GtkWidget       *widget,
                                         gpointer         user_data);
 
 gboolean
-on_gain_meter_eventbox_enter_notify_event
-                                        (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data);
-
-gboolean
 on_limiter_eventbox_enter_notify_event (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data);
