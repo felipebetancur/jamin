@@ -122,7 +122,7 @@ style "button"
 
 style "main_button" = "button"
 {
-  font = "-adobe-helvetica-medium-r-normal--*-100-*-*-*-*-*-*"
+  font = "-*-helvetica-medium-r-normal--*-100-*-*-*-*-*-*"
   bg[PRELIGHT] = { 1.0, 0, 0 } 	# red
   bg[NORMAL] = { 1.0, 0, 0 }
   bg[ACTIVE] = { 1.0, 0, 0 }
@@ -186,7 +186,7 @@ style "sys_label" = "radio_button"
 
 style "ruler"
 {
-  font = "-adobe-helvetica-medium-r-normal--*-80-*-*-*-*-*-*"
+  font = "-*-helvetica-medium-r-normal--*-80-*-*-*-*-*-*"
 }
 
 # pixmap_path "~/.pixmaps"
