@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.50 2004/05/05 22:33:10 theno23 Exp $
+ *  $Id: main.c,v 1.51 2004/05/07 15:49:59 theno23 Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
     /* Create OSC server */
 
 #ifdef HAVE_OSC
-    st = lo_server_thread_new("7770", error);
+    st = lo_server_thread_new("4444", error);
     lo_server_thread_add_method(st, "/scene", "i", scene_handler, NULL);
     lo_server_thread_start(st);
 #endif

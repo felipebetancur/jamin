@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = src pixmaps examples po
+SUBDIRS = src pixmaps examples controller po
 
 EXTRA_DIST = \
 	autogen.sh \

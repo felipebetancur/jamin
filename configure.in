@@ -114,6 +114,7 @@ src/Makefile
 src/jamin.1
 pixmaps/Makefile
 examples/Makefile
+controller/Makefile
 examples/jamin_ui
 po/Makefile.in
 ])
