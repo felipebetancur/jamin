@@ -145,12 +145,36 @@ static inline void bp_set_params(biquad *f, bq_t fc, bq_t bw, bq_t fs)
         f->a2 = a0r * (alpha - 1.0);
 }
 
+/* Butterworth biquad, from
+ * http://musicdsp.org/showArchiveComment.php?ArchiveID=38 */
+static inline void blp_set_params(biquad *f, bq_t fc, bq_t r, bq_t fs)
+{
+	const bq_t c = 1.0 / tan(M_PI * fc / fs);
+
+	f->b0 = 1.0 / (1.0 + r * c + c * c);
+	f->b1 = 2.0 * f->b0;
+	f->b2 = f->b0;
+	f->a1 = -2.0 * ( 1.0 - c*c) * f->b0;
+	f->a2 = -(1.0 - r * c + c * c) * f->b0;
+}
+
+static inline void bhp_set_params(biquad *f, bq_t fc, bq_t r, bq_t fs)
+{
+	const bq_t c = tan(M_PI * fc / fs);
+
+	f->b0 = 1.0 / (1.0 + r * c + c * c);
+	f->b1 = -2.0 * f->b0;
+	f->b2 = f->b0;
+	f->a1 = -2.0 * (c*c - 1.0) * f->b0;
+	f->a2 = -(1.0 - r * c + c * c) * f->b0;
+}
+
 static inline bq_t biquad_run(biquad *f, const bq_t x) {
 	bq_t y;
 
 	y = f->b0 * x + f->b1 * f->x1 + f->b2 * f->x2
 		      + f->a1 * f->y1 + f->a2 * f->y2;
-	denormal_kill(&y);
+	//denormal_kill(&y);
 	f->x2 = f->x1;
 	f->x1 = x;
 	f->y2 = f->y1;
@@ -165,7 +189,7 @@ static inline bq_t biquad_run_fb(biquad *f, bq_t x, const bq_t fb) {
 	x += f->y1 * fb * 0.98;
 	y = f->b0 * x + f->b1 * f->x1 + f->b2 * f->x2
 		      + f->a1 * f->y1 + f->a2 * f->y2;
-	denormal_kill(&y);
+	//denormal_kill(&y);
 	f->x2 = f->x1;
 	f->x1 = x;
 	f->y2 = f->y1;

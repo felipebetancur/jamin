@@ -1,3 +1,11 @@
+2004-10-22  Steve Harris  <steve@plugin.org.uk>
+
+	* src/process.c: Abandon using RBJ biquads and the crazy inverting
+	  scheme, it was too complicated. Now using pairs of Butterworth
+	  HP/LP's in a traditional crossover network. Seems to sound good.
+	  The use of IIR xovers is controled by the variable iir_xover, defined
+	  in process.c.
+
 2004-10-21  Steve Harris  <steve@plugin.org.uk>
 
 	  The code now uses IIR biquads to do the corssover. Theres a lopass

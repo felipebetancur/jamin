@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.60 2004/10/21 21:09:06 theno23 Exp $
+ *  $Id: process.c,v 1.61 2004/10/22 10:15:45 theno23 Exp $
  */
 
 #include <math.h>
@@ -32,6 +32,8 @@
 #include "io.h"
 #include "db.h"
 #include "denormal-kill.h"
+
+#define BIQUAD_TYPE double
 #include "biquad.h"
 
 #define BUF_MASK   (BINS-1)		/* BINS is a power of two */
@@ -53,6 +55,8 @@ lim_settings limiter;
 float eq_coefs[BINS]; /* Linear gain of each FFT bin */
 float lim_peak[2];
 
+static int iir_xover = 0;
+
 float in_peak[NCHANNELS], out_peak[NCHANNELS];
 
 static float band_f[BANDS];
@@ -62,7 +66,7 @@ static int bands[BINS];
 static float in_buf[NCHANNELS][BINS];
 static float mid_buf[NCHANNELS][BINS];
 static float out_buf[NCHANNELS][XO_NBANDS][BINS];
-static biquad xo_filt[NCHANNELS][XO_NBANDS-1];
+static biquad xo_filt[NCHANNELS][(XO_NBANDS-1) * 2];
 static float window[BINS];
 static fft_data *real;
 static fft_data *comp;
@@ -198,6 +202,9 @@ void process_init(float fs)
 	latcorbuf[i] = calloc(latcorbuf_len, sizeof(float));
 	latcorbuf_postcomp[i] = calloc(latcorbuf_len, sizeof(float));
     }
+
+    /* Clear the corssover filters state */
+    memset(xo_filt, 0, sizeof(xo_filt));
 }
 
 void run_eq(unsigned int port, unsigned int in_ptr)
@@ -343,37 +350,6 @@ void run_eq_iir(unsigned int port, unsigned int in_ptr)
     for (j = 0; j < BINS; j++) {
 	mid_buf[port][(in_ptr + j) & BUF_MASK] += real[j] * fix * window[j];
     }
-
-    lp_set_params(&xo_filt[port][0], xover_fa, 0.25, 44100.0f);
-    lp_set_params(&xo_filt[port][1], xover_fb - 20.0f, 0.25, 44100.0f);
-
-//XXX need to fill other bands
-    for (j = 0; j < BINS; j++) {
-	const float x = mid_buf[port][(in_ptr + j) & BUF_MASK];
-	const float a = biquad_run(&xo_filt[port][0], x);
-	const float b = biquad_run(&xo_filt[port][1], x - a);
-	const float c = (x - a) - b;
-
-	out_buf[port][XO_LOW][(in_ptr + j) & BUF_MASK] = a;
-	out_buf[port][XO_MID][(in_ptr + j) & BUF_MASK] = b;
-	out_buf[port][XO_HIGH][(in_ptr + j) & BUF_MASK] = c;
-    }
-
-    if (xo_band_action[XO_LOW] == MUTE) {
-	for (j = 0; j < BINS; j++) {
-	    out_buf[port][XO_LOW][(in_ptr + j) & BUF_MASK] = 0.0f;
-	}
-    }
-    if (xo_band_action[XO_MID] == MUTE) {
-	for (j = 0; j < BINS; j++) {
-	    out_buf[port][XO_MID][(in_ptr + j) & BUF_MASK] = 0.0f;
-	}
-    }
-    if (xo_band_action[XO_HIGH] == MUTE) {
-	for (j = 0; j < BINS; j++) {
-	    out_buf[port][XO_HIGH][(in_ptr + j) & BUF_MASK] = 0.0f;
-	}
-    }
 }
 
 #define EPSILON 0.0000001f		/* small positive number */
@@ -405,6 +381,20 @@ int process_signal(jack_nframes_t nframes,
 
     /* Crossfade parameter values from current to target */
     s_crossfade(nframes);
+
+    if (iir_xover) {
+	for (port = 0; port < nchannels; port++) {
+//XXX sample rate is const
+	    blp_set_params(&xo_filt[port][0], xover_fa, 1.4f, 44100.0f);
+	    bhp_set_params(&xo_filt[port][1], xover_fa, 1.4f, 44100.0f);
+	    blp_set_params(&xo_filt[port][2], xover_fb, 1.4f, 44100.0f);
+	    bhp_set_params(&xo_filt[port][3], xover_fb, 1.4f, 44100.0f);
+	    //lp_set_params(&xo_filt[port][0], xover_fa, 0.1f, 44100.0f);
+	    //hp_set_params(&xo_filt[port][1], xover_fa, 1.0f, 44100.0f);
+	    //lp_set_params(&xo_filt[port][2], xover_fb, 1.0f, 44100.0f);
+	    //hp_set_params(&xo_filt[port][3], xover_fb, 1.0f, 44100.0f);
+	}
+    }
 
     for (pos = 0; pos < nframes; pos++) {
 	const unsigned int op = (in_ptr - latency) & BUF_MASK;
@@ -439,14 +429,25 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 		in_peak[port] = amp;
 	    }
 
-	    out_tmp[port][XO_LOW][pos] = out_buf[port][XO_LOW][op];
-	    out_buf[port][XO_LOW][op] = 0.0f;
-	    out_tmp[port][XO_MID][pos] = out_buf[port][XO_MID][op];
-	    out_buf[port][XO_MID][op] = 0.0f;
-	    out_tmp[port][XO_HIGH][pos] = out_buf[port][XO_HIGH][op];
-	    out_buf[port][XO_HIGH][op] = 0.0f;
+	    if (iir_xover) {
+		const float x = mid_buf[port][op];
+		const float a = biquad_run(&xo_filt[port][0], x);
+		const float y = biquad_run(&xo_filt[port][1], x);
+		const float b = biquad_run(&xo_filt[port][2], y);
+		const float c = biquad_run(&xo_filt[port][3], y);
 
-	    mid_buf[port][op] = 0.0f;
+		out_tmp[port][XO_LOW][pos] = a;
+		out_tmp[port][XO_MID][pos] = b;
+		out_tmp[port][XO_HIGH][pos] = c;
+		mid_buf[port][op] = 0.0f;
+	    } else {
+		out_tmp[port][XO_LOW][pos] = out_buf[port][XO_LOW][op];
+		out_buf[port][XO_LOW][op] = 0.0f;
+		out_tmp[port][XO_MID][pos] = out_buf[port][XO_MID][op];
+		out_buf[port][XO_MID][op] = 0.0f;
+		out_tmp[port][XO_HIGH][pos] = out_buf[port][XO_HIGH][op];
+		out_buf[port][XO_HIGH][op] = 0.0f;
+	    }
 	}
 
 	in_ptr = (in_ptr + 1) & BUF_MASK;
@@ -458,13 +459,29 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 		eq_bypass = eq_bypass_pending;
 		limiter_bypass = limiter_bypass_pending;
 
-		//run_eq(CHANNEL_L, in_ptr);
-		//run_eq(CHANNEL_R, in_ptr);
-		run_eq_iir(CHANNEL_L, in_ptr);
-		run_eq_iir(CHANNEL_R, in_ptr);
+		if (iir_xover) {
+		    run_eq_iir(CHANNEL_L, in_ptr);
+		    run_eq_iir(CHANNEL_R, in_ptr);
+		} else {
+		    run_eq(CHANNEL_L, in_ptr);
+		    run_eq(CHANNEL_R, in_ptr);
+		}
 	    }
 	    /* Work out when we can run it again */
 	    n_calc_pt = (in_ptr + dsp_block_size) & BUF_MASK;
+	}
+    }
+
+    /* Handle solo and mute for the IIR crossove case */
+    if (iir_xover) {
+	for (port = 0; port < nchannels; port++) {
+	    for (band = XO_LOW; band < XO_NBANDS; band++) {
+		if (xo_band_action[band] == MUTE) {
+		    for (pos = 0; pos < nframes; pos++) {
+			out_tmp[port][band][pos] = 0.0f;
+		    }
+		}
+	    }
 	}
     }
 
@@ -485,7 +502,7 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	    out[port][pos] =
 		out_tmp[port][XO_LOW][pos] + out_tmp[port][XO_MID][pos] +
 		out_tmp[port][XO_HIGH][pos];
-		/* Keep buffer of compressor oputputs incase we need it for
+		/* Keep buffer of compressor outputs incase we need it for
 		 * limiter bypass */
 		latcorbuf_postcomp[port][(latcorbuf_pos + pos) &
 		    (latcorbuf_len - 1)] = out[port][pos];
@@ -655,9 +672,6 @@ void process_set_ws_boost(float val)
 void process_set_xo_band_action(int band, int action)
 {
     assert(action == ACTIVE || action == MUTE || action == BYPASS);
-
-char *desc[] = {"active", "mute", "bypass", "huh!"};
-printf("B%d -> %d (%s)\n", band, action, desc[action]);
 
     xo_band_action_pending[band] = action;
 }
