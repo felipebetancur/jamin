@@ -1,2 +1,9 @@
-EXTRA_DIST = brushed-steel.png thai-gold-knobs.png thai-gold.png play.xpm stop.xpm
-pkgdatadir = $(datadir)/share/jam
+EXTRA_DIST = brushed-steel.png \
+             thai-gold-knobs.png \
+             thai-gold.png \
+             play.xpm \
+             stop.xpm
+
+pixmap_DATA = $(EXTRA_DIST)
+
+pixmapdir = $(datadir)/jamin

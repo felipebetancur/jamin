@@ -685,9 +685,7 @@ draw_EQ_curve ()
     int            i, x0 = 0, y0 = 0, x1, y1, inc;
     float          x[EQ_BANDS], y[EQ_BANDS];
 
-
     if (!EQ_realized) return;
-
 
     /*  Clear the curve drawing area.  */
 
