@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.35 2004/05/19 23:39:20 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.36 2004/06/06 17:08:09 jdepner Exp $
  */
 
 #include "support.h"
@@ -172,7 +172,10 @@ are, from left to right:\n\n\
     r - compression ratio (N:1)\n\
     K - knee (0.0 [hard] to 1.0 [soft])\n\
     M - makeup gain in db\n\
-    AM - automatic makeup gain computation\n\n\
+    Note that the value label for makeup gain is also the automatic makeup \
+gain button.  Pressing this will cause JAMin to try to approximate the \
+optimum makeup gain for the other settings.  When pressed you cannot \
+manually adjust the makeup gain.\n\
     A full explanation of the use of these parameters is covered in the user \
 manual.\n\
     Compressor controls can be \"ganged\" by clicking on the control label in \
