@@ -260,11 +260,8 @@ create_window1 (void)
   GtkWidget *label244;
   GtkWidget *curve2;
   GtkWidget *label49;
-  GtkWidget *hbox26;
-  GtkWidget *label211;
-  GtkWidget *eventbox48;
-  GtkWidget *drawingarea2;
-  GtkWidget *label212;
+  GtkWidget *handlebox1;
+  GtkWidget *drawingarea4;
   GtkWidget *label78;
   GtkWidget *cross_lbl;
   GtkWidget *table14;
@@ -1745,33 +1742,17 @@ create_window1 (void)
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 2), label49);
   gtk_label_set_justify (GTK_LABEL (label49), GTK_JUSTIFY_LEFT);
 
-  hbox26 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (hbox26, "hbox26");
-  gtk_widget_show (hbox26);
-  gtk_container_add (GTK_CONTAINER (notebook1), hbox26);
+  handlebox1 = gtk_handle_box_new ();
+  gtk_widget_set_name (handlebox1, "handlebox1");
+  gtk_widget_show (handlebox1);
+  gtk_container_add (GTK_CONTAINER (notebook1), handlebox1);
+  gtk_widget_set_size_request (handlebox1, 510, 200);
 
-  label211 = gtk_label_new ("");
-  gtk_widget_set_name (label211, "label211");
-  gtk_widget_show (label211);
-  gtk_box_pack_start (GTK_BOX (hbox26), label211, TRUE, TRUE, 0);
-  gtk_label_set_justify (GTK_LABEL (label211), GTK_JUSTIFY_LEFT);
-
-  eventbox48 = gtk_event_box_new ();
-  gtk_widget_set_name (eventbox48, "eventbox48");
-  gtk_widget_show (eventbox48);
-  gtk_box_pack_start (GTK_BOX (hbox26), eventbox48, TRUE, TRUE, 0);
-
-  drawingarea2 = gtk_drawing_area_new ();
-  gtk_widget_set_name (drawingarea2, "drawingarea2");
-  gtk_widget_show (drawingarea2);
-  gtk_container_add (GTK_CONTAINER (eventbox48), drawingarea2);
-  gtk_widget_set_size_request (drawingarea2, 520, 0);
-
-  label212 = gtk_label_new ("");
-  gtk_widget_set_name (label212, "label212");
-  gtk_widget_show (label212);
-  gtk_box_pack_start (GTK_BOX (hbox26), label212, TRUE, TRUE, 0);
-  gtk_label_set_justify (GTK_LABEL (label212), GTK_JUSTIFY_LEFT);
+  drawingarea4 = gtk_drawing_area_new ();
+  gtk_widget_set_name (drawingarea4, "drawingarea4");
+  gtk_widget_show (drawingarea4);
+  gtk_container_add (GTK_CONTAINER (handlebox1), drawingarea4);
+  gtk_widget_set_size_request (drawingarea4, 500, 200);
 
   label78 = gtk_label_new (_("Spectrum"));
   gtk_widget_set_name (label78, "label78");
@@ -2403,7 +2384,7 @@ create_window1 (void)
   frame11 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame11, "frame11");
   gtk_widget_show (frame11);
-  gtk_box_pack_start (GTK_BOX (hbox28), frame11, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox28), frame11, FALSE, TRUE, 0);
   gtk_frame_set_label_align (GTK_FRAME (frame11), 0.5, 0.5);
 
   drawingarea3 = gtk_drawing_area_new ();
@@ -2814,11 +2795,8 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, label244, "label244");
   GLADE_HOOKUP_OBJECT (window1, curve2, "curve2");
   GLADE_HOOKUP_OBJECT (window1, label49, "label49");
-  GLADE_HOOKUP_OBJECT (window1, hbox26, "hbox26");
-  GLADE_HOOKUP_OBJECT (window1, label211, "label211");
-  GLADE_HOOKUP_OBJECT (window1, eventbox48, "eventbox48");
-  GLADE_HOOKUP_OBJECT (window1, drawingarea2, "drawingarea2");
-  GLADE_HOOKUP_OBJECT (window1, label212, "label212");
+  GLADE_HOOKUP_OBJECT (window1, handlebox1, "handlebox1");
+  GLADE_HOOKUP_OBJECT (window1, drawingarea4, "drawingarea4");
   GLADE_HOOKUP_OBJECT (window1, label78, "label78");
   GLADE_HOOKUP_OBJECT (window1, cross_lbl, "cross_lbl");
   GLADE_HOOKUP_OBJECT (window1, table14, "table14");
