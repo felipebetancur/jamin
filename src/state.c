@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.38 2004/01/10 10:27:30 theno23 Exp $
+ *  $Id: state.c,v 1.39 2004/01/10 13:09:19 theno23 Exp $
  */
 
 #include <stdio.h>
@@ -32,6 +32,9 @@
 #include "process.h"
 #include "scenes.h"
 #include "hdeq.h"
+
+/* A scene value to indicate that loading failed */
+#define LOAD_ERROR -2
 
 /* The smallest value that counts as a change, should be approximately
  * epsilon+delta */
@@ -437,8 +440,14 @@ void s_save_session (const char *fname)
     xmlFreeDoc(doc);
 }
 
+/* declare SAX handlers */
 void s_startElement(void *user_data, const xmlChar *name,
                     const xmlChar **attrs);
+
+static void s_warning(void *user_data, const char *msg, ...);
+
+static void s_error(void *user_data, const char *msg, ...);
+
 
 void s_load_session_from_ui (GtkWidget *w, gpointer user_data)
 {
@@ -483,7 +492,16 @@ void s_load_session (const char *fname)
 
     handler = calloc(1, sizeof(xmlSAXHandler));
     handler->startElement = s_startElement;
+    handler->warning = s_warning;
+    handler->error = s_error;
+
     xmlSAXUserParseFile(handler, &scene, filename);
+
+    if (scene == LOAD_ERROR) {
+	fprintf(stderr, "Loading failed\n");
+	return;
+    }
+
     s_history_add(g_strdup_printf("Load %s", filename));
     last_changed = S_LOAD;
     free(handler);
@@ -598,6 +616,31 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
     if (!found) {
 	fprintf(stderr, "Unknown symbol: %s\n", *p);
     }
+}
+
+static void s_warning(void *user_data, const char *msg, ...)
+{
+    va_list args;
+    char *fmt;
+
+    va_start(args, msg);
+    fmt = g_strdup_printf("XML parser warning: %s", msg);
+    vfprintf(stderr, fmt, args);
+    free(fmt);
+    va_end(args);
+}
+
+static void s_error(void *user_data, const char *msg, ...)
+{
+    va_list args;
+    char *fmt;
+
+    va_start(args, msg);
+    fmt = g_strdup_printf("XML parser error: %s", msg);
+    vfprintf(stderr, fmt, args);
+    free(fmt);
+    va_end(args);
+    *((int *)user_data) = LOAD_ERROR;
 }
 
 void s_crossfade(const int nframes)
