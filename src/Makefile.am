@@ -10,27 +10,27 @@ jamin_LDFLAGS = -lm
 
 bin_PROGRAMS = jamin
 
-# EXTRA_DIST = *.h
-
 jamin_SOURCES = \
-	main.c main.h \
-	support.c support.h \
-	interface.c interface.h \
 	callbacks.c callbacks.h \
-	geq.c geq.h \
-	io.c io.h \
-	spline.c \
-	process.c process.h \
-	plugin.c plugin.h \
 	compressor.h \
-	limiter.h \
-	intrim.c intrim.h \
-	limiter-ui.c limiter-ui.h \
 	compressor-ui.c compressor-ui.h \
+	db.h \
+	geq.c geq.h \
 	gtkmeter.c gtkmeter.h \
 	gtkmeterscale.c gtkmeterscale.h \
+	interface.c interface.h \
+	intrim.c intrim.h \
+	io.c io.h \
+	limiter.h \
+	limiter-ui.c limiter-ui.h \
+	main.c main.h \
+	plugin.c plugin.h \
+	process.c process.h \
 	spectrum.c spectrum.h \
-	state.c state.h
+	spline.c \
+	state.c state.h \
+	stereo.c stereo.h \
+	support.c support.h
 
 jamin_LDADD = @PACKAGE_LIBS@
 

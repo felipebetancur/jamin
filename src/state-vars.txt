@@ -9,5 +9,7 @@ comp-thresh(3)	Compressor threshold
 comp-ratio(3)	Compressor ratio
 comp-knee(3)	Compressor knee
 comp-makeup(3)	Compressor makeup gain
+stereo-width(3)	Stereo width
+lim-input	Limiter input gain
 lim-time	Limiter time
 lim-limit	Limiter level

@@ -1689,3 +1689,76 @@ on_release_val_label_realize           (GtkWidget       *widget,
 	gtk_widget_size_request(widget, &size);
 	gtk_widget_set_usize(widget, size.width, -1);
 }
+
+void
+on_hscale2_value_changed               (GtkRange        *range,
+                                        gpointer         user_data)
+{
+	s_set_value_ui(S_STEREO_WIDTH(0),
+			gtk_range_get_adjustment(GTK_RANGE(range))->value);
+}
+
+
+void
+on_hscale2_realize                     (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+	s_set_adjustment(S_STEREO_WIDTH(0),
+			gtk_range_get_adjustment(GTK_RANGE(widget)));
+}
+
+
+void
+on_hscale3_value_changed               (GtkRange        *range,
+                                        gpointer         user_data)
+{
+	s_set_value_ui(S_STEREO_WIDTH(1),
+			gtk_range_get_adjustment(GTK_RANGE(range))->value);
+
+}
+
+
+void
+on_hscale3_realize                     (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+	s_set_adjustment(S_STEREO_WIDTH(1),
+			gtk_range_get_adjustment(GTK_RANGE(widget)));
+}
+
+
+void
+on_hscale4_value_changed               (GtkRange        *range,
+                                        gpointer         user_data)
+{
+	s_set_value_ui(S_STEREO_WIDTH(2),
+			gtk_range_get_adjustment(GTK_RANGE(range))->value);
+}
+
+
+void
+on_hscale4_realize                     (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+	s_set_adjustment(S_STEREO_WIDTH(2),
+			gtk_range_get_adjustment(GTK_RANGE(widget)));
+}
+
+
+void
+on_lim_input_hscale_value_changed      (GtkRange        *range,
+                                        gpointer         user_data)
+{
+	s_set_value_ui(S_LIM_INPUT,
+			gtk_range_get_adjustment(GTK_RANGE(range))->value);
+}
+
+
+void
+on_lim_input_hscale_realize            (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+	s_set_adjustment(S_LIM_INPUT,
+			gtk_range_get_adjustment(GTK_RANGE(widget)));
+}
+

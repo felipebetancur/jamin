@@ -49,15 +49,15 @@ void bind_intrim()
 
 void intrim_cb(int id, float value)
 {
-    in_trim_gain = powf(10.0f, value * 0.05f);
+    in_trim_gain = db2lin(value);
     in_gain[0] = in_trim_gain * in_pan_gain[0];
     in_gain[1] = in_trim_gain * in_pan_gain[1];
 }
 
 void inpan_cb(int id, float value)
 {
-    in_pan_gain[0] = powf(10.0f, value * -0.025f);
-    in_pan_gain[1] = powf(10.0f, value * 0.025f);
+    in_pan_gain[0] = db2lin(value * -0.5f);
+    in_pan_gain[1] = db2lin(value * 0.5f);
     in_gain[0] = in_trim_gain * in_pan_gain[0];
     in_gain[1] = in_trim_gain * in_pan_gain[1];
     update_pan_label(value);

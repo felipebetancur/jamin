@@ -18,6 +18,8 @@
 
 /* number of input and output channels */
 #define NCHANNELS 2
+#define CHANNEL_L 0
+#define CHANNEL_R 1
 
 /* crossover bands */
 #define XO_LOW  0
@@ -41,6 +43,10 @@ extern int global_bypass;
 float bin_peak_read_and_clear(int bin);
 
 void process_set_spec_mode(int mode);
+
+void process_set_stereo_width(int xo_band, float width);
+
+void process_set_limiter_input_gain(float gain);
 
 void process_init(float fs, int buffer_size);
 

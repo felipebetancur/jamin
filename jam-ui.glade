@@ -3984,43 +3984,1774 @@
 			  <property name="spacing">0</property>
 
 			  <child>
-			    <widget class="GtkFrame" id="frame2">
-			      <property name="width_request">610</property>
-			      <property name="height_request">230</property>
+			    <widget class="GtkNotebook" id="notebook3">
 			      <property name="visible">True</property>
-			      <property name="label_xalign">0</property>
-			      <property name="label_yalign">0.5</property>
-			      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+			      <property name="can_focus">True</property>
+			      <property name="show_tabs">True</property>
+			      <property name="show_border">True</property>
+			      <property name="tab_pos">GTK_POS_TOP</property>
+			      <property name="scrollable">False</property>
+			      <property name="tab_hborder">2</property>
+			      <property name="tab_vborder">2</property>
+			      <property name="enable_popup">False</property>
 
 			      <child>
-				<widget class="GtkVBox" id="vbox25">
+				<widget class="GtkHBox" id="hbox1">
 				  <property name="width_request">605</property>
-				  <property name="height_request">230</property>
+				  <property name="height_request">155</property>
+				  <property name="visible">True</property>
+				  <property name="homogeneous">True</property>
+				  <property name="spacing">13</property>
+
+				  <child>
+				    <widget class="GtkEventBox" id="low_comp_event_box">
+				      <property name="visible">True</property>
+				      <signal name="enter_notify_event" handler="on_low_comp_event_box_enter_notify_event" last_modification_time="Fri, 25 Apr 2003 16:57:56 GMT"/>
+				      <signal name="leave_notify_event" handler="on_low_comp_event_box_leave_notify_event" last_modification_time="Fri, 25 Apr 2003 16:58:01 GMT"/>
+
+				      <child>
+					<widget class="GtkAlignment" id="alignment7">
+					  <property name="visible">True</property>
+					  <property name="xalign">0.5</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xscale">1</property>
+					  <property name="yscale">1</property>
+
+					  <child>
+					    <widget class="GtkFrame" id="frame7">
+					      <property name="width_request">215</property>
+					      <property name="height_request">155</property>
+					      <property name="visible">True</property>
+					      <property name="label_xalign">0</property>
+					      <property name="label_yalign">0.5</property>
+					      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+
+					      <child>
+						<widget class="GtkVBox" id="low_comp">
+						  <property name="width_request">205</property>
+						  <property name="height_request">139</property>
+						  <property name="visible">True</property>
+						  <property name="homogeneous">False</property>
+						  <property name="spacing">1</property>
+						  <signal name="realize" handler="on_low_comp_realize" last_modification_time="Sat, 12 Apr 2003 22:23:45 GMT"/>
+
+						  <child>
+						    <widget class="GtkVBox" id="vbox30">
+						      <property name="visible">True</property>
+						      <property name="homogeneous">False</property>
+						      <property name="spacing">0</property>
+
+						      <child>
+							<widget class="GtkTable" id="table8">
+							  <property name="visible">True</property>
+							  <property name="n_rows">2</property>
+							  <property name="n_columns">5</property>
+							  <property name="homogeneous">False</property>
+							  <property name="row_spacing">0</property>
+							  <property name="column_spacing">0</property>
+
+							  <child>
+							    <widget class="GtkLabel" id="label71">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">Release</property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">1</property>
+							      <property name="right_attach">2</property>
+							      <property name="top_attach">0</property>
+							      <property name="bottom_attach">1</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options"></property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label72">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">Thresh</property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">2</property>
+							      <property name="right_attach">3</property>
+							      <property name="top_attach">0</property>
+							      <property name="bottom_attach">1</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options"></property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label73">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">Ratio</property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">3</property>
+							      <property name="right_attach">4</property>
+							      <property name="top_attach">0</property>
+							      <property name="bottom_attach">1</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options"></property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label70">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">Attack</property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">0</property>
+							      <property name="right_attach">1</property>
+							      <property name="top_attach">0</property>
+							      <property name="bottom_attach">1</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options"></property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label74">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">Makeup</property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">4</property>
+							      <property name="right_attach">5</property>
+							      <property name="top_attach">0</property>
+							      <property name="bottom_attach">1</property>
+							      <property name="y_options"></property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkVScale" id="comp_th_1">
+							      <property name="visible">True</property>
+							      <property name="can_focus">True</property>
+							      <property name="draw_value">True</property>
+							      <property name="value_pos">GTK_POS_TOP</property>
+							      <property name="digits">1</property>
+							      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+							      <property name="inverted">True</property>
+							      <property name="adjustment">0 -30 0 0 0 0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">2</property>
+							      <property name="right_attach">3</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkVScale" id="comp_re_1">
+							      <property name="visible">True</property>
+							      <property name="can_focus">True</property>
+							      <property name="draw_value">True</property>
+							      <property name="value_pos">GTK_POS_TOP</property>
+							      <property name="digits">1</property>
+							      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+							      <property name="inverted">True</property>
+							      <property name="adjustment">10 10 800 0 0 0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">1</property>
+							      <property name="right_attach">2</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkVScale" id="comp_at_1">
+							      <property name="visible">True</property>
+							      <property name="can_focus">True</property>
+							      <property name="draw_value">True</property>
+							      <property name="value_pos">GTK_POS_TOP</property>
+							      <property name="digits">1</property>
+							      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+							      <property name="inverted">True</property>
+							      <property name="adjustment">10 10 400 0 0 0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">0</property>
+							      <property name="right_attach">1</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkVBox" id="vbox31">
+							      <property name="width_request">29</property>
+							      <property name="height_request">120</property>
+							      <property name="visible">True</property>
+							      <property name="homogeneous">False</property>
+							      <property name="spacing">0</property>
+
+							      <child>
+								<widget class="GtkVScale" id="comp_ra_1">
+								  <property name="width_request">20</property>
+								  <property name="height_request">53</property>
+								  <property name="visible">True</property>
+								  <property name="can_focus">True</property>
+								  <property name="draw_value">True</property>
+								  <property name="value_pos">GTK_POS_TOP</property>
+								  <property name="digits">1</property>
+								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+								  <property name="inverted">True</property>
+								  <property name="adjustment">1 1 20 0 0 0</property>
+								</widget>
+								<packing>
+								  <property name="padding">0</property>
+								  <property name="expand">True</property>
+								  <property name="fill">True</property>
+								</packing>
+							      </child>
+
+							      <child>
+								<widget class="GtkLabel" id="low_knee_lbl">
+								  <property name="width_request">29</property>
+								  <property name="height_request">14</property>
+								  <property name="visible">True</property>
+								  <property name="label" translatable="yes">Knee</property>
+								  <property name="use_underline">False</property>
+								  <property name="use_markup">False</property>
+								  <property name="justify">GTK_JUSTIFY_LEFT</property>
+								  <property name="wrap">False</property>
+								  <property name="selectable">False</property>
+								  <property name="xalign">0.5</property>
+								  <property name="yalign">0.5</property>
+								  <property name="xpad">0</property>
+								  <property name="ypad">0</property>
+								  <signal name="realize" handler="on_low_knee_lbl_realize" last_modification_time="Mon, 21 Apr 2003 00:04:45 GMT"/>
+								</widget>
+								<packing>
+								  <property name="padding">0</property>
+								  <property name="expand">False</property>
+								  <property name="fill">False</property>
+								</packing>
+							      </child>
+
+							      <child>
+								<widget class="GtkVScale" id="comp_kn_1">
+								  <property name="width_request">20</property>
+								  <property name="height_request">53</property>
+								  <property name="visible">True</property>
+								  <property name="can_focus">True</property>
+								  <property name="draw_value">True</property>
+								  <property name="value_pos">GTK_POS_TOP</property>
+								  <property name="digits">1</property>
+								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+								  <property name="inverted">True</property>
+								  <property name="adjustment">0 0 1 0 0 0</property>
+								  <signal name="value_changed" handler="on_comp_kn_1_value_changed" last_modification_time="Mon, 21 Apr 2003 00:00:07 GMT"/>
+								</widget>
+								<packing>
+								  <property name="padding">0</property>
+								  <property name="expand">True</property>
+								  <property name="fill">True</property>
+								</packing>
+							      </child>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">3</property>
+							      <property name="right_attach">4</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options">fill</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkVBox" id="vbox123">
+							      <property name="visible">True</property>
+							      <property name="homogeneous">False</property>
+							      <property name="spacing">0</property>
+
+							      <child>
+								<widget class="GtkVScale" id="comp_ma_1">
+								  <property name="visible">True</property>
+								  <property name="can_focus">True</property>
+								  <property name="draw_value">True</property>
+								  <property name="value_pos">GTK_POS_TOP</property>
+								  <property name="digits">1</property>
+								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+								  <property name="inverted">True</property>
+								  <property name="adjustment">0 0 30 0 0 0</property>
+								</widget>
+								<packing>
+								  <property name="padding">0</property>
+								  <property name="expand">True</property>
+								  <property name="fill">True</property>
+								</packing>
+							      </child>
+
+							      <child>
+								<widget class="GtkToggleButton" id="autoutton1">
+								  <property name="visible">True</property>
+								  <property name="can_focus">True</property>
+								  <property name="label" translatable="yes">auto</property>
+								  <property name="use_underline">True</property>
+								  <property name="relief">GTK_RELIEF_NORMAL</property>
+								  <property name="active">False</property>
+								  <property name="inconsistent">False</property>
+								  <signal name="toggled" handler="on_autoutton1_toggled" last_modification_time="Sat, 26 Apr 2003 13:27:05 GMT"/>
+								</widget>
+								<packing>
+								  <property name="padding">0</property>
+								  <property name="expand">False</property>
+								  <property name="fill">False</property>
+								</packing>
+							      </child>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">4</property>
+							      <property name="right_attach">5</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options">fill</property>
+							    </packing>
+							  </child>
+							</widget>
+							<packing>
+							  <property name="padding">0</property>
+							  <property name="expand">True</property>
+							  <property name="fill">True</property>
+							</packing>
+						      </child>
+						    </widget>
+						    <packing>
+						      <property name="padding">0</property>
+						      <property name="expand">True</property>
+						      <property name="fill">True</property>
+						    </packing>
+						  </child>
+
+						  <child>
+						    <widget class="GtkTable" id="table9">
+						      <property name="visible">True</property>
+						      <property name="n_rows">3</property>
+						      <property name="n_columns">2</property>
+						      <property name="homogeneous">False</property>
+						      <property name="row_spacing">1</property>
+						      <property name="column_spacing">0</property>
+
+						      <child>
+							<widget class="GtkLabel" id="label76">
+							  <property name="width_request">31</property>
+							  <property name="height_request">14</property>
+							  <property name="visible">True</property>
+							  <property name="label" translatable="yes">Level</property>
+							  <property name="use_underline">False</property>
+							  <property name="use_markup">False</property>
+							  <property name="justify">GTK_JUSTIFY_LEFT</property>
+							  <property name="wrap">False</property>
+							  <property name="selectable">False</property>
+							  <property name="xalign">0</property>
+							  <property name="yalign">0.5</property>
+							  <property name="xpad">0</property>
+							  <property name="ypad">0</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">0</property>
+							  <property name="right_attach">1</property>
+							  <property name="top_attach">0</property>
+							  <property name="bottom_attach">1</property>
+							  <property name="x_padding">2</property>
+							  <property name="x_options">fill</property>
+							  <property name="y_options"></property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="GtkLabel" id="label77">
+							  <property name="width_request">26</property>
+							  <property name="height_request">14</property>
+							  <property name="visible">True</property>
+							  <property name="label" translatable="yes">Gain</property>
+							  <property name="use_underline">False</property>
+							  <property name="use_markup">False</property>
+							  <property name="justify">GTK_JUSTIFY_LEFT</property>
+							  <property name="wrap">False</property>
+							  <property name="selectable">False</property>
+							  <property name="xalign">0</property>
+							  <property name="yalign">0.5</property>
+							  <property name="xpad">0</property>
+							  <property name="ypad">0</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">0</property>
+							  <property name="right_attach">1</property>
+							  <property name="top_attach">2</property>
+							  <property name="bottom_attach">3</property>
+							  <property name="x_padding">2</property>
+							  <property name="x_options">fill</property>
+							  <property name="y_options"></property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="Custom" id="comp_le_1">
+							  <property name="height_request">12</property>
+							  <property name="visible">True</property>
+							  <property name="creation_function">make_meter</property>
+							  <property name="string1">right</property>
+							  <property name="int1">-40</property>
+							  <property name="int2">0</property>
+							  <property name="last_modification_time">Sat, 26 Apr 2003 13:46:53 GMT</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">1</property>
+							  <property name="right_attach">2</property>
+							  <property name="top_attach">0</property>
+							  <property name="bottom_attach">1</property>
+							  <property name="y_options">fill</property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="Custom" id="comp_ga_1">
+							  <property name="height_request">12</property>
+							  <property name="visible">True</property>
+							  <property name="creation_function">make_meter</property>
+							  <property name="string1">left</property>
+							  <property name="int1">-40</property>
+							  <property name="int2">0</property>
+							  <property name="last_modification_time">Sat, 26 Apr 2003 13:46:53 GMT</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">1</property>
+							  <property name="right_attach">2</property>
+							  <property name="top_attach">2</property>
+							  <property name="bottom_attach">3</property>
+							  <property name="x_options">fill</property>
+							  <property name="y_options">fill</property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="Custom" id="custom16">
+							  <property name="height_request">10</property>
+							  <property name="visible">True</property>
+							  <property name="creation_function">make_mscale</property>
+							  <property name="string1">top bottom</property>
+							  <property name="int1">-40</property>
+							  <property name="int2">0</property>
+							  <property name="last_modification_time">Sat, 26 Apr 2003 20:02:46 GMT</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">1</property>
+							  <property name="right_attach">2</property>
+							  <property name="top_attach">1</property>
+							  <property name="bottom_attach">2</property>
+							  <property name="x_options">fill</property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="GtkLabel" id="label255">
+							  <property name="visible">True</property>
+							  <property name="label" translatable="yes"></property>
+							  <property name="use_underline">False</property>
+							  <property name="use_markup">False</property>
+							  <property name="justify">GTK_JUSTIFY_LEFT</property>
+							  <property name="wrap">False</property>
+							  <property name="selectable">False</property>
+							  <property name="xalign">0</property>
+							  <property name="yalign">0.5</property>
+							  <property name="xpad">0</property>
+							  <property name="ypad">0</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">0</property>
+							  <property name="right_attach">1</property>
+							  <property name="top_attach">1</property>
+							  <property name="bottom_attach">2</property>
+							  <property name="x_options">fill</property>
+							  <property name="y_options"></property>
+							</packing>
+						      </child>
+						    </widget>
+						    <packing>
+						      <property name="padding">0</property>
+						      <property name="expand">False</property>
+						      <property name="fill">True</property>
+						    </packing>
+						  </child>
+						</widget>
+					      </child>
+
+					      <child>
+						<widget class="GtkLabel" id="label-Low">
+						  <property name="visible">True</property>
+						  <property name="label" translatable="yes">Low : 00000 - 00000</property>
+						  <property name="use_underline">False</property>
+						  <property name="use_markup">False</property>
+						  <property name="justify">GTK_JUSTIFY_LEFT</property>
+						  <property name="wrap">False</property>
+						  <property name="selectable">False</property>
+						  <property name="xalign">0.5</property>
+						  <property name="yalign">0.5</property>
+						  <property name="xpad">0</property>
+						  <property name="ypad">0</property>
+						  <signal name="realize" handler="on_label-Low_realize" last_modification_time="Mon, 14 Apr 2003 22:04:21 GMT"/>
+						</widget>
+						<packing>
+						  <property name="type">label_item</property>
+						</packing>
+					      </child>
+					    </widget>
+					  </child>
+					</widget>
+				      </child>
+				    </widget>
+				    <packing>
+				      <property name="padding">0</property>
+				      <property name="expand">True</property>
+				      <property name="fill">True</property>
+				    </packing>
+				  </child>
+
+				  <child>
+				    <widget class="GtkEventBox" id="mid_comp_event_box">
+				      <property name="visible">True</property>
+				      <signal name="enter_notify_event" handler="on_mid_comp_event_box_enter_notify_event" last_modification_time="Fri, 25 Apr 2003 17:03:03 GMT"/>
+				      <signal name="leave_notify_event" handler="on_mid_comp_event_box_leave_notify_event" last_modification_time="Fri, 25 Apr 2003 17:03:10 GMT"/>
+
+				      <child>
+					<widget class="GtkAlignment" id="alignment9">
+					  <property name="visible">True</property>
+					  <property name="xalign">0.5</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xscale">1</property>
+					  <property name="yscale">1</property>
+
+					  <child>
+					    <widget class="GtkFrame" id="frame8">
+					      <property name="width_request">215</property>
+					      <property name="height_request">155</property>
+					      <property name="visible">True</property>
+					      <property name="label_xalign">0</property>
+					      <property name="label_yalign">0.5</property>
+					      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+
+					      <child>
+						<widget class="GtkVBox" id="mid_comp">
+						  <property name="width_request">205</property>
+						  <property name="height_request">135</property>
+						  <property name="visible">True</property>
+						  <property name="homogeneous">False</property>
+						  <property name="spacing">1</property>
+						  <signal name="realize" handler="on_mid_comp_realize" last_modification_time="Sat, 12 Apr 2003 22:29:18 GMT"/>
+
+						  <child>
+						    <widget class="GtkVBox" id="vbox36">
+						      <property name="visible">True</property>
+						      <property name="homogeneous">False</property>
+						      <property name="spacing">0</property>
+
+						      <child>
+							<widget class="GtkTable" id="table12">
+							  <property name="visible">True</property>
+							  <property name="n_rows">2</property>
+							  <property name="n_columns">5</property>
+							  <property name="homogeneous">False</property>
+							  <property name="row_spacing">0</property>
+							  <property name="column_spacing">0</property>
+
+							  <child>
+							    <widget class="GtkLabel" id="label86">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">Attack</property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">0</property>
+							      <property name="right_attach">1</property>
+							      <property name="top_attach">0</property>
+							      <property name="bottom_attach">1</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options"></property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label87">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">Release</property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">1</property>
+							      <property name="right_attach">2</property>
+							      <property name="top_attach">0</property>
+							      <property name="bottom_attach">1</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options"></property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label88">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">Thresh</property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">2</property>
+							      <property name="right_attach">3</property>
+							      <property name="top_attach">0</property>
+							      <property name="bottom_attach">1</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options"></property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label89">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">Ratio</property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">3</property>
+							      <property name="right_attach">4</property>
+							      <property name="top_attach">0</property>
+							      <property name="bottom_attach">1</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options"></property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkVBox" id="vbox37">
+							      <property name="visible">True</property>
+							      <property name="homogeneous">False</property>
+							      <property name="spacing">0</property>
+
+							      <child>
+								<widget class="GtkVScale" id="comp_ra_2">
+								  <property name="width_request">20</property>
+								  <property name="height_request">53</property>
+								  <property name="visible">True</property>
+								  <property name="can_focus">True</property>
+								  <property name="draw_value">True</property>
+								  <property name="value_pos">GTK_POS_TOP</property>
+								  <property name="digits">1</property>
+								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+								  <property name="inverted">True</property>
+								  <property name="adjustment">1 1 20 0 0 0</property>
+								</widget>
+								<packing>
+								  <property name="padding">0</property>
+								  <property name="expand">True</property>
+								  <property name="fill">True</property>
+								</packing>
+							      </child>
+
+							      <child>
+								<widget class="GtkLabel" id="mid_knee_lbl">
+								  <property name="width_request">29</property>
+								  <property name="height_request">14</property>
+								  <property name="visible">True</property>
+								  <property name="label" translatable="yes">Knee</property>
+								  <property name="use_underline">False</property>
+								  <property name="use_markup">False</property>
+								  <property name="justify">GTK_JUSTIFY_LEFT</property>
+								  <property name="wrap">False</property>
+								  <property name="selectable">False</property>
+								  <property name="xalign">0.5</property>
+								  <property name="yalign">0.5</property>
+								  <property name="xpad">0</property>
+								  <property name="ypad">0</property>
+								  <signal name="realize" handler="on_mid_knee_lbl_realize" last_modification_time="Mon, 21 Apr 2003 00:05:02 GMT"/>
+								</widget>
+								<packing>
+								  <property name="padding">0</property>
+								  <property name="expand">False</property>
+								  <property name="fill">False</property>
+								</packing>
+							      </child>
+
+							      <child>
+								<widget class="GtkVScale" id="comp_kn_2">
+								  <property name="width_request">20</property>
+								  <property name="height_request">53</property>
+								  <property name="visible">True</property>
+								  <property name="can_focus">True</property>
+								  <property name="draw_value">True</property>
+								  <property name="value_pos">GTK_POS_TOP</property>
+								  <property name="digits">1</property>
+								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+								  <property name="inverted">True</property>
+								  <property name="adjustment">0 0 1 0 0 0</property>
+								  <signal name="value_changed" handler="on_comp_kn_2_value_changed" last_modification_time="Mon, 21 Apr 2003 00:00:18 GMT"/>
+								</widget>
+								<packing>
+								  <property name="padding">0</property>
+								  <property name="expand">True</property>
+								  <property name="fill">True</property>
+								</packing>
+							      </child>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">3</property>
+							      <property name="right_attach">4</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options">fill</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label90">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">Makeup</property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">4</property>
+							      <property name="right_attach">5</property>
+							      <property name="top_attach">0</property>
+							      <property name="bottom_attach">1</property>
+							      <property name="y_options"></property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkVScale" id="comp_th_2">
+							      <property name="visible">True</property>
+							      <property name="can_focus">True</property>
+							      <property name="draw_value">True</property>
+							      <property name="value_pos">GTK_POS_TOP</property>
+							      <property name="digits">1</property>
+							      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+							      <property name="inverted">True</property>
+							      <property name="adjustment">0 -30 0 0 0 0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">2</property>
+							      <property name="right_attach">3</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkVScale" id="comp_re_2">
+							      <property name="visible">True</property>
+							      <property name="can_focus">True</property>
+							      <property name="draw_value">True</property>
+							      <property name="value_pos">GTK_POS_TOP</property>
+							      <property name="digits">1</property>
+							      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+							      <property name="inverted">True</property>
+							      <property name="adjustment">10 10 800 0 0 0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">1</property>
+							      <property name="right_attach">2</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkVScale" id="comp_at_2">
+							      <property name="visible">True</property>
+							      <property name="can_focus">True</property>
+							      <property name="draw_value">True</property>
+							      <property name="value_pos">GTK_POS_TOP</property>
+							      <property name="digits">1</property>
+							      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+							      <property name="inverted">True</property>
+							      <property name="adjustment">10 10 400 0 0 0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">0</property>
+							      <property name="right_attach">1</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							      <property name="y_options">fill</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkVBox" id="vbox124">
+							      <property name="visible">True</property>
+							      <property name="homogeneous">False</property>
+							      <property name="spacing">0</property>
+
+							      <child>
+								<widget class="GtkVScale" id="comp_ma_2">
+								  <property name="visible">True</property>
+								  <property name="can_focus">True</property>
+								  <property name="draw_value">True</property>
+								  <property name="value_pos">GTK_POS_TOP</property>
+								  <property name="digits">1</property>
+								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+								  <property name="inverted">True</property>
+								  <property name="adjustment">0 0 30 0 0 0</property>
+								</widget>
+								<packing>
+								  <property name="padding">0</property>
+								  <property name="expand">True</property>
+								  <property name="fill">True</property>
+								</packing>
+							      </child>
+
+							      <child>
+								<widget class="GtkToggleButton" id="autobutton2">
+								  <property name="visible">True</property>
+								  <property name="can_focus">True</property>
+								  <property name="label" translatable="yes">auto</property>
+								  <property name="use_underline">True</property>
+								  <property name="relief">GTK_RELIEF_NORMAL</property>
+								  <property name="active">False</property>
+								  <property name="inconsistent">False</property>
+								  <signal name="toggled" handler="on_autoutton2_toggled" last_modification_time="Sat, 26 Apr 2003 13:29:33 GMT"/>
+								</widget>
+								<packing>
+								  <property name="padding">0</property>
+								  <property name="expand">False</property>
+								  <property name="fill">False</property>
+								</packing>
+							      </child>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">4</property>
+							      <property name="right_attach">5</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options">fill</property>
+							    </packing>
+							  </child>
+							</widget>
+							<packing>
+							  <property name="padding">0</property>
+							  <property name="expand">True</property>
+							  <property name="fill">True</property>
+							</packing>
+						      </child>
+						    </widget>
+						    <packing>
+						      <property name="padding">0</property>
+						      <property name="expand">True</property>
+						      <property name="fill">True</property>
+						    </packing>
+						  </child>
+
+						  <child>
+						    <widget class="GtkTable" id="table13">
+						      <property name="visible">True</property>
+						      <property name="n_rows">3</property>
+						      <property name="n_columns">2</property>
+						      <property name="homogeneous">False</property>
+						      <property name="row_spacing">1</property>
+						      <property name="column_spacing">0</property>
+
+						      <child>
+							<widget class="GtkLabel" id="label92">
+							  <property name="width_request">31</property>
+							  <property name="height_request">14</property>
+							  <property name="visible">True</property>
+							  <property name="label" translatable="yes">Level</property>
+							  <property name="use_underline">False</property>
+							  <property name="use_markup">False</property>
+							  <property name="justify">GTK_JUSTIFY_LEFT</property>
+							  <property name="wrap">False</property>
+							  <property name="selectable">False</property>
+							  <property name="xalign">0</property>
+							  <property name="yalign">0.5</property>
+							  <property name="xpad">0</property>
+							  <property name="ypad">0</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">0</property>
+							  <property name="right_attach">1</property>
+							  <property name="top_attach">0</property>
+							  <property name="bottom_attach">1</property>
+							  <property name="x_padding">2</property>
+							  <property name="x_options">fill</property>
+							  <property name="y_options"></property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="GtkLabel" id="label93">
+							  <property name="width_request">26</property>
+							  <property name="height_request">14</property>
+							  <property name="visible">True</property>
+							  <property name="label" translatable="yes">Gain</property>
+							  <property name="use_underline">False</property>
+							  <property name="use_markup">False</property>
+							  <property name="justify">GTK_JUSTIFY_LEFT</property>
+							  <property name="wrap">False</property>
+							  <property name="selectable">False</property>
+							  <property name="xalign">0</property>
+							  <property name="yalign">0.5</property>
+							  <property name="xpad">0</property>
+							  <property name="ypad">0</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">0</property>
+							  <property name="right_attach">1</property>
+							  <property name="top_attach">2</property>
+							  <property name="bottom_attach">3</property>
+							  <property name="x_padding">2</property>
+							  <property name="x_options">fill</property>
+							  <property name="y_options"></property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="Custom" id="comp_le_2">
+							  <property name="height_request">12</property>
+							  <property name="visible">True</property>
+							  <property name="creation_function">make_meter</property>
+							  <property name="string1">right</property>
+							  <property name="int1">-40</property>
+							  <property name="int2">0</property>
+							  <property name="last_modification_time">Sat, 26 Apr 2003 13:46:53 GMT</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">1</property>
+							  <property name="right_attach">2</property>
+							  <property name="top_attach">0</property>
+							  <property name="bottom_attach">1</property>
+							  <property name="y_options">fill</property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="Custom" id="comp_ga_2">
+							  <property name="height_request">12</property>
+							  <property name="visible">True</property>
+							  <property name="creation_function">make_meter</property>
+							  <property name="string1">left</property>
+							  <property name="int1">-40</property>
+							  <property name="int2">0</property>
+							  <property name="last_modification_time">Sat, 26 Apr 2003 13:46:53 GMT</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">1</property>
+							  <property name="right_attach">2</property>
+							  <property name="top_attach">2</property>
+							  <property name="bottom_attach">3</property>
+							  <property name="x_options">fill</property>
+							  <property name="y_options">fill</property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="Custom" id="custom17">
+							  <property name="height_request">10</property>
+							  <property name="visible">True</property>
+							  <property name="creation_function">make_mscale</property>
+							  <property name="string1">top bottom</property>
+							  <property name="int1">-40</property>
+							  <property name="int2">0</property>
+							  <property name="last_modification_time">Sat, 26 Apr 2003 20:02:53 GMT</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">1</property>
+							  <property name="right_attach">2</property>
+							  <property name="top_attach">1</property>
+							  <property name="bottom_attach">2</property>
+							  <property name="x_options">fill</property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="GtkLabel" id="label256">
+							  <property name="visible">True</property>
+							  <property name="label" translatable="yes"></property>
+							  <property name="use_underline">False</property>
+							  <property name="use_markup">False</property>
+							  <property name="justify">GTK_JUSTIFY_LEFT</property>
+							  <property name="wrap">False</property>
+							  <property name="selectable">False</property>
+							  <property name="xalign">0</property>
+							  <property name="yalign">0.5</property>
+							  <property name="xpad">0</property>
+							  <property name="ypad">0</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">0</property>
+							  <property name="right_attach">1</property>
+							  <property name="top_attach">1</property>
+							  <property name="bottom_attach">2</property>
+							  <property name="x_options">fill</property>
+							  <property name="y_options"></property>
+							</packing>
+						      </child>
+						    </widget>
+						    <packing>
+						      <property name="padding">0</property>
+						      <property name="expand">False</property>
+						      <property name="fill">True</property>
+						    </packing>
+						  </child>
+						</widget>
+					      </child>
+
+					      <child>
+						<widget class="GtkLabel" id="label-Mid">
+						  <property name="visible">True</property>
+						  <property name="label" translatable="yes">Mid : 00000 - 00000</property>
+						  <property name="use_underline">False</property>
+						  <property name="use_markup">False</property>
+						  <property name="justify">GTK_JUSTIFY_LEFT</property>
+						  <property name="wrap">False</property>
+						  <property name="selectable">False</property>
+						  <property name="xalign">0.5</property>
+						  <property name="yalign">0.5</property>
+						  <property name="xpad">0</property>
+						  <property name="ypad">0</property>
+						  <signal name="realize" handler="on_label-Mid_realize" last_modification_time="Mon, 14 Apr 2003 22:15:41 GMT"/>
+						</widget>
+						<packing>
+						  <property name="type">label_item</property>
+						</packing>
+					      </child>
+					    </widget>
+					  </child>
+					</widget>
+				      </child>
+				    </widget>
+				    <packing>
+				      <property name="padding">0</property>
+				      <property name="expand">True</property>
+				      <property name="fill">True</property>
+				    </packing>
+				  </child>
+
+				  <child>
+				    <widget class="GtkEventBox" id="high_comp_event_box">
+				      <property name="visible">True</property>
+				      <signal name="enter_notify_event" handler="on_high_comp_event_box_enter_notify_event" last_modification_time="Fri, 25 Apr 2003 17:03:30 GMT"/>
+				      <signal name="leave_notify_event" handler="on_high_comp_event_box_leave_notify_event" last_modification_time="Fri, 25 Apr 2003 17:03:45 GMT"/>
+
+				      <child>
+					<widget class="GtkAlignment" id="alignment8">
+					  <property name="visible">True</property>
+					  <property name="xalign">0.5</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xscale">1</property>
+					  <property name="yscale">1</property>
+
+					  <child>
+					    <widget class="GtkFrame" id="frame6">
+					      <property name="width_request">215</property>
+					      <property name="height_request">155</property>
+					      <property name="visible">True</property>
+					      <property name="label_xalign">0</property>
+					      <property name="label_yalign">0.5</property>
+					      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+
+					      <child>
+						<widget class="GtkVBox" id="high_comp">
+						  <property name="width_request">205</property>
+						  <property name="height_request">135</property>
+						  <property name="visible">True</property>
+						  <property name="homogeneous">False</property>
+						  <property name="spacing">1</property>
+						  <signal name="realize" handler="on_high_comp_realize" last_modification_time="Sat, 12 Apr 2003 22:29:38 GMT"/>
+
+						  <child>
+						    <widget class="GtkVBox" id="vbox18">
+						      <property name="visible">True</property>
+						      <property name="homogeneous">False</property>
+						      <property name="spacing">0</property>
+
+						      <child>
+							<widget class="GtkTable" id="table6">
+							  <property name="visible">True</property>
+							  <property name="n_rows">2</property>
+							  <property name="n_columns">5</property>
+							  <property name="homogeneous">False</property>
+							  <property name="row_spacing">0</property>
+							  <property name="column_spacing">0</property>
+
+							  <child>
+							    <widget class="GtkLabel" id="label22">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">Attack</property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">0</property>
+							      <property name="right_attach">1</property>
+							      <property name="top_attach">0</property>
+							      <property name="bottom_attach">1</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options"></property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label23">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">Release</property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">1</property>
+							      <property name="right_attach">2</property>
+							      <property name="top_attach">0</property>
+							      <property name="bottom_attach">1</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options"></property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label24">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">Thresh</property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">2</property>
+							      <property name="right_attach">3</property>
+							      <property name="top_attach">0</property>
+							      <property name="bottom_attach">1</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options"></property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label25">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">Ratio</property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">3</property>
+							      <property name="right_attach">4</property>
+							      <property name="top_attach">0</property>
+							      <property name="bottom_attach">1</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options"></property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkVBox" id="vbox7">
+							      <property name="visible">True</property>
+							      <property name="homogeneous">False</property>
+							      <property name="spacing">0</property>
+
+							      <child>
+								<widget class="GtkVScale" id="comp_ra_3">
+								  <property name="width_request">20</property>
+								  <property name="height_request">53</property>
+								  <property name="visible">True</property>
+								  <property name="can_focus">True</property>
+								  <property name="draw_value">True</property>
+								  <property name="value_pos">GTK_POS_TOP</property>
+								  <property name="digits">1</property>
+								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+								  <property name="inverted">True</property>
+								  <property name="adjustment">1 1 20 0 0 0</property>
+								</widget>
+								<packing>
+								  <property name="padding">0</property>
+								  <property name="expand">True</property>
+								  <property name="fill">True</property>
+								</packing>
+							      </child>
+
+							      <child>
+								<widget class="GtkLabel" id="high_knee_lbl">
+								  <property name="width_request">29</property>
+								  <property name="height_request">14</property>
+								  <property name="visible">True</property>
+								  <property name="label" translatable="yes">Knee</property>
+								  <property name="use_underline">False</property>
+								  <property name="use_markup">False</property>
+								  <property name="justify">GTK_JUSTIFY_LEFT</property>
+								  <property name="wrap">False</property>
+								  <property name="selectable">False</property>
+								  <property name="xalign">0.5</property>
+								  <property name="yalign">0.5</property>
+								  <property name="xpad">0</property>
+								  <property name="ypad">0</property>
+								  <signal name="realize" handler="on_high_knee_lbl_realize" last_modification_time="Mon, 21 Apr 2003 00:05:19 GMT"/>
+								</widget>
+								<packing>
+								  <property name="padding">0</property>
+								  <property name="expand">False</property>
+								  <property name="fill">False</property>
+								</packing>
+							      </child>
+
+							      <child>
+								<widget class="GtkVScale" id="comp_kn_3">
+								  <property name="width_request">20</property>
+								  <property name="height_request">53</property>
+								  <property name="visible">True</property>
+								  <property name="can_focus">True</property>
+								  <property name="draw_value">True</property>
+								  <property name="value_pos">GTK_POS_TOP</property>
+								  <property name="digits">1</property>
+								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+								  <property name="inverted">True</property>
+								  <property name="adjustment">0 0 1 0 0 0</property>
+								  <signal name="value_changed" handler="on_comp_kn_3_value_changed" last_modification_time="Mon, 21 Apr 2003 00:00:25 GMT"/>
+								</widget>
+								<packing>
+								  <property name="padding">0</property>
+								  <property name="expand">True</property>
+								  <property name="fill">True</property>
+								</packing>
+							      </child>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">3</property>
+							      <property name="right_attach">4</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options">fill</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label26">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">Makeup</property>
+							      <property name="use_underline">False</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">4</property>
+							      <property name="right_attach">5</property>
+							      <property name="top_attach">0</property>
+							      <property name="bottom_attach">1</property>
+							      <property name="y_options"></property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkVScale" id="comp_at_3">
+							      <property name="visible">True</property>
+							      <property name="can_focus">True</property>
+							      <property name="draw_value">True</property>
+							      <property name="value_pos">GTK_POS_TOP</property>
+							      <property name="digits">1</property>
+							      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+							      <property name="inverted">True</property>
+							      <property name="adjustment">10 10 400 0 0 0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">0</property>
+							      <property name="right_attach">1</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkVScale" id="comp_re_3">
+							      <property name="visible">True</property>
+							      <property name="can_focus">True</property>
+							      <property name="draw_value">True</property>
+							      <property name="value_pos">GTK_POS_TOP</property>
+							      <property name="digits">1</property>
+							      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+							      <property name="inverted">True</property>
+							      <property name="adjustment">10 10 800 0 0 0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">1</property>
+							      <property name="right_attach">2</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkVScale" id="comp_th_3">
+							      <property name="visible">True</property>
+							      <property name="can_focus">True</property>
+							      <property name="draw_value">True</property>
+							      <property name="value_pos">GTK_POS_TOP</property>
+							      <property name="digits">1</property>
+							      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+							      <property name="inverted">True</property>
+							      <property name="adjustment">0 -30 0 0 0 0</property>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">2</property>
+							      <property name="right_attach">3</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkVBox" id="vbox125">
+							      <property name="visible">True</property>
+							      <property name="homogeneous">False</property>
+							      <property name="spacing">0</property>
+
+							      <child>
+								<widget class="GtkVScale" id="comp_ma_3">
+								  <property name="visible">True</property>
+								  <property name="can_focus">True</property>
+								  <property name="draw_value">True</property>
+								  <property name="value_pos">GTK_POS_TOP</property>
+								  <property name="digits">1</property>
+								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+								  <property name="inverted">True</property>
+								  <property name="adjustment">0 0 30 0 0 0</property>
+								</widget>
+								<packing>
+								  <property name="padding">0</property>
+								  <property name="expand">True</property>
+								  <property name="fill">True</property>
+								</packing>
+							      </child>
+
+							      <child>
+								<widget class="GtkToggleButton" id="autobutton3">
+								  <property name="visible">True</property>
+								  <property name="can_focus">True</property>
+								  <property name="label" translatable="yes">auto</property>
+								  <property name="use_underline">True</property>
+								  <property name="relief">GTK_RELIEF_NORMAL</property>
+								  <property name="active">False</property>
+								  <property name="inconsistent">False</property>
+								  <signal name="toggled" handler="on_autoutton3_toggled" last_modification_time="Sat, 26 Apr 2003 13:29:27 GMT"/>
+								</widget>
+								<packing>
+								  <property name="padding">0</property>
+								  <property name="expand">False</property>
+								  <property name="fill">False</property>
+								</packing>
+							      </child>
+							    </widget>
+							    <packing>
+							      <property name="left_attach">4</property>
+							      <property name="right_attach">5</property>
+							      <property name="top_attach">1</property>
+							      <property name="bottom_attach">2</property>
+							      <property name="x_options">fill</property>
+							      <property name="y_options">fill</property>
+							    </packing>
+							  </child>
+							</widget>
+							<packing>
+							  <property name="padding">0</property>
+							  <property name="expand">True</property>
+							  <property name="fill">True</property>
+							</packing>
+						      </child>
+						    </widget>
+						    <packing>
+						      <property name="padding">0</property>
+						      <property name="expand">True</property>
+						      <property name="fill">True</property>
+						    </packing>
+						  </child>
+
+						  <child>
+						    <widget class="GtkTable" id="table11">
+						      <property name="visible">True</property>
+						      <property name="n_rows">3</property>
+						      <property name="n_columns">2</property>
+						      <property name="homogeneous">False</property>
+						      <property name="row_spacing">1</property>
+						      <property name="column_spacing">0</property>
+
+						      <child>
+							<widget class="GtkLabel" id="label84">
+							  <property name="width_request">31</property>
+							  <property name="height_request">14</property>
+							  <property name="visible">True</property>
+							  <property name="label" translatable="yes">Level</property>
+							  <property name="use_underline">False</property>
+							  <property name="use_markup">False</property>
+							  <property name="justify">GTK_JUSTIFY_LEFT</property>
+							  <property name="wrap">False</property>
+							  <property name="selectable">False</property>
+							  <property name="xalign">0</property>
+							  <property name="yalign">0.5</property>
+							  <property name="xpad">0</property>
+							  <property name="ypad">0</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">0</property>
+							  <property name="right_attach">1</property>
+							  <property name="top_attach">0</property>
+							  <property name="bottom_attach">1</property>
+							  <property name="x_padding">2</property>
+							  <property name="x_options">fill</property>
+							  <property name="y_options"></property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="GtkLabel" id="label85">
+							  <property name="width_request">26</property>
+							  <property name="height_request">14</property>
+							  <property name="visible">True</property>
+							  <property name="label" translatable="yes">Gain</property>
+							  <property name="use_underline">False</property>
+							  <property name="use_markup">False</property>
+							  <property name="justify">GTK_JUSTIFY_LEFT</property>
+							  <property name="wrap">False</property>
+							  <property name="selectable">False</property>
+							  <property name="xalign">0</property>
+							  <property name="yalign">0.5</property>
+							  <property name="xpad">0</property>
+							  <property name="ypad">0</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">0</property>
+							  <property name="right_attach">1</property>
+							  <property name="top_attach">2</property>
+							  <property name="bottom_attach">3</property>
+							  <property name="x_padding">2</property>
+							  <property name="x_options">fill</property>
+							  <property name="y_options"></property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="Custom" id="comp_ga_3">
+							  <property name="height_request">12</property>
+							  <property name="visible">True</property>
+							  <property name="creation_function">make_meter</property>
+							  <property name="string1">left</property>
+							  <property name="int1">-40</property>
+							  <property name="int2">0</property>
+							  <property name="last_modification_time">Sat, 26 Apr 2003 13:46:53 GMT</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">1</property>
+							  <property name="right_attach">2</property>
+							  <property name="top_attach">2</property>
+							  <property name="bottom_attach">3</property>
+							  <property name="x_options">fill</property>
+							  <property name="y_options">fill</property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="Custom" id="comp_le_3">
+							  <property name="height_request">12</property>
+							  <property name="visible">True</property>
+							  <property name="creation_function">make_meter</property>
+							  <property name="string1">right</property>
+							  <property name="int1">-40</property>
+							  <property name="int2">0</property>
+							  <property name="last_modification_time">Sat, 26 Apr 2003 13:46:53 GMT</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">1</property>
+							  <property name="right_attach">2</property>
+							  <property name="top_attach">0</property>
+							  <property name="bottom_attach">1</property>
+							  <property name="y_options">fill</property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="Custom" id="custom18">
+							  <property name="height_request">10</property>
+							  <property name="visible">True</property>
+							  <property name="creation_function">make_mscale</property>
+							  <property name="string1">top bottom</property>
+							  <property name="int1">-40</property>
+							  <property name="int2">0</property>
+							  <property name="last_modification_time">Sat, 26 Apr 2003 20:03:00 GMT</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">1</property>
+							  <property name="right_attach">2</property>
+							  <property name="top_attach">1</property>
+							  <property name="bottom_attach">2</property>
+							  <property name="x_options">fill</property>
+							</packing>
+						      </child>
+
+						      <child>
+							<widget class="GtkLabel" id="label257">
+							  <property name="visible">True</property>
+							  <property name="label" translatable="yes"></property>
+							  <property name="use_underline">False</property>
+							  <property name="use_markup">False</property>
+							  <property name="justify">GTK_JUSTIFY_LEFT</property>
+							  <property name="wrap">False</property>
+							  <property name="selectable">False</property>
+							  <property name="xalign">0</property>
+							  <property name="yalign">0.5</property>
+							  <property name="xpad">0</property>
+							  <property name="ypad">0</property>
+							</widget>
+							<packing>
+							  <property name="left_attach">0</property>
+							  <property name="right_attach">1</property>
+							  <property name="top_attach">1</property>
+							  <property name="bottom_attach">2</property>
+							  <property name="x_options">fill</property>
+							  <property name="y_options"></property>
+							</packing>
+						      </child>
+						    </widget>
+						    <packing>
+						      <property name="padding">0</property>
+						      <property name="expand">False</property>
+						      <property name="fill">True</property>
+						    </packing>
+						  </child>
+						</widget>
+					      </child>
+
+					      <child>
+						<widget class="GtkLabel" id="label-High">
+						  <property name="visible">True</property>
+						  <property name="label" translatable="yes">High : 00000 - 00000</property>
+						  <property name="use_underline">False</property>
+						  <property name="use_markup">False</property>
+						  <property name="justify">GTK_JUSTIFY_LEFT</property>
+						  <property name="wrap">False</property>
+						  <property name="selectable">False</property>
+						  <property name="xalign">0.5</property>
+						  <property name="yalign">0.5</property>
+						  <property name="xpad">0</property>
+						  <property name="ypad">0</property>
+						  <signal name="realize" handler="on_label-High_realize" last_modification_time="Mon, 14 Apr 2003 22:16:06 GMT"/>
+						</widget>
+						<packing>
+						  <property name="type">label_item</property>
+						</packing>
+					      </child>
+					    </widget>
+					  </child>
+					</widget>
+				      </child>
+				    </widget>
+				    <packing>
+				      <property name="padding">0</property>
+				      <property name="expand">True</property>
+				      <property name="fill">True</property>
+				    </packing>
+				  </child>
+				</widget>
+				<packing>
+				  <property name="tab_expand">False</property>
+				  <property name="tab_fill">True</property>
+				</packing>
+			      </child>
+
+			      <child>
+				<widget class="GtkLabel" id="label259">
+				  <property name="visible">True</property>
+				  <property name="label" translatable="yes">Compressors</property>
+				  <property name="use_underline">False</property>
+				  <property name="use_markup">False</property>
+				  <property name="justify">GTK_JUSTIFY_LEFT</property>
+				  <property name="wrap">False</property>
+				  <property name="selectable">False</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				</widget>
+				<packing>
+				  <property name="type">tab</property>
+				</packing>
+			      </child>
+
+			      <child>
+				<widget class="GtkHBox" id="hbox41">
 				  <property name="visible">True</property>
 				  <property name="homogeneous">False</property>
 				  <property name="spacing">0</property>
 
 				  <child>
-				    <widget class="GtkHBox" id="hbox15">
+				    <widget class="GtkFrame" id="frame19">
 				      <property name="visible">True</property>
-				      <property name="homogeneous">False</property>
-				      <property name="spacing">0</property>
+				      <property name="label_xalign">0.5</property>
+				      <property name="label_yalign">0.5</property>
+				      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
 
 				      <child>
-					<widget class="GtkHSeparator" id="hseparator3">
+					<widget class="GtkVBox" id="vbox126">
 					  <property name="visible">True</property>
+					  <property name="homogeneous">False</property>
+					  <property name="spacing">0</property>
+
+					  <child>
+					    <widget class="GtkHScale" id="hscale2">
+					      <property name="visible">True</property>
+					      <property name="can_focus">True</property>
+					      <property name="draw_value">True</property>
+					      <property name="value_pos">GTK_POS_TOP</property>
+					      <property name="digits">2</property>
+					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+					      <property name="inverted">False</property>
+					      <property name="adjustment">-0 -1 1 0.1 0.1 0</property>
+					      <signal name="value_changed" handler="on_hscale2_value_changed" last_modification_time="Sun, 11 May 2003 09:12:23 GMT"/>
+					      <signal name="realize" handler="on_hscale2_realize" last_modification_time="Sun, 11 May 2003 09:12:34 GMT"/>
+					    </widget>
+					    <packing>
+					      <property name="padding">0</property>
+					      <property name="expand">False</property>
+					      <property name="fill">True</property>
+					    </packing>
+					  </child>
+
+					  <child>
+					    <widget class="GtkDrawingArea" id="stereo_low_da">
+					      <property name="visible">True</property>
+					    </widget>
+					    <packing>
+					      <property name="padding">0</property>
+					      <property name="expand">True</property>
+					      <property name="fill">True</property>
+					    </packing>
+					  </child>
 					</widget>
-					<packing>
-					  <property name="padding">0</property>
-					  <property name="expand">True</property>
-					  <property name="fill">True</property>
-					</packing>
 				      </child>
 
 				      <child>
-					<widget class="GtkLabel" id="label62">
+					<widget class="GtkLabel" id="label261">
 					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">Compressors</property>
+					  <property name="label" translatable="yes">Low</property>
 					  <property name="use_underline">False</property>
 					  <property name="use_markup">False</property>
 					  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -4032,1703 +5763,151 @@
 					  <property name="ypad">0</property>
 					</widget>
 					<packing>
-					  <property name="padding">5</property>
-					  <property name="expand">False</property>
-					  <property name="fill">False</property>
-					</packing>
-				      </child>
-
-				      <child>
-					<widget class="GtkHSeparator" id="hseparator7">
-					  <property name="visible">True</property>
-					</widget>
-					<packing>
-					  <property name="padding">0</property>
-					  <property name="expand">True</property>
-					  <property name="fill">True</property>
+					  <property name="type">label_item</property>
 					</packing>
 				      </child>
 				    </widget>
 				    <packing>
 				      <property name="padding">0</property>
-				      <property name="expand">False</property>
+				      <property name="expand">True</property>
 				      <property name="fill">True</property>
 				    </packing>
 				  </child>
 
 				  <child>
-				    <widget class="GtkHBox" id="hbox1">
-				      <property name="width_request">605</property>
-				      <property name="height_request">155</property>
+				    <widget class="GtkFrame" id="frame20">
 				      <property name="visible">True</property>
-				      <property name="homogeneous">True</property>
-				      <property name="spacing">13</property>
+				      <property name="label_xalign">0.5</property>
+				      <property name="label_yalign">0.5</property>
+				      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
 
 				      <child>
-					<widget class="GtkEventBox" id="low_comp_event_box">
+					<widget class="GtkVBox" id="vbox128">
 					  <property name="visible">True</property>
-					  <signal name="enter_notify_event" handler="on_low_comp_event_box_enter_notify_event" last_modification_time="Fri, 25 Apr 2003 16:57:56 GMT"/>
-					  <signal name="leave_notify_event" handler="on_low_comp_event_box_leave_notify_event" last_modification_time="Fri, 25 Apr 2003 16:58:01 GMT"/>
+					  <property name="homogeneous">False</property>
+					  <property name="spacing">0</property>
 
 					  <child>
-					    <widget class="GtkAlignment" id="alignment7">
+					    <widget class="GtkHScale" id="hscale3">
 					      <property name="visible">True</property>
-					      <property name="xalign">0.5</property>
-					      <property name="yalign">0.5</property>
-					      <property name="xscale">1</property>
-					      <property name="yscale">1</property>
-
-					      <child>
-						<widget class="GtkFrame" id="frame7">
-						  <property name="width_request">215</property>
-						  <property name="height_request">155</property>
-						  <property name="visible">True</property>
-						  <property name="label_xalign">0</property>
-						  <property name="label_yalign">0.5</property>
-						  <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
-
-						  <child>
-						    <widget class="GtkVBox" id="low_comp">
-						      <property name="width_request">205</property>
-						      <property name="height_request">139</property>
-						      <property name="visible">True</property>
-						      <property name="homogeneous">False</property>
-						      <property name="spacing">1</property>
-						      <signal name="realize" handler="on_low_comp_realize" last_modification_time="Sat, 12 Apr 2003 22:23:45 GMT"/>
-
-						      <child>
-							<widget class="GtkVBox" id="vbox30">
-							  <property name="visible">True</property>
-							  <property name="homogeneous">False</property>
-							  <property name="spacing">0</property>
-
-							  <child>
-							    <widget class="GtkTable" id="table8">
-							      <property name="visible">True</property>
-							      <property name="n_rows">2</property>
-							      <property name="n_columns">5</property>
-							      <property name="homogeneous">False</property>
-							      <property name="row_spacing">0</property>
-							      <property name="column_spacing">0</property>
-
-							      <child>
-								<widget class="GtkLabel" id="label71">
-								  <property name="visible">True</property>
-								  <property name="label" translatable="yes">Release</property>
-								  <property name="use_underline">False</property>
-								  <property name="use_markup">False</property>
-								  <property name="justify">GTK_JUSTIFY_LEFT</property>
-								  <property name="wrap">False</property>
-								  <property name="selectable">False</property>
-								  <property name="xalign">0.5</property>
-								  <property name="yalign">0.5</property>
-								  <property name="xpad">0</property>
-								  <property name="ypad">0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">1</property>
-								  <property name="right_attach">2</property>
-								  <property name="top_attach">0</property>
-								  <property name="bottom_attach">1</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options"></property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkLabel" id="label72">
-								  <property name="visible">True</property>
-								  <property name="label" translatable="yes">Thresh</property>
-								  <property name="use_underline">False</property>
-								  <property name="use_markup">False</property>
-								  <property name="justify">GTK_JUSTIFY_LEFT</property>
-								  <property name="wrap">False</property>
-								  <property name="selectable">False</property>
-								  <property name="xalign">0.5</property>
-								  <property name="yalign">0.5</property>
-								  <property name="xpad">0</property>
-								  <property name="ypad">0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">2</property>
-								  <property name="right_attach">3</property>
-								  <property name="top_attach">0</property>
-								  <property name="bottom_attach">1</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options"></property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkLabel" id="label73">
-								  <property name="visible">True</property>
-								  <property name="label" translatable="yes">Ratio</property>
-								  <property name="use_underline">False</property>
-								  <property name="use_markup">False</property>
-								  <property name="justify">GTK_JUSTIFY_LEFT</property>
-								  <property name="wrap">False</property>
-								  <property name="selectable">False</property>
-								  <property name="xalign">0.5</property>
-								  <property name="yalign">0.5</property>
-								  <property name="xpad">0</property>
-								  <property name="ypad">0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">3</property>
-								  <property name="right_attach">4</property>
-								  <property name="top_attach">0</property>
-								  <property name="bottom_attach">1</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options"></property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkLabel" id="label70">
-								  <property name="visible">True</property>
-								  <property name="label" translatable="yes">Attack</property>
-								  <property name="use_underline">False</property>
-								  <property name="use_markup">False</property>
-								  <property name="justify">GTK_JUSTIFY_LEFT</property>
-								  <property name="wrap">False</property>
-								  <property name="selectable">False</property>
-								  <property name="xalign">0.5</property>
-								  <property name="yalign">0.5</property>
-								  <property name="xpad">0</property>
-								  <property name="ypad">0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">0</property>
-								  <property name="right_attach">1</property>
-								  <property name="top_attach">0</property>
-								  <property name="bottom_attach">1</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options"></property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkLabel" id="label74">
-								  <property name="visible">True</property>
-								  <property name="label" translatable="yes">Makeup</property>
-								  <property name="use_underline">False</property>
-								  <property name="use_markup">False</property>
-								  <property name="justify">GTK_JUSTIFY_LEFT</property>
-								  <property name="wrap">False</property>
-								  <property name="selectable">False</property>
-								  <property name="xalign">0.5</property>
-								  <property name="yalign">0.5</property>
-								  <property name="xpad">0</property>
-								  <property name="ypad">0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">4</property>
-								  <property name="right_attach">5</property>
-								  <property name="top_attach">0</property>
-								  <property name="bottom_attach">1</property>
-								  <property name="y_options"></property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkVScale" id="comp_th_1">
-								  <property name="visible">True</property>
-								  <property name="can_focus">True</property>
-								  <property name="draw_value">True</property>
-								  <property name="value_pos">GTK_POS_TOP</property>
-								  <property name="digits">1</property>
-								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								  <property name="inverted">True</property>
-								  <property name="adjustment">0 -30 0 0 0 0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">2</property>
-								  <property name="right_attach">3</property>
-								  <property name="top_attach">1</property>
-								  <property name="bottom_attach">2</property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkVScale" id="comp_re_1">
-								  <property name="visible">True</property>
-								  <property name="can_focus">True</property>
-								  <property name="draw_value">True</property>
-								  <property name="value_pos">GTK_POS_TOP</property>
-								  <property name="digits">1</property>
-								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								  <property name="inverted">True</property>
-								  <property name="adjustment">10 10 800 0 0 0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">1</property>
-								  <property name="right_attach">2</property>
-								  <property name="top_attach">1</property>
-								  <property name="bottom_attach">2</property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkVScale" id="comp_at_1">
-								  <property name="visible">True</property>
-								  <property name="can_focus">True</property>
-								  <property name="draw_value">True</property>
-								  <property name="value_pos">GTK_POS_TOP</property>
-								  <property name="digits">1</property>
-								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								  <property name="inverted">True</property>
-								  <property name="adjustment">10 10 400 0 0 0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">0</property>
-								  <property name="right_attach">1</property>
-								  <property name="top_attach">1</property>
-								  <property name="bottom_attach">2</property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkVBox" id="vbox31">
-								  <property name="width_request">29</property>
-								  <property name="height_request">120</property>
-								  <property name="visible">True</property>
-								  <property name="homogeneous">False</property>
-								  <property name="spacing">0</property>
-
-								  <child>
-								    <widget class="GtkVScale" id="comp_ra_1">
-								      <property name="width_request">20</property>
-								      <property name="height_request">53</property>
-								      <property name="visible">True</property>
-								      <property name="can_focus">True</property>
-								      <property name="draw_value">True</property>
-								      <property name="value_pos">GTK_POS_TOP</property>
-								      <property name="digits">1</property>
-								      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								      <property name="inverted">True</property>
-								      <property name="adjustment">1 1 20 0 0 0</property>
-								    </widget>
-								    <packing>
-								      <property name="padding">0</property>
-								      <property name="expand">True</property>
-								      <property name="fill">True</property>
-								    </packing>
-								  </child>
-
-								  <child>
-								    <widget class="GtkLabel" id="low_knee_lbl">
-								      <property name="width_request">29</property>
-								      <property name="height_request">14</property>
-								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">Knee</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
-								      <signal name="realize" handler="on_low_knee_lbl_realize" last_modification_time="Mon, 21 Apr 2003 00:04:45 GMT"/>
-								    </widget>
-								    <packing>
-								      <property name="padding">0</property>
-								      <property name="expand">False</property>
-								      <property name="fill">False</property>
-								    </packing>
-								  </child>
-
-								  <child>
-								    <widget class="GtkVScale" id="comp_kn_1">
-								      <property name="width_request">20</property>
-								      <property name="height_request">53</property>
-								      <property name="visible">True</property>
-								      <property name="can_focus">True</property>
-								      <property name="draw_value">True</property>
-								      <property name="value_pos">GTK_POS_TOP</property>
-								      <property name="digits">1</property>
-								      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								      <property name="inverted">True</property>
-								      <property name="adjustment">0 0 1 0 0 0</property>
-								      <signal name="value_changed" handler="on_comp_kn_1_value_changed" last_modification_time="Mon, 21 Apr 2003 00:00:07 GMT"/>
-								    </widget>
-								    <packing>
-								      <property name="padding">0</property>
-								      <property name="expand">True</property>
-								      <property name="fill">True</property>
-								    </packing>
-								  </child>
-								</widget>
-								<packing>
-								  <property name="left_attach">3</property>
-								  <property name="right_attach">4</property>
-								  <property name="top_attach">1</property>
-								  <property name="bottom_attach">2</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options">fill</property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkVBox" id="vbox123">
-								  <property name="visible">True</property>
-								  <property name="homogeneous">False</property>
-								  <property name="spacing">0</property>
-
-								  <child>
-								    <widget class="GtkVScale" id="comp_ma_1">
-								      <property name="visible">True</property>
-								      <property name="can_focus">True</property>
-								      <property name="draw_value">True</property>
-								      <property name="value_pos">GTK_POS_TOP</property>
-								      <property name="digits">1</property>
-								      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								      <property name="inverted">True</property>
-								      <property name="adjustment">0 0 30 0 0 0</property>
-								    </widget>
-								    <packing>
-								      <property name="padding">0</property>
-								      <property name="expand">True</property>
-								      <property name="fill">True</property>
-								    </packing>
-								  </child>
-
-								  <child>
-								    <widget class="GtkToggleButton" id="autoutton1">
-								      <property name="visible">True</property>
-								      <property name="can_focus">True</property>
-								      <property name="label" translatable="yes">auto</property>
-								      <property name="use_underline">True</property>
-								      <property name="relief">GTK_RELIEF_NORMAL</property>
-								      <property name="active">False</property>
-								      <property name="inconsistent">False</property>
-								      <signal name="toggled" handler="on_autoutton1_toggled" last_modification_time="Sat, 26 Apr 2003 13:27:05 GMT"/>
-								    </widget>
-								    <packing>
-								      <property name="padding">0</property>
-								      <property name="expand">False</property>
-								      <property name="fill">False</property>
-								    </packing>
-								  </child>
-								</widget>
-								<packing>
-								  <property name="left_attach">4</property>
-								  <property name="right_attach">5</property>
-								  <property name="top_attach">1</property>
-								  <property name="bottom_attach">2</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options">fill</property>
-								</packing>
-							      </child>
-							    </widget>
-							    <packing>
-							      <property name="padding">0</property>
-							      <property name="expand">True</property>
-							      <property name="fill">True</property>
-							    </packing>
-							  </child>
-							</widget>
-							<packing>
-							  <property name="padding">0</property>
-							  <property name="expand">True</property>
-							  <property name="fill">True</property>
-							</packing>
-						      </child>
-
-						      <child>
-							<widget class="GtkTable" id="table9">
-							  <property name="visible">True</property>
-							  <property name="n_rows">3</property>
-							  <property name="n_columns">2</property>
-							  <property name="homogeneous">False</property>
-							  <property name="row_spacing">1</property>
-							  <property name="column_spacing">0</property>
-
-							  <child>
-							    <widget class="GtkLabel" id="label76">
-							      <property name="width_request">31</property>
-							      <property name="height_request">14</property>
-							      <property name="visible">True</property>
-							      <property name="label" translatable="yes">Level</property>
-							      <property name="use_underline">False</property>
-							      <property name="use_markup">False</property>
-							      <property name="justify">GTK_JUSTIFY_LEFT</property>
-							      <property name="wrap">False</property>
-							      <property name="selectable">False</property>
-							      <property name="xalign">0</property>
-							      <property name="yalign">0.5</property>
-							      <property name="xpad">0</property>
-							      <property name="ypad">0</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">0</property>
-							      <property name="right_attach">1</property>
-							      <property name="top_attach">0</property>
-							      <property name="bottom_attach">1</property>
-							      <property name="x_padding">2</property>
-							      <property name="x_options">fill</property>
-							      <property name="y_options"></property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="GtkLabel" id="label77">
-							      <property name="width_request">26</property>
-							      <property name="height_request">14</property>
-							      <property name="visible">True</property>
-							      <property name="label" translatable="yes">Gain</property>
-							      <property name="use_underline">False</property>
-							      <property name="use_markup">False</property>
-							      <property name="justify">GTK_JUSTIFY_LEFT</property>
-							      <property name="wrap">False</property>
-							      <property name="selectable">False</property>
-							      <property name="xalign">0</property>
-							      <property name="yalign">0.5</property>
-							      <property name="xpad">0</property>
-							      <property name="ypad">0</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">0</property>
-							      <property name="right_attach">1</property>
-							      <property name="top_attach">2</property>
-							      <property name="bottom_attach">3</property>
-							      <property name="x_padding">2</property>
-							      <property name="x_options">fill</property>
-							      <property name="y_options"></property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="Custom" id="comp_le_1">
-							      <property name="height_request">12</property>
-							      <property name="visible">True</property>
-							      <property name="creation_function">make_meter</property>
-							      <property name="string1">right</property>
-							      <property name="int1">-40</property>
-							      <property name="int2">0</property>
-							      <property name="last_modification_time">Sat, 26 Apr 2003 13:46:53 GMT</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">1</property>
-							      <property name="right_attach">2</property>
-							      <property name="top_attach">0</property>
-							      <property name="bottom_attach">1</property>
-							      <property name="y_options">fill</property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="Custom" id="comp_ga_1">
-							      <property name="height_request">12</property>
-							      <property name="visible">True</property>
-							      <property name="creation_function">make_meter</property>
-							      <property name="string1">left</property>
-							      <property name="int1">-40</property>
-							      <property name="int2">0</property>
-							      <property name="last_modification_time">Sat, 26 Apr 2003 13:46:53 GMT</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">1</property>
-							      <property name="right_attach">2</property>
-							      <property name="top_attach">2</property>
-							      <property name="bottom_attach">3</property>
-							      <property name="x_options">fill</property>
-							      <property name="y_options">fill</property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="Custom" id="custom16">
-							      <property name="height_request">10</property>
-							      <property name="visible">True</property>
-							      <property name="creation_function">make_mscale</property>
-							      <property name="string1">top bottom</property>
-							      <property name="int1">-40</property>
-							      <property name="int2">0</property>
-							      <property name="last_modification_time">Sat, 26 Apr 2003 20:02:46 GMT</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">1</property>
-							      <property name="right_attach">2</property>
-							      <property name="top_attach">1</property>
-							      <property name="bottom_attach">2</property>
-							      <property name="x_options">fill</property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="GtkLabel" id="label255">
-							      <property name="visible">True</property>
-							      <property name="label" translatable="yes"></property>
-							      <property name="use_underline">False</property>
-							      <property name="use_markup">False</property>
-							      <property name="justify">GTK_JUSTIFY_LEFT</property>
-							      <property name="wrap">False</property>
-							      <property name="selectable">False</property>
-							      <property name="xalign">0</property>
-							      <property name="yalign">0.5</property>
-							      <property name="xpad">0</property>
-							      <property name="ypad">0</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">0</property>
-							      <property name="right_attach">1</property>
-							      <property name="top_attach">1</property>
-							      <property name="bottom_attach">2</property>
-							      <property name="x_options">fill</property>
-							      <property name="y_options"></property>
-							    </packing>
-							  </child>
-							</widget>
-							<packing>
-							  <property name="padding">0</property>
-							  <property name="expand">False</property>
-							  <property name="fill">True</property>
-							</packing>
-						      </child>
-						    </widget>
-						  </child>
-
-						  <child>
-						    <widget class="GtkLabel" id="label-Low">
-						      <property name="visible">True</property>
-						      <property name="label" translatable="yes">Low : 00000 - 00000</property>
-						      <property name="use_underline">False</property>
-						      <property name="use_markup">False</property>
-						      <property name="justify">GTK_JUSTIFY_LEFT</property>
-						      <property name="wrap">False</property>
-						      <property name="selectable">False</property>
-						      <property name="xalign">0.5</property>
-						      <property name="yalign">0.5</property>
-						      <property name="xpad">0</property>
-						      <property name="ypad">0</property>
-						      <signal name="realize" handler="on_label-Low_realize" last_modification_time="Mon, 14 Apr 2003 22:04:21 GMT"/>
-						    </widget>
-						    <packing>
-						      <property name="type">label_item</property>
-						    </packing>
-						  </child>
-						</widget>
-					      </child>
+					      <property name="can_focus">True</property>
+					      <property name="draw_value">True</property>
+					      <property name="value_pos">GTK_POS_TOP</property>
+					      <property name="digits">2</property>
+					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+					      <property name="inverted">False</property>
+					      <property name="adjustment">-0 -1 1 0.1 0.1 0</property>
+					      <signal name="value_changed" handler="on_hscale3_value_changed" last_modification_time="Sun, 11 May 2003 09:12:55 GMT"/>
+					      <signal name="realize" handler="on_hscale3_realize" last_modification_time="Sun, 11 May 2003 09:13:03 GMT"/>
 					    </widget>
+					    <packing>
+					      <property name="padding">0</property>
+					      <property name="expand">False</property>
+					      <property name="fill">True</property>
+					    </packing>
+					  </child>
+
+					  <child>
+					    <widget class="GtkDrawingArea" id="stereo_mid_da">
+					      <property name="visible">True</property>
+					    </widget>
+					    <packing>
+					      <property name="padding">0</property>
+					      <property name="expand">True</property>
+					      <property name="fill">True</property>
+					    </packing>
 					  </child>
 					</widget>
-					<packing>
-					  <property name="padding">0</property>
-					  <property name="expand">True</property>
-					  <property name="fill">True</property>
-					</packing>
 				      </child>
 
 				      <child>
-					<widget class="GtkEventBox" id="mid_comp_event_box">
+					<widget class="GtkLabel" id="label262">
 					  <property name="visible">True</property>
-					  <signal name="enter_notify_event" handler="on_mid_comp_event_box_enter_notify_event" last_modification_time="Fri, 25 Apr 2003 17:03:03 GMT"/>
-					  <signal name="leave_notify_event" handler="on_mid_comp_event_box_leave_notify_event" last_modification_time="Fri, 25 Apr 2003 17:03:10 GMT"/>
-
-					  <child>
-					    <widget class="GtkAlignment" id="alignment9">
-					      <property name="visible">True</property>
-					      <property name="xalign">0.5</property>
-					      <property name="yalign">0.5</property>
-					      <property name="xscale">1</property>
-					      <property name="yscale">1</property>
-
-					      <child>
-						<widget class="GtkFrame" id="frame8">
-						  <property name="width_request">215</property>
-						  <property name="height_request">155</property>
-						  <property name="visible">True</property>
-						  <property name="label_xalign">0</property>
-						  <property name="label_yalign">0.5</property>
-						  <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
-
-						  <child>
-						    <widget class="GtkVBox" id="mid_comp">
-						      <property name="width_request">205</property>
-						      <property name="height_request">135</property>
-						      <property name="visible">True</property>
-						      <property name="homogeneous">False</property>
-						      <property name="spacing">1</property>
-						      <signal name="realize" handler="on_mid_comp_realize" last_modification_time="Sat, 12 Apr 2003 22:29:18 GMT"/>
-
-						      <child>
-							<widget class="GtkVBox" id="vbox36">
-							  <property name="visible">True</property>
-							  <property name="homogeneous">False</property>
-							  <property name="spacing">0</property>
-
-							  <child>
-							    <widget class="GtkTable" id="table12">
-							      <property name="visible">True</property>
-							      <property name="n_rows">2</property>
-							      <property name="n_columns">5</property>
-							      <property name="homogeneous">False</property>
-							      <property name="row_spacing">0</property>
-							      <property name="column_spacing">0</property>
-
-							      <child>
-								<widget class="GtkLabel" id="label86">
-								  <property name="visible">True</property>
-								  <property name="label" translatable="yes">Attack</property>
-								  <property name="use_underline">False</property>
-								  <property name="use_markup">False</property>
-								  <property name="justify">GTK_JUSTIFY_LEFT</property>
-								  <property name="wrap">False</property>
-								  <property name="selectable">False</property>
-								  <property name="xalign">0.5</property>
-								  <property name="yalign">0.5</property>
-								  <property name="xpad">0</property>
-								  <property name="ypad">0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">0</property>
-								  <property name="right_attach">1</property>
-								  <property name="top_attach">0</property>
-								  <property name="bottom_attach">1</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options"></property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkLabel" id="label87">
-								  <property name="visible">True</property>
-								  <property name="label" translatable="yes">Release</property>
-								  <property name="use_underline">False</property>
-								  <property name="use_markup">False</property>
-								  <property name="justify">GTK_JUSTIFY_LEFT</property>
-								  <property name="wrap">False</property>
-								  <property name="selectable">False</property>
-								  <property name="xalign">0.5</property>
-								  <property name="yalign">0.5</property>
-								  <property name="xpad">0</property>
-								  <property name="ypad">0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">1</property>
-								  <property name="right_attach">2</property>
-								  <property name="top_attach">0</property>
-								  <property name="bottom_attach">1</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options"></property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkLabel" id="label88">
-								  <property name="visible">True</property>
-								  <property name="label" translatable="yes">Thresh</property>
-								  <property name="use_underline">False</property>
-								  <property name="use_markup">False</property>
-								  <property name="justify">GTK_JUSTIFY_LEFT</property>
-								  <property name="wrap">False</property>
-								  <property name="selectable">False</property>
-								  <property name="xalign">0.5</property>
-								  <property name="yalign">0.5</property>
-								  <property name="xpad">0</property>
-								  <property name="ypad">0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">2</property>
-								  <property name="right_attach">3</property>
-								  <property name="top_attach">0</property>
-								  <property name="bottom_attach">1</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options"></property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkLabel" id="label89">
-								  <property name="visible">True</property>
-								  <property name="label" translatable="yes">Ratio</property>
-								  <property name="use_underline">False</property>
-								  <property name="use_markup">False</property>
-								  <property name="justify">GTK_JUSTIFY_LEFT</property>
-								  <property name="wrap">False</property>
-								  <property name="selectable">False</property>
-								  <property name="xalign">0.5</property>
-								  <property name="yalign">0.5</property>
-								  <property name="xpad">0</property>
-								  <property name="ypad">0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">3</property>
-								  <property name="right_attach">4</property>
-								  <property name="top_attach">0</property>
-								  <property name="bottom_attach">1</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options"></property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkVBox" id="vbox37">
-								  <property name="visible">True</property>
-								  <property name="homogeneous">False</property>
-								  <property name="spacing">0</property>
-
-								  <child>
-								    <widget class="GtkVScale" id="comp_ra_2">
-								      <property name="width_request">20</property>
-								      <property name="height_request">53</property>
-								      <property name="visible">True</property>
-								      <property name="can_focus">True</property>
-								      <property name="draw_value">True</property>
-								      <property name="value_pos">GTK_POS_TOP</property>
-								      <property name="digits">1</property>
-								      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								      <property name="inverted">True</property>
-								      <property name="adjustment">1 1 20 0 0 0</property>
-								    </widget>
-								    <packing>
-								      <property name="padding">0</property>
-								      <property name="expand">True</property>
-								      <property name="fill">True</property>
-								    </packing>
-								  </child>
-
-								  <child>
-								    <widget class="GtkLabel" id="mid_knee_lbl">
-								      <property name="width_request">29</property>
-								      <property name="height_request">14</property>
-								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">Knee</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
-								      <signal name="realize" handler="on_mid_knee_lbl_realize" last_modification_time="Mon, 21 Apr 2003 00:05:02 GMT"/>
-								    </widget>
-								    <packing>
-								      <property name="padding">0</property>
-								      <property name="expand">False</property>
-								      <property name="fill">False</property>
-								    </packing>
-								  </child>
-
-								  <child>
-								    <widget class="GtkVScale" id="comp_kn_2">
-								      <property name="width_request">20</property>
-								      <property name="height_request">53</property>
-								      <property name="visible">True</property>
-								      <property name="can_focus">True</property>
-								      <property name="draw_value">True</property>
-								      <property name="value_pos">GTK_POS_TOP</property>
-								      <property name="digits">1</property>
-								      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								      <property name="inverted">True</property>
-								      <property name="adjustment">0 0 1 0 0 0</property>
-								      <signal name="value_changed" handler="on_comp_kn_2_value_changed" last_modification_time="Mon, 21 Apr 2003 00:00:18 GMT"/>
-								    </widget>
-								    <packing>
-								      <property name="padding">0</property>
-								      <property name="expand">True</property>
-								      <property name="fill">True</property>
-								    </packing>
-								  </child>
-								</widget>
-								<packing>
-								  <property name="left_attach">3</property>
-								  <property name="right_attach">4</property>
-								  <property name="top_attach">1</property>
-								  <property name="bottom_attach">2</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options">fill</property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkLabel" id="label90">
-								  <property name="visible">True</property>
-								  <property name="label" translatable="yes">Makeup</property>
-								  <property name="use_underline">False</property>
-								  <property name="use_markup">False</property>
-								  <property name="justify">GTK_JUSTIFY_LEFT</property>
-								  <property name="wrap">False</property>
-								  <property name="selectable">False</property>
-								  <property name="xalign">0.5</property>
-								  <property name="yalign">0.5</property>
-								  <property name="xpad">0</property>
-								  <property name="ypad">0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">4</property>
-								  <property name="right_attach">5</property>
-								  <property name="top_attach">0</property>
-								  <property name="bottom_attach">1</property>
-								  <property name="y_options"></property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkVScale" id="comp_th_2">
-								  <property name="visible">True</property>
-								  <property name="can_focus">True</property>
-								  <property name="draw_value">True</property>
-								  <property name="value_pos">GTK_POS_TOP</property>
-								  <property name="digits">1</property>
-								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								  <property name="inverted">True</property>
-								  <property name="adjustment">0 -30 0 0 0 0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">2</property>
-								  <property name="right_attach">3</property>
-								  <property name="top_attach">1</property>
-								  <property name="bottom_attach">2</property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkVScale" id="comp_re_2">
-								  <property name="visible">True</property>
-								  <property name="can_focus">True</property>
-								  <property name="draw_value">True</property>
-								  <property name="value_pos">GTK_POS_TOP</property>
-								  <property name="digits">1</property>
-								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								  <property name="inverted">True</property>
-								  <property name="adjustment">10 10 800 0 0 0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">1</property>
-								  <property name="right_attach">2</property>
-								  <property name="top_attach">1</property>
-								  <property name="bottom_attach">2</property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkVScale" id="comp_at_2">
-								  <property name="visible">True</property>
-								  <property name="can_focus">True</property>
-								  <property name="draw_value">True</property>
-								  <property name="value_pos">GTK_POS_TOP</property>
-								  <property name="digits">1</property>
-								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								  <property name="inverted">True</property>
-								  <property name="adjustment">10 10 400 0 0 0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">0</property>
-								  <property name="right_attach">1</property>
-								  <property name="top_attach">1</property>
-								  <property name="bottom_attach">2</property>
-								  <property name="y_options">fill</property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkVBox" id="vbox124">
-								  <property name="visible">True</property>
-								  <property name="homogeneous">False</property>
-								  <property name="spacing">0</property>
-
-								  <child>
-								    <widget class="GtkVScale" id="comp_ma_2">
-								      <property name="visible">True</property>
-								      <property name="can_focus">True</property>
-								      <property name="draw_value">True</property>
-								      <property name="value_pos">GTK_POS_TOP</property>
-								      <property name="digits">1</property>
-								      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								      <property name="inverted">True</property>
-								      <property name="adjustment">0 0 30 0 0 0</property>
-								    </widget>
-								    <packing>
-								      <property name="padding">0</property>
-								      <property name="expand">True</property>
-								      <property name="fill">True</property>
-								    </packing>
-								  </child>
-
-								  <child>
-								    <widget class="GtkToggleButton" id="autobutton2">
-								      <property name="visible">True</property>
-								      <property name="can_focus">True</property>
-								      <property name="label" translatable="yes">auto</property>
-								      <property name="use_underline">True</property>
-								      <property name="relief">GTK_RELIEF_NORMAL</property>
-								      <property name="active">False</property>
-								      <property name="inconsistent">False</property>
-								      <signal name="toggled" handler="on_autoutton2_toggled" last_modification_time="Sat, 26 Apr 2003 13:29:33 GMT"/>
-								    </widget>
-								    <packing>
-								      <property name="padding">0</property>
-								      <property name="expand">False</property>
-								      <property name="fill">False</property>
-								    </packing>
-								  </child>
-								</widget>
-								<packing>
-								  <property name="left_attach">4</property>
-								  <property name="right_attach">5</property>
-								  <property name="top_attach">1</property>
-								  <property name="bottom_attach">2</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options">fill</property>
-								</packing>
-							      </child>
-							    </widget>
-							    <packing>
-							      <property name="padding">0</property>
-							      <property name="expand">True</property>
-							      <property name="fill">True</property>
-							    </packing>
-							  </child>
-							</widget>
-							<packing>
-							  <property name="padding">0</property>
-							  <property name="expand">True</property>
-							  <property name="fill">True</property>
-							</packing>
-						      </child>
-
-						      <child>
-							<widget class="GtkTable" id="table13">
-							  <property name="visible">True</property>
-							  <property name="n_rows">3</property>
-							  <property name="n_columns">2</property>
-							  <property name="homogeneous">False</property>
-							  <property name="row_spacing">1</property>
-							  <property name="column_spacing">0</property>
-
-							  <child>
-							    <widget class="GtkLabel" id="label92">
-							      <property name="width_request">31</property>
-							      <property name="height_request">14</property>
-							      <property name="visible">True</property>
-							      <property name="label" translatable="yes">Level</property>
-							      <property name="use_underline">False</property>
-							      <property name="use_markup">False</property>
-							      <property name="justify">GTK_JUSTIFY_LEFT</property>
-							      <property name="wrap">False</property>
-							      <property name="selectable">False</property>
-							      <property name="xalign">0</property>
-							      <property name="yalign">0.5</property>
-							      <property name="xpad">0</property>
-							      <property name="ypad">0</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">0</property>
-							      <property name="right_attach">1</property>
-							      <property name="top_attach">0</property>
-							      <property name="bottom_attach">1</property>
-							      <property name="x_padding">2</property>
-							      <property name="x_options">fill</property>
-							      <property name="y_options"></property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="GtkLabel" id="label93">
-							      <property name="width_request">26</property>
-							      <property name="height_request">14</property>
-							      <property name="visible">True</property>
-							      <property name="label" translatable="yes">Gain</property>
-							      <property name="use_underline">False</property>
-							      <property name="use_markup">False</property>
-							      <property name="justify">GTK_JUSTIFY_LEFT</property>
-							      <property name="wrap">False</property>
-							      <property name="selectable">False</property>
-							      <property name="xalign">0</property>
-							      <property name="yalign">0.5</property>
-							      <property name="xpad">0</property>
-							      <property name="ypad">0</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">0</property>
-							      <property name="right_attach">1</property>
-							      <property name="top_attach">2</property>
-							      <property name="bottom_attach">3</property>
-							      <property name="x_padding">2</property>
-							      <property name="x_options">fill</property>
-							      <property name="y_options"></property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="Custom" id="comp_le_2">
-							      <property name="height_request">12</property>
-							      <property name="visible">True</property>
-							      <property name="creation_function">make_meter</property>
-							      <property name="string1">right</property>
-							      <property name="int1">-40</property>
-							      <property name="int2">0</property>
-							      <property name="last_modification_time">Sat, 26 Apr 2003 13:46:53 GMT</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">1</property>
-							      <property name="right_attach">2</property>
-							      <property name="top_attach">0</property>
-							      <property name="bottom_attach">1</property>
-							      <property name="y_options">fill</property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="Custom" id="comp_ga_2">
-							      <property name="height_request">12</property>
-							      <property name="visible">True</property>
-							      <property name="creation_function">make_meter</property>
-							      <property name="string1">left</property>
-							      <property name="int1">-40</property>
-							      <property name="int2">0</property>
-							      <property name="last_modification_time">Sat, 26 Apr 2003 13:46:53 GMT</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">1</property>
-							      <property name="right_attach">2</property>
-							      <property name="top_attach">2</property>
-							      <property name="bottom_attach">3</property>
-							      <property name="x_options">fill</property>
-							      <property name="y_options">fill</property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="Custom" id="custom17">
-							      <property name="height_request">10</property>
-							      <property name="visible">True</property>
-							      <property name="creation_function">make_mscale</property>
-							      <property name="string1">top bottom</property>
-							      <property name="int1">-40</property>
-							      <property name="int2">0</property>
-							      <property name="last_modification_time">Sat, 26 Apr 2003 20:02:53 GMT</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">1</property>
-							      <property name="right_attach">2</property>
-							      <property name="top_attach">1</property>
-							      <property name="bottom_attach">2</property>
-							      <property name="x_options">fill</property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="GtkLabel" id="label256">
-							      <property name="visible">True</property>
-							      <property name="label" translatable="yes"></property>
-							      <property name="use_underline">False</property>
-							      <property name="use_markup">False</property>
-							      <property name="justify">GTK_JUSTIFY_LEFT</property>
-							      <property name="wrap">False</property>
-							      <property name="selectable">False</property>
-							      <property name="xalign">0</property>
-							      <property name="yalign">0.5</property>
-							      <property name="xpad">0</property>
-							      <property name="ypad">0</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">0</property>
-							      <property name="right_attach">1</property>
-							      <property name="top_attach">1</property>
-							      <property name="bottom_attach">2</property>
-							      <property name="x_options">fill</property>
-							      <property name="y_options"></property>
-							    </packing>
-							  </child>
-							</widget>
-							<packing>
-							  <property name="padding">0</property>
-							  <property name="expand">False</property>
-							  <property name="fill">True</property>
-							</packing>
-						      </child>
-						    </widget>
-						  </child>
-
-						  <child>
-						    <widget class="GtkLabel" id="label-Mid">
-						      <property name="visible">True</property>
-						      <property name="label" translatable="yes">Mid : 00000 - 00000</property>
-						      <property name="use_underline">False</property>
-						      <property name="use_markup">False</property>
-						      <property name="justify">GTK_JUSTIFY_LEFT</property>
-						      <property name="wrap">False</property>
-						      <property name="selectable">False</property>
-						      <property name="xalign">0.5</property>
-						      <property name="yalign">0.5</property>
-						      <property name="xpad">0</property>
-						      <property name="ypad">0</property>
-						      <signal name="realize" handler="on_label-Mid_realize" last_modification_time="Mon, 14 Apr 2003 22:15:41 GMT"/>
-						    </widget>
-						    <packing>
-						      <property name="type">label_item</property>
-						    </packing>
-						  </child>
-						</widget>
-					      </child>
-					    </widget>
-					  </child>
+					  <property name="label" translatable="yes">Mid</property>
+					  <property name="use_underline">False</property>
+					  <property name="use_markup">False</property>
+					  <property name="justify">GTK_JUSTIFY_LEFT</property>
+					  <property name="wrap">False</property>
+					  <property name="selectable">False</property>
+					  <property name="xalign">0.5</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xpad">0</property>
+					  <property name="ypad">0</property>
 					</widget>
 					<packing>
-					  <property name="padding">0</property>
-					  <property name="expand">True</property>
-					  <property name="fill">True</property>
+					  <property name="type">label_item</property>
 					</packing>
+				      </child>
+				    </widget>
+				    <packing>
+				      <property name="padding">0</property>
+				      <property name="expand">True</property>
+				      <property name="fill">True</property>
+				    </packing>
+				  </child>
+
+				  <child>
+				    <widget class="GtkFrame" id="frame21">
+				      <property name="visible">True</property>
+				      <property name="label_xalign">0.5</property>
+				      <property name="label_yalign">0.5</property>
+				      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+
+				      <child>
+					<widget class="GtkVBox" id="vbox129">
+					  <property name="visible">True</property>
+					  <property name="homogeneous">False</property>
+					  <property name="spacing">0</property>
+
+					  <child>
+					    <widget class="GtkHScale" id="hscale4">
+					      <property name="visible">True</property>
+					      <property name="can_focus">True</property>
+					      <property name="draw_value">True</property>
+					      <property name="value_pos">GTK_POS_TOP</property>
+					      <property name="digits">2</property>
+					      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+					      <property name="inverted">False</property>
+					      <property name="adjustment">-0 -1 1 0.1 0.1 0</property>
+					      <signal name="value_changed" handler="on_hscale4_value_changed" last_modification_time="Sun, 11 May 2003 09:13:09 GMT"/>
+					      <signal name="realize" handler="on_hscale4_realize" last_modification_time="Sun, 11 May 2003 09:13:17 GMT"/>
+					    </widget>
+					    <packing>
+					      <property name="padding">0</property>
+					      <property name="expand">False</property>
+					      <property name="fill">True</property>
+					    </packing>
+					  </child>
+
+					  <child>
+					    <widget class="GtkDrawingArea" id="stereo_high_da">
+					      <property name="visible">True</property>
+					    </widget>
+					    <packing>
+					      <property name="padding">0</property>
+					      <property name="expand">True</property>
+					      <property name="fill">True</property>
+					    </packing>
+					  </child>
+					</widget>
 				      </child>
 
 				      <child>
-					<widget class="GtkEventBox" id="high_comp_event_box">
+					<widget class="GtkLabel" id="label263">
 					  <property name="visible">True</property>
-					  <signal name="enter_notify_event" handler="on_high_comp_event_box_enter_notify_event" last_modification_time="Fri, 25 Apr 2003 17:03:30 GMT"/>
-					  <signal name="leave_notify_event" handler="on_high_comp_event_box_leave_notify_event" last_modification_time="Fri, 25 Apr 2003 17:03:45 GMT"/>
-
-					  <child>
-					    <widget class="GtkAlignment" id="alignment8">
-					      <property name="visible">True</property>
-					      <property name="xalign">0.5</property>
-					      <property name="yalign">0.5</property>
-					      <property name="xscale">1</property>
-					      <property name="yscale">1</property>
-
-					      <child>
-						<widget class="GtkFrame" id="frame6">
-						  <property name="width_request">215</property>
-						  <property name="height_request">155</property>
-						  <property name="visible">True</property>
-						  <property name="label_xalign">0</property>
-						  <property name="label_yalign">0.5</property>
-						  <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
-
-						  <child>
-						    <widget class="GtkVBox" id="high_comp">
-						      <property name="width_request">205</property>
-						      <property name="height_request">135</property>
-						      <property name="visible">True</property>
-						      <property name="homogeneous">False</property>
-						      <property name="spacing">1</property>
-						      <signal name="realize" handler="on_high_comp_realize" last_modification_time="Sat, 12 Apr 2003 22:29:38 GMT"/>
-
-						      <child>
-							<widget class="GtkVBox" id="vbox18">
-							  <property name="visible">True</property>
-							  <property name="homogeneous">False</property>
-							  <property name="spacing">0</property>
-
-							  <child>
-							    <widget class="GtkTable" id="table6">
-							      <property name="visible">True</property>
-							      <property name="n_rows">2</property>
-							      <property name="n_columns">5</property>
-							      <property name="homogeneous">False</property>
-							      <property name="row_spacing">0</property>
-							      <property name="column_spacing">0</property>
-
-							      <child>
-								<widget class="GtkLabel" id="label22">
-								  <property name="visible">True</property>
-								  <property name="label" translatable="yes">Attack</property>
-								  <property name="use_underline">False</property>
-								  <property name="use_markup">False</property>
-								  <property name="justify">GTK_JUSTIFY_LEFT</property>
-								  <property name="wrap">False</property>
-								  <property name="selectable">False</property>
-								  <property name="xalign">0.5</property>
-								  <property name="yalign">0.5</property>
-								  <property name="xpad">0</property>
-								  <property name="ypad">0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">0</property>
-								  <property name="right_attach">1</property>
-								  <property name="top_attach">0</property>
-								  <property name="bottom_attach">1</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options"></property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkLabel" id="label23">
-								  <property name="visible">True</property>
-								  <property name="label" translatable="yes">Release</property>
-								  <property name="use_underline">False</property>
-								  <property name="use_markup">False</property>
-								  <property name="justify">GTK_JUSTIFY_LEFT</property>
-								  <property name="wrap">False</property>
-								  <property name="selectable">False</property>
-								  <property name="xalign">0.5</property>
-								  <property name="yalign">0.5</property>
-								  <property name="xpad">0</property>
-								  <property name="ypad">0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">1</property>
-								  <property name="right_attach">2</property>
-								  <property name="top_attach">0</property>
-								  <property name="bottom_attach">1</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options"></property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkLabel" id="label24">
-								  <property name="visible">True</property>
-								  <property name="label" translatable="yes">Thresh</property>
-								  <property name="use_underline">False</property>
-								  <property name="use_markup">False</property>
-								  <property name="justify">GTK_JUSTIFY_LEFT</property>
-								  <property name="wrap">False</property>
-								  <property name="selectable">False</property>
-								  <property name="xalign">0.5</property>
-								  <property name="yalign">0.5</property>
-								  <property name="xpad">0</property>
-								  <property name="ypad">0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">2</property>
-								  <property name="right_attach">3</property>
-								  <property name="top_attach">0</property>
-								  <property name="bottom_attach">1</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options"></property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkLabel" id="label25">
-								  <property name="visible">True</property>
-								  <property name="label" translatable="yes">Ratio</property>
-								  <property name="use_underline">False</property>
-								  <property name="use_markup">False</property>
-								  <property name="justify">GTK_JUSTIFY_LEFT</property>
-								  <property name="wrap">False</property>
-								  <property name="selectable">False</property>
-								  <property name="xalign">0</property>
-								  <property name="yalign">0.5</property>
-								  <property name="xpad">0</property>
-								  <property name="ypad">0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">3</property>
-								  <property name="right_attach">4</property>
-								  <property name="top_attach">0</property>
-								  <property name="bottom_attach">1</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options"></property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkVBox" id="vbox7">
-								  <property name="visible">True</property>
-								  <property name="homogeneous">False</property>
-								  <property name="spacing">0</property>
-
-								  <child>
-								    <widget class="GtkVScale" id="comp_ra_3">
-								      <property name="width_request">20</property>
-								      <property name="height_request">53</property>
-								      <property name="visible">True</property>
-								      <property name="can_focus">True</property>
-								      <property name="draw_value">True</property>
-								      <property name="value_pos">GTK_POS_TOP</property>
-								      <property name="digits">1</property>
-								      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								      <property name="inverted">True</property>
-								      <property name="adjustment">1 1 20 0 0 0</property>
-								    </widget>
-								    <packing>
-								      <property name="padding">0</property>
-								      <property name="expand">True</property>
-								      <property name="fill">True</property>
-								    </packing>
-								  </child>
-
-								  <child>
-								    <widget class="GtkLabel" id="high_knee_lbl">
-								      <property name="width_request">29</property>
-								      <property name="height_request">14</property>
-								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">Knee</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
-								      <signal name="realize" handler="on_high_knee_lbl_realize" last_modification_time="Mon, 21 Apr 2003 00:05:19 GMT"/>
-								    </widget>
-								    <packing>
-								      <property name="padding">0</property>
-								      <property name="expand">False</property>
-								      <property name="fill">False</property>
-								    </packing>
-								  </child>
-
-								  <child>
-								    <widget class="GtkVScale" id="comp_kn_3">
-								      <property name="width_request">20</property>
-								      <property name="height_request">53</property>
-								      <property name="visible">True</property>
-								      <property name="can_focus">True</property>
-								      <property name="draw_value">True</property>
-								      <property name="value_pos">GTK_POS_TOP</property>
-								      <property name="digits">1</property>
-								      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								      <property name="inverted">True</property>
-								      <property name="adjustment">0 0 1 0 0 0</property>
-								      <signal name="value_changed" handler="on_comp_kn_3_value_changed" last_modification_time="Mon, 21 Apr 2003 00:00:25 GMT"/>
-								    </widget>
-								    <packing>
-								      <property name="padding">0</property>
-								      <property name="expand">True</property>
-								      <property name="fill">True</property>
-								    </packing>
-								  </child>
-								</widget>
-								<packing>
-								  <property name="left_attach">3</property>
-								  <property name="right_attach">4</property>
-								  <property name="top_attach">1</property>
-								  <property name="bottom_attach">2</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options">fill</property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkLabel" id="label26">
-								  <property name="visible">True</property>
-								  <property name="label" translatable="yes">Makeup</property>
-								  <property name="use_underline">False</property>
-								  <property name="use_markup">False</property>
-								  <property name="justify">GTK_JUSTIFY_LEFT</property>
-								  <property name="wrap">False</property>
-								  <property name="selectable">False</property>
-								  <property name="xalign">0.5</property>
-								  <property name="yalign">0.5</property>
-								  <property name="xpad">0</property>
-								  <property name="ypad">0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">4</property>
-								  <property name="right_attach">5</property>
-								  <property name="top_attach">0</property>
-								  <property name="bottom_attach">1</property>
-								  <property name="y_options"></property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkVScale" id="comp_at_3">
-								  <property name="visible">True</property>
-								  <property name="can_focus">True</property>
-								  <property name="draw_value">True</property>
-								  <property name="value_pos">GTK_POS_TOP</property>
-								  <property name="digits">1</property>
-								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								  <property name="inverted">True</property>
-								  <property name="adjustment">10 10 400 0 0 0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">0</property>
-								  <property name="right_attach">1</property>
-								  <property name="top_attach">1</property>
-								  <property name="bottom_attach">2</property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkVScale" id="comp_re_3">
-								  <property name="visible">True</property>
-								  <property name="can_focus">True</property>
-								  <property name="draw_value">True</property>
-								  <property name="value_pos">GTK_POS_TOP</property>
-								  <property name="digits">1</property>
-								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								  <property name="inverted">True</property>
-								  <property name="adjustment">10 10 800 0 0 0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">1</property>
-								  <property name="right_attach">2</property>
-								  <property name="top_attach">1</property>
-								  <property name="bottom_attach">2</property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkVScale" id="comp_th_3">
-								  <property name="visible">True</property>
-								  <property name="can_focus">True</property>
-								  <property name="draw_value">True</property>
-								  <property name="value_pos">GTK_POS_TOP</property>
-								  <property name="digits">1</property>
-								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								  <property name="inverted">True</property>
-								  <property name="adjustment">0 -30 0 0 0 0</property>
-								</widget>
-								<packing>
-								  <property name="left_attach">2</property>
-								  <property name="right_attach">3</property>
-								  <property name="top_attach">1</property>
-								  <property name="bottom_attach">2</property>
-								</packing>
-							      </child>
-
-							      <child>
-								<widget class="GtkVBox" id="vbox125">
-								  <property name="visible">True</property>
-								  <property name="homogeneous">False</property>
-								  <property name="spacing">0</property>
-
-								  <child>
-								    <widget class="GtkVScale" id="comp_ma_3">
-								      <property name="visible">True</property>
-								      <property name="can_focus">True</property>
-								      <property name="draw_value">True</property>
-								      <property name="value_pos">GTK_POS_TOP</property>
-								      <property name="digits">1</property>
-								      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-								      <property name="inverted">True</property>
-								      <property name="adjustment">0 0 30 0 0 0</property>
-								    </widget>
-								    <packing>
-								      <property name="padding">0</property>
-								      <property name="expand">True</property>
-								      <property name="fill">True</property>
-								    </packing>
-								  </child>
-
-								  <child>
-								    <widget class="GtkToggleButton" id="autobutton3">
-								      <property name="visible">True</property>
-								      <property name="can_focus">True</property>
-								      <property name="label" translatable="yes">auto</property>
-								      <property name="use_underline">True</property>
-								      <property name="relief">GTK_RELIEF_NORMAL</property>
-								      <property name="active">False</property>
-								      <property name="inconsistent">False</property>
-								      <signal name="toggled" handler="on_autoutton3_toggled" last_modification_time="Sat, 26 Apr 2003 13:29:27 GMT"/>
-								    </widget>
-								    <packing>
-								      <property name="padding">0</property>
-								      <property name="expand">False</property>
-								      <property name="fill">False</property>
-								    </packing>
-								  </child>
-								</widget>
-								<packing>
-								  <property name="left_attach">4</property>
-								  <property name="right_attach">5</property>
-								  <property name="top_attach">1</property>
-								  <property name="bottom_attach">2</property>
-								  <property name="x_options">fill</property>
-								  <property name="y_options">fill</property>
-								</packing>
-							      </child>
-							    </widget>
-							    <packing>
-							      <property name="padding">0</property>
-							      <property name="expand">True</property>
-							      <property name="fill">True</property>
-							    </packing>
-							  </child>
-							</widget>
-							<packing>
-							  <property name="padding">0</property>
-							  <property name="expand">True</property>
-							  <property name="fill">True</property>
-							</packing>
-						      </child>
-
-						      <child>
-							<widget class="GtkTable" id="table11">
-							  <property name="visible">True</property>
-							  <property name="n_rows">3</property>
-							  <property name="n_columns">2</property>
-							  <property name="homogeneous">False</property>
-							  <property name="row_spacing">1</property>
-							  <property name="column_spacing">0</property>
-
-							  <child>
-							    <widget class="GtkLabel" id="label84">
-							      <property name="width_request">31</property>
-							      <property name="height_request">14</property>
-							      <property name="visible">True</property>
-							      <property name="label" translatable="yes">Level</property>
-							      <property name="use_underline">False</property>
-							      <property name="use_markup">False</property>
-							      <property name="justify">GTK_JUSTIFY_LEFT</property>
-							      <property name="wrap">False</property>
-							      <property name="selectable">False</property>
-							      <property name="xalign">0</property>
-							      <property name="yalign">0.5</property>
-							      <property name="xpad">0</property>
-							      <property name="ypad">0</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">0</property>
-							      <property name="right_attach">1</property>
-							      <property name="top_attach">0</property>
-							      <property name="bottom_attach">1</property>
-							      <property name="x_padding">2</property>
-							      <property name="x_options">fill</property>
-							      <property name="y_options"></property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="GtkLabel" id="label85">
-							      <property name="width_request">26</property>
-							      <property name="height_request">14</property>
-							      <property name="visible">True</property>
-							      <property name="label" translatable="yes">Gain</property>
-							      <property name="use_underline">False</property>
-							      <property name="use_markup">False</property>
-							      <property name="justify">GTK_JUSTIFY_LEFT</property>
-							      <property name="wrap">False</property>
-							      <property name="selectable">False</property>
-							      <property name="xalign">0</property>
-							      <property name="yalign">0.5</property>
-							      <property name="xpad">0</property>
-							      <property name="ypad">0</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">0</property>
-							      <property name="right_attach">1</property>
-							      <property name="top_attach">2</property>
-							      <property name="bottom_attach">3</property>
-							      <property name="x_padding">2</property>
-							      <property name="x_options">fill</property>
-							      <property name="y_options"></property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="Custom" id="comp_ga_3">
-							      <property name="height_request">12</property>
-							      <property name="visible">True</property>
-							      <property name="creation_function">make_meter</property>
-							      <property name="string1">left</property>
-							      <property name="int1">-40</property>
-							      <property name="int2">0</property>
-							      <property name="last_modification_time">Sat, 26 Apr 2003 13:46:53 GMT</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">1</property>
-							      <property name="right_attach">2</property>
-							      <property name="top_attach">2</property>
-							      <property name="bottom_attach">3</property>
-							      <property name="x_options">fill</property>
-							      <property name="y_options">fill</property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="Custom" id="comp_le_3">
-							      <property name="height_request">12</property>
-							      <property name="visible">True</property>
-							      <property name="creation_function">make_meter</property>
-							      <property name="string1">right</property>
-							      <property name="int1">-40</property>
-							      <property name="int2">0</property>
-							      <property name="last_modification_time">Sat, 26 Apr 2003 13:46:53 GMT</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">1</property>
-							      <property name="right_attach">2</property>
-							      <property name="top_attach">0</property>
-							      <property name="bottom_attach">1</property>
-							      <property name="y_options">fill</property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="Custom" id="custom18">
-							      <property name="height_request">10</property>
-							      <property name="visible">True</property>
-							      <property name="creation_function">make_mscale</property>
-							      <property name="string1">top bottom</property>
-							      <property name="int1">-40</property>
-							      <property name="int2">0</property>
-							      <property name="last_modification_time">Sat, 26 Apr 2003 20:03:00 GMT</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">1</property>
-							      <property name="right_attach">2</property>
-							      <property name="top_attach">1</property>
-							      <property name="bottom_attach">2</property>
-							      <property name="x_options">fill</property>
-							    </packing>
-							  </child>
-
-							  <child>
-							    <widget class="GtkLabel" id="label257">
-							      <property name="visible">True</property>
-							      <property name="label" translatable="yes"></property>
-							      <property name="use_underline">False</property>
-							      <property name="use_markup">False</property>
-							      <property name="justify">GTK_JUSTIFY_LEFT</property>
-							      <property name="wrap">False</property>
-							      <property name="selectable">False</property>
-							      <property name="xalign">0</property>
-							      <property name="yalign">0.5</property>
-							      <property name="xpad">0</property>
-							      <property name="ypad">0</property>
-							    </widget>
-							    <packing>
-							      <property name="left_attach">0</property>
-							      <property name="right_attach">1</property>
-							      <property name="top_attach">1</property>
-							      <property name="bottom_attach">2</property>
-							      <property name="x_options">fill</property>
-							      <property name="y_options"></property>
-							    </packing>
-							  </child>
-							</widget>
-							<packing>
-							  <property name="padding">0</property>
-							  <property name="expand">False</property>
-							  <property name="fill">True</property>
-							</packing>
-						      </child>
-						    </widget>
-						  </child>
-
-						  <child>
-						    <widget class="GtkLabel" id="label-High">
-						      <property name="visible">True</property>
-						      <property name="label" translatable="yes">High : 00000 - 00000</property>
-						      <property name="use_underline">False</property>
-						      <property name="use_markup">False</property>
-						      <property name="justify">GTK_JUSTIFY_LEFT</property>
-						      <property name="wrap">False</property>
-						      <property name="selectable">False</property>
-						      <property name="xalign">0.5</property>
-						      <property name="yalign">0.5</property>
-						      <property name="xpad">0</property>
-						      <property name="ypad">0</property>
-						      <signal name="realize" handler="on_label-High_realize" last_modification_time="Mon, 14 Apr 2003 22:16:06 GMT"/>
-						    </widget>
-						    <packing>
-						      <property name="type">label_item</property>
-						    </packing>
-						  </child>
-						</widget>
-					      </child>
-					    </widget>
-					  </child>
+					  <property name="label" translatable="yes">High</property>
+					  <property name="use_underline">False</property>
+					  <property name="use_markup">False</property>
+					  <property name="justify">GTK_JUSTIFY_LEFT</property>
+					  <property name="wrap">False</property>
+					  <property name="selectable">False</property>
+					  <property name="xalign">0.5</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xpad">0</property>
+					  <property name="ypad">0</property>
 					</widget>
 					<packing>
-					  <property name="padding">0</property>
-					  <property name="expand">True</property>
-					  <property name="fill">True</property>
+					  <property name="type">label_item</property>
 					</packing>
 				      </child>
 				    </widget>
@@ -5739,6 +5918,29 @@
 				    </packing>
 				  </child>
 				</widget>
+				<packing>
+				  <property name="tab_expand">False</property>
+				  <property name="tab_fill">True</property>
+				</packing>
+			      </child>
+
+			      <child>
+				<widget class="GtkLabel" id="label260">
+				  <property name="visible">True</property>
+				  <property name="label" translatable="yes">Stereo Width</property>
+				  <property name="use_underline">False</property>
+				  <property name="use_markup">False</property>
+				  <property name="justify">GTK_JUSTIFY_LEFT</property>
+				  <property name="wrap">False</property>
+				  <property name="selectable">False</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				</widget>
+				<packing>
+				  <property name="type">tab</property>
+				</packing>
 			      </child>
 			    </widget>
 			    <packing>
@@ -6012,7 +6214,7 @@
 					      </child>
 
 					      <child>
-						<widget class="GtkHScale" id="hscale1">
+						<widget class="GtkHScale" id="lim_input_hscale">
 						  <property name="visible">True</property>
 						  <property name="can_focus">True</property>
 						  <property name="draw_value">True</property>
@@ -6021,6 +6223,8 @@
 						  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						  <property name="inverted">False</property>
 						  <property name="adjustment">0 -20 20 0 0 0</property>
+						  <signal name="value_changed" handler="on_lim_input_hscale_value_changed" last_modification_time="Sun, 11 May 2003 10:53:32 GMT"/>
+						  <signal name="realize" handler="on_lim_input_hscale_realize" last_modification_time="Sun, 11 May 2003 10:53:39 GMT"/>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>

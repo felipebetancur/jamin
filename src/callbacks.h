@@ -399,3 +399,35 @@ gboolean
 on_mid2high2_button_release_event      (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
+
+void
+on_hscale2_value_changed               (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_hscale2_realize                     (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_hscale3_value_changed               (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_hscale3_realize                     (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_hscale4_value_changed               (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_hscale4_realize                     (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_lim_input_hscale_value_changed      (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_lim_input_hscale_realize            (GtkWidget       *widget,
+                                        gpointer         user_data);

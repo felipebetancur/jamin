@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <jack/jack.h>
 #include <fftw3.h>
+#include <assert.h>
 
 #include "process.h"
 #include "compressor.h"
@@ -22,7 +23,6 @@ float eq_coefs[BINS]; /* Linear gain of each FFT bin */
 float lim_peak[2];
 
 int global_bypass = 0;
-int limiter_connected = FALSE;
 
 float in_peak[NCHANNELS], out_peak[NCHANNELS];
 
@@ -39,6 +39,9 @@ static float *real;
 static float *comp;
 static float *comp_tmp;
 static float *out_tmp[NCHANNELS][XO_NBANDS];
+static float sw_m_gain[XO_NBANDS];
+static float sw_s_gain[XO_NBANDS];
+static float limiter_gain = 1.0f;
 
 static int spectrum_mode = SPEC_PRE_EQ;
 
@@ -54,6 +57,7 @@ float sample_rate = 0.0f;
 const jack_nframes_t step_size = BINS / OVER_SAMP;
 
 void run_eq(unsigned int port, unsigned int in_pos);
+void run_width(int xo_band, float *left, float *right, int nframes);
 
 void process_init(float fs, int buffer_size)
 {
@@ -126,26 +130,27 @@ void process_init(float fs, int buffer_size)
            exit(1);
     }
 
-    out_tmp[0][XO_LOW] = calloc(buffer_size, sizeof(float));
-    out_tmp[1][XO_LOW] = calloc(buffer_size, sizeof(float));
-    out_tmp[0][XO_MID] = calloc(buffer_size, sizeof(float));
-    out_tmp[1][XO_MID] = calloc(buffer_size, sizeof(float));
-    out_tmp[0][XO_HIGH] = calloc(buffer_size, sizeof(float));
-    out_tmp[1][XO_HIGH] = calloc(buffer_size, sizeof(float));
+    out_tmp[CHANNEL_L][XO_LOW] = calloc(buffer_size, sizeof(float));
+    out_tmp[CHANNEL_R][XO_LOW] = calloc(buffer_size, sizeof(float));
+    out_tmp[CHANNEL_L][XO_MID] = calloc(buffer_size, sizeof(float));
+    out_tmp[CHANNEL_R][XO_MID] = calloc(buffer_size, sizeof(float));
+    out_tmp[CHANNEL_L][XO_HIGH] = calloc(buffer_size, sizeof(float));
+    out_tmp[CHANNEL_R][XO_HIGH] = calloc(buffer_size, sizeof(float));
 
     compressors[XO_LOW].handle = plugin_instantiate(comp_plugin, fs);
-    comp_connect(comp_plugin, &compressors[XO_LOW], out_tmp[0][XO_LOW],
-		 out_tmp[1][XO_LOW]);
+    comp_connect(comp_plugin, &compressors[XO_LOW],
+	    out_tmp[CHANNEL_L][XO_LOW], out_tmp[CHANNEL_R][XO_LOW]);
 
     compressors[XO_MID].handle = plugin_instantiate(comp_plugin, fs);
-    comp_connect(comp_plugin, &compressors[XO_MID], out_tmp[0][XO_MID],
-		 out_tmp[1][XO_MID]);
+    comp_connect(comp_plugin, &compressors[XO_MID],
+	    out_tmp[CHANNEL_L][XO_MID], out_tmp[CHANNEL_R][XO_MID]);
 
     compressors[XO_HIGH].handle = plugin_instantiate(comp_plugin, fs);
-    comp_connect(comp_plugin, &compressors[XO_HIGH], out_tmp[0][XO_HIGH],
-		 out_tmp[1][XO_HIGH]);
+    comp_connect(comp_plugin, &compressors[XO_HIGH],
+	    out_tmp[CHANNEL_L][XO_HIGH], out_tmp[CHANNEL_R][XO_HIGH]);
 
     limiter.handle = plugin_instantiate(lim_plugin, fs);
+    lim_connect(lim_plugin, &limiter, NULL, NULL);
 }
 
 void run_eq(unsigned int port, unsigned int in_ptr)
@@ -243,16 +248,11 @@ int process_signal(jack_nframes_t nframes,
     static unsigned int in_ptr = 0;
     static unsigned int n_calc_pt = BINS - (BINS / OVER_SAMP);
 
-    if (!limiter_connected) {
-	limiter_connected = TRUE;
-	lim_connect(lim_plugin, &limiter, out[0], out[1]);
-    } else {				/* already connected */
-	/* need to update buffer addresses anyway */
-	plugin_connect_port(lim_plugin, limiter.handle, LIM_IN_1, out[0]);
-	plugin_connect_port(lim_plugin, limiter.handle, LIM_IN_2, out[1]);
-	plugin_connect_port(lim_plugin, limiter.handle, LIM_OUT_1, out[0]);
-	plugin_connect_port(lim_plugin, limiter.handle, LIM_OUT_2, out[1]);
-    }
+    /* The limiters i/o ports potentially change with every call */
+    plugin_connect_port(lim_plugin, limiter.handle, LIM_IN_1, out[CHANNEL_L]);
+    plugin_connect_port(lim_plugin, limiter.handle, LIM_IN_2, out[CHANNEL_R]);
+    plugin_connect_port(lim_plugin, limiter.handle, LIM_OUT_1, out[CHANNEL_L]);
+    plugin_connect_port(lim_plugin, limiter.handle, LIM_OUT_2, out[CHANNEL_R]);
 
     for (pos = 0; pos < nframes; pos++) {
 	const unsigned int op = (in_ptr - latency) & BUF_MASK;
@@ -277,9 +277,10 @@ int process_signal(jack_nframes_t nframes,
 
 	if (in_ptr == n_calc_pt) {	/* time to do the FFT? */
 	    if (!global_bypass) {
-		run_eq(0, in_ptr);
-		run_eq(1, in_ptr);
+		run_eq(CHANNEL_L, in_ptr);
+		run_eq(CHANNEL_R, in_ptr);
 	    }
+	    /* Work out when we can run it again */
 	    n_calc_pt = (in_ptr + step_size) & BUF_MASK;
 	}
     }
@@ -287,8 +288,14 @@ int process_signal(jack_nframes_t nframes,
     //printf("rolled fifo's...\n");
 
     plugin_run(comp_plugin, compressors[XO_LOW].handle, nframes);
+    run_width(XO_LOW, out_tmp[CHANNEL_L][XO_LOW], out_tmp[CHANNEL_R][XO_LOW],
+	    nframes);
     plugin_run(comp_plugin, compressors[XO_MID].handle, nframes);
+    run_width(XO_MID, out_tmp[CHANNEL_L][XO_MID], out_tmp[CHANNEL_R][XO_MID],
+	    nframes);
     plugin_run(comp_plugin, compressors[XO_HIGH].handle, nframes);
+    run_width(XO_HIGH, out_tmp[CHANNEL_L][XO_HIGH], out_tmp[CHANNEL_R][XO_HIGH],
+	    nframes);
 
     //printf("run compressors...\n");
 
@@ -304,6 +311,10 @@ int process_signal(jack_nframes_t nframes,
 
     for (pos = 0; pos < nframes; pos++) {
 	for (port = 0; port < nchannels; port++) {
+	    /* Apply input gain */
+	    out[port][pos] *= limiter_gain;
+
+	    /* Check for peaks */
 	    if (out[port][pos] > lim_peak[LIM_PEAK_IN]) {
 		lim_peak[LIM_PEAK_IN] = out[port][pos];
 	    }
@@ -360,6 +371,36 @@ float eval_comp(float thresh, float ratio, float knee, float in)
 void process_set_spec_mode(int mode)
 {
     spectrum_mode = mode;
+}
+
+void process_set_stereo_width(int xo_band, float width)
+{
+    assert(xo_band >= 0 && xo_band < XO_NBANDS);
+
+    /* Scale width to be pi/4 - pi/2, the sqrt(2) factor saves us some cycles
+     * later */
+    sw_m_gain[xo_band] = cosf((width + 1.0f) * 0.78539815f) * 0.7071067811f;
+    sw_s_gain[xo_band] = sinf((width + 1.0f) * 0.78539815f) * 0.7071067811f;
+
+    printf("[%d] mid = %f, side= %f\n", xo_band, sw_m_gain[xo_band], sw_s_gain[xo_band]);
+}
+
+void run_width(int xo_band, float *left, float *right, int nframes)
+{
+    unsigned int pos;
+
+    for (pos = 0; pos < nframes; pos++) {
+	const float mid = (left[pos] + right[pos]) * sw_m_gain[xo_band];
+	const float side = (left[pos] - right[pos]) * sw_s_gain[xo_band];
+
+	left[pos] = mid + side;
+	right[pos] = mid - side;
+    }
+}
+
+void process_set_limiter_input_gain(float gain)
+{
+        limiter_gain = gain;
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

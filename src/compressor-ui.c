@@ -75,6 +75,8 @@ void bind_compressors()
 gboolean adj_cb(GtkAdjustment *adj, gpointer p)
 {
     s_set_value_ui((int)p, adj->value);
+
+    return FALSE;
 }
 
 void at_changed(int id, float value)

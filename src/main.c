@@ -25,6 +25,7 @@
 #include "intrim.h"
 #include "process.h"
 #include "spectrum.h"
+#include "stereo.h"
 #include "state.h"
 
 GtkWidget *main_window;
@@ -66,6 +67,7 @@ int main(int argc, char *argv[])
     bind_limiter();
     bind_compressors();
     bind_spectrum();
+    bind_stereo();
 
     s_clear_history();
 
