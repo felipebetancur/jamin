@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-02 02:31+0300\n"
+"POT-Creation-Date: 2004-12-15 13:30-0600\n"
 "PO-Revision-Date: 2004-12-16 03:51+0300\n"
 "Last-Translator: \n"
 "Language-Team:  <ru@li.org>\n"
@@ -95,753 +95,712 @@ msgstr "перемотать вперёд"
 msgid "HH:MM:SS:xx"
 msgstr "ЧЧ:ММ:СС:xx"
 
-#: src/interface.c:830
+#: src/interface.c:831
 msgid "Stopped | some CPU | some frames | 96000 Hz | Focus - something"
-msgstr "Остановлено·|·сколько-то·CPU·|·сколько-то выборок·|·96000·Гц·|·Что-то в фокусе"
+msgstr ""
+"Остановлено·|·сколько-то·CPU·|·сколько-то выборок·|·96000·Гц·|·Что-то в "
+"фокусе"
 
 #: src/interface.c:853
 msgid "Scenes"
 msgstr "Сцены"
 
-#: src/interface.c:869
-#: src/interface.c:880
-#: src/interface.c:891
-#: src/interface.c:902
+#: src/interface.c:868 src/interface.c:879 src/interface.c:890
+#: src/interface.c:901
 msgid "Don't change this pixmap!!!"
 msgstr "Не меняйте это изображение!!!"
 
-#: src/interface.c:913
-#: src/interface.c:924
-#: src/interface.c:935
-#: src/interface.c:946
-#: src/interface.c:957
-#: src/interface.c:968
-#: src/interface.c:979
-#: src/interface.c:990
-#: src/interface.c:1001
-#: src/interface.c:1012
-#: src/interface.c:1023
-#: src/interface.c:1034
-#: src/interface.c:1045
-#: src/interface.c:1056
-#: src/interface.c:1067
-#: src/interface.c:1078
+#: src/interface.c:912 src/interface.c:923 src/interface.c:934
+#: src/interface.c:945 src/interface.c:956 src/interface.c:967
+#: src/interface.c:978 src/interface.c:989 src/interface.c:1000
+#: src/interface.c:1011 src/interface.c:1022 src/interface.c:1033
+#: src/interface.c:1044 src/interface.c:1055 src/interface.c:1066
+#: src/interface.c:1077
 msgid "Right click for menu"
 msgstr "Меню под правой кнопкой мыши"
 
-#: src/interface.c:1141
+#: src/interface.c:1140
 msgid "Input Gain"
 msgstr "Входное усиление"
 
-#: src/interface.c:1173
+#: src/interface.c:1172
 msgid "pan_label"
 msgstr "пан_метка"
 
-#: src/interface.c:1183
+#: src/interface.c:1181
 msgid "Input Balance"
 msgstr "Входной баланс"
 
-#: src/interface.c:1192
-#: src/interface.c:3233
+#: src/interface.c:1190 src/interface.c:3176
 msgid "Input"
 msgstr "Вход"
 
-#: src/interface.c:1243
+#: src/interface.c:1241
 msgid "HDEQ"
 msgstr "HDEQ"
 
-#: src/interface.c:1273
+#: src/interface.c:1270
 msgid "25 Hz"
 msgstr "25 Гц"
 
-#: src/interface.c:1282
+#: src/interface.c:1279
 msgid "25"
 msgstr "25"
 
-#: src/interface.c:1302
+#: src/interface.c:1298
 msgid "31 Hz"
 msgstr "31 Гц"
 
-#: src/interface.c:1311
+#: src/interface.c:1307
 msgid "31"
 msgstr "31"
 
-#: src/interface.c:1331
+#: src/interface.c:1326
 msgid "39 Hz"
 msgstr "39 Гц"
 
-#: src/interface.c:1340
+#: src/interface.c:1335
 msgid "39"
 msgstr "39"
 
-#: src/interface.c:1360
+#: src/interface.c:1354
 msgid "50 Hz"
 msgstr "50 Гц"
 
-#: src/interface.c:1369
+#: src/interface.c:1363
 msgid "50"
 msgstr "50"
 
-#: src/interface.c:1389
+#: src/interface.c:1382
 msgid "62 Hz"
 msgstr "62 Гц"
 
-#: src/interface.c:1398
+#: src/interface.c:1391
 msgid "62"
 msgstr "62"
 
-#: src/interface.c:1418
+#: src/interface.c:1410
 msgid "79 Hz"
 msgstr "79 Гц"
 
-#: src/interface.c:1427
+#: src/interface.c:1419
 msgid "79"
 msgstr "79"
 
-#: src/interface.c:1447
+#: src/interface.c:1438
 msgid "100 Hz"
 msgstr "100 Гц"
 
-#: src/interface.c:1456
+#: src/interface.c:1447
 msgid "100"
 msgstr "100"
 
-#: src/interface.c:1476
+#: src/interface.c:1466
 msgid "125 Hz"
 msgstr "125 Гц"
 
-#: src/interface.c:1485
+#: src/interface.c:1475
 msgid "125"
 msgstr "125"
 
-#: src/interface.c:1505
+#: src/interface.c:1494
 msgid "158 Hz"
 msgstr "158 Гц"
 
-#: src/interface.c:1514
+#: src/interface.c:1503
 msgid "158"
 msgstr "158"
 
-#: src/interface.c:1534
+#: src/interface.c:1522
 msgid "200 Hz"
 msgstr "200 Гц"
 
-#: src/interface.c:1543
+#: src/interface.c:1531
 msgid "200"
 msgstr "200"
 
-#: src/interface.c:1563
+#: src/interface.c:1550
 msgid "251 Hz"
 msgstr "251 Гц"
 
-#: src/interface.c:1572
+#: src/interface.c:1559
 msgid "251"
 msgstr "251"
 
-#: src/interface.c:1587
+#: src/interface.c:1573
 msgid "317 Hz"
 msgstr "317 Гц"
 
-#: src/interface.c:1596
+#: src/interface.c:1582
 msgid "317"
 msgstr "317"
 
-#: src/interface.c:1611
+#: src/interface.c:1596
 msgid "400 Hz"
 msgstr "400 Гц"
 
-#: src/interface.c:1620
+#: src/interface.c:1605
 msgid "400"
 msgstr "400"
 
-#: src/interface.c:1635
+#: src/interface.c:1619
 msgid "503 Hz"
 msgstr "503 Гц"
 
-#: src/interface.c:1644
+#: src/interface.c:1628
 msgid "503"
 msgstr "503"
 
-#: src/interface.c:1659
+#: src/interface.c:1642
 msgid "634 Hz"
 msgstr "634 гц"
 
-#: src/interface.c:1668
+#: src/interface.c:1651
 msgid "634"
 msgstr "634"
 
-#: src/interface.c:1683
+#: src/interface.c:1665
 msgid "800 Hz"
 msgstr "800 Гц"
 
-#: src/interface.c:1692
+#: src/interface.c:1674
 msgid "800"
 msgstr "800"
 
-#: src/interface.c:1707
+#: src/interface.c:1688
 msgid "1000 Hz"
 msgstr "1000 Гц"
 
-#: src/interface.c:1716
+#: src/interface.c:1697
 msgid "1k"
 msgstr "1к"
 
-#: src/interface.c:1731
+#: src/interface.c:1711
 msgid "1200 Hz"
 msgstr "1200 Гц"
 
-#: src/interface.c:1740
+#: src/interface.c:1720
 msgid "1k2"
 msgstr "1к2"
 
-#: src/interface.c:1755
+#: src/interface.c:1734
 msgid "1500 Hz"
 msgstr "1500 Гц"
 
-#: src/interface.c:1764
+#: src/interface.c:1743
 msgid "1k5"
 msgstr "1к5"
 
-#: src/interface.c:1779
+#: src/interface.c:1757
 msgid "2000 Hz"
 msgstr "2000 Гц"
 
-#: src/interface.c:1788
+#: src/interface.c:1766
 msgid "2k"
 msgstr "2к"
 
-#: src/interface.c:1803
+#: src/interface.c:1780
 msgid "2500 Hz"
 msgstr "2500 Гц"
 
-#: src/interface.c:1812
+#: src/interface.c:1789
 msgid "2k5"
 msgstr "2к5"
 
-#: src/interface.c:1827
+#: src/interface.c:1803
 msgid "3200 Hz"
 msgstr "3200 Гц"
 
-#: src/interface.c:1836
+#: src/interface.c:1812
 msgid "3k2"
 msgstr "3к2"
 
-#: src/interface.c:1851
+#: src/interface.c:1826
 msgid "4000 Hz"
 msgstr "4000 Гц"
 
-#: src/interface.c:1860
+#: src/interface.c:1835
 msgid "4k"
 msgstr "4к"
 
-#: src/interface.c:1875
+#: src/interface.c:1849
 msgid "5000 Hz"
 msgstr "5000 Гц"
 
-#: src/interface.c:1884
+#: src/interface.c:1858
 msgid "5k"
 msgstr "5к"
 
-#: src/interface.c:1899
+#: src/interface.c:1872
 msgid "6000 Hz"
 msgstr "6000 Гц"
 
-#: src/interface.c:1913
+#: src/interface.c:1886
 msgid "6k"
 msgstr "6к"
 
-#: src/interface.c:1928
+#: src/interface.c:1900
 msgid "8000 Hz"
 msgstr "8000 Гц"
 
-#: src/interface.c:1937
+#: src/interface.c:1909
 msgid "8k"
 msgstr "8к"
 
-#: src/interface.c:1952
+#: src/interface.c:1923
 msgid "10 KHz"
 msgstr "10 кГц"
 
-#: src/interface.c:1961
+#: src/interface.c:1932
 msgid "10k"
 msgstr "10к"
 
-#: src/interface.c:1976
+#: src/interface.c:1946
 msgid "12 KHz"
 msgstr "12 кГц"
 
-#: src/interface.c:1985
+#: src/interface.c:1955
 msgid "12k"
 msgstr "12к"
 
-#: src/interface.c:2000
+#: src/interface.c:1969
 msgid "16 KHz"
 msgstr "16 кГц"
 
-#: src/interface.c:2009
+#: src/interface.c:1978
 msgid "16k"
 msgstr "16к"
 
-#: src/interface.c:2024
+#: src/interface.c:1992
 msgid "20000 Hz"
 msgstr "20 000 Гц"
 
-#: src/interface.c:2033
+#: src/interface.c:2001
 msgid "20k"
 msgstr "20к"
 
-#: src/interface.c:2039
+#: src/interface.c:2006
 msgid "30 band EQ"
 msgstr "30-полосный EQ"
 
-#: src/interface.c:2061
-#: src/interface.c:4823
+#: src/interface.c:2027 src/interface.c:4755
 msgid "Spectrum"
 msgstr "Спектр"
 
-#: src/interface.c:2090
-#: src/interface.c:2124
-#: src/interface.c:2158
+#: src/interface.c:2055 src/interface.c:2090 src/interface.c:2125
 msgid "X=input db , Y=output db"
 msgstr "X=Дб на входе , Y=Дб на выходе"
 
-#: src/interface.c:2103
+#: src/interface.c:2068
 msgid "Low"
 msgstr "Низкие"
 
-#: src/interface.c:2137
+#: src/interface.c:2103
 msgid "Mid"
 msgstr "Средние"
 
-#: src/interface.c:2171
+#: src/interface.c:2138
 msgid "High"
 msgstr "Высокие"
 
-#: src/interface.c:2176
+#: src/interface.c:2144
 msgid "Compressor curves"
 msgstr "Кривые компрессора"
 
-#: src/interface.c:2192
+#: src/interface.c:2159
 msgid "EQ bypass"
 msgstr "Обход EQ"
 
-#: src/interface.c:2207
-#: src/interface.c:2221
+#: src/interface.c:2174 src/interface.c:2187
 msgid "00000"
 msgstr "00000"
 
-#: src/interface.c:2215
+#: src/interface.c:2182
 msgid "Crossover"
 msgstr "Кроссовер"
 
-#: src/interface.c:2245
+#: src/interface.c:2211
 msgid "Low to Mid Band Crossover"
 msgstr "Кроссовер низких--средних"
 
-#: src/interface.c:2259
+#: src/interface.c:2225
 msgid "Mid to High Band Crossover"
 msgstr "Кроссовер средних--высоких"
 
-#: src/interface.c:2336
-#: src/interface.c:2629
-#: src/interface.c:2922
+#: src/interface.c:2302 src/interface.c:2588 src/interface.c:2874
 msgid "A"
 msgstr "A"
 
-#: src/interface.c:2346
-#: src/interface.c:2639
-#: src/interface.c:2932
+#: src/interface.c:2311 src/interface.c:2597 src/interface.c:2883
 msgid "Attack"
 msgstr "Атака"
 
-#: src/interface.c:2366
-#: src/interface.c:2659
-#: src/interface.c:2952
+#: src/interface.c:2331 src/interface.c:2617 src/interface.c:2903
 msgid "R"
 msgstr "R"
 
-#: src/interface.c:2376
-#: src/interface.c:2669
-#: src/interface.c:2962
-#: src/interface.c:3313
+#: src/interface.c:2340 src/interface.c:2626 src/interface.c:2912
+#: src/interface.c:3253
 msgid "Release"
 msgstr "Затухание"
 
-#: src/interface.c:2396
-#: src/interface.c:2689
-#: src/interface.c:2982
+#: src/interface.c:2360 src/interface.c:2646 src/interface.c:2932
 msgid "T"
 msgstr "T"
 
-#: src/interface.c:2406
-#: src/interface.c:2699
-#: src/interface.c:2992
+#: src/interface.c:2369 src/interface.c:2655 src/interface.c:2941
 msgid "Threshold"
 msgstr "Порог"
 
-#: src/interface.c:2425
-#: src/interface.c:2718
-#: src/interface.c:3011
+#: src/interface.c:2388 src/interface.c:2674 src/interface.c:2960
 msgid "r"
 msgstr "r"
 
-#: src/interface.c:2435
-#: src/interface.c:2728
-#: src/interface.c:3021
+#: src/interface.c:2397 src/interface.c:2683 src/interface.c:2969
 msgid "Ratio"
 msgstr "Коэффициент"
 
-#: src/interface.c:2454
-#: src/interface.c:2747
-#: src/interface.c:3040
+#: src/interface.c:2416 src/interface.c:2702 src/interface.c:2988
 msgid "K"
 msgstr "K"
 
-#: src/interface.c:2464
-#: src/interface.c:2757
-#: src/interface.c:3050
+#: src/interface.c:2425 src/interface.c:2711 src/interface.c:2997
 msgid "Knee"
 msgstr "Изгиб"
 
-#: src/interface.c:2483
-#: src/interface.c:2776
-#: src/interface.c:3069
+#: src/interface.c:2444 src/interface.c:2730 src/interface.c:3016
 msgid "M"
 msgstr "M"
 
-#: src/interface.c:2494
-#: src/interface.c:2787
-#: src/interface.c:3080
+#: src/interface.c:2454 src/interface.c:2740 src/interface.c:3026
 msgid "0.0"
 msgstr "0.0"
 
-#: src/interface.c:2498
-#: src/interface.c:2791
-#: src/interface.c:3084
+#: src/interface.c:2458 src/interface.c:2744 src/interface.c:3030
 msgid "Auto makeup"
 msgstr "Автомэйк-ап"
 
-#: src/interface.c:2504
-#: src/interface.c:2797
-#: src/interface.c:3090
+#: src/interface.c:2464 src/interface.c:2750 src/interface.c:3036
 msgid "Makeup gain"
 msgstr "Усиление мэйк-апа"
 
-#: src/interface.c:2520
-#: src/interface.c:2813
-#: src/interface.c:3106
+#: src/interface.c:2480 src/interface.c:2766 src/interface.c:3052
 msgid "Level"
 msgstr "Уровень"
 
-#: src/interface.c:2537
-#: src/interface.c:2830
-#: src/interface.c:3123
+#: src/interface.c:2497 src/interface.c:2783 src/interface.c:3069
 msgid "Gain"
 msgstr "Усиление"
 
-#: src/interface.c:2548
+#: src/interface.c:2508
 msgid "Low Band Stereo Width"
 msgstr "Стереобаза низких"
 
-#: src/interface.c:2568
-#: src/interface.c:2861
-#: src/interface.c:3154
+#: src/interface.c:2528 src/interface.c:2814 src/interface.c:3100
 msgid "Solo"
 msgstr "Соло"
 
-#: src/interface.c:2572
+#: src/interface.c:2532
 msgid "Low Band Solo"
 msgstr "Соло низких"
 
-#: src/interface.c:2574
-#: src/interface.c:2867
-#: src/interface.c:3160
-#: src/interface.c:3434
+#: src/interface.c:2534 src/interface.c:2820 src/interface.c:3106
+#: src/interface.c:3371
 msgid "Bypass"
 msgstr "Обход"
 
-#: src/interface.c:2578
+#: src/interface.c:2538
 msgid "Low Band Bypass"
 msgstr "Обход низких"
 
-#: src/interface.c:2580
+#: src/interface.c:2540
 msgid "Low : 00000 - 00000"
 msgstr "Низкие : 00000 - 00000"
 
-#: src/interface.c:2841
+#: src/interface.c:2794
 msgid "Mid Band Stereo Width"
 msgstr "Стереобаза средних"
 
-#: src/interface.c:2865
+#: src/interface.c:2818
 msgid "Mid Band Solo"
 msgstr "Соло средних"
 
-#: src/interface.c:2871
+#: src/interface.c:2824
 msgid "Mid Band Bypass"
 msgstr "Обход средних"
 
-#: src/interface.c:2873
+#: src/interface.c:2826
 msgid "Mid : 00000 - 00000"
 msgstr "Средние : 00000 - 00000"
 
-#: src/interface.c:3134
+#: src/interface.c:3080
 msgid "High Band Stereo Width"
 msgstr "Стереобаза высоких"
 
-#: src/interface.c:3158
+#: src/interface.c:3104
 msgid "High Band Solo"
 msgstr "Соло высоких"
 
-#: src/interface.c:3164
+#: src/interface.c:3110
 msgid "High Band Bypass"
 msgstr "Обход высоких"
 
-#: src/interface.c:3166
+#: src/interface.c:3112
 msgid "High : 00000 - 00000"
 msgstr "Высокие : 00000 - 00000"
 
-#: src/interface.c:3194
+#: src/interface.c:3139
 msgid "Amount "
 msgstr "На сколько"
 
-#: src/interface.c:3206
+#: src/interface.c:3150
 msgid "Boost"
 msgstr "Подъём"
 
-#: src/interface.c:3273
+#: src/interface.c:3215
 msgid "----"
 msgstr "----"
 
-#: src/interface.c:3283
+#: src/interface.c:3224
 msgid "1.000 ms"
 msgstr "1,00 мс"
 
-#: src/interface.c:3322
+#: src/interface.c:3261
 msgid "Limit"
 msgstr "Граница"
 
-#: src/interface.c:3366
+#: src/interface.c:3304
 msgid "Limiter bypass"
 msgstr "Обход ограничителя"
 
-#: src/interface.c:3371
+#: src/interface.c:3309
 msgid "Limiter"
 msgstr "Ограничитель"
 
-#: src/interface.c:3440
-#: src/interface.c:4797
+#: src/interface.c:3377 src/interface.c:4730
 msgid "Output"
 msgstr "Выход"
 
-#: src/interface.c:4587
+#: src/interface.c:4523
 msgid "Set"
 msgstr "Установить"
 
-#: src/interface.c:4591
+#: src/interface.c:4527
 msgid "Assign settings to button"
 msgstr "Настроить клавишу"
 
-#: src/interface.c:4598
+#: src/interface.c:4534
 msgid "Clear"
 msgstr "Очистить"
 
-#: src/interface.c:4602
+#: src/interface.c:4538
 msgid "Clear settings from button"
 msgstr "Удалить настройки клавиши"
 
-#: src/interface.c:4609
+#: src/interface.c:4545
 msgid "Name"
 msgstr "Имя"
 
-#: src/interface.c:4613
+#: src/interface.c:4549
 msgid "Set scene name"
 msgstr "Указать имя сцены"
 
-#: src/interface.c:4684
+#: src/interface.c:4620
 msgid "Eq options"
 msgstr "Параметры EQ"
 
-#: src/interface.c:4720
+#: src/interface.c:4656
 msgid "Minimum Gain"
 msgstr "Минимальное усиление"
 
-#: src/interface.c:4739
+#: src/interface.c:4674
 msgid "Maximum Gain"
 msgstr "Максимальное усиление"
 
-#: src/interface.c:4753
+#: src/interface.c:4687
 msgid "Graphic"
 msgstr "Графический"
 
-#: src/interface.c:4782
+#: src/interface.c:4715
 msgid "Pre EQ"
 msgstr "До эквализации"
 
-#: src/interface.c:4787
+#: src/interface.c:4720
 msgid "Post EQ"
 msgstr "После эквализации"
 
-#: src/interface.c:4792
+#: src/interface.c:4725
 msgid "Post compressor"
 msgstr "После компрессора"
 
-#: src/interface.c:4809
+#: src/interface.c:4742
 msgid "Update frequency"
 msgstr "Частота обновления"
 
-#: src/interface.c:4820
+#: src/interface.c:4752
 msgid "Spectrum update frequency (Hz)"
 msgstr "Частота обновления спектра (Гц)"
 
-#: src/interface.c:4995
+#: src/interface.c:4926
 msgid "Preferences"
 msgstr "Настройки"
 
-#: src/interface.c:5024
+#: src/interface.c:4955
 msgid "Crossfade time"
 msgstr "Вреям кроссфейда"
 
-#: src/interface.c:5043
+#: src/interface.c:4973
 msgid "Low Band Compressor"
 msgstr "Компрессор низких"
 
-#: src/interface.c:5053
+#: src/interface.c:4983
 msgid "Mid Band Compressor"
 msgstr "Компрессор средних"
 
-#: src/interface.c:5063
+#: src/interface.c:4993
 msgid "High Band Compressor"
 msgstr "Компрессор высоких"
 
-#: src/interface.c:5079
+#: src/interface.c:5009
 msgid "Ganged Controls"
 msgstr "Объединённые органы управления"
 
-#: src/interface.c:5095
+#: src/interface.c:5025
 msgid "Parametric Handles"
 msgstr "Параметрические органы управления"
 
-#: src/interface.c:5105
+#: src/interface.c:5035
 msgid "HDEQ Curve"
 msgstr "Кривая HDEQ"
 
-#: src/interface.c:5115
+#: src/interface.c:5045
 msgid "HDEQ Grid"
 msgstr "Сетка HDEQ"
 
-#: src/interface.c:5125
+#: src/interface.c:5055
 msgid "HDEQ Background"
 msgstr "Фон HDEQ"
 
-#: src/interface.c:5141
+#: src/interface.c:5071
 msgid "Text"
 msgstr "Текст"
 
-#: src/interface.c:5157
+#: src/interface.c:5087
 msgid "Meter Normal"
 msgstr "Обычный уровень"
 
-#: src/interface.c:5167
+#: src/interface.c:5097
 msgid "Meter Warning"
 msgstr "Уровень предупреждения"
 
-#: src/interface.c:5177
+#: src/interface.c:5107
 msgid "Meter Over"
 msgstr "Превышение уровня"
 
-#: src/interface.c:5187
+#: src/interface.c:5117
 msgid "Meter Peak"
 msgstr "Пик уровня"
 
-#: src/interface.c:5203
+#: src/interface.c:5133
 msgid "Reset All Colors"
 msgstr "Сбросить все цвета"
 
-#: src/interface.c:5215
+#: src/interface.c:5145
 msgid "Colors"
 msgstr "Цвета"
 
-#: src/interface.c:5231
+#: src/interface.c:5160
 msgid "FFT"
 msgstr "FFT"
 
-#: src/interface.c:5235
+#: src/interface.c:5164
 msgid "FFT Crossover"
 msgstr "FFT-кроссовер"
 
-#: src/interface.c:5239
+#: src/interface.c:5168
 msgid "IIR"
 msgstr "IIR"
 
-#: src/interface.c:5243
+#: src/interface.c:5172
 msgid "IIR Crossover"
 msgstr "IIR-Кроссовер"
 
-#: src/interface.c:5247
+#: src/interface.c:5176
 msgid "Crossover type"
 msgstr "Тип кроссовера"
 
-#: src/interface.c:5397
+#: src/interface.c:5325
 msgid "Select Color"
 msgstr "Выбрать цвет"
 
-#: src/interface.c:5443
+#: src/interface.c:5371
 msgid "Scene X Name"
 msgstr "Имя сцены X"
 
-#: src/interface.c:5520
+#: src/interface.c:5448
 msgid "filter tuning [DEBUG]"
 msgstr "настройка фильтра [ОТЛАДКА]"
 
-#: src/interface.c:5535
+#: src/interface.c:5463
 msgid "Bar A bias"
 msgstr ""
 
-#: src/interface.c:5542
+#: src/interface.c:5469
 msgid "HPA bias"
 msgstr ""
 
-#: src/interface.c:5549
+#: src/interface.c:5475
 msgid "Bar B bias"
 msgstr ""
 
-#: src/interface.c:5556
+#: src/interface.c:5481
 msgid "HPB bias"
 msgstr ""
 
-#: src/interface.c:5563
+#: src/interface.c:5487
 msgid "LPA rez"
 msgstr ""
 
-#: src/interface.c:5570
+#: src/interface.c:5493
 msgid "HPA rez"
 msgstr ""
 
-#: src/interface.c:5577
+#: src/interface.c:5499
 msgid "LPB rez"
 msgstr ""
 
-#: src/interface.c:5584
+#: src/interface.c:5505
 msgid "HPB rez"
 msgstr ""
 
-#: src/interface.c:5731
-msgid "dialog1"
-msgstr "О JAMin"
+#: src/interface.c:5651
+#, fuzzy
+msgid "About JAMin"
+msgstr "_О JAMin"
 
-#: src/interface.c:5766
+#: src/interface.c:5690
 msgid ""
 "\n"
-"JAMin is the JACK Audio Mastering interface.  JAMin is designed to perform professional audio mastering of any number of input streams.  It consists of a number of tools to do this: a 1024 band hand drawn EQ with modifiable parametric controls, a 31 band graphic EQ, 3 band compressor, 3 band stereo width control, lookahead limiter, boost, and a number of other features."
+"JAMin is the JACK Audio Mastering interface.  JAMin is designed to perform "
+"professional audio mastering of any number of input streams.  It consists of "
+"a number of tools to do this: a 1024 band hand drawn EQ with modifiable "
+"parametric controls, a 31 band graphic EQ, 3 band compressor, 3 band stereo "
+"width control, lookahead limiter, boost, and a number of other features."
 msgstr ""
 "\n"
-"JAMin - это приложение для мастеринга звука, работающее через сервер JACK. JAMin спроектирован для профессионального мастеринга звука, посылаемого с любого количества источников.  Программа  состоит из нескольких инструментов: 1024-полосный рисуемый от руки эквалайзер с изменяемыми параметрическими точками контроля, 31-полосный графический эквалайзер, 3-полосный компрессор, 3-полосный контроллер стереопанорамы, lookahead-ограничитель (лимитер), усиление сигнала и некоторые другие."
+"JAMin - это приложение для мастеринга звука, работающее через сервер JACK. "
+"JAMin спроектирован для профессионального мастеринга звука, посылаемого с "
+"любого количества источников.  Программа  состоит из нескольких "
+"инструментов: 1024-полосный рисуемый от руки эквалайзер с изменяемыми "
+"параметрическими точками контроля, 31-полосный графический эквалайзер, 3-"
+"полосный компрессор, 3-полосный контроллер стереопанорамы, lookahead-"
+"ограничитель (лимитер), усиление сигнала и некоторые другие."
 
-#: src/interface.c:5768
+#: src/interface.c:5692
 msgid "What Is JAMin"
 msgstr "О JAMin"
 
-#: src/interface.c:5785
+#: src/interface.c:5712
 msgid ""
 "\n"
 "Steve Harris is the JAMin principle author and team leader.\n"
@@ -861,7 +820,8 @@ msgstr ""
 "\n"
 "Архитектором и основным разработчиком JAMin является Steve Harris.\n"
 "\n"
-"Разработчики, имеющие доступ на запись в проект на SourceForge CVS (в  алфавитном порядке):\n"
+"Разработчики, имеющие доступ на запись в проект на SourceForge CVS (в  "
+"алфавитном порядке):\n"
 "\n"
 "Jan Depner\n"
 "Steve Harris\n"
@@ -873,31 +833,50 @@ msgstr ""
 "\n"
 "Александр Прокудин (на русский язык)\n"
 
-#: src/interface.c:5787
+#: src/interface.c:5714
 msgid "Developers"
 msgstr "Авторы"
 
-#: src/interface.c:5804
+#: src/interface.c:5734
 msgid ""
 "\n"
-"JAMin is released under the GNU General Public License and is copyright (c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, and P. Shirkey. \n"
+"JAMin is released under the GNU General Public License and is copyright (c) "
+"2003 J. Depner, S. Harris, J. O'Quin, R. Parker, and P. Shirkey. \n"
 "\n"
-"This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. \n"
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version. \n"
 "\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
-"You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA."
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 675 Mass "
+"Ave, Cambridge, MA 02139, USA."
 msgstr ""
 "\n"
-"    JAMin выпущен под лицензией GNU General Public License. Авторские и смежные права: (c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, и P. Shirkey. \n"
-"    Это свободная программа; вы можете повторно распространять ее и/или модифицировать ее в соответствии с Универсальной Общественной Лицензией GNU, опубликованной Фондом Свободного ПО; либо версии 2, либо (по вашему выбору) любой более поздней версии..\n"
-"    Эта программа распространяется в надежде, что она будет полезной, но БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ; даже без подразумеваемых гарантий КОММЕРЧЕСКОЙ ЦЕННОСТИ или ПРИГОДНОСТИ ДЛЯ КОНКРЕТНОЙ ЦЕЛИ.  Для получения подробных сведений смотрите Универсальную Общественную Лицензию GNU.\n"
-"    Вы должны были получить копию Универсальной Общественной Лицензии GNU вместе с этой программой; если нет, напишите по адресу: Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA."
+"    JAMin выпущен под лицензией GNU General Public License. Авторские и "
+"смежные права: (c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, и P. "
+"Shirkey. \n"
+"    Это свободная программа; вы можете повторно распространять ее и/или "
+"модифицировать ее в соответствии с Универсальной Общественной Лицензией GNU, "
+"опубликованной Фондом Свободного ПО; либо версии 2, либо (по вашему выбору) "
+"любой более поздней версии..\n"
+"    Эта программа распространяется в надежде, что она будет полезной, но БЕЗ "
+"КАКИХ-ЛИБО ГАРАНТИЙ; даже без подразумеваемых гарантий КОММЕРЧЕСКОЙ ЦЕННОСТИ "
+"или ПРИГОДНОСТИ ДЛЯ КОНКРЕТНОЙ ЦЕЛИ.  Для получения подробных сведений "
+"смотрите Универсальную Общественную Лицензию GNU.\n"
+"    Вы должны были получить копию Универсальной Общественной Лицензии GNU "
+"вместе с этой программой; если нет, напишите по адресу: Free Software "
+"Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA."
 
-#: src/interface.c:5806
+#: src/interface.c:5736
 msgid "License"
 msgstr "Лицензия"
 
-#: src/interface.c:5823
+#: src/interface.c:5756
 msgid ""
 "\n"
 "Web site: <http://jamin.sourceforge.net>\n"
@@ -913,28 +892,27 @@ msgstr ""
 "\n"
 "Страница проекта: http://sourceforge.net/projects/jamin/"
 
-#: src/interface.c:5825
+#: src/interface.c:5758
 msgid "Online"
 msgstr "В Интернете"
 
-#: src/callbacks.c:268
+#: src/callbacks.c:281
 msgid "Pre EQ spectrum         "
 msgstr "Спектр до эквализации"
 
-#: src/callbacks.c:271
+#: src/callbacks.c:284
 msgid "Post EQ spectrum        "
 msgstr "Спектр после эквализации"
 
-#: src/callbacks.c:274
+#: src/callbacks.c:287
 msgid "Post compressor spectrum"
 msgstr "Спектр после компрессора"
 
-#: src/callbacks.c:277
+#: src/callbacks.c:290
 msgid "Output spectrum         "
 msgstr "Спектр на выходе"
 
-#: src/callbacks.c:1353
-#: src/callbacks.c:1383
+#: src/callbacks.c:1366 src/callbacks.c:1396
 msgid "Select a session file"
 msgstr "Выберите файл сессии"
 
@@ -944,7 +922,11 @@ msgid ""
 "\n"
 "    Web site: <http://jamin.sourceforge.net>\n"
 "\n"
-"    JAMin is designed to perform professional audio mastering of any number of input streams.  It consists of a number of tools to do this: a 1024 band hand drawn EQ with modifiable parametric controls, a 31 band graphic EQ, 3 band compressor, 3 band stereo width control, lookahead limiter, boost, and a number of other features.\n"
+"    JAMin is designed to perform professional audio mastering of any number "
+"of input streams.  It consists of a number of tools to do this: a 1024 band "
+"hand drawn EQ with modifiable parametric controls, a 31 band graphic EQ, 3 "
+"band compressor, 3 band stereo width control, lookahead limiter, boost, and "
+"a number of other features.\n"
 "\n"
 "    Steve Harris is the JAMin principle author and team leader.\n"
 "\n"
@@ -956,20 +938,36 @@ msgid ""
 "    Ron Parker\n"
 "    Patrick Shirkey\n"
 "\n"
-"    JAMin is released under the GNU General Public License and is copyright (c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, and P. Shirkey. \n"
-"    This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\n"
-"    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
-"    You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.\n"
+"    JAMin is released under the GNU General Public License and is copyright "
+"(c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, and P. Shirkey. \n"
+"    This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"    This program is distributed in the hope that it will be useful, but "
+"WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY "
+"or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"    You should have received a copy of the GNU General Public License along "
+"with this program; if not, write to the Free Software Foundation, Inc., 675 "
+"Mass Ave, Cambridge, MA 02139, USA.\n"
 msgstr ""
-"    JAMin - это приложение для мастеринга звука, работающее через сервер JACK.\n"
+"    JAMin - это приложение для мастеринга звука, работающее через сервер "
+"JACK.\n"
 "\n"
 "    Веб-сайт: <http://jamin.sourceforge.net>\n"
 "\n"
-"    JAMin спроектирован для профессионального мастеринга звука, посылаемого с любого количества источников.  Программа  состоит из нескольких инструментов: 1024-полосного рисуемого от руки эквалайзера  с изменяемыми параметрическими точками контроля, 31-полосного графического эквалайзера, 3-полосного компрессора, 3-полосного контроллера стереопанорамы, lookahead-ограничитель (лимитер), усиление сигнала и некоторые другие.\n"
+"    JAMin спроектирован для профессионального мастеринга звука, посылаемого "
+"с любого количества источников.  Программа  состоит из нескольких "
+"инструментов: 1024-полосного рисуемого от руки эквалайзера  с изменяемыми "
+"параметрическими точками контроля, 31-полосного графического эквалайзера, 3-"
+"полосного компрессора, 3-полосного контроллера стереопанорамы, lookahead-"
+"ограничитель (лимитер), усиление сигнала и некоторые другие.\n"
 "\n"
 "    Архитектором и основным разработчиком JAMin является Steve Harris.\n"
 "\n"
-"    Разработчики, имеющие доступ на запись в проект на SourceForge CVS (в алфавитном порядке):\n"
+"    Разработчики, имеющие доступ на запись в проект на SourceForge CVS (в "
+"алфавитном порядке):\n"
 "\n"
 "    Jan Depner\n"
 "    Steve Harris\n"
@@ -977,14 +975,25 @@ msgstr ""
 "    Ron Parker\n"
 "    Patrick Shirkey\n"
 "\n"
-"    JAMin выпущен под лицензией GNU General Public License. Авторские и смежные права: (c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, и P. Shirkey. \n"
-"    Это свободная программа; вы можете повторно распространять ее и/или модифицировать ее в соответствии с Универсальной Общественной Лицензией GNU, опубликованной Фондом Свободного ПО; либо версии 2, либо (по вашему выбору) любой более поздней версии..\n"
-"    Эта программа распространяется в надежде, что она будет полезной, но БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ; даже без подразумеваемых гарантий КОММЕРЧЕСКОЙ ЦЕННОСТИ или ПРИГОДНОСТИ ДЛЯ КОНКРЕТНОЙ ЦЕЛИ.  Для получения подробных сведений смотрите Универсальную Общественную Лицензию GNU.\n"
-"    Вы должны были получить копию Универсальной Общественной Лицензии GNU вместе с этой программой; если нет, напишите по адресу: Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.\n"
+"    JAMin выпущен под лицензией GNU General Public License. Авторские и "
+"смежные права: (c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, и P. "
+"Shirkey. \n"
+"    Это свободная программа; вы можете повторно распространять ее и/или "
+"модифицировать ее в соответствии с Универсальной Общественной Лицензией GNU, "
+"опубликованной Фондом Свободного ПО; либо версии 2, либо (по вашему выбору) "
+"любой более поздней версии..\n"
+"    Эта программа распространяется в надежде, что она будет полезной, но БЕЗ "
+"КАКИХ-ЛИБО ГАРАНТИЙ; даже без подразумеваемых гарантий КОММЕРЧЕСКОЙ ЦЕННОСТИ "
+"или ПРИГОДНОСТИ ДЛЯ КОНКРЕТНОЙ ЦЕЛИ.  Для получения подробных сведений "
+"смотрите Универсальную Общественную Лицензию GNU.\n"
+"    Вы должны были получить копию Универсальной Общественной Лицензии GNU "
+"вместе с этой программой; если нет, напишите по адресу: Free Software "
+"Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.\n"
 
 #: src/callbacks_help.h:51
 msgid ""
-"    JAMin would not be functional without many other open source packages and we thought that it would only be right to list them here:\n"
+"    JAMin would not be functional without many other open source packages "
+"and we thought that it would only be right to list them here:\n"
 "\n"
 "    JACK - JACK Audio Connection Kit\n"
 "    http://jackit.sourceforge.net\n"
@@ -1009,7 +1018,9 @@ msgid ""
 "\n"
 "Many thanks to all of the authors of these packages!\n"
 msgstr ""
-"    JAMin основан на использовании ряда технологий, без которых программы попросту не состоялось бы. Мы считаем правильным перечислить эти технологии и реализующие их приложения:\n"
+"    JAMin основан на использовании ряда технологий, без которых программы "
+"попросту не состоялось бы. Мы считаем правильным перечислить эти технологии "
+"и реализующие их приложения:\n"
 "\n"
 "    JACK - JACK Audio Connection Kit\n"
 "    Звуковой сервер реального времени\n"
@@ -1025,7 +1036,8 @@ msgstr ""
 "    http://www.ladspa.org\n"
 "\n"
 "    FFTW - Fastest Fourier Transform in the West\n"
-"    Свободная реализация быстрых преобразований Фурье    http://www.fftw.org\n"
+"    Свободная реализация быстрых преобразований Фурье    http://www.fftw."
+"org\n"
 "\n"
 "    libsndfile - Erik de Castro Lopo's sound file I/O\n"
 "    Библиотека для I/O звука, которую написал Erik de Castro Lopo\n"
@@ -1043,65 +1055,185 @@ msgstr ""
 
 #: src/callbacks_help.h:72
 msgid ""
-"    The File menu has the standard options available.  Save and Save As allow you to save the scenes and settings for a session to a .jam file.  By default these are saved in the $HOME/.jamin directory but may be saved anywhere.\n"
+"    The File menu has the standard options available.  Save and Save As "
+"allow you to save the scenes and settings for a session to a .jam file.  By "
+"default these are saved in the $HOME/.jamin directory but may be saved "
+"anywhere.\n"
 "    The Edit menu has undo and redo options for changes to the settings.\n"
 "    The Ports menu allows you to set the input and output ports for JAMin.\n"
-"    The Options menu has EQ Options and Preferences entries.  The EQ Options dialog allows you to set the minimum and maximum gain level in dB for both the HDEQ and GEQ.  You can also set the source of the spectrum for both the HDEQ and spectrum windows.  Spectrum update frequency can be set here as well.  Up to 10 per second (default) and down to 0 (disabled).\n"
-"    Colors may be changed in the Options->Preferences dialog.  These colors are saved in the file $HOME/.jamin-defaults.  This is done whenever you exit from JAMin.  You can actually edit this file and change the colors by hand.  They are just RGB values in the 0-65535 range but it's much easier to use the GUI ;-).  You may also set the crossfade time and crossover type in this dialog (see the man page for more information on crossfade time and crossover type).\n"
-"    For help on the rest of the GUI, context specific help can be obtained by moving the mouse pointer into one of the tool areas (compressor, EQ, limiter, input, etc) and pressing <Shift><F1>.\n"
+"    The Options menu has EQ Options and Preferences entries.  The EQ Options "
+"dialog allows you to set the minimum and maximum gain level in dB for both "
+"the HDEQ and GEQ.  You can also set the source of the spectrum for both the "
+"HDEQ and spectrum windows.  Spectrum update frequency can be set here as "
+"well.  Up to 10 per second (default) and down to 0 (disabled).\n"
+"    Colors may be changed in the Options->Preferences dialog.  These colors "
+"are saved in the file $HOME/.jamin-defaults.  This is done whenever you exit "
+"from JAMin.  You can actually edit this file and change the colors by hand.  "
+"They are just RGB values in the 0-65535 range but it's much easier to use "
+"the GUI ;-).  You may also set the crossfade time and crossover type in this "
+"dialog (see the man page for more information on crossfade time and "
+"crossover type).\n"
+"    For help on the rest of the GUI, context specific help can be obtained "
+"by moving the mouse pointer into one of the tool areas (compressor, EQ, "
+"limiter, input, etc) and pressing <Shift><F1>.\n"
 msgstr ""
-"    Меню \"Файл\" ничем примечательным не выделяется. Командами \"Сохранить\" и \"Сохранить как...\" текущие сцены и их настройки можно сохранить для данной сессии или же в файл с расширением .jam.  По умолчанию сцены сохраняются в каталог $HOME/.jamin, но это может быть изменено.\n"
-"    В меню \"Правка\" доступны команды \"Отменить\" и \"Повторить\" для контроля над изменениями в сессии.\n"
+"    Меню \"Файл\" ничем примечательным не выделяется. Командами \"Сохранить"
+"\" и \"Сохранить как...\" текущие сцены и их настройки можно сохранить для "
+"данной сессии или же в файл с расширением .jam.  По умолчанию сцены "
+"сохраняются в каталог $HOME/.jamin, но это может быть изменено.\n"
+"    В меню \"Правка\" доступны команды \"Отменить\" и \"Повторить\" для "
+"контроля над изменениями в сессии.\n"
 "    Через меню \"Порты\" для JAMin можно назначать порты входа и выхода.\n"
-"    Через меню \"Настройки\" можно вызвать диалог настроек эквалайзера и диалог общих для программы настроек. В диалоге настроек эквалайзера можно установить минимальный и максимальный уровни (в Дб) для рисуемого от руки (HDEQ) и графического эквалайзеров. Вы также можете указать источник для отрисовки графика частотного спектра для рисуемого от руки эквалайзера и спектральных окон.  Помимо того, здесь можно установить частоту обновления графика частотного спектра - от 10 раз в секунду (по умолчанию) до 0 (обновление отключено).\n"
-"    Цвета можно изменять в диалоге, вызываемом через \"Настройки\" -> \"Общие\". Установки цветов сохраняются в файл $HOME/.jamin-defaults.  Это происходит при каждом выходе из JAMin.  При желании, цвета можно изменить прямым редактированием файла, поскольку значения цветов лежат в пространстве палитры RGB (0-65535). Но мы всё-таки рекомендуем использовать графический интерфейс ;-).  В этом диалоге также можно установить время кроссфейда (подробнее о времени кроссфейда можно прочитать в man-странице JAMin, набрав в консоли 'man jamin').\n"
-"    Справку по отдельным частям графического интерфейса программы можно получить, наведя мышку на интересуемую область (компрессор, эквалайзер, ограничитель, вход и т.д.) и нажав <Shift><F1>.\n"
+"    Через меню \"Настройки\" можно вызвать диалог настроек эквалайзера и "
+"диалог общих для программы настроек. В диалоге настроек эквалайзера можно "
+"установить минимальный и максимальный уровни (в Дб) для рисуемого от руки "
+"(HDEQ) и графического эквалайзеров. Вы также можете указать источник для "
+"отрисовки графика частотного спектра для рисуемого от руки эквалайзера и "
+"спектральных окон.  Помимо того, здесь можно установить частоту обновления "
+"графика частотного спектра - от 10 раз в секунду (по умолчанию) до 0 "
+"(обновление отключено).\n"
+"    Цвета можно изменять в диалоге, вызываемом через \"Настройки\" -> \"Общие"
+"\". Установки цветов сохраняются в файл $HOME/.jamin-defaults.  Это "
+"происходит при каждом выходе из JAMin.  При желании, цвета можно изменить "
+"прямым редактированием файла, поскольку значения цветов лежат в пространстве "
+"палитры RGB (0-65535). Но мы всё-таки рекомендуем использовать графический "
+"интерфейс ;-).  В этом диалоге также можно установить время кроссфейда "
+"(подробнее о времени кроссфейда можно прочитать в man-странице JAMin, набрав "
+"в консоли 'man jamin').\n"
+"    Справку по отдельным частям графического интерфейса программы можно "
+"получить, наведя мышку на интересуемую область (компрессор, эквалайзер, "
+"ограничитель, вход и т.д.) и нажав <Shift><F1>.\n"
 
 #: src/callbacks_help.h:97
 msgid ""
-"    The hand drawn EQ (HDEQ) allows the user to draw the EQ curve using the mouse.  The curve is then splined to fill 1024 EQ bands.  There are a number of other options available in the HDEQ.  There are user defined notches that act as a parametric EQ.  There are also crossover controls that will allow the user to change the compressor crossover points.  The following is a quick guide to using the HDEQ:\n"
+"    The hand drawn EQ (HDEQ) allows the user to draw the EQ curve using the "
+"mouse.  The curve is then splined to fill 1024 EQ bands.  There are a number "
+"of other options available in the HDEQ.  There are user defined notches that "
+"act as a parametric EQ.  There are also crossover controls that will allow "
+"the user to change the compressor crossover points.  The following is a "
+"quick guide to using the HDEQ:\n"
 "\n"
-"    In the background window - left click and release to begin drawing the curve.  Left click again to end the curve.  You can define any portion of the curve, you don't have to define the entire curve.  Drawing can be done from left to right or right to left.  If you try to reverse direction while drawing the data in the reverse direction will be ignored.  You can discard the curve that you are drawing by clicking the middle or right buttons.  Clicking the right mouse button in the HDEQ when not drawing a curve will reset all EQ and notch values to their original (flat) settings.\n"
+"    In the background window - left click and release to begin drawing the "
+"curve.  Left click again to end the curve.  You can define any portion of "
+"the curve, you don't have to define the entire curve.  Drawing can be done "
+"from left to right or right to left.  If you try to reverse direction while "
+"drawing the data in the reverse direction will be ignored.  You can discard "
+"the curve that you are drawing by clicking the middle or right buttons.  "
+"Clicking the right mouse button in the HDEQ when not drawing a curve will "
+"reset all EQ and notch values to their original (flat) settings.\n"
 "\n"
-"    Over the crossover bar handles - left click and hold to drag the crossover bars.\n"
+"    Over the crossover bar handles - left click and hold to drag the "
+"crossover bars.\n"
 "\n"
-"    Over the notch handles - left click and hold to drag the notch center or cuttoff frequency and gain.  <Ctrl>-left click will reset the notch to 0.  If you hold the shift key while adjusting the notch handle it will only move in the Y (gain) direction.\n"
+"    Over the notch handles - left click and hold to drag the notch center or "
+"cuttoff frequency and gain.  <Ctrl>-left click will reset the notch to 0.  "
+"If you hold the shift key while adjusting the notch handle it will only move "
+"in the Y (gain) direction.\n"
 "\n"
-"    Over the notch width handle - left click and hold to widen or narrow the notches, except the high and low cutoff notches which have no width handles.\n"
+"    Over the notch width handle - left click and hold to widen or narrow the "
+"notches, except the high and low cutoff notches which have no width "
+"handles.\n"
 msgstr ""
-"    HDEQ позволяет пользователю рисовать кривую эквализации при помощи мыши.  Кривая автоматически делится наl 1024 полосы эквалайзера.  Помимо того, в HDEQ есть устаналиваемые пользователем отметки, добавляющие возможность параметрической эквализации.  Помимо того, есть регуляторы кроссовера, позволяющие пользователю менять точки кросссовера компрессора.  Ниже приводится короткое руководство по использованию HDEQ:\n"
+"    HDEQ позволяет пользователю рисовать кривую эквализации при помощи "
+"мыши.  Кривая автоматически делится наl 1024 полосы эквалайзера.  Помимо "
+"того, в HDEQ есть устаналиваемые пользователем отметки, добавляющие "
+"возможность параметрической эквализации.  Помимо того, есть регуляторы "
+"кроссовера, позволяющие пользователю менять точки кросссовера компрессора.  "
+"Ниже приводится короткое руководство по использованию HDEQ:\n"
 "\n"
-"    Щёлкните по изображению графика левой клавишей мыши и нарисуйте кривую, а затем щёлкните левой клавишей мыш ещё раз для завершения.  Не обязательно рисовать всю кривую целиком -- достаточно нарисовать её часть. Рисовать можно как слева направо так и справа налево. Если вы попробуете изменить направление во время рисования, это будет проигнорировано. От нарисованной кривой до её завершения (по щелчку левой клавишей мыши) можно отказаться, щёлкнув средней или правой клавишами мыши.  Щелчок правой клавишей мыши по графику HDEQ вне режима рисования \"обнулит\" все внесённые изменения.\n"
+"    Щёлкните по изображению графика левой клавишей мыши и нарисуйте кривую, "
+"а затем щёлкните левой клавишей мыш ещё раз для завершения.  Не обязательно "
+"рисовать всю кривую целиком -- достаточно нарисовать её часть. Рисовать "
+"можно как слева направо так и справа налево. Если вы попробуете изменить "
+"направление во время рисования, это будет проигнорировано. От нарисованной "
+"кривой до её завершения (по щелчку левой клавишей мыши) можно отказаться, "
+"щёлкнув средней или правой клавишами мыши.  Щелчок правой клавишей мыши по "
+"графику HDEQ вне режима рисования \"обнулит\" все внесённые изменения.\n"
 "\n"
-"    Над регуляторами кроссовера - щёлкнуть левой клавишей мыши, и удерживая эту клавишу нажатой, перемещать регуляторы.\n"
+"    Над регуляторами кроссовера - щёлкнуть левой клавишей мыши, и удерживая "
+"эту клавишу нажатой, перемещать регуляторы.\n"
 "\n"
-"    Над регуляторами отметок - щёлкнуть левой клавишей мыши, и удерживая эту клавишу нажатой, перемещать центр отметок или частоту вырезания и усиление.  <Ctrl>+ щелчок левой клавишей мыши сбросит значение отметки на 0.  Если при перемещении регулятора отметки удерживать <Shift>, то отметка будет перемещаться только по горизонтали.\n"
+"    Над регуляторами отметок - щёлкнуть левой клавишей мыши, и удерживая эту "
+"клавишу нажатой, перемещать центр отметок или частоту вырезания и усиление.  "
+"<Ctrl>+ щелчок левой клавишей мыши сбросит значение отметки на 0.  Если при "
+"перемещении регулятора отметки удерживать <Shift>, то отметка будет "
+"перемещаться только по горизонтали.\n"
 "\n"
-"    Над регуляторами ширины отметок - щёлкнуть левой клавишей мыши, и удерживая эту клавишу нажатой, расширять или сужать отметки. Это не относится к отметкам низко- или высокочастотного среза, у которых нет регуляторов ширины.\n"
+"    Над регуляторами ширины отметок - щёлкнуть левой клавишей мыши, и "
+"удерживая эту клавишу нажатой, расширять или сужать отметки. Это не "
+"относится к отметкам низко- или высокочастотного среза, у которых нет "
+"регуляторов ширины.\n"
 
 #: src/callbacks_help.h:123
-msgid "    The adjustable crossover is used to split the entire audible range into three sections.  It applies to the compressors and stereo widths. If the crossovers are set to 500Hz and 5KHz then the first stereo width control and compressor works for 25-500Hz, the second for 500Hz-5KHz, and the last for 5KHz-20KHz.  The crossover has no effect on the HDEQ unless one or more bands are soloed.  The crossover bars that are visible in the HDEQ serve as a visual reference.\n"
-msgstr "     Настраиваемый кроссовер используется для разделения всего слышимого звукового диапазона частот на три части.  Он работает с компрессорами и регуляторами ширины стеребазы.  Если кроссоверы установлены на 500 Гц и 5 кГц, то первый регуляторы ширины стереобазы будет работать для полосы 25-500 Гц, второй -- для 500 Гц-5 кГц и третий -- для 5-20 кГц.   Кроссовер никак не влияет на рисуемый эквалайзер (HDEQ).   В любом случае, полосы кроссовера, видимые в HDEQ, служат лишь для визуального контроля.\n"
+msgid ""
+"    The adjustable crossover is used to split the entire audible range into "
+"three sections.  It applies to the compressors and stereo widths. If the "
+"crossovers are set to 500Hz and 5KHz then the first stereo width control and "
+"compressor works for 25-500Hz, the second for 500Hz-5KHz, and the last for "
+"5KHz-20KHz.  The crossover has no effect on the HDEQ unless one or more "
+"bands are soloed.  The crossover bars that are visible in the HDEQ serve as "
+"a visual reference.\n"
+msgstr ""
+"     Настраиваемый кроссовер используется для разделения всего слышимого "
+"звукового диапазона частот на три части.  Он работает с компрессорами и "
+"регуляторами ширины стеребазы.  Если кроссоверы установлены на 500 Гц и 5 "
+"кГц, то первый регуляторы ширины стереобазы будет работать для полосы 25-500 "
+"Гц, второй -- для 500 Гц-5 кГц и третий -- для 5-20 кГц.   Кроссовер никак "
+"не влияет на рисуемый эквалайзер (HDEQ).   В любом случае, полосы "
+"кроссовера, видимые в HDEQ, служат лишь для визуального контроля.\n"
 
 #: src/callbacks_help.h:134
-msgid "    The graphic EQ (GEQ) can be used to set gain for specific bands of the audio spectrum.  The center of the band is annotated at the bottom of each fader.  Setting a fader in the GEQ will override the HDEQ in the immediate vicinity of the changed fader and cause that curve to be redrawn.  It will not override the parametric notch settings in the HDEQ.  Clicking the right mouse button on a GEQ control will reset the value to 0.0.\n"
-msgstr "    Графический эквалайзер (GEQ) может использоваться для установки усиления определённых полос спектра звуковых частот. Центр полосы указывается в нижней части каждого фейдера.  Изменение любого фейдера в GEQ тут же отразится на HDEQ, где кривая будет соответствующим образом перерисована.  Однако, параметры параметрических отметок в HDEQ изменены не будут. Щелчок правой кнопкой мыши по регулятору GEQ сбрасывает значение до 0.0.\n"
+msgid ""
+"    The graphic EQ (GEQ) can be used to set gain for specific bands of the "
+"audio spectrum.  The center of the band is annotated at the bottom of each "
+"fader.  Setting a fader in the GEQ will override the HDEQ in the immediate "
+"vicinity of the changed fader and cause that curve to be redrawn.  It will "
+"not override the parametric notch settings in the HDEQ.  Clicking the right "
+"mouse button on a GEQ control will reset the value to 0.0.\n"
+msgstr ""
+"    Графический эквалайзер (GEQ) может использоваться для установки усиления "
+"определённых полос спектра звуковых частот. Центр полосы указывается в "
+"нижней части каждого фейдера.  Изменение любого фейдера в GEQ тут же "
+"отразится на HDEQ, где кривая будет соответствующим образом перерисована.  "
+"Однако, параметры параметрических отметок в HDEQ изменены не будут. Щелчок "
+"правой кнопкой мыши по регулятору GEQ сбрасывает значение до 0.0.\n"
 
 #: src/callbacks_help.h:144
-msgid "    The input section allows you to set the input gain to the JAMin system.  You can also pan the input left or right.  Clicking the right mouse button on the gain/balance control will reset the value to 0.0/centre.\n"
-msgstr "    Здесь устраивается усиление на входе в JAMin, а также панорамирование входящего сигнала  Щелчком правой кнопкой мыши по регулятору усиления/баланса значение сбрасывается до 0.0/центра.\n"
+msgid ""
+"    The input section allows you to set the input gain to the JAMin system.  "
+"You can also pan the input left or right.  Clicking the right mouse button "
+"on the gain/balance control will reset the value to 0.0/centre.\n"
+msgstr ""
+"    Здесь устраивается усиление на входе в JAMin, а также панорамирование "
+"входящего сигнала  Щелчком правой кнопкой мыши по регулятору усиления/"
+"баланса значение сбрасывается до 0.0/центра.\n"
 
 #: src/callbacks_help.h:151
-msgid "    The spectrum display shows the power spectrum of the signal in bands that correspond to the frequency bands in the 30 band EQ (GEQ). In addition it displays the maximum value reached for each band as a yellow line.\n"
-msgstr "    График частотного спектра отображает мощность сигнала в каждой полосе, сответствующей частотной полосе 30-полосном графическом эквалайзере (GEQ). Помимо того, при помощи жёлтой полоски отображается максимальный достигнутый пик в каждой частотной полосе.\n"
+msgid ""
+"    The spectrum display shows the power spectrum of the signal in bands "
+"that correspond to the frequency bands in the 30 band EQ (GEQ). In addition "
+"it displays the maximum value reached for each band as a yellow line.\n"
+msgstr ""
+"    График частотного спектра отображает мощность сигнала в каждой полосе, "
+"сответствующей частотной полосе 30-полосном графическом эквалайзере (GEQ). "
+"Помимо того, при помощи жёлтой полоски отображается максимальный достигнутый "
+"пик в каждой частотной полосе.\n"
 
 #: src/callbacks_help.h:158
-msgid "    The compressor curves show a graphical representation of the compression for each compressor band.  The bands are defined by the crossover that can be set using the crossover faders or the crossover bars in the HDEQ.  The X-axis shows the input in db while the Y-axis shows the output in db.  The scale is from -60 to 0 in X and -60 to +30 in Y.\n"
+msgid ""
+"    The compressor curves show a graphical representation of the compression "
+"for each compressor band.  The bands are defined by the crossover that can "
+"be set using the crossover faders or the crossover bars in the HDEQ.  The X-"
+"axis shows the input in db while the Y-axis shows the output in db.  The "
+"scale is from -60 to 0 in X and -60 to +30 in Y.\n"
 msgstr ""
 
 #: src/callbacks_help.h:167
 msgid ""
-"    The compressors allow you to set compression parameters for each compressor band.  The bands are defined by the crossover that can be set using the crossover faders or the crossover bars in the HDEQ.  The parameters are, from left to right:\n"
+"    The compressors allow you to set compression parameters for each "
+"compressor band.  The bands are defined by the crossover that can be set "
+"using the crossover faders or the crossover bars in the HDEQ.  The "
+"parameters are, from left to right:\n"
 "\n"
 "    A - attack in milliseconds\n"
 "    R - release in milliseconds\n"
@@ -1109,11 +1241,22 @@ msgid ""
 "    r - compression ratio (N:1)\n"
 "    K - knee (0.0 [hard] to 1.0 [soft])\n"
 "    M - makeup gain in db\n"
-"    Note that the value label for makeup gain is also the automatic makeup gain button.  Pressing this will cause JAMin to try to approximate the optimum makeup gain for the other settings.  When pressed you cannot manually adjust the makeup gain however, adjustments to the threshold or ratio will cause the makeup gain to change.\n"
-"    A full explanation of the use of these parameters is covered in the user manual.\n"
-"    Compressor controls can be \"ganged\" by clicking on the control label in the desired compressor band windows.  When they are ganged moving one control will move all other ganged controls by the same amount.  To ungang just click on the label again.  The labels change to the band color to indicate that they are ganged.\n"
+"    Note that the value label for makeup gain is also the automatic makeup "
+"gain button.  Pressing this will cause JAMin to try to approximate the "
+"optimum makeup gain for the other settings.  When pressed you cannot "
+"manually adjust the makeup gain however, adjustments to the threshold or "
+"ratio will cause the makeup gain to change.\n"
+"    A full explanation of the use of these parameters is covered in the user "
+"manual.\n"
+"    Compressor controls can be \"ganged\" by clicking on the control label "
+"in the desired compressor band windows.  When they are ganged moving one "
+"control will move all other ganged controls by the same amount.  To ungang "
+"just click on the label again.  The labels change to the band color to "
+"indicate that they are ganged.\n"
 msgstr ""
-"    Здесь можно указать различные параметры компрессии для каждой полосы.  Полпосы определяются при помощи кроссовера путём установки фейдеров в HDEQ.  Вот эти параметры:\n"
+"    Здесь можно указать различные параметры компрессии для каждой полосы.  "
+"Полпосы определяются при помощи кроссовера путём установки фейдеров в HDEQ.  "
+"Вот эти параметры:\n"
 "\n"
 "    A - атака в миллисекундах\n"
 "    R - затухание в миллисекундах\n"
@@ -1123,65 +1266,151 @@ msgstr ""
 "    M - makeup gain in db\n"
 "    AM - automatic makeup gain computation\n"
 "\n"
-"    Подробное описание настройки этих параметров излагается в руководстве пользователя.\n"
-"    Регуляторы компрессора можно двигать одновременно, предварительно щёлкнув мышкой по метке контроллера в выбранных окнах компрессора.  Это позволит перемещать выбранные регуляторы одновременно на равное расстояние.  Для выхода из этого режима просто щёлкните ещё раз по метке.  В этом синхронном режиме метки меняют цвет полосы, чтобы показать, что они синхронны.\n"
+"    Подробное описание настройки этих параметров излагается в руководстве "
+"пользователя.\n"
+"    Регуляторы компрессора можно двигать одновременно, предварительно "
+"щёлкнув мышкой по метке контроллера в выбранных окнах компрессора.  Это "
+"позволит перемещать выбранные регуляторы одновременно на равное расстояние.  "
+"Для выхода из этого режима просто щёлкните ещё раз по метке.  В этом "
+"синхронном режиме метки меняют цвет полосы, чтобы показать, что они "
+"синхронны.\n"
 
 #: src/callbacks_help.h:193
-msgid "    The stereo width controls define the apparent 'wideness' of the stereo signal for each of the three bands.  The bands are defined by the crossovers that can be set using the crossover faders or the crossover bars in the HDEQ.  More negative values decrease the 'width' while positive values increase the 'width'.  Clicking the right mouse button on the stereo width control will reset the value to 0.0.\n"
+msgid ""
+"    The stereo width controls define the apparent 'wideness' of the stereo "
+"signal for each of the three bands.  The bands are defined by the crossovers "
+"that can be set using the crossover faders or the crossover bars in the "
+"HDEQ.  More negative values decrease the 'width' while positive values "
+"increase the 'width'.  Clicking the right mouse button on the stereo width "
+"control will reset the value to 0.0.\n"
 msgstr ""
 
 #: src/callbacks_help.h:203
-msgid "    The lookahead limiter is a brickwall limiter that will not allow the output to exceed the set level.  It 'looks ahead' by the specified amount in order to make a smooth transition as it nears the limit level.  Clicking the right mouse button on the input or limit control will reset the value to 0.0.\n"
+msgid ""
+"    The lookahead limiter is a brickwall limiter that will not allow the "
+"output to exceed the set level.  It 'looks ahead' by the specified amount in "
+"order to make a smooth transition as it nears the limit level.  Clicking the "
+"right mouse button on the input or limit control will reset the value to "
+"0.0.\n"
 msgstr ""
 
 #: src/callbacks_help.h:212
-msgid "    The boost control allows the user to add 'tube like' gain to the output signal.  Use to taste (New England mild to Cajun spicy).  Clicking the right mouse button on the boost control will reset the value to 0.0.\n"
+msgid ""
+"    The boost control allows the user to add 'tube like' gain to the output "
+"signal.  Use to taste (New England mild to Cajun spicy).  Clicking the right "
+"mouse button on the boost control will reset the value to 0.0.\n"
 msgstr ""
 
 #: src/callbacks_help.h:219
-msgid "    The output control allows you to decrease the output level.  The upper level is 0dB.  Clicking the right mouse button on the output control will reset the value to 0.0.\n"
-msgstr "    Регулятор выхода позволяет уменьшить уровень выхода.  Самым верхним уровнем является 0 Дб.  Щелчком правой кнопки мыши по регулятору выхода значение сбрасывается в 0.0.\n"
+msgid ""
+"    The output control allows you to decrease the output level.  The upper "
+"level is 0dB.  Clicking the right mouse button on the output control will "
+"reset the value to 0.0.\n"
+msgstr ""
+"    Регулятор выхода позволяет уменьшить уровень выхода.  Самым верхним "
+"уровнем является 0 Дб.  Щелчком правой кнопки мыши по регулятору выхода "
+"значение сбрасывается в 0.0.\n"
 
 #: src/callbacks_help.h:226
-msgid "    The EQ Options dialog allows you to set the minimum and maximum gain level in dB for both the HDEQ and GEQ.  You can also set the source of the spectrum for both the HDEQ and spectrum windows.  Spectrum update frequency can be set here as well.  Up to 10 per second (default) and down to 0 (disabled).\n"
+msgid ""
+"    The EQ Options dialog allows you to set the minimum and maximum gain "
+"level in dB for both the HDEQ and GEQ.  You can also set the source of the "
+"spectrum for both the HDEQ and spectrum windows.  Spectrum update frequency "
+"can be set here as well.  Up to 10 per second (default) and down to 0 "
+"(disabled).\n"
 msgstr ""
 
 #: src/callbacks_help.h:235
-msgid "    Colors may be changed in the Options->Preferences dialog.  These colors are saved in the file $HOME/.jamin-defaults.  This is done whenever you exit from JAMin.  You can actually edit this file and change the colors by hand.  They are just RGB values in the 0-65535 range but it's much easier to use the GUI ;-).  You may also set the crossfade time and crossover type in this dialog (see the man page for more information on crossfade time and crossover type).\n"
+msgid ""
+"    Colors may be changed in the Options->Preferences dialog.  These colors "
+"are saved in the file $HOME/.jamin-defaults.  This is done whenever you exit "
+"from JAMin.  You can actually edit this file and change the colors by hand.  "
+"They are just RGB values in the 0-65535 range but it's much easier to use "
+"the GUI ;-).  You may also set the crossfade time and crossover type in this "
+"dialog (see the man page for more information on crossfade time and "
+"crossover type).\n"
 msgstr ""
 
 #: src/callbacks_help.h:246
-msgid "    This allows you to set the input to the spectrum computation for both the Spectrum window and the HDEQ.  The default is Post EQ.  The other options are Pre EQ, Post compressor, and Output.\n"
+msgid ""
+"    This allows you to set the input to the spectrum computation for both "
+"the Spectrum window and the HDEQ.  The default is Post EQ.  The other "
+"options are Pre EQ, Post compressor, and Output.\n"
 msgstr ""
 
 #: src/callbacks_help.h:253
-msgid "    The transport controls give you the usual tape transport type controls.  These are useful if you are using other JACK enabled applications that honor the JACK transport control functions (ecamegapedal, Ardour). Note that there is no stop button (use pause). Some JACK and system status information is available to the right of the transport buttons.  The fast forward and reverse buttonsa will move the transport forward or back by five seconds.\n"
+msgid ""
+"    The transport controls give you the usual tape transport type controls.  "
+"These are useful if you are using other JACK enabled applications that honor "
+"the JACK transport control functions (ecamegapedal, Ardour). Note that there "
+"is no stop button (use pause). Some JACK and system status information is "
+"available to the right of the transport buttons.  The fast forward and "
+"reverse buttonsa will move the transport forward or back by five seconds.\n"
 msgstr ""
 
 #: src/callbacks_help.h:263
-msgid "    This button will bypass all of JAMin's functions.  The keyboard accelerator for this button is the 'b' key.\n"
-msgstr "    Этой кнопкой включается обход всех изменений, сделанных  при помощи JAMin.  \"Горячей клавишей\" является 'b'.\n"
+msgid ""
+"    This button will bypass all of JAMin's functions.  The keyboard "
+"accelerator for this button is the 'b' key.\n"
+msgstr ""
+"    Этой кнопкой включается обход всех изменений, сделанных  при помощи "
+"JAMin.  \"Горячей клавишей\" является 'b'.\n"
 
 #: src/callbacks_help.h:269
 msgid ""
-"    Scenes are used to save and recall an entire group of JAMin parameter settings during a session.  After setting all of the parameters for a specific section of music (verse, chorus, bridge) or a complete song you can right click on a scene button, use the menu to 'Set' that scene, then use the 'Name' entry of the menu to enter a name for that scene (Back Alley Fugue - verse).  You can recall these settings by left clicking on the scene button.  A bright green button means that the scene associated with this button is currently the active scene.  A dull green button signifies that the scene is loaded but not active.  A red button means that the scene has no settings loaded.  A bright yellow button means that this scene is active but the settings have been changed.  If you want to save the settings you must use the 'Set' entry in the button's right click menu.  You can clear settings from a button using the right click menu and the 'Clear' entry.\n"
+"    Scenes are used to save and recall an entire group of JAMin parameter "
+"settings during a session.  After setting all of the parameters for a "
+"specific section of music (verse, chorus, bridge) or a complete song you can "
+"right click on a scene button, use the menu to 'Set' that scene, then use "
+"the 'Name' entry of the menu to enter a name for that scene (Back Alley "
+"Fugue - verse).  You can recall these settings by left clicking on the scene "
+"button.  A bright green button means that the scene associated with this "
+"button is currently the active scene.  A dull green button signifies that "
+"the scene is loaded but not active.  A red button means that the scene has "
+"no settings loaded.  A bright yellow button means that this scene is active "
+"but the settings have been changed.  If you want to save the settings you "
+"must use the 'Set' entry in the button's right click menu.  You can clear "
+"settings from a button using the right click menu and the 'Clear' entry.\n"
 "\n"
-"    The keyboard accelerators for the scene buttons are the number keys, 1 through 0 for scenes 1 through 10.  <Shift>-1 through <Shift>-0 will access scenes 11 through 20.  For example, pressing the 1 key will cause scene 1 to become active.  Pressing <Shift>-5 will cause scene 15 to become active.  The ALT modifier can be used to assign settings to a scene button (instead of using the scene button menus).  Pressing <Alt><Shift>-5 will assign the current settings to scene button 15 (you may still want to change the name).  The CTRL modifier can be used to clear a scene button.  Pressing <Ctrl>-4 will clear scene button 4.  \n"
+"    The keyboard accelerators for the scene buttons are the number keys, 1 "
+"through 0 for scenes 1 through 10.  <Shift>-1 through <Shift>-0 will access "
+"scenes 11 through 20.  For example, pressing the 1 key will cause scene 1 to "
+"become active.  Pressing <Shift>-5 will cause scene 15 to become active.  "
+"The ALT modifier can be used to assign settings to a scene button (instead "
+"of using the scene button menus).  Pressing <Alt><Shift>-5 will assign the "
+"current settings to scene button 15 (you may still want to change the "
+"name).  The CTRL modifier can be used to clear a scene button.  Pressing "
+"<Ctrl>-4 will clear scene button 4.  \n"
 "\n"
-"    Note that the keypad keys may be used but only for scenes 1 through 10 with Num Lock on.  Using the keypad with Num Lock off will access the cursor keys (which can be used to control some aspects of the GUI).  Using <Shift> with the keypad with Num Lock on will also access the cursor keys.\n"
+"    Note that the keypad keys may be used but only for scenes 1 through 10 "
+"with Num Lock on.  Using the keypad with Num Lock off will access the cursor "
+"keys (which can be used to control some aspects of the GUI).  Using <Shift> "
+"with the keypad with Num Lock on will also access the cursor keys.\n"
 msgstr ""
 
 #: src/callbacks_help.h:299
-msgid "    This button allows you to bypass all EQ processing.  It will have no effect on any of the other controls.\n"
-msgstr "    Эта кнопка позволяет включить обход  всех изменений в эквализации.  На остальные регуляторы это никак не влияет.\n"
+msgid ""
+"    This button allows you to bypass all EQ processing.  It will have no "
+"effect on any of the other controls.\n"
+msgstr ""
+"    Эта кнопка позволяет включить обход  всех изменений в эквализации.  На "
+"остальные регуляторы это никак не влияет.\n"
 
 #: src/callbacks_help.h:305
-msgid "    The solo buttons allow you to listen to selected bands while muting the other bands.  Selecting two of the solo buttons effectively mutes the remaining band.  The per band bypass buttons allow you to bypass compression on the selected bands.\n"
+msgid ""
+"    The solo buttons allow you to listen to selected bands while muting the "
+"other bands.  Selecting two of the solo buttons effectively mutes the "
+"remaining band.  The per band bypass buttons allow you to bypass compression "
+"on the selected bands.\n"
 msgstr ""
 
 #: src/callbacks_help.h:313
-msgid "    This button allows you to bypass limiting.  It has no effect on any of the other controls.\n"
-msgstr "    Этой кнопкой включается обход ограничителя (лимитера). На остальные регуляторы это никак не влияет.\n"
+msgid ""
+"    This button allows you to bypass limiting.  It has no effect on any of "
+"the other controls.\n"
+msgstr ""
+"    Этой кнопкой включается обход ограничителя (лимитера). На остальные "
+"регуляторы это никак не влияет.\n"
 
 #: src/callbacks_help.h:319
 msgid ""
@@ -1241,8 +1470,7 @@ msgstr ""
 " \t\t\t\t\t (которая сейчас отображается)\n"
 "\t<Ctrl>-j\t\t-\tО JAMin\n"
 
-#: src/hdeq.c:361
-#: src/hdeq.c:446
+#: src/hdeq.c:361 src/hdeq.c:446
 #, c-format
 msgid "Mid : %d - %d"
 msgstr "Средние: %d - %d"
@@ -1266,8 +1494,7 @@ msgstr "X размещается в set_EQ"
 msgid "%dHz , EQ : %ddb , Spectrum : %ddb"
 msgstr "%d Гц , EQ : %d Дб, Спектр : %d Дб"
 
-#: src/hdeq.c:1393
-#: src/hdeq.c:1894
+#: src/hdeq.c:1393 src/hdeq.c:1894
 msgid "Allocating EQ_yinput in callbacks.c"
 msgstr ""
 
@@ -1276,13 +1503,11 @@ msgstr ""
 msgid "%ddb , %dHz - %dHz"
 msgstr "%d Дб, %d Гц - %d Гц"
 
-#: src/hdeq.c:2011
-#: src/hdeq.c:2031
+#: src/hdeq.c:2011 src/hdeq.c:2031
 msgid "Allocating y in callbacks.c"
 msgstr ""
 
-#: src/geq.c:128
-#: src/geq.c:160
+#: src/geq.c:128 src/geq.c:160
 #, c-format
 msgid "Splined length %d does not match BINS / 2 - 1 (%d)"
 msgstr "Отмеренная длина %d не совпадает с BINS / 2 - 1 (%d)"
@@ -1292,8 +1517,7 @@ msgstr "Отмеренная длина %d не совпадает с BINS / 2 -
 msgid "jam error: Adjustment from out-of-range band %d requested\n"
 msgstr "Ошибка JAMin: хапрошена подстройка полосы %d вне зоны действия\n"
 
-#: src/support.c:90
-#: src/support.c:114
+#: src/support.c:90 src/support.c:114
 #, c-format
 msgid "Couldn't find pixmap file: %s"
 msgstr "Не удалось найти изображение: %s"
@@ -1303,10 +1527,7 @@ msgstr "Не удалось найти изображение: %s"
 msgid "iomenu error: %s\n"
 msgstr "ошибка iomenu: %s\n"
 
-#: src/io-menu.c:111
-#: src/io-menu.c:118
-#: src/io-menu.c:185
-#: src/io-menu.c:231
+#: src/io-menu.c:111 src/io-menu.c:118 src/io-menu.c:185 src/io-menu.c:231
 #, c-format
 msgid "connecting port %s to %s\n"
 msgstr "порт %s соединяется с %s\n"
@@ -1321,28 +1542,22 @@ msgstr "не удаётся соединить из %s\n"
 msgid "unable to connect to %s\n"
 msgstr "не удаётся соединить с %s\n"
 
-#: src/io-menu.c:137
-#: src/io-menu.c:144
-#: src/io-menu.c:175
-#: src/io-menu.c:221
+#: src/io-menu.c:137 src/io-menu.c:144 src/io-menu.c:175 src/io-menu.c:221
 #, c-format
 msgid "disconnecting port %s from %s\n"
 msgstr "порт %s отсоединяется от %s\n"
 
-#: src/io-menu.c:140
-#: src/io-menu.c:147
+#: src/io-menu.c:140 src/io-menu.c:147
 #, c-format
 msgid "unable to disconnect port %s\n"
 msgstr "не удаётся отсоединить порт %s\n"
 
-#: src/io-menu.c:179
-#: src/io-menu.c:225
+#: src/io-menu.c:179 src/io-menu.c:225
 #, c-format
 msgid "unable to disconnect %s from %s\n"
 msgstr "не удаётся отсоединить %s от %s\n"
 
-#: src/io-menu.c:189
-#: src/io-menu.c:235
+#: src/io-menu.c:189 src/io-menu.c:235
 #, c-format
 msgid "unable to connect %s to %s\n"
 msgstr "не удаётся соединить %s с %s\n"
@@ -1359,17 +1574,17 @@ msgstr "Вход"
 msgid "Out"
 msgstr "Выход"
 
-#: src/io.c:231
+#: src/io.c:232
 #, c-format
 msgid "%s internal error %d: %s\n"
 msgstr "%s внутренняя ошибка %d: %s\n"
 
-#: src/io.c:233
+#: src/io.c:234
 #, c-format
 msgid " Terminating due to -F option.\n"
 msgstr " Завершение ввиду параметра -F.\n"
 
-#: src/io.c:688
+#: src/io.c:696
 #, c-format
 msgid ""
 "File %s : %s\n"
@@ -1378,47 +1593,48 @@ msgstr ""
 "Файл %s : %s\n"
 "Используется стандартный."
 
-#: src/io.c:716
+#: src/io.c:730
 #, c-format
-msgid "%s: jack_client_open() failed, status = %d\n"
+msgid "%s: jack_client_open() failed, status = 0x%2.0x\n"
 msgstr ""
 
-#: src/io.c:721
+#: src/io.c:735
 #, c-format
 msgid "%s: JACK server started\n"
 msgstr "%s: сервер JACK запущен\n"
 
-#: src/io.c:725
+#: src/io.c:739
 #, c-format
 msgid "%s: unique name `%s' assigned\n"
 msgstr "%s: назначено уникальное имя `%s'\n"
 
-#: src/io.c:733
+#: src/io.c:747
 #, c-format
 msgid "%s: Cannot contact JACK server, is it running?\n"
 msgstr "%s: Не удаётся соединиться с JACK-сервером. Он запущен?\n"
 
-#: src/io.c:844
-#, c-format
+#: src/io.c:861
+#, fuzzy, c-format
 msgid ""
 "Usage: %s [-%s] [inport1 inport2 [outport1 outport2]]\n"
 "\n"
 "user options:\n"
 "\t-f file\tload session file on startup\n"
 "\t-h\tshow this help\n"
-"\t-n name\tset JACK client name\n"
+"\t-j name\tJACK server name\n"
+"\t-n name\tJACK client name\n"
 "\t-s freq\tset spectrum update frequency\n"
-"\t-c time\tset crossfade time\n"
+"\t-c time\tcrossfade time\n"
 "\t-r\tuse example GTK resource file\n"
-"\t-p\tdon't automatically connect JACK output ports\n"
+"\t-p\tdo not automatically connect JACK output ports\n"
 "\t-v\tverbose output (use -vv... for more detail)\n"
-"\t-V\tprint version and quit\n"
+"\t-V\tprint JAMin version and quit\n"
 "\n"
 "developer options:\n"
-"\t-d\tdummy mode (don't connect to jackd)\n"
+"\t-d\tdummy mode (don't connect to JACK)\n"
 "\t-F\ttreat all errors as fatal\n"
 "\t-T\tprint trace buffer\n"
-"\t-t\tdon't start DSP thread\n"
+"\t-t\tdon't start separate DSP thread\n"
 "\n"
 msgstr ""
 "Использование: %s [-%s] [вход.порт1 вход.порт2 [выход.порт1 выход.порт2]]\n"
@@ -1441,7 +1657,7 @@ msgstr ""
 "\t-t\tне запускать DSP-нить\n"
 "\n"
 
-#: src/io.c:1040
+#: src/io.c:1058
 #, c-format
 msgid ""
 "%s: not permitted to create realtime DSP thread.\n"
@@ -1453,29 +1669,31 @@ msgstr ""
 "\tсуперпользователя или с JACK capabilities.\n"
 "\tВыполнение операции продолжается с ключом -t.\n"
 
-#: src/io.c:1091
+#: src/io.c:1109
 #, c-format
 msgid "%s: Cannot register JACK ports."
 msgstr "%s: Не удаётся зарегистрировать JACK-порты."
 
-#: src/io.c:1097
+#: src/io.c:1115
 #, c-format
 msgid "%s: Cannot activate JACK client."
 msgstr "%s: Не удаётся активировать JACK-клиент."
 
-#: src/io.c:1118
+#: src/io.c:1136
 msgid "No physical playback ports found"
 msgstr ""
 "Не найдено ни одного физического \n"
 "порта воспроизведения"
 
-#: src/io.c:1130
+#: src/io.c:1148
 #, c-format
 msgid "Cannot connect input port \"%s\"\n"
 msgstr "Не удаётся подсоединить порт входа \"%s\"\n"
 
-#: src/io.c:1140
+#: src/io.c:1158
 #, c-format
 msgid "Cannot connect output port \"%s\"\n"
 msgstr "Не удаётся подсоединить порт выхода \"%s\"\n"
 
+#~ msgid "dialog1"
+#~ msgstr "О JAMin"
