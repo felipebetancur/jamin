@@ -23,20 +23,20 @@ TODO (owner)
 - README file
 - man page
 - add test script directory (Jack)
-- add UI for reporting JACK status
-- add JACK transport position tracking (Jack)
-- add UI for reporting JACK transport status
+- UI for reporting JACK status, including transport state
+- JACK transport master control (Jack)
+- UI for JACK transport master
 
 
 TO THINK ABOUT
 
 - making the DocBook/XML documentation compatible with Yelp (Alexandre)
 - error and debug message rationalization, IF_DEBUG(), -v option
-- JACK transport master control
 
 
-CLOSED (date, who, comment)
+CLOSED (date)
 
-- remove use of <asm/atomic.h> (2003/06/03, Jack, use volatile attribute)
-- capabilites support for DSP thread (2003/06/15, Jack)
-- AUTHORS file (2003/06/16, Jack)
+- remove use of <asm/atomic.h> (2003/06/03)
+- capabilites support for DSP thread (2003/06/15)
+- AUTHORS file (2003/06/16)
+- add JACK transport position tracking (2003/06/17)
