@@ -67,7 +67,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <pthread.h>
-#include <sched.h>
 #include <getopt.h>
 #include <errno.h>
 #include <assert.h>
