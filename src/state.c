@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.44 2004/01/19 23:20:39 jdepner Exp $
+ *  $Id: state.c,v 1.45 2004/01/22 01:54:13 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -32,6 +32,7 @@
 #include "process.h"
 #include "scenes.h"
 #include "hdeq.h"
+#include "compressor-ui.h"
 #include "help.h"
 
 /* A scene value to indicate that loading failed */
@@ -377,14 +378,19 @@ void s_redo()
 }
 
 
-/*  Negative time will use the default "crossfade tim" which may come from the
+/*  Negative time will use the default "crossfade time" which may come from the
     command line -c option.  */
 
 void s_crossfade_to_state(s_state *state, float time)
 {
-    int i, duration;
+    int i, duration, milliseconds;
 
     if (time < 0.0) time = crossfade_time;
+
+
+    suspend_ganging ();
+    milliseconds = time * 1000.0 + 50;
+    g_timeout_add (milliseconds, unsuspend_ganging, NULL);
 
 
     /* printf("restore %s\n", state->description); */
@@ -726,6 +732,7 @@ static void s_error(void *user_data, const char *msg, ...)
 void s_crossfade(const int nframes)
 {
     unsigned int i;
+
 
     /*  We don't want warning flags when we're cross fading.  */
 

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.42 2004/01/19 20:31:06 jdepner Exp $
+ *  $Id: main.c,v 1.43 2004/01/22 01:54:13 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -58,7 +58,6 @@ char *resource_file = NULL;		/* GTK resource file */
 char user_default_session[PATH_MAX];	/* user's default session name */
 
 static gboolean update_meters(gpointer data);
-gboolean spectrum_update(gpointer data);
 static void set_configuration_files(void);
 
 

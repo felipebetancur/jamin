@@ -85,7 +85,7 @@ void preferences_init()
     set_color (&band_color[2], 0, 0, 60000);
     set_color (&band_color[3], 0, 0, 0);
 
-    set_color (&gang_color, 65535, 0, 65535);
+    set_color (&gang_color, 65535, 0, 0);
 }
 
 

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: spectrum.c,v 1.13 2004/01/19 20:31:07 jdepner Exp $
+ *  $Id: spectrum.c,v 1.14 2004/01/22 01:54:13 jdepner Exp $
  */
 
 #include <math.h>
@@ -177,8 +177,10 @@ gboolean spectrum_update(gpointer data)
     we're setting a flag that will start a countdown in spectrum_timeout_check.
     That function is called by update_meters (every 100 milliseconds).  We
     let it countdown for 1100 ms to make sure that spectrum_update has killed
-    itself and then we start a new timeout at the new frequency.  It would be
-    much easier if there was a g_timeout_remove ;-)  JCD  */
+    itself and then we start a new timeout at the new frequency.  Why are we
+    doing it this way?  Because this sucker can get called way too frequently
+    to try to set a timeout to turn it off and on again (it respawns).  It 
+    would be much easier if there was a g_timeout_remove ;-)  JCD  */
 
 void set_spectrum_freq (int freq)
 {
@@ -205,6 +207,7 @@ void spectrum_timeout_check()
         }
     }
 }
+
 
 
 GtkWidget *make_mini_label(const char *text)

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.130 2004/01/19 23:20:38 jdepner Exp $
+ *  $Id: callbacks.c,v 1.131 2004/01/22 01:54:13 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1191,6 +1191,8 @@ on_new1_activate                       (GtkMenuItem     *menuitem,
   s_load_session(NULL);
 
   unset_scene_buttons ();
+  set_scene_button (0);
+
   reset_hdeq ();
 }
 
@@ -1682,8 +1684,6 @@ on_comp_at_label_1_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_at (0);
 
   return FALSE;
@@ -1696,8 +1696,6 @@ on_comp_re_label_1_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_re (0);
 
   return FALSE;
@@ -1710,8 +1708,6 @@ on_comp_th_label_1_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_th (0);
 
   return FALSE;
@@ -1724,8 +1720,6 @@ on_comp_ra_label_1_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_ra (0);
 
   return FALSE;
@@ -1738,8 +1732,6 @@ on_comp_kn_label_1_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_kn (0);
 
   return FALSE;
@@ -1752,8 +1744,6 @@ on_comp_ma_label_1_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_ma (0);
 
   return FALSE;
@@ -1766,8 +1756,6 @@ on_comp_at_label_2_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_at (1);
 
   return FALSE;
@@ -1780,8 +1768,6 @@ on_comp_re_label_2_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_re (1);
 
   return FALSE;
@@ -1794,8 +1780,6 @@ on_comp_th_label_2_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_th (1);
 
   return FALSE;
@@ -1808,8 +1792,6 @@ on_comp_ra_label_2_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_ra (1);
 
   return FALSE;
@@ -1822,8 +1804,6 @@ on_comp_kn_label_2_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_kn (1);
 
   return FALSE;
@@ -1836,8 +1816,6 @@ on_comp_ma_label_2_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_ma (1);
 
   return FALSE;
@@ -1850,8 +1828,6 @@ on_comp_at_label_3_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_at (2);
 
   return FALSE;
@@ -1864,8 +1840,6 @@ on_comp_re_label_3_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_re (2);
 
   return FALSE;
@@ -1878,8 +1852,6 @@ on_comp_th_label_3_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_th (2);
 
   return FALSE;
@@ -1892,8 +1864,6 @@ on_comp_ra_label_3_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_ra (2);
 
   return FALSE;
@@ -1906,8 +1876,6 @@ on_comp_kn_label_3_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_kn (2);
 
   return FALSE;
@@ -1920,8 +1888,6 @@ on_comp_ma_label_3_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  set_scene_warning_button ();
-
   comp_gang_ma (2);
 
   return FALSE;

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: compressor-ui.c,v 1.18 2004/01/19 23:20:38 jdepner Exp $
+ *  $Id: compressor-ui.c,v 1.19 2004/01/22 01:54:13 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -89,7 +89,7 @@ static gulong sig_hand_th[XO_BANDS];
 static gulong sig_hand_ra[XO_BANDS];
 static gulong sig_hand_kn[XO_BANDS];
 static gulong sig_hand_ma[XO_BANDS];
-
+static gboolean suspend_gang = FALSE;
 
 #define connect_scale(sym, i, member, state_id) \
         gang_##sym[i] = FALSE; \
@@ -152,7 +152,7 @@ void at_changed(int id, float value)
 
   i = id - S_COMP_ATTACK(0);
 
-  if (gang_at[i])
+  if (!suspend_gang && gang_at[i])
     {
       diff = value - prev_value_at[i];
 
@@ -175,10 +175,10 @@ void at_changed(int id, float value)
               draw_comp_curve(j);
             }
         }
+      prev_value_at[i] = value;
     }
                   
   compressors[i].attack = value;
-  prev_value_at[i] = value;
   draw_comp_curve(i);
 }
 
@@ -190,7 +190,7 @@ void re_changed(int id, float value)
 
   i = id - S_COMP_RELEASE(0);
 
-  if (gang_re[i])
+  if (!suspend_gang && gang_re[i])
     {
       diff = value - prev_value_re[i];
 
@@ -213,10 +213,10 @@ void re_changed(int id, float value)
               draw_comp_curve(j);
             }
         }
+      prev_value_re[i] = value;
     }
                   
   compressors[i].release = value;
-  prev_value_re[i] = value;
   draw_comp_curve(i);
 }
 
@@ -228,7 +228,7 @@ void th_changed(int id, float value)
 
   i = id - S_COMP_THRESH(0);
 
-  if (gang_th[i])
+  if (!suspend_gang && gang_th[i])
     {
       diff = value - prev_value_th[i];
 
@@ -256,10 +256,10 @@ void th_changed(int id, float value)
               gtk_meter_set_warn_point(le_meter[j], new_value);
             }
         }
+      prev_value_th[i] = value;
     }
                   
   compressors[i].threshold = value;
-  prev_value_th[i] = value;
   if (auto_gain[i]) {
     calc_auto_gain(i);
   } else {
@@ -276,7 +276,7 @@ void ra_changed(int id, float value)
 
   i = id - S_COMP_RATIO(0);
 
-  if (gang_ra[i])
+  if (!suspend_gang && gang_ra[i])
     {
       diff = value - prev_value_ra[i];
 
@@ -304,10 +304,10 @@ void ra_changed(int id, float value)
               gtk_meter_set_warn_point(le_meter[j], new_value);
             }
         }
+      prev_value_ra[i] = value;
     }
                   
   compressors[i].ratio = value;
-  prev_value_ra[i] = value;
   if (auto_gain[i]) {
     calc_auto_gain(i);
   } else {
@@ -324,7 +324,7 @@ void kn_changed(int id, float value)
 
   i = id - S_COMP_KNEE(0);
 
-  if (gang_kn[i])
+  if (!suspend_gang && gang_kn[i])
     {
       diff = value - prev_value_kn[i];
 
@@ -347,10 +347,10 @@ void kn_changed(int id, float value)
               draw_comp_curve(j);
             }
         }
+      prev_value_kn[i] = value;
     }
                   
   compressors[i].knee = value;
-  prev_value_kn[i] = value;
   draw_comp_curve(i);
 }
 
@@ -362,7 +362,7 @@ void ma_changed(int id, float value)
 
   i = id - S_COMP_MAKEUP(0);
 
-  if (gang_ma[i])
+  if (!suspend_gang && gang_ma[i])
     {
       diff = value - prev_value_ma[i];
 
@@ -385,10 +385,10 @@ void ma_changed(int id, float value)
               draw_comp_curve(j);
             }
         }
+      prev_value_ma[i] = value;
     }
                   
   compressors[i].makeup_gain = value;
-  prev_value_ma[i] = value;
   draw_comp_curve(i);
 }
 
@@ -589,6 +589,17 @@ void comp_gang_ma (int band)
       gtk_widget_modify_fg ((GtkWidget *) lab_ma[band], GTK_STATE_NORMAL, 
                             get_band_color (GANG_HIGHLIGHT_COLOR));
     }
+}
+
+void suspend_ganging ()
+{
+  suspend_gang = TRUE;
+}
+
+gboolean unsuspend_ganging (gpointer data)
+{
+  suspend_gang = FALSE;
+  return (FALSE);
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

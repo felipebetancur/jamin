@@ -245,6 +245,7 @@ void set_scene (int scene_num, gboolean morph)
                           scene_state[menu_scene].description, NULL);
 }
 
+
 /* Gets the scene name */
 
 const char *get_scene_name(int number)

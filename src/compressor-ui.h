@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: compressor-ui.h,v 1.7 2004/01/19 23:20:38 jdepner Exp $
+ *  $Id: compressor-ui.h,v 1.8 2004/01/22 01:54:13 jdepner Exp $
  */
 
 #ifndef COMPRESSOR_UI_H
@@ -29,5 +29,7 @@ void comp_gang_th (int band);
 void comp_gang_ra (int band);
 void comp_gang_kn (int band);
 void comp_gang_ma (int band);
+void suspend_ganging ();
+gboolean unsuspend_ganging (gpointer data);
 
 #endif
