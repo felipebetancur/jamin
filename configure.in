@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_INIT(configure.in)
-AM_INIT_AUTOMAKE(jamin, 0.8.40)
+AM_INIT_AUTOMAKE(jamin, 0.8.41)
 AM_CONFIG_HEADER(config.h)
 AM_MAINTAINER_MODE
 
@@ -50,7 +50,11 @@ configure: error: era machines])])
 
 PKG_CHECK_MODULES(XML, libxml-2.0 >= 2.0)
 
-PKG_CHECK_MODULES(OSC, liblo >= 0.5)
+PKG_CHECK_MODULES(OSC, liblo >= 0.5,
+	[AC_DEFINE(HAVE_OSC, [yes], [Whether liblo OSC library is available])
+	 [OSC_PROGS="jamin-scene"]],
+	[AC_MSG_WARN([liblo not available, OSC support will not be built])]
+)
 
 # On Mac OS X the float functions for <math.h> are in -lmx
 AC_CHECK_LIB([m], [sqrt],, [AC_MSG_ERROR(Can't find libm)])
@@ -70,6 +74,8 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE")
 dnl Add the languages which your application supports here.
 ALL_LINGUAS=""
 AM_GLIB_GNU_GETTEXT
+
+AC_SUBST(OSC_PROGS)
 
 JAMIN_LIBS="$FFTW_LIBS $XML_LIBS $JACK_LIBS $OSC_LIBS"
 AC_SUBST(JAMIN_LIBS)
