@@ -20,7 +20,7 @@ float geq_gains[EQ_BANDS + 1];
 float geq_freqs[EQ_BANDS];
 
 int bin_base[BINS];
-int bin_delta[BINS];
+float bin_delta[BINS];
 
 gboolean eqb_changed(GtkAdjustment *adj, gpointer user_data);
 gboolean eqb_mod(GtkAdjustment *adj, gpointer user_data);
