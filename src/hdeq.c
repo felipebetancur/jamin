@@ -196,8 +196,7 @@ void bind_hdeq ()
 void hdeq_low2mid_set (GtkRange *range)
 {
     double          value, other_value, lvalue, mvalue, hvalue;
-    char            label[6];
-
+    char            *label = NULL;
 
     value = gtk_range_get_value (range);
     other_value = gtk_range_get_value ((GtkRange *) l_mid2high);
@@ -238,9 +237,9 @@ void hdeq_low2mid_set (GtkRange *range)
     /*  Set the label using log scale.  */
 
     lvalue = pow (10.0, value);
-    sprintf (label, "%05d", NINT (lvalue));
+    label = g_strdup_printf("%05d", NINT (lvalue));
     gtk_label_set_label (l_low2mid_lbl, label);
-
+    free(label);
 
     /* Write value into DSP code */
 
@@ -250,13 +249,15 @@ void hdeq_low2mid_set (GtkRange *range)
     /*  Set the compressor labels.  */
 
     hvalue = pow (10.0, other_value);
-    sprintf (label, _("Mid : %d - %d"), NINT (lvalue), NINT (hvalue));
+    label = g_strdup_printf (_("Mid : %d - %d"), NINT (lvalue), NINT (hvalue));
     gtk_label_set_label (l_comp_lbl[1], label);
+    free(label);
 
     lvalue = pow (10.0, l_low2mid_adj->lower);
     mvalue = pow (10.0, value);
-    sprintf (label, _("Low : %d - %d"), NINT (lvalue), NINT (mvalue));
+    label = g_strdup_printf(_("Low : %d - %d"), NINT (lvalue), NINT (mvalue));
     gtk_label_set_label (l_comp_lbl[0], label);
+    free(label);
 
     draw_EQ_curve ();
 }
@@ -267,7 +268,7 @@ void hdeq_low2mid_set (GtkRange *range)
 void hdeq_mid2high_set (GtkRange *range)
 {
     double          value, other_value, lvalue, mvalue, hvalue;
-    char            label[6];
+    char            *label = NULL;
 
 
     value = gtk_range_get_value (range);
@@ -308,9 +309,9 @@ void hdeq_mid2high_set (GtkRange *range)
     /*  Set the label using log scale.  */
 
     mvalue = pow (10.0, value);
-    sprintf (label, "%05d", NINT (mvalue));
+    label = g_strdup_printf ("%05d", NINT (mvalue));
     gtk_label_set_label (l_mid2high_lbl, label);
-
+    free(label);
 
     /* Write value into DSP code */
 
@@ -320,12 +321,14 @@ void hdeq_mid2high_set (GtkRange *range)
     /*  Set the compressor labels.  */
 
     lvalue = pow (10.0, other_value);
-    sprintf (label, _("Mid : %d - %d"), NINT (lvalue), NINT (mvalue));
+    label = g_strdup_printf (_("Mid : %d - %d"), NINT (lvalue), NINT (mvalue));
     gtk_label_set_label (l_comp_lbl[1], label);
+    free(label);
 
     hvalue = pow (10.0, l_low2mid_adj->upper);
-    sprintf (label, _("High : %d - %d"), NINT (mvalue), NINT (hvalue));
+    label = g_strdup_printf (_("High : %d - %d"), NINT (mvalue), NINT (hvalue));
     gtk_label_set_label (l_comp_lbl[2], label);
+    free(label);
 
     draw_EQ_curve ();
 }
@@ -1997,7 +2000,7 @@ void comp_curve_realize (GtkWidget *widget, int i)
 void comp_curve_box_motion (int i, GdkEventMotion  *event)
 {
     float          x, y;
-    char           coords[20];
+    char           *coords = NULL;
 
 
     x = comp_start_x[i] + (((float) event->x / 
@@ -2008,8 +2011,9 @@ void comp_curve_box_motion (int i, GdkEventMotion  *event)
         (float) comp_curve_height[i]) * comp_curve_range_y[i]);
 
 
-    sprintf (coords, "%d , %d    ", NINT (x), NINT (y));
+    coords = g_strdup_printf ("%d , %d    ", NINT (x), NINT (y));
     comp_write_annotation (i, coords);
+    free(coords);
 }
 
 

@@ -19,6 +19,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include <glib.h>
 
 #include "scenes.h"
 #include "state.h"
@@ -44,11 +45,11 @@ void set_EQ_curve_values ();
 void bind_scenes ()
 {
     int             i;
-    char            name[20];
+    char            *name;
 
+    name = malloc(sizeof(char) * 32);
 
     scene_menu = (GtkMenu *) create_scene_menu();
-
 
     current_scene = -1;
     menu_scene = -1;
@@ -67,6 +68,8 @@ void bind_scenes ()
         scene_state[i].description = NULL; 
         gtk_widget_set_sensitive ((GtkWidget *) l_scene[i], FALSE);
       }
+
+      free(name);
 }
 
 
@@ -179,9 +182,9 @@ s_state *get_scene (int number)
 void set_scene (int scene_num, gboolean morph)
 {
     int         i;
-    char        name[256];
-    GtkTooltips *tooltips = gtk_tooltips_new();
+    char        *name = NULL;
 
+    GtkTooltips *tooltips = gtk_tooltips_new();
 
     /*  Only save the scene settings if we're going from the current settings.
         That is, scene_num = -1.  Otherwise we may be in the middle of 
@@ -195,6 +198,7 @@ void set_scene (int scene_num, gboolean morph)
         for (i = 0 ; i < S_SIZE ; i++) 
           scene_state[menu_scene].value[i] = s_get_value(i);
 
+        name = malloc(sizeof(char) * 256);
 
         strcpy (name, gtk_entry_get_text (l_scene_name[menu_scene]));
         scene_state[menu_scene].description = 
@@ -202,6 +206,8 @@ void set_scene (int scene_num, gboolean morph)
                             strlen (name) + 1);
 
         strcpy (scene_state[menu_scene].description, name);
+
+        free(name);
       }
 
 
@@ -259,7 +265,7 @@ const char *get_scene_name(int number)
 
 void set_scene_name (int number, const char *scene_name)
 {
-    char        name[256];
+    char        *name = NULL;
     GtkTooltips *tooltips = gtk_tooltips_new();
     int         i;
 
@@ -275,11 +281,11 @@ void set_scene_name (int number, const char *scene_name)
 
     if (scene_name == NULL)
       {
-        strcpy (name, gtk_entry_get_text (l_scene_name[i]));
+        name = strdup(gtk_entry_get_text (l_scene_name[i]));
       }
     else
       {
-        strcpy (name, scene_name);
+        name = strdup(scene_name);
 
         gtk_entry_set_text (l_scene_name[i], name);
       }
@@ -290,13 +296,13 @@ void set_scene_name (int number, const char *scene_name)
 
     strcpy (scene_state[menu_scene].description, name);
 
-
     /*  Set the tooltip to the full name (it may be too long to show up
         completely in the text widget).  */
 
     gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[menu_scene]), 
                           scene_state[menu_scene].description, NULL);
 
+    free(name);
 
     //set_scene_warning_button ();
 }
@@ -307,7 +313,7 @@ void set_scene_name (int number, const char *scene_name)
 
 void clear_scene (int scene_num)
 {
-    char        name[20];
+    char        *name = NULL;
     int         i;
 
 
@@ -331,8 +337,9 @@ void clear_scene (int scene_num)
 
     scene_loaded[menu_scene] = FALSE;
 
-    sprintf (name, "Scene %1d", menu_scene + 1);
+    name = g_strdup_printf("Scene %1d", menu_scene + 1);
     gtk_entry_set_text (l_scene_name[menu_scene], name);
+    free(name);
 }
 
 
@@ -343,7 +350,7 @@ void clear_scene (int scene_num)
 void unset_scene_buttons ()
 {
     int         i;
-    char        name[20];
+    char        *name;
 
 
     current_scene = -1;
@@ -356,8 +363,9 @@ void unset_scene_buttons ()
 
         gtk_widget_set_sensitive ((GtkWidget *) l_scene[i], FALSE);
 
-        sprintf (name, "Scene %1d", i + 1);
+        name = g_strdup_printf("Scene %1d", i + 1);
         gtk_entry_set_text (l_scene_name[i], name);
+        free(name);
       }
 }
 
