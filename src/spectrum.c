@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: spectrum.c,v 1.16 2004/04/11 15:30:10 jdepner Exp $
+ *  $Id: spectrum.c,v 1.17 2004/05/06 10:28:00 jdepner Exp $
  */
 
 #include <math.h>
@@ -190,6 +190,12 @@ void set_spectrum_freq (int freq)
   timeout_ret = FALSE;
   timeout_countdown = 11;
   spectrum_freq = freq;
+}
+
+
+int get_spectrum_freq ()
+{
+  return (spectrum_freq);
 }
 
 

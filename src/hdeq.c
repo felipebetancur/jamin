@@ -2279,6 +2279,18 @@ void hdeq_set_upper_gain (float gain)
 }
 
 
+float hdeq_get_lower_gain ()
+{
+  return (EQ_gain_lower);
+}
+
+
+float hdeq_get_upper_gain ()
+{
+  return (EQ_gain_upper);
+}
+
+
 /*  Write the annotation for the compressor curves when you move the cursor in
     the curve box.  */
 

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.53 2004/05/06 09:49:43 theno23 Exp $
+ *  $Id: state.c,v 1.54 2004/05/06 10:28:00 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -478,8 +478,10 @@ void s_save_session (const char *fname)
     int curr_scene;
     char tmp[256];
 
+
     /* Check to see if we have been passed a filename, if not fall back to
      * previous one */
+
     if (fname) {
 	filename = fname;
 	s_update_title();
@@ -491,7 +493,9 @@ void s_save_session (const char *fname)
 	free(errstr);
     }
 
+
     /*  Need to save this scene number.  */
+
     curr_scene = get_current_scene ();
 
     xmlSetCompressMode(5);
@@ -502,12 +506,16 @@ void s_save_session (const char *fname)
     node = xmlNewText("\n");
     xmlAddChild(rootnode, node);
 
-// XXX Jan, these need to be replaced with the real, live values 
-    s_save_global_int(doc, "mode", SPEC_POST_EQ);
-    s_save_global_float(doc, "ct", 1.0);
-//  ...
+
+    s_save_global_int(doc, "mode", process_get_spec_mode());
+    s_save_global_int(doc, "freq", get_spectrum_freq());
+    s_save_global_float(doc, "ct", crossfade_time);
+    s_save_global_float(doc, "lgain", hdeq_get_lower_gain());
+    s_save_global_float(doc, "hgain", hdeq_get_upper_gain());
+
 
     /* record the current gang state of the compressor controls */
+
     for (i = 0 ; i < XO_BANDS ; i++) {
         s_save_global_gang(doc, "at", i, comp_at_ganged(i));
         s_save_global_gang(doc, "re", i, comp_re_ganged(i));
@@ -517,7 +525,9 @@ void s_save_session (const char *fname)
         s_save_global_gang(doc, "ma", i, comp_ma_ganged(i));
     }
 
+
     /* Save current active state */
+
     for (i=0; i<S_SIZE; i++) {
 	node = xmlNewDocRawNode(doc, NULL, "parameter", NULL);
 	snprintf(tmp, 255, "%g", s_value[i]);
@@ -528,7 +538,9 @@ void s_save_session (const char *fname)
 	xmlAddChild(rootnode, node);
     }
 
+
     /* Save scenes */
+
     for (j=0; j<NUM_SCENES; j++) {
 	s_state *st = get_scene(j);
 	sc_node = xmlNewDocRawNode(doc, NULL, "scene", NULL);
