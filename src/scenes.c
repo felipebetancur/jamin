@@ -114,6 +114,8 @@ void select_scene (int number, int button)
 
                         set_EQ_curve_values ();
 
+                        s_history_add_state (scene_state[i]);
+
                         gtk_image_set_from_stock (l_scene[i], GTK_STOCK_YES, 
                                                   GTK_ICON_SIZE_BUTTON);
                       }
@@ -170,29 +172,40 @@ s_state *get_scene (int number)
 
 /*  Set the scene state from the current settings.  Get the scene name from
     the scene_name text entry widget.  If scene_num is -1 use the last pressed
-    scene button number.  */
+    scene button number.  If morph is set to TRUE we are in the midst of a
+    crossfade/morph to an already existing scene so we don't want to save the
+    scene settings.  */
 
-void set_scene (int scene_num)
+void set_scene (int scene_num, gboolean morph)
 {
     int         i;
     char        name[256];
     GtkTooltips *tooltips = gtk_tooltips_new();
 
 
-    if (scene_num >= 0) menu_scene = scene_num;
+    /*  Only save the scene settings if we're going from the current settings.
+        That is, scene_num = -1.  Otherwise we may be in the middle of 
+        crossfading/morphing to a new state.  */
+
+    if (scene_num >= 0) menu_scene = prev_scene = scene_num;
+
+
+    if (!morph)
+      {
+        for (i = 0 ; i < S_SIZE ; i++) 
+          scene_state[menu_scene].value[i] = s_get_value(i);
+
+
+        strcpy (name, gtk_entry_get_text (l_scene_name[menu_scene]));
+        scene_state[menu_scene].description = 
+          (char *) realloc (scene_state[menu_scene].description, 
+                            strlen (name) + 1);
+
+        strcpy (scene_state[menu_scene].description, name);
+      }
+
 
     gtk_widget_set_sensitive ((GtkWidget *) l_scene[menu_scene], TRUE);
-
-    for (i = 0 ; i < S_SIZE ; i++) 
-      scene_state[menu_scene].value[i] = s_get_value(i);
-
-    
-    strcpy (name, gtk_entry_get_text (l_scene_name[menu_scene]));
-    scene_state[menu_scene].description = 
-            (char *) realloc (scene_state[menu_scene].description, 
-            strlen (name) + 1);
-
-    strcpy (scene_state[menu_scene].description, name);
 
 
     /*  Set the scene loaded flag.  */
@@ -376,6 +389,33 @@ void set_scene_warning_button ()
 }
 
 
+/*  Set the specified scene button to active.  Only done on undo/redo.  */
+
+void set_scene_button (int scene)
+{
+    int i;
+
+
+    /*  Change the selected icon to green/yes.  */
+
+    for (i = 0 ; i < NUM_SCENES ; i++)
+      {
+        if (i == scene)
+          {
+            gtk_image_set_from_stock (l_scene[i], GTK_STOCK_YES, 
+                                      GTK_ICON_SIZE_BUTTON);
+
+            current_scene = i;
+          }
+        else
+          {
+            gtk_image_set_from_stock (l_scene[i], GTK_STOCK_NO, 
+                                      GTK_ICON_SIZE_BUTTON);
+          }
+      }
+}
+
+
 /* Return the magic scene number that will be used to represent that scene if 
    it has had unsaved changes made */
 
@@ -385,7 +425,7 @@ int changed_scene_no(int s)
 }
 
 
-/* return TRUE if the scene number passed in represents a changes scene and
+/* return TRUE if the scene number passed in represents a changed scene and
    FALSE otherwise */
 
 int is_changed_scene(int s)

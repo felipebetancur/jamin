@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.36 2004/01/07 22:55:54 joq Exp $
+ *  $Id: state.c,v 1.37 2004/01/08 15:59:33 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -199,6 +199,30 @@ void s_history_add(const char *description)
     last_state = ns;
 }
 
+void s_history_add_state(s_state state)
+{
+    s_state *ns;
+    GList *it;
+
+    ns = malloc(sizeof(s_state));
+    ns->description = (char *)state.description;
+    memcpy(ns->value, state.value, S_SIZE * sizeof(float));
+
+    if (undo_pos) {
+	it = undo_pos->next;
+	while (it) {
+	    free(it->data);
+	    it = it->next;
+	}
+	undo_pos->next = NULL;
+    }
+
+    history = g_list_append(history, ns);
+    undo_pos = g_list_last(history);
+    /* printf("add %s\n", description); */
+    last_state = ns;
+}
+
 void s_undo() 
 {
     GList *undo_next;
@@ -207,14 +231,12 @@ void s_undo()
 
     unsigned int compute_state_crc (s_state *state);
 
-fprintf(stderr,"%s %d %p\n",__FILE__,__LINE__,undo_pos);
+
     if (!undo_pos) {
-fprintf(stderr, "undo pos is NULL, no action\n");
 	return;
     }
     undo_next = g_list_previous(undo_pos);
     if (!undo_next) {
-fprintf(stderr, "undo pos would be NULL, so no action\n");
 	return;
     }
     undo_pos = undo_next;
@@ -229,11 +251,7 @@ fprintf(stderr, "undo pos would be NULL, so no action\n");
         crc[0] = compute_state_crc (st[0]);
         crc[1] = compute_state_crc (st[1]);
 
-        if (crc[0] == crc[1])
-          {
-            set_scene (scene);
-            fprintf(stderr,"%s %d SETTING SCENE\n",__FILE__,__LINE__);
-          }
+        if (crc[0] == crc[1]) set_scene_button (scene);
       }
 
     set_EQ_curve_values ();
@@ -242,36 +260,49 @@ fprintf(stderr, "undo pos would be NULL, so no action\n");
 
 void s_redo() 
 {
+    gboolean  restore;
+    int       scene, crc[2];
+    s_state   *st[2];
+
+    unsigned int compute_state_crc (s_state *state);
+
+
+    restore = FALSE;
     if (undo_pos) {
 	if (undo_pos->next) {
 	    undo_pos = g_list_next(undo_pos);
-	    s_restore_state((s_state *)undo_pos->data);
+            restore = TRUE;
 	}
     } else {
 	undo_pos = history;
 	undo_pos = g_list_next(undo_pos);
-	s_restore_state((s_state *)undo_pos->data);
+        restore = TRUE;
     }
 
-    set_EQ_curve_values ();
-}
+    if (restore)
+      {
+        s_restore_state((s_state *)undo_pos->data);
 
-void s_restore_state(s_state *state)
-{
-    int i, duration;
+        scene = get_previous_scene_num ();
+        if (scene >= 0)
+          {
+            st[0] = get_scene (scene);
+            st[1] = (s_state *) undo_pos->data;
 
-    /* printf("restore %s\n", state->description); */
-    /* crossfade in 3ms, sounds a bit better than jumping */
-    duration = (int)(sample_rate * 0.003f);
-    suppress_feedback++;
-    for (i=0; i<S_SIZE; i++) {
-	/* set the target and duration for crosssfade, but set the controls to
-	 * the endpoint */
-	s_target[i] = state->value[i];
-	s_duration[i] = duration;
-	//s_set_events(i, state->value[i]);
-    }
-    suppress_feedback--;
+            crc[0] = compute_state_crc (st[0]);
+            crc[1] = compute_state_crc (st[1]);
+
+            if (crc[0] == crc[1]) 
+              {
+                set_scene_button (scene);
+              }
+            else
+              {
+                set_scene_warning_button (scene);
+              }
+          }
+        set_EQ_curve_values ();
+      }
 }
 
 void s_crossfade_to_state(s_state *state, float time)
@@ -289,6 +320,11 @@ void s_crossfade_to_state(s_state *state, float time)
 	//s_set_events(i, state->value[i]);
     }
     suppress_feedback--;
+}
+
+void s_restore_state(s_state *state)
+{
+    s_crossfade_to_state (state, 0.003f);
 }
 
 static void s_set_events(int id, float value)
@@ -436,7 +472,7 @@ void s_load_session (const char *fname)
 
     if (saved_scene < 100)
       {
-        set_scene (saved_scene);
+        set_scene (saved_scene, FALSE);
       }
     else
       {
@@ -487,7 +523,7 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 
 	if (active) {
             saved_scene = *scene;
-	    set_scene(*scene);
+	    set_scene(*scene, FALSE);
 	}
 	if (changed) {
             saved_scene = *scene + 100;
@@ -495,7 +531,7 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 	}
 
 	if (sname && *scene > -1) {
-	    set_scene(*scene);
+	    set_scene(*scene, FALSE);
 	    set_scene_name(*scene, sname);
 	}
 
