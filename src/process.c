@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.44 2004/02/22 18:18:03 theno23 Exp $
+ *  $Id: process.c,v 1.45 2004/02/22 18:33:55 theno23 Exp $
  */
 
 #include <math.h>
@@ -409,7 +409,7 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	}
     }
 
-    if (!limiter_bypass) plugin_run(lim_plugin, limiter.handle, nframes);
+    plugin_run(lim_plugin, limiter.handle, nframes);
 
     //printf("run limiter...\n");
 
@@ -434,7 +434,7 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 
     /* If bypass is on override all the stuff done by the crossover section,
      * limiter and so on */
-    if (global_bypass) {
+    if (global_bypass || limiter_bypass) {
 	const unsigned int limiter_latency = (unsigned int)limiter.latency;
 
 	for (port = 0; port < nchannels; port++) {
