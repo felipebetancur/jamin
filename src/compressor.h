@@ -52,7 +52,7 @@ static inline void comp_connect(plugin *p, comp_settings *s, float *left, float
 	s->release = 200.0f;
 	s->threshold = -20.0f;
 	s->ratio = 2.0f;
-	s->knee = 5.0f;
+	s->knee = 0.5f;
 	s->makeup_gain = 0.0f;
 }
 

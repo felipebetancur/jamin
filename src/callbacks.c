@@ -783,15 +783,21 @@ on_EQ_curve_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-    int    diffx_fa, diffx_fb, size;
+    float               *x = NULL, *y = NULL, interval;
+    int                 diffx_fa, diffx_fb, i, j, i_start = 0, i_end = 0, size;
+    static int          interp_pad = 5;
 
 
     switch (event->button)
       {
 
-        /*  Button 1 - start drawing or grab and slide the xover bars.  */
+        /*  Button 1 - start drawing, end drawing, or grab and slide the 
+            xover bars.  */
 
       case 1:
+
+        /*  Checking for position over xover bar handles.  */
+
         diffx_fa = abs (event->x - xover_handle_fa);
         diffx_fb = abs (event->x - xover_handle_fb);
         if (diffx_fa <= XOVER_HANDLE_HALF_SIZE && (event->y <= XOVER_HANDLE_SIZE ||
@@ -808,23 +814,160 @@ on_EQ_curve_event_box_button_press_event
           }
         else
           {
-            /*  Save the first point so we can do real narrow EQ changes.  */
+            /*  Start drawing.  */
 
-            size = (EQ_input_points + 1) * sizeof (float);
-            EQ_xinput = (float *) realloc (EQ_xinput, size);
-            EQ_yinput = (float *) realloc (EQ_yinput, size);
-
-            if (EQ_yinput == NULL)
+            if (!EQ_drawing)
               {
-                perror (_("Allocating EQ_yinput in callbacks.c"));
-                clean_quit ();
+                /*  Save the first point so we can do real narrow EQ 
+                    changes.  */
+
+                size = (EQ_input_points + 1) * sizeof (float);
+                EQ_xinput = (float *) realloc (EQ_xinput, size);
+                EQ_yinput = (float *) realloc (EQ_yinput, size);
+
+                if (EQ_yinput == NULL)
+                  {
+                    perror (_("Allocating EQ_yinput in callbacks.c"));
+                    clean_quit ();
+                  }
+
+                EQ_xinput[EQ_input_points] = (float) event->x;
+                EQ_yinput[EQ_input_points] = (float) event->y;
+                EQ_input_points++;
+
+                EQ_drawing = 1;
               }
 
-            EQ_xinput[EQ_input_points] = (float) event->x;
-            EQ_yinput[EQ_input_points] = (float) event->y;
-            EQ_input_points++;
+            /*  End drawing - combine the drawn data with any parts of the 
+                previous that haven't been superceded by what was drawn.  Use 
+                an "interp_pad" cushion on either side of the drawn section 
+                so it will merge nicely with the old data.  */
 
-            EQ_drawing = 1;
+            else
+              {
+                /*  Convert the x and y input positions to "real" values.  */
+
+                for (i = 0 ; i < EQ_input_points ; i++)
+                  {
+                    EQ_xinput[i] = l_low2mid_adj->lower + 
+                        (((double) EQ_xinput[i] / (double) EQ_curve_width) * 
+                        EQ_curve_range_x);
+
+
+                    EQ_yinput[i] = (((((double) EQ_curve_height - 
+                        (double) EQ_yinput[i]) / (double) EQ_curve_height) * 
+                        EQ_curve_range_y) + l_eqb1_adj->lower) * 0.05;
+                  }
+
+
+                /*  Merge the drawn section with the old curve.  */
+
+                for (i = 0 ; i < EQ_length ; i++)
+                  {
+                    if (EQ_xinterp[i] >= EQ_xinput[0])
+                      {
+                        i_start = i - interp_pad;
+                        break;
+                      }
+                  }
+
+                for (i = EQ_length - 1 ; i >= 0 ; i--)
+                  {
+                    if (EQ_xinterp[i] <= EQ_xinput[EQ_input_points - 1])
+                      {
+                        i_end = i + interp_pad;
+                        break;
+                      }
+                  }
+
+
+                j = 0;
+                for (i = 0 ; i < i_start ; i++)
+                  {
+                    size = (j + 1) * sizeof (float);
+                    x = (float *) realloc (x, size);
+                    y = (float *) realloc (y, size);
+
+                    if (y == NULL)
+                      {
+                        perror (_("Allocating y in callbacks.c"));
+                        clean_quit ();
+                      }
+
+                    x[j] = EQ_xinterp[i];
+                    y[j] = EQ_yinterp[i];
+                    j++;
+                  }
+
+                for (i = 0 ; i < EQ_input_points ; i++)
+                  {
+                    size = (j + 1) * sizeof (float);
+                    x = (float *) realloc (x, size);
+                    y = (float *) realloc (y, size);
+
+                    if (y == NULL)
+                      {
+                        perror (_("Allocating y in callbacks.c"));
+                        clean_quit ();
+                      }
+
+                    x[j] = EQ_xinput[i];
+                    y[j] = EQ_yinput[i];
+                    j++;
+                  }
+
+                for (i = i_end ; i < EQ_length ; i++)
+                  {
+                    size = (j + 1) * sizeof (float);
+                    x = (float *) realloc (x, size);
+                    y = (float *) realloc (y, size);
+
+                    x[j] = EQ_xinterp[i];
+                    y[j] = EQ_yinterp[i];
+                    j++;
+                  }
+
+
+                /*  Recompute the splined curve in the log(freq) domain for
+                    plotting the EQ.  */
+
+                interpolate (EQ_interval, j, EQ_start, EQ_end, &EQ_length, x, 
+                    y, EQ_xinterp, EQ_yinterp);
+
+
+                /*  Recompute the splined curve in the freq domain for setting 
+                    the eq_coefs.  */
+
+                for (i = 0 ; i < j ; i++)
+                    x[i] = pow (10.0, (double) x[i]);
+
+                interval = ((l_geq_freqs[EQ_BANDS - 1]) - l_geq_freqs[0]) / 
+                    EQ_INTERP;
+
+                interpolate (interval, j, l_geq_freqs[0], 
+                    l_geq_freqs[EQ_BANDS - 1], &EQ_length, x, y, 
+                    EQ_freq_xinterp, EQ_freq_yinterp);
+
+
+                if (x) free (x);
+                if (y) free (y);
+
+
+                EQ_input_points = 0;
+
+
+                /*  Set the graphic EQ sliders and the EQ settings based on 
+                    the hand-drawn curve.  */
+
+                geq_set_sliders (EQ_length, EQ_freq_xinterp, EQ_freq_yinterp);
+
+                EQ_mod = 0;
+
+
+                /*  Redraw the curve.  */
+
+                draw_EQ_curve ();
+              }
           }
         break;
 
@@ -842,21 +985,24 @@ on_EQ_curve_event_box_button_release_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-    float               *x = NULL, *y = NULL, interval;
-    int                 i, j, i_start = 0, i_end = 0, size;
-    static int          interp_pad = 5;
-
-
-    xover_active = 0;
-    EQ_drag_fa = 0;
-    EQ_drag_fb = 0;
-
     switch (event->button)
       {
+      case 1:
+        if (EQ_drawing == 1)
+          {
+            EQ_drawing = 2;
+          }
+        else if (EQ_drawing == 2)
+          {
+            EQ_drawing = 0;
+          }
+        break;
 
-        /*  Button 2 - discard the drawn curve.  */
+
+        /*  Button 2 or 3 - discard the drawn curve.  */
 
       case 2:
+      case 3:
         EQ_drawing = 0;
 
         EQ_input_points = 0;
@@ -864,144 +1010,12 @@ on_EQ_curve_event_box_button_release_event
         draw_EQ_curve ();
         
         break;
-
-
-        /*  Button 3 - combine the drawn data with any parts of the previous 
-            that haven't been superceded by what was drawn.  Use an 
-            "interp_pad" cushion on either side of the drawn section so it 
-            will merge nicely with the old data.  */
-
-      case 3:
-        if (EQ_drawing)
-          {
-            EQ_drawing = 0;
-
-
-            /*  Convert the x and y input positions to "real" values.  */
-
-            for (i = 0 ; i < EQ_input_points ; i++)
-              {
-                EQ_xinput[i] = l_low2mid_adj->lower + (((double) EQ_xinput[i] /
-                   (double) EQ_curve_width) * EQ_curve_range_x);
-
-
-                EQ_yinput[i] = (((((double) EQ_curve_height - 
-                    (double) EQ_yinput[i]) / (double) EQ_curve_height) * 
-                    EQ_curve_range_y) + l_eqb1_adj->lower) * 0.05;
-              }
-
-
-            /*  Merge the drawn section with the old curve.  */
-
-            for (i = 0 ; i < EQ_length ; i++)
-              {
-                if (EQ_xinterp[i] >= EQ_xinput[0])
-                  {
-                    i_start = i - interp_pad;
-                    break;
-                  }
-              }
-
-            for (i = EQ_length - 1 ; i >= 0 ; i--)
-              {
-                if (EQ_xinterp[i] <= EQ_xinput[EQ_input_points - 1])
-                  {
-                    i_end = i + interp_pad;
-                    break;
-                  }
-              }
-
-
-            j = 0;
-            for (i = 0 ; i < i_start ; i++)
-              {
-                size = (j + 1) * sizeof (float);
-                x = (float *) realloc (x, size);
-                y = (float *) realloc (y, size);
-
-                if (y == NULL)
-                  {
-                    perror (_("Allocating y in callbacks.c"));
-                    clean_quit ();
-                  }
-
-                x[j] = EQ_xinterp[i];
-                y[j] = EQ_yinterp[i];
-                j++;
-              }
-
-            for (i = 0 ; i < EQ_input_points ; i++)
-              {
-                size = (j + 1) * sizeof (float);
-                x = (float *) realloc (x, size);
-                y = (float *) realloc (y, size);
-
-                if (y == NULL)
-                  {
-                    perror (_("Allocating y in callbacks.c"));
-                    clean_quit ();
-                  }
-
-                x[j] = EQ_xinput[i];
-                y[j] = EQ_yinput[i];
-                j++;
-              }
-
-            for (i = i_end ; i < EQ_length ; i++)
-              {
-                size = (j + 1) * sizeof (float);
-                x = (float *) realloc (x, size);
-                y = (float *) realloc (y, size);
-
-                x[j] = EQ_xinterp[i];
-                y[j] = EQ_yinterp[i];
-                j++;
-              }
-
-
-            /*  Recompute the splined curve in the log(freq) domain for
-                plotting the EQ.  */
-
-            interpolate (EQ_interval, j, EQ_start, EQ_end, &EQ_length, x, 
-                y, EQ_xinterp, EQ_yinterp);
-
-
-            /*  Recompute the splined curve in the freq domain for setting 
-                the eq_coefs.  */
-
-            for (i = 0 ; i < j ; i++)
-                x[i] = pow (10.0, (double) x[i]);
-
-            interval = ((l_geq_freqs[EQ_BANDS - 1]) - l_geq_freqs[0]) / 
-                EQ_INTERP;
-
-            interpolate (interval, j, l_geq_freqs[0], 
-                l_geq_freqs[EQ_BANDS - 1], &EQ_length, x, y, EQ_freq_xinterp, 
-                EQ_freq_yinterp);
-
-
-            if (x) free (x);
-            if (y) free (y);
-
-
-            EQ_input_points = 0;
-
-
-            /*  Set the graphic EQ sliders and the EQ settings based on the 
-                hand-drawn curve.  */
-
-            geq_set_sliders (EQ_length, EQ_freq_xinterp, EQ_freq_yinterp);
-
-            EQ_mod = 0;
-
-
-            /*  Redraw the curve.  */
-
-            draw_EQ_curve ();
-          }
-
-        break;
       }
+
+
+    xover_active = 0;
+    EQ_drag_fa = 0;
+    EQ_drag_fb = 0;
 
     return FALSE;
 }
