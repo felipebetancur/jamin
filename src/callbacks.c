@@ -1112,11 +1112,11 @@ on_EQ_curve_event_box_motion_notify_event
                 if (EQ_notch_drag[i])
                   {
                     /*  If we're shifted we're raising or lowering notch 
-                        gain.  */
+                        gain only.  */
 
                     if (event->state & GDK_SHIFT_MASK)
                       {
-                        if (y>= 0 && y <= EQ_curve_height)
+                        if (y >= 0 && y <= EQ_curve_height)
                           {
                             EQ_notch_gain[i] = (((((double) EQ_curve_height - 
                                 (double) y) / (double) EQ_curve_height) * 
@@ -1130,12 +1130,21 @@ on_EQ_curve_event_box_motion_notify_event
                       }
                     else
                       {
-                        if (x >= 0 && x <= EQ_curve_width)
+                        if (x >= 0 && x <= EQ_curve_width && y >= 0 && 
+                            y <= EQ_curve_height)
                           {
                             j = nearest_x (freq);
                             if (check_notch (i, j, 0))
                               {
                                 EQ_notch_index[i] = nearest_x (freq);
+
+                                EQ_notch_gain[i] = 
+                                    (((((double) EQ_curve_height - 
+                                    (double) y) / (double) EQ_curve_height) * 
+                                    EQ_curve_range_y) + l_eqb1_adj->lower) * 
+                                    0.05;
+                                EQ_notch_flag[i] = 1;
+
                                 drag = 1;
                                 notch_flag = i;
                               }
@@ -1217,7 +1226,14 @@ on_EQ_curve_event_box_motion_notify_event
                               }
                             else
                               {
-                                cursor = GDK_SB_H_DOUBLE_ARROW;
+                                if (EQ_notch_drag[i])
+                                  {
+                                    cursor = GDK_CROSS;
+                                  }
+                                else
+                                  {
+                                    cursor = GDK_SB_H_DOUBLE_ARROW;
+                                  }
                               }
                             notch_flag = i;
                             break;
@@ -1235,7 +1251,7 @@ on_EQ_curve_event_box_motion_notify_event
                               }
                             else
                               {
-                                cursor = GDK_SB_H_DOUBLE_ARROW;
+                                cursor = GDK_CROSS;
                               }
                             notch_flag = i;
                             break;
@@ -1371,6 +1387,16 @@ on_EQ_curve_event_box_button_press_event
                           {
                             EQ_notch_flag[i] = 0;
                             EQ_notch_gain[i] = 0.0;
+
+                            if (!i || i == NOTCHES - 1)
+                              {
+                                EQ_notch_width[i] = 0;
+                              }
+                            else
+                              {
+                                EQ_notch_width[i] = 5;
+                              }
+
                             insert_notch ();
                             set_EQ ();
                             draw_EQ_curve ();
