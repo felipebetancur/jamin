@@ -39,7 +39,6 @@
 
 static char *help_ptr = general_help;
 static gboolean text_focus = FALSE;
-static GtkNotebook *l_notebook1;
 
 
 void

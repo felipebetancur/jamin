@@ -1,4 +1,4 @@
-#ifndef GEW_H
+#ifndef GEQ_H
 #define GEQ_H
 
 #define EQ_BANDS 30

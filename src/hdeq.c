@@ -102,7 +102,7 @@ static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0,
                        EQ_length = 0, comp_realized[3] = {0, 0, 0}, 
                        EQ_cleared = 1, EQ_realized = 0, xover_active = 0,
                        xover_handle_fa, xover_handle_fb, EQ_drag_fa = 0,
-                         EQ_drag_fb = 0, EQ_partial = 0,
+                       EQ_drag_fb = 0, EQ_partial = 0,
                        EQ_notch_drag[NOTCHES] = {0, 0, 0, 0, 0}, 
                        EQ_notch_Q_drag[NOTCHES] = {0, 0, 0, 0, 0},
                        EQ_notch_handle[2][3][NOTCHES], 
@@ -457,7 +457,7 @@ void draw_EQ_spectrum_curve (float single_levels[])
             for (i = 1 ; i < EQ_INTERP ; i++)
               {
                 gdk_draw_line (EQ_drawable, EQ_gc, x[i - 1], y[i - 1], 
-                    x[i], y[i]);
+                               x[i], y[i]);
               }
           }
         EQ_partial = 0;
@@ -935,7 +935,7 @@ static void draw_EQ_curve ()
 /*  Whenever the curve is exposed, which will happen on a resize, we need to
     get the current dimensions and redraw the curve.  */
 
-void hdeq_curve_exposed (GtkWidget *widget, GdkEventExpose  *event)
+void hdeq_curve_exposed (GtkWidget *widget, GdkEventExpose *event)
 {
     l_low2mid_adj = gtk_range_get_adjustment ((GtkRange *) l_low2mid);
     EQ_curve_range_x = l_low2mid_adj->upper - l_low2mid_adj->lower;
@@ -951,11 +951,10 @@ void hdeq_curve_exposed (GtkWidget *widget, GdkEventExpose  *event)
 
 
     /*  If we only get part of the height exposed we don't want to redraw the
-        spectrum.  This is a band-aid fo a partial expose problem.  I'm not
-        sure what the best solution would be.  */
+        entire spectrum.  This is a band-aid for a partial expose problem.  
+        I'm not sure what the best solution would be.  */
 
     if (event->area.height != widget->allocation.height) EQ_partial = 1;
-
 
     draw_EQ_curve ();
 }

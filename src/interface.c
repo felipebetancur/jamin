@@ -112,11 +112,13 @@ create_window1 (void)
   GtkWidget *input_frame;
   GtkWidget *input_vbox;
   GtkWidget *hbox14;
+  GtkWidget *in_trim_scale_event_box;
   GtkWidget *in_trim_scale;
   GtkWidget *inmeter_l;
   GtkWidget *custom15;
   GtkWidget *inmeter_r;
   GtkWidget *pan_label;
+  GtkWidget *pan_scale_event_box;
   GtkWidget *pan_scale;
   GtkWidget *label252;
   GtkWidget *vbox78;
@@ -318,7 +320,9 @@ create_window1 (void)
   GtkWidget *mid2high_lbl;
   GtkWidget *crossover_eventbox;
   GtkWidget *table14;
+  GtkWidget *low2mid_event_box;
   GtkWidget *low2mid;
+  GtkWidget *mid2high_event_box;
   GtkWidget *mid2high;
   GtkWidget *alignment1;
   GtkWidget *eventbox1;
@@ -332,18 +336,23 @@ create_window1 (void)
   GtkWidget *slider_hbox_l;
   GtkWidget *vbox_1_l;
   GtkWidget *label_1_l;
+  GtkWidget *comp_at_1_event_box;
   GtkWidget *comp_at_1;
   GtkWidget *vbox_2_l;
   GtkWidget *label_6_l;
+  GtkWidget *comp_re_1_event_box;
   GtkWidget *comp_re_1;
   GtkWidget *vbox_3_l;
   GtkWidget *label_2_l;
+  GtkWidget *comp_th_1_event_box;
   GtkWidget *comp_th_1;
   GtkWidget *vbox_4_l;
   GtkWidget *label_3_l;
+  GtkWidget *comp_ra_1_event_box;
   GtkWidget *comp_ra_1;
   GtkWidget *vbox_5_l;
   GtkWidget *label_4_l;
+  GtkWidget *comp_kn_1_event_box;
   GtkWidget *comp_kn_1;
   GtkWidget *vbox_6_l;
   GtkWidget *label_5_l;
@@ -355,6 +364,7 @@ create_window1 (void)
   GtkWidget *comp_le_1;
   GtkWidget *custom_1_l;
   GtkWidget *comp_ga_1;
+  GtkWidget *low_stereo_event_box;
   GtkWidget *hscale_1_l;
   GtkWidget *label_freq_l;
   GtkWidget *mid_comp_event_box;
@@ -364,18 +374,23 @@ create_window1 (void)
   GtkWidget *slider_hbox_m;
   GtkWidget *vbox_1_m;
   GtkWidget *label_1_m;
+  GtkWidget *comp_at_2_event_box;
   GtkWidget *comp_at_2;
   GtkWidget *vbox_2_m;
   GtkWidget *label_6_m;
+  GtkWidget *comp_re_2_event_box;
   GtkWidget *comp_re_2;
   GtkWidget *vbox_3_m;
   GtkWidget *label_2_m;
+  GtkWidget *comp_th_2_event_box;
   GtkWidget *comp_th_2;
   GtkWidget *vbox_4_m;
   GtkWidget *label_3_m;
+  GtkWidget *comp_ra_2_event_box;
   GtkWidget *comp_ra_2;
   GtkWidget *vbox_5_m;
   GtkWidget *label_4_m;
+  GtkWidget *comp_kn_2_event_box;
   GtkWidget *comp_kn_2;
   GtkWidget *vbox_6_m;
   GtkWidget *label_5_m;
@@ -387,6 +402,7 @@ create_window1 (void)
   GtkWidget *comp_le_2;
   GtkWidget *custom_1_m;
   GtkWidget *comp_ga_2;
+  GtkWidget *mid_stereo_event_box;
   GtkWidget *hscale_1_m;
   GtkWidget *label_freq_m;
   GtkWidget *high_comp_event_box;
@@ -396,18 +412,23 @@ create_window1 (void)
   GtkWidget *slider_hbox_h;
   GtkWidget *vbox_1_h;
   GtkWidget *label_1_h;
+  GtkWidget *comp_at_3_event_box;
   GtkWidget *comp_at_3;
   GtkWidget *vbox_2_h;
   GtkWidget *label_6_h;
+  GtkWidget *comp_re_3_event_box;
   GtkWidget *comp_re_3;
   GtkWidget *vbox_3_h;
   GtkWidget *label_2_h;
+  GtkWidget *comp_th_3_event_box;
   GtkWidget *comp_th_3;
   GtkWidget *vbox_4_h;
   GtkWidget *label_3_h;
+  GtkWidget *comp_ra_3_event_box;
   GtkWidget *comp_ra_3;
   GtkWidget *vbox_5_h;
   GtkWidget *label_4_h;
+  GtkWidget *comp_kn_3_event_box;
   GtkWidget *comp_kn_3;
   GtkWidget *vbox_6_h;
   GtkWidget *label_5_h;
@@ -419,6 +440,7 @@ create_window1 (void)
   GtkWidget *comp_le_3;
   GtkWidget *custom_1_h;
   GtkWidget *comp_ga_3;
+  GtkWidget *high_stereo_event_box;
   GtkWidget *hscale_1_h;
   GtkWidget *label_freq_h;
   GtkWidget *right_mid_vbox;
@@ -952,10 +974,16 @@ create_window1 (void)
   gtk_widget_show (hbox14);
   gtk_box_pack_start (GTK_BOX (input_vbox), hbox14, TRUE, TRUE, 5);
 
+  in_trim_scale_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (in_trim_scale_event_box, "in_trim_scale_event_box");
+  gtk_widget_show (in_trim_scale_event_box);
+  gtk_box_pack_start (GTK_BOX (hbox14), in_trim_scale_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, in_trim_scale_event_box, _("Input Gain"), NULL);
+
   in_trim_scale = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (in_trim_scale, "in_trim_scale");
   gtk_widget_show (in_trim_scale);
-  gtk_box_pack_start (GTK_BOX (hbox14), in_trim_scale, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (in_trim_scale_event_box), in_trim_scale);
   gtk_range_set_inverted (GTK_RANGE (in_trim_scale), TRUE);
 
   inmeter_l = make_meter ("inmeter_l", NULL, NULL, -60, 6);
@@ -988,10 +1016,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (input_vbox), pan_label, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (pan_label), GTK_JUSTIFY_LEFT);
 
+  pan_scale_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (pan_scale_event_box, "pan_scale_event_box");
+  gtk_widget_show (pan_scale_event_box);
+  gtk_box_pack_start (GTK_BOX (input_vbox), pan_scale_event_box, FALSE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, pan_scale_event_box, _("Input Balance"), NULL);
+
   pan_scale = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -6, 6, 0.25, 1, 0)));
   gtk_widget_set_name (pan_scale, "pan_scale");
   gtk_widget_show (pan_scale);
-  gtk_box_pack_start (GTK_BOX (input_vbox), pan_scale, FALSE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (pan_scale_event_box), pan_scale);
   gtk_scale_set_draw_value (GTK_SCALE (pan_scale), FALSE);
   gtk_scale_set_digits (GTK_SCALE (pan_scale), 2);
 
@@ -2146,20 +2180,32 @@ create_window1 (void)
   gtk_widget_show (table14);
   gtk_container_add (GTK_CONTAINER (crossover_eventbox), table14);
 
+  low2mid_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (low2mid_event_box, "low2mid_event_box");
+  gtk_widget_show (low2mid_event_box);
+  gtk_table_attach (GTK_TABLE (table14), low2mid_event_box, 0, 1, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_SHRINK | GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_SHRINK | GTK_FILL), 0, 0);
+  gtk_tooltips_set_tip (tooltips, low2mid_event_box, _("Low to Mid Band Crossover"), NULL);
+
   low2mid = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (2.22462, 1.39794, 4.30103, 0.01, 0.1, 0)));
   gtk_widget_set_name (low2mid, "low2mid");
   gtk_widget_show (low2mid);
-  gtk_table_attach (GTK_TABLE (table14), low2mid, 0, 1, 0, 1,
+  gtk_container_add (GTK_CONTAINER (low2mid_event_box), low2mid);
+  gtk_scale_set_draw_value (GTK_SCALE (low2mid), FALSE);
+
+  mid2high_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (mid2high_event_box, "mid2high_event_box");
+  gtk_widget_show (mid2high_event_box);
+  gtk_table_attach (GTK_TABLE (table14), mid2high_event_box, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_SHRINK | GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_SHRINK | GTK_FILL), 0, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (low2mid), FALSE);
+  gtk_tooltips_set_tip (tooltips, mid2high_event_box, _("Mid to High Band Crossover"), NULL);
 
   mid2high = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (3.19488, 1.39794, 4.30103, 0.01, 0.1, 0)));
   gtk_widget_set_name (mid2high, "mid2high");
   gtk_widget_show (mid2high);
-  gtk_table_attach (GTK_TABLE (table14), mid2high, 0, 1, 1, 2,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_SHRINK | GTK_FILL),
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_SHRINK | GTK_FILL), 0, 0);
+  gtk_container_add (GTK_CONTAINER (mid2high_event_box), mid2high);
   gtk_scale_set_draw_value (GTK_SCALE (mid2high), FALSE);
 
   alignment1 = gtk_alignment_new (0.5, 0.5, 1, 1);
@@ -2226,10 +2272,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox_1_l), label_1_l, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (label_1_l), GTK_JUSTIFY_LEFT);
 
+  comp_at_1_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_at_1_event_box, "comp_at_1_event_box");
+  gtk_widget_show (comp_at_1_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_1_l), comp_at_1_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, comp_at_1_event_box, _("Attack"), NULL);
+
   comp_at_1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (400, 10, 400, 0, 0, 0)));
   gtk_widget_set_name (comp_at_1, "comp_at_1");
   gtk_widget_show (comp_at_1);
-  gtk_box_pack_start (GTK_BOX (vbox_1_l), comp_at_1, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_at_1_event_box), comp_at_1);
   gtk_widget_set_size_request (comp_at_1, 27, 55);
   gtk_scale_set_digits (GTK_SCALE (comp_at_1), 0);
   gtk_range_set_inverted (GTK_RANGE (comp_at_1), TRUE);
@@ -2245,10 +2297,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox_2_l), label_6_l, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (label_6_l), GTK_JUSTIFY_LEFT);
 
+  comp_re_1_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_re_1_event_box, "comp_re_1_event_box");
+  gtk_widget_show (comp_re_1_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_2_l), comp_re_1_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, comp_re_1_event_box, _("Release"), NULL);
+
   comp_re_1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (10, 10, 800, 0, 0, 0)));
   gtk_widget_set_name (comp_re_1, "comp_re_1");
   gtk_widget_show (comp_re_1);
-  gtk_box_pack_start (GTK_BOX (vbox_2_l), comp_re_1, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_re_1_event_box), comp_re_1);
   gtk_widget_set_size_request (comp_re_1, 27, 55);
   gtk_scale_set_digits (GTK_SCALE (comp_re_1), 0);
   gtk_range_set_inverted (GTK_RANGE (comp_re_1), TRUE);
@@ -2264,10 +2322,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox_3_l), label_2_l, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (label_2_l), GTK_JUSTIFY_LEFT);
 
+  comp_th_1_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_th_1_event_box, "comp_th_1_event_box");
+  gtk_widget_show (comp_th_1_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_3_l), comp_th_1_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, comp_th_1_event_box, _("Threshold"), NULL);
+
   comp_th_1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -30, 0, 1, 0, 0)));
   gtk_widget_set_name (comp_th_1, "comp_th_1");
   gtk_widget_show (comp_th_1);
-  gtk_box_pack_start (GTK_BOX (vbox_3_l), comp_th_1, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_th_1_event_box), comp_th_1);
   gtk_widget_set_size_request (comp_th_1, 30, 55);
   gtk_range_set_inverted (GTK_RANGE (comp_th_1), TRUE);
 
@@ -2282,10 +2346,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox_4_l), label_3_l, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (label_3_l), GTK_JUSTIFY_LEFT);
 
+  comp_ra_1_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_ra_1_event_box, "comp_ra_1_event_box");
+  gtk_widget_show (comp_ra_1_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_4_l), comp_ra_1_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, comp_ra_1_event_box, _("Ratio"), NULL);
+
   comp_ra_1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1, 1, 20, 0, 0, 0)));
   gtk_widget_set_name (comp_ra_1, "comp_ra_1");
   gtk_widget_show (comp_ra_1);
-  gtk_box_pack_start (GTK_BOX (vbox_4_l), comp_ra_1, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_ra_1_event_box), comp_ra_1);
   gtk_widget_set_size_request (comp_ra_1, 30, 55);
   gtk_range_set_inverted (GTK_RANGE (comp_ra_1), TRUE);
 
@@ -2300,10 +2370,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox_5_l), label_4_l, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (label_4_l), GTK_JUSTIFY_LEFT);
 
+  comp_kn_1_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_kn_1_event_box, "comp_kn_1_event_box");
+  gtk_widget_show (comp_kn_1_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_5_l), comp_kn_1_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, comp_kn_1_event_box, _("Knee"), NULL);
+
   comp_kn_1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 1, 0.1, 0, 0)));
   gtk_widget_set_name (comp_kn_1, "comp_kn_1");
   gtk_widget_show (comp_kn_1);
-  gtk_box_pack_start (GTK_BOX (vbox_5_l), comp_kn_1, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_kn_1_event_box), comp_kn_1);
   gtk_widget_set_size_request (comp_kn_1, 27, 55);
   gtk_range_set_inverted (GTK_RANGE (comp_kn_1), TRUE);
 
@@ -2374,10 +2450,16 @@ create_window1 (void)
   GTK_WIDGET_UNSET_FLAGS (comp_ga_1, GTK_CAN_DEFAULT);
   gtk_tooltips_set_tip (tooltips, comp_ga_1, _("Gain"), NULL);
 
+  low_stereo_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (low_stereo_event_box, "low_stereo_event_box");
+  gtk_widget_show (low_stereo_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_l), low_stereo_event_box, FALSE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, low_stereo_event_box, _("Low Band Stereo Width"), NULL);
+
   hscale_1_l = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -1, 1, 0.1, 0.1, 0)));
   gtk_widget_set_name (hscale_1_l, "hscale_1_l");
   gtk_widget_show (hscale_1_l);
-  gtk_box_pack_start (GTK_BOX (vbox_l), hscale_1_l, FALSE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (low_stereo_event_box), hscale_1_l);
   gtk_widget_set_size_request (hscale_1_l, 37, 36);
   gtk_scale_set_digits (GTK_SCALE (hscale_1_l), 2);
 
@@ -2425,10 +2507,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox_1_m), label_1_m, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (label_1_m), GTK_JUSTIFY_LEFT);
 
+  comp_at_2_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_at_2_event_box, "comp_at_2_event_box");
+  gtk_widget_show (comp_at_2_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_1_m), comp_at_2_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, comp_at_2_event_box, _("Attack"), NULL);
+
   comp_at_2 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (400, 10, 400, 0, 0, 0)));
   gtk_widget_set_name (comp_at_2, "comp_at_2");
   gtk_widget_show (comp_at_2);
-  gtk_box_pack_start (GTK_BOX (vbox_1_m), comp_at_2, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_at_2_event_box), comp_at_2);
   gtk_widget_set_size_request (comp_at_2, 27, 55);
   gtk_scale_set_digits (GTK_SCALE (comp_at_2), 0);
   gtk_range_set_inverted (GTK_RANGE (comp_at_2), TRUE);
@@ -2444,10 +2532,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox_2_m), label_6_m, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (label_6_m), GTK_JUSTIFY_LEFT);
 
+  comp_re_2_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_re_2_event_box, "comp_re_2_event_box");
+  gtk_widget_show (comp_re_2_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_2_m), comp_re_2_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, comp_re_2_event_box, _("Release"), NULL);
+
   comp_re_2 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (10, 10, 800, 0, 0, 0)));
   gtk_widget_set_name (comp_re_2, "comp_re_2");
   gtk_widget_show (comp_re_2);
-  gtk_box_pack_start (GTK_BOX (vbox_2_m), comp_re_2, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_re_2_event_box), comp_re_2);
   gtk_widget_set_size_request (comp_re_2, 27, 55);
   gtk_scale_set_digits (GTK_SCALE (comp_re_2), 0);
   gtk_range_set_inverted (GTK_RANGE (comp_re_2), TRUE);
@@ -2463,10 +2557,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox_3_m), label_2_m, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (label_2_m), GTK_JUSTIFY_LEFT);
 
+  comp_th_2_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_th_2_event_box, "comp_th_2_event_box");
+  gtk_widget_show (comp_th_2_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_3_m), comp_th_2_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, comp_th_2_event_box, _("Threshold"), NULL);
+
   comp_th_2 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -30, 0, 1, 0, 0)));
   gtk_widget_set_name (comp_th_2, "comp_th_2");
   gtk_widget_show (comp_th_2);
-  gtk_box_pack_start (GTK_BOX (vbox_3_m), comp_th_2, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_th_2_event_box), comp_th_2);
   gtk_widget_set_size_request (comp_th_2, 30, 55);
   gtk_range_set_inverted (GTK_RANGE (comp_th_2), TRUE);
 
@@ -2481,10 +2581,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox_4_m), label_3_m, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (label_3_m), GTK_JUSTIFY_LEFT);
 
+  comp_ra_2_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_ra_2_event_box, "comp_ra_2_event_box");
+  gtk_widget_show (comp_ra_2_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_4_m), comp_ra_2_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, comp_ra_2_event_box, _("Ratio"), NULL);
+
   comp_ra_2 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1, 1, 20, 0, 0, 0)));
   gtk_widget_set_name (comp_ra_2, "comp_ra_2");
   gtk_widget_show (comp_ra_2);
-  gtk_box_pack_start (GTK_BOX (vbox_4_m), comp_ra_2, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_ra_2_event_box), comp_ra_2);
   gtk_widget_set_size_request (comp_ra_2, 30, 55);
   gtk_range_set_inverted (GTK_RANGE (comp_ra_2), TRUE);
 
@@ -2499,10 +2605,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox_5_m), label_4_m, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (label_4_m), GTK_JUSTIFY_LEFT);
 
+  comp_kn_2_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_kn_2_event_box, "comp_kn_2_event_box");
+  gtk_widget_show (comp_kn_2_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_5_m), comp_kn_2_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, comp_kn_2_event_box, _("Knee"), NULL);
+
   comp_kn_2 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 1, 0.1, 0, 0)));
   gtk_widget_set_name (comp_kn_2, "comp_kn_2");
   gtk_widget_show (comp_kn_2);
-  gtk_box_pack_start (GTK_BOX (vbox_5_m), comp_kn_2, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_kn_2_event_box), comp_kn_2);
   gtk_widget_set_size_request (comp_kn_2, 27, 55);
   gtk_range_set_inverted (GTK_RANGE (comp_kn_2), TRUE);
 
@@ -2573,14 +2685,20 @@ create_window1 (void)
   GTK_WIDGET_UNSET_FLAGS (comp_ga_2, GTK_CAN_DEFAULT);
   gtk_tooltips_set_tip (tooltips, comp_ga_2, _("Gain"), NULL);
 
+  mid_stereo_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (mid_stereo_event_box, "mid_stereo_event_box");
+  gtk_widget_show (mid_stereo_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_m), mid_stereo_event_box, FALSE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, mid_stereo_event_box, _("Mid Band Stereo Width"), NULL);
+
   hscale_1_m = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -1, 1, 0.1, 0.1, 0)));
   gtk_widget_set_name (hscale_1_m, "hscale_1_m");
   gtk_widget_show (hscale_1_m);
-  gtk_box_pack_start (GTK_BOX (vbox_m), hscale_1_m, FALSE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (mid_stereo_event_box), hscale_1_m);
   gtk_widget_set_size_request (hscale_1_m, 37, 36);
   gtk_scale_set_digits (GTK_SCALE (hscale_1_m), 2);
 
-  label_freq_m = gtk_label_new (_("Low : 00000 - 00000"));
+  label_freq_m = gtk_label_new (_("Mid : 00000 - 00000"));
   gtk_widget_set_name (label_freq_m, "label_freq_m");
   gtk_widget_show (label_freq_m);
   gtk_frame_set_label_widget (GTK_FRAME (frame_m), label_freq_m);
@@ -2624,10 +2742,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox_1_h), label_1_h, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (label_1_h), GTK_JUSTIFY_LEFT);
 
+  comp_at_3_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_at_3_event_box, "comp_at_3_event_box");
+  gtk_widget_show (comp_at_3_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_1_h), comp_at_3_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, comp_at_3_event_box, _("Attack"), NULL);
+
   comp_at_3 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (400, 10, 400, 0, 0, 0)));
   gtk_widget_set_name (comp_at_3, "comp_at_3");
   gtk_widget_show (comp_at_3);
-  gtk_box_pack_start (GTK_BOX (vbox_1_h), comp_at_3, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_at_3_event_box), comp_at_3);
   gtk_widget_set_size_request (comp_at_3, 27, 55);
   gtk_scale_set_digits (GTK_SCALE (comp_at_3), 0);
   gtk_range_set_inverted (GTK_RANGE (comp_at_3), TRUE);
@@ -2643,10 +2767,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox_2_h), label_6_h, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (label_6_h), GTK_JUSTIFY_LEFT);
 
+  comp_re_3_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_re_3_event_box, "comp_re_3_event_box");
+  gtk_widget_show (comp_re_3_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_2_h), comp_re_3_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, comp_re_3_event_box, _("Release"), NULL);
+
   comp_re_3 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (10, 10, 800, 0, 0, 0)));
   gtk_widget_set_name (comp_re_3, "comp_re_3");
   gtk_widget_show (comp_re_3);
-  gtk_box_pack_start (GTK_BOX (vbox_2_h), comp_re_3, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_re_3_event_box), comp_re_3);
   gtk_widget_set_size_request (comp_re_3, 27, 55);
   gtk_scale_set_digits (GTK_SCALE (comp_re_3), 0);
   gtk_range_set_inverted (GTK_RANGE (comp_re_3), TRUE);
@@ -2662,10 +2792,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox_3_h), label_2_h, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (label_2_h), GTK_JUSTIFY_LEFT);
 
+  comp_th_3_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_th_3_event_box, "comp_th_3_event_box");
+  gtk_widget_show (comp_th_3_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_3_h), comp_th_3_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, comp_th_3_event_box, _("Threshold"), NULL);
+
   comp_th_3 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -30, 0, 1, 0, 0)));
   gtk_widget_set_name (comp_th_3, "comp_th_3");
   gtk_widget_show (comp_th_3);
-  gtk_box_pack_start (GTK_BOX (vbox_3_h), comp_th_3, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_th_3_event_box), comp_th_3);
   gtk_widget_set_size_request (comp_th_3, 30, 55);
   gtk_range_set_inverted (GTK_RANGE (comp_th_3), TRUE);
 
@@ -2680,10 +2816,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox_4_h), label_3_h, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (label_3_h), GTK_JUSTIFY_LEFT);
 
+  comp_ra_3_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_ra_3_event_box, "comp_ra_3_event_box");
+  gtk_widget_show (comp_ra_3_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_4_h), comp_ra_3_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, comp_ra_3_event_box, _("Ratio"), NULL);
+
   comp_ra_3 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1, 1, 20, 0, 0, 0)));
   gtk_widget_set_name (comp_ra_3, "comp_ra_3");
   gtk_widget_show (comp_ra_3);
-  gtk_box_pack_start (GTK_BOX (vbox_4_h), comp_ra_3, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_ra_3_event_box), comp_ra_3);
   gtk_widget_set_size_request (comp_ra_3, 30, 55);
   gtk_range_set_inverted (GTK_RANGE (comp_ra_3), TRUE);
 
@@ -2698,10 +2840,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox_5_h), label_4_h, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (label_4_h), GTK_JUSTIFY_LEFT);
 
+  comp_kn_3_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_kn_3_event_box, "comp_kn_3_event_box");
+  gtk_widget_show (comp_kn_3_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_5_h), comp_kn_3_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, comp_kn_3_event_box, _("Knee"), NULL);
+
   comp_kn_3 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 1, 0.1, 0, 0)));
   gtk_widget_set_name (comp_kn_3, "comp_kn_3");
   gtk_widget_show (comp_kn_3);
-  gtk_box_pack_start (GTK_BOX (vbox_5_h), comp_kn_3, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (comp_kn_3_event_box), comp_kn_3);
   gtk_widget_set_size_request (comp_kn_3, 27, 55);
   gtk_range_set_inverted (GTK_RANGE (comp_kn_3), TRUE);
 
@@ -2772,14 +2920,20 @@ create_window1 (void)
   GTK_WIDGET_UNSET_FLAGS (comp_ga_3, GTK_CAN_DEFAULT);
   gtk_tooltips_set_tip (tooltips, comp_ga_3, _("Gain"), NULL);
 
+  high_stereo_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (high_stereo_event_box, "high_stereo_event_box");
+  gtk_widget_show (high_stereo_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_h), high_stereo_event_box, FALSE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, high_stereo_event_box, _("High Band Stereo Width"), NULL);
+
   hscale_1_h = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -1, 1, 0.1, 0.1, 0)));
   gtk_widget_set_name (hscale_1_h, "hscale_1_h");
   gtk_widget_show (hscale_1_h);
-  gtk_box_pack_start (GTK_BOX (vbox_h), hscale_1_h, FALSE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (high_stereo_event_box), hscale_1_h);
   gtk_widget_set_size_request (hscale_1_h, 37, 36);
   gtk_scale_set_digits (GTK_SCALE (hscale_1_h), 2);
 
-  label_freq_h = gtk_label_new (_("Low : 00000 - 00000"));
+  label_freq_h = gtk_label_new (_("High : 00000 - 00000"));
   gtk_widget_set_name (label_freq_h, "label_freq_h");
   gtk_widget_show (label_freq_h);
   gtk_frame_set_label_widget (GTK_FRAME (frame_h), label_freq_h);
@@ -3500,11 +3654,13 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, input_frame, "input_frame");
   GLADE_HOOKUP_OBJECT (window1, input_vbox, "input_vbox");
   GLADE_HOOKUP_OBJECT (window1, hbox14, "hbox14");
+  GLADE_HOOKUP_OBJECT (window1, in_trim_scale_event_box, "in_trim_scale_event_box");
   GLADE_HOOKUP_OBJECT (window1, in_trim_scale, "in_trim_scale");
   GLADE_HOOKUP_OBJECT (window1, inmeter_l, "inmeter_l");
   GLADE_HOOKUP_OBJECT (window1, custom15, "custom15");
   GLADE_HOOKUP_OBJECT (window1, inmeter_r, "inmeter_r");
   GLADE_HOOKUP_OBJECT (window1, pan_label, "pan_label");
+  GLADE_HOOKUP_OBJECT (window1, pan_scale_event_box, "pan_scale_event_box");
   GLADE_HOOKUP_OBJECT (window1, pan_scale, "pan_scale");
   GLADE_HOOKUP_OBJECT (window1, label252, "label252");
   GLADE_HOOKUP_OBJECT (window1, vbox78, "vbox78");
@@ -3704,7 +3860,9 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, mid2high_lbl, "mid2high_lbl");
   GLADE_HOOKUP_OBJECT (window1, crossover_eventbox, "crossover_eventbox");
   GLADE_HOOKUP_OBJECT (window1, table14, "table14");
+  GLADE_HOOKUP_OBJECT (window1, low2mid_event_box, "low2mid_event_box");
   GLADE_HOOKUP_OBJECT (window1, low2mid, "low2mid");
+  GLADE_HOOKUP_OBJECT (window1, mid2high_event_box, "mid2high_event_box");
   GLADE_HOOKUP_OBJECT (window1, mid2high, "mid2high");
   GLADE_HOOKUP_OBJECT (window1, alignment1, "alignment1");
   GLADE_HOOKUP_OBJECT (window1, eventbox1, "eventbox1");
@@ -3718,18 +3876,23 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, slider_hbox_l, "slider_hbox_l");
   GLADE_HOOKUP_OBJECT (window1, vbox_1_l, "vbox_1_l");
   GLADE_HOOKUP_OBJECT (window1, label_1_l, "label_1_l");
+  GLADE_HOOKUP_OBJECT (window1, comp_at_1_event_box, "comp_at_1_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_at_1, "comp_at_1");
   GLADE_HOOKUP_OBJECT (window1, vbox_2_l, "vbox_2_l");
   GLADE_HOOKUP_OBJECT (window1, label_6_l, "label_6_l");
+  GLADE_HOOKUP_OBJECT (window1, comp_re_1_event_box, "comp_re_1_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_re_1, "comp_re_1");
   GLADE_HOOKUP_OBJECT (window1, vbox_3_l, "vbox_3_l");
   GLADE_HOOKUP_OBJECT (window1, label_2_l, "label_2_l");
+  GLADE_HOOKUP_OBJECT (window1, comp_th_1_event_box, "comp_th_1_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_th_1, "comp_th_1");
   GLADE_HOOKUP_OBJECT (window1, vbox_4_l, "vbox_4_l");
   GLADE_HOOKUP_OBJECT (window1, label_3_l, "label_3_l");
+  GLADE_HOOKUP_OBJECT (window1, comp_ra_1_event_box, "comp_ra_1_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_ra_1, "comp_ra_1");
   GLADE_HOOKUP_OBJECT (window1, vbox_5_l, "vbox_5_l");
   GLADE_HOOKUP_OBJECT (window1, label_4_l, "label_4_l");
+  GLADE_HOOKUP_OBJECT (window1, comp_kn_1_event_box, "comp_kn_1_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_kn_1, "comp_kn_1");
   GLADE_HOOKUP_OBJECT (window1, vbox_6_l, "vbox_6_l");
   GLADE_HOOKUP_OBJECT (window1, label_5_l, "label_5_l");
@@ -3741,6 +3904,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, comp_le_1, "comp_le_1");
   GLADE_HOOKUP_OBJECT (window1, custom_1_l, "custom_1_l");
   GLADE_HOOKUP_OBJECT (window1, comp_ga_1, "comp_ga_1");
+  GLADE_HOOKUP_OBJECT (window1, low_stereo_event_box, "low_stereo_event_box");
   GLADE_HOOKUP_OBJECT (window1, hscale_1_l, "hscale_1_l");
   GLADE_HOOKUP_OBJECT (window1, label_freq_l, "label_freq_l");
   GLADE_HOOKUP_OBJECT (window1, mid_comp_event_box, "mid_comp_event_box");
@@ -3750,18 +3914,23 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, slider_hbox_m, "slider_hbox_m");
   GLADE_HOOKUP_OBJECT (window1, vbox_1_m, "vbox_1_m");
   GLADE_HOOKUP_OBJECT (window1, label_1_m, "label_1_m");
+  GLADE_HOOKUP_OBJECT (window1, comp_at_2_event_box, "comp_at_2_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_at_2, "comp_at_2");
   GLADE_HOOKUP_OBJECT (window1, vbox_2_m, "vbox_2_m");
   GLADE_HOOKUP_OBJECT (window1, label_6_m, "label_6_m");
+  GLADE_HOOKUP_OBJECT (window1, comp_re_2_event_box, "comp_re_2_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_re_2, "comp_re_2");
   GLADE_HOOKUP_OBJECT (window1, vbox_3_m, "vbox_3_m");
   GLADE_HOOKUP_OBJECT (window1, label_2_m, "label_2_m");
+  GLADE_HOOKUP_OBJECT (window1, comp_th_2_event_box, "comp_th_2_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_th_2, "comp_th_2");
   GLADE_HOOKUP_OBJECT (window1, vbox_4_m, "vbox_4_m");
   GLADE_HOOKUP_OBJECT (window1, label_3_m, "label_3_m");
+  GLADE_HOOKUP_OBJECT (window1, comp_ra_2_event_box, "comp_ra_2_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_ra_2, "comp_ra_2");
   GLADE_HOOKUP_OBJECT (window1, vbox_5_m, "vbox_5_m");
   GLADE_HOOKUP_OBJECT (window1, label_4_m, "label_4_m");
+  GLADE_HOOKUP_OBJECT (window1, comp_kn_2_event_box, "comp_kn_2_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_kn_2, "comp_kn_2");
   GLADE_HOOKUP_OBJECT (window1, vbox_6_m, "vbox_6_m");
   GLADE_HOOKUP_OBJECT (window1, label_5_m, "label_5_m");
@@ -3773,6 +3942,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, comp_le_2, "comp_le_2");
   GLADE_HOOKUP_OBJECT (window1, custom_1_m, "custom_1_m");
   GLADE_HOOKUP_OBJECT (window1, comp_ga_2, "comp_ga_2");
+  GLADE_HOOKUP_OBJECT (window1, mid_stereo_event_box, "mid_stereo_event_box");
   GLADE_HOOKUP_OBJECT (window1, hscale_1_m, "hscale_1_m");
   GLADE_HOOKUP_OBJECT (window1, label_freq_m, "label_freq_m");
   GLADE_HOOKUP_OBJECT (window1, high_comp_event_box, "high_comp_event_box");
@@ -3782,18 +3952,23 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, slider_hbox_h, "slider_hbox_h");
   GLADE_HOOKUP_OBJECT (window1, vbox_1_h, "vbox_1_h");
   GLADE_HOOKUP_OBJECT (window1, label_1_h, "label_1_h");
+  GLADE_HOOKUP_OBJECT (window1, comp_at_3_event_box, "comp_at_3_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_at_3, "comp_at_3");
   GLADE_HOOKUP_OBJECT (window1, vbox_2_h, "vbox_2_h");
   GLADE_HOOKUP_OBJECT (window1, label_6_h, "label_6_h");
+  GLADE_HOOKUP_OBJECT (window1, comp_re_3_event_box, "comp_re_3_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_re_3, "comp_re_3");
   GLADE_HOOKUP_OBJECT (window1, vbox_3_h, "vbox_3_h");
   GLADE_HOOKUP_OBJECT (window1, label_2_h, "label_2_h");
+  GLADE_HOOKUP_OBJECT (window1, comp_th_3_event_box, "comp_th_3_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_th_3, "comp_th_3");
   GLADE_HOOKUP_OBJECT (window1, vbox_4_h, "vbox_4_h");
   GLADE_HOOKUP_OBJECT (window1, label_3_h, "label_3_h");
+  GLADE_HOOKUP_OBJECT (window1, comp_ra_3_event_box, "comp_ra_3_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_ra_3, "comp_ra_3");
   GLADE_HOOKUP_OBJECT (window1, vbox_5_h, "vbox_5_h");
   GLADE_HOOKUP_OBJECT (window1, label_4_h, "label_4_h");
+  GLADE_HOOKUP_OBJECT (window1, comp_kn_3_event_box, "comp_kn_3_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_kn_3, "comp_kn_3");
   GLADE_HOOKUP_OBJECT (window1, vbox_6_h, "vbox_6_h");
   GLADE_HOOKUP_OBJECT (window1, label_5_h, "label_5_h");
@@ -3805,6 +3980,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, comp_le_3, "comp_le_3");
   GLADE_HOOKUP_OBJECT (window1, custom_1_h, "custom_1_h");
   GLADE_HOOKUP_OBJECT (window1, comp_ga_3, "comp_ga_3");
+  GLADE_HOOKUP_OBJECT (window1, high_stereo_event_box, "high_stereo_event_box");
   GLADE_HOOKUP_OBJECT (window1, hscale_1_h, "hscale_1_h");
   GLADE_HOOKUP_OBJECT (window1, label_freq_h, "label_freq_h");
   GLADE_HOOKUP_OBJECT (window1, right_mid_vbox, "right_mid_vbox");
