@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.14 2003/12/11 22:35:16 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.15 2003/12/22 00:01:00 joq Exp $
  */
 
 char general_help[] = {
@@ -230,9 +230,10 @@ char keys_help[] = {
 "    Keyboard accelerators are available for many of the functions in \
 JAMin:\n\n\
 \tb\t\t-\tBypass\n\
-\tSpace\t-\tToggle play\n\
-\t<\t\t-\tPosition transport to beginning\n\
-\t>\t\t-\tPosition transport to end\n\
+\tSpace\t-\tToggle play and pause\n\
+\tHome\t-\tPosition transport to beginning\n\
+\t<\t\t-\tMove transport backwards 5 sec.\n\
+\t>\t\t-\tMove transport forwards 5 sec.\n\
 \t1-6\t\t-\tSelect scene 1-6\n\
 \t<Ctrl>-o\t-\tOpen session file\n\
 \t<Ctrl>-s\t-\tSave to current session file\n\
