@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.h,v 1.23 2004/02/22 18:18:03 theno23 Exp $
+ *  $Id: process.h,v 1.24 2004/04/04 15:47:15 jdepner Exp $
  */
 
 #ifndef PROCESS_H
@@ -27,6 +27,12 @@
 #define UPPER_SPECTRUM_DB  3.0
 #define LOWER_SPECTRUM_DB  -60.0
 #define SPECTRUM_RANGE_DB  (UPPER_SPECTRUM_DB - LOWER_SPECTRUM_DB)
+
+
+/*  Using this because "round" isn't available (AFAICT) in gcc 2.9X.  */
+
+#define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
+
 
 #include "plugin.h"
 #include "compressor.h"

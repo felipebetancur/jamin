@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.45 2004/02/22 18:33:55 theno23 Exp $
+ *  $Id: process.c,v 1.46 2004/04/04 15:47:15 jdepner Exp $
  */
 
 #include <math.h>
@@ -225,6 +225,8 @@ void run_eq(unsigned int port, unsigned int in_ptr)
 
     memset(comp_tmp, 0, BINS * sizeof(fft_data));
     targ_bin = xover_fa / sample_rate * ((float)BINS + 0.5f);
+/*fprintf(stderr,"%s %d %d %f %f\n",__FILE__,__LINE__,targ_bin,xover_fa,sample_rate);*/
+
     comp_tmp[0] = comp[0] * eq_coefs[0];
     if (comp_tmp[0] > bin_peak[0]) bin_peak[0] = comp_tmp[0];
     
@@ -249,6 +251,10 @@ void run_eq(unsigned int port, unsigned int in_ptr)
 
     memset(comp_tmp, 0, BINS * sizeof(fft_data));
     targ_bin = xover_fb / sample_rate * ((float)BINS + 0.5f);
+
+
+    /*  Note that i falls through from the above loop.  */
+
     for (; i < targ_bin && i < BINS / 2 - 1; i++) {
 	const float eq_gain = xo_band_action[XO_MID] == MUTE ? 0.0f :
 				(eq_bypass ? 1.0f : eq_coefs[i]);
@@ -268,6 +274,10 @@ void run_eq(unsigned int port, unsigned int in_ptr)
     }
 
     memset(comp_tmp, 0, BINS * sizeof(fft_data));
+
+
+    /*  Again, note that i falls through from the above loop.  */
+
     for (; i < BINS / 2 - 1; i++) {
 	const float eq_gain = xo_band_action[XO_HIGH] == MUTE ? 0.0f :
 				(eq_bypass ? 1.0f : eq_coefs[i]);

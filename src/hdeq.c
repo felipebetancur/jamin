@@ -49,9 +49,6 @@
 #include "preferences.h"
 
 
-#define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
-
-
 #define EQ_INTERP                     (BINS / 2 - 1)
 #define EQ_SPECTRUM_RANGE             90.0
 #define XOVER_HANDLE_SIZE             10
@@ -425,7 +422,7 @@ loggain2ypix (float log_gain, int *y)
 void draw_EQ_spectrum_curve (float single_levels[])
 {
     static int     x[EQ_INTERP], y[EQ_INTERP];
-    int            i;
+    int            i, bin;
     float          step, range, freq;
 
 
@@ -472,10 +469,17 @@ void draw_EQ_spectrum_curve (float single_levels[])
             freq2xpix (freq, &x[i]);
 
 
+            /*  Figure out which single_levels bin corresponds to this 
+                frequency.  The FFT bins go from 0Hz to the input sample rate
+                divided by 2.  */
+
+            bin = NINT (freq / sample_rate * ((float) BINS + 0.5f));
+
+
             /*  Most of the single_level values will be in the -90.0db to 
                 -20.0db range.  We're using -90.0db to 0.0db as our range.  */
 
-            y[i] = NINT (-(lin2db(single_levels[i]) / EQ_SPECTRUM_RANGE) * 
+            y[i] = NINT (-(lin2db(single_levels[bin]) / EQ_SPECTRUM_RANGE) * 
                 EQ_curve_height);
 
             if (i) gdk_draw_line (EQ_drawable, EQ_gc, x[i - 1], y[i - 1], 

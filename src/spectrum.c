@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: spectrum.c,v 1.14 2004/01/22 01:54:13 jdepner Exp $
+ *  $Id: spectrum.c,v 1.15 2004/04/04 15:47:15 jdepner Exp $
  */
 
 #include <math.h>
@@ -161,8 +161,12 @@ gboolean spectrum_update(gpointer data)
       }
     }
     else if (page == 0) {
+      for (i=0; i<BANDS; i++) {
+        levels[i] = 0.0f;
+      }
       for (i=0; i<count; i++) {
         single_levels[i] = bin_peak_read_and_clear(i);
+        /*fprintf(stderr,"%s %d %f %d %f\n",__FILE__,__LINE__,sample_rate,i,single_levels[i]);*/
       }
       draw_EQ_spectrum_curve (single_levels);
     }

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: geq.c,v 1.28 2004/01/16 03:12:06 jdepner Exp $
+ *  $Id: geq.c,v 1.29 2004/04/04 15:47:15 jdepner Exp $
  */
 
 /* code to control the graphic eq's, swh */
@@ -109,6 +109,7 @@ void geq_set_gains()
       {
         eq_coefs[0] = 1.0f;
         for (bin = 1; bin < (BINS/2 - 1); bin++) {
+          /*fprintf(stderr,"%s %d %d %d %f\n",__FILE__,__LINE__,bin,bin_base[bin],geq_gains[bin_base[bin]]);*/
           eq_coefs[bin] = ((1.0f-bin_delta[bin]) * geq_gains[bin_base[bin]])
             + (bin_delta[bin] * geq_gains[bin_base[bin]+1]);
         }
@@ -117,13 +118,14 @@ void geq_set_gains()
 
 void geq_set_coefs (int length, float x[], float y[])
 {
-    int i;
+    int i, bin;
 
 
     if (length != BINS / 2 - 1)
       {
-        errstr = g_strdup_printf (_("Splined length %d does not match BINS / 2 - 1 (%d)"), 
-                                  length, BINS / 2 - 1);
+        errstr = 
+          g_strdup_printf (_("Splined length %d does not match BINS / 2 - 1 (%d)"), 
+                           length, BINS / 2 - 1);
 
         fprintf (stderr, "%s\n", errstr);
         message (GTK_MESSAGE_WARNING, errstr);
@@ -133,10 +135,14 @@ void geq_set_coefs (int length, float x[], float y[])
       {
         /*  Set eq_coefs using linear gain values.  */
 
-        eq_coefs[0] = 1.0f;
-        for (i = 1 ; i < length ; i++) 
+        for (i = 0 ; i < (BINS/2 - 1) ; i++) 
           {
-            eq_coefs[i] = powf (10.0f, y[i]);
+            /*  Figure out which eq_coeffs bin corresponds to this frequency.
+                The FFT bins go from 0Hz to the input sample rate divided 
+                by 2.  */
+
+            bin = NINT (x[i] / sample_rate * ((float) BINS + 0.5f));
+            eq_coefs[bin] = powf (10.0f, y[i]);
           }
       }
 }
