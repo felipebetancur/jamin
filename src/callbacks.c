@@ -359,12 +359,11 @@ draw_EQ_curve ()
       }
 
 
-    /*  If we've messed with the graphics EQ sliders, recompute the splined curve.  */
+    /*  If we've messed with the graphics EQ sliders, recompute the splined 
+        curve.  */
 
     if (EQ_mod) interpolate (EQ_interval, EQ_BANDS, EQ_start, EQ_end, 
         &EQ_length, x, y, EQ_xinterp, EQ_yinterp);
-
-    EQ_mod = 0;
 
 
     /*  Plot the curve.  */
@@ -383,6 +382,8 @@ draw_EQ_curve ()
         x0 = x1;
         y0 = y1;
       }
+
+    EQ_mod = 0;
 }
 
 
@@ -655,6 +656,16 @@ on_EQ_curve_event_box_button_release_event
 
 
         EQ_input_points = 0;
+
+
+        /*  Set the graphic EQ sliders based on the curve.  */
+
+        geq_set_sliders (EQ_length, EQ_xinterp, EQ_yinterp);
+
+        EQ_mod = 0;
+
+
+        /*  Redraw the curve.  */
 
         draw_EQ_curve ();
 

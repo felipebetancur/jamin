@@ -89,6 +89,11 @@ void geq_set_gains()
     }
 }
 
+void geq_set_sliders(int length, float x[], float y[])
+{
+    /*  This is where Steve does the voodoo.  */
+}
+
 gboolean eqb_changed(GtkAdjustment *adj, gpointer user_data)
 {
     int band = (int)user_data;

@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     add_pixmap_directory(PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
 
     main_window = create_window1();
-    gtk_widget_show(main_window);
+
 
     /* bind the graphic equaliser sliders to adjustments */
     bind_geq();
@@ -66,6 +66,9 @@ int main(int argc, char *argv[])
     g_timeout_add(100, update_meters, NULL);
 
     backend_activate(argc, argv);
+
+    gtk_widget_show(main_window);
+
 
     gtk_main();
 
