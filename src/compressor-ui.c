@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: compressor-ui.c,v 1.25 2004/05/06 19:04:39 jdepner Exp $
+ *  $Id: compressor-ui.c,v 1.26 2004/06/06 11:27:47 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -65,6 +65,9 @@ static GtkLabel *lab_th[XO_BANDS];
 static GtkLabel *lab_ra[XO_BANDS];
 static GtkLabel *lab_kn[XO_BANDS];
 static GtkLabel *lab_ma[XO_BANDS];
+
+static GtkToggleButton *autobutton[XO_NBANDS];
+
 static gboolean gang_at[XO_BANDS];
 static gboolean gang_re[XO_BANDS];
 static gboolean gang_th[XO_BANDS];
@@ -95,6 +98,8 @@ static gboolean suspend_gang = FALSE;
         gang_##sym[i] = FALSE; \
 	snprintf(name, 255, "comp_" # sym "_label_%d", i+1); \
 	lab_##sym[i] = GTK_LABEL(lookup_widget(main_window, name)); \
+	snprintf(name, 255, "autobutton_%d", i+1); \
+	autobutton[i] = GTK_TOGGLE_BUTTON(lookup_widget(main_window, name)); \
 	snprintf(name, 255, "comp_" # sym "_%d", i+1); \
 	scale = lookup_widget(main_window, name); \
 	adj_##sym[i] = gtk_range_get_adjustment(GTK_RANGE(scale)); \
@@ -400,6 +405,8 @@ void ma_changed(int id, float value)
 {
   int          i, j;
   gdouble      diff, new_value;
+  char         *val;
+
 
 
   i = id - S_COMP_MAKEUP(0);
@@ -430,14 +437,24 @@ void ma_changed(int id, float value)
                   prev_value_ma[j] = new_value;
 
                   g_signal_handler_unblock (adj_ma[j], sig_hand_ma[j]);
+
+		  val = g_strdup_printf ("%04.1f", new_value);
+		  gtk_button_set_label (GTK_BUTTON(autobutton[j]), val);
+		  free (val);
                 }
               draw_comp_curve(j);
             }
+
         }
       prev_value_ma[i] = value;
     }
                   
   compressors[i].makeup_gain = value;
+
+  val = g_strdup_printf ("%04.1f", value);
+  gtk_button_set_label (GTK_BUTTON(autobutton[i]), val);
+  free (val);
+
   draw_comp_curve(i);
 }
 

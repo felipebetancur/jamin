@@ -367,10 +367,9 @@ create_window1 (void)
   GtkWidget *comp_ma_label_1_event_box;
   GtkWidget *comp_ma_label_1;
   GtkWidget *vbox_7_l;
-  GtkWidget *eventbox_1_l;
+  GtkWidget *autobutton_1;
+  GtkWidget *eventbox63;
   GtkWidget *comp_ma_1;
-  GtkWidget *eventbox_2_l;
-  GtkWidget *autobutton_l;
   GtkWidget *comp_le_1;
   GtkWidget *custom_1_l;
   GtkWidget *comp_ga_1;
@@ -417,10 +416,9 @@ create_window1 (void)
   GtkWidget *comp_ma_label_2_event_box;
   GtkWidget *comp_ma_label_2;
   GtkWidget *vbox_7_m;
-  GtkWidget *eventbox_1_m;
+  GtkWidget *autobutton_2;
+  GtkWidget *eventbox64;
   GtkWidget *comp_ma_2;
-  GtkWidget *eventbox_2_m;
-  GtkWidget *autobutton_m;
   GtkWidget *comp_le_2;
   GtkWidget *custom_1_m;
   GtkWidget *comp_ga_2;
@@ -467,10 +465,9 @@ create_window1 (void)
   GtkWidget *comp_ma_label_3_event_box;
   GtkWidget *comp_ma_label_3;
   GtkWidget *vbox_7_h;
-  GtkWidget *eventbox_1_h;
+  GtkWidget *autobutton_3;
+  GtkWidget *eventbox65;
   GtkWidget *comp_ma_3;
-  GtkWidget *eventbox_2_h;
-  GtkWidget *autobutton_h;
   GtkWidget *comp_le_3;
   GtkWidget *custom_1_h;
   GtkWidget *comp_ga_3;
@@ -2494,31 +2491,25 @@ create_window1 (void)
   gtk_widget_set_name (vbox_7_l, "vbox_7_l");
   gtk_widget_show (vbox_7_l);
   gtk_box_pack_start (GTK_BOX (vbox_6_l), vbox_7_l, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (vbox_7_l, 30, 77);
 
-  eventbox_1_l = gtk_event_box_new ();
-  gtk_widget_set_name (eventbox_1_l, "eventbox_1_l");
-  gtk_widget_show (eventbox_1_l);
-  gtk_box_pack_start (GTK_BOX (vbox_7_l), eventbox_1_l, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, eventbox_1_l, _("Makeup"), NULL);
+  autobutton_1 = gtk_toggle_button_new_with_mnemonic (_("0.0"));
+  gtk_widget_set_name (autobutton_1, "autobutton_1");
+  gtk_widget_show (autobutton_1);
+  gtk_box_pack_start (GTK_BOX (vbox_7_l), autobutton_1, FALSE, FALSE, 0);
+  gtk_tooltips_set_tip (tooltips, autobutton_1, _("Auto makeup"), NULL);
+
+  eventbox63 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox63, "eventbox63");
+  gtk_widget_show (eventbox63);
+  gtk_box_pack_start (GTK_BOX (vbox_7_l), eventbox63, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox63, _("Makeup gain"), NULL);
 
   comp_ma_1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 30, 1, 0, 0)));
   gtk_widget_set_name (comp_ma_1, "comp_ma_1");
   gtk_widget_show (comp_ma_1);
-  gtk_container_add (GTK_CONTAINER (eventbox_1_l), comp_ma_1);
-  gtk_widget_set_size_request (comp_ma_1, 27, 55);
+  gtk_container_add (GTK_CONTAINER (eventbox63), comp_ma_1);
+  gtk_scale_set_draw_value (GTK_SCALE (comp_ma_1), FALSE);
   gtk_range_set_inverted (GTK_RANGE (comp_ma_1), TRUE);
-
-  eventbox_2_l = gtk_event_box_new ();
-  gtk_widget_set_name (eventbox_2_l, "eventbox_2_l");
-  gtk_widget_show (eventbox_2_l);
-  gtk_box_pack_start (GTK_BOX (vbox_7_l), eventbox_2_l, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, eventbox_2_l, _("Auto makeup"), NULL);
-
-  autobutton_l = gtk_toggle_button_new_with_mnemonic (_("AM"));
-  gtk_widget_set_name (autobutton_l, "autobutton_l");
-  gtk_widget_show (autobutton_l);
-  gtk_container_add (GTK_CONTAINER (eventbox_2_l), autobutton_l);
 
   comp_le_1 = make_meter ("comp_le_1", "right", NULL, -40, 0);
   gtk_widget_set_name (comp_le_1, "comp_le_1");
@@ -2793,31 +2784,25 @@ create_window1 (void)
   gtk_widget_set_name (vbox_7_m, "vbox_7_m");
   gtk_widget_show (vbox_7_m);
   gtk_box_pack_start (GTK_BOX (vbox_6_m), vbox_7_m, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (vbox_7_m, 30, 77);
 
-  eventbox_1_m = gtk_event_box_new ();
-  gtk_widget_set_name (eventbox_1_m, "eventbox_1_m");
-  gtk_widget_show (eventbox_1_m);
-  gtk_box_pack_start (GTK_BOX (vbox_7_m), eventbox_1_m, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, eventbox_1_m, _("Makeup"), NULL);
+  autobutton_2 = gtk_toggle_button_new_with_mnemonic (_("0.0"));
+  gtk_widget_set_name (autobutton_2, "autobutton_2");
+  gtk_widget_show (autobutton_2);
+  gtk_box_pack_start (GTK_BOX (vbox_7_m), autobutton_2, FALSE, FALSE, 0);
+  gtk_tooltips_set_tip (tooltips, autobutton_2, _("Auto makeup"), NULL);
+
+  eventbox64 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox64, "eventbox64");
+  gtk_widget_show (eventbox64);
+  gtk_box_pack_start (GTK_BOX (vbox_7_m), eventbox64, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox64, _("Makeup gain"), NULL);
 
   comp_ma_2 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 30, 1, 0, 0)));
   gtk_widget_set_name (comp_ma_2, "comp_ma_2");
   gtk_widget_show (comp_ma_2);
-  gtk_container_add (GTK_CONTAINER (eventbox_1_m), comp_ma_2);
-  gtk_widget_set_size_request (comp_ma_2, 27, 55);
+  gtk_container_add (GTK_CONTAINER (eventbox64), comp_ma_2);
+  gtk_scale_set_draw_value (GTK_SCALE (comp_ma_2), FALSE);
   gtk_range_set_inverted (GTK_RANGE (comp_ma_2), TRUE);
-
-  eventbox_2_m = gtk_event_box_new ();
-  gtk_widget_set_name (eventbox_2_m, "eventbox_2_m");
-  gtk_widget_show (eventbox_2_m);
-  gtk_box_pack_start (GTK_BOX (vbox_7_m), eventbox_2_m, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, eventbox_2_m, _("Auto makeup"), NULL);
-
-  autobutton_m = gtk_toggle_button_new_with_mnemonic (_("AM"));
-  gtk_widget_set_name (autobutton_m, "autobutton_m");
-  gtk_widget_show (autobutton_m);
-  gtk_container_add (GTK_CONTAINER (eventbox_2_m), autobutton_m);
 
   comp_le_2 = make_meter ("comp_le_2", "right", NULL, -40, 0);
   gtk_widget_set_name (comp_le_2, "comp_le_2");
@@ -3092,31 +3077,25 @@ create_window1 (void)
   gtk_widget_set_name (vbox_7_h, "vbox_7_h");
   gtk_widget_show (vbox_7_h);
   gtk_box_pack_start (GTK_BOX (vbox_6_h), vbox_7_h, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (vbox_7_h, 30, 77);
 
-  eventbox_1_h = gtk_event_box_new ();
-  gtk_widget_set_name (eventbox_1_h, "eventbox_1_h");
-  gtk_widget_show (eventbox_1_h);
-  gtk_box_pack_start (GTK_BOX (vbox_7_h), eventbox_1_h, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, eventbox_1_h, _("Makeup"), NULL);
+  autobutton_3 = gtk_toggle_button_new_with_mnemonic (_("0.0"));
+  gtk_widget_set_name (autobutton_3, "autobutton_3");
+  gtk_widget_show (autobutton_3);
+  gtk_box_pack_start (GTK_BOX (vbox_7_h), autobutton_3, FALSE, FALSE, 0);
+  gtk_tooltips_set_tip (tooltips, autobutton_3, _("Auto makeup"), NULL);
+
+  eventbox65 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox65, "eventbox65");
+  gtk_widget_show (eventbox65);
+  gtk_box_pack_start (GTK_BOX (vbox_7_h), eventbox65, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox65, _("Makeup gain"), NULL);
 
   comp_ma_3 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 30, 1, 0, 0)));
   gtk_widget_set_name (comp_ma_3, "comp_ma_3");
   gtk_widget_show (comp_ma_3);
-  gtk_container_add (GTK_CONTAINER (eventbox_1_h), comp_ma_3);
-  gtk_widget_set_size_request (comp_ma_3, 27, 55);
+  gtk_container_add (GTK_CONTAINER (eventbox65), comp_ma_3);
+  gtk_scale_set_draw_value (GTK_SCALE (comp_ma_3), FALSE);
   gtk_range_set_inverted (GTK_RANGE (comp_ma_3), TRUE);
-
-  eventbox_2_h = gtk_event_box_new ();
-  gtk_widget_set_name (eventbox_2_h, "eventbox_2_h");
-  gtk_widget_show (eventbox_2_h);
-  gtk_box_pack_start (GTK_BOX (vbox_7_h), eventbox_2_h, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, eventbox_2_h, _("Auto makeup"), NULL);
-
-  autobutton_h = gtk_toggle_button_new_with_mnemonic (_("AM"));
-  gtk_widget_set_name (autobutton_h, "autobutton_h");
-  gtk_widget_show (autobutton_h);
-  gtk_container_add (GTK_CONTAINER (eventbox_2_h), autobutton_h);
 
   comp_le_3 = make_meter ("comp_le_3", "right", NULL, -40, 0);
   gtk_widget_set_name (comp_le_3, "comp_le_3");
@@ -3867,11 +3846,11 @@ create_window1 (void)
   g_signal_connect ((gpointer) comp_ma_label_1_event_box, "button_press_event",
                     G_CALLBACK (on_comp_ma_label_1_event_box_button_press_event),
                     NULL);
+  g_signal_connect ((gpointer) autobutton_1, "toggled",
+                    G_CALLBACK (on_autobutton_1_toggled),
+                    NULL);
   g_signal_connect ((gpointer) comp_ma_1, "button_press_event",
                     G_CALLBACK (scene_warning),
-                    NULL);
-  g_signal_connect ((gpointer) autobutton_l, "toggled",
-                    G_CALLBACK (on_autobutton_l_toggled),
                     NULL);
   g_signal_connect ((gpointer) low_stereo_event_box, "enter_notify_event",
                     G_CALLBACK (on_stereo_event_box_enter_notify_event),
@@ -3939,11 +3918,11 @@ create_window1 (void)
   g_signal_connect ((gpointer) comp_ma_label_2_event_box, "button_press_event",
                     G_CALLBACK (on_comp_ma_label_2_event_box_button_press_event),
                     NULL);
+  g_signal_connect ((gpointer) autobutton_2, "toggled",
+                    G_CALLBACK (on_autobutton_2_toggled),
+                    NULL);
   g_signal_connect ((gpointer) comp_ma_2, "button_press_event",
                     G_CALLBACK (scene_warning),
-                    NULL);
-  g_signal_connect ((gpointer) autobutton_m, "toggled",
-                    G_CALLBACK (on_autobutton_m_toggled),
                     NULL);
   g_signal_connect ((gpointer) mid_stereo_event_box, "enter_notify_event",
                     G_CALLBACK (on_stereo_event_box_enter_notify_event),
@@ -4011,11 +3990,11 @@ create_window1 (void)
   g_signal_connect ((gpointer) comp_ma_label_3_event_box, "button_press_event",
                     G_CALLBACK (on_comp_ma_label_3_event_box_button_press_event),
                     NULL);
+  g_signal_connect ((gpointer) autobutton_3, "toggled",
+                    G_CALLBACK (on_autobutton_3_toggled),
+                    NULL);
   g_signal_connect ((gpointer) comp_ma_3, "button_press_event",
                     G_CALLBACK (scene_warning),
-                    NULL);
-  g_signal_connect ((gpointer) autobutton_h, "toggled",
-                    G_CALLBACK (on_autobutton_h_toggled),
                     NULL);
   g_signal_connect ((gpointer) high_stereo_event_box, "enter_notify_event",
                     G_CALLBACK (on_stereo_event_box_enter_notify_event),
@@ -4434,10 +4413,9 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, comp_ma_label_1_event_box, "comp_ma_label_1_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_ma_label_1, "comp_ma_label_1");
   GLADE_HOOKUP_OBJECT (window1, vbox_7_l, "vbox_7_l");
-  GLADE_HOOKUP_OBJECT (window1, eventbox_1_l, "eventbox_1_l");
+  GLADE_HOOKUP_OBJECT (window1, autobutton_1, "autobutton_1");
+  GLADE_HOOKUP_OBJECT (window1, eventbox63, "eventbox63");
   GLADE_HOOKUP_OBJECT (window1, comp_ma_1, "comp_ma_1");
-  GLADE_HOOKUP_OBJECT (window1, eventbox_2_l, "eventbox_2_l");
-  GLADE_HOOKUP_OBJECT (window1, autobutton_l, "autobutton_l");
   GLADE_HOOKUP_OBJECT (window1, comp_le_1, "comp_le_1");
   GLADE_HOOKUP_OBJECT (window1, custom_1_l, "custom_1_l");
   GLADE_HOOKUP_OBJECT (window1, comp_ga_1, "comp_ga_1");
@@ -4484,10 +4462,9 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, comp_ma_label_2_event_box, "comp_ma_label_2_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_ma_label_2, "comp_ma_label_2");
   GLADE_HOOKUP_OBJECT (window1, vbox_7_m, "vbox_7_m");
-  GLADE_HOOKUP_OBJECT (window1, eventbox_1_m, "eventbox_1_m");
+  GLADE_HOOKUP_OBJECT (window1, autobutton_2, "autobutton_2");
+  GLADE_HOOKUP_OBJECT (window1, eventbox64, "eventbox64");
   GLADE_HOOKUP_OBJECT (window1, comp_ma_2, "comp_ma_2");
-  GLADE_HOOKUP_OBJECT (window1, eventbox_2_m, "eventbox_2_m");
-  GLADE_HOOKUP_OBJECT (window1, autobutton_m, "autobutton_m");
   GLADE_HOOKUP_OBJECT (window1, comp_le_2, "comp_le_2");
   GLADE_HOOKUP_OBJECT (window1, custom_1_m, "custom_1_m");
   GLADE_HOOKUP_OBJECT (window1, comp_ga_2, "comp_ga_2");
@@ -4534,10 +4511,9 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, comp_ma_label_3_event_box, "comp_ma_label_3_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_ma_label_3, "comp_ma_label_3");
   GLADE_HOOKUP_OBJECT (window1, vbox_7_h, "vbox_7_h");
-  GLADE_HOOKUP_OBJECT (window1, eventbox_1_h, "eventbox_1_h");
+  GLADE_HOOKUP_OBJECT (window1, autobutton_3, "autobutton_3");
+  GLADE_HOOKUP_OBJECT (window1, eventbox65, "eventbox65");
   GLADE_HOOKUP_OBJECT (window1, comp_ma_3, "comp_ma_3");
-  GLADE_HOOKUP_OBJECT (window1, eventbox_2_h, "eventbox_2_h");
-  GLADE_HOOKUP_OBJECT (window1, autobutton_h, "autobutton_h");
   GLADE_HOOKUP_OBJECT (window1, comp_le_3, "comp_le_3");
   GLADE_HOOKUP_OBJECT (window1, custom_1_h, "custom_1_h");
   GLADE_HOOKUP_OBJECT (window1, comp_ga_3, "comp_ga_3");

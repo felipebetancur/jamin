@@ -4464,30 +4464,45 @@
 
 								  <child>
 								    <widget class="GtkVBox" id="vbox_7_l">
-								      <property name="width_request">30</property>
-								      <property name="height_request">77</property>
 								      <property name="visible">True</property>
 								      <property name="homogeneous">False</property>
 								      <property name="spacing">0</property>
 
 								      <child>
-									<widget class="GtkEventBox" id="eventbox_1_l">
+									<widget class="GtkToggleButton" id="autobutton_1">
 									  <property name="visible">True</property>
-									  <property name="tooltip" translatable="yes">Makeup</property>
+									  <property name="tooltip" translatable="yes">Auto makeup</property>
+									  <property name="can_focus">True</property>
+									  <property name="label" translatable="yes">0.0</property>
+									  <property name="use_underline">True</property>
+									  <property name="relief">GTK_RELIEF_NORMAL</property>
+									  <property name="active">False</property>
+									  <property name="inconsistent">False</property>
+									  <signal name="toggled" handler="on_autobutton_1_toggled" last_modification_time="Sun, 06 Jun 2004 10:51:53 GMT"/>
+									</widget>
+									<packing>
+									  <property name="padding">0</property>
+									  <property name="expand">False</property>
+									  <property name="fill">False</property>
+									</packing>
+								      </child>
+
+								      <child>
+									<widget class="GtkEventBox" id="eventbox63">
+									  <property name="visible">True</property>
+									  <property name="tooltip" translatable="yes">Makeup gain</property>
 
 									  <child>
 									    <widget class="GtkVScale" id="comp_ma_1">
-									      <property name="width_request">27</property>
-									      <property name="height_request">55</property>
 									      <property name="visible">True</property>
 									      <property name="can_focus">True</property>
-									      <property name="draw_value">True</property>
+									      <property name="draw_value">False</property>
 									      <property name="value_pos">GTK_POS_TOP</property>
 									      <property name="digits">1</property>
 									      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 									      <property name="inverted">True</property>
 									      <property name="adjustment">0 0 30 1 0 0</property>
-									      <signal name="button_press_event" handler="scene_warning" last_modification_time="Wed, 10 Dec 2003 01:17:43 GMT"/>
+									      <signal name="button_press_event" handler="scene_warning" last_modification_time="Sun, 06 Jun 2004 10:11:52 GMT"/>
 									    </widget>
 									  </child>
 									</widget>
@@ -4495,31 +4510,6 @@
 									  <property name="padding">0</property>
 									  <property name="expand">True</property>
 									  <property name="fill">True</property>
-									</packing>
-								      </child>
-
-								      <child>
-									<widget class="GtkEventBox" id="eventbox_2_l">
-									  <property name="visible">True</property>
-									  <property name="tooltip" translatable="yes">Auto makeup</property>
-
-									  <child>
-									    <widget class="GtkToggleButton" id="autobutton_l">
-									      <property name="visible">True</property>
-									      <property name="can_focus">True</property>
-									      <property name="label" translatable="yes">AM</property>
-									      <property name="use_underline">True</property>
-									      <property name="relief">GTK_RELIEF_NORMAL</property>
-									      <property name="active">False</property>
-									      <property name="inconsistent">False</property>
-									      <signal name="toggled" handler="on_autobutton_l_toggled" last_modification_time="Fri, 27 Jun 2003 05:34:16 GMT"/>
-									    </widget>
-									  </child>
-									</widget>
-									<packing>
-									  <property name="padding">0</property>
-									  <property name="expand">False</property>
-									  <property name="fill">False</property>
 									</packing>
 								      </child>
 								    </widget>
@@ -5166,30 +5156,45 @@
 
 								  <child>
 								    <widget class="GtkVBox" id="vbox_7_m">
-								      <property name="width_request">30</property>
-								      <property name="height_request">77</property>
 								      <property name="visible">True</property>
 								      <property name="homogeneous">False</property>
 								      <property name="spacing">0</property>
 
 								      <child>
-									<widget class="GtkEventBox" id="eventbox_1_m">
+									<widget class="GtkToggleButton" id="autobutton_2">
 									  <property name="visible">True</property>
-									  <property name="tooltip" translatable="yes">Makeup</property>
+									  <property name="tooltip" translatable="yes">Auto makeup</property>
+									  <property name="can_focus">True</property>
+									  <property name="label" translatable="yes">0.0</property>
+									  <property name="use_underline">True</property>
+									  <property name="relief">GTK_RELIEF_NORMAL</property>
+									  <property name="active">False</property>
+									  <property name="inconsistent">False</property>
+									  <signal name="toggled" handler="on_autobutton_2_toggled" last_modification_time="Sun, 06 Jun 2004 11:01:01 GMT"/>
+									</widget>
+									<packing>
+									  <property name="padding">0</property>
+									  <property name="expand">False</property>
+									  <property name="fill">False</property>
+									</packing>
+								      </child>
+
+								      <child>
+									<widget class="GtkEventBox" id="eventbox64">
+									  <property name="visible">True</property>
+									  <property name="tooltip" translatable="yes">Makeup gain</property>
 
 									  <child>
 									    <widget class="GtkVScale" id="comp_ma_2">
-									      <property name="width_request">27</property>
-									      <property name="height_request">55</property>
 									      <property name="visible">True</property>
 									      <property name="can_focus">True</property>
-									      <property name="draw_value">True</property>
+									      <property name="draw_value">False</property>
 									      <property name="value_pos">GTK_POS_TOP</property>
 									      <property name="digits">1</property>
 									      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 									      <property name="inverted">True</property>
 									      <property name="adjustment">0 0 30 1 0 0</property>
-									      <signal name="button_press_event" handler="scene_warning" last_modification_time="Wed, 10 Dec 2003 01:18:44 GMT"/>
+									      <signal name="button_press_event" handler="scene_warning" last_modification_time="Sun, 06 Jun 2004 10:11:52 GMT"/>
 									    </widget>
 									  </child>
 									</widget>
@@ -5197,31 +5202,6 @@
 									  <property name="padding">0</property>
 									  <property name="expand">True</property>
 									  <property name="fill">True</property>
-									</packing>
-								      </child>
-
-								      <child>
-									<widget class="GtkEventBox" id="eventbox_2_m">
-									  <property name="visible">True</property>
-									  <property name="tooltip" translatable="yes">Auto makeup</property>
-
-									  <child>
-									    <widget class="GtkToggleButton" id="autobutton_m">
-									      <property name="visible">True</property>
-									      <property name="can_focus">True</property>
-									      <property name="label" translatable="yes">AM</property>
-									      <property name="use_underline">True</property>
-									      <property name="relief">GTK_RELIEF_NORMAL</property>
-									      <property name="active">False</property>
-									      <property name="inconsistent">False</property>
-									      <signal name="toggled" handler="on_autobutton_m_toggled" last_modification_time="Fri, 27 Jun 2003 05:34:16 GMT"/>
-									    </widget>
-									  </child>
-									</widget>
-									<packing>
-									  <property name="padding">0</property>
-									  <property name="expand">False</property>
-									  <property name="fill">False</property>
 									</packing>
 								      </child>
 								    </widget>
@@ -5868,30 +5848,45 @@
 
 								  <child>
 								    <widget class="GtkVBox" id="vbox_7_h">
-								      <property name="width_request">30</property>
-								      <property name="height_request">77</property>
 								      <property name="visible">True</property>
 								      <property name="homogeneous">False</property>
 								      <property name="spacing">0</property>
 
 								      <child>
-									<widget class="GtkEventBox" id="eventbox_1_h">
+									<widget class="GtkToggleButton" id="autobutton_3">
 									  <property name="visible">True</property>
-									  <property name="tooltip" translatable="yes">Makeup</property>
+									  <property name="tooltip" translatable="yes">Auto makeup</property>
+									  <property name="can_focus">True</property>
+									  <property name="label" translatable="yes">0.0</property>
+									  <property name="use_underline">True</property>
+									  <property name="relief">GTK_RELIEF_NORMAL</property>
+									  <property name="active">False</property>
+									  <property name="inconsistent">False</property>
+									  <signal name="toggled" handler="on_autobutton_3_toggled" last_modification_time="Sun, 06 Jun 2004 11:02:38 GMT"/>
+									</widget>
+									<packing>
+									  <property name="padding">0</property>
+									  <property name="expand">False</property>
+									  <property name="fill">False</property>
+									</packing>
+								      </child>
+
+								      <child>
+									<widget class="GtkEventBox" id="eventbox65">
+									  <property name="visible">True</property>
+									  <property name="tooltip" translatable="yes">Makeup gain</property>
 
 									  <child>
 									    <widget class="GtkVScale" id="comp_ma_3">
-									      <property name="width_request">27</property>
-									      <property name="height_request">55</property>
 									      <property name="visible">True</property>
 									      <property name="can_focus">True</property>
-									      <property name="draw_value">True</property>
+									      <property name="draw_value">False</property>
 									      <property name="value_pos">GTK_POS_TOP</property>
 									      <property name="digits">1</property>
 									      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 									      <property name="inverted">True</property>
 									      <property name="adjustment">0 0 30 1 0 0</property>
-									      <signal name="button_press_event" handler="scene_warning" last_modification_time="Wed, 10 Dec 2003 01:19:30 GMT"/>
+									      <signal name="button_press_event" handler="scene_warning" last_modification_time="Sun, 06 Jun 2004 10:11:52 GMT"/>
 									    </widget>
 									  </child>
 									</widget>
@@ -5899,31 +5894,6 @@
 									  <property name="padding">0</property>
 									  <property name="expand">True</property>
 									  <property name="fill">True</property>
-									</packing>
-								      </child>
-
-								      <child>
-									<widget class="GtkEventBox" id="eventbox_2_h">
-									  <property name="visible">True</property>
-									  <property name="tooltip" translatable="yes">Auto makeup</property>
-
-									  <child>
-									    <widget class="GtkToggleButton" id="autobutton_h">
-									      <property name="visible">True</property>
-									      <property name="can_focus">True</property>
-									      <property name="label" translatable="yes">AM</property>
-									      <property name="use_underline">True</property>
-									      <property name="relief">GTK_RELIEF_NORMAL</property>
-									      <property name="active">False</property>
-									      <property name="inconsistent">False</property>
-									      <signal name="toggled" handler="on_autobutton_h_toggled" last_modification_time="Fri, 27 Jun 2003 05:34:16 GMT"/>
-									    </widget>
-									  </child>
-									</widget>
-									<packing>
-									  <property name="padding">0</property>
-									  <property name="expand">False</property>
-									  <property name="fill">False</property>
 									</packing>
 								      </child>
 								    </widget>

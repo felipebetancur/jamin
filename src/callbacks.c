@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.151 2004/05/19 23:39:19 jdepner Exp $
+ *  $Id: callbacks.c,v 1.152 2004/06/06 11:27:47 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -629,7 +629,7 @@ make_mscale (gchar *widget_name, gchar *string1, gchar *string2,
 
 
 void
-on_autobutton_l_toggled                  (GtkToggleButton *togglebutton,
+on_autobutton_1_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
     comp_set_auto(0, gtk_toggle_button_get_active(togglebutton));
@@ -637,7 +637,7 @@ on_autobutton_l_toggled                  (GtkToggleButton *togglebutton,
 
 
 void
-on_autobutton_m_toggled                  (GtkToggleButton *togglebutton,
+on_autobutton_2_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
     comp_set_auto(1, gtk_toggle_button_get_active(togglebutton));
@@ -645,7 +645,7 @@ on_autobutton_m_toggled                  (GtkToggleButton *togglebutton,
 
 
 void
-on_autobutton_h_toggled                  (GtkToggleButton *togglebutton,
+on_autobutton_3_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
     comp_set_auto(2, gtk_toggle_button_get_active(togglebutton));
@@ -2578,4 +2578,3 @@ on_reset_all_colors1_activate          (GtkMenuItem     *menuitem,
   pref_reset_all_colors ();
   pref_force_color_change ();
 }
-

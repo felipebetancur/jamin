@@ -426,15 +426,15 @@ rewind_transport                       (GtkWidget       *widget,
                                         gpointer         user_data);
 
 void
-on_autobutton_l_toggled                 (GtkToggleButton *togglebutton,
+on_autobutton_1_toggled                 (GtkToggleButton *togglebutton,
                                         gpointer         user_data);
 
 void
-on_autobutton_m_toggled                 (GtkToggleButton *togglebutton,
+on_autobutton_2_toggled                 (GtkToggleButton *togglebutton,
                                         gpointer         user_data);
 
 void
-on_autobutton_h_toggled                 (GtkToggleButton *togglebutton,
+on_autobutton_3_toggled                 (GtkToggleButton *togglebutton,
                                         gpointer         user_data);
 
 gboolean
