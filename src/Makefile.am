@@ -46,10 +46,9 @@ jamin_SOURCES = \
 	transport.c transport.h \
 	scenes.c scenes.h \
 	help.c help.h
-	status-ui.c status-ui.h
 
 state.h: mk-stateh.pl state-vars.txt
 	@echo "WARNING: Rebuilding state.h"
 	./mk-stateh.pl
 
-EXTRA_DIST = mk-stateh.pl $(man_MANS)
+EXTRA_DIST = mk-stateh.pl state-vars.txt $(man_MANS)
