@@ -34,6 +34,8 @@ static int suppress_feedback = 0;
 static void s_history_add(const char *description);
 static void s_restore_state(s_state *state);
 static void s_set_events(int id, float value);
+void set_EQ_curve_values ();
+
 
 void state_init()
 {
@@ -159,10 +161,8 @@ static void s_history_add(const char *description)
     last_state = ns;
 }
 
-void s_undo() {
-    void set_EQ_curve_values ();
-
-
+void s_undo() 
+{
     if (!undo_pos) {
 	return;
     }
@@ -252,6 +252,8 @@ void s_load_session (GtkWidget *w, gpointer user_data)
     s_history_add(g_strdup_printf("Loaded %s", filename));
     last_changed = S_LOAD;
     free(handler);
+
+    set_EQ_curve_values ();
 }
 
 void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)

@@ -230,7 +230,7 @@ create_window1 (void)
   GtkWidget *low_comp_event_box;
   GtkWidget *alignment7;
   GtkWidget *frame7;
-  GtkWidget *vbox148;
+  GtkWidget *low_comp;
   GtkWidget *vbox149;
   GtkWidget *table24;
   GtkWidget *label289;
@@ -258,7 +258,7 @@ create_window1 (void)
   GtkWidget *eventbox90;
   GtkWidget *hscale5;
   GtkWidget *label_Low;
-  GtkWidget *eventbox51;
+  GtkWidget *mid_comp_event_box;
   GtkWidget *alignment10;
   GtkWidget *frame22;
   GtkWidget *mid_comp;
@@ -289,7 +289,7 @@ create_window1 (void)
   GtkWidget *eventbox76;
   GtkWidget *hscale3;
   GtkWidget *label_Mid;
-  GtkWidget *eventbox52;
+  GtkWidget *high_comp_event_box;
   GtkWidget *alignment11;
   GtkWidget *frame23;
   GtkWidget *high_comp;
@@ -1587,16 +1587,16 @@ create_window1 (void)
   gtk_container_add (GTK_CONTAINER (alignment7), frame7);
   gtk_widget_set_size_request (frame7, 196, 170);
 
-  vbox148 = gtk_vbox_new (FALSE, 1);
-  gtk_widget_set_name (vbox148, "vbox148");
-  gtk_widget_show (vbox148);
-  gtk_container_add (GTK_CONTAINER (frame7), vbox148);
-  gtk_widget_set_size_request (vbox148, 192, 119);
+  low_comp = gtk_vbox_new (FALSE, 1);
+  gtk_widget_set_name (low_comp, "low_comp");
+  gtk_widget_show (low_comp);
+  gtk_container_add (GTK_CONTAINER (frame7), low_comp);
+  gtk_widget_set_size_request (low_comp, 192, 119);
 
   vbox149 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox149, "vbox149");
   gtk_widget_show (vbox149);
-  gtk_box_pack_start (GTK_BOX (vbox148), vbox149, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (low_comp), vbox149, TRUE, TRUE, 0);
   gtk_widget_set_size_request (vbox149, 192, 160);
 
   table24 = gtk_table_new (2, 5, FALSE);
@@ -1683,7 +1683,7 @@ create_window1 (void)
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
   gtk_tooltips_set_tip (tooltips, eventbox86, _("Threshold"), NULL);
 
-  comp_th_1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -30, 0, 0, 0, 0)));
+  comp_th_1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -30, 0, 1, 0, 0)));
   gtk_widget_set_name (comp_th_1, "comp_th_1");
   gtk_widget_show (comp_th_1);
   gtk_container_add (GTK_CONTAINER (eventbox86), comp_th_1);
@@ -1704,7 +1704,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox150), eventbox87, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox87, _("Ratio"), NULL);
 
-  comp_ra_1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1, 1, 20, 0, 0, 0)));
+  comp_ra_1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1, 1, 20, 1, 0, 0)));
   gtk_widget_set_name (comp_ra_1, "comp_ra_1");
   gtk_widget_show (comp_ra_1);
   gtk_container_add (GTK_CONTAINER (eventbox87), comp_ra_1);
@@ -1724,7 +1724,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox150), eventbox88, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox88, _("Knee"), NULL);
 
-  comp_kn_1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 1, 0, 0, 0)));
+  comp_kn_1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 1, 0.1, 0, 0)));
   gtk_widget_set_name (comp_kn_1, "comp_kn_1");
   gtk_widget_show (comp_kn_1);
   gtk_container_add (GTK_CONTAINER (eventbox88), comp_kn_1);
@@ -1745,7 +1745,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox151), eventbox89, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, eventbox89, _("Makeup"), NULL);
 
-  comp_ma_1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 30, 0, 0, 0)));
+  comp_ma_1 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 30, 1, 0, 0)));
   gtk_widget_set_name (comp_ma_1, "comp_ma_1");
   gtk_widget_show (comp_ma_1);
   gtk_container_add (GTK_CONTAINER (eventbox89), comp_ma_1);
@@ -1781,16 +1781,16 @@ create_window1 (void)
   gtk_frame_set_label_widget (GTK_FRAME (frame7), label_Low);
   gtk_label_set_justify (GTK_LABEL (label_Low), GTK_JUSTIFY_LEFT);
 
-  eventbox51 = gtk_event_box_new ();
-  gtk_widget_set_name (eventbox51, "eventbox51");
-  gtk_widget_show (eventbox51);
-  gtk_box_pack_start (GTK_BOX (hbox1), eventbox51, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (eventbox51, 205, 135);
+  mid_comp_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (mid_comp_event_box, "mid_comp_event_box");
+  gtk_widget_show (mid_comp_event_box);
+  gtk_box_pack_start (GTK_BOX (hbox1), mid_comp_event_box, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (mid_comp_event_box, 205, 135);
 
   alignment10 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_widget_set_name (alignment10, "alignment10");
   gtk_widget_show (alignment10);
-  gtk_container_add (GTK_CONTAINER (eventbox51), alignment10);
+  gtk_container_add (GTK_CONTAINER (mid_comp_event_box), alignment10);
   gtk_widget_set_size_request (alignment10, 205, 135);
 
   frame22 = gtk_frame_new (NULL);
@@ -1993,16 +1993,16 @@ create_window1 (void)
   gtk_frame_set_label_widget (GTK_FRAME (frame22), label_Mid);
   gtk_label_set_justify (GTK_LABEL (label_Mid), GTK_JUSTIFY_LEFT);
 
-  eventbox52 = gtk_event_box_new ();
-  gtk_widget_set_name (eventbox52, "eventbox52");
-  gtk_widget_show (eventbox52);
-  gtk_box_pack_start (GTK_BOX (hbox1), eventbox52, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (eventbox52, 209, 151);
+  high_comp_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (high_comp_event_box, "high_comp_event_box");
+  gtk_widget_show (high_comp_event_box);
+  gtk_box_pack_start (GTK_BOX (hbox1), high_comp_event_box, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (high_comp_event_box, 209, 151);
 
   alignment11 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_widget_set_name (alignment11, "alignment11");
   gtk_widget_show (alignment11);
-  gtk_container_add (GTK_CONTAINER (eventbox52), alignment11);
+  gtk_container_add (GTK_CONTAINER (high_comp_event_box), alignment11);
   gtk_widget_set_size_request (alignment11, 209, 151);
 
   frame23 = gtk_frame_new (NULL);
@@ -2526,7 +2526,7 @@ create_window1 (void)
   gtk_widget_set_name (vbox141, "vbox141");
   gtk_widget_show (vbox141);
   gtk_container_add (GTK_CONTAINER (eventbox55), vbox141);
-  gtk_widget_set_size_request (vbox141, 35, -2);
+  gtk_widget_set_size_request (vbox141, 35, 0);
 
   table21 = gtk_table_new (3, 1, FALSE);
   gtk_widget_set_name (table21, "table21");
@@ -2938,8 +2938,8 @@ create_window1 (void)
   g_signal_connect ((gpointer) low_comp_event_box, "leave_notify_event",
                     G_CALLBACK (on_low_comp_event_box_leave_notify_event),
                     NULL);
-  g_signal_connect ((gpointer) vbox148, "realize",
-                    G_CALLBACK (on_mid_comp_realize),
+  g_signal_connect ((gpointer) low_comp, "realize",
+                    G_CALLBACK (on_low_comp_realize),
                     NULL);
   g_signal_connect ((gpointer) label294, "realize",
                     G_CALLBACK (on_low_knee_lbl_realize),
@@ -2962,10 +2962,10 @@ create_window1 (void)
   g_signal_connect ((gpointer) label_Low, "realize",
                     G_CALLBACK (on_label_Low_realize),
                     NULL);
-  g_signal_connect ((gpointer) eventbox51, "enter_notify_event",
+  g_signal_connect ((gpointer) mid_comp_event_box, "enter_notify_event",
                     G_CALLBACK (on_mid_comp_event_box_enter_notify_event),
                     NULL);
-  g_signal_connect ((gpointer) eventbox51, "leave_notify_event",
+  g_signal_connect ((gpointer) mid_comp_event_box, "leave_notify_event",
                     G_CALLBACK (on_mid_comp_event_box_leave_notify_event),
                     NULL);
   g_signal_connect ((gpointer) mid_comp, "realize",
@@ -2992,10 +2992,10 @@ create_window1 (void)
   g_signal_connect ((gpointer) label_Mid, "realize",
                     G_CALLBACK (on_label_Mid_realize),
                     NULL);
-  g_signal_connect ((gpointer) eventbox52, "enter_notify_event",
+  g_signal_connect ((gpointer) high_comp_event_box, "enter_notify_event",
                     G_CALLBACK (on_high_comp_event_box_enter_notify_event),
                     NULL);
-  g_signal_connect ((gpointer) eventbox52, "leave_notify_event",
+  g_signal_connect ((gpointer) high_comp_event_box, "leave_notify_event",
                     G_CALLBACK (on_high_comp_event_box_leave_notify_event),
                     NULL);
   g_signal_connect ((gpointer) high_comp, "realize",
@@ -3319,7 +3319,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, low_comp_event_box, "low_comp_event_box");
   GLADE_HOOKUP_OBJECT (window1, alignment7, "alignment7");
   GLADE_HOOKUP_OBJECT (window1, frame7, "frame7");
-  GLADE_HOOKUP_OBJECT (window1, vbox148, "vbox148");
+  GLADE_HOOKUP_OBJECT (window1, low_comp, "low_comp");
   GLADE_HOOKUP_OBJECT (window1, vbox149, "vbox149");
   GLADE_HOOKUP_OBJECT (window1, table24, "table24");
   GLADE_HOOKUP_OBJECT (window1, label289, "label289");
@@ -3347,7 +3347,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, eventbox90, "eventbox90");
   GLADE_HOOKUP_OBJECT (window1, hscale5, "hscale5");
   GLADE_HOOKUP_OBJECT (window1, label_Low, "label_Low");
-  GLADE_HOOKUP_OBJECT (window1, eventbox51, "eventbox51");
+  GLADE_HOOKUP_OBJECT (window1, mid_comp_event_box, "mid_comp_event_box");
   GLADE_HOOKUP_OBJECT (window1, alignment10, "alignment10");
   GLADE_HOOKUP_OBJECT (window1, frame22, "frame22");
   GLADE_HOOKUP_OBJECT (window1, mid_comp, "mid_comp");
@@ -3378,7 +3378,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, eventbox76, "eventbox76");
   GLADE_HOOKUP_OBJECT (window1, hscale3, "hscale3");
   GLADE_HOOKUP_OBJECT (window1, label_Mid, "label_Mid");
-  GLADE_HOOKUP_OBJECT (window1, eventbox52, "eventbox52");
+  GLADE_HOOKUP_OBJECT (window1, high_comp_event_box, "high_comp_event_box");
   GLADE_HOOKUP_OBJECT (window1, alignment11, "alignment11");
   GLADE_HOOKUP_OBJECT (window1, frame23, "frame23");
   GLADE_HOOKUP_OBJECT (window1, high_comp, "high_comp");

@@ -2887,13 +2887,13 @@
 					      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
 
 					      <child>
-						<widget class="GtkVBox" id="vbox148">
+						<widget class="GtkVBox" id="low_comp">
 						  <property name="width_request">192</property>
 						  <property name="height_request">119</property>
 						  <property name="visible">True</property>
 						  <property name="homogeneous">False</property>
 						  <property name="spacing">1</property>
-						  <signal name="realize" handler="on_mid_comp_realize" last_modification_time="Sat, 12 Apr 2003 22:29:18 GMT"/>
+						  <signal name="realize" handler="on_low_comp_realize" last_modification_time="Sun, 29 Jun 2003 12:11:10 GMT"/>
 
 						  <child>
 						    <widget class="GtkVBox" id="vbox149">
@@ -3110,7 +3110,7 @@
 								  <property name="digits">1</property>
 								  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 								  <property name="inverted">True</property>
-								  <property name="adjustment">0 -30 0 0 0 0</property>
+								  <property name="adjustment">0 -30 0 1 0 0</property>
 								</widget>
 							      </child>
 							    </widget>
@@ -3148,7 +3148,7 @@
 								      <property name="digits">1</property>
 								      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 								      <property name="inverted">True</property>
-								      <property name="adjustment">1 1 20 0 0 0</property>
+								      <property name="adjustment">1 1 20 1 0 0</property>
 								    </widget>
 								  </child>
 								</widget>
@@ -3199,7 +3199,7 @@
 								      <property name="digits">1</property>
 								      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 								      <property name="inverted">True</property>
-								      <property name="adjustment">0 0 1 0 0 0</property>
+								      <property name="adjustment">0 0 1 0.1 0 0</property>
 								      <signal name="value_changed" handler="on_comp_kn_1_value_changed" last_modification_time="Fri, 27 Jun 2003 05:53:03 GMT"/>
 								    </widget>
 								  </child>
@@ -3243,7 +3243,7 @@
 								      <property name="digits">1</property>
 								      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 								      <property name="inverted">True</property>
-								      <property name="adjustment">0 0 30 0 0 0</property>
+								      <property name="adjustment">0 0 30 1 0 0</property>
 								    </widget>
 								  </child>
 								</widget>
@@ -3374,7 +3374,7 @@
 				  </child>
 
 				  <child>
-				    <widget class="GtkEventBox" id="eventbox51">
+				    <widget class="GtkEventBox" id="mid_comp_event_box">
 				      <property name="width_request">205</property>
 				      <property name="height_request">135</property>
 				      <property name="visible">True</property>
@@ -3888,7 +3888,7 @@
 				  </child>
 
 				  <child>
-				    <widget class="GtkEventBox" id="eventbox52">
+				    <widget class="GtkEventBox" id="high_comp_event_box">
 				      <property name="width_request">209</property>
 				      <property name="height_request">151</property>
 				      <property name="visible">True</property>
@@ -5126,6 +5126,7 @@
 					  <child>
 					    <widget class="GtkVBox" id="vbox141">
 					      <property name="width_request">35</property>
+					      <property name="height_request">0</property>
 					      <property name="visible">True</property>
 					      <property name="homogeneous">False</property>
 					      <property name="spacing">0</property>

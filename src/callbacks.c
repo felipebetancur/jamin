@@ -2690,11 +2690,6 @@ on_load_button_clicked                 (GtkButton       *button,
     g_signal_connect (GTK_OBJECT (file_selector->ok_button),
         "clicked", G_CALLBACK (s_load_session), file_selector);
 
-    /*
-    g_signal_connect (GTK_OBJECT (file_selector->ok_button),
-        "clicked", G_CALLBACK (set_EQ_curve_values), NULL);
-	*/
-
     g_signal_connect_swapped (GTK_OBJECT (file_selector->ok_button),
         "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
 
@@ -2774,5 +2769,3 @@ forward_transport                      (GtkWidget       *widget,
     transport_rewind();
     return FALSE;
 }
-
-
