@@ -1804,7 +1804,7 @@ create_window1 (void)
   gtk_widget_set_name (eventbox49, "eventbox49");
   gtk_widget_show (eventbox49);
   gtk_box_pack_start (GTK_BOX (vbox100), eventbox49, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, eventbox49, _("2000 Hz"), NULL);
+  gtk_tooltips_set_tip (tooltips, eventbox49, _("2500 Hz"), NULL);
 
   eqb21 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb21, "eqb21");
@@ -2025,7 +2025,7 @@ create_window1 (void)
   gtk_widget_set_name (eventbox50, "eventbox50");
   gtk_widget_show (eventbox50);
   gtk_box_pack_start (GTK_BOX (vbox101), eventbox50, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, eventbox50, _("2000 Hz"), NULL);
+  gtk_tooltips_set_tip (tooltips, eventbox50, _("20000 Hz"), NULL);
 
   eqb30 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -12, 12, 1, 6, 0)));
   gtk_widget_set_name (eqb30, "eqb30");

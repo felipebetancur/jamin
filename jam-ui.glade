@@ -2826,7 +2826,7 @@
 					      <child>
 						<widget class="GtkEventBox" id="eventbox49">
 						  <property name="visible">True</property>
-						  <property name="tooltip" translatable="yes">2000 Hz</property>
+						  <property name="tooltip" translatable="yes">2500 Hz</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb21">
@@ -3372,7 +3372,7 @@
 					      <child>
 						<widget class="GtkEventBox" id="eventbox50">
 						  <property name="visible">True</property>
-						  <property name="tooltip" translatable="yes">2000 Hz</property>
+						  <property name="tooltip" translatable="yes">20000 Hz</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb30">
