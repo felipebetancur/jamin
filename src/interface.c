@@ -1234,6 +1234,7 @@ create_window1 (void)
   gtk_widget_set_name (EQ_curve_event_box, "EQ_curve_event_box");
   gtk_widget_show (EQ_curve_event_box);
   gtk_box_pack_start (GTK_BOX (vbox99), EQ_curve_event_box, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, EQ_curve_event_box, _("Left button-start, Middle button-abort, Right button-accept"), NULL);
 
   frame9 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame9, "frame9");
@@ -2420,6 +2421,12 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) EQ_curve_event_box, "motion_notify_event",
                     G_CALLBACK (on_EQ_curve_event_box_motion_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) EQ_curve_event_box, "button_press_event",
+                    G_CALLBACK (on_EQ_curve_event_box_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) EQ_curve_event_box, "button_release_event",
+                    G_CALLBACK (on_EQ_curve_event_box_button_release_event),
                     NULL);
   g_signal_connect ((gpointer) EQ_curve, "configure_event",
                     G_CALLBACK (on_EQ_curve_configure_event),

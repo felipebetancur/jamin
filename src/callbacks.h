@@ -145,3 +145,15 @@ on_EQ_curve_event_box_motion_notify_event
                                         (GtkWidget       *widget,
                                         GdkEventMotion  *event,
                                         gpointer         user_data);
+
+gboolean
+on_EQ_curve_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_EQ_curve_event_box_button_release_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);

@@ -3,6 +3,7 @@
 #endif
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <errno.h>
 #include <math.h>
 #include <gtk/gtk.h>
@@ -15,6 +16,12 @@
 
 
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
+#define EQ_INTRVL 10
+#define EQ_INTERP ((EQ_BANDS + 1) * EQ_INTRVL)
+
+
+void interpolate (float, int, float, float, int *, float *, float *, float *, 
+                  float *);
 
 
 static GtkHScale       *l_low2mid, *l_mid2high;
@@ -23,10 +30,17 @@ static GtkWidget       *l_low_comp, *l_mid_comp, *l_high_comp;
 static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_low_comp_lbl, 
                        *l_mid_comp_lbl, *l_high_comp_lbl, *l_EQ_curve_lbl;
 static GtkDrawingArea  *l_EQ_curve;
+static GdkDrawable     *EQ_drawable;
+static GdkColormap     *colormap;
+static GdkColor        white, black;
 static GdkGC           *norm_gc;
 static GtkAdjustment   *l_low2mid_adj, *l_eqb1_adj;
 static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
-                       EQ_curve_height;
+                       EQ_curve_height, EQ_xinterp[EQ_INTERP + 1], EQ_start, 
+                       EQ_end, EQ_interval, EQ_yinterp[EQ_INTERP + 1], 
+                       *EQ_xinput = NULL, *EQ_yinput = NULL;
+static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0, 
+                       EQ_length = 0;
 
 
 void
@@ -215,10 +229,20 @@ on_high_comp_realize                   (GtkWidget       *widget,
 
 
 void
+clean_quit ()
+{
+    if (EQ_xinput) free (EQ_xinput);
+    if (EQ_yinput) free (EQ_yinput);
+
+    gtk_main_quit();
+}
+
+
+void
 on_quit_clicked                        (GtkButton       *button,
                                         gpointer         user_data)
 {
-    gtk_main_quit();
+    clean_quit ();
 }
 
 
@@ -227,9 +251,9 @@ on_window1_delete_event                (GtkWidget       *widget,
                                         GdkEvent        *event,
                                         gpointer         user_data)
 {
-  gtk_main_quit();
+    clean_quit ();
 
-  return FALSE;
+    return FALSE;
 }
 
 
@@ -237,7 +261,7 @@ void
 on_in_trim_scale_value_changed         (GtkRange        *range,
                                         gpointer         user_data)
 {
-  in_trim_gain = powf(10.0f, gtk_range_get_adjustment(range)->value * 0.05f);
+    in_trim_gain = powf(10.0f, gtk_range_get_adjustment(range)->value * 0.05f);
 }
 
 void
@@ -271,6 +295,20 @@ on_window1_show                        (GtkWidget       *widget,
     on_low2mid_value_changed ((GtkRange *) l_low2mid, NULL);
 
     on_mid2high_value_changed ((GtkRange *) l_mid2high, NULL);
+
+    colormap = gdk_colormap_get_system ();
+
+    white.red = 65535;
+    white.green = 65535;
+    white.blue = 65535;
+
+    gdk_colormap_alloc_color (colormap, &white, FALSE, TRUE);
+
+    black.red = 0;
+    black.green = 0;
+    black.blue = 0;
+
+    gdk_colormap_alloc_color (colormap, &black, FALSE, TRUE);
 }
 
 
@@ -284,14 +322,75 @@ on_EQ_curve_configure_event            (GtkWidget       *widget,
 
 
 gboolean
+eqb_mod                                (GtkAdjustment *adj, gpointer user_data)
+{
+    EQ_mod = 1;
+
+    return FALSE;
+}
+
+
+void
+draw_EQ_curve ()
+{
+    int            i, x0 = 0, y0 = 0, x1, y1;
+    float          x[EQ_BANDS], y[EQ_BANDS];
+
+
+    /*  Clear the curve drawing area.  */
+
+    gdk_gc_set_foreground (norm_gc, &white);
+    gdk_draw_rectangle (EQ_drawable, norm_gc, TRUE, 0, 0, EQ_curve_width, 
+        EQ_curve_height);
+    gdk_gc_set_foreground (norm_gc, &black);
+
+
+    /*  Draw the grid lines.  */
+
+    for (i = 0 ; i < EQ_BANDS ; i++)
+      {
+        x[i] = log10 (geq_freqs[i]);
+        y[i] = log10 (geq_gains[i]);
+
+        x1 = NINT (((x[i] - l_low2mid_adj->lower) / EQ_curve_range_x) * 
+            EQ_curve_width);
+
+        gdk_draw_line (EQ_drawable, norm_gc, x1, 0, x1, EQ_curve_height);
+      }
+
+
+    /*  If we've messed with the graphics EQ sliders, recompute the splined curve.  */
+
+    if (EQ_mod) interpolate (EQ_interval, EQ_BANDS, EQ_start, EQ_end, 
+        &EQ_length, x, y, EQ_xinterp, EQ_yinterp);
+
+    EQ_mod = 0;
+
+
+    /*  Plot the curve.  */
+
+    for (i = 0 ; i < EQ_length ; i++)
+      {
+        x1 = NINT (((EQ_xinterp[i] - l_low2mid_adj->lower) / 
+            EQ_curve_range_x) * EQ_curve_width);
+
+        y1 = EQ_curve_height - NINT ((((EQ_yinterp[i] / 
+            0.05) - l_eqb1_adj->lower) / EQ_curve_range_y) * 
+            EQ_curve_height);
+
+        if (i) gdk_draw_line (EQ_drawable, norm_gc, x0, y0, x1, y1);
+
+        x0 = x1;
+        y0 = y1;
+      }
+}
+
+
+gboolean
 on_EQ_curve_expose_event               (GtkWidget       *widget,
                                         GdkEventExpose  *event,
                                         gpointer         user_data)
 {
-    int            i, x0 = 0, y0 = 0, x1, y1;
-
-
-
     l_low2mid_adj = gtk_range_get_adjustment ((GtkRange *) l_low2mid);
     l_eqb1_adj = gtk_range_get_adjustment ((GtkRange *) l_eqb1);
     EQ_curve_range_x = l_low2mid_adj->upper - l_low2mid_adj->lower;
@@ -299,26 +398,7 @@ on_EQ_curve_expose_event               (GtkWidget       *widget,
     EQ_curve_width = widget->allocation.width;
     EQ_curve_height = widget->allocation.height;
 
-    for (i = 0 ; i < EQ_BANDS ; i++)
-      {
-        x1 = NINT (((log10 (geq_freqs[i]) - l_low2mid_adj->lower) / 
-            EQ_curve_range_x) * EQ_curve_width);
-
-        y1 = EQ_curve_height - NINT (((((log10 (geq_gains[i])) / 
-            0.05) - l_eqb1_adj->lower) / EQ_curve_range_y) * 
-            EQ_curve_height);
-
-
-        gdk_draw_line (widget->window, norm_gc, x1, 0, x1, 
-            EQ_curve_height);
-
-
-        if (i) gdk_draw_line (widget->window, norm_gc, x0, y0, x1, y1);
-
-        x0 = x1;
-        y0 = y1;
-      }
-
+    draw_EQ_curve ();
 
     return FALSE;
 }
@@ -330,7 +410,13 @@ on_EQ_curve_realize                    (GtkWidget       *widget,
 {
     l_EQ_curve = (GtkDrawingArea *) widget;
 
+    EQ_drawable = widget->window;
+
     norm_gc = widget->style->fg_gc[GTK_WIDGET_STATE (widget)];
+
+    EQ_start = log10 (geq_freqs[0]);
+    EQ_end = log10 (geq_freqs[EQ_BANDS - 1]);
+    EQ_interval = (EQ_end - EQ_start) / EQ_INTERP;
 }
 
 
@@ -357,7 +443,7 @@ on_EQ_curve_event_box_motion_notify_event
                                         gpointer         user_data)
 {
     static int     prev_x = -1, prev_y = -1;
-    int            x, y;
+    int            x, y, size;
     float          freq, gain;
     char           coords[20];
 
@@ -365,9 +451,11 @@ on_EQ_curve_event_box_motion_notify_event
     x = NINT (event->x);
     y = NINT (event->y);
 
+
+    /*  We only want to updatethings if we've actually moved the cursor.  */
+
     if (x != prev_x || y != prev_y)
       {
-        
         freq = pow (10.0, (l_low2mid_adj->lower + (((double) x / 
             (double) EQ_curve_width) * EQ_curve_range_x)));
 
@@ -379,8 +467,198 @@ on_EQ_curve_event_box_motion_notify_event
         sprintf (coords, "%dHz , %ddb", NINT (freq), NINT (gain));
         gtk_label_set_text (l_EQ_curve_lbl, coords);
 
+
+        /*  If we're in the midst of drawing the curve...  */
+
+        if (EQ_drawing)
+          {
+            /*  Only allow the user to draw in the positive direction.  */
+
+            if (!EQ_input_points || x > EQ_xinput[EQ_input_points - 1])
+              {
+                if (EQ_input_points) gdk_draw_line (EQ_drawable, norm_gc, 
+                    NINT (EQ_xinput[EQ_input_points - 1]), 
+                    NINT (EQ_yinput[EQ_input_points - 1]), x, y);
+
+                size = (EQ_input_points + 1) * sizeof (float);
+                EQ_xinput = (float *) realloc (EQ_xinput, size);
+                EQ_yinput = (float *) realloc (EQ_yinput, size);
+
+                if (EQ_yinput == NULL)
+                  {
+                    perror ("Allocating EQ_yinput in callbacks.c");
+                    clean_quit ();
+                  }
+
+                EQ_xinput[EQ_input_points] = x;
+                EQ_yinput[EQ_input_points] = y;
+                EQ_input_points++;
+              }
+          }
+
         prev_x = x;
         prev_y = y;
+
+      }
+
+    return FALSE;
+}
+
+
+gboolean
+on_EQ_curve_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+    switch (event->button)
+      {
+
+        /*  Button 1 - start drawing.  */
+
+      case 1:
+        EQ_drawing = 1;
+        break;
+
+      default:
+        break;
+      }
+
+    return FALSE;
+}
+
+
+gboolean
+on_EQ_curve_event_box_button_release_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+    float               *x = NULL, *y = NULL;
+    int                 i, j, i_start = 0, i_end = 0, size;
+
+
+    switch (event->button)
+      {
+
+        /*  Button 2 - discard the drawn curve.  */
+
+      case 2:
+        EQ_drawing = 0;
+
+        EQ_input_points = 0;
+
+        draw_EQ_curve ();
+        
+        break;
+
+
+        /*  Button 3 - combine the drawn data with any parts of the previous 
+            that haven't been superceded by what was drawn.  Use an EQ_INTRVL 
+            cushion on either side of the drawn section so it will merge 
+            nicely with the old data.  */
+
+      case 3:
+        EQ_drawing = 0;
+
+
+        /*  Convert the x and y input positions to "real" values.  */
+
+        for (i = 0 ; i < EQ_input_points ; i++)
+          {
+            EQ_xinput[i] = l_low2mid_adj->lower + (((double) EQ_xinput[i] / 
+                 (double) EQ_curve_width) * EQ_curve_range_x);
+
+
+            EQ_yinput[i] = (((((double) EQ_curve_height - 
+                (double) EQ_yinput[i]) / (double) EQ_curve_height) * 
+                EQ_curve_range_y) + l_eqb1_adj->lower) * 0.05;
+          }
+
+
+        /*  Merge the drawn section with the old curve.  */
+
+        for (i = 0 ; i < EQ_length ; i++)
+          {
+            if (EQ_xinterp[i] >= EQ_xinput[0])
+              {
+                i_start = i - EQ_INTRVL;
+                break;
+              }
+          }
+
+        for (i = EQ_length - 1 ; i >= 0 ; i--)
+          {
+            if (EQ_xinterp[i] <= EQ_xinput[EQ_input_points - 1])
+              {
+                i_end = i + EQ_INTRVL;
+                break;
+              }
+          }
+
+
+        j = 0;
+        for (i = 0 ; i < i_start ; i++)
+          {
+            size = (j + 1) * sizeof (float);
+            x = (float *) realloc (x, size);
+            y = (float *) realloc (y, size);
+
+            if (y == NULL)
+              {
+                perror ("Allocating y in callbacks.c");
+                clean_quit ();
+              }
+
+            x[j] = EQ_xinterp[i];
+            y[j] = EQ_yinterp[i];
+            j++;
+          }
+
+        for (i = 0 ; i < EQ_input_points ; i++)
+          {
+            size = (j + 1) * sizeof (float);
+            x = (float *) realloc (x, size);
+            y = (float *) realloc (y, size);
+
+            if (y == NULL)
+              {
+                perror ("Allocating y in callbacks.c");
+                clean_quit ();
+              }
+
+            x[j] = EQ_xinput[i];
+            y[j] = EQ_yinput[i];
+            j++;
+          }
+
+        for (i = i_end ; i < EQ_length ; i++)
+          {
+            size = (j + 1) * sizeof (float);
+            x = (float *) realloc (x, size);
+            y = (float *) realloc (y, size);
+
+            x[j] = EQ_xinterp[i];
+            y[j] = EQ_yinterp[i];
+            j++;
+          }
+
+
+        /*  Recompute the splined curve.  */
+
+        interpolate (EQ_interval, j, EQ_start, EQ_end, &EQ_length, x, 
+            y, EQ_xinterp, EQ_yinterp);
+
+
+        if (x) free (x);
+        if (y) free (y);
+
+
+        EQ_input_points = 0;
+
+        draw_EQ_curve ();
+
+        break;
       }
 
     return FALSE;

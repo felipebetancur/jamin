@@ -21,6 +21,7 @@ int bin_base[BINS];
 int bin_delta[BINS];
 
 gboolean eqb_changed(GtkAdjustment *adj, gpointer user_data);
+gboolean eqb_mod(GtkAdjustment *adj, gpointer user_data);
 void geq_set_gains();
 
 void bind_geq()
@@ -44,6 +45,7 @@ void bind_geq()
 	snprintf(tip, 255, "%'.0f Hz", floor(geq_freqs[i] + 0.5));
 	gtk_tooltips_set_tip(tooltips, scale, tip, NULL);
 	geqa[i] = gtk_range_get_adjustment(GTK_RANGE(scale));
+        gtk_signal_connect(geqa[i], "value-changed", GTK_SIGNAL_FUNC(eqb_mod), NULL);
 	gtk_signal_connect(geqa[i], "value-changed", GTK_SIGNAL_FUNC(eqb_changed), (gpointer)i+1);
     }
 

@@ -18,6 +18,7 @@ jam_SOURCES = \
 	callbacks.c callbacks.h \
 	geq.c geq.h \
 	io.c io.h \
+	spline.c \
 	process.c process.h \
 	plugin.c plugin.h \
 	compressor.h \
