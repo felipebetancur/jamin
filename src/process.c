@@ -248,6 +248,12 @@ int process_signal(jack_nframes_t nframes,
     if (!limiter_connected) {
 	limiter_connected = TRUE;
 	lim_connect(lim_plugin, &limiter, out[0], out[1]);
+    } else {				/* already connected */
+	/* need to update buffer addresses anyway */
+	plugin_connect_port(lim_plugin, limiter.handle, LIM_IN_1, out[0]);
+	plugin_connect_port(lim_plugin, limiter.handle, LIM_IN_2, out[1]);
+	plugin_connect_port(lim_plugin, limiter.handle, LIM_OUT_1, out[0]);
+	plugin_connect_port(lim_plugin, limiter.handle, LIM_OUT_2, out[1]);
     }
 
     for (pos = 0; pos < nframes; pos++) {
