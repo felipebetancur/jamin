@@ -2,6 +2,7 @@
 
 	* state.c, compressor-ui.c: added global settings to XML file. all
 	  should be read, but only the gang states are written correctly.
+	  Added gang accessor funcs to compressor ui code.
 
 2004-05-05  Steve Harris  <steve@plugin.org.uk>
 
