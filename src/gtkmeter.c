@@ -427,7 +427,7 @@ gtk_meter_update (GtkMeter *meter)
       gtk_signal_emit_by_name (GTK_OBJECT (meter->adjustment), "value_changed");
     }
 
-  gtk_widget_draw (GTK_WIDGET(meter), NULL);
+  gtk_widget_draw(GTK_WIDGET(meter), NULL);
 }
 
 static void
@@ -519,4 +519,6 @@ void gtk_meter_set_warn_point(GtkMeter *meter, gfloat pt)
         meter->amber_frac = (iec_scale(meter->amber_level) - meter->iec_lower) /
 		(meter->iec_upper - meter->iec_lower);
     }
+
+    gtk_widget_draw(GTK_WIDGET(meter), NULL);
 }

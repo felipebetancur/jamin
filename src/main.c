@@ -25,6 +25,7 @@
 #include "intrim.h"
 #include "process.h"
 #include "spectrum.h"
+#include "state.h"
 
 GtkWidget *main_window;
 
@@ -52,25 +53,25 @@ int main(int argc, char *argv[])
     gtk_set_locale();
     gtk_init(&argc, &argv);
     backend_init(argc, argv);
+    state_init();
 
     add_pixmap_directory(PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
 
     main_window = create_window1();
 
-
     /* bind the graphic equaliser sliders to adjustments */
+    gtk_widget_show(main_window);
     bind_geq();
     bind_intrim();
     bind_limiter();
     bind_compressors();
     bind_spectrum();
 
+    s_clear_history();
+
     g_timeout_add(100, update_meters, NULL);
 
     backend_activate(argc, argv);
-
-    gtk_widget_show(main_window);
-
 
     gtk_main();
 

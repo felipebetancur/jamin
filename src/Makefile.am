@@ -29,6 +29,11 @@ jamin_SOURCES = \
 	compressor-ui.c compressor-ui.h \
 	gtkmeter.c gtkmeter.h \
 	gtkmeterscale.c gtkmeterscale.h \
-	spectrum.c spectrum.h
+	spectrum.c spectrum.h \
+	state.c state.h
 
 jamin_LDADD = @PACKAGE_LIBS@
+
+state.h: mk-stateh.pl state-vars.txt
+	@echo "WARNING: Rebuilding state.h"
+	./mk-stateh.pl

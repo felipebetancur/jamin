@@ -7,9 +7,14 @@
 #include "support.h"
 #include "main.h"
 #include "gtkmeter.h"
+#include "state.h"
 
-gboolean lh_changed(GtkAdjustment *adj, gpointer user_data);
-GtkAdjustment *lh_adj;
+void lh_changed(int id, float value);
+void ll_changed(int id, float value);
+
+static GtkAdjustment *lh_adj, *ll_adj;
+static GtkLabel *lh_label, *ll_label;
+
 
 static GtkMeter *in_meter, *att_meter, *out_meter;
 static GtkAdjustment *in_meter_adj, *att_meter_adj, *out_meter_adj;
@@ -20,8 +25,19 @@ void bind_limiter()
 
     scale = lookup_widget(main_window, "lim_lh_scale");
     lh_adj = gtk_range_get_adjustment(GTK_RANGE(scale));
-    g_signal_connect(G_OBJECT(lh_adj), "value-changed", G_CALLBACK(lh_changed),
-	    NULL);
+    lh_label = GTK_LABEL(lookup_widget(main_window, "release_val_label"));
+    s_set_adjustment(S_LIM_TIME, lh_adj);
+    s_set_callback(S_LIM_TIME, lh_changed);
+
+    scale = lookup_widget(main_window, "out_trim_scale");
+    ll_adj = gtk_range_get_adjustment(GTK_RANGE(scale));
+    ll_label = GTK_LABEL(lookup_widget(main_window, "limit_val_label"));
+    s_set_adjustment(S_LIM_LIMIT, ll_adj);
+    s_set_callback(S_LIM_LIMIT, ll_changed);
+
+    s_set_value(S_LIM_TIME, 0.1f, 0);
+    s_set_value(S_LIM_LIMIT, 0.0f, 0);
+
     in_meter = GTK_METER(lookup_widget(main_window, "lim_in_meter"));
     att_meter = GTK_METER(lookup_widget(main_window, "lim_att_meter"));
     out_meter = GTK_METER(lookup_widget(main_window, "lim_out_meter"));
@@ -30,11 +46,29 @@ void bind_limiter()
     out_meter_adj = gtk_meter_get_adjustment(out_meter);
 }
 
-gboolean lh_changed(GtkAdjustment *adj, gpointer user_data)
+void lh_changed(int id, float value)
 {
-    limiter.delay = adj->value * 0.001f;
+    char text[256];
 
-    return FALSE;
+    const float val = powf(10.0f, value);
+    if (val >= 100.0f) {
+	snprintf(text, 255, "%.3g s", val * 0.001f);
+    } else {
+	snprintf(text, 255, "%.4g ms", val);
+    }
+    gtk_label_set_text(lh_label, text);
+
+    limiter.delay = powf(10.0f, value - 3.0f);
+}
+
+void ll_changed(int id, float value)
+{
+    char text[256];
+
+    limiter.limit = value;
+	        
+    snprintf(text, 255, "%.1f dB", value);
+    gtk_label_set_text(ll_label, text);
 }
 
 void limiter_meters_update()

@@ -8,10 +8,14 @@
 #include "main.h"
 #include "intrim.h"
 #include "gtkmeter.h"
+#include "state.h"
 
 static GtkMeter *in_meter[2], *out_meter[2];
 static GtkAdjustment *in_meter_adj[2], *out_meter_adj[2];
 static GtkLabel	*pan_label;
+
+void intrim_cb(int id, float value);
+void inpan_cb(int id, float value);
 
 float in_gain[2] = {1.0f, 1.0f};
 float in_trim_gain = 1.0f;
@@ -35,6 +39,27 @@ void bind_intrim()
 
     pan_label = GTK_LABEL(lookup_widget(main_window, "pan_label"));
     update_pan_label(0.0);
+
+    s_set_callback(S_IN_GAIN, intrim_cb);
+    s_set_adjustment(S_IN_GAIN, gtk_range_get_adjustment(lookup_widget(main_window, "in_trim_scale")));
+    s_set_callback(S_IN_PAN, inpan_cb);
+    s_set_adjustment(S_IN_PAN, gtk_range_get_adjustment(lookup_widget(main_window, "pan_scale")));
+}
+
+void intrim_cb(int id, float value)
+{
+    in_trim_gain = powf(10.0f, value * 0.05f);
+    in_gain[0] = in_trim_gain * in_pan_gain[0];
+    in_gain[1] = in_trim_gain * in_pan_gain[1];
+}
+
+void inpan_cb(int id, float value)
+{
+    in_pan_gain[0] = powf(10.0f, value * -0.025f);
+    in_pan_gain[1] = powf(10.0f, value * 0.025f);
+    in_gain[0] = in_trim_gain * in_pan_gain[0];
+    in_gain[1] = in_trim_gain * in_pan_gain[1];
+    update_pan_label(value);
 }
 
 void in_meter_value(float amp[])

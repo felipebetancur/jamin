@@ -18,6 +18,7 @@
 #include "compressor-ui.h"
 #include "gtkmeter.h"
 #include "gtkmeterscale.h"
+#include "state.h"
 
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
 #define EQ_INTERP (BINS / 2 - 1)
@@ -64,6 +65,7 @@ on_low2mid_value_changed               (GtkRange        *range,
 
     value = gtk_range_get_value (range);
     other_value = gtk_range_get_value ((GtkRange *) l_mid2high);
+    s_set_value_ui(S_XOVER_FREQ(0), value);
 
 
     /*  Don't let the two sliders cross each other and desensitize the mid
@@ -130,6 +132,7 @@ on_mid2high_value_changed              (GtkRange        *range,
 
     value = gtk_range_get_value (range);
     other_value = gtk_range_get_value ((GtkRange *) l_low2mid);
+    s_set_value_ui(S_XOVER_FREQ(1), value);
 
 
     /*  Don't let the two sliders cross each other and desensitize the mid
@@ -189,6 +192,7 @@ on_low2mid_realize                     (GtkWidget       *widget,
                                         gpointer         user_data)
 {
     l_low2mid = (GtkHScale *) widget;
+    s_set_adjustment(S_XOVER_FREQ(0), gtk_range_get_adjustment(GTK_RANGE(widget)));
 }
 
 
@@ -197,6 +201,7 @@ on_mid2high_realize                    (GtkWidget       *widget,
                                         gpointer         user_data)
 {
     l_mid2high = (GtkHScale *) widget;
+    s_set_adjustment(S_XOVER_FREQ(1), gtk_range_get_adjustment(GTK_RANGE(widget)));
 }
 
 
@@ -883,7 +888,8 @@ void
 on_out_trim_scale_value_changed        (GtkRange        *range,
                                         gpointer         user_data)
 {
-    limiter.limit = gtk_range_get_adjustment(range)->value;
+    s_set_value_ui(S_LIM_LIMIT,
+		    gtk_range_get_adjustment(GTK_RANGE(range))->value);
 }
 
 
@@ -891,9 +897,7 @@ void
 on_in_trim_scale_value_changed         (GtkRange        *range,
                                         gpointer         user_data)
 {
-    in_trim_gain = powf(10.0f, gtk_range_get_adjustment(range)->value * 0.05f);
-    in_gain[0] = in_trim_gain * in_pan_gain[0];
-    in_gain[1] = in_trim_gain * in_pan_gain[1];
+    s_set_value_ui(S_IN_GAIN, gtk_range_get_adjustment(range)->value);
 }
 
 
@@ -901,13 +905,7 @@ void
 on_pan_scale_value_changed             (GtkRange        *range,
                                         gpointer         user_data)
 {
-    const float balance = gtk_range_get_adjustment(range)->value;
-
-    in_pan_gain[0] = powf(10.0f, balance * -0.025f);
-    in_pan_gain[1] = powf(10.0f, balance * 0.025f);
-    in_gain[0] = in_trim_gain * in_pan_gain[0];
-    in_gain[1] = in_trim_gain * in_pan_gain[1];
-    update_pan_label(balance);
+    s_set_value_ui(S_IN_PAN, gtk_range_get_adjustment(range)->value);
 }
 
 
@@ -1484,3 +1482,28 @@ on_output_activate                     (GtkMenuItem     *menuitem,
 
 }
 
+
+void
+on_button10_clicked                    (GtkButton       *button,
+                                        gpointer         user_data)
+{
+	s_undo();
+}
+
+void
+on_lim_lh_scale_value_changed          (GtkRange        *range,
+                                        gpointer         user_data)
+{
+	s_set_value_ui(S_LIM_TIME,
+			gtk_range_get_adjustment(GTK_RANGE(range))->value);
+}
+
+void
+on_release_val_label_realize           (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+	GtkRequisition size;
+
+	gtk_widget_size_request(widget, &size);
+	gtk_widget_set_usize(widget, size.width, -1);
+}

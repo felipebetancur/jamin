@@ -38,8 +38,10 @@ static void gtk_meterscale_size_allocate       (GtkWidget     *widget,
 static gint gtk_meterscale_expose              (GtkWidget        *widget,
 						GdkEventExpose   *event);
 static float iec_scale(float db);
-static void meterscale_draw_notch(GtkMeterScale *meterscale, float db, int mark,
-		PangoRectangle *last_label_rect);
+static void meterscale_draw_notch_label(GtkMeterScale *meterscale, float db,
+		int mark, PangoRectangle *last_label_rect);
+static void meterscale_draw_notch(GtkMeterScale *meterscale, float db, int
+		mark);
 
 /* Local data */
 
@@ -181,7 +183,7 @@ gtk_meterscale_realize (GtkWidget *widget)
   }
   if (meterscale->direction & GTK_METERSCALE_TOP ||
       meterscale->direction & GTK_METERSCALE_BOTTOM) {
-    meterscale->min_height = rect.height + METERSCALE_MAX_FONT_SIZE;
+    meterscale->min_height = rect.height + METERSCALE_MAX_FONT_SIZE + 1;
   }
   gtk_widget_set_usize(widget, meterscale->min_width, meterscale->min_height);
 }
@@ -247,21 +249,25 @@ gtk_meterscale_expose (GtkWidget      *widget,
   lr.width = 0;
   lr.height = 0;
 
-  meterscale_draw_notch(meterscale, 0.0f, 3, &lr);
+  meterscale_draw_notch_label(meterscale, 0.0f, 3, &lr);
 
-  for (val = 3.0f; val < meterscale->upper; val += 3.0f) {
-    meterscale_draw_notch(meterscale, val, 2, &lr);
+  for (val = 5.0f; val < meterscale->upper; val += 5.0f) {
+    meterscale_draw_notch_label(meterscale, val, 2, &lr);
   }
 
-  for (val = -3.0f; val > meterscale->lower; val -= 3.0f) {
-    meterscale_draw_notch(meterscale, val, 2, &lr);
+  for (val = -5.0f; val > meterscale->lower; val -= 5.0f) {
+    meterscale_draw_notch_label(meterscale, val, 2, &lr);
+  }
+
+  for (val = -10.0f; val < 10.0f; val += 1.0f) {
+    meterscale_draw_notch(meterscale, val, 1);
   }
   
   return FALSE;
 }
 
-static void meterscale_draw_notch(GtkMeterScale *meterscale, float db, int mark,
-		PangoRectangle *last_label_rect)
+static void meterscale_draw_notch_label(GtkMeterScale *meterscale, float db,
+		int mark, PangoRectangle *last_label_rect)
 {
     GtkWidget *widget = GTK_WIDGET(meterscale);
     int length, width, pos;
@@ -333,6 +339,28 @@ static void meterscale_draw_notch(GtkMeterScale *meterscale, float db, int mark,
 	last_label_rect->height = rect.height;
 	last_label_rect->x = x;
 	last_label_rect->y = y;
+    }
+
+    meterscale_draw_notch(meterscale, db, mark);
+}
+
+static void meterscale_draw_notch(GtkMeterScale *meterscale, float db,
+		int mark)
+{
+    GtkWidget *widget = GTK_WIDGET(meterscale);
+    int pos, length, width;
+
+    if (meterscale->direction & GTK_METERSCALE_LEFT ||
+        meterscale->direction & GTK_METERSCALE_RIGHT) {
+	    length = widget->allocation.height - 2;
+	    width = widget->allocation.width - 2;
+	    pos = length - length * (iec_scale(db) - meterscale->iec_lower) /
+		    (meterscale->iec_upper - meterscale->iec_lower);
+    } else {
+	    length = widget->allocation.width - 2;
+	    width = widget->allocation.height - 2;
+	    pos = length * (iec_scale(db) - meterscale->iec_lower) /
+		    (meterscale->iec_upper - meterscale->iec_lower);
     }
 
     if (meterscale->direction & GTK_METERSCALE_LEFT) {

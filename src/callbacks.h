@@ -367,3 +367,15 @@ on_post_compressor_activate            (GtkMenuItem     *menuitem,
 void
 on_output_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
+
+void
+on_button10_clicked                    (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_lim_lh_scale_value_changed          (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_release_val_label_realize           (GtkWidget       *widget,
+                                        gpointer         user_data);

@@ -79,7 +79,7 @@ void bind_spectrum()
     /* Calcuate the centre frequency for each band */
     for (band=0; band<BANDS; band++) {
 	band_freq[band] = 1000.0 * pow(10.0, (double)(band-16) * 0.1);
-	printf("band %d is at %f Hz\n", band, band_freq[band]);
+	//printf("band %d is at %f Hz\n", band, band_freq[band]);
 	band_bin_count[band] = 0;
     }
 
@@ -94,14 +94,14 @@ void bind_spectrum()
 	    }
 	}
 	bin_bands[bin] = nearest_band;
-	printf("bin %d (%f Hz) is nearest band %d (%f Hz)\n", bin, bin_freq, nearest_band, band_freq[nearest_band]);
+	//printf("bin %d (%f Hz) is nearest band %d (%f Hz)\n", bin, bin_freq, nearest_band, band_freq[nearest_band]);
 	band_bin_count[nearest_band]++;
     }
 
     for (band=0; band<BANDS; band++) {
 	if (band_bin_count[band] == 0) {
 	    band_bin[band] = band_freq[band] * BINS / sample_rate;
-	    printf("band %d is unassigned, use bin %d\n", band, band_bin[band]);
+	    //printf("band %d is unassigned, use bin %d\n", band, band_bin[band]);
 	} else {
 	    /* Mark for no reverse lookup */
 	    band_bin[band] = -1;

@@ -8,13 +8,15 @@
 #include "main.h"
 #include "compressor-ui.h"
 #include "gtkmeter.h"
+#include "state.h"
 
-gboolean at_changed(GtkAdjustment *adj, gpointer user_data);
-gboolean re_changed(GtkAdjustment *adj, gpointer user_data);
-gboolean th_changed(GtkAdjustment *adj, gpointer user_data);
-gboolean ra_changed(GtkAdjustment *adj, gpointer user_data);
-gboolean kn_changed(GtkAdjustment *adj, gpointer user_data);
-gboolean ma_changed(GtkAdjustment *adj, gpointer user_data);
+gboolean adj_cb(GtkAdjustment *adj, gpointer p);
+void at_changed(int id, float value);
+void re_changed(int id, float value);
+void th_changed(int id, float value);
+void ra_changed(int id, float value);
+void kn_changed(int id, float value);
+void ma_changed(int id, float value);
 
 void calc_auto_gain(int i);
 void draw_comp_curve (int i);
@@ -31,12 +33,17 @@ static int auto_gain[XO_BANDS];
 static GtkMeter *le_meter[XO_BANDS], *ga_meter[XO_BANDS];
 static GtkAdjustment *le_meter_adj[XO_BANDS], *ga_meter_adj[XO_BANDS];
 
-#define connect_scale(sym, i, member) \
+#define connect_scale(sym, i, member, state_id) \
 	snprintf(name, 255, "comp_" # sym "_%d", i+1); \
 	scale = lookup_widget(main_window, name); \
 	adj_##sym[i] = gtk_range_get_adjustment(GTK_RANGE(scale)); \
-	g_signal_connect(G_OBJECT(adj_##sym[i]), "value-changed", G_CALLBACK(sym##_changed), (gpointer)i); \
-	gtk_adjustment_set_value(adj_##sym[i], compressors[i].member);
+	s_set_callback(state_id, sym##_changed); \
+	s_set_adjustment(state_id, adj_##sym[i]); \
+	s_set_value(state_id, compressors[i].member, 0); \
+	g_signal_connect(G_OBJECT(adj_##sym[i]), "value-changed", G_CALLBACK(adj_cb), (gpointer)state_id); 
+
+	//g_signal_connect(G_OBJECT(adj_##sym[i]), "value-changed", G_CALLBACK(sym##_changed), (gpointer)i); 
+	//gtk_adjustment_set_value(adj_##sym[i], compressors[i].member);
 
 void bind_compressors()
 {
@@ -53,79 +60,77 @@ void bind_compressors()
 	ga_meter[i] = GTK_METER(lookup_widget(main_window, name));
 	ga_meter_adj[i] = gtk_meter_get_adjustment(ga_meter[i]);
 
-	connect_scale(at, i, attack);
-	connect_scale(re, i, release);
-	connect_scale(th, i, threshold);
-	connect_scale(ra, i, ratio);
-	connect_scale(kn, i, knee);
-	connect_scale(ma, i, makeup_gain);
+	connect_scale(at, i, attack, S_COMP_ATTACK(i));
+	connect_scale(re, i, release, S_COMP_RELEASE(i));
+	connect_scale(th, i, threshold, S_COMP_THRESH(i));
+	connect_scale(ra, i, ratio, S_COMP_RATIO(i));
+	connect_scale(kn, i, knee, S_COMP_KNEE(i));
+	connect_scale(ma, i, makeup_gain, S_COMP_MAKEUP(i));
 	ma[i] = scale;
 
 	auto_gain[i] = 0;
     }
 }
 
-gboolean at_changed(GtkAdjustment *adj, gpointer user_data)
+gboolean adj_cb(GtkAdjustment *adj, gpointer p)
 {
-    compressors[(int)user_data].attack = adj->value;
-    draw_comp_curve((int)user_data);
-
-    return FALSE;
+    s_set_value_ui((int)p, adj->value);
 }
 
-gboolean re_changed(GtkAdjustment *adj, gpointer user_data)
+void at_changed(int id, float value)
 {
-    compressors[(int)user_data].release = adj->value;
-    draw_comp_curve((int)user_data);
-
-    return FALSE;
+    compressors[id - S_COMP_ATTACK(0)].attack = value;
+    draw_comp_curve(id - S_COMP_ATTACK(0));
 }
 
-gboolean th_changed(GtkAdjustment *adj, gpointer user_data)
+void re_changed(int id, float value)
 {
-    compressors[(int)user_data].threshold = adj->value;
-    if (auto_gain[(int)user_data]) {
-	calc_auto_gain((int)user_data);
+    compressors[id - S_COMP_RELEASE(0)].release = value;
+    draw_comp_curve(id - S_COMP_RELEASE(0));
+}
+
+void th_changed(int id, float value)
+{
+    int band = id - S_COMP_THRESH(0);
+
+    compressors[band].threshold = value;
+    if (auto_gain[band]) {
+	calc_auto_gain(band);
     } else {
-	draw_comp_curve((int)user_data);
+	draw_comp_curve(band);
     }
-    gtk_meter_set_warn_point(le_meter[(int)user_data], adj->value);
-
-    return FALSE;
+    gtk_meter_set_warn_point(le_meter[band], value);
 }
 
-gboolean ra_changed(GtkAdjustment *adj, gpointer user_data)
+void ra_changed(int id, float value)
 {
-    compressors[(int)user_data].ratio = adj->value;
-    if (auto_gain[(int)user_data]) {
-	calc_auto_gain((int)user_data);
+    int band = id - S_COMP_RATIO(0);
+
+    compressors[band].ratio = value;
+    if (auto_gain[band]) {
+	calc_auto_gain(band);
     } else {
-	draw_comp_curve((int)user_data);
+	draw_comp_curve(band);
     }
-
-    return FALSE;
 }
 
-gboolean kn_changed(GtkAdjustment *adj, gpointer user_data)
+void kn_changed(int id, float value)
 {
-    compressors[(int)user_data].knee = adj->value * 9.0f + 1.0f;
-    draw_comp_curve((int)user_data);
-
-    return FALSE;
+    compressors[id - S_COMP_KNEE(0)].knee = value * 9.0f + 1.0f;
+    draw_comp_curve(id - S_COMP_KNEE(0));
 }
 
-gboolean ma_changed(GtkAdjustment *adj, gpointer user_data)
+void ma_changed(int id, float value)
 {
-    compressors[(int)user_data].makeup_gain = adj->value;
-    draw_comp_curve((int)user_data);
-
-    return FALSE;
+    compressors[id - S_COMP_MAKEUP(0)].makeup_gain = value;
+    draw_comp_curve(id - S_COMP_MAKEUP(0));
 }
 
 void calc_auto_gain(int i)
 {
     if (adj_ma[i] && adj_th[i] && adj_ra[i]) {
-	gtk_adjustment_set_value(adj_ma[i], adj_th[i]->value / adj_ra[i]->value - adj_th[i]->value);
+	s_set_value_no_history(S_COMP_MAKEUP(i), adj_th[i]->value / adj_ra[i]->value - adj_th[i]->value);
+	//gtk_adjustment_set_value(adj_ma[i], adj_th[i]->value / adj_ra[i]->value - adj_th[i]->value);
     }
 }
 
