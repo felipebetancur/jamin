@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.55 2004/05/06 14:27:34 jdepner Exp $
+ *  $Id: state.c,v 1.56 2004/05/06 22:48:16 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -974,6 +974,11 @@ void s_set_crossfade_time(float ct)
 
   if (ct == 0.0) ct = 0.001;
   crossfade_time = ct;
+}
+
+float s_get_crossfade_time()
+{
+  return (crossfade_time);
 }
 
 void s_save_global_int(xmlDocPtr doc, char *symbol, int value)

@@ -91,6 +91,7 @@
 #include "db.h"
 #include "transport.h"
 #include "scenes.h"
+#include "spectrum.h"
 #include "preferences.h"
 
 
@@ -149,6 +150,7 @@ static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0,
                        EQ_notch_index[NOTCHES], EQ_notch_flag[NOTCHES];
 static guint           notebook1_page = 0;
 static gboolean        hdeq_ready = FALSE;
+static GtkSpinButton   *lgain_spin, *ugain_spin, *spec_freq_spin;
 
 
 /*  Given the frequency this returns the nearest array index in the X direction
@@ -204,6 +206,14 @@ void bind_hdeq ()
     /*  Create the options dialog for later popup use.  */
 
     eq_options_dialog = create_eq_options_dialog();
+
+
+    lgain_spin = GTK_SPIN_BUTTON (lookup_widget (eq_options_dialog, 
+                                                "geq_min_gain_spinner"));
+    ugain_spin = GTK_SPIN_BUTTON (lookup_widget (eq_options_dialog, 
+                                                "geq_max_gain_spinner"));
+    spec_freq_spin = GTK_SPIN_BUTTON (lookup_widget (eq_options_dialog, 
+                                                "spectrum_freq_spinbutton"));
 
 
     /*  Looking up the widgets we'll need to work with based on the name
@@ -2232,6 +2242,10 @@ void popup_EQ_options_dialog (int updown)
 
   if (updown)
     {
+      gtk_spin_button_set_value (lgain_spin, EQ_gain_lower);
+      gtk_spin_button_set_value (ugain_spin, EQ_gain_upper);
+      gtk_spin_button_set_value (spec_freq_spin, get_spectrum_freq ());
+
       gtk_widget_show (eq_options_dialog);
     }
 

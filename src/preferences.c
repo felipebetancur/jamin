@@ -52,6 +52,8 @@ static GtkWidget         *preferences_dialog, *color_dialog, *colorsel;
 static GdkColormap       *colormap = NULL;
 static GdkColor          color[COLORS];
 static int               color_id;
+static GtkSpinButton     *ct_spin;
+
 
 static void color_ok_callback (GtkWidget *w, gpointer user_data);
 static void color_cancel_callback (GtkWidget *w, gpointer user_data);
@@ -83,6 +85,9 @@ void preferences_init()
 
 
     preferences_dialog = create_preferences_dialog ();
+
+    ct_spin = GTK_SPIN_BUTTON (lookup_widget (preferences_dialog, 
+                                              "crossfade_spinbutton"));
 
     color_dialog = create_colorselectiondialog1 ();
 
@@ -249,6 +254,8 @@ void popup_preferences_dialog (int updown)
 {
   if (updown)
     {
+      gtk_spin_button_set_value (ct_spin, s_get_crossfade_time());
+
       gtk_widget_show (preferences_dialog);
     }
   else

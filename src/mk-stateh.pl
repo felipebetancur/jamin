@@ -61,6 +61,7 @@ void s_crossfade(const int nframes);
 void s_crossfade_ui();
 void s_suppress_push();
 void s_set_crossfade_time(float ct);
+float s_get_crossfade_time();
 void s_suppress_pop();
 int s_have_filename();
 char *s_get_filename();
