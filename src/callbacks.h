@@ -807,3 +807,18 @@ on_hscale_1_h_value_changed            (GtkRange        *range,
 void
 on_hscale_1_h_realize                  (GtkWidget       *widget,
                                         gpointer         user_data);
+
+gboolean
+on_frame_l_enter_notify_event          (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_frame_m_enter_notify_event          (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_frame_h_enter_notify_event          (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);

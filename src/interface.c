@@ -3212,6 +3212,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) mid2high, "button_release_event",
                     G_CALLBACK (on_mid2high_button_release_event),
                     NULL);
+  g_signal_connect ((gpointer) frame_l, "enter_notify_event",
+                    G_CALLBACK (on_frame_l_enter_notify_event),
+                    NULL);
   g_signal_connect ((gpointer) autobutton_l, "toggled",
                     G_CALLBACK (on_autobutton_l_toggled),
                     NULL);
@@ -3221,6 +3224,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) hscale_1_l, "realize",
                     G_CALLBACK (on_hscale_1_l_realize),
                     NULL);
+  g_signal_connect ((gpointer) frame_m, "enter_notify_event",
+                    G_CALLBACK (on_frame_m_enter_notify_event),
+                    NULL);
   g_signal_connect ((gpointer) autobutton_m, "toggled",
                     G_CALLBACK (on_autobutton_m_toggled),
                     NULL);
@@ -3229,6 +3235,9 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) hscale_1_m, "realize",
                     G_CALLBACK (on_hscale_1_m_realize),
+                    NULL);
+  g_signal_connect ((gpointer) frame_h, "enter_notify_event",
+                    G_CALLBACK (on_frame_h_enter_notify_event),
                     NULL);
   g_signal_connect ((gpointer) autobutton_h, "toggled",
                     G_CALLBACK (on_autobutton_h_toggled),

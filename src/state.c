@@ -2,10 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <libgen.h>
 #include <gtk/gtk.h>
 #include <libxml/parser.h>
 
 #include "config.h"
+#include "main.h"
 #include "state.h"
 #include "process.h"
 #include "scenes.h"
@@ -33,7 +35,9 @@ static void s_history_add(const char *description);
 static void s_set_events(int id, float value);
 void set_EQ_curve_values ();
 void unset_scene_buttons ();
+void s_update_title();
 
+static const gchar *filename = NULL;
 
 void state_init()
 {
@@ -209,16 +213,30 @@ void s_set_description(int id, const char *desc)
     last_changed = id;
 }
 
-void s_save_session (GtkWidget *w, gpointer user_data)
+void s_save_session_from_ui (GtkWidget *w, gpointer user_data)
 {
-    const gchar      *filename;
     GtkFileSelection *file_selector = (GtkFileSelection *) user_data;
+
+    s_save_session(gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_selector)));
+}
+    
+void s_save_session (const char *fname)
+{
     xmlDocPtr doc;
     xmlNodePtr rootnode, node, sc_node;
     unsigned int i, j;
     char tmp[256];
 
-    filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_selector));
+    /* Check to see if we have been passed a filename, if not fall back to
+     * previous one */
+    if (fname) {
+	filename = fname;
+	s_update_title();
+    }
+    if (!filename) {
+	fprintf(stderr, "No filename found at %s:%d, not saving\n", __FILE__,
+		__LINE__);
+    }
 
     xmlSetCompressMode(5);
     doc = xmlNewDoc("1.0");
@@ -277,13 +295,13 @@ void s_startElement(void *user_data, const xmlChar *name,
 
 void s_load_session (GtkWidget *w, gpointer user_data)
 {
-    const gchar      *filename;
     GtkFileSelection *file_selector = (GtkFileSelection *) user_data;
     xmlSAXHandlerPtr  handler;
     int scene = -1;
 
     filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION
                                                 (file_selector));
+    s_update_title();
 
     handler = calloc(1, sizeof(xmlSAXHandler));
     handler->startElement = s_startElement;
@@ -395,6 +413,25 @@ void s_crossfade_ui()
 	}
     }
     suppress_feedback--;
+}
+
+int s_have_filename()
+{
+    return (filename != NULL);
+}
+
+void s_update_title()
+{
+    char *title;
+    char *base;
+    char *tmp;
+
+    tmp = strdup(filename);
+    base = basename(tmp);
+    title = g_strdup_printf(PACKAGE " - %s - " VERSION, base);
+    free(tmp);
+    gtk_window_set_title ((GtkWindow *) main_window, title);
+    free(title);
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

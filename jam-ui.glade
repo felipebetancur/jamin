@@ -3927,6 +3927,7 @@
 					  <property name="label_xalign">0</property>
 					  <property name="label_yalign">0.5</property>
 					  <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+					  <signal name="enter_notify_event" handler="on_frame_l_enter_notify_event" last_modification_time="Wed, 27 Aug 2003 20:41:16 GMT"/>
 
 					  <child>
 					    <widget class="GtkVBox" id="vbox_l">
@@ -4440,6 +4441,7 @@
 					  <property name="label_xalign">0</property>
 					  <property name="label_yalign">0.5</property>
 					  <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+					  <signal name="enter_notify_event" handler="on_frame_m_enter_notify_event" last_modification_time="Wed, 27 Aug 2003 20:41:49 GMT"/>
 
 					  <child>
 					    <widget class="GtkVBox" id="vbox_m">
@@ -4953,6 +4955,7 @@
 					  <property name="label_xalign">0</property>
 					  <property name="label_yalign">0.5</property>
 					  <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+					  <signal name="enter_notify_event" handler="on_frame_h_enter_notify_event" last_modification_time="Wed, 27 Aug 2003 20:42:06 GMT"/>
 
 					  <child>
 					    <widget class="GtkVBox" id="vbox_h">

@@ -742,7 +742,7 @@ on_save_button_clicked                 (GtkButton       *button,
                                         gpointer         user_data)
 {
     GtkFileSelection    *file_selector;
-    gchar               string[512];
+    gchar               *string;
 
 
     file_selector = 
@@ -750,14 +750,14 @@ on_save_button_clicked                 (GtkButton       *button,
 
     if (getenv ("HOME") != NULL)
       {
-        snprintf (string, sizeof(string), "%s/.jam/", getenv ("HOME"));
+        string = g_strdup_printf("%s/.jam/", getenv ("HOME"));
         gtk_file_selection_set_filename (file_selector, string);
       }
 
     gtk_file_selection_complete (file_selector, "*.jam");
 
     g_signal_connect (GTK_OBJECT (file_selector->ok_button),
-        "clicked", G_CALLBACK (s_save_session), file_selector);
+        "clicked", G_CALLBACK (s_save_session_from_ui), file_selector);
 
     g_signal_connect_swapped (GTK_OBJECT (file_selector->ok_button),
         "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
@@ -1770,7 +1770,11 @@ void
 on_save1_activate                      (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-
+	if (s_have_filename()) {
+		s_save_session(NULL);
+	} else {
+		on_save_button_clicked (NULL, NULL);
+	}
 }
 
 
@@ -1779,7 +1783,7 @@ on_save_as1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
     GtkFileSelection    *file_selector;
-    gchar               string[512];
+    gchar               *string;
 
 
     file_selector = 
@@ -1787,14 +1791,14 @@ on_save_as1_activate                   (GtkMenuItem     *menuitem,
 
     if (getenv ("HOME") != NULL)
       {
-        snprintf (string, sizeof(string), "%s/.jam/", getenv ("HOME"));
+        string = g_strdup_printf("%s/.jam/", getenv ("HOME"));
         gtk_file_selection_set_filename (file_selector, string);
       }
 
     gtk_file_selection_complete (file_selector, "*.jam");
 
     g_signal_connect (GTK_OBJECT (file_selector->ok_button),
-        "clicked", G_CALLBACK (s_save_session), file_selector);
+        "clicked", G_CALLBACK (s_save_session_from_ui), file_selector);
 
     g_signal_connect_swapped (GTK_OBJECT (file_selector->ok_button),
         "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
@@ -1852,3 +1856,37 @@ on_about1_activate                     (GtkMenuItem     *menuitem,
 {
 
 }
+
+gboolean
+on_frame_l_enter_notify_event          (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+printf("L\n");
+  comp_box_enter (0);
+
+  return FALSE;
+}
+
+
+gboolean
+on_frame_m_enter_notify_event          (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+  comp_box_enter (1);
+
+  return FALSE;
+}
+
+
+gboolean
+on_frame_h_enter_notify_event          (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+  comp_box_enter (2);
+
+  return FALSE;
+}
+

@@ -50,12 +50,14 @@ void s_clear_history();
 void s_set_callback(int id, s_callback_func callback);
 void s_set_adjustment(int id, GtkAdjustment *adjustment);
 void s_undo();
-void s_save_session (GtkWidget *w, gpointer user_data);
+void s_save_session_from_ui (GtkWidget *w, gpointer user_data);
+void s_save_session (const char *fname);
 void s_load_session (GtkWidget *w, gpointer user_data);
 void s_crossfade(const int nframes);
 void s_crossfade_ui();
 void s_suppress_push();
 void s_suppress_pop();
+int s_have_filename();
 
 #define S_NONE -1
 EOB

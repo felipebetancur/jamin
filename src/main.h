@@ -1,1 +1,6 @@
-extern GtkWidget *main_window, *cc_window;
+#ifndef MAIN_H
+#define MAIN_H
+
+extern GtkWidget *main_window;
+
+#endif

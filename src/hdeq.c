@@ -149,9 +149,9 @@ void bind_hdeq ()
     l_low2mid_lbl = GTK_LABEL (lookup_widget (main_window, "low2mid_lbl"));
     l_mid2high_lbl = GTK_LABEL (lookup_widget (main_window, "mid2high_lbl"));
 
-    l_comp[0] = lookup_widget (main_window, "low_comp");
-    l_comp[1] = lookup_widget (main_window, "mid_comp");
-    l_comp[2] = lookup_widget (main_window, "high_comp");
+    l_comp[0] = lookup_widget (main_window, "frame_l");
+    l_comp[1] = lookup_widget (main_window, "frame_m");
+    l_comp[2] = lookup_widget (main_window, "frame_h");
 
     l_comp_lbl[0] = GTK_LABEL (lookup_widget (main_window, "label_freq_l"));
     l_comp_lbl[1] = GTK_LABEL (lookup_widget (main_window, "label_freq_m"));
