@@ -82,11 +82,12 @@
 #include "state.h"
 #include "debug.h"
 
-char *jamin_options = "dFhTtvVf:";	/* valid JAMin options */
+char *jamin_options = "dFf:hpTtvV";	/* valid JAMin options */
 char *pname;				/* `basename $0` */
 int dummy_mode = 0;			/* -d option */
 int all_errors_fatal = 0;		/* -F option */
 int show_help = 0;			/* -h option */
+int connect_ports = 1;			/* -p option */
 int trace_option = 0;			/* -T option */
 int thread_option = 1;			/* -t option */
 int debug_level = DBG_OFF;		/* -v option */
@@ -557,6 +558,18 @@ int io_process(jack_nframes_t nframes, void *arg)
 }
 
 
+/* io_xrun -- JACK xrun callback.
+ *
+ *  Called in the JACK process thread.
+ */
+int io_xrun(void *arg)
+{
+    ++jst.xruns;			/* only modified in this thread */
+    IF_DEBUG(DBG_TERSE, io_trace("I/O xrun"));
+    return 0;
+}
+
+
 /* io_bufsize -- JACK buffer size callback.
  *
  *  Called in the JACK process thread when the global JACK buffer size
@@ -565,9 +578,7 @@ int io_process(jack_nframes_t nframes, void *arg)
 int io_bufsize(jack_nframes_t nframes, void *arg)
 {
     jst.buf_size = nframes;
-
     IF_DEBUG(DBG_TERSE, io_trace("buffer size is %" PRIu32, nframes));
-
     io_set_latency(LAT_BUFFERS,
 		   (have_dsp_thread &&
 		    (dsp_block_size > nframes)? dsp_block_size: 0));
@@ -580,7 +591,7 @@ int io_bufsize(jack_nframes_t nframes, void *arg)
  *  Called in main user interface thread after user requests "quit",
  *  or in JACK thread if shutdown callback invoked.  JACK allows the
  *  shutdown handler to wait, even though it runs in the process()
- *  thread.
+ *  thread.  May be called more than once.
  *
  *  DSP engine state transitions:
  *      DSP_INIT	-> DSP_STOPPED
@@ -638,6 +649,14 @@ void io_cleanup()
 }
 
 
+/* io_shutdown -- clean up all DSP I/O resources. */
+void io_shutdown(void *arg)
+{
+    jst.active = 0;
+    io_cleanup();
+}
+
+
 /****************  Initialization  ****************/
 
 /* io_init -- initialize DSP engine.
@@ -667,8 +686,14 @@ void io_init(int argc, char *argv[])
 	case 'F':			/* all errors fatal */
 	    all_errors_fatal = 1;
 	    break;
+	case 'f':
+	    s_set_filename(optarg);
+	    break;
 	case 'h':			/* show help */
 	    show_help = 1;
+	    break;
+	case 'p':			/* no port connections */
+	    connect_ports = 0;
 	    break;
 	case 't':			/* no DSP thread */
 	    thread_option = 0;
@@ -679,9 +704,6 @@ void io_init(int argc, char *argv[])
 	case 'v':			/* verbose */
 	    debug_level += 1;		/* increment output level */
 	    break;
-	case 'f':
-	    s_set_filename(optarg);
-	    break;
 	case 'V':			/* version */
 	    /* version info already printed */
 	    exit(9);
@@ -691,14 +713,17 @@ void io_init(int argc, char *argv[])
 	}
     }
 
-    /* check input and output port names for each channel */
-    if ((argc - optind) >= nchannels)
-	for (chan = 0; chan < nchannels; chan++)
-	    iports[chan] = argv[optind++];
+    if (connect_ports) {
 
-    if ((argc - optind) >= nchannels)
-	for (chan = 0; chan < nchannels; chan++)
-	    oports[chan] = argv[optind++];
+	/* check for input and output port names of each channel */
+	if ((argc - optind) >= nchannels)
+	    for (chan = 0; chan < nchannels; chan++)
+		iports[chan] = argv[optind++];
+
+	if ((argc - optind) >= nchannels)
+	    for (chan = 0; chan < nchannels; chan++)
+		oports[chan] = argv[optind++];
+    }
 
     if (argc != optind)			/* any extra options? */
 	show_help = 1;
@@ -731,8 +756,8 @@ void io_init(int argc, char *argv[])
 
     /* set JACK callback functions */
     jack_set_process_callback(client, io_process, NULL);
-    jack_on_shutdown(client, io_cleanup, NULL);
-    // JOQ: jack_set_xrun_callback(client, io_xrun, NULL);
+    jack_on_shutdown(client, io_shutdown, NULL);
+    jack_set_xrun_callback(client, io_xrun, NULL);
     jack_set_buffer_size_callback(client, io_bufsize, NULL);
 
     /* set initial buffer size and sample rate */
@@ -921,16 +946,18 @@ void io_activate()
 
     jst.active = 1;
 
-    /* connect all the JACK ports */
-    for (chan = 0; chan < nchannels; chan++) {
-	if (jack_connect(client, iports[chan],
-			 jack_port_name(input_ports[chan])))
-	    fprintf(stderr, "Cannot connect input port \"%s\"\n",
-		    iports[chan]);
-	if (jack_connect(client, jack_port_name(output_ports[chan]),
-			 oports[chan]))
-	    fprintf(stderr, "Cannot connect output port \"%s\"\n",
-		    oports[chan]);
+    /* connect any required JACK ports */
+    if (connect_ports) {
+	for (chan = 0; chan < nchannels; chan++) {
+	    if (jack_connect(client, iports[chan],
+			     jack_port_name(input_ports[chan])))
+		fprintf(stderr, "Cannot connect input port \"%s\"\n",
+			iports[chan]);
+	    if (jack_connect(client, jack_port_name(output_ports[chan]),
+			     oports[chan]))
+		fprintf(stderr, "Cannot connect output port \"%s\"\n",
+			oports[chan]);
+	}
     }
 
     /* Allocate DSP engine ringbuffers.  Be careful to get the sizes

@@ -74,13 +74,13 @@ void status_update(GtkWidget *main_window)
 
 
     if (j.realtime)
-	rt = "  |  Realtime";
+	rt = "  |  RT";
     else
 	rt = "";
 
-    snprintf(string, sizeof(string), "%s  |  %4.1f%% CPU  |  %" PRIu32
-	     " frames  |  %" PRIu32 " Hz%s",
-             state_msg, j.cpu_load, j.buf_size, j.sample_rate, rt);
+    snprintf(string, sizeof(string), "%s  |  %4.1f%% CPU  |  %ld xruns  |  %"
+	     PRIu32 " frames  |  %" PRIu32 " Hz%s",
+             state_msg, j.cpu_load, j.xruns, j.buf_size, j.sample_rate, rt);
 
     if (l_status_label == NULL)
 	l_status_label = GTK_LABEL(lookup_widget(main_window, "status_label"));

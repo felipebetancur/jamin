@@ -6,6 +6,7 @@
 typedef struct {
     int		realtime;
     int		active;
+    int		xruns;
     float	cpu_load;
     jack_nframes_t sample_rate;
     jack_nframes_t buf_size;

@@ -155,15 +155,11 @@ void transport_play()
 #ifdef NEW_JACK_TRANSPORT
 
     jack_transport_start(client);
-    IF_DEBUG(DBG_TERSE, fprintf(stderr,"Transport started.\n"));
 
 #else /* old JACK transport interface */
 
-    if (transport_master()) {
+    if (transport_master())
 	tpt.info.transport_state = JackTransportRolling;
-	IF_DEBUG(DBG_TERSE,
-		 fprintf(stderr,"Transport started.\n"));
-    }
 
 #endif /* NEW_JACK_TRANSPORT */
 }
@@ -174,18 +170,11 @@ void transport_set_position(jack_nframes_t frame)
 #ifdef NEW_JACK_TRANSPORT
 
     jack_transport_locate(client, frame);
-    IF_DEBUG(DBG_TERSE,
-	     fprintf(stderr, "Transport positioned to frame %" PRIu32 "\n",
-		     frame));
 
 #else /* old JACK transport interface */
 
-    if (transport_master()) {
+    if (transport_master())
 	tpt.info.frame = frame;
-	IF_DEBUG(DBG_TERSE,
-		 fprintf(stderr, "Transport positioned to frame %ld\n",
-			 frame));
-    }
 
 #endif /* NEW_JACK_TRANSPORT */
 }
@@ -196,14 +185,11 @@ void transport_stop()
 #ifdef NEW_JACK_TRANSPORT
 
     jack_transport_stop(client);
-    IF_DEBUG(DBG_TERSE, fprintf(stderr,"Transport stopped.\n"));
 
 #else /* old JACK transport interface */
 
-    if (transport_master()) {
+    if (transport_master())
 	tpt.info.transport_state = JackTransportStopped;
-	IF_DEBUG(DBG_TERSE, fprintf(stderr,"Transport stopped.\n"));
-    }
 
 #endif /* NEW_JACK_TRANSPORT */
 }
