@@ -84,6 +84,7 @@
 #include "spectrum.h"
 #include "debug.h"
 #include "help.h"
+#include "support.h"
 
 char *jamin_options = "dFf:n:hprTtvVs:c:";    /* valid JAMin options */
 char *pname;				      /* `basename $0` */
@@ -133,10 +134,10 @@ int nchannels = NCHANNELS;		/* actual number of channels */
 jack_port_t *input_ports[NCHANNELS+1] = {NULL};
 jack_port_t *output_ports[NCHANNELS+1] = {NULL};
 
-static char *in_names[NCHANNELS] = {"in_L", "in_R"};
-static char *out_names[NCHANNELS] = {"out_L", "out_R"};
-static char *iports[NCHANNELS] = {"", ""};
-static char *oports[NCHANNELS] = {"alsa_pcm:playback_1", "alsa_pcm:playback_2"};
+static const char *in_names[NCHANNELS] = {"in_L", "in_R"};
+static const char *out_names[NCHANNELS] = {"out_L", "out_R"};
+static const char *iports[NCHANNELS] = {NULL, NULL};
+static const char *oports[NCHANNELS] = {NULL, NULL};
 
 
 /****************  Low-level utility functions  ****************/
@@ -221,9 +222,9 @@ void io_errlog(int err, char *fmt, ...)
 
     IF_DEBUG(DBG_TERSE,
 	     io_trace("error %d: %s", err, buffer));
-    fprintf(stderr, "%s internal error %d: %s\n", PACKAGE, err, buffer);
+    fprintf(stderr, _("%s internal error %d: %s\n"), PACKAGE, err, buffer);
     if (all_errors_fatal) {
-	fprintf(stderr, " Terminating due to -F option.\n");
+	fprintf(stderr, _(" Terminating due to -F option.\n"));
 	abort();
     }
 }
@@ -673,7 +674,7 @@ gboolean check_file (char *optarg)
 
   if ((fp = fopen (optarg, "r")) == NULL)
     {
-      errstr = g_strdup_printf ("File %s : %s\nUsing default.", optarg, 
+      errstr = g_strdup_printf (_("File %s : %s\nUsing default."), optarg, 
                                 strerror (errno));
       fprintf (stderr, "%s\n", errstr);
       message (GTK_MESSAGE_ERROR, errstr);
@@ -784,7 +785,7 @@ void io_init(int argc, char *argv[])
 	show_help = 1;
 
     if (show_help) {
-	fprintf(stderr,
+	fprintf(stderr, _(
                 "Usage: %s [-%s] [inport1 inport2 [outport1 outport2]]\n"
                 "\nuser options:\n"
                 "\t-f file\tload session file on startup\n"
@@ -801,7 +802,7 @@ void io_init(int argc, char *argv[])
                 "\t-F\ttreat all errors as fatal\n"
                 "\t-T\tprint trace buffer\n"
                 "\t-t\tdon't start DSP thread\n"
-                "\n",
+                "\n"),
 		pname, jamin_options);
 	exit(1);
     }
@@ -819,12 +820,11 @@ void io_init(int argc, char *argv[])
     if (!client_name) {
 	client_name = strdup(PACKAGE);
     }
-    printf("Registering as %s\n", client_name);
 
     client = jack_client_new(client_name);
     if (client == 0) {
-	fprintf(stderr,
-		"%s: Cannot contact JACK server, is it running?\n", PACKAGE);
+	fprintf(stderr, _("%s: Cannot contact JACK server, is it running?\n"),
+		PACKAGE);
 	exit(2);
     }
 
@@ -966,9 +966,9 @@ int io_create_dsp_thread()
 	sched_setscheduler(0, policy, &my_param);
 
         errstr = g_strdup_printf (
-                "%s: not permitted to create realtime DSP thread.\n"
-		"\tYou must run as root or use JACK capabilities.\n"
-		"\tContinuing operation, but with -t option.\n", PACKAGE);
+	    _("%s: not permitted to create realtime DSP thread.\n"
+	      "\tYou must run as root or use JACK capabilities.\n"
+	      "\tContinuing operation, but with -t option.\n"), PACKAGE);
         fprintf (stderr, "%s\n", errstr);
         message (GTK_MESSAGE_WARNING, errstr);
         free (errstr);
@@ -1016,13 +1016,13 @@ void io_activate()
 			       JackPortIsOutput, 0);
 
 	if (input_ports[chan] == NULL || output_ports[chan] == NULL) {
-	    fprintf(stderr, "%s: Cannot register JACK ports.", PACKAGE);
+	    fprintf(stderr, _("%s: Cannot register JACK ports."), PACKAGE);
 	    exit(2);
 	}
     }
 
     if (jack_activate(client)) {
-	fprintf(stderr, "%s: Cannot activate JACK client.", PACKAGE);
+	fprintf(stderr, _("%s: Cannot activate JACK client."), PACKAGE);
 	exit(2);
     }
 
@@ -1030,30 +1030,52 @@ void io_activate()
 
     /* connect any required JACK ports */
     if (connect_ports) {
+
+	const char **pports = NULL;
+
+	if (oports[0] == NULL) {	/* no output ports specified? */
+
+	    pports = jack_get_ports (client, ":playback", 
+				     JACK_DEFAULT_AUDIO_TYPE,
+				     JackPortIsPhysical|JackPortIsInput);
+	    if (pports) {
+		/* use first `nchannels' physical playback ports */
+		for (chan = 0; chan < nchannels && pports[chan]; chan++) {
+		    oports[chan] = pports[chan];
+		}
+	    } else {
+		errstr = g_strdup_printf(_("No physical playback ports found"));
+		fprintf (stderr, "%s\n", errstr);
+		message (GTK_MESSAGE_WARNING, errstr);
+		free (errstr);
+	    }
+	}
+
 	for (chan = 0; chan < nchannels; chan++) {
 	    if (iports[chan] && *iports[chan]) {
 		if (jack_connect(client, iports[chan],
-				 jack_port_name(input_ports[chan])))
-                  {
+				 jack_port_name(input_ports[chan]))) {
                     errstr = g_strdup_printf (
-                        "Cannot connect input port \"%s\"\n", iports[chan]);
+                        _("Cannot connect input port \"%s\"\n"), iports[chan]);
                     fprintf (stderr, "%s\n", errstr);
                     message (GTK_MESSAGE_WARNING, errstr);
                     free (errstr);
-                  }
+		}
 	    }
 	    if (oports[chan] && *oports[chan]) {
 		if (jack_connect(client, jack_port_name(output_ports[chan]),
-				 oports[chan]))
-                  {
+				 oports[chan])) {
                     errstr = g_strdup_printf (
-                        "Cannot connect output port \"%s\"\n", oports[chan]);
+                        _("Cannot connect output port \"%s\"\n"), oports[chan]);
                     fprintf (stderr, "%s\n", errstr);
                     message (GTK_MESSAGE_WARNING, errstr);
                     free (errstr);
-                  }
+		}
 	    }
 	}
+
+	if (pports)
+	    free(pports);
     }
 
     /* Allocate DSP engine ringbuffers.  Be careful to get the sizes

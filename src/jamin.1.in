@@ -51,8 +51,12 @@ sustained sounds in the bass range).
 .TP 
 \fB\-p\fR
 .br 
-Don't automatically connect any JACK output ports.  Otherwise, connect
-to "alsa_pcm:playback_1" and "alsa_pcm:playback_2".
+Don't automatically connect any JACK output ports.  
+
+Without this option, JAMin will connect to \fIoutport1\fR and
+\fIoutport2\fR if they were explicitly listed on the command line.  If
+not, it connects to the first two physical output ports with the
+string ":playback" in their names.
 .TP 
 \fB\-r\fR
 .br 
