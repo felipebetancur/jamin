@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.142 2004/04/09 16:25:53 jdepner Exp $
+ *  $Id: callbacks.c,v 1.143 2004/04/11 01:31:20 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1806,15 +1806,17 @@ on_window1_key_press_event             (GtkWidget       *widget,
             break;
 
           case GDK_MOD1_MASK:
+          case (GDK_MOD1_MASK | GDK_SHIFT_MASK):
             set_scene (scene);
             break;
 
           case GDK_CONTROL_MASK:
+          case (GDK_CONTROL_MASK | GDK_SHIFT_MASK):
             clear_scene (scene);
             break;
+
           }
       }
-
 
     return FALSE;
 }
