@@ -55,7 +55,7 @@ void bind_geq()
     }
 
     bin = 0;
-    while (bin <= geq_freqs[0] / hz_per_bin) {
+    while (bin <= geq_freqs[0] / hz_per_bin && bin < (BINS / 2) - 1) {
 	bin_base[bin] = 0;
 	bin_delta[bin++] = 0.0f;
     }
