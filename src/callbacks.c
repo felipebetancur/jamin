@@ -440,7 +440,7 @@ on_window1_show                        (GtkWidget       *widget,
 
 
     EQ_back.red = 0;
-    EQ_back.green = 31611;
+    EQ_back.green = 21611;
     EQ_back.blue = 0;
 
     gdk_colormap_alloc_color (colormap, &EQ_back, FALSE, TRUE);
@@ -855,7 +855,7 @@ draw_EQ_curve ()
 
     /*  Plot the curve.  */
 
-    gdk_gc_set_foreground (EQ_gc, &EQ_fore);
+    gdk_gc_set_foreground (EQ_gc, &white);
     for (i = 0 ; i < EQ_length ; i++)
       {
         logfreq2xpix (EQ_x_notched[i], &x1);
@@ -1123,6 +1123,45 @@ on_EQ_curve_event_box_motion_notify_event
         gtk_label_set_text (l_EQ_curve_lbl, coords);
 
 
+        /*  Set the compressor label colors based on which portion of the EQ
+            the cursor is in.  */
+
+        gtk_widget_modify_fg ((GtkWidget *) l_low_comp_lbl, GTK_STATE_NORMAL, 
+                              &comp_color[3]);
+        gtk_widget_modify_fg ((GtkWidget *) l_low_curve_lbl, GTK_STATE_NORMAL, 
+                              &comp_color[3]);
+        gtk_widget_modify_fg ((GtkWidget *) l_mid_comp_lbl, GTK_STATE_NORMAL, 
+                              &comp_color[3]);
+        gtk_widget_modify_fg ((GtkWidget *) l_mid_curve_lbl, GTK_STATE_NORMAL, 
+                              &comp_color[3]);
+        gtk_widget_modify_fg ((GtkWidget *) l_high_comp_lbl, GTK_STATE_NORMAL, 
+                              &comp_color[3]);
+        gtk_widget_modify_fg ((GtkWidget *) l_high_curve_lbl, 
+                              GTK_STATE_NORMAL, &comp_color[3]);
+
+        if (freq <= xover_fa)
+          {
+            gtk_widget_modify_fg ((GtkWidget *) l_low_comp_lbl, 
+                                  GTK_STATE_NORMAL, &comp_color[0]);
+            gtk_widget_modify_fg ((GtkWidget *) l_low_curve_lbl, 
+                                  GTK_STATE_NORMAL, &comp_color[0]);
+          }
+        else if (freq >= xover_fb)
+          {
+            gtk_widget_modify_fg ((GtkWidget *) l_high_comp_lbl, 
+                                  GTK_STATE_NORMAL, &comp_color[2]);
+            gtk_widget_modify_fg ((GtkWidget *) l_high_curve_lbl, 
+                                  GTK_STATE_NORMAL, &comp_color[2]);
+          }
+        else
+          {
+            gtk_widget_modify_fg ((GtkWidget *) l_mid_comp_lbl, 
+                                  GTK_STATE_NORMAL, &comp_color[1]);
+            gtk_widget_modify_fg ((GtkWidget *) l_mid_curve_lbl, 
+                                  GTK_STATE_NORMAL, &comp_color[1]);
+          }
+
+
         /*  If we're in the midst of drawing the curve...  */
 
         if (EQ_drawing)
@@ -1131,7 +1170,7 @@ on_EQ_curve_event_box_motion_notify_event
 
             if (!EQ_input_points || x > EQ_xinput[EQ_input_points - 1])
               {
-                gdk_gc_set_foreground (EQ_gc, &EQ_fore);
+                gdk_gc_set_foreground (EQ_gc, &white);
                 if (EQ_input_points) gdk_draw_line (EQ_drawable, EQ_gc, 
                     NINT (EQ_xinput[EQ_input_points - 1]), 
                     NINT (EQ_yinput[EQ_input_points - 1]), x, y);
