@@ -24,11 +24,11 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.c,v 1.21 2003/12/03 22:28:05 jdepner Exp $
+ *  $Id: io-menu.c,v 1.22 2003/12/04 07:10:51 joq Exp $
  */
 
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <errno.h>
 #include <gtk/gtk.h>
@@ -69,6 +69,8 @@ static char group_names[2*MAXGROUPS*MAXNAMELEN];
 
 /* connect/disconnect function pointer prototype */
 typedef void (*iomenu_callback)(GtkWidget *widget, char *port_name);
+typedef int  (*iomenu_check)(const char *group);
+
 
 /* dislay error message.  This should display a pop-up. */
 static void
@@ -146,10 +148,8 @@ iomenu_all_inputs(GtkWidget *widget, char *group)
 					 JACK_DEFAULT_AUDIO_TYPE,
 					 JackPortIsOutput);
 
-    if (gports == NULL) {
-	iomenu_error(_("no %s ports available\n"), group);
+    if (gports == NULL)
 	return;
-    }
 
     /* connect or disconnect as many input ports as possible */
     for (i = 0; iports_list[i] && gports[i]; ++i) {
@@ -177,6 +177,8 @@ iomenu_all_inputs(GtkWidget *widget, char *group)
 	    }
 	}
     }
+
+    free(gports);
 }
 
 /* connect (or disconnect) all output ports */
@@ -188,10 +190,8 @@ iomenu_all_outputs(GtkWidget *widget, char *group)
 					 JACK_DEFAULT_AUDIO_TYPE,
 					 JackPortIsInput);
 
-    if (gports == NULL) {
-	iomenu_error(_("no %s ports available\n"), group);
+    if (gports == NULL)
 	return;
-    }
 
     /* connect or disconnect as many output ports as possible */
     for (i = 0; oports_list[i] && gports[i]; ++i) {
@@ -219,6 +219,8 @@ iomenu_all_outputs(GtkWidget *widget, char *group)
 	    }
 	}
     }
+
+    free(gports);
 }
 
 
@@ -263,52 +265,65 @@ iomenu_connection_item(jack_port_t *port, const char *connection_name)
     return item;
 }
 
+/* return TRUE if any input port is connected to this group */
+static int
+iomenu_check_input(const char *group)
+{
+    const char **gports = jack_get_ports(client, group,
+					 JACK_DEFAULT_AUDIO_TYPE,
+					 JackPortIsOutput);
+    int rc = FALSE;
+
+    if (gports) {
+	int i;
+	for (i = 0; iports_list[i] && gports[i]; ++i) {
+	    if (jack_port_connected_to(iports_list[i], gports[i])) {
+		rc = TRUE;
+		break;
+	    }
+	}
+	free(gports);
+    }
+    return rc;
+}
+
+/* return TRUE if any output port is connected to this group */
+static int
+iomenu_check_output(const char *group)
+{
+    const char **gports = jack_get_ports(client, group,
+					 JACK_DEFAULT_AUDIO_TYPE,
+					 JackPortIsInput);
+    int rc = FALSE;
+
+    if (gports) {
+	int i;
+	for (i = 0; oports_list[i] && gports[i]; ++i) {
+	    if (jack_port_connected_to(oports_list[i], gports[i])) {
+		rc = TRUE;
+		break;
+	    }
+	}
+	free(gports);
+    }
+    return rc;
+}
+
 /* add a group of JACK ports to the interface
  *
  *  Creates a menu item for the `group' with `handler' as callback.
+ *  The `check' function looks at either the input or output ports to
+ *  see if any are already connected to that `group'.
  */
 static GtkWidget *
-iomenu_group_item(iomenu_callback handler, const char *group)
+iomenu_group_item(iomenu_check check, iomenu_callback handler,
+		  const char *group)
 {
-    int i;
-    const char **g_inports = jack_get_ports(client, group,
-					 JACK_DEFAULT_AUDIO_TYPE,
-					 JackPortIsOutput);
-    const char **g_outports = jack_get_ports(client, group,
-					 JACK_DEFAULT_AUDIO_TYPE,
-					 JackPortIsInput);
     GtkWidget *item = gtk_check_menu_item_new_with_label(group);
     
-					 
-    if (g_inports == NULL) {
-	iomenu_error(_("no %s inports available\n"), group);
-    }
-					 
-    if (g_outports == NULL) {
-	iomenu_error(_("no %s outports available\n"), group);
-    }
-    
-    
-    /* scan for ports that are connected */
-    if (handler == iomenu_all_inputs){
-	for (i = 0; iports_list[i] && g_inports[i]; ++i) {
-
-	    if (jack_port_connected_to(iports_list[i], g_inports[i])){
-//		printf ("some inports connected\n");
-	
-		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), TRUE);
-	    }
-	}
-    } else {
-	for (i = 0; oports_list[i] && g_outports[i]; ++i) {
-
-	    if (jack_port_connected_to(oports_list[i], g_outports[i])){ 
-//		printf ("Some outports connected\n");
-		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), TRUE);
-	    }
-	}
-    }	
-
+    /* if any of these ports are already connected, check the item */
+    if (check(group))
+	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), TRUE);
 
     g_signal_connect(G_OBJECT(item), "activate",
 		     G_CALLBACK(handler), (char *) group);
@@ -319,7 +334,7 @@ iomenu_group_item(iomenu_callback handler, const char *group)
 /* add groups item and submenu followed by separator */
 GtkWidget *
 iomenu_add_groups(GtkWidget *menu, const char **groups,
-		  iomenu_callback handler)
+		  iomenu_check check, iomenu_callback handler)
 {
     GtkWidget *item =
 	iomenu_add_item(menu, gtk_menu_item_new_with_label(_("Groups")));
@@ -328,7 +343,8 @@ iomenu_add_groups(GtkWidget *menu, const char **groups,
 
     /* create menu items for each input group */
     for (i = 0; groups[i]; ++i) {
-	iomenu_add_item(sub_menu, iomenu_group_item(handler, groups[i]));
+	iomenu_add_item(sub_menu,
+			iomenu_group_item(check, handler, groups[i]));
     }
     gtk_widget_show(sub_menu);
 
@@ -477,7 +493,8 @@ iomenu_pull_down_ports()
     oports_menu = iomenu_add_submenu(out_item);
 
     /* add input groups item and submenu, plus separator */
-    iomenu_add_groups(iports_menu, outgroups, iomenu_all_inputs);
+    iomenu_add_groups(iports_menu, outgroups,
+		      iomenu_check_input, iomenu_all_inputs);
 
     /* create menu items for each input port */
     for (i = 0; iports_list[i]; ++i) {
@@ -486,7 +503,8 @@ iomenu_pull_down_ports()
     }
 
     /* add output groups item and submenu, plus separator */
-    iomenu_add_groups(oports_menu, ingroups, iomenu_all_outputs);
+    iomenu_add_groups(oports_menu, ingroups,
+		      iomenu_check_output, iomenu_all_outputs);
 
     /* create menu items for each output port */
     for (i = 0; oports_list[i]; ++i) {
