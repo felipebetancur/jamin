@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.135 2004/02/22 12:55:56 jdepner Exp $
+ *  $Id: callbacks.c,v 1.136 2004/02/22 18:18:02 theno23 Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -2198,7 +2198,7 @@ void
 on_eq_bypass_toggled                   (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
-
+  process_set_eq_bypass(gtk_toggle_button_get_active(togglebutton));
 }
 
 
@@ -2219,6 +2219,7 @@ on_limiter_bypass_toggled              (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
 
+  process_set_limiter_bypass(gtk_toggle_button_get_active(togglebutton));
 }
 
 

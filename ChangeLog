@@ -1,3 +1,10 @@
+2004-02-22  Steve Harris  <steve@plugin.org.uk>
+
+	* process.c (run_eq): linked UI controls to bypass for EQ and limiter
+
+	* process.c (process_set_eq_bypass, process_set_limiter_bypass):
+	  new functions, used to control bypass from other threads.
+
 2004-02-17  Steve Harris  <steve@plugin.org.uk>
 
 	* process.c (run_eq): fixed off-by-one-octave bug in frequency ->

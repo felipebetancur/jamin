@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.43 2004/02/17 23:01:35 theno23 Exp $
+ *  $Id: process.c,v 1.44 2004/02/22 18:18:03 theno23 Exp $
  */
 
 #include <math.h>
@@ -51,8 +51,6 @@ lim_settings limiter;
 float eq_coefs[BINS]; /* Linear gain of each FFT bin */
 float lim_peak[2];
 
-volatile int global_bypass = 0;		/* updated from GUI thread */
-
 float in_peak[NCHANNELS], out_peak[NCHANNELS];
 
 static float band_f[BANDS];
@@ -80,6 +78,12 @@ static unsigned int latcorbuf_len;
 static float *latcorbuf[NCHANNELS];
 
 static int spectrum_mode = SPEC_POST_EQ;
+
+volatile int global_bypass = 0;		/* updated from GUI thread */
+static int eq_bypass_pending = FALSE;
+static int eq_bypass = FALSE;
+static int limiter_bypass_pending = FALSE;
+static int limiter_bypass = FALSE;
 
 /* Data for plugins */
 plugin *comp_plugin, *lim_plugin;
@@ -226,7 +230,7 @@ void run_eq(unsigned int port, unsigned int in_ptr)
     
     for (i = 1; i < targ_bin && i < BINS / 2 - 1; i++) {
 	const float eq_gain = xo_band_action[XO_LOW] == MUTE ? 0.0f :
-				eq_coefs[i];
+				(eq_bypass ? 1.0f : eq_coefs[i]);
 
 	comp_tmp[i] = comp[i] * eq_gain;
 	comp_tmp[BINS - i] = comp[BINS - i] * eq_gain;
@@ -247,7 +251,7 @@ void run_eq(unsigned int port, unsigned int in_ptr)
     targ_bin = xover_fb / sample_rate * ((float)BINS + 0.5f);
     for (; i < targ_bin && i < BINS / 2 - 1; i++) {
 	const float eq_gain = xo_band_action[XO_MID] == MUTE ? 0.0f :
-				eq_coefs[i];
+				(eq_bypass ? 1.0f : eq_coefs[i]);
 
 	comp_tmp[i] = comp[i] * eq_gain;
 	comp_tmp[BINS - i] = comp[BINS - i] * eq_gain;
@@ -266,7 +270,7 @@ void run_eq(unsigned int port, unsigned int in_ptr)
     memset(comp_tmp, 0, BINS * sizeof(fft_data));
     for (; i < BINS / 2 - 1; i++) {
 	const float eq_gain = xo_band_action[XO_HIGH] == MUTE ? 0.0f :
-				eq_coefs[i];
+				(eq_bypass ? 1.0f : eq_coefs[i]);
 
 	comp_tmp[i] = comp[i] * eq_gain;
 	comp_tmp[BINS - i] = comp[BINS - i] * eq_gain;
@@ -358,6 +362,11 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 
 	if (in_ptr == n_calc_pt) {	/* time to do the FFT? */
 	    if (!global_bypass) {
+		/* Just so the bypass can't kick in in the middle of
+		 * precessing, might do something wierd */
+		eq_bypass = eq_bypass_pending;
+		limiter_bypass = limiter_bypass_pending;
+
 		run_eq(CHANNEL_L, in_ptr);
 		run_eq(CHANNEL_R, in_ptr);
 	    }
@@ -400,7 +409,7 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	}
     }
 
-    plugin_run(lim_plugin, limiter.handle, nframes);
+    if (!limiter_bypass) plugin_run(lim_plugin, limiter.handle, nframes);
 
     //printf("run limiter...\n");
 
@@ -540,6 +549,16 @@ void process_set_xo_band_action(int band, int action)
     assert(action == ACTIVE || action == MUTE || action == BYPASS);
 
     xo_band_action_pending[band] = action;
+}
+
+void process_set_eq_bypass(int bypass)
+{
+    eq_bypass_pending = bypass;
+}
+
+void process_set_limiter_bypass(int bypass)
+{
+    limiter_bypass_pending = bypass;
 }
 
 /* vi:set ts=8 sts=4 sw=4: */
