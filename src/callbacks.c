@@ -856,7 +856,7 @@ draw_EQ_curve ()
 
         /*  Make the shelf handles follow the shelf.  */
 
-        if (!i || i == NOTCHES - 1)
+        if (EQ_notch_flag[i] && (!i || i == NOTCHES - 1))
           {
             loggain2ypix (EQ_notch_gain[i], &y1);
           }
