@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.139 2004/04/04 23:19:44 jdepner Exp $
+ *  $Id: callbacks.c,v 1.140 2004/04/05 21:31:09 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1589,6 +1589,7 @@ on_window1_key_press_event             (GtkWidget       *widget,
 	transport_skip(-5.0);
         break;
 
+
         /*  Skip forward  */
 
       case GDK_greater:
@@ -1600,7 +1601,6 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
       case GDK_1:
       case GDK_KP_1:
-      case GDK_KP_End:
         scene = 0;
         break;
 
@@ -1609,7 +1609,6 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
       case GDK_2:
       case GDK_KP_2:
-      case GDK_KP_Down:
         scene = 1;
         break;
 
@@ -1618,7 +1617,6 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
       case GDK_3:
       case GDK_KP_3:
-      case GDK_KP_Page_Down:
         scene = 2;
         break;
 
@@ -1627,7 +1625,6 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
       case GDK_4:
       case GDK_KP_4:
-      case GDK_KP_Left:
         scene = 3;
         break;
 
@@ -1636,7 +1633,6 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
       case GDK_5:
       case GDK_KP_5:
-      case GDK_KP_Begin:
         scene = 4;
         break;
 
@@ -1645,7 +1641,6 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
       case GDK_6:
       case GDK_KP_6:
-      case GDK_KP_Right:
         scene = 5;
         break;
 
@@ -1654,7 +1649,6 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
       case GDK_7:
       case GDK_KP_7:
-      case GDK_KP_Home:
         scene = 6;
         break;
 
@@ -1663,7 +1657,6 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
       case GDK_8:
       case GDK_KP_8:
-      case GDK_KP_Up:
         scene = 7;
         break;
 
@@ -1672,7 +1665,6 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
       case GDK_9:
       case GDK_KP_9:
-      case GDK_KP_Page_Up:
         scene = 8;
         break;
 
@@ -1681,24 +1673,78 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
       case GDK_0:
       case GDK_KP_0:
-      case GDK_KP_Insert:
         scene = 9;
         break;
 
  
-        /*  Undo  */
-        /*
-      case GDK_z:
-        if (state == GDK_CONTROL_MASK) s_undo ();
-        break;
-        */
+        /*  Select scene 11  */
 
-        /*  Redo  */
-        /*
-      case GDK_r:
-        if (state == GDK_CONTROL_MASK) s_redo ();
+      case GDK_exclam:
+        scene = 10;
         break;
-        */
+
+
+        /*  Select scene 12  */
+
+      case GDK_at:
+        scene = 11;
+        break;
+
+
+        /*  Select scene 13  */
+
+      case GDK_numbersign:
+        scene = 12;
+        break;
+
+
+        /*  Select scene 14  */
+
+      case GDK_dollar:
+        scene = 13;
+        break;
+
+
+        /*  Select scene 15  */
+
+      case GDK_percent:
+        scene = 14;
+        break;
+
+
+        /*  Select scene 16  */
+
+      case GDK_asciicircum:
+        scene = 15;
+        break;
+
+
+        /*  Select scene 17  */
+
+      case GDK_ampersand:
+        scene = 16;
+        break;
+
+
+        /*  Select scene 18  */
+
+      case GDK_asterisk:
+        scene = 17;
+        break;
+
+
+        /*  Select scene 19  */
+
+      case GDK_parenleft:
+        scene = 18;
+        break;
+
+
+        /*  Select scene 20  */
+
+      case GDK_parenright:
+        scene = 19;
+        break;
 
 
         /*  Switch to tab 1 (HDEQ) unless we're getting help.  */
@@ -1745,6 +1791,7 @@ on_window1_key_press_event             (GtkWidget       *widget,
         switch (state)
           {
           case 0:
+          case GDK_SHIFT_MASK:
             select_scene (scene, 1);
             break;
 
