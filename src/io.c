@@ -761,7 +761,6 @@ void io_init(int argc, char *argv[])
 	    trace_option = 1;
 	    break;
 	case 'i':			/* Use IIR type crossover */
-            preferences_set_xover_button (IIR);
             process_set_crossover_type (IIR);
 	    break;
 	case 'v':			/* verbose */

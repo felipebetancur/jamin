@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.62 2004/10/23 11:26:59 jdepner Exp $
+ *  $Id: process.c,v 1.63 2004/10/23 11:35:22 jdepner Exp $
  */
 
 #include <math.h>
@@ -684,6 +684,11 @@ void process_set_eq_bypass(int bypass)
 void process_set_crossover_type(int type)
 {
     iir_xover = type;
+}
+
+int process_get_crossover_type()
+{
+    return (iir_xover);
 }
 
 void process_set_limiter_bypass(int bypass)

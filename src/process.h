@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.h,v 1.28 2004/10/23 11:26:59 jdepner Exp $
+ *  $Id: process.h,v 1.29 2004/10/23 11:35:22 jdepner Exp $
  */
 
 #ifndef PROCESS_H
@@ -98,6 +98,7 @@ void process_set_xo_band_action(int band, int action);
 
 void process_set_eq_bypass(int bypass);
 void process_set_crossover_type(int type);
+int process_get_crossover_type();
 void process_set_limiter_bypass(int bypass);
 
 void process_set_low2mid_xover (float freq);

@@ -36,6 +36,7 @@
 #include "help.h"
 #include "interface.h"
 #include "support.h"
+#include "process.h"
 #include "compressor-ui.h"
 #include "state.h"
 #include "gtkmeter.h"
@@ -97,6 +98,15 @@ void preferences_init()
 						   "FFT_Crossover"));
     t_iir = &iir_button->check_button.toggle_button;
     t_fft = &fft_button->check_button.toggle_button;
+
+    if (process_get_crossover_type() == IIR)
+      {
+	gtk_toggle_button_set_active (t_iir, TRUE);
+      }
+    else
+      {
+	gtk_toggle_button_set_active (t_fft, TRUE);
+      }
 
 
     color_dialog = create_colorselectiondialog1 ();
@@ -241,22 +251,6 @@ void preferences_init()
 GdkColor *get_color (int color_id)
 {
   return (&color[color_id]);
-}
-
-
-void preferences_set_xover_button (int type)
-{
-  /*  Can't get this to work no matter what I try.
-
-  if (type == IIR)
-    {
-      gtk_toggle_button_set_active (t_iir, TRUE);
-    }
-  else
-    {
-      gtk_toggle_button_set_active (t_fft, TRUE);
-    }
-  */
 }
 
 
