@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.12 2003/12/01 12:09:22 kotau Exp $
+ *  $Id: callbacks_help.h,v 1.13 2003/12/09 22:25:22 jdepner Exp $
  */
 
 char general_help[] = {
@@ -42,6 +42,27 @@ more details.\n\
     You should have received a copy of the GNU General Public License along \
 with this program; if not, write to the Free Software Foundation, Inc., 675 \
 Mass Ave, Cambridge, MA 02139, USA.\n"
+};
+
+
+char prerequisites_help[] = {
+"    JAMin would not be functional without many other open source packages \
+and we thought that it would only be right to list them here:\n\n\
+    JACK - JACK Audio Connection Kit\n\
+    http://jackit.sourceforge.net\n\n\
+    SWH plugins - Steve Harris' LADSPA plugins\n\
+    http://plugin.org.uk\n\n\
+    LADSPA - Linux Audio Developer's Simple Plugin API\n\
+    http://www.ladspa.org\n\n\
+    FFTW - Fastest Fourier Transform in the West\n\
+    http://www.fftw.org\n\n\
+    libsndfile - Erik de Castro Lopo's sound file I/O\n\
+    http://www.zip.com.au/~erikd/libsndfile\n\n\
+    GTK - The GIMP Toolkit\n\
+    http://www.gtk.org\n\n\
+    ALSA - Advanced Linux Sound Architecture\n\
+    http://www.alsa-project.org\n\n\
+Many thanks to all of the authors of these packages!\n"
 };
 
 

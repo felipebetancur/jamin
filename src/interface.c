@@ -38,31 +38,32 @@ create_window1 (void)
   GtkWidget *open1;
   GtkWidget *save1;
   GtkWidget *save_as1;
-  GtkWidget *image165;
+  GtkWidget *image178;
   GtkWidget *separatormenuitem1;
   GtkWidget *quit1;
   GtkWidget *menuitem2;
   GtkWidget *menuitem2_menu;
   GtkWidget *undo1;
-  GtkWidget *image166;
+  GtkWidget *image179;
   GtkWidget *redo1;
-  GtkWidget *image167;
+  GtkWidget *image180;
   GtkWidget *cut1;
   GtkWidget *copy1;
   GtkWidget *paste1;
   GtkWidget *delete1;
-  GtkWidget *image168;
+  GtkWidget *image181;
   GtkWidget *jack_ports;
-  GtkWidget *jack_ports_menu;
   GtkWidget *menuitem4;
   GtkWidget *menuitem4_menu;
   GtkWidget *help1;
-  GtkWidget *image169;
+  GtkWidget *image182;
   GtkWidget *keys1;
-  GtkWidget *image170;
+  GtkWidget *image183;
   GtkWidget *separator1;
   GtkWidget *about1;
-  GtkWidget *image171;
+  GtkWidget *image184;
+  GtkWidget *about_prerequisites1;
+  GtkWidget *image185;
   GtkWidget *top_hbox;
   GtkWidget *transport_controls_eventbox;
   GtkWidget *transport_controls;
@@ -539,10 +540,10 @@ create_window1 (void)
                               GDK_a, GDK_CONTROL_MASK,
                               GTK_ACCEL_VISIBLE);
 
-  image165 = gtk_image_new_from_stock ("gtk-save-as", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_name (image165, "image165");
-  gtk_widget_show (image165);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (save_as1), image165);
+  image178 = gtk_image_new_from_stock ("gtk-save-as", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image178, "image178");
+  gtk_widget_show (image178);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (save_as1), image178);
 
   separatormenuitem1 = gtk_menu_item_new ();
   gtk_widget_set_name (separatormenuitem1, "separatormenuitem1");
@@ -572,10 +573,10 @@ create_window1 (void)
                               GDK_z, GDK_CONTROL_MASK,
                               GTK_ACCEL_VISIBLE);
 
-  image166 = gtk_image_new_from_stock ("gtk-undo", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_name (image166, "image166");
-  gtk_widget_show (image166);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (undo1), image166);
+  image179 = gtk_image_new_from_stock ("gtk-undo", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image179, "image179");
+  gtk_widget_show (image179);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (undo1), image179);
 
   redo1 = gtk_image_menu_item_new_with_mnemonic (_("_Redo"));
   gtk_widget_set_name (redo1, "redo1");
@@ -585,10 +586,10 @@ create_window1 (void)
                               GDK_r, GDK_CONTROL_MASK,
                               GTK_ACCEL_VISIBLE);
 
-  image167 = gtk_image_new_from_stock ("gtk-redo", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_name (image167, "image167");
-  gtk_widget_show (image167);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (redo1), image167);
+  image180 = gtk_image_new_from_stock ("gtk-redo", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image180, "image180");
+  gtk_widget_show (image180);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (redo1), image180);
 
   cut1 = gtk_image_menu_item_new_from_stock ("gtk-cut", accel_group);
   gtk_widget_set_name (cut1, "cut1");
@@ -613,19 +614,15 @@ create_window1 (void)
                               GDK_d, GDK_CONTROL_MASK,
                               GTK_ACCEL_VISIBLE);
 
-  image168 = gtk_image_new_from_stock ("gtk-delete", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_name (image168, "image168");
-  gtk_widget_show (image168);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (delete1), image168);
+  image181 = gtk_image_new_from_stock ("gtk-delete", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image181, "image181");
+  gtk_widget_show (image181);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (delete1), image181);
 
   jack_ports = gtk_menu_item_new_with_mnemonic (_("Ports"));
   gtk_widget_set_name (jack_ports, "jack_ports");
   gtk_widget_show (jack_ports);
   gtk_container_add (GTK_CONTAINER (menubar1), jack_ports);
-
-  jack_ports_menu = gtk_menu_new ();
-  gtk_widget_set_name (jack_ports_menu, "jack_ports_menu");
-  gtk_menu_item_set_submenu (GTK_MENU_ITEM (jack_ports), jack_ports_menu);
 
   menuitem4 = gtk_menu_item_new_with_mnemonic (_("_Help"));
   gtk_widget_set_name (menuitem4, "menuitem4");
@@ -644,10 +641,10 @@ create_window1 (void)
                               GDK_h, GDK_CONTROL_MASK,
                               GTK_ACCEL_VISIBLE);
 
-  image169 = gtk_image_new_from_stock ("gtk-help", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_name (image169, "image169");
-  gtk_widget_show (image169);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (help1), image169);
+  image182 = gtk_image_new_from_stock ("gtk-help", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image182, "image182");
+  gtk_widget_show (image182);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (help1), image182);
 
   keys1 = gtk_image_menu_item_new_with_mnemonic (_("_Keys"));
   gtk_widget_set_name (keys1, "keys1");
@@ -657,10 +654,10 @@ create_window1 (void)
                               GDK_k, GDK_CONTROL_MASK,
                               GTK_ACCEL_VISIBLE);
 
-  image170 = gtk_image_new_from_stock ("gtk-index", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_name (image170, "image170");
-  gtk_widget_show (image170);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (keys1), image170);
+  image183 = gtk_image_new_from_stock ("gtk-index", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image183, "image183");
+  gtk_widget_show (image183);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (keys1), image183);
 
   separator1 = gtk_menu_item_new ();
   gtk_widget_set_name (separator1, "separator1");
@@ -676,10 +673,23 @@ create_window1 (void)
                               GDK_j, GDK_CONTROL_MASK,
                               GTK_ACCEL_VISIBLE);
 
-  image171 = gtk_image_new_from_stock ("gtk-dialog-info", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_name (image171, "image171");
-  gtk_widget_show (image171);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (about1), image171);
+  image184 = gtk_image_new_from_stock ("gtk-dialog-info", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image184, "image184");
+  gtk_widget_show (image184);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (about1), image184);
+
+  about_prerequisites1 = gtk_image_menu_item_new_with_mnemonic (_("About Prerequisites"));
+  gtk_widget_set_name (about_prerequisites1, "about_prerequisites1");
+  gtk_widget_show (about_prerequisites1);
+  gtk_container_add (GTK_CONTAINER (menuitem4_menu), about_prerequisites1);
+  gtk_widget_add_accelerator (about_prerequisites1, "activate", accel_group,
+                              GDK_p, GDK_CONTROL_MASK,
+                              GTK_ACCEL_VISIBLE);
+
+  image185 = gtk_image_new_from_stock ("gtk-properties", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image185, "image185");
+  gtk_widget_show (image185);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (about_prerequisites1), image185);
 
   top_hbox = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (top_hbox, "top_hbox");
@@ -3271,6 +3281,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) about1, "activate",
                     G_CALLBACK (on_about1_activate),
                     NULL);
+  g_signal_connect ((gpointer) about_prerequisites1, "activate",
+                    G_CALLBACK (on_about_prerequisites1_activate),
+                    NULL);
   g_signal_connect ((gpointer) transport_controls_eventbox, "enter_notify_event",
                     G_CALLBACK (on_transport_controls_eventbox_enter_notify_event),
                     NULL);
@@ -3651,31 +3664,32 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, open1, "open1");
   GLADE_HOOKUP_OBJECT (window1, save1, "save1");
   GLADE_HOOKUP_OBJECT (window1, save_as1, "save_as1");
-  GLADE_HOOKUP_OBJECT (window1, image165, "image165");
+  GLADE_HOOKUP_OBJECT (window1, image178, "image178");
   GLADE_HOOKUP_OBJECT (window1, separatormenuitem1, "separatormenuitem1");
   GLADE_HOOKUP_OBJECT (window1, quit1, "quit1");
   GLADE_HOOKUP_OBJECT (window1, menuitem2, "menuitem2");
   GLADE_HOOKUP_OBJECT (window1, menuitem2_menu, "menuitem2_menu");
   GLADE_HOOKUP_OBJECT (window1, undo1, "undo1");
-  GLADE_HOOKUP_OBJECT (window1, image166, "image166");
+  GLADE_HOOKUP_OBJECT (window1, image179, "image179");
   GLADE_HOOKUP_OBJECT (window1, redo1, "redo1");
-  GLADE_HOOKUP_OBJECT (window1, image167, "image167");
+  GLADE_HOOKUP_OBJECT (window1, image180, "image180");
   GLADE_HOOKUP_OBJECT (window1, cut1, "cut1");
   GLADE_HOOKUP_OBJECT (window1, copy1, "copy1");
   GLADE_HOOKUP_OBJECT (window1, paste1, "paste1");
   GLADE_HOOKUP_OBJECT (window1, delete1, "delete1");
-  GLADE_HOOKUP_OBJECT (window1, image168, "image168");
+  GLADE_HOOKUP_OBJECT (window1, image181, "image181");
   GLADE_HOOKUP_OBJECT (window1, jack_ports, "jack_ports");
-  GLADE_HOOKUP_OBJECT (window1, jack_ports_menu, "jack_ports_menu");
   GLADE_HOOKUP_OBJECT (window1, menuitem4, "menuitem4");
   GLADE_HOOKUP_OBJECT (window1, menuitem4_menu, "menuitem4_menu");
   GLADE_HOOKUP_OBJECT (window1, help1, "help1");
-  GLADE_HOOKUP_OBJECT (window1, image169, "image169");
+  GLADE_HOOKUP_OBJECT (window1, image182, "image182");
   GLADE_HOOKUP_OBJECT (window1, keys1, "keys1");
-  GLADE_HOOKUP_OBJECT (window1, image170, "image170");
+  GLADE_HOOKUP_OBJECT (window1, image183, "image183");
   GLADE_HOOKUP_OBJECT (window1, separator1, "separator1");
   GLADE_HOOKUP_OBJECT (window1, about1, "about1");
-  GLADE_HOOKUP_OBJECT (window1, image171, "image171");
+  GLADE_HOOKUP_OBJECT (window1, image184, "image184");
+  GLADE_HOOKUP_OBJECT (window1, about_prerequisites1, "about_prerequisites1");
+  GLADE_HOOKUP_OBJECT (window1, image185, "image185");
   GLADE_HOOKUP_OBJECT (window1, top_hbox, "top_hbox");
   GLADE_HOOKUP_OBJECT (window1, transport_controls_eventbox, "transport_controls_eventbox");
   GLADE_HOOKUP_OBJECT (window1, transport_controls, "transport_controls");

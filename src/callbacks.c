@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.106 2003/11/25 19:26:32 kotau Exp $
+ *  $Id: callbacks.c,v 1.107 2003/12/09 22:25:22 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1370,6 +1370,14 @@ on_about1_activate                     (GtkMenuItem     *menuitem,
 }
 
 
+void
+on_about_prerequisites1_activate       (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+    help_message (prerequisites_help);
+}
+
+
 gboolean
 on_frame_l_enter_notify_event          (GtkWidget       *widget,
                                         GdkEventCrossing *event,
@@ -1638,3 +1646,4 @@ on_comp_button_press_event             (GtkWidget       *widget,
 
   return FALSE;
 }
+

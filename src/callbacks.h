@@ -826,3 +826,7 @@ on_comp_button_press_event             (GtkWidget       *widget,
 void
 on_jack_ports_activate                 (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
+
+void
+on_about_prerequisites1_activate       (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
