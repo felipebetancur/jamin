@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.52 2004/04/12 16:34:15 theno23 Exp $
+ *  $Id: process.c,v 1.53 2004/05/01 13:07:04 jdepner Exp $
  */
 
 #include <math.h>
@@ -515,6 +515,9 @@ void process_set_stereo_width(int xo_band, float width)
     sw_m_gain[xo_band] = cosf((width + 1.0f) * 0.78539815f) * 0.7071067811f;
     sw_s_gain[xo_band] = sinf((width + 1.0f) * 0.78539815f) * 0.7071067811f;
 }
+
+
+/*  This is a holdover from when we had per band balance.  */
 
 void process_set_stereo_balance(int xo_band, float bias)
 {

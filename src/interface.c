@@ -376,10 +376,6 @@ create_window1 (void)
   GtkWidget *low_band_vbox;
   GtkWidget *low_stereo_event_box;
   GtkWidget *hscale_1_l;
-  GtkWidget *low_balance_event_box;
-  GtkWidget *low_balance_hbox;
-  GtkWidget *low_balance_label;
-  GtkWidget *low_balance_scale;
   GtkWidget *low_band_button_event_box;
   GtkWidget *low_band_button_hbox;
   GtkWidget *low_solo;
@@ -430,10 +426,6 @@ create_window1 (void)
   GtkWidget *mid_band_vbox;
   GtkWidget *mid_stereo_event_box;
   GtkWidget *hscale_1_m;
-  GtkWidget *mid_balance_event_box;
-  GtkWidget *mid_balance_hbox;
-  GtkWidget *mid_balance_label;
-  GtkWidget *mid_balance_scale;
   GtkWidget *mid_band_button_event_box;
   GtkWidget *mid_band_button_hbox;
   GtkWidget *mid_solo;
@@ -484,10 +476,6 @@ create_window1 (void)
   GtkWidget *high_band_vbox;
   GtkWidget *high_stereo_event_box;
   GtkWidget *hscale_1_h;
-  GtkWidget *high_balance_event_box;
-  GtkWidget *high_balance_hbox;
-  GtkWidget *high_balance_label;
-  GtkWidget *high_balance_scale;
   GtkWidget *high_band_button_event_box;
   GtkWidget *high_band_button_hbox;
   GtkWidget *high_solo;
@@ -2570,29 +2558,6 @@ create_window1 (void)
   gtk_scale_set_value_pos (GTK_SCALE (hscale_1_l), GTK_POS_LEFT);
   gtk_scale_set_digits (GTK_SCALE (hscale_1_l), 2);
 
-  low_balance_event_box = gtk_event_box_new ();
-  gtk_widget_set_name (low_balance_event_box, "low_balance_event_box");
-  gtk_widget_show (low_balance_event_box);
-  gtk_box_pack_start (GTK_BOX (low_band_vbox), low_balance_event_box, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, low_balance_event_box, _("Low Band Stereo Balance"), NULL);
-
-  low_balance_hbox = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (low_balance_hbox, "low_balance_hbox");
-  gtk_widget_show (low_balance_hbox);
-  gtk_container_add (GTK_CONTAINER (low_balance_event_box), low_balance_hbox);
-
-  low_balance_label = gtk_label_new (_("centre"));
-  gtk_widget_set_name (low_balance_label, "low_balance_label");
-  gtk_widget_show (low_balance_label);
-  gtk_box_pack_start (GTK_BOX (low_balance_hbox), low_balance_label, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (low_balance_label), GTK_JUSTIFY_LEFT);
-
-  low_balance_scale = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -6, 6, 0.25, 1, 0)));
-  gtk_widget_set_name (low_balance_scale, "low_balance_scale");
-  gtk_widget_show (low_balance_scale);
-  gtk_box_pack_start (GTK_BOX (low_balance_hbox), low_balance_scale, TRUE, TRUE, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (low_balance_scale), FALSE);
-
   low_band_button_event_box = gtk_event_box_new ();
   gtk_widget_set_name (low_band_button_event_box, "low_band_button_event_box");
   gtk_widget_show (low_band_button_event_box);
@@ -2892,29 +2857,6 @@ create_window1 (void)
   gtk_scale_set_value_pos (GTK_SCALE (hscale_1_m), GTK_POS_LEFT);
   gtk_scale_set_digits (GTK_SCALE (hscale_1_m), 2);
 
-  mid_balance_event_box = gtk_event_box_new ();
-  gtk_widget_set_name (mid_balance_event_box, "mid_balance_event_box");
-  gtk_widget_show (mid_balance_event_box);
-  gtk_box_pack_start (GTK_BOX (mid_band_vbox), mid_balance_event_box, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, mid_balance_event_box, _("Mid Band Stereo Balance"), NULL);
-
-  mid_balance_hbox = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (mid_balance_hbox, "mid_balance_hbox");
-  gtk_widget_show (mid_balance_hbox);
-  gtk_container_add (GTK_CONTAINER (mid_balance_event_box), mid_balance_hbox);
-
-  mid_balance_label = gtk_label_new (_("centre"));
-  gtk_widget_set_name (mid_balance_label, "mid_balance_label");
-  gtk_widget_show (mid_balance_label);
-  gtk_box_pack_start (GTK_BOX (mid_balance_hbox), mid_balance_label, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (mid_balance_label), GTK_JUSTIFY_LEFT);
-
-  mid_balance_scale = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -6, 6, 0.25, 1, 0)));
-  gtk_widget_set_name (mid_balance_scale, "mid_balance_scale");
-  gtk_widget_show (mid_balance_scale);
-  gtk_box_pack_start (GTK_BOX (mid_balance_hbox), mid_balance_scale, TRUE, TRUE, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (mid_balance_scale), FALSE);
-
   mid_band_button_event_box = gtk_event_box_new ();
   gtk_widget_set_name (mid_band_button_event_box, "mid_band_button_event_box");
   gtk_widget_show (mid_band_button_event_box);
@@ -3213,29 +3155,6 @@ create_window1 (void)
   gtk_widget_set_size_request (hscale_1_h, 38, 20);
   gtk_scale_set_value_pos (GTK_SCALE (hscale_1_h), GTK_POS_LEFT);
   gtk_scale_set_digits (GTK_SCALE (hscale_1_h), 2);
-
-  high_balance_event_box = gtk_event_box_new ();
-  gtk_widget_set_name (high_balance_event_box, "high_balance_event_box");
-  gtk_widget_show (high_balance_event_box);
-  gtk_box_pack_start (GTK_BOX (high_band_vbox), high_balance_event_box, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, high_balance_event_box, _("High Band Stereo Balance"), NULL);
-
-  high_balance_hbox = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (high_balance_hbox, "high_balance_hbox");
-  gtk_widget_show (high_balance_hbox);
-  gtk_container_add (GTK_CONTAINER (high_balance_event_box), high_balance_hbox);
-
-  high_balance_label = gtk_label_new (_("centre"));
-  gtk_widget_set_name (high_balance_label, "high_balance_label");
-  gtk_widget_show (high_balance_label);
-  gtk_box_pack_start (GTK_BOX (high_balance_hbox), high_balance_label, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (high_balance_label), GTK_JUSTIFY_LEFT);
-
-  high_balance_scale = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -6, 6, 0.25, 1, 0)));
-  gtk_widget_set_name (high_balance_scale, "high_balance_scale");
-  gtk_widget_show (high_balance_scale);
-  gtk_box_pack_start (GTK_BOX (high_balance_hbox), high_balance_scale, TRUE, TRUE, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (high_balance_scale), FALSE);
 
   high_band_button_event_box = gtk_event_box_new ();
   gtk_widget_set_name (high_band_button_event_box, "high_band_button_event_box");
@@ -3959,15 +3878,6 @@ create_window1 (void)
   g_signal_connect ((gpointer) hscale_1_l, "button_press_event",
                     G_CALLBACK (reset_range),
                     NULL);
-  g_signal_connect ((gpointer) low_balance_event_box, "enter_notify_event",
-                    G_CALLBACK (on_stereo_balance_event_box_enter_notify_event),
-                    NULL);
-  g_signal_connect ((gpointer) low_balance_scale, "value_changed",
-                    G_CALLBACK (on_low_balance_scale_value_changed),
-                    NULL);
-  g_signal_connect ((gpointer) low_balance_scale, "button_press_event",
-                    G_CALLBACK (reset_range),
-                    NULL);
   g_signal_connect ((gpointer) low_band_button_event_box, "enter_notify_event",
                     G_CALLBACK (on_band_button_event_box_enter_notify_event),
                     NULL);
@@ -4040,15 +3950,6 @@ create_window1 (void)
   g_signal_connect ((gpointer) hscale_1_m, "button_press_event",
                     G_CALLBACK (reset_range),
                     NULL);
-  g_signal_connect ((gpointer) mid_balance_event_box, "enter_notify_event",
-                    G_CALLBACK (on_stereo_balance_event_box_enter_notify_event),
-                    NULL);
-  g_signal_connect ((gpointer) mid_balance_scale, "value_changed",
-                    G_CALLBACK (on_high_balance_scale_value_changed),
-                    NULL);
-  g_signal_connect ((gpointer) mid_balance_scale, "button_press_event",
-                    G_CALLBACK (reset_range),
-                    NULL);
   g_signal_connect ((gpointer) mid_band_button_event_box, "enter_notify_event",
                     G_CALLBACK (on_band_button_event_box_enter_notify_event),
                     NULL);
@@ -4119,15 +4020,6 @@ create_window1 (void)
                     G_CALLBACK (on_hscale_1_h_realize),
                     NULL);
   g_signal_connect ((gpointer) hscale_1_h, "button_press_event",
-                    G_CALLBACK (reset_range),
-                    NULL);
-  g_signal_connect ((gpointer) high_balance_event_box, "enter_notify_event",
-                    G_CALLBACK (on_stereo_balance_event_box_enter_notify_event),
-                    NULL);
-  g_signal_connect ((gpointer) high_balance_scale, "value_changed",
-                    G_CALLBACK (on_high_balance_scale_value_changed),
-                    NULL);
-  g_signal_connect ((gpointer) high_balance_scale, "button_press_event",
                     G_CALLBACK (reset_range),
                     NULL);
   g_signal_connect ((gpointer) high_band_button_event_box, "enter_notify_event",
@@ -4545,10 +4437,6 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, low_band_vbox, "low_band_vbox");
   GLADE_HOOKUP_OBJECT (window1, low_stereo_event_box, "low_stereo_event_box");
   GLADE_HOOKUP_OBJECT (window1, hscale_1_l, "hscale_1_l");
-  GLADE_HOOKUP_OBJECT (window1, low_balance_event_box, "low_balance_event_box");
-  GLADE_HOOKUP_OBJECT (window1, low_balance_hbox, "low_balance_hbox");
-  GLADE_HOOKUP_OBJECT (window1, low_balance_label, "low_balance_label");
-  GLADE_HOOKUP_OBJECT (window1, low_balance_scale, "low_balance_scale");
   GLADE_HOOKUP_OBJECT (window1, low_band_button_event_box, "low_band_button_event_box");
   GLADE_HOOKUP_OBJECT (window1, low_band_button_hbox, "low_band_button_hbox");
   GLADE_HOOKUP_OBJECT (window1, low_solo, "low_solo");
@@ -4599,10 +4487,6 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, mid_band_vbox, "mid_band_vbox");
   GLADE_HOOKUP_OBJECT (window1, mid_stereo_event_box, "mid_stereo_event_box");
   GLADE_HOOKUP_OBJECT (window1, hscale_1_m, "hscale_1_m");
-  GLADE_HOOKUP_OBJECT (window1, mid_balance_event_box, "mid_balance_event_box");
-  GLADE_HOOKUP_OBJECT (window1, mid_balance_hbox, "mid_balance_hbox");
-  GLADE_HOOKUP_OBJECT (window1, mid_balance_label, "mid_balance_label");
-  GLADE_HOOKUP_OBJECT (window1, mid_balance_scale, "mid_balance_scale");
   GLADE_HOOKUP_OBJECT (window1, mid_band_button_event_box, "mid_band_button_event_box");
   GLADE_HOOKUP_OBJECT (window1, mid_band_button_hbox, "mid_band_button_hbox");
   GLADE_HOOKUP_OBJECT (window1, mid_solo, "mid_solo");
@@ -4653,10 +4537,6 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, high_band_vbox, "high_band_vbox");
   GLADE_HOOKUP_OBJECT (window1, high_stereo_event_box, "high_stereo_event_box");
   GLADE_HOOKUP_OBJECT (window1, hscale_1_h, "hscale_1_h");
-  GLADE_HOOKUP_OBJECT (window1, high_balance_event_box, "high_balance_event_box");
-  GLADE_HOOKUP_OBJECT (window1, high_balance_hbox, "high_balance_hbox");
-  GLADE_HOOKUP_OBJECT (window1, high_balance_label, "high_balance_label");
-  GLADE_HOOKUP_OBJECT (window1, high_balance_scale, "high_balance_scale");
   GLADE_HOOKUP_OBJECT (window1, high_band_button_event_box, "high_band_button_event_box");
   GLADE_HOOKUP_OBJECT (window1, high_band_button_hbox, "high_band_button_hbox");
   GLADE_HOOKUP_OBJECT (window1, high_solo, "high_solo");

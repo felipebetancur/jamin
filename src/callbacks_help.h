@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.33 2004/04/29 14:51:59 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.34 2004/05/01 13:07:03 jdepner Exp $
  */
 
 char general_help[] = {
@@ -188,16 +188,6 @@ that can be set using the crossover faders or the crossover bars in the \
 HDEQ.  More negative values decrease the 'width' while positive values \
 increase the 'width'.  Clicking the right mouse button on the stereo width \
 control will reset the value to 0.0.\n"
-};
-
-
-char stereo_balance_help[] = {
-"    The stereo balance controls allow the user to adjust the balance for the \
-set of frequencies defined by the crossover locations.  That is, the balance \
-for each of the three bands, low, mid, and high, can be shifted left or \
-right.   The bands are defined by the crossovers that can be set using the \
-crossover faders or the crossover bars in the HDEQ.  Clicking the right mouse \
-button on the stereo balance control will reset the value to 0.0.\n"
 };
 
 

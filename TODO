@@ -10,6 +10,8 @@ TO BE DECIDED (owner)
 
 TODO (owner)
 
+- fix limiter bypass (Steve)
+- add OSC functionality (Steve)
 - save compressor control ganging, min/max EQ values, other stuff with state (Steve)
 - commit mastering documentation to CVS (Ron)
 - set JACK port latencies correctly (Jack, Steve)

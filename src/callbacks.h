@@ -859,18 +859,6 @@ pause_transport_toggle                 (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
 
-void
-on_low_balance_scale_value_changed         (GtkRange        *range,
-                                        gpointer         user_data);
-
-void
-on_mid_balance_scale_value_changed         (GtkRange        *range,
-                                        gpointer         user_data);
-
-void
-on_high_balance_scale_value_changed        (GtkRange        *range,
-                                        gpointer         user_data);
-
 gboolean
 on_comp_event_box_enter_notify_event (GtkWidget       *widget,
                                         GdkEventCrossing *event,
@@ -881,11 +869,6 @@ on_stereo_event_box_enter_notify_event
                                         (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data);
-
-gboolean
-on_stereo_balance_event_box_enter_notify_event (GtkWidget       *widget,
-                                            GdkEventCrossing *event,
-                                            gpointer         user_data);
 
 gboolean
 reset_range                            (GtkWidget       *widget,
@@ -1095,26 +1078,12 @@ void
 on_hscale_1_l_realize                  (GtkWidget       *widget,
                                         gpointer         user_data);
 
-gboolean
-on_stereo_balance_event_box_enter_notify_event
-                                        (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data);
-
-void
-on_low_balance_scale_value_changed     (GtkRange        *range,
-                                        gpointer         user_data);
-
 void
 on_hscale_1_m_value_changed            (GtkRange        *range,
                                         gpointer         user_data);
 
 void
 on_hscale_1_m_realize                  (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_high_balance_scale_value_changed    (GtkRange        *range,
                                         gpointer         user_data);
 
 void

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.147 2004/04/29 14:51:58 jdepner Exp $
+ *  $Id: callbacks.c,v 1.148 2004/05/01 13:07:03 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1876,30 +1876,6 @@ scene_warning                          (GtkWidget       *widget,
 }
 
 
-void
-on_low_balance_scale_value_changed         (GtkRange        *range,
-                                        gpointer         user_data)
-{
-  s_set_value_ui(S_STEREO_BALANCE(0), gtk_range_get_adjustment(range)->value);
-}
-
-
-void
-on_mid_balance_scale_value_changed         (GtkRange        *range,
-                                        gpointer         user_data)
-{
-  s_set_value_ui(S_STEREO_BALANCE(1), gtk_range_get_adjustment(range)->value);
-}
-
-
-void
-on_high_balance_scale_value_changed        (GtkRange        *range,
-                                        gpointer         user_data)
-{
-  s_set_value_ui(S_STEREO_BALANCE(2), gtk_range_get_adjustment(range)->value);
-}
-
-
 gboolean
 on_comp_event_box_enter_notify_event (GtkWidget       *widget,
                                       GdkEventCrossing *event,
@@ -1918,18 +1894,6 @@ on_stereo_event_box_enter_notify_event
                                         gpointer         user_data)
 {
   help_ptr = stereo_help;
-
-  return FALSE;
-}
-
-
-gboolean
-on_stereo_balance_event_box_enter_notify_event
-                                        (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data)
-{
-  help_ptr = stereo_balance_help;
 
   return FALSE;
 }

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.49 2004/04/10 18:25:46 jdepner Exp $
+ *  $Id: state.c,v 1.50 2004/05/01 13:07:04 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -711,9 +711,16 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 	}
     }
     if (!found) {
-      errstr = g_strdup_printf("Unknown symbol: %s\n", *p);
-      message (GTK_MESSAGE_WARNING, errstr);
-      free(errstr);
+
+      /*  We need to disregard stereo-balance settings as these have been removed
+          but may still be in old .jam files.  */
+
+      if (!strstr (symbol ,"stereo-balance"))
+        {
+          errstr = g_strdup_printf("Unknown symbol: %s\n", symbol);
+          message (GTK_MESSAGE_WARNING, errstr);
+          free(errstr);
+        }
     }
 }
 
