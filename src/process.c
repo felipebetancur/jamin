@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <jack/jack.h>
 #include <fftw3.h>
-#include <assert.h>
 
 #include "process.h"
 #include "compressor.h"
@@ -229,29 +228,16 @@ float bin_peak_read_and_clear(int bin)
     return ret * fix;
 }
 
-int process(jack_nframes_t nframes, void *arg)
+int process_signal(jack_nframes_t nframes,
+		   int nchannels,
+		   jack_default_audio_sample_t *in[],
+		   jack_default_audio_sample_t *out[])
 {
     unsigned int pos, port;
     const unsigned int step_size = BINS / OVER_SAMP;
     const unsigned int latency = BINS - step_size;
     static unsigned int in_ptr = 0;
     static unsigned int n_calc_pt = BINS - (BINS / OVER_SAMP);
-    jack_default_audio_sample_t *in[2], *out[2];
-
-    /* the ports must be registered */
-    assert(input_ports[0] && input_ports[1] &&
-	   output_ports[0] && output_ports[1]);
-
-    in[0] = (jack_default_audio_sample_t *)
-	jack_port_get_buffer(input_ports[0], nframes);
-    out[0] = (jack_default_audio_sample_t *)
-	jack_port_get_buffer(output_ports[0], nframes);
-    in[1] = (jack_default_audio_sample_t *)
-	jack_port_get_buffer(input_ports[1], nframes);
-    out[1] = (jack_default_audio_sample_t *)
-	jack_port_get_buffer(output_ports[1], nframes);
-
-    //printf("got buffers...\n");
 
     if (!lim_connected) {
 	lim_connect(lim_plugin, &limiter, out[0], out[1]);
@@ -263,7 +249,7 @@ int process(jack_nframes_t nframes, void *arg)
 	const unsigned int op = (in_ptr - latency) & BUF_MASK;
 	float amp;
 
-	for (port = 0; port < 2; port++) {
+	for (port = 0; port < nchannels; port++) {
 	    in_buf[port][in_ptr] = in[port][pos] * in_gain[port];
 	    amp = fabs(in_buf[port][in_ptr]);
 	    if (amp > in_peak[port]) {
@@ -296,7 +282,7 @@ int process(jack_nframes_t nframes, void *arg)
 
     //printf("run compressors...\n");
 
-    for (port = 0; port < 2; port++) {
+    for (port = 0; port < nchannels; port++) {
 	for (pos = 0; pos < nframes; pos++) {
 	    out[port][pos] =
 		out_tmp[port][XO_LOW][pos] + out_tmp[port][XO_MID][pos] +
@@ -307,7 +293,7 @@ int process(jack_nframes_t nframes, void *arg)
     //printf("done something...\n");
 
     for (pos = 0; pos < nframes; pos++) {
-	for (port = 0; port < 2; port++) {
+	for (port = 0; port < nchannels; port++) {
 	    if (out[port][pos] > lim_peak[LIM_PEAK_IN]) {
 		lim_peak[LIM_PEAK_IN] = out[port][pos];
 	    } else {
@@ -324,7 +310,7 @@ int process(jack_nframes_t nframes, void *arg)
     /* If bypass is on override all the stuff done by the crossover section,
      * limiter and so on */
     if (global_bypass) {
-	for (port = 0; port < 2; port++) {
+	for (port = 0; port < nchannels; port++) {
 	    for (pos = 0; pos < nframes; pos++) {
 		out[port][pos] = in_buf[port][(in_ptr + pos - latency) & BUF_MASK];
 	    }
@@ -332,7 +318,7 @@ int process(jack_nframes_t nframes, void *arg)
     }
 
     for (pos = 0; pos < nframes; pos++) {
-	for (port = 0; port < 2; port++) {
+	for (port = 0; port < nchannels; port++) {
 	    const float oa = fabs(out[port][pos]);
 
 	    if (oa > lim_peak[LIM_PEAK_OUT]) {

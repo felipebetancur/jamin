@@ -38,7 +38,9 @@ void process_init(float fs, int buffer_size);
 
 int iec_scale(float db);
 
-int process(jack_nframes_t nframes, void *arg);
+int process_signal(jack_nframes_t nframes, int nchannels,
+		   jack_default_audio_sample_t *in[],
+		   jack_default_audio_sample_t *out[]);
 
 float eval_comp(float thresh, float ratio, float knee, float in);
 

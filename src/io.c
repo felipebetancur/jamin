@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <jack/jack.h>
 #include <getopt.h>
+#include <assert.h>
 
 #include "process.h"
 #include "plugin.h"
@@ -17,6 +18,33 @@ jack_port_t *output_ports[2];
 jack_client_t *client;
 
 static int dummy_mode = 0;
+
+#define NCHANNELS 2
+
+/* io_handler -- JACK process callback.
+ *
+ *   Runs as a high-priority realtime thread.  CANNOT EVER WAIT.
+ */
+int io_handler(jack_nframes_t nframes, void *arg)
+{
+    jack_default_audio_sample_t *in[NCHANNELS], *out[NCHANNELS];
+    int chan;
+
+    for (chan = 0; chan < NCHANNELS; chan++) {
+
+	/* the ports must be registered */
+	assert(input_ports[chan] && output_ports[chan]);
+
+	in[chan] = (jack_default_audio_sample_t *)
+	    jack_port_get_buffer(input_ports[chan], nframes);
+	out[chan] = (jack_default_audio_sample_t *)
+	    jack_port_get_buffer(output_ports[chan], nframes);
+    }
+
+    /* Call the DSP directly, for now.  Soon, we'll collect multiple
+     * buffers for processing in a separate DSP thread. */
+    return process_signal(nframes, NCHANNELS, in, out);
+}
 
 int backend_init(int argc, char *argv[])
 {
@@ -62,7 +90,7 @@ int backend_init(int argc, char *argv[])
 
     process_init((float) jack_get_sample_rate(client), jack_get_buffer_size(client));
 
-    jack_set_process_callback(client, process, 0);
+    jack_set_process_callback(client, io_handler, 0);
 
     return 0;
 }
