@@ -14,6 +14,7 @@
 #include "interface.h"
 #include "support.h"
 #include "process.h"
+#include "io.h"
 #include "intrim.h"
 #include "compressor-ui.h"
 #include "gtkmeter.h"
@@ -57,7 +58,8 @@ static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
                        comp_curve_range_x[3], comp_curve_range_y[3], 
                        comp_curve_width[3], comp_curve_height[3] , 
                        comp_start_x[3], comp_start_y[3], comp_end_x[3], 
-                       comp_end_y[3];
+                       comp_end_y[3], EQ_freq_xinterp[EQ_INTERP + 1],
+                       EQ_freq_yinterp[EQ_INTERP + 1];
 static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0, 
                        EQ_length = 0, comp_realized[3] = {0, 0, 0}, 
                        EQ_cleared = 1, EQ_realized = 0, xover_active = 0,
@@ -455,8 +457,13 @@ draw_EQ_spectrum_curve (float single_levels[])
 
         for (i = 0 ; i < EQ_INTERP ; i++)
           {
-            x[i] = NINT (((EQ_xinterp[i] - l_low2mid_adj->lower) / 
+            const float freq = ((float) i / (float) BINS) * sample_rate;
+
+            x[i] = NINT (((log10(freq) - l_low2mid_adj->lower) /
                           EQ_curve_range_x) * EQ_curve_width);
+
+            //x[i] = NINT (((EQ_xinterp[i] - l_low2mid_adj->lower) / 
+            //              EQ_curve_range_x) * EQ_curve_width);
 
 
             /*  Most of the single_level values will be in the -90.0db to 
@@ -776,7 +783,7 @@ on_EQ_curve_event_box_button_release_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-    float               *x = NULL, *y = NULL;
+    float               *x = NULL, *y = NULL, interval;
     int                 i, j, i_start = 0, i_end = 0, size;
 
 
@@ -892,10 +899,25 @@ on_EQ_curve_event_box_button_release_event
               }
 
 
-            /*  Recompute the splined curve.  */
+            /*  Recompute the splined curve in the log(freq) domain for
+                plotting the EQ.  */
 
             interpolate (EQ_interval, j, EQ_start, EQ_end, &EQ_length, x, 
                 y, EQ_xinterp, EQ_yinterp);
+
+
+            /*  Recompute the splined curve in the freq domain for setting 
+                the eq_coefs.  */
+
+            for (i = 0 ; i < j ; i++)
+                x[i] = pow (10.0, (double) x[i]);
+
+            interval = ((l_geq_freqs[EQ_BANDS - 1]) - l_geq_freqs[0]) / 
+                EQ_INTERP;
+
+            interpolate (interval, j, l_geq_freqs[0], 
+                l_geq_freqs[EQ_BANDS - 1], &EQ_length, x, y, EQ_freq_xinterp, 
+                EQ_freq_yinterp);
 
 
             if (x) free (x);
@@ -908,7 +930,7 @@ on_EQ_curve_event_box_button_release_event
             /*  Set the graphic EQ sliders and the EQ settings based on the 
                 hand-drawn curve.  */
 
-            geq_set_sliders (EQ_length, EQ_xinterp, EQ_yinterp);
+            geq_set_sliders (EQ_length, EQ_freq_xinterp, EQ_freq_yinterp);
 
             EQ_mod = 0;
 

@@ -15,6 +15,8 @@
 GtkAdjustment *geqa[EQ_BANDS];
 GtkRange *geqr[EQ_BANDS];
 
+static int EQ_drawn = 0;
+
 /* Linear gain of the 1/3rd octave EQ bands */
 float geq_gains[EQ_BANDS + 1];
 /* Frequency of each band of the EQ */
@@ -84,41 +86,69 @@ void geq_set_gains()
 {
     unsigned int bin;
 
-    eq_coefs[0] = 1.0f;
-    for (bin = 1; bin < (BINS/2 - 1); bin++) {
-	eq_coefs[bin] = ((1.0f-bin_delta[bin]) * geq_gains[bin_base[bin]])
-		         + (bin_delta[bin] * geq_gains[bin_base[bin]+1]);
-    }
+    if (!EQ_drawn)
+      {
+        eq_coefs[0] = 1.0f;
+        for (bin = 1; bin < (BINS/2 - 1); bin++) {
+          eq_coefs[bin] = ((1.0f-bin_delta[bin]) * geq_gains[bin_base[bin]])
+            + (bin_delta[bin] * geq_gains[bin_base[bin]+1]);
+        }
+      }
 }
 
 void geq_set_sliders(int length, float x[], float y[])
 {
     int i, j;
+    float dist;
 
 
     if (length != BINS / 2 - 1)
       {
         fprintf (stderr, 
-            "Splined length %d does not match BINS / 2 - 1 (%d)\n", length,
+            _("Splined length %d does not match BINS / 2 - 1 (%d)\n"), length,
              BINS / 2 - 1);
       }
     else
       {
         /*  Set eq_coefs using linear gain values.  */
 
-        for (i = 0 ; i < length ; i++)
+        eq_coefs[0] = 1.0f;
+        for (i = 1 ; i < length ; i++) 
           {
-            eq_coefs[i] = pow (10.0, y[i]);
+            eq_coefs[i] = ((1.0f - bin_delta[i]) * pow (10.0, (double) y[i])) +
+              (bin_delta[i] * pow (10.0, (double) y[i + 1]));
           }
+
+
+        /*  Make sure that we don't reset the coefficients when we set the
+            graphic EQ adjustments (see geq_set_gains).  */
+
+        EQ_drawn = 1;
 
 
         /*  Convert to db and set the faders in the graphic EQ.  */
 
-        j = length / (EQ_BANDS + 1);
-        for (i = 0 ; i < EQ_BANDS ; i++)
+        for (j = 0 ; j < EQ_BANDS ; j++)
           {
-            gtk_adjustment_set_value (geqa[i], y[i * j] / 0.05);
+            float nearest_dist = 9999999.0f;
+            int nearest_band = 0;
+            for (i = 0 ; i < length ; i++)
+              {
+                dist = fabs (x[i] - geq_freqs[j]);
+                if (dist < nearest_dist) 
+                  {
+                    nearest_band = i;
+                    nearest_dist = dist;
+                  }
+              }
+
+            gtk_adjustment_set_value (geqa[j], y[nearest_band] / 0.05);
           }
+
+
+        /*  Release the restriction on the graphic EQ adjustments.  */
+
+        EQ_drawn = 0;
       }
 }
 
@@ -156,7 +186,7 @@ gboolean eqb_changed(GtkAdjustment *adj, gpointer user_data)
 GtkAdjustment *geq_get_adjustment(int band)
 {
     if (band < 0 || band > EQ_BANDS) {
-	fprintf(stderr, "jam error: Adjustment from out-of-range band %d requested\n", band);
+	fprintf(stderr, _("jam error: Adjustment from out-of-range band %d requested\n"), band);
 	exit(1);
     }
     return geqa[band];
