@@ -336,27 +336,33 @@ create_window1 (void)
   GtkWidget *comp_l;
   GtkWidget *slider_hbox_l;
   GtkWidget *vbox_1_l;
-  GtkWidget *label_1_l;
+  GtkWidget *comp_at_label_1_event_box;
+  GtkWidget *comp_at_label_1;
   GtkWidget *comp_at_1_event_box;
   GtkWidget *comp_at_1;
   GtkWidget *vbox_2_l;
-  GtkWidget *label_6_l;
+  GtkWidget *comp_re_label_1_event_box;
+  GtkWidget *comp_re_label_1;
   GtkWidget *comp_re_1_event_box;
   GtkWidget *comp_re_1;
   GtkWidget *vbox_3_l;
-  GtkWidget *label_2_l;
+  GtkWidget *comp_th_label_1_event_box;
+  GtkWidget *comp_th_label_1;
   GtkWidget *comp_th_1_event_box;
   GtkWidget *comp_th_1;
   GtkWidget *vbox_4_l;
-  GtkWidget *label_3_l;
+  GtkWidget *comp_ra_label_1_event_box;
+  GtkWidget *comp_ra_label_1;
   GtkWidget *comp_ra_1_event_box;
   GtkWidget *comp_ra_1;
   GtkWidget *vbox_5_l;
-  GtkWidget *label_4_l;
+  GtkWidget *comp_kn_label_1_event_box;
+  GtkWidget *comp_kn_label_1;
   GtkWidget *comp_kn_1_event_box;
   GtkWidget *comp_kn_1;
   GtkWidget *vbox_6_l;
-  GtkWidget *label_5_l;
+  GtkWidget *comp_ma_label_1_event_box;
+  GtkWidget *comp_ma_label_1;
   GtkWidget *vbox_7_l;
   GtkWidget *eventbox_1_l;
   GtkWidget *comp_ma_1;
@@ -379,27 +385,33 @@ create_window1 (void)
   GtkWidget *comp_m;
   GtkWidget *slider_hbox_m;
   GtkWidget *vbox_1_m;
-  GtkWidget *label_1_m;
+  GtkWidget *comp_at_label_2_event_box;
+  GtkWidget *comp_at_label_2;
   GtkWidget *comp_at_2_event_box;
   GtkWidget *comp_at_2;
   GtkWidget *vbox_2_m;
-  GtkWidget *label_6_m;
+  GtkWidget *comp_re_label_2_event_box;
+  GtkWidget *comp_re_label_2;
   GtkWidget *comp_re_2_event_box;
   GtkWidget *comp_re_2;
   GtkWidget *vbox_3_m;
-  GtkWidget *label_2_m;
+  GtkWidget *comp_th_label_2_event_box;
+  GtkWidget *comp_th_label_2;
   GtkWidget *comp_th_2_event_box;
   GtkWidget *comp_th_2;
   GtkWidget *vbox_4_m;
-  GtkWidget *label_3_m;
+  GtkWidget *comp_ra_label_2_event_box;
+  GtkWidget *comp_ra_label_2;
   GtkWidget *comp_ra_2_event_box;
   GtkWidget *comp_ra_2;
   GtkWidget *vbox_5_m;
-  GtkWidget *label_4_m;
+  GtkWidget *comp_kn_label_2_event_box;
+  GtkWidget *comp_kn_label_2;
   GtkWidget *comp_kn_2_event_box;
   GtkWidget *comp_kn_2;
   GtkWidget *vbox_6_m;
-  GtkWidget *label_5_m;
+  GtkWidget *comp_ma_label_2_event_box;
+  GtkWidget *comp_ma_label_2;
   GtkWidget *vbox_7_m;
   GtkWidget *eventbox_1_m;
   GtkWidget *comp_ma_2;
@@ -422,27 +434,33 @@ create_window1 (void)
   GtkWidget *comp_h;
   GtkWidget *slider_hbox_h;
   GtkWidget *vbox_1_h;
-  GtkWidget *label_1_h;
+  GtkWidget *comp_at_label_3_event_box;
+  GtkWidget *comp_at_label_3;
   GtkWidget *comp_at_3_event_box;
   GtkWidget *comp_at_3;
   GtkWidget *vbox_2_h;
-  GtkWidget *label_6_h;
+  GtkWidget *comp_re_label_3_event_box;
+  GtkWidget *comp_re_label_3;
   GtkWidget *comp_re_3_event_box;
   GtkWidget *comp_re_3;
   GtkWidget *vbox_3_h;
-  GtkWidget *label_2_h;
+  GtkWidget *comp_th_label_3_event_box;
+  GtkWidget *comp_th_label_3;
   GtkWidget *comp_th_3_event_box;
   GtkWidget *comp_th_3;
   GtkWidget *vbox_4_h;
-  GtkWidget *label_3_h;
+  GtkWidget *comp_ra_label_3_event_box;
+  GtkWidget *comp_ra_label_3;
   GtkWidget *comp_ra_3_event_box;
   GtkWidget *comp_ra_3;
   GtkWidget *vbox_5_h;
-  GtkWidget *label_4_h;
+  GtkWidget *comp_kn_label_3_event_box;
+  GtkWidget *comp_kn_label_3;
   GtkWidget *comp_kn_3_event_box;
   GtkWidget *comp_kn_3;
   GtkWidget *vbox_6_h;
-  GtkWidget *label_5_h;
+  GtkWidget *comp_ma_label_3_event_box;
+  GtkWidget *comp_ma_label_3;
   GtkWidget *vbox_7_h;
   GtkWidget *eventbox_1_h;
   GtkWidget *comp_ma_3;
@@ -2289,11 +2307,16 @@ create_window1 (void)
   gtk_widget_show (vbox_1_l);
   gtk_box_pack_start (GTK_BOX (slider_hbox_l), vbox_1_l, TRUE, TRUE, 0);
 
-  label_1_l = gtk_label_new (_("A"));
-  gtk_widget_set_name (label_1_l, "label_1_l");
-  gtk_widget_show (label_1_l);
-  gtk_box_pack_start (GTK_BOX (vbox_1_l), label_1_l, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_1_l), GTK_JUSTIFY_LEFT);
+  comp_at_label_1_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_at_label_1_event_box, "comp_at_label_1_event_box");
+  gtk_widget_show (comp_at_label_1_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_1_l), comp_at_label_1_event_box, FALSE, FALSE, 0);
+
+  comp_at_label_1 = gtk_label_new (_("A"));
+  gtk_widget_set_name (comp_at_label_1, "comp_at_label_1");
+  gtk_widget_show (comp_at_label_1);
+  gtk_container_add (GTK_CONTAINER (comp_at_label_1_event_box), comp_at_label_1);
+  gtk_label_set_justify (GTK_LABEL (comp_at_label_1), GTK_JUSTIFY_LEFT);
 
   comp_at_1_event_box = gtk_event_box_new ();
   gtk_widget_set_name (comp_at_1_event_box, "comp_at_1_event_box");
@@ -2314,11 +2337,16 @@ create_window1 (void)
   gtk_widget_show (vbox_2_l);
   gtk_box_pack_start (GTK_BOX (slider_hbox_l), vbox_2_l, TRUE, TRUE, 0);
 
-  label_6_l = gtk_label_new (_("R"));
-  gtk_widget_set_name (label_6_l, "label_6_l");
-  gtk_widget_show (label_6_l);
-  gtk_box_pack_start (GTK_BOX (vbox_2_l), label_6_l, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_6_l), GTK_JUSTIFY_LEFT);
+  comp_re_label_1_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_re_label_1_event_box, "comp_re_label_1_event_box");
+  gtk_widget_show (comp_re_label_1_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_2_l), comp_re_label_1_event_box, FALSE, FALSE, 0);
+
+  comp_re_label_1 = gtk_label_new (_("R"));
+  gtk_widget_set_name (comp_re_label_1, "comp_re_label_1");
+  gtk_widget_show (comp_re_label_1);
+  gtk_container_add (GTK_CONTAINER (comp_re_label_1_event_box), comp_re_label_1);
+  gtk_label_set_justify (GTK_LABEL (comp_re_label_1), GTK_JUSTIFY_LEFT);
 
   comp_re_1_event_box = gtk_event_box_new ();
   gtk_widget_set_name (comp_re_1_event_box, "comp_re_1_event_box");
@@ -2339,11 +2367,16 @@ create_window1 (void)
   gtk_widget_show (vbox_3_l);
   gtk_box_pack_start (GTK_BOX (slider_hbox_l), vbox_3_l, TRUE, TRUE, 0);
 
-  label_2_l = gtk_label_new (_("T"));
-  gtk_widget_set_name (label_2_l, "label_2_l");
-  gtk_widget_show (label_2_l);
-  gtk_box_pack_start (GTK_BOX (vbox_3_l), label_2_l, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_2_l), GTK_JUSTIFY_LEFT);
+  comp_th_label_1_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_th_label_1_event_box, "comp_th_label_1_event_box");
+  gtk_widget_show (comp_th_label_1_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_3_l), comp_th_label_1_event_box, FALSE, FALSE, 0);
+
+  comp_th_label_1 = gtk_label_new (_("T"));
+  gtk_widget_set_name (comp_th_label_1, "comp_th_label_1");
+  gtk_widget_show (comp_th_label_1);
+  gtk_container_add (GTK_CONTAINER (comp_th_label_1_event_box), comp_th_label_1);
+  gtk_label_set_justify (GTK_LABEL (comp_th_label_1), GTK_JUSTIFY_LEFT);
 
   comp_th_1_event_box = gtk_event_box_new ();
   gtk_widget_set_name (comp_th_1_event_box, "comp_th_1_event_box");
@@ -2363,11 +2396,16 @@ create_window1 (void)
   gtk_widget_show (vbox_4_l);
   gtk_box_pack_start (GTK_BOX (slider_hbox_l), vbox_4_l, TRUE, TRUE, 0);
 
-  label_3_l = gtk_label_new (_("r"));
-  gtk_widget_set_name (label_3_l, "label_3_l");
-  gtk_widget_show (label_3_l);
-  gtk_box_pack_start (GTK_BOX (vbox_4_l), label_3_l, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_3_l), GTK_JUSTIFY_LEFT);
+  comp_ra_label_1_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_ra_label_1_event_box, "comp_ra_label_1_event_box");
+  gtk_widget_show (comp_ra_label_1_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_4_l), comp_ra_label_1_event_box, FALSE, FALSE, 0);
+
+  comp_ra_label_1 = gtk_label_new (_("r"));
+  gtk_widget_set_name (comp_ra_label_1, "comp_ra_label_1");
+  gtk_widget_show (comp_ra_label_1);
+  gtk_container_add (GTK_CONTAINER (comp_ra_label_1_event_box), comp_ra_label_1);
+  gtk_label_set_justify (GTK_LABEL (comp_ra_label_1), GTK_JUSTIFY_LEFT);
 
   comp_ra_1_event_box = gtk_event_box_new ();
   gtk_widget_set_name (comp_ra_1_event_box, "comp_ra_1_event_box");
@@ -2387,11 +2425,16 @@ create_window1 (void)
   gtk_widget_show (vbox_5_l);
   gtk_box_pack_start (GTK_BOX (slider_hbox_l), vbox_5_l, TRUE, TRUE, 0);
 
-  label_4_l = gtk_label_new (_("K"));
-  gtk_widget_set_name (label_4_l, "label_4_l");
-  gtk_widget_show (label_4_l);
-  gtk_box_pack_start (GTK_BOX (vbox_5_l), label_4_l, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_4_l), GTK_JUSTIFY_LEFT);
+  comp_kn_label_1_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_kn_label_1_event_box, "comp_kn_label_1_event_box");
+  gtk_widget_show (comp_kn_label_1_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_5_l), comp_kn_label_1_event_box, FALSE, FALSE, 0);
+
+  comp_kn_label_1 = gtk_label_new (_("K"));
+  gtk_widget_set_name (comp_kn_label_1, "comp_kn_label_1");
+  gtk_widget_show (comp_kn_label_1);
+  gtk_container_add (GTK_CONTAINER (comp_kn_label_1_event_box), comp_kn_label_1);
+  gtk_label_set_justify (GTK_LABEL (comp_kn_label_1), GTK_JUSTIFY_LEFT);
 
   comp_kn_1_event_box = gtk_event_box_new ();
   gtk_widget_set_name (comp_kn_1_event_box, "comp_kn_1_event_box");
@@ -2411,11 +2454,16 @@ create_window1 (void)
   gtk_widget_show (vbox_6_l);
   gtk_box_pack_start (GTK_BOX (slider_hbox_l), vbox_6_l, TRUE, TRUE, 0);
 
-  label_5_l = gtk_label_new (_("M"));
-  gtk_widget_set_name (label_5_l, "label_5_l");
-  gtk_widget_show (label_5_l);
-  gtk_box_pack_start (GTK_BOX (vbox_6_l), label_5_l, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_5_l), GTK_JUSTIFY_LEFT);
+  comp_ma_label_1_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_ma_label_1_event_box, "comp_ma_label_1_event_box");
+  gtk_widget_show (comp_ma_label_1_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_6_l), comp_ma_label_1_event_box, FALSE, FALSE, 0);
+
+  comp_ma_label_1 = gtk_label_new (_("M"));
+  gtk_widget_set_name (comp_ma_label_1, "comp_ma_label_1");
+  gtk_widget_show (comp_ma_label_1);
+  gtk_container_add (GTK_CONTAINER (comp_ma_label_1_event_box), comp_ma_label_1);
+  gtk_label_set_justify (GTK_LABEL (comp_ma_label_1), GTK_JUSTIFY_LEFT);
 
   vbox_7_l = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox_7_l, "vbox_7_l");
@@ -2553,11 +2601,16 @@ create_window1 (void)
   gtk_widget_show (vbox_1_m);
   gtk_box_pack_start (GTK_BOX (slider_hbox_m), vbox_1_m, TRUE, TRUE, 0);
 
-  label_1_m = gtk_label_new (_("A"));
-  gtk_widget_set_name (label_1_m, "label_1_m");
-  gtk_widget_show (label_1_m);
-  gtk_box_pack_start (GTK_BOX (vbox_1_m), label_1_m, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_1_m), GTK_JUSTIFY_LEFT);
+  comp_at_label_2_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_at_label_2_event_box, "comp_at_label_2_event_box");
+  gtk_widget_show (comp_at_label_2_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_1_m), comp_at_label_2_event_box, FALSE, FALSE, 0);
+
+  comp_at_label_2 = gtk_label_new (_("A"));
+  gtk_widget_set_name (comp_at_label_2, "comp_at_label_2");
+  gtk_widget_show (comp_at_label_2);
+  gtk_container_add (GTK_CONTAINER (comp_at_label_2_event_box), comp_at_label_2);
+  gtk_label_set_justify (GTK_LABEL (comp_at_label_2), GTK_JUSTIFY_LEFT);
 
   comp_at_2_event_box = gtk_event_box_new ();
   gtk_widget_set_name (comp_at_2_event_box, "comp_at_2_event_box");
@@ -2578,11 +2631,16 @@ create_window1 (void)
   gtk_widget_show (vbox_2_m);
   gtk_box_pack_start (GTK_BOX (slider_hbox_m), vbox_2_m, TRUE, TRUE, 0);
 
-  label_6_m = gtk_label_new (_("R"));
-  gtk_widget_set_name (label_6_m, "label_6_m");
-  gtk_widget_show (label_6_m);
-  gtk_box_pack_start (GTK_BOX (vbox_2_m), label_6_m, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_6_m), GTK_JUSTIFY_LEFT);
+  comp_re_label_2_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_re_label_2_event_box, "comp_re_label_2_event_box");
+  gtk_widget_show (comp_re_label_2_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_2_m), comp_re_label_2_event_box, FALSE, FALSE, 0);
+
+  comp_re_label_2 = gtk_label_new (_("R"));
+  gtk_widget_set_name (comp_re_label_2, "comp_re_label_2");
+  gtk_widget_show (comp_re_label_2);
+  gtk_container_add (GTK_CONTAINER (comp_re_label_2_event_box), comp_re_label_2);
+  gtk_label_set_justify (GTK_LABEL (comp_re_label_2), GTK_JUSTIFY_LEFT);
 
   comp_re_2_event_box = gtk_event_box_new ();
   gtk_widget_set_name (comp_re_2_event_box, "comp_re_2_event_box");
@@ -2603,11 +2661,16 @@ create_window1 (void)
   gtk_widget_show (vbox_3_m);
   gtk_box_pack_start (GTK_BOX (slider_hbox_m), vbox_3_m, TRUE, TRUE, 0);
 
-  label_2_m = gtk_label_new (_("T"));
-  gtk_widget_set_name (label_2_m, "label_2_m");
-  gtk_widget_show (label_2_m);
-  gtk_box_pack_start (GTK_BOX (vbox_3_m), label_2_m, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_2_m), GTK_JUSTIFY_LEFT);
+  comp_th_label_2_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_th_label_2_event_box, "comp_th_label_2_event_box");
+  gtk_widget_show (comp_th_label_2_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_3_m), comp_th_label_2_event_box, FALSE, FALSE, 0);
+
+  comp_th_label_2 = gtk_label_new (_("T"));
+  gtk_widget_set_name (comp_th_label_2, "comp_th_label_2");
+  gtk_widget_show (comp_th_label_2);
+  gtk_container_add (GTK_CONTAINER (comp_th_label_2_event_box), comp_th_label_2);
+  gtk_label_set_justify (GTK_LABEL (comp_th_label_2), GTK_JUSTIFY_LEFT);
 
   comp_th_2_event_box = gtk_event_box_new ();
   gtk_widget_set_name (comp_th_2_event_box, "comp_th_2_event_box");
@@ -2627,11 +2690,16 @@ create_window1 (void)
   gtk_widget_show (vbox_4_m);
   gtk_box_pack_start (GTK_BOX (slider_hbox_m), vbox_4_m, TRUE, TRUE, 0);
 
-  label_3_m = gtk_label_new (_("r"));
-  gtk_widget_set_name (label_3_m, "label_3_m");
-  gtk_widget_show (label_3_m);
-  gtk_box_pack_start (GTK_BOX (vbox_4_m), label_3_m, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_3_m), GTK_JUSTIFY_LEFT);
+  comp_ra_label_2_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_ra_label_2_event_box, "comp_ra_label_2_event_box");
+  gtk_widget_show (comp_ra_label_2_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_4_m), comp_ra_label_2_event_box, FALSE, FALSE, 0);
+
+  comp_ra_label_2 = gtk_label_new (_("r"));
+  gtk_widget_set_name (comp_ra_label_2, "comp_ra_label_2");
+  gtk_widget_show (comp_ra_label_2);
+  gtk_container_add (GTK_CONTAINER (comp_ra_label_2_event_box), comp_ra_label_2);
+  gtk_label_set_justify (GTK_LABEL (comp_ra_label_2), GTK_JUSTIFY_LEFT);
 
   comp_ra_2_event_box = gtk_event_box_new ();
   gtk_widget_set_name (comp_ra_2_event_box, "comp_ra_2_event_box");
@@ -2651,11 +2719,16 @@ create_window1 (void)
   gtk_widget_show (vbox_5_m);
   gtk_box_pack_start (GTK_BOX (slider_hbox_m), vbox_5_m, TRUE, TRUE, 0);
 
-  label_4_m = gtk_label_new (_("K"));
-  gtk_widget_set_name (label_4_m, "label_4_m");
-  gtk_widget_show (label_4_m);
-  gtk_box_pack_start (GTK_BOX (vbox_5_m), label_4_m, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_4_m), GTK_JUSTIFY_LEFT);
+  comp_kn_label_2_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_kn_label_2_event_box, "comp_kn_label_2_event_box");
+  gtk_widget_show (comp_kn_label_2_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_5_m), comp_kn_label_2_event_box, FALSE, FALSE, 0);
+
+  comp_kn_label_2 = gtk_label_new (_("K"));
+  gtk_widget_set_name (comp_kn_label_2, "comp_kn_label_2");
+  gtk_widget_show (comp_kn_label_2);
+  gtk_container_add (GTK_CONTAINER (comp_kn_label_2_event_box), comp_kn_label_2);
+  gtk_label_set_justify (GTK_LABEL (comp_kn_label_2), GTK_JUSTIFY_LEFT);
 
   comp_kn_2_event_box = gtk_event_box_new ();
   gtk_widget_set_name (comp_kn_2_event_box, "comp_kn_2_event_box");
@@ -2675,11 +2748,16 @@ create_window1 (void)
   gtk_widget_show (vbox_6_m);
   gtk_box_pack_start (GTK_BOX (slider_hbox_m), vbox_6_m, TRUE, TRUE, 0);
 
-  label_5_m = gtk_label_new (_("M"));
-  gtk_widget_set_name (label_5_m, "label_5_m");
-  gtk_widget_show (label_5_m);
-  gtk_box_pack_start (GTK_BOX (vbox_6_m), label_5_m, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_5_m), GTK_JUSTIFY_LEFT);
+  comp_ma_label_2_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_ma_label_2_event_box, "comp_ma_label_2_event_box");
+  gtk_widget_show (comp_ma_label_2_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_6_m), comp_ma_label_2_event_box, FALSE, FALSE, 0);
+
+  comp_ma_label_2 = gtk_label_new (_("M"));
+  gtk_widget_set_name (comp_ma_label_2, "comp_ma_label_2");
+  gtk_widget_show (comp_ma_label_2);
+  gtk_container_add (GTK_CONTAINER (comp_ma_label_2_event_box), comp_ma_label_2);
+  gtk_label_set_justify (GTK_LABEL (comp_ma_label_2), GTK_JUSTIFY_LEFT);
 
   vbox_7_m = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox_7_m, "vbox_7_m");
@@ -2817,11 +2895,16 @@ create_window1 (void)
   gtk_widget_show (vbox_1_h);
   gtk_box_pack_start (GTK_BOX (slider_hbox_h), vbox_1_h, TRUE, TRUE, 0);
 
-  label_1_h = gtk_label_new (_("A"));
-  gtk_widget_set_name (label_1_h, "label_1_h");
-  gtk_widget_show (label_1_h);
-  gtk_box_pack_start (GTK_BOX (vbox_1_h), label_1_h, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_1_h), GTK_JUSTIFY_LEFT);
+  comp_at_label_3_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_at_label_3_event_box, "comp_at_label_3_event_box");
+  gtk_widget_show (comp_at_label_3_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_1_h), comp_at_label_3_event_box, FALSE, FALSE, 0);
+
+  comp_at_label_3 = gtk_label_new (_("A"));
+  gtk_widget_set_name (comp_at_label_3, "comp_at_label_3");
+  gtk_widget_show (comp_at_label_3);
+  gtk_container_add (GTK_CONTAINER (comp_at_label_3_event_box), comp_at_label_3);
+  gtk_label_set_justify (GTK_LABEL (comp_at_label_3), GTK_JUSTIFY_LEFT);
 
   comp_at_3_event_box = gtk_event_box_new ();
   gtk_widget_set_name (comp_at_3_event_box, "comp_at_3_event_box");
@@ -2842,11 +2925,16 @@ create_window1 (void)
   gtk_widget_show (vbox_2_h);
   gtk_box_pack_start (GTK_BOX (slider_hbox_h), vbox_2_h, TRUE, TRUE, 0);
 
-  label_6_h = gtk_label_new (_("R"));
-  gtk_widget_set_name (label_6_h, "label_6_h");
-  gtk_widget_show (label_6_h);
-  gtk_box_pack_start (GTK_BOX (vbox_2_h), label_6_h, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_6_h), GTK_JUSTIFY_LEFT);
+  comp_re_label_3_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_re_label_3_event_box, "comp_re_label_3_event_box");
+  gtk_widget_show (comp_re_label_3_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_2_h), comp_re_label_3_event_box, FALSE, FALSE, 0);
+
+  comp_re_label_3 = gtk_label_new (_("R"));
+  gtk_widget_set_name (comp_re_label_3, "comp_re_label_3");
+  gtk_widget_show (comp_re_label_3);
+  gtk_container_add (GTK_CONTAINER (comp_re_label_3_event_box), comp_re_label_3);
+  gtk_label_set_justify (GTK_LABEL (comp_re_label_3), GTK_JUSTIFY_LEFT);
 
   comp_re_3_event_box = gtk_event_box_new ();
   gtk_widget_set_name (comp_re_3_event_box, "comp_re_3_event_box");
@@ -2867,11 +2955,16 @@ create_window1 (void)
   gtk_widget_show (vbox_3_h);
   gtk_box_pack_start (GTK_BOX (slider_hbox_h), vbox_3_h, TRUE, TRUE, 0);
 
-  label_2_h = gtk_label_new (_("T"));
-  gtk_widget_set_name (label_2_h, "label_2_h");
-  gtk_widget_show (label_2_h);
-  gtk_box_pack_start (GTK_BOX (vbox_3_h), label_2_h, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_2_h), GTK_JUSTIFY_LEFT);
+  comp_th_label_3_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_th_label_3_event_box, "comp_th_label_3_event_box");
+  gtk_widget_show (comp_th_label_3_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_3_h), comp_th_label_3_event_box, FALSE, FALSE, 0);
+
+  comp_th_label_3 = gtk_label_new (_("T"));
+  gtk_widget_set_name (comp_th_label_3, "comp_th_label_3");
+  gtk_widget_show (comp_th_label_3);
+  gtk_container_add (GTK_CONTAINER (comp_th_label_3_event_box), comp_th_label_3);
+  gtk_label_set_justify (GTK_LABEL (comp_th_label_3), GTK_JUSTIFY_LEFT);
 
   comp_th_3_event_box = gtk_event_box_new ();
   gtk_widget_set_name (comp_th_3_event_box, "comp_th_3_event_box");
@@ -2891,11 +2984,16 @@ create_window1 (void)
   gtk_widget_show (vbox_4_h);
   gtk_box_pack_start (GTK_BOX (slider_hbox_h), vbox_4_h, TRUE, TRUE, 0);
 
-  label_3_h = gtk_label_new (_("r"));
-  gtk_widget_set_name (label_3_h, "label_3_h");
-  gtk_widget_show (label_3_h);
-  gtk_box_pack_start (GTK_BOX (vbox_4_h), label_3_h, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_3_h), GTK_JUSTIFY_LEFT);
+  comp_ra_label_3_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_ra_label_3_event_box, "comp_ra_label_3_event_box");
+  gtk_widget_show (comp_ra_label_3_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_4_h), comp_ra_label_3_event_box, FALSE, FALSE, 0);
+
+  comp_ra_label_3 = gtk_label_new (_("r"));
+  gtk_widget_set_name (comp_ra_label_3, "comp_ra_label_3");
+  gtk_widget_show (comp_ra_label_3);
+  gtk_container_add (GTK_CONTAINER (comp_ra_label_3_event_box), comp_ra_label_3);
+  gtk_label_set_justify (GTK_LABEL (comp_ra_label_3), GTK_JUSTIFY_LEFT);
 
   comp_ra_3_event_box = gtk_event_box_new ();
   gtk_widget_set_name (comp_ra_3_event_box, "comp_ra_3_event_box");
@@ -2915,11 +3013,16 @@ create_window1 (void)
   gtk_widget_show (vbox_5_h);
   gtk_box_pack_start (GTK_BOX (slider_hbox_h), vbox_5_h, TRUE, TRUE, 0);
 
-  label_4_h = gtk_label_new (_("K"));
-  gtk_widget_set_name (label_4_h, "label_4_h");
-  gtk_widget_show (label_4_h);
-  gtk_box_pack_start (GTK_BOX (vbox_5_h), label_4_h, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_4_h), GTK_JUSTIFY_LEFT);
+  comp_kn_label_3_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_kn_label_3_event_box, "comp_kn_label_3_event_box");
+  gtk_widget_show (comp_kn_label_3_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_5_h), comp_kn_label_3_event_box, FALSE, FALSE, 0);
+
+  comp_kn_label_3 = gtk_label_new (_("K"));
+  gtk_widget_set_name (comp_kn_label_3, "comp_kn_label_3");
+  gtk_widget_show (comp_kn_label_3);
+  gtk_container_add (GTK_CONTAINER (comp_kn_label_3_event_box), comp_kn_label_3);
+  gtk_label_set_justify (GTK_LABEL (comp_kn_label_3), GTK_JUSTIFY_LEFT);
 
   comp_kn_3_event_box = gtk_event_box_new ();
   gtk_widget_set_name (comp_kn_3_event_box, "comp_kn_3_event_box");
@@ -2939,11 +3042,16 @@ create_window1 (void)
   gtk_widget_show (vbox_6_h);
   gtk_box_pack_start (GTK_BOX (slider_hbox_h), vbox_6_h, TRUE, TRUE, 0);
 
-  label_5_h = gtk_label_new (_("M"));
-  gtk_widget_set_name (label_5_h, "label_5_h");
-  gtk_widget_show (label_5_h);
-  gtk_box_pack_start (GTK_BOX (vbox_6_h), label_5_h, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label_5_h), GTK_JUSTIFY_LEFT);
+  comp_ma_label_3_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (comp_ma_label_3_event_box, "comp_ma_label_3_event_box");
+  gtk_widget_show (comp_ma_label_3_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox_6_h), comp_ma_label_3_event_box, FALSE, FALSE, 0);
+
+  comp_ma_label_3 = gtk_label_new (_("M"));
+  gtk_widget_set_name (comp_ma_label_3, "comp_ma_label_3");
+  gtk_widget_show (comp_ma_label_3);
+  gtk_container_add (GTK_CONTAINER (comp_ma_label_3_event_box), comp_ma_label_3);
+  gtk_label_set_justify (GTK_LABEL (comp_ma_label_3), GTK_JUSTIFY_LEFT);
 
   vbox_7_h = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox_7_h, "vbox_7_h");
@@ -3605,20 +3713,38 @@ create_window1 (void)
   g_signal_connect ((gpointer) comp_l_event_box, "enter_notify_event",
                     G_CALLBACK (on_comp_event_box_enter_notify_event),
                     NULL);
+  g_signal_connect ((gpointer) comp_at_label_1_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_at_label_1_event_box_button_press_event),
+                    NULL);
   g_signal_connect ((gpointer) comp_at_1, "button_press_event",
                     G_CALLBACK (scene_warning),
+                    NULL);
+  g_signal_connect ((gpointer) comp_re_label_1_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_re_label_1_event_box_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) comp_re_1, "button_press_event",
                     G_CALLBACK (scene_warning),
                     NULL);
+  g_signal_connect ((gpointer) comp_th_label_1_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_th_label_1_event_box_button_press_event),
+                    NULL);
   g_signal_connect ((gpointer) comp_th_1, "button_press_event",
                     G_CALLBACK (scene_warning),
+                    NULL);
+  g_signal_connect ((gpointer) comp_ra_label_1_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_ra_label_1_event_box_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) comp_ra_1, "button_press_event",
                     G_CALLBACK (scene_warning),
                     NULL);
+  g_signal_connect ((gpointer) comp_kn_label_1_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_kn_label_1_event_box_button_press_event),
+                    NULL);
   g_signal_connect ((gpointer) comp_kn_1, "button_press_event",
                     G_CALLBACK (scene_warning),
+                    NULL);
+  g_signal_connect ((gpointer) comp_ma_label_1_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_ma_label_1_event_box_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) comp_ma_1, "button_press_event",
                     G_CALLBACK (scene_warning),
@@ -3659,20 +3785,38 @@ create_window1 (void)
   g_signal_connect ((gpointer) comp_m_event_box, "enter_notify_event",
                     G_CALLBACK (on_comp_event_box_enter_notify_event),
                     NULL);
+  g_signal_connect ((gpointer) comp_at_label_2_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_at_label_2_event_box_button_press_event),
+                    NULL);
   g_signal_connect ((gpointer) comp_at_2, "button_press_event",
                     G_CALLBACK (scene_warning),
+                    NULL);
+  g_signal_connect ((gpointer) comp_re_label_2_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_re_label_2_event_box_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) comp_re_2, "button_press_event",
                     G_CALLBACK (scene_warning),
                     NULL);
+  g_signal_connect ((gpointer) comp_th_label_2_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_th_label_2_event_box_button_press_event),
+                    NULL);
   g_signal_connect ((gpointer) comp_th_2, "button_press_event",
                     G_CALLBACK (scene_warning),
+                    NULL);
+  g_signal_connect ((gpointer) comp_ra_label_2_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_ra_label_2_event_box_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) comp_ra_2, "button_press_event",
                     G_CALLBACK (scene_warning),
                     NULL);
+  g_signal_connect ((gpointer) comp_kn_label_2_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_kn_label_2_event_box_button_press_event),
+                    NULL);
   g_signal_connect ((gpointer) comp_kn_2, "button_press_event",
                     G_CALLBACK (scene_warning),
+                    NULL);
+  g_signal_connect ((gpointer) comp_ma_label_2_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_ma_label_2_event_box_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) comp_ma_2, "button_press_event",
                     G_CALLBACK (scene_warning),
@@ -3713,20 +3857,38 @@ create_window1 (void)
   g_signal_connect ((gpointer) comp_h_event_box, "enter_notify_event",
                     G_CALLBACK (on_comp_event_box_enter_notify_event),
                     NULL);
+  g_signal_connect ((gpointer) comp_at_label_3_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_at_label_3_event_box_button_press_event),
+                    NULL);
   g_signal_connect ((gpointer) comp_at_3, "button_press_event",
                     G_CALLBACK (scene_warning),
+                    NULL);
+  g_signal_connect ((gpointer) comp_re_label_3_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_re_label_3_event_box_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) comp_re_3, "button_press_event",
                     G_CALLBACK (scene_warning),
                     NULL);
+  g_signal_connect ((gpointer) comp_th_label_3_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_th_label_3_event_box_button_press_event),
+                    NULL);
   g_signal_connect ((gpointer) comp_th_3, "button_press_event",
                     G_CALLBACK (scene_warning),
+                    NULL);
+  g_signal_connect ((gpointer) comp_ra_label_3_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_ra_label_3_event_box_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) comp_ra_3, "button_press_event",
                     G_CALLBACK (scene_warning),
                     NULL);
+  g_signal_connect ((gpointer) comp_kn_label_3_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_kn_label_3_event_box_button_press_event),
+                    NULL);
   g_signal_connect ((gpointer) comp_kn_3, "button_press_event",
                     G_CALLBACK (scene_warning),
+                    NULL);
+  g_signal_connect ((gpointer) comp_ma_label_3_event_box, "button_press_event",
+                    G_CALLBACK (on_comp_ma_label_3_event_box_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) comp_ma_3, "button_press_event",
                     G_CALLBACK (scene_warning),
@@ -4113,27 +4275,33 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, comp_l, "comp_l");
   GLADE_HOOKUP_OBJECT (window1, slider_hbox_l, "slider_hbox_l");
   GLADE_HOOKUP_OBJECT (window1, vbox_1_l, "vbox_1_l");
-  GLADE_HOOKUP_OBJECT (window1, label_1_l, "label_1_l");
+  GLADE_HOOKUP_OBJECT (window1, comp_at_label_1_event_box, "comp_at_label_1_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_at_label_1, "comp_at_label_1");
   GLADE_HOOKUP_OBJECT (window1, comp_at_1_event_box, "comp_at_1_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_at_1, "comp_at_1");
   GLADE_HOOKUP_OBJECT (window1, vbox_2_l, "vbox_2_l");
-  GLADE_HOOKUP_OBJECT (window1, label_6_l, "label_6_l");
+  GLADE_HOOKUP_OBJECT (window1, comp_re_label_1_event_box, "comp_re_label_1_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_re_label_1, "comp_re_label_1");
   GLADE_HOOKUP_OBJECT (window1, comp_re_1_event_box, "comp_re_1_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_re_1, "comp_re_1");
   GLADE_HOOKUP_OBJECT (window1, vbox_3_l, "vbox_3_l");
-  GLADE_HOOKUP_OBJECT (window1, label_2_l, "label_2_l");
+  GLADE_HOOKUP_OBJECT (window1, comp_th_label_1_event_box, "comp_th_label_1_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_th_label_1, "comp_th_label_1");
   GLADE_HOOKUP_OBJECT (window1, comp_th_1_event_box, "comp_th_1_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_th_1, "comp_th_1");
   GLADE_HOOKUP_OBJECT (window1, vbox_4_l, "vbox_4_l");
-  GLADE_HOOKUP_OBJECT (window1, label_3_l, "label_3_l");
+  GLADE_HOOKUP_OBJECT (window1, comp_ra_label_1_event_box, "comp_ra_label_1_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_ra_label_1, "comp_ra_label_1");
   GLADE_HOOKUP_OBJECT (window1, comp_ra_1_event_box, "comp_ra_1_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_ra_1, "comp_ra_1");
   GLADE_HOOKUP_OBJECT (window1, vbox_5_l, "vbox_5_l");
-  GLADE_HOOKUP_OBJECT (window1, label_4_l, "label_4_l");
+  GLADE_HOOKUP_OBJECT (window1, comp_kn_label_1_event_box, "comp_kn_label_1_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_kn_label_1, "comp_kn_label_1");
   GLADE_HOOKUP_OBJECT (window1, comp_kn_1_event_box, "comp_kn_1_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_kn_1, "comp_kn_1");
   GLADE_HOOKUP_OBJECT (window1, vbox_6_l, "vbox_6_l");
-  GLADE_HOOKUP_OBJECT (window1, label_5_l, "label_5_l");
+  GLADE_HOOKUP_OBJECT (window1, comp_ma_label_1_event_box, "comp_ma_label_1_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_ma_label_1, "comp_ma_label_1");
   GLADE_HOOKUP_OBJECT (window1, vbox_7_l, "vbox_7_l");
   GLADE_HOOKUP_OBJECT (window1, eventbox_1_l, "eventbox_1_l");
   GLADE_HOOKUP_OBJECT (window1, comp_ma_1, "comp_ma_1");
@@ -4156,27 +4324,33 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, comp_m, "comp_m");
   GLADE_HOOKUP_OBJECT (window1, slider_hbox_m, "slider_hbox_m");
   GLADE_HOOKUP_OBJECT (window1, vbox_1_m, "vbox_1_m");
-  GLADE_HOOKUP_OBJECT (window1, label_1_m, "label_1_m");
+  GLADE_HOOKUP_OBJECT (window1, comp_at_label_2_event_box, "comp_at_label_2_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_at_label_2, "comp_at_label_2");
   GLADE_HOOKUP_OBJECT (window1, comp_at_2_event_box, "comp_at_2_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_at_2, "comp_at_2");
   GLADE_HOOKUP_OBJECT (window1, vbox_2_m, "vbox_2_m");
-  GLADE_HOOKUP_OBJECT (window1, label_6_m, "label_6_m");
+  GLADE_HOOKUP_OBJECT (window1, comp_re_label_2_event_box, "comp_re_label_2_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_re_label_2, "comp_re_label_2");
   GLADE_HOOKUP_OBJECT (window1, comp_re_2_event_box, "comp_re_2_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_re_2, "comp_re_2");
   GLADE_HOOKUP_OBJECT (window1, vbox_3_m, "vbox_3_m");
-  GLADE_HOOKUP_OBJECT (window1, label_2_m, "label_2_m");
+  GLADE_HOOKUP_OBJECT (window1, comp_th_label_2_event_box, "comp_th_label_2_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_th_label_2, "comp_th_label_2");
   GLADE_HOOKUP_OBJECT (window1, comp_th_2_event_box, "comp_th_2_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_th_2, "comp_th_2");
   GLADE_HOOKUP_OBJECT (window1, vbox_4_m, "vbox_4_m");
-  GLADE_HOOKUP_OBJECT (window1, label_3_m, "label_3_m");
+  GLADE_HOOKUP_OBJECT (window1, comp_ra_label_2_event_box, "comp_ra_label_2_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_ra_label_2, "comp_ra_label_2");
   GLADE_HOOKUP_OBJECT (window1, comp_ra_2_event_box, "comp_ra_2_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_ra_2, "comp_ra_2");
   GLADE_HOOKUP_OBJECT (window1, vbox_5_m, "vbox_5_m");
-  GLADE_HOOKUP_OBJECT (window1, label_4_m, "label_4_m");
+  GLADE_HOOKUP_OBJECT (window1, comp_kn_label_2_event_box, "comp_kn_label_2_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_kn_label_2, "comp_kn_label_2");
   GLADE_HOOKUP_OBJECT (window1, comp_kn_2_event_box, "comp_kn_2_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_kn_2, "comp_kn_2");
   GLADE_HOOKUP_OBJECT (window1, vbox_6_m, "vbox_6_m");
-  GLADE_HOOKUP_OBJECT (window1, label_5_m, "label_5_m");
+  GLADE_HOOKUP_OBJECT (window1, comp_ma_label_2_event_box, "comp_ma_label_2_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_ma_label_2, "comp_ma_label_2");
   GLADE_HOOKUP_OBJECT (window1, vbox_7_m, "vbox_7_m");
   GLADE_HOOKUP_OBJECT (window1, eventbox_1_m, "eventbox_1_m");
   GLADE_HOOKUP_OBJECT (window1, comp_ma_2, "comp_ma_2");
@@ -4199,27 +4373,33 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, comp_h, "comp_h");
   GLADE_HOOKUP_OBJECT (window1, slider_hbox_h, "slider_hbox_h");
   GLADE_HOOKUP_OBJECT (window1, vbox_1_h, "vbox_1_h");
-  GLADE_HOOKUP_OBJECT (window1, label_1_h, "label_1_h");
+  GLADE_HOOKUP_OBJECT (window1, comp_at_label_3_event_box, "comp_at_label_3_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_at_label_3, "comp_at_label_3");
   GLADE_HOOKUP_OBJECT (window1, comp_at_3_event_box, "comp_at_3_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_at_3, "comp_at_3");
   GLADE_HOOKUP_OBJECT (window1, vbox_2_h, "vbox_2_h");
-  GLADE_HOOKUP_OBJECT (window1, label_6_h, "label_6_h");
+  GLADE_HOOKUP_OBJECT (window1, comp_re_label_3_event_box, "comp_re_label_3_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_re_label_3, "comp_re_label_3");
   GLADE_HOOKUP_OBJECT (window1, comp_re_3_event_box, "comp_re_3_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_re_3, "comp_re_3");
   GLADE_HOOKUP_OBJECT (window1, vbox_3_h, "vbox_3_h");
-  GLADE_HOOKUP_OBJECT (window1, label_2_h, "label_2_h");
+  GLADE_HOOKUP_OBJECT (window1, comp_th_label_3_event_box, "comp_th_label_3_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_th_label_3, "comp_th_label_3");
   GLADE_HOOKUP_OBJECT (window1, comp_th_3_event_box, "comp_th_3_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_th_3, "comp_th_3");
   GLADE_HOOKUP_OBJECT (window1, vbox_4_h, "vbox_4_h");
-  GLADE_HOOKUP_OBJECT (window1, label_3_h, "label_3_h");
+  GLADE_HOOKUP_OBJECT (window1, comp_ra_label_3_event_box, "comp_ra_label_3_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_ra_label_3, "comp_ra_label_3");
   GLADE_HOOKUP_OBJECT (window1, comp_ra_3_event_box, "comp_ra_3_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_ra_3, "comp_ra_3");
   GLADE_HOOKUP_OBJECT (window1, vbox_5_h, "vbox_5_h");
-  GLADE_HOOKUP_OBJECT (window1, label_4_h, "label_4_h");
+  GLADE_HOOKUP_OBJECT (window1, comp_kn_label_3_event_box, "comp_kn_label_3_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_kn_label_3, "comp_kn_label_3");
   GLADE_HOOKUP_OBJECT (window1, comp_kn_3_event_box, "comp_kn_3_event_box");
   GLADE_HOOKUP_OBJECT (window1, comp_kn_3, "comp_kn_3");
   GLADE_HOOKUP_OBJECT (window1, vbox_6_h, "vbox_6_h");
-  GLADE_HOOKUP_OBJECT (window1, label_5_h, "label_5_h");
+  GLADE_HOOKUP_OBJECT (window1, comp_ma_label_3_event_box, "comp_ma_label_3_event_box");
+  GLADE_HOOKUP_OBJECT (window1, comp_ma_label_3, "comp_ma_label_3");
   GLADE_HOOKUP_OBJECT (window1, vbox_7_h, "vbox_7_h");
   GLADE_HOOKUP_OBJECT (window1, eventbox_1_h, "eventbox_1_h");
   GLADE_HOOKUP_OBJECT (window1, comp_ma_3, "comp_ma_3");

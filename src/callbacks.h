@@ -861,3 +861,111 @@ gboolean
 reset_range                            (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
+
+gboolean
+on_comp_at_label_1_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_re_label_1_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_th_label_1_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_ra_label_1_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_kn_label_1_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_ma_label_1_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_at_label_2_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_re_label_2_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_th_label_2_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_ra_label_2_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_kn_label_2_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_ma_label_2_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_at_label_3_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_re_label_3_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_th_label_3_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_ra_label_3_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_kn_label_3_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_comp_ma_label_3_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);

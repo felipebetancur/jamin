@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: compressor-ui.h,v 1.5 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: compressor-ui.h,v 1.6 2004/01/18 11:28:54 jdepner Exp $
  */
 
 #ifndef COMPRESSOR_UI_H
@@ -22,5 +22,11 @@
 void bind_compressors();
 void compressor_meters_update();
 void comp_set_auto(int band, int state);
+void comp_gang_at (int band);
+void comp_gang_re (int band);
+void comp_gang_th (int band);
+void comp_gang_ra (int band);
+void comp_gang_kn (int band);
+void comp_gang_ma (int band);
 
 #endif

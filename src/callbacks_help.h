@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.19 2004/01/18 01:46:55 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.20 2004/01/18 11:28:54 jdepner Exp $
  */
 
 char general_help[] = {
@@ -83,7 +83,10 @@ guide to using the HDEQ:\n\n\
     In the background window - left click and release to begin drawing the \
 curve.  Left click again to end the curve.  You can define any portion of the \
 curve, you don't have to define the entire curve.  Drawing is only allowed \
-from left to right.\n\n\
+from left to right.  You can discard the curve that you are drawing by \
+clicking the middle or right buttons.  Clicking the right mouse button in the \
+HDEQ when not drawing a curve will reset all EQ and notch values to their \
+original (flat) settings.\n\n\
     Over the crossover bar handles - left click and hold to drag the \
 crossover bars.\n\n\
     Over the notch handles - left click and hold to drag the notch center or \

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.124 2004/01/18 01:46:55 jdepner Exp $
+ *  $Id: callbacks.c,v 1.125 2004/01/18 11:28:54 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1687,3 +1687,256 @@ reset_range                            (GtkWidget       *widget,
 
   return FALSE;
 }
+
+
+gboolean
+on_comp_at_label_1_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_at (0);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_re_label_1_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_re (0);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_th_label_1_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_th (0);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_ra_label_1_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_ra (0);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_kn_label_1_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_kn (0);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_ma_label_1_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_ma (0);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_at_label_2_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_at (1);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_re_label_2_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_re (1);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_th_label_2_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_th (1);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_ra_label_2_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_ra (1);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_kn_label_2_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_kn (1);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_ma_label_2_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_ma (1);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_at_label_3_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_at (2);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_re_label_3_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_re (2);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_th_label_3_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_th (2);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_ra_label_3_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_ra (2);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_kn_label_3_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_kn (2);
+
+  return FALSE;
+}
+
+
+gboolean
+on_comp_ma_label_3_event_box_button_press_event
+                                        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  comp_gang_ma (2);
+
+  return FALSE;
+}
+

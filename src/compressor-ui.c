@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: compressor-ui.c,v 1.15 2003/11/21 13:09:39 jdepner Exp $
+ *  $Id: compressor-ui.c,v 1.16 2004/01/18 11:28:54 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -25,6 +25,8 @@
 #include "gtkmeter.h"
 #include "state.h"
 #include "scenes.h"
+#include "hdeq.h"
+
 
 #define MUG_CORR_FACT 0.4f /* makeup gain correction factor - dampens the
 			      makeup gain correction to stop it over
@@ -53,6 +55,20 @@ static int auto_gain[XO_BANDS];
 static GtkMeter *le_meter[XO_BANDS], *ga_meter[XO_BANDS];
 static GtkAdjustment *le_meter_adj[XO_BANDS], *ga_meter_adj[XO_BANDS];
 
+static GtkLabel *lab_at[XO_BANDS];
+static GtkLabel *lab_re[XO_BANDS];
+static GtkLabel *lab_th[XO_BANDS];
+static GtkLabel *lab_ra[XO_BANDS];
+static GtkLabel *lab_kn[XO_BANDS];
+static GtkLabel *lab_ma[XO_BANDS];
+static gboolean gang_at[XO_BANDS];
+static gboolean gang_re[XO_BANDS];
+static gboolean gang_th[XO_BANDS];
+static gboolean gang_ra[XO_BANDS];
+static gboolean gang_kn[XO_BANDS];
+static gboolean gang_ma[XO_BANDS];
+
+
 #define connect_scale(sym, i, member, state_id) \
 	snprintf(name, 255, "comp_" # sym "_%d", i+1); \
 	scale = lookup_widget(main_window, name); \
@@ -71,7 +87,28 @@ void bind_compressors()
     char name[256];
     int i;
 
+
     for (i=0; i<XO_BANDS; i++) {
+        gang_at[i] = FALSE;
+        gang_re[i] = FALSE;
+        gang_th[i] = FALSE;
+        gang_ra[i] = FALSE;
+        gang_kn[i] = FALSE;
+        gang_ma[i] = FALSE;
+
+	snprintf(name, 255, "comp_at_label_%d", i+1);
+	lab_at[i] = GTK_LABEL(lookup_widget(main_window, name));
+	snprintf(name, 255, "comp_re_label_%d", i+1);
+	lab_re[i] = GTK_LABEL(lookup_widget(main_window, name));
+	snprintf(name, 255, "comp_th_label_%d", i+1);
+	lab_th[i] = GTK_LABEL(lookup_widget(main_window, name));
+	snprintf(name, 255, "comp_ra_label_%d", i+1);
+	lab_ra[i] = GTK_LABEL(lookup_widget(main_window, name));
+	snprintf(name, 255, "comp_kn_label_%d", i+1);
+	lab_kn[i] = GTK_LABEL(lookup_widget(main_window, name));
+	snprintf(name, 255, "comp_ma_label_%d", i+1);
+	lab_ma[i] = GTK_LABEL(lookup_widget(main_window, name));
+        
 	snprintf(name, 255, "comp_le_%d", i+1);
 	le_meter[i] = GTK_METER(lookup_widget(main_window, name));
 	le_meter_adj[i] = gtk_meter_get_adjustment(le_meter[i]);
@@ -180,6 +217,101 @@ void comp_set_auto(int band, int state)
 comp_settings comp_get_settings(int band)
 {
     return (compressors[band]);
+}
+
+void comp_gang_at (int band)
+{
+  if (gang_at[band])
+    {
+      gang_at[band] = FALSE;
+      gtk_widget_modify_fg ((GtkWidget *) lab_at[band], GTK_STATE_NORMAL, 
+                            get_band_color (3));
+    }
+  else
+    {
+      gang_at[band] = TRUE;
+      gtk_widget_modify_fg ((GtkWidget *) lab_at[band], GTK_STATE_NORMAL, 
+                            get_band_color (band));
+    }
+}
+
+void comp_gang_re (int band)
+{
+  if (gang_re[band])
+    {
+      gang_re[band] = FALSE;
+      gtk_widget_modify_fg ((GtkWidget *) lab_re[band], GTK_STATE_NORMAL, 
+                            get_band_color (3));
+    }
+  else
+    {
+      gang_re[band] = TRUE;
+      gtk_widget_modify_fg ((GtkWidget *) lab_re[band], GTK_STATE_NORMAL, 
+                            get_band_color (band));
+    }
+}
+
+void comp_gang_th (int band)
+{
+  if (gang_th[band])
+    {
+      gang_th[band] = FALSE;
+      gtk_widget_modify_fg ((GtkWidget *) lab_th[band], GTK_STATE_NORMAL, 
+                            get_band_color (3));
+    }
+  else
+    {
+      gang_th[band] = TRUE;
+      gtk_widget_modify_fg ((GtkWidget *) lab_th[band], GTK_STATE_NORMAL, 
+                            get_band_color (band));
+    }
+}
+
+void comp_gang_ra (int band)
+{
+  if (gang_ra[band])
+    {
+      gang_ra[band] = FALSE;
+      gtk_widget_modify_fg ((GtkWidget *) lab_ra[band], GTK_STATE_NORMAL, 
+                            get_band_color (3));
+    }
+  else
+    {
+      gang_ra[band] = TRUE;
+      gtk_widget_modify_fg ((GtkWidget *) lab_ra[band], GTK_STATE_NORMAL, 
+                            get_band_color (band));
+    }
+}
+void comp_gang_kn (int band)
+{
+  if (gang_kn[band])
+    {
+      gang_kn[band] = FALSE;
+      gtk_widget_modify_fg ((GtkWidget *) lab_kn[band], GTK_STATE_NORMAL, 
+                            get_band_color (3));
+    }
+  else
+    {
+      gang_kn[band] = TRUE;
+      gtk_widget_modify_fg ((GtkWidget *) lab_kn[band], GTK_STATE_NORMAL, 
+                            get_band_color (band));
+    }
+}
+
+void comp_gang_ma (int band)
+{
+  if (gang_ma[band])
+    {
+      gang_ma[band] = FALSE;
+      gtk_widget_modify_fg ((GtkWidget *) lab_ma[band], GTK_STATE_NORMAL, 
+                            get_band_color (3));
+    }
+  else
+    {
+      gang_ma[band] = TRUE;
+      gtk_widget_modify_fg ((GtkWidget *) lab_ma[band], GTK_STATE_NORMAL, 
+                            get_band_color (band));
+    }
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

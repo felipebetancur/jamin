@@ -78,7 +78,7 @@ static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_comp_lbl[3],
 static GtkDrawingArea  *l_EQ_curve, *l_comp_curve[3];
 static GdkDrawable     *EQ_drawable, *comp_drawable[3];
 static GdkColormap     *colormap = NULL;
-static GdkColor        white, black, comp_color[4], EQ_back_color, 
+static GdkColor        white, black, band_color[4], EQ_back_color, 
                        EQ_fore_color, EQ_spectrum_color, EQ_grid_color, 
                        EQ_notch_color;
 static GdkGC           *EQ_gc, *comp_gc[3];
@@ -123,6 +123,12 @@ void clean_quit ()
     if (EQ_yinput) free (EQ_yinput);
 
     gtk_main_quit();
+}
+
+
+GdkColor *get_band_color (int band)
+{
+  return (&band_color[band]);
 }
 
 
@@ -180,10 +186,10 @@ void bind_hdeq ()
     set_color (&white, 65535, 65535, 65535);
     set_color (&black, 0, 0, 0);
     set_color (&EQ_notch_color, 65535, 65535, 0);
-    set_color (&comp_color[0], 60000, 0, 0);
-    set_color (&comp_color[1], 0, 50000, 0);
-    set_color (&comp_color[2], 0, 0, 60000);
-    set_color (&comp_color[3], 0, 0, 0);
+    set_color (&band_color[0], 60000, 0, 0);
+    set_color (&band_color[1], 0, 50000, 0);
+    set_color (&band_color[2], 0, 0, 60000);
+    set_color (&band_color[3], 0, 0, 0);
     set_color (&EQ_back_color, 0, 21611, 0);
     set_color (&EQ_fore_color, 65535, 65535, 65535);
     set_color (&EQ_grid_color, 0, 36611, 0);
@@ -583,6 +589,39 @@ static void set_EQ ()
 }
 
 
+/*  Reset the curve and parametric controls to 0.  */
+
+void reset_hdeq ()
+{
+  int                  i;
+
+    for (i = 0 ; i < EQ_length ; i++)
+        EQ_y_notched[i] = EQ_yinterp[i] = 0.0;
+
+
+    for (i = 0 ; i < NOTCHES ; i++)
+      {
+        EQ_notch_drag[i] = 0;
+        EQ_notch_Q_drag[i] = 0;
+        EQ_notch_flag[i] = 0;
+        if (!i || i == NOTCHES - 1)
+          {
+            EQ_notch_width[i] = 0;
+          }
+        else
+          {
+            EQ_notch_width[i] = 5;
+            EQ_notch_index[i] = i * NOTCH_INT;
+          }
+      }
+
+    EQ_notch_index[0] = 20;
+    EQ_notch_index[4] = EQ_INTERP - 20;
+
+    set_EQ ();
+}
+
+
 /*  Place the sliding notch filters in the hand drawn EQ curve.  */
 
 static void insert_notch ()
@@ -743,7 +782,7 @@ static void draw_EQ_curve ()
     gdk_gc_set_line_attributes (EQ_gc, 2, GDK_LINE_SOLID, GDK_CAP_BUTT,
         GDK_JOIN_MITER);
 
-    gdk_gc_set_foreground (EQ_gc, &comp_color[0]);
+    gdk_gc_set_foreground (EQ_gc, &band_color[0]);
     freq2xpix (xover_fa, &x1);
     gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE,
@@ -761,7 +800,7 @@ static void draw_EQ_curve ()
     xover_handle_fa = x1;
 
 
-    gdk_gc_set_foreground (EQ_gc, &comp_color[2]);
+    gdk_gc_set_foreground (EQ_gc, &band_color[2]);
     freq2xpix (xover_fb, &x1);
     gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE,
@@ -1727,10 +1766,17 @@ void hdeq_curve_button_release (GdkEventButton  *event)
         break;
 
 
-        /*  Button 2 or 3 - discard the drawn curve.  */
+        /*  Button 2 or 3 - discard (or reset) the drawn curve.  */
 
       case 2:
       case 3:
+
+        /*  If we're not drawing the curve and the right button is pressed,
+            reset the curve and all of the parametric controls.  */
+
+        if (event->button == 3 && !EQ_drawing) reset_hdeq ();
+
+
         EQ_drawing = 0;
 
         EQ_input_points = 0;
@@ -1928,7 +1974,7 @@ void draw_comp_curve (int i)
 
     gdk_gc_set_line_attributes (comp_gc[i], 2, GDK_LINE_SOLID, GDK_CAP_BUTT,
         GDK_JOIN_MITER);
-    gdk_gc_set_foreground (comp_gc[i], &comp_color[i]);
+    gdk_gc_set_foreground (comp_gc[i], &band_color[i]);
 
 
     comp = comp_get_settings (i);
@@ -2023,9 +2069,9 @@ void comp_curve_box_motion (int i, GdkEventMotion  *event)
 void comp_box_leave (int i)
 {
     gtk_widget_modify_fg ((GtkWidget *) l_comp_lbl[i], GTK_STATE_NORMAL, 
-                          &comp_color[3]);
+                          &band_color[3]);
     gtk_widget_modify_fg ((GtkWidget *) l_c_curve_lbl[i], GTK_STATE_NORMAL, 
-                          &comp_color[3]);
+                          &band_color[3]);
 }
 
 
@@ -2035,9 +2081,9 @@ void comp_box_leave (int i)
 void comp_box_enter (int i)
 {
     gtk_widget_modify_fg ((GtkWidget *) l_comp_lbl[i], GTK_STATE_NORMAL, 
-                          &comp_color[i]);
+                          &band_color[i]);
     gtk_widget_modify_fg ((GtkWidget *) l_c_curve_lbl[i], GTK_STATE_NORMAL, 
-                          &comp_color[i]);
+                          &band_color[i]);
 }
 
 

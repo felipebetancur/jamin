@@ -11,13 +11,14 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: hdeq.h,v 1.6 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: hdeq.h,v 1.7 2004/01/18 11:28:54 jdepner Exp $
  */
 
 #ifndef HDEQ_H
 #define HDEQ_H
 
 void clean_quit ();
+GdkColor *get_band_color (int band);
 void bind_hdeq ();
 void hdeq_low2mid_set (GtkRange *range);
 void hdeq_mid2high_set (GtkRange *range);
@@ -28,6 +29,7 @@ void hdeq_mid2high_init ();
 void crossover_init ();
 void hdeq_eqb_mod ();
 void draw_EQ_spectrum_curve (float single_levels[]);
+void reset_hdeq ();
 void hdeq_curve_exposed (GtkWidget *widget, GdkEventExpose  *event);
 void hdeq_curve_init (GtkWidget *widget);
 void hdeq_curve_motion (GdkEventMotion *event);

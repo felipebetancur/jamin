@@ -4129,18 +4129,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_1_l">
+								    <widget class="GtkEventBox" id="comp_at_label_1_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">A</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_at_label_1_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:11:56 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_at_label_1">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">A</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -4191,18 +4198,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_6_l">
+								    <widget class="GtkEventBox" id="comp_re_label_1_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">R</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_re_label_1_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:12:45 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_re_label_1">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">R</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -4253,18 +4267,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_2_l">
+								    <widget class="GtkEventBox" id="comp_th_label_1_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">T</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_th_label_1_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:13:23 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_th_label_1">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">T</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -4315,18 +4336,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_3_l">
+								    <widget class="GtkEventBox" id="comp_ra_label_1_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">r</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_ra_label_1_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:14:00 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_ra_label_1">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">r</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -4377,18 +4405,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_4_l">
+								    <widget class="GtkEventBox" id="comp_kn_label_1_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">K</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_kn_label_1_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:14:21 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_kn_label_1">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">K</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -4439,18 +4474,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_5_l">
+								    <widget class="GtkEventBox" id="comp_ma_label_1_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">M</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_ma_label_1_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:14:41 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_ma_label_1">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">M</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -4777,18 +4819,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_1_m">
+								    <widget class="GtkEventBox" id="comp_at_label_2_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">A</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_at_label_2_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:15:04 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_at_label_2">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">A</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -4839,18 +4888,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_6_m">
+								    <widget class="GtkEventBox" id="comp_re_label_2_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">R</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_re_label_2_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:15:25 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_re_label_2">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">R</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -4901,18 +4957,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_2_m">
+								    <widget class="GtkEventBox" id="comp_th_label_2_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">T</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_th_label_2_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:15:42 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_th_label_2">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">T</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -4963,18 +5026,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_3_m">
+								    <widget class="GtkEventBox" id="comp_ra_label_2_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">r</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_ra_label_2_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:16:00 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_ra_label_2">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">r</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -5025,18 +5095,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_4_m">
+								    <widget class="GtkEventBox" id="comp_kn_label_2_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">K</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_kn_label_2_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:16:24 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_kn_label_2">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">K</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -5087,18 +5164,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_5_m">
+								    <widget class="GtkEventBox" id="comp_ma_label_2_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">M</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_ma_label_2_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:16:45 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_ma_label_2">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">M</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -5425,18 +5509,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_1_h">
+								    <widget class="GtkEventBox" id="comp_at_label_3_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">A</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_at_label_3_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:17:12 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_at_label_3">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">A</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -5487,18 +5578,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_6_h">
+								    <widget class="GtkEventBox" id="comp_re_label_3_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">R</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_re_label_3_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:17:30 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_re_label_3">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">R</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -5549,18 +5647,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_2_h">
+								    <widget class="GtkEventBox" id="comp_th_label_3_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">T</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_th_label_3_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:17:53 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_th_label_3">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">T</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -5611,18 +5716,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_3_h">
+								    <widget class="GtkEventBox" id="comp_ra_label_3_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">r</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_ra_label_3_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:18:23 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_ra_label_3">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">r</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -5673,18 +5785,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_4_h">
+								    <widget class="GtkEventBox" id="comp_kn_label_3_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">K</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_kn_label_3_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:18:44 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_kn_label_3">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">K</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -5735,18 +5854,25 @@
 								  <property name="spacing">0</property>
 
 								  <child>
-								    <widget class="GtkLabel" id="label_5_h">
+								    <widget class="GtkEventBox" id="comp_ma_label_3_event_box">
 								      <property name="visible">True</property>
-								      <property name="label" translatable="yes">M</property>
-								      <property name="use_underline">False</property>
-								      <property name="use_markup">False</property>
-								      <property name="justify">GTK_JUSTIFY_LEFT</property>
-								      <property name="wrap">False</property>
-								      <property name="selectable">False</property>
-								      <property name="xalign">0.5</property>
-								      <property name="yalign">0.5</property>
-								      <property name="xpad">0</property>
-								      <property name="ypad">0</property>
+								      <signal name="button_press_event" handler="on_comp_ma_label_3_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:19:03 GMT"/>
+
+								      <child>
+									<widget class="GtkLabel" id="comp_ma_label_3">
+									  <property name="visible">True</property>
+									  <property name="label" translatable="yes">M</property>
+									  <property name="use_underline">False</property>
+									  <property name="use_markup">False</property>
+									  <property name="justify">GTK_JUSTIFY_LEFT</property>
+									  <property name="wrap">False</property>
+									  <property name="selectable">False</property>
+									  <property name="xalign">0.5</property>
+									  <property name="yalign">0.5</property>
+									  <property name="xpad">0</property>
+									  <property name="ypad">0</property>
+									</widget>
+								      </child>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
