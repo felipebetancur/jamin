@@ -1,3 +1,8 @@
+2004-10-05  Steve Harris  <steve@plugin.org.uk>
+
+	* src/Makefile.am: Bugfix to allow building on machines with libxml2
+	  headers in a non-standard location
+
 2004-08-01  Steve Harris  <steve@plugin.org.uk>
 
 	* jamin.1.in: Added notes saying how the OSC method can be used.
