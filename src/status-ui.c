@@ -56,12 +56,12 @@ void status_update(GtkWidget *main_window)
 	state_msg = "";
 
     if (j.realtime)
-      rt = "Realtime";
+      rt = " : Realtime";
     else
-      rt = "Not Realtime";
+      rt = "";
 
     snprintf(title, sizeof(title), PACKAGE " " VERSION
-	     "     %s : %.1f%% CPU : %ld frames : %ld Hz : %s",
+	     "     %s : %.1f%% CPU : %ld frames : %ld Hz%s",
 	     state_msg, j.cpu_load, j.buf_size, j.sample_rate, rt);
 
     gtk_window_set_title ((GtkWindow *) main_window, title);
