@@ -32,7 +32,7 @@ static GtkImage          *l_scene[NUM_SCENES];
 static GtkEventBox       *l_scene_eventbox[NUM_SCENES];
 static GtkEntry          *l_scene_name[NUM_SCENES];
 static int               current_scene, menu_scene;
-static gboolean          scene_loaded[NUM_SCENES];
+static gboolean          scene_loaded[NUM_SCENES], suppress_warning = FALSE;
 static s_state           scene_state[NUM_SCENES];
 
 
@@ -89,14 +89,14 @@ void select_scene (int number, int button)
               {
                 if (i == number)
                   {
-                    gtk_image_set_from_stock (l_scene[i], GTK_STOCK_YES, 
-                                              GTK_ICON_SIZE_BUTTON);
-
                     current_scene = i;
 
                     s_crossfade_to_state (&scene_state[i], 1.0f);
 
                     set_EQ_curve_values ();
+
+                    gtk_image_set_from_stock (l_scene[i], GTK_STOCK_YES, 
+                                              GTK_ICON_SIZE_BUTTON);
                   }
                 else
                   {
@@ -251,6 +251,9 @@ void set_scene_name (int number, const char *scene_name)
 
     gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[menu_scene]), 
                           scene_state[menu_scene].description, NULL);
+
+
+    set_scene_warning_button ();
 }
 
 
@@ -306,4 +309,24 @@ void unset_scene_buttons ()
         sprintf (name, "Scene %1d", i + 1);
         gtk_entry_set_text (l_scene_name[i], name);
       }
+}
+
+
+/*  Set the current scene button to a warning.  This is done whenever any 
+    state changes are made while a scene is active.  */
+
+void set_scene_warning_button ()
+{
+    if (current_scene != -1 && !suppress_warning)
+      gtk_image_set_from_stock (l_scene[current_scene], 
+                                GTK_STOCK_DIALOG_WARNING, 
+                                GTK_ICON_SIZE_BUTTON);
+}
+
+
+/*  Suppress or unsupress the scene change warning flag.  */
+
+void suppress_scene_warning (gboolean i)
+{
+  suppress_warning = i;
 }

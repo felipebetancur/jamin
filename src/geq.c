@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: geq.c,v 1.24 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: geq.c,v 1.25 2003/11/21 01:30:20 jdepner Exp $
  */
 
 /* code to control the graphic eq's, swh */
@@ -207,6 +207,14 @@ gboolean eqb_changed(GtkAdjustment *adj, gpointer user_data)
     geq_gains[band-1] = db2lin(adj->value);
 
     geq_set_gains();
+
+
+    /*  If the adjustment was made by hand set the scene warning.  If it was 
+        set automatically by the set_EQ function we don't want to set it 
+        because this could just be a scene change.  */
+
+    if (!EQ_drawn) set_scene_warning_button ();
+
 
     return FALSE;
 }

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: compressor-ui.c,v 1.13 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: compressor-ui.c,v 1.14 2003/11/21 01:30:20 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -24,6 +24,7 @@
 #include "compressor-ui.h"
 #include "gtkmeter.h"
 #include "state.h"
+#include "scenes.h"
 
 #define MUG_CORR_FACT 0.4f /* makeup gain correction factor - dampens the
 			      makeup gain correction to stop it over
@@ -94,6 +95,8 @@ void bind_compressors()
 gboolean adj_cb(GtkAdjustment *adj, gpointer p)
 {
     s_set_value_ui((int)p, adj->value);
+
+    set_scene_warning_button ();
 
     return FALSE;
 }
@@ -172,6 +175,8 @@ void comp_set_auto(int band, int state)
     if (state) {
 	calc_auto_gain(band);
     }
+
+    set_scene_warning_button ();
 }
 
 comp_settings comp_get_settings(int band)

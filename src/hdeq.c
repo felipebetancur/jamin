@@ -335,6 +335,8 @@ void hdeq_mid2high_set (GtkRange *range)
 void hdeq_low2mid_button (int active)
 {
     xover_active = active;
+
+    set_scene_warning_button ();
 }
 
 
@@ -344,6 +346,8 @@ void hdeq_low2mid_button (int active)
 void hdeq_mid2high_button (int active)
 {
     xover_active = active;
+
+    set_scene_warning_button ();
 }
 
 
@@ -1737,6 +1741,9 @@ void hdeq_curve_button_release (GdkEventButton  *event)
         EQ_notch_drag[i] = 0;
         EQ_notch_Q_drag[i] = 0;
       }
+
+
+    set_scene_warning_button ();
 }
 
 
@@ -1808,7 +1815,9 @@ void hdeq_set_xover ()
 
 void hdeq_set_lower_gain (float gain)
 {
-      EQ_gain_lower = gain;
+  EQ_gain_lower = gain;
+
+  set_scene_warning_button ();
 }
 
 
@@ -1816,7 +1825,9 @@ void hdeq_set_lower_gain (float gain)
 
 void hdeq_set_upper_gain (float gain)
 {
-    EQ_gain_upper = gain;
+  EQ_gain_upper = gain;
+
+  set_scene_warning_button ();
 }
 
 

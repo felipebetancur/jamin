@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.24 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: state.c,v 1.25 2003/11/21 01:30:20 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -52,6 +52,7 @@ static void s_set_events(int id, float value);
 void set_EQ_curve_values ();
 void unset_scene_buttons ();
 void s_update_title();
+void s_history_add(const char *description);
 
 static const gchar *filename = NULL;
 
@@ -96,6 +97,11 @@ void s_set_adjustment(int id, GtkAdjustment *adjustment)
 
 void s_set_value_ui(int id, float value)
 {
+    /*  Don't set the scene warning mask for automatic operations.  Only for 
+        manual ops.  */
+
+    suppress_scene_warning (TRUE);
+
     s_value[id] = value;
 
     if (suppress_feedback) {
@@ -125,6 +131,11 @@ void s_set_value_ui(int id, float value)
     if (s_callback[id]) {
 	(*s_callback[id])(id, value);
     }
+
+
+    /*  Allow scene warnings.  */
+
+    suppress_scene_warning (FALSE);
 }
 
 void s_set_value(int id, float value, int duration)
@@ -240,6 +251,7 @@ void s_restore_state(s_state *state)
 void s_crossfade_to_state(s_state *state, float time)
 {
     int i, duration;
+
 
     /* printf("restore %s\n", state->description); */
     duration = (int)(sample_rate * time);
@@ -468,6 +480,8 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 void s_crossfade(const int nframes)
 {
     unsigned int i;
+
+    /*  We don't want warning flags when we're cross fading.  */
 
     for (i=0; i<S_SIZE; i++) {
         if (s_duration[i] != 0) {
