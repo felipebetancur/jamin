@@ -29,26 +29,12 @@
 #include "transport.h"
 #include "status-ui.h"
 
-static GtkLabel *label_state;
-static GtkLabel *label_CPU_load;
-static GtkLabel *label_period;
-static GtkLabel *label_rate;
-static GtkLabel *label_realtime;
 
-void status_init()
+void status_update(GtkWidget *main_window)
 {
-    /* look up widget addresses */
-    label_state = GTK_LABEL(lookup_widget(main_window, "JACK_transport_state"));
-    label_CPU_load = GTK_LABEL(lookup_widget(main_window, "JACK_CPU_load"));
-    label_period = GTK_LABEL(lookup_widget(main_window, "JACK_period"));
-    label_rate = GTK_LABEL(lookup_widget(main_window, "JACK_sample_rate"));
-    label_realtime = GTK_LABEL(lookup_widget(main_window, "JACK_realtime"));
-}
-
-void status_update()
-{
-    char *state_msg;
-    char msg[20];
+    char *state_msg, *rt;
+    gchar title[256];
+    
     jack_status_t j;
 
     io_get_status(&j);
@@ -72,19 +58,14 @@ void status_update()
     } else
 	state_msg = "";
 
-    gtk_label_set_text(label_state, state_msg);
-
-    snprintf(msg, sizeof(msg), "%.1f%% CPU", j.cpu_load);
-    gtk_label_set_text(label_CPU_load, msg);
-
-    snprintf(msg, sizeof(msg), "%ld frames", j.buf_size);
-    gtk_label_set_text(label_period, msg);
-
-    snprintf(msg, sizeof(msg), "%ld Hz", j.sample_rate);
-    gtk_label_set_text(label_rate, msg);
-
     if (j.realtime)
-	gtk_label_set_text(label_realtime, "Realtime");
+      rt = "Realtime";
     else
-	gtk_label_set_text(label_realtime, "Not realtime");
+      rt = "Not Realtime";
+
+
+    sprintf (title, 
+        "JAMin %s     %s : %.1f%% CPU : %ld frames : %ld Hz : %s",
+        VERSION, state_msg, j.cpu_load, j.buf_size, j.sample_rate, rt);
+    gtk_window_set_title ((GtkWindow *) main_window, title);
 }

@@ -36,6 +36,7 @@ gboolean update_meters(gpointer data);
 int main(int argc, char *argv[])
 {
     char rcfile[PATH_MAX];
+    gchar title[40];
     int fd;
 
 #ifdef ENABLE_NLS
@@ -49,12 +50,15 @@ int main(int argc, char *argv[])
     printf("This is free software, and you are welcome to redistribute it\n" 
 	   "under certain conditions; see the file COPYING for details.\n");
 
+
     /* look for the rcfile, if its there parse it */
+
     snprintf(rcfile, PATH_MAX, "%s/%s", getenv("HOME"), ".jamrc");
     if ((fd = open(rcfile, O_RDONLY)) >= 0) {	close(fd);
 	printf("Using jamrc file: %s\n", rcfile);
 	gtk_rc_parse(rcfile);
     }
+
 
     gtk_set_locale();
     gtk_init(&argc, &argv);
@@ -62,9 +66,11 @@ int main(int argc, char *argv[])
     state_init();
     add_pixmap_directory(PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
     main_window = create_window1();
-    status_init();
+    //status_init();
+
 
     /* bind the graphic equaliser sliders to adjustments */
+
     bind_geq();
     gtk_widget_show(main_window);
     bind_intrim();
@@ -74,7 +80,9 @@ int main(int argc, char *argv[])
     bind_stereo();
     s_clear_history();
 
+
     /* start I/O processing, then run GTK main loop, until "quit" */
+
     io_activate();
     g_timeout_add(100, update_meters, NULL);
     gtk_main();
@@ -83,14 +91,24 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+
 gboolean update_meters(gpointer data)
 {
+    static unsigned int    count = 0;
+
+
     in_meter_value(in_peak);
     out_meter_value(out_peak);
     limiter_meters_update();
     compressor_meters_update();
     spectrum_update();
-    status_update();
+
+
+    /*  Only update the status once a second.  */
+
+    if (count % 10) status_update (main_window);
+    count++;
+
 
     return TRUE;
 }
