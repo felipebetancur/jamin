@@ -29,7 +29,7 @@ void cleanup();
 
 int main(int argc, char *argv[])
 {
-    char rcfile[256];
+    char rcfile[PATH_MAX];
     int fd;
 
 #ifdef ENABLE_NLS
@@ -39,11 +39,10 @@ int main(int argc, char *argv[])
 #endif
 
     /* look for the rcfile, if its there parse it */
-    snprintf(rcfile, 255, "%s/%s", getenv("HOME"), ".jamrc");
-    if ((fd = open(rcfile, O_RDONLY))) {
-	close(fd);
+    snprintf(rcfile, PATH_MAX, "%s/%s", getenv("HOME"), ".jamrc");
+    if ((fd = open(rcfile, O_RDONLY)) >= 0) {	close(fd);
 	printf("Using jamrc file: %s\n", rcfile);
-	gtk_rc_parse("/root/.jamrc");
+	gtk_rc_parse(rcfile);
     }
 
     gtk_set_locale();
