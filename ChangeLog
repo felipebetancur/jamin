@@ -1,3 +1,10 @@
+2004-10-26  Steve Harris  <steve@plugin.org.uk>
+
+	* src/process.c: added a #ifdef'd section on FILER_TUNING that allows
+	  you to tune the filter paramters dynamically.
+	* jam-ui.glade: added a window that is only created if the macro is
+	  defined.
+
 2004-10-23  Jan Depner  <eviltwin69@cableone.net>
 
 	  Crossover type can be selected from the options->preferences menu

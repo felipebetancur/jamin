@@ -1215,3 +1215,27 @@ on_FFT_Crossover_clicked               (GtkButton       *button,
 void
 on_IIR_Crossover_clicked               (GtkButton       *button,
                                         gpointer         user_data);
+
+void
+on_ft_bias_a_value_changed             (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_ft_bias_b_value_changed             (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_ft_rez_lp_a_value_changed           (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_ft_rez_hp_a_value_changed           (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_ft_rez_lp_b_value_changed           (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_ft_rez_hp_b_value_changed           (GtkRange        *range,
+                                        gpointer         user_data);

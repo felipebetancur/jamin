@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.63 2004/10/23 11:35:22 jdepner Exp $
+ *  $Id: process.c,v 1.64 2004/10/26 21:35:08 theno23 Exp $
  */
 
 #include <math.h>
@@ -104,6 +104,15 @@ float sample_rate = 0.0f;
 
 /* Desired block size for calling process_signal(). */
 const jack_nframes_t dsp_block_size = BINS / OVER_SAMP;
+
+#ifdef FILTER_TUNING
+float ft_bias_a_val = 0.0f;
+float ft_bias_b_val = 0.0f;
+float ft_rez_lp_a_val = 1.2;
+float ft_rez_hp_a_val = 1.2;
+float ft_rez_lp_b_val = 1.2;
+float ft_rez_hp_b_val = 1.2;
+#endif
 
 void run_eq(unsigned int port, unsigned int in_pos);
 void run_eq_iir(unsigned int port, unsigned int in_pos);
@@ -384,15 +393,21 @@ int process_signal(jack_nframes_t nframes,
 
     if (iir_xover) {
 	for (port = 0; port < nchannels; port++) {
-//XXX sample rate is const
-	    blp_set_params(&xo_filt[port][0], xover_fa, 1.4f, 44100.0f);
-	    bhp_set_params(&xo_filt[port][1], xover_fa, 1.4f, 44100.0f);
-	    blp_set_params(&xo_filt[port][2], xover_fb, 1.4f, 44100.0f);
-	    bhp_set_params(&xo_filt[port][3], xover_fb, 1.4f, 44100.0f);
-	    //lp_set_params(&xo_filt[port][0], xover_fa, 0.1f, 44100.0f);
-	    //hp_set_params(&xo_filt[port][1], xover_fa, 1.0f, 44100.0f);
-	    //lp_set_params(&xo_filt[port][2], xover_fb, 1.0f, 44100.0f);
-	    //hp_set_params(&xo_filt[port][3], xover_fb, 1.0f, 44100.0f);
+#ifdef FILTER_TUNING
+	    blp_set_params(&xo_filt[port][0], xover_fa + ft_bias_a_val,
+			   ft_rez_lp_a_val, sample_rate);
+	    bhp_set_params(&xo_filt[port][1], xover_fa + ft_bias_a_val,
+			   ft_rez_hp_a_val, sample_rate);
+	    blp_set_params(&xo_filt[port][2], xover_fb + ft_bias_b_val,
+			   ft_rez_lp_b_val, sample_rate);
+	    bhp_set_params(&xo_filt[port][3], xover_fb + ft_bias_b_val,
+			   ft_rez_hp_b_val, sample_rate);
+#else
+	    blp_set_params(&xo_filt[port][0], xover_fa, 1.4f, sample_rate);
+	    bhp_set_params(&xo_filt[port][1], xover_fa, 1.4f, sample_rate);
+	    blp_set_params(&xo_filt[port][2], xover_fb, 1.4f, sample_rate);
+	    bhp_set_params(&xo_filt[port][3], xover_fb, 1.4f, sample_rate);
+#endif
 	}
     }
 

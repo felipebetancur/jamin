@@ -8,3 +8,4 @@ GtkWidget* create_eq_options_dialog (void);
 GtkWidget* create_preferences_dialog (void);
 GtkWidget* create_colorselectiondialog1 (void);
 GtkWidget* create_scene_name_dialog (void);
+GtkWidget* create_filter_tuning (void);
