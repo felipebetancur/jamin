@@ -81,6 +81,7 @@ int main(int argc, char *argv[])
 gboolean update_meters(gpointer data)
 {
     in_meter_value(in_peak);
+    out_meter_value(out_peak);
     limiter_meters_update();
     compressor_meters_update();
 }

@@ -24,7 +24,7 @@ float lim_peak[2];
 
 int global_bypass = 0;
 
-float in_peak[2];
+float in_peak[2], out_peak[2];
 
 static float band_f[BANDS];
 static float gain_fix[BANDS];
@@ -248,8 +248,6 @@ int process(jack_nframes_t nframes, void *arg)
 	    amp = fabs(in_buf[port][in_ptr]);
 	    if (amp > in_peak[port]) {
 		in_peak[port] = amp;
-	    } else {
-		in_peak[port] = in_peak[port] * 0.99f + amp * 0.01f;
 	    }
 
 	    out_tmp[port][XO_LOW][pos] = out_buf[port][XO_LOW][op];
@@ -315,11 +313,16 @@ int process(jack_nframes_t nframes, void *arg)
 
     for (pos = 0; pos < nframes; pos++) {
 	for (port = 0; port < 2; port++) {
-	    if (out[port][pos] > lim_peak[LIM_PEAK_OUT]) {
-		lim_peak[LIM_PEAK_OUT] = out[port][pos];
+	    const float oa = fabs(out[port][pos]);
+
+	    if (oa > lim_peak[LIM_PEAK_OUT]) {
+		lim_peak[LIM_PEAK_OUT] = oa;
 	    } else {
 		lim_peak[LIM_PEAK_OUT] = lim_peak[LIM_PEAK_OUT] * 0.9999f +
-		    out[port][pos] * 0.0001f;
+		    oa * 0.0001f;
+	    }
+	    if (oa > out_peak[port]) {
+		out_peak[port] = oa;
 	    }
 	}
     }

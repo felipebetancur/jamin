@@ -14,6 +14,7 @@
 #include "support.h"
 #include "process.h"
 #include "intrim.h"
+#include "gtkmeter.h"
 
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
 #define EQ_INTERP (BINS / 2 - 1)
@@ -1369,4 +1370,24 @@ on_high_comp_event_box_leave_notify_event
         &comp_color[3]);
 
     return FALSE;
+}
+
+GtkWidget*
+make_meter (gchar *widget_name, gchar *string1, gchar *string2,
+                gint int1, gint int2)
+{
+    gint dir = GTK_METER_UP;
+    GtkAdjustment *adjustment = (GtkAdjustment*) gtk_adjustment_new (0.0, (float)int1, (float)int2, 0.0, 0.0, 0.0);
+
+    if (!string1 || !strcmp(string1, "up")) {
+        dir = GTK_METER_UP;
+    } else if (!strcmp(string1, "down")) {
+	dir = GTK_METER_DOWN;
+    } else if (!strcmp(string1, "left")) {
+	dir = GTK_METER_LEFT;
+    } else if (!strcmp(string1, "right")) {
+	dir = GTK_METER_RIGHT;
+    }
+
+    return gtk_meter_new(adjustment, dir);
 }

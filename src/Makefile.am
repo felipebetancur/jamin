@@ -25,8 +25,8 @@ jam_SOURCES = \
 	limiter.h \
 	intrim.c intrim.h \
 	limiter-ui.c limiter-ui.h \
-	compressor-ui.c compressor-ui.h
-
+	compressor-ui.c compressor-ui.h \
+	gtkmeter.c gtkmeter.h
 
 jam_LDADD = @PACKAGE_LIBS@
 

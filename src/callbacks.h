@@ -323,3 +323,7 @@ on_high_comp_event_box_leave_notify_event
                                         (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data);
+
+GtkWidget*
+make_meter (gchar *widget_name, gchar *string1, gchar *string2,
+                gint int1, gint int2);

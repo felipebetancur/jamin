@@ -7,8 +7,10 @@
 #include "support.h"
 #include "main.h"
 #include "intrim.h"
+#include "gtkmeter.h"
 
-static GtkProgressBar *in_meter[2];
+static GtkMeter *in_meter[2], *out_meter[2];
+static GtkAdjustment *in_meter_adj[2], *out_meter_adj[2];
 static GtkLabel	*pan_label;
 
 float in_gain[2] = {1.0f, 1.0f};
@@ -17,20 +19,45 @@ float in_pan_gain[2] = {1.0f, 1.0f};
 
 void bind_intrim()
 {
-    in_meter[0] = GTK_PROGRESS_BAR(lookup_widget(main_window, "inmeter_l"));
-    in_meter[1] = GTK_PROGRESS_BAR(lookup_widget(main_window, "inmeter_r"));
+    in_meter[0] = lookup_widget(main_window, "inmeter_l");
+    in_meter[1] = lookup_widget(main_window, "inmeter_r");
+    in_meter_adj[0] = gtk_meter_get_adjustment(in_meter[0]);
+    in_meter_adj[1] = gtk_meter_get_adjustment(in_meter[1]);
+    gtk_adjustment_set_value(in_meter_adj[0], -60.0);
+    gtk_adjustment_set_value(in_meter_adj[1], -60.0);
+
+    out_meter[0] = lookup_widget(main_window, "outmeter_l");
+    out_meter[1] = lookup_widget(main_window, "outmeter_r");
+    out_meter_adj[0] = gtk_meter_get_adjustment(out_meter[0]);
+    out_meter_adj[1] = gtk_meter_get_adjustment(out_meter[1]);
+    gtk_adjustment_set_value(out_meter_adj[0], -60.0);
+    gtk_adjustment_set_value(out_meter_adj[1], -60.0);
+
     pan_label = GTK_LABEL(lookup_widget(main_window, "pan_label"));
-    gtk_progress_bar_set_fraction(in_meter[0], 0.5);
-    gtk_progress_bar_set_fraction(in_meter[1], 0.5);
     update_pan_label(0.0);
 }
 
 void in_meter_value(float amp[])
 {
+    gtk_adjustment_set_value(in_meter_adj[0], 20.0f * log10f(amp[0]));
+    gtk_adjustment_set_value(in_meter_adj[1], 20.0f * log10f(amp[1]));
+    amp[0] = 0.0f;
+    amp[1] = 0.0f;
+
+    /*
     gtk_progress_bar_set_fraction(in_meter[0],
 	    iec_scale(20.0f * log10f(amp[0])) * 0.01f);
     gtk_progress_bar_set_fraction(in_meter[1],
 	    iec_scale(20.0f * log10f(amp[1])) * 0.01f);
+	    */
+}
+
+void out_meter_value(float amp[])
+{
+    gtk_adjustment_set_value(out_meter_adj[0], 20.0f * log10f(amp[0]));
+    gtk_adjustment_set_value(out_meter_adj[1], 20.0f * log10f(amp[1]));
+    amp[0] = 0.0f;
+    amp[1] = 0.0f;
 }
 
 void update_pan_label(float balance)
