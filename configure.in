@@ -44,7 +44,12 @@ configure: error: era machines])])
 [fi]
 
 PKG_CHECK_MODULES(XML, libxml-2.0 >= 2.0)
-AC_CHECK_LIB([m], [sqrt], , [AC_MSG_ERROR(Can't find libm)])
+
+# On Mac OS X the float functions for <math.h> are in -lmx
+AC_CHECK_LIB([m], [sqrt], [MATH_LIBS=-lm], [AC_MSG_ERROR(Can't find libm)])
+AC_CHECK_LIB(m, log10f,, [
+	AC_CHECK_LIB(mx, log10f, [MATH_LIBS=$MATH_LIBS -lmx],
+		[AC_MSG_ERROR([Can't find float libm])])])
 
 pkg_modules="gtk+-2.0 >= 1.3.13"
 PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
@@ -59,7 +64,7 @@ dnl Add the languages which your application supports here.
 ALL_LINGUAS=""
 AM_GLIB_GNU_GETTEXT
 
-JAMIN_LIBS="$FFTW_LIBS $XML_LIBS $JACK_LIBS -lm"
+JAMIN_LIBS="$FFTW_LIBS $XML_LIBS $JACK_LIBS $MATH_LIBS"
 AC_SUBST(JAMIN_LIBS)
 JAMIN_CFLAGS="-g $FFTW_CFLAGS $JACK_CFAGS $XML_CFLAGS"
 AC_SUBST(JAMIN_CFLAGS)
