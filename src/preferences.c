@@ -33,20 +33,50 @@
 #include "preferences.h"
 #include "hdeq.h"
 #include "main.h"
+#include "help.h"
 #include "interface.h"
 #include "support.h"
+#include "compressor-ui.h"
 #include "state.h"
 
 
-static GtkWidget       *preferences_dialog;
-static GdkColormap     *colormap = NULL;
-static GdkColor        band_color[4], gang_color;
+static char color_help[] = {
+"    This is a standard color selection dialog.  Push buttons and see what \
+happens.  If you don't like the color just press cancel.  When you've got \
+the color you want (fuschia, puce, chartreuse, whatever) just press OK.\n"
+};
 
+
+static GtkWidget         *preferences_dialog, *color_dialog, *colorsel;
+static GdkColormap       *colormap = NULL;
+static GdkColor          band_color[4], gang_color;
+static int               color_id;
+
+static void color_ok_callback (GtkWidget *w, gpointer user_data);
+static void color_cancel_callback (GtkWidget *w, gpointer user_data);
+static void color_help_callback (GtkWidget *w, gpointer user_data);
 
 
 void preferences_init()
 {
     preferences_dialog = create_preferences_dialog ();
+
+    color_dialog = create_colorselectiondialog1 ();
+
+    colorsel = GTK_COLOR_SELECTION_DIALOG (color_dialog)->colorsel;
+
+    g_signal_connect (GTK_OBJECT 
+                      (GTK_COLOR_SELECTION_DIALOG (color_dialog)->ok_button),
+                      "clicked", G_CALLBACK (color_ok_callback), color_dialog);
+
+    g_signal_connect (GTK_OBJECT 
+                      (GTK_COLOR_SELECTION_DIALOG (color_dialog)->cancel_button),
+                      "clicked", G_CALLBACK (color_cancel_callback), color_dialog);
+
+    g_signal_connect (GTK_OBJECT 
+                      (GTK_COLOR_SELECTION_DIALOG (color_dialog)->help_button),
+                      "clicked", G_CALLBACK (color_help_callback), color_dialog);
+
 
     colormap = gdk_colormap_get_system ();
 
@@ -55,7 +85,7 @@ void preferences_init()
     set_color (&band_color[2], 0, 0, 60000);
     set_color (&band_color[3], 0, 0, 0);
 
-    set_color (&gang_color, 60000, 0, 0);
+    set_color (&gang_color, 65535, 0, 65535);
 }
 
 
@@ -109,5 +139,65 @@ void popup_preferences_dialog (int updown)
 }
 
 
+/*  Pop up the color dialog.  */
+
+void popup_color_dialog (int id)
+{
+  GdkColor *ptr;
+
+  color_id = id;
+
+  if (id == GANG_HIGHLIGHT_COLOR)
+    {
+      ptr = &gang_color;
+    }
+  else
+    {
+      ptr = &band_color[id];
+    }
 
 
+  gtk_color_selection_set_current_color ((GtkColorSelection *) colorsel, ptr);
+
+
+  gtk_widget_show (color_dialog);
+}
+
+
+static void color_ok_callback (GtkWidget *w, gpointer user_data)
+{
+  GdkColor color;
+
+
+  gtk_color_selection_get_current_color ((GtkColorSelection *) colorsel, 
+                                         &color);
+
+  if (color_id == GANG_HIGHLIGHT_COLOR)
+    {
+      set_color (&gang_color, color.red, color.green, color.blue);
+
+      repaint_gang_labels ();
+    }
+  else
+    {
+      set_color (&band_color[color_id], color.red, color.green, color.blue);
+
+      draw_EQ_curve ();
+      draw_comp_curve (color_id);
+    }
+
+
+  gtk_widget_hide (color_dialog);
+}
+
+
+static void color_cancel_callback (GtkWidget *w, gpointer user_data)
+{
+  gtk_widget_hide (color_dialog);
+}
+
+
+static void color_help_callback (GtkWidget *w, gpointer user_data)
+{
+  message (GTK_MESSAGE_INFO, color_help);
+}

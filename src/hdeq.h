@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: hdeq.h,v 1.8 2004/01/19 20:31:06 jdepner Exp $
+ *  $Id: hdeq.h,v 1.9 2004/01/19 23:20:38 jdepner Exp $
  */
 
 #ifndef HDEQ_H
@@ -28,6 +28,7 @@ void hdeq_low2mid_init ();
 void hdeq_mid2high_init ();
 void crossover_init ();
 void hdeq_eqb_mod ();
+void draw_EQ_curve ();
 void draw_EQ_spectrum_curve (float single_levels[]);
 void reset_hdeq ();
 void hdeq_curve_exposed (GtkWidget *widget, GdkEventExpose  *event);

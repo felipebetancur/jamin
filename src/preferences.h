@@ -11,11 +11,18 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: preferences.h,v 1.1 2004/01/19 20:31:07 jdepner Exp $
+ *  $Id: preferences.h,v 1.2 2004/01/19 23:20:39 jdepner Exp $
  */
 
 #ifndef PREFERENCES_H
 #define PREFERENCES_H
+
+
+#define LOW_BAND_COLOR       0
+#define MID_BAND_COLOR       1
+#define HIGH_BAND_COLOR      2
+#define NORMAL_COLOR         3
+#define GANG_HIGHLIGHT_COLOR 4
 
 
 void preferences_init();
@@ -26,6 +33,7 @@ void set_gang_color (GdkColor color);
 void set_color (GdkColor *color, unsigned short red, unsigned short green, 
                 unsigned short blue);
 void popup_preferences_dialog (int updown);
+void popup_color_dialog (int id);
 
 
 #endif

@@ -67,7 +67,6 @@
 
 void interpolate (float, int, float, float, int *, float *, float *, float *, 
                   float *);
-static void draw_EQ_curve ();
 
 
 /* vi:set ts=8 sts=4 sw=4: */
@@ -682,7 +681,7 @@ static void insert_notch ()
 /*  Draw the EQ curve.  This may be from the graphic EQ sliders if they have
     been modified.  Usually from the hand drawn EQ though.  */
 
-static void draw_EQ_curve ()
+void draw_EQ_curve ()
 {
     int            i, x0 = 0, y0 = 0, x1, y1, inc;
     float          x[EQ_BANDS], y[EQ_BANDS];
@@ -761,7 +760,7 @@ static void draw_EQ_curve ()
     gdk_gc_set_line_attributes (EQ_gc, 2, GDK_LINE_SOLID, GDK_CAP_BUTT,
         GDK_JOIN_MITER);
 
-    gdk_gc_set_foreground (EQ_gc, get_band_color (0));
+    gdk_gc_set_foreground (EQ_gc, get_band_color (LOW_BAND_COLOR));
     freq2xpix (xover_fa, &x1);
     gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE,
@@ -779,7 +778,7 @@ static void draw_EQ_curve ()
     xover_handle_fa = x1;
 
 
-    gdk_gc_set_foreground (EQ_gc, get_band_color (2));
+    gdk_gc_set_foreground (EQ_gc, get_band_color (HIGH_BAND_COLOR));
     freq2xpix (xover_fb, &x1);
     gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE,
@@ -2077,9 +2076,9 @@ void comp_curve_box_motion (int i, GdkEventMotion  *event)
 void comp_box_leave (int i)
 {
     gtk_widget_modify_fg ((GtkWidget *) l_comp_lbl[i], GTK_STATE_NORMAL, 
-                          get_band_color (3));
+                          get_band_color (NORMAL_COLOR));
     gtk_widget_modify_fg ((GtkWidget *) l_c_curve_lbl[i], GTK_STATE_NORMAL, 
-                          get_band_color (3));
+                          get_band_color (NORMAL_COLOR));
 }
 
 

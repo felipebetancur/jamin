@@ -4548,6 +4548,7 @@ create_eq_options_dialog (void)
   gtk_widget_show (geq_min_gain_spinner);
   gtk_box_pack_start (GTK_BOX (hbox36), geq_min_gain_spinner, FALSE, FALSE, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (geq_min_gain_spinner), TRUE);
+  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (geq_min_gain_spinner), GTK_UPDATE_IF_VALID);
 
   hbox37 = gtk_hbox_new (FALSE, 4);
   gtk_widget_set_name (hbox37, "hbox37");
@@ -4566,6 +4567,7 @@ create_eq_options_dialog (void)
   gtk_widget_show (geq_max_gain_spinner);
   gtk_box_pack_start (GTK_BOX (hbox37), geq_max_gain_spinner, FALSE, FALSE, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (geq_max_gain_spinner), TRUE);
+  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (geq_max_gain_spinner), GTK_UPDATE_IF_VALID);
 
   graphic_lbl = gtk_label_new (_("Graphic"));
   gtk_widget_set_name (graphic_lbl, "graphic_lbl");
@@ -4635,6 +4637,7 @@ create_eq_options_dialog (void)
   gtk_widget_show (spectrum_freq_spinbutton);
   gtk_box_pack_start (GTK_BOX (spectrum_freq_hbox), spectrum_freq_spinbutton, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, spectrum_freq_spinbutton, _("Spectrum update frequency (Hz)"), NULL);
+  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spectrum_freq_spinbutton), GTK_UPDATE_IF_VALID);
 
   spectrum_lbl = gtk_label_new (_("Spectrum"));
   gtk_widget_set_name (spectrum_lbl, "spectrum_lbl");

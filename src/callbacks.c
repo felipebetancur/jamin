@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.129 2004/01/19 20:31:06 jdepner Exp $
+ *  $Id: callbacks.c,v 1.130 2004/01/19 23:20:38 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1517,7 +1517,7 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
       case GDK_F1:
         if (state != GDK_SHIFT_MASK) 
-          gtk_notebook_set_current_page (l_notebook1, 0);
+            gtk_notebook_set_current_page (l_notebook1, 0);
         break;
 
 
@@ -1986,7 +1986,7 @@ void
 on_low_band_color_button_clicked       (GtkButton       *button,
                                         gpointer         user_data)
 {
-
+  popup_color_dialog (LOW_BAND_COLOR);
 }
 
 
@@ -1994,7 +1994,7 @@ void
 on_mid_band_color_button_clicked       (GtkButton       *button,
                                         gpointer         user_data)
 {
-
+  popup_color_dialog (MID_BAND_COLOR);
 }
 
 
@@ -2002,7 +2002,7 @@ void
 on_high_band_color_button_clicked      (GtkButton       *button,
                                         gpointer         user_data)
 {
-
+  popup_color_dialog (HIGH_BAND_COLOR);
 }
 
 
@@ -2010,7 +2010,7 @@ void
 on_gang_highlight_color_button_clicked (GtkButton       *button,
                                         gpointer         user_data)
 {
-
+  popup_color_dialog (GANG_HIGHLIGHT_COLOR);
 }
 
 
