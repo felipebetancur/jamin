@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: geq.c,v 1.31 2004/05/08 21:29:39 jdepner Exp $
+ *  $Id: geq.c,v 1.32 2004/08/20 22:56:08 jdepner Exp $
  */
 
 /* code to control the graphic eq's, swh */
@@ -122,7 +122,7 @@ void geq_set_coefs (int length, float x[], float y[])
     int i, bin;
 
 
-    if (length != BINS / 2 - 1)
+    if (length < BINS / 2 - 1)
       {
         errstr = 
           g_strdup_printf (_("Splined length %d does not match BINS / 2 - 1 (%d)"), 
@@ -155,7 +155,7 @@ void geq_set_sliders(int length, float x[], float y[])
     float value;
 
 
-    if (length != BINS / 2 - 1)
+    if (length < BINS / 2 - 1)
       {
         errstr = g_strdup_printf (_("Splined length %d does not match BINS / 2 - 1 (%d)"), 
                                   length, BINS / 2 - 1);
