@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: compressor-ui.c,v 1.19 2004/01/22 01:54:13 jdepner Exp $
+ *  $Id: compressor-ui.c,v 1.20 2004/04/11 23:24:57 theno23 Exp $
  */
 
 #include <stdio.h>
@@ -339,7 +339,7 @@ void kn_changed(int id, float value)
                   g_signal_handler_block (adj_kn[j], sig_hand_kn[j]);
 
                   gtk_adjustment_set_value (adj_kn[j], new_value);
-                  compressors[j].knee = new_value;
+                  compressors[j].knee = new_value * 10.0f;
                   prev_value_kn[j] = new_value;
 
                   g_signal_handler_unblock (adj_kn[j], sig_hand_kn[j]);
@@ -350,7 +350,7 @@ void kn_changed(int id, float value)
       prev_value_kn[i] = value;
     }
                   
-  compressors[i].knee = value;
+  compressors[i].knee = value * 10.0f;
   draw_comp_curve(i);
 }
 
