@@ -96,10 +96,9 @@ void geq_set_gains()
       }
 }
 
-void geq_set_sliders(int length, float x[], float y[])
+void geq_set_coefs (int length, float x[], float y[])
 {
-    int i, j;
-    float value;
+    int i;
 
 
     if (length != BINS / 2 - 1)
@@ -118,8 +117,23 @@ void geq_set_sliders(int length, float x[], float y[])
             eq_coefs[i] = ((1.0f - bin_delta[i]) * pow (10.0, (double) y[i])) +
               (bin_delta[i] * pow (10.0, (double) y[i + 1]));
           }
+      }
+}
+
+void geq_set_sliders(int length, float x[], float y[])
+{
+    int i, j;
+    float value;
 
 
+    if (length != BINS / 2 - 1)
+      {
+        fprintf (stderr, 
+            _("Splined length %d does not match BINS / 2 - 1 (%d)\n"), length,
+             BINS / 2 - 1);
+      }
+    else
+      {
         /*  Make sure that we don't reset the coefficients when we set the
             graphic EQ adjustments (see geq_set_gains).  */
 
