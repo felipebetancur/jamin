@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.150 2004/05/08 21:29:38 jdepner Exp $
+ *  $Id: callbacks.c,v 1.151 2004/05/19 23:39:19 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -56,8 +56,8 @@
 /* vi:set ts=8 sts=4 sw=4: */
 
 
-static char             *help_ptr = general_help, scene_name_text[100];
-static gboolean         text_focus = FALSE;
+static char             *help_ptr = NULL, scene_name_text[100];
+static gboolean         text_focus = FALSE, force_keypress_help = FALSE;
 static GtkToggleButton  *l_solo_button[XO_NBANDS], *l_bypass_button[XO_NBANDS];
 static int              hot_scene = 0;
 static GtkWidget        *scene_name_dialog;
@@ -167,6 +167,8 @@ void
 on_window1_show                        (GtkWidget       *widget,
                                         gpointer         user_data)
 {
+  help_ptr = _(general_help);
+
   crossover_init ();
 
   l_notebook1 = GTK_NOTEBOOK (lookup_widget (main_window, "notebook1"));
@@ -261,16 +263,16 @@ on_EQ_curve_event_box_leave_notify_event
   switch (mode)
     {
     case SPEC_PRE_EQ:
-      hdeq_curve_set_label ("Pre EQ spectrum         ");
+      hdeq_curve_set_label (_("Pre EQ spectrum         "));
       break;
     case SPEC_POST_EQ:
-      hdeq_curve_set_label ("Post EQ spectrum        ");
+      hdeq_curve_set_label (_("Post EQ spectrum        "));
       break;
     case SPEC_POST_COMP:
-      hdeq_curve_set_label ("Post compressor spectrum");
+      hdeq_curve_set_label (_("Post compressor spectrum"));
       break;
     case SPEC_OUTPUT:
-      hdeq_curve_set_label ("Output spectrum         ");
+      hdeq_curve_set_label (_("Output spectrum         "));
       break;
     }
 
@@ -1139,7 +1141,7 @@ on_EQ_curve_event_box_enter_notify_event
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    help_ptr = hdeq_help;
+    help_ptr = _(hdeq_help);
 
     return FALSE;
 }
@@ -1161,7 +1163,7 @@ on_input_eventbox_enter_notify_event   (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    help_ptr = input_help;
+    help_ptr = _(input_help);
 
     return FALSE;
 }
@@ -1171,7 +1173,7 @@ on_geq_eventbox_enter_notify_event     (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    help_ptr = geq_help;
+    help_ptr = _(geq_help);
 
     return FALSE;
 }
@@ -1183,7 +1185,7 @@ on_spectrum_eventbox_enter_notify_event
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    help_ptr = spectrum_help;
+    help_ptr = _(spectrum_help);
 
     return FALSE;
 }
@@ -1195,7 +1197,7 @@ on_crossover_eventbox_enter_notify_event
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    help_ptr = crossover_help;
+    help_ptr = _(crossover_help);
 
     return FALSE;
 }
@@ -1207,7 +1209,7 @@ on_comp_curve_eventbox_enter_notify_event
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    help_ptr = comp_curve_help;
+    help_ptr = _(comp_curve_help);
 
     return FALSE;
 }
@@ -1218,7 +1220,7 @@ on_limiter_eventbox_enter_notify_event (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    help_ptr = limiter_help;
+    help_ptr = _(limiter_help);
 
     return FALSE;
 }
@@ -1229,7 +1231,7 @@ on_boost_eventbox_enter_notify_event   (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    help_ptr = boost_help;
+    help_ptr = _(boost_help);
 
     return FALSE;
 }
@@ -1240,7 +1242,7 @@ on_output_eventbox_enter_notify_event  (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    help_ptr = output_help;
+    help_ptr = _(output_help);
 
     return FALSE;
 }
@@ -1250,7 +1252,7 @@ on_help_button_enter_notify_event      (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    help_ptr = general_help;
+    help_ptr = _(general_help);
 
     return FALSE;
 }
@@ -1262,7 +1264,8 @@ on_eq_options_eventbox_enter_notify_event
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    help_ptr = eq_options_help;
+    force_keypress_help = TRUE;
+    help_ptr = _(eq_options_help);
 
     return FALSE;
 }
@@ -1274,7 +1277,7 @@ on_spectrum_options_eventbox_enter_notify_event
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    help_ptr = spectrum_options_help;
+    help_ptr = _(spectrum_options_help);
 
     return FALSE;
 }
@@ -1286,7 +1289,7 @@ on_transport_controls_eventbox_enter_notify_event
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    help_ptr = transport_controls_help;
+    help_ptr = _(transport_controls_help);
 
     return FALSE;
 }
@@ -1297,7 +1300,7 @@ on_bypass_button_enter_notify_event    (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    help_ptr = bypass_help;
+    help_ptr = _(bypass_help);
 
     return FALSE;
 }
@@ -1308,7 +1311,7 @@ on_scenes_eventbox_enter_notify_event  (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    help_ptr = scenes_help;
+    help_ptr = _(scenes_help);
 
     return FALSE;
 }
@@ -1345,7 +1348,7 @@ on_open1_activate                      (GtkMenuItem     *menuitem,
     GtkFileSelection    *file_selector;
 
     file_selector = 
-       (GtkFileSelection *) gtk_file_selection_new ("Select a session file");
+      (GtkFileSelection *) gtk_file_selection_new (_("Select a session file"));
 
     if (jamin_dir) {
         gtk_file_selection_set_filename (file_selector, jamin_dir);
@@ -1375,7 +1378,7 @@ on_save_as1_activate                   (GtkMenuItem     *menuitem,
 
 
     file_selector = 
-       (GtkFileSelection *) gtk_file_selection_new ("Select a session file");
+      (GtkFileSelection *) gtk_file_selection_new (_("Select a session file"));
 
     if (s_have_filename())
       {
@@ -1463,7 +1466,7 @@ on_about1_activate                     (GtkMenuItem     *menuitem,
       splash_dialog = 
         gtk_dialog_new_with_buttons (title, (GtkWindow *) main_window,
                                      GTK_DIALOG_DESTROY_WITH_PARENT,
-                                     "More...", GTK_RESPONSE_NONE,
+                                     _("More..."), GTK_RESPONSE_NONE,
                                      NULL);
 
       g_signal_connect_swapped (GTK_OBJECT (splash_dialog), "response",
@@ -1568,10 +1571,11 @@ on_window1_key_press_event             (GtkWidget       *widget,
         an initial focus problem with the dialogs.  There must be a better way
         to do it but I don't know what it is.   JCD  */
 
-    if (help_ptr == eq_options_help || help_ptr == preferences_help)
+    if (force_keypress_help)
       {
         if (key == GDK_F1 && state == GDK_SHIFT_MASK)   
           message (GTK_MESSAGE_INFO, help_ptr);
+	force_keypress_help = FALSE;
       }
 
 
@@ -1872,7 +1876,7 @@ on_comp_event_box_enter_notify_event (GtkWidget       *widget,
                                       GdkEventCrossing *event,
                                       gpointer         user_data)
 {
-  help_ptr = comp_help;
+  help_ptr = _(comp_help);
 
   return FALSE;
 }
@@ -1884,7 +1888,7 @@ on_stereo_event_box_enter_notify_event
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-  help_ptr = stereo_help;
+  help_ptr = _(stereo_help);
 
   return FALSE;
 }
@@ -2186,7 +2190,7 @@ on_eq_options_event_box_enter_notify_event
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-  help_ptr = eq_options_help;
+  help_ptr = _(eq_options_help);
 
   return FALSE;
 }
@@ -2198,7 +2202,8 @@ on_preferences_event_box_enter_notify_event
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-  help_ptr = preferences_help;
+  force_keypress_help = TRUE;
+  help_ptr = _(preferences_help);
 
   return FALSE;
 }
@@ -2365,7 +2370,7 @@ on_eq_bypass_event_box_enter_notify_event
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-  help_ptr = eq_bypass_help;
+  help_ptr = _(eq_bypass_help);
 
   return FALSE;
 }
@@ -2385,7 +2390,7 @@ on_band_button_event_box_enter_notify_event
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-  help_ptr = band_button_help;
+  help_ptr = _(band_button_help);
 
   return FALSE;
 }
@@ -2406,7 +2411,7 @@ on_limiter_bypass_event_box_enter_notify_event
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-  help_ptr = limiter_bypass_help;
+  help_ptr = _(limiter_bypass_help);
 
   return FALSE;
 }

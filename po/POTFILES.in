@@ -3,6 +3,9 @@
 src/main.c
 src/interface.c
 src/callbacks.c
+src/callbacks_help.h
+src/hdeq.c
+src/geq.c
 src/support.c
 src/io-menu.c
 src/io.c

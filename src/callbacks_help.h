@@ -11,10 +11,12 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.34 2004/05/01 13:07:03 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.35 2004/05/19 23:39:20 jdepner Exp $
  */
 
-char general_help[] = {
+#include "support.h"
+
+char general_help[] = {N_(
 "    JAMin is the JACK Audio Mastering interface.\n\n\
     Web site: <http://jamin.sourceforge.net>\n\n\
     JAMin is designed to perform professional audio mastering of any number \
@@ -41,11 +43,11 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for \
 more details.\n\
     You should have received a copy of the GNU General Public License along \
 with this program; if not, write to the Free Software Foundation, Inc., 675 \
-Mass Ave, Cambridge, MA 02139, USA.\n"
+Mass Ave, Cambridge, MA 02139, USA.\n")
 };
 
 
-char prerequisites_help[] = {
+char prerequisites_help[] = {N_(
 "    JAMin would not be functional without many other open source packages \
 and we thought that it would only be right to list them here:\n\n\
     JACK - JACK Audio Connection Kit\n\
@@ -62,11 +64,11 @@ and we thought that it would only be right to list them here:\n\n\
     http://www.gtk.org\n\n\
     ALSA - Advanced Linux Sound Architecture\n\
     http://www.alsa-project.org\n\n\
-Many thanks to all of the authors of these packages!\n"
+Many thanks to all of the authors of these packages!\n")
 };
 
 
-char help_help[] = {
+char help_help[] = {N_(
 "    The File menu has the standard options available.  Save and Save As \
 allow you to save the scenes and settings for a session to a .jam file.  \
 By default these are saved in the $HOME/.jamin directory but may be saved \
@@ -86,11 +88,11 @@ use the GUI ;-).  You may also set the crossfade time in this dialog (see the \
 man page for more information on crossfade time).\n\
     For help on the rest of the GUI, context specific help can be obtained \
 by moving the mouse pointer into one of the tool areas (compressor, EQ, \
-limiter, input, etc) and pressing <Shift><F1>.\n"
+limiter, input, etc) and pressing <Shift><F1>.\n")
 };
 
 
-char hdeq_help[] = {
+char hdeq_help[] = {N_(
 "    The hand drawn EQ (HDEQ) allows the user to draw the EQ curve using the \
 mouse.  The curve is then splined to fill 1024 EQ bands.  There are a number \
 of other options available in the HDEQ.  There are user defined notches that \
@@ -112,54 +114,54 @@ cuttoff frequency and gain.  <Ctrl>-left click will reset the notch to 0.  If \
 you hold the shift key while adjusting the notch handle it will only move in \
 the Y (gain) direction.\n\n\
     Over the notch width handle - left click and hold to widen or narrow the \
-notches, except the high and low cutoff notches which have no width handles.\n"
+notches, except the high and low cutoff notches which have no width handles.\n")
 };
 
 
-char crossover_help[] = {
+char crossover_help[] = {N_(
 "    The adjustable crossover is used to split the entire audible range into \
 three sections.  It applies to the compressors and stereo widths. If the \
 crossovers are set to 500Hz and 5KHz then the first stereo width control and \
 compressor works for 25-500Hz, the second for 500Hz-5KHz, and the last for \
 5KHz-20KHz.  The crossover has no effect on the HDEQ.  However, the crossover \
-bars that are visible in the HDEQ serve as a visual reference.\n"
+bars that are visible in the HDEQ serve as a visual reference.\n")
 };
 
 
-char geq_help[] = {
+char geq_help[] = {N_(
 "    The graphic EQ (GEQ) can be used to set gain for specific bands of the \
 audio spectrum.  The center of the band is annotated at the bottom of each \
 fader.  Setting a fader in the GEQ will override the HDEQ in the immediate \
 vicinity of the changed fader and cause that curve to be redrawn.  It will \
 not override the parametric notch settings in the HDEQ.  Clicking the right \
-mouse button on a GEQ control will reset the value to 0.0.\n"
+mouse button on a GEQ control will reset the value to 0.0.\n")
 };
 
 
-char input_help[] = {
+char input_help[] = {N_(
 "    The input section allows you to set the input gain to the JAMin system.  \
 You can also pan the input left or right.  Clicking the right mouse button on \
-the gain/balance control will reset the value to 0.0/centre.\n"
+the gain/balance control will reset the value to 0.0/centre.\n")
 };
 
 
-char spectrum_help[] = {
+char spectrum_help[] = {N_(
 "    The spectrum display shows the power spectrum of the signal in bands \
 that correspond to the frequency bands in the 30 band EQ (GEQ). In addition \
-it displays the maximum value reached for each band as a yellow line.\n"
+it displays the maximum value reached for each band as a yellow line.\n")
 };
 
 
-char comp_curve_help[] = {
+char comp_curve_help[] = {N_(
 "    The compressor curves show a graphical representation of the compression \
 for each compressor band.  The bands are defined by the crossover that can \
 be set using the crossover faders or the crossover bars in the HDEQ.  The \
 X-axis shows the input in db while the Y-axis shows the output in db.  The \
-scale is from -60 to 0 in X and -60 to +30 in Y.\n"
+scale is from -60 to 0 in X and -60 to +30 in Y.\n")
 };
 
 
-char comp_help[] = {
+char comp_help[] = {N_(
 "    The compressors allow you to set compression parameters for each \
 compressor band.  The bands are defined by the crossover that can be set \
 using the crossover faders or the crossover bars in the HDEQ.  The parameters \
@@ -177,86 +179,86 @@ manual.\n\
 the desired compressor band windows.  When they are ganged moving one control \
 will move all other ganged controls by the same amount.  To ungang just click \
 on the label again.  The labels change to the band color to indicate that \
-they are ganged.\n"
+they are ganged.\n")
 };
 
 
-char stereo_help[] = {
+char stereo_help[] = {N_(
 "    The stereo width controls define the apparent 'wideness' of the stereo \
 signal for each of the three bands.  The bands are defined by the crossovers \
 that can be set using the crossover faders or the crossover bars in the \
 HDEQ.  More negative values decrease the 'width' while positive values \
 increase the 'width'.  Clicking the right mouse button on the stereo width \
-control will reset the value to 0.0.\n"
+control will reset the value to 0.0.\n")
 };
 
 
-char limiter_help[] = {
+char limiter_help[] = {N_(
 "    The lookahead limiter is a brickwall limiter that will not allow the \
 output to exceed the set level.  It \'looks ahead\' by the specified amount \
 in order to make a smooth transition as it nears the limit level.  Clicking \
 the right mouse button on the input or limit control will reset the value to \
-0.0.\n"
+0.0.\n")
 };
 
 
-char boost_help[] = {
+char boost_help[] = {N_(
 "    The boost control allows the user to add 'tube like' gain to the output \
 signal.  Use to taste (New England mild to Cajun spicy).  Clicking the right \
-mouse button on the boost control will reset the value to 0.0.\n"
+mouse button on the boost control will reset the value to 0.0.\n")
 };
 
 
-char output_help[] = {
+char output_help[] = {N_(
 "    The output control allows you to decrease the output level.  The upper \
 level is 0dB.  Clicking the right mouse button on the output control will \
-reset the value to 0.0.\n"
+reset the value to 0.0.\n")
 };
 
 
-char eq_options_help[] = {
+char eq_options_help[] = {N_(
 "    The EQ Options dialog allows you to set the minimum and maximum gain \
 level in dB for both the HDEQ and GEQ.  You can also set the source of the \
 spectrum for both the HDEQ and spectrum windows.  Spectrum update frequency \
 can be set here as well.  Up to 10 per second (default) and down to 0 \
-(disabled).\n"
+(disabled).\n")
 };
 
 
-char preferences_help[] = {
+char preferences_help[] = {N_(
 "    Colors may be changed in the Options->Preferences dialog.  These colors \
 are saved in the file $HOME/.jamin-defaults.  This is done whenever you \
 exit from JAMin.  You can actually edit this file and change the colors by \
 hand.  They are just RGB values in the 0-65535 range but it's much easier to \
 use the GUI ;-).  You may also set the crossfade time in this dialog (see the \
-man page for more information on crossfade time).\n"
+man page for more information on crossfade time).\n")
 };
 
 
-char spectrum_options_help[] = {
+char spectrum_options_help[] = {N_(
 "    This allows you to set the input to the spectrum computation for both \
 the Spectrum window and the HDEQ.  The default is Post EQ.  The other options \
-are Pre EQ, Post compressor, and Output.\n"
+are Pre EQ, Post compressor, and Output.\n")
 };
 
 
-char transport_controls_help[] = {
+char transport_controls_help[] = {N_(
 "    The transport controls give you the usual tape transport type controls.  \
 These are useful if you are using other JACK enabled applications that honor \
 the JACK transport control functions (ecamegapedal, Ardour). Note that there \
 is no stop button (use pause). Some JACK and system status information is \
 available to the right of the transport buttons.  The fast forward and \
-reverse buttonsa will move the transport forward or back by five seconds.\n"
+reverse buttonsa will move the transport forward or back by five seconds.\n")
 };
 
 
-char bypass_help[] = {
+char bypass_help[] = {N_(
 "    This button will bypass all of JAMin's functions.  The keyboard \
-accelerator for this button is the 'b' key.\n"
+accelerator for this button is the 'b' key.\n")
 };
 
 
-char scenes_help[] = {
+char scenes_help[] = {N_(
 "    Scenes are used to save and recall an entire group of JAMin parameter \
 settings during a session.  After setting all of the parameters for a \
 specific section of music (verse, chorus, bridge) or a complete song you can \
@@ -282,31 +284,31 @@ will clear scene button 4.  \n\n\
     Note that the keypad keys may be used but only for scenes 1 through 10 \
 with Num Lock on.  Using the keypad with Num Lock off will access the cursor \
 keys (which can be used to control some aspects of the GUI).  Using <Shift> \
-with the keypad with Num Lock on will also access the cursor keys.\n"
+with the keypad with Num Lock on will also access the cursor keys.\n")
 };
 
 
-char eq_bypass_help[] = {
+char eq_bypass_help[] = {N_(
 "    This button allows you to bypass all EQ processing.  It will have no \
-effect on any of the other controls.\n"
+effect on any of the other controls.\n")
 };
 
 
-char band_button_help[] = {
+char band_button_help[] = {N_(
 "    The solo buttons allow you to listen to selected bands while muting the \
 other bands.  Selecting two of the solo buttons effectively mutes the \
 remaining band.  The per band bypass buttons allow you to bypass compression \
-on the selected bands.\n"
+on the selected bands.\n")
 };
 
 
-char limiter_bypass_help[] = {
+char limiter_bypass_help[] = {N_(
 "    This button allows you to bypass limiting.  It has no effect on any of \
-the other controls.\n"
+the other controls.\n")
 };
 
 
-char keys_help[] = {
+char keys_help[] = {N_(
 "    Keyboard accelerators are available for many of the functions in \
 JAMin:\n\n\
 \tb\t\t\t-\tBypass\n\
@@ -330,5 +332,5 @@ JAMin:\n\n\
 \tF4\t\t\t-\tSet the notebook tab to Compressor \n \t\t\t\t\tcurves\n\
 \tF5\t\t\t-\tSet the notebook tab to the EQ \n \t\t\t\t\tOptions\n\
 \t<Ctrl>-k\t\t-\tKeyboard accelerator help (this \n \t\t\t\t\tscreen)\n\
-\t<Ctrl>-j\t\t-\tAbout JAMin\n"
+\t<Ctrl>-j\t\t-\tAbout JAMin\n")
 };
