@@ -34,7 +34,7 @@ static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_low_comp_lbl,
 static GtkDrawingArea  *l_EQ_curve, *l_comp_curve[3];
 static GdkDrawable     *EQ_drawable, *comp_drawable[3];
 static GdkColormap     *colormap;
-static GdkColor        white, black, red, green, blue, comp_color[3];
+static GdkColor        white, black, red, green, blue, comp_color[4];
 static GdkGC           *EQ_gc, *comp_gc[3];
 static PangoContext    *comp_pc[3];
 static GtkAdjustment   *l_low2mid_adj, *l_eqb1_adj;
@@ -331,6 +331,8 @@ on_window1_show                        (GtkWidget       *widget,
 
     gdk_colormap_alloc_color (colormap, &blue, FALSE, TRUE);
     comp_color[2] = blue;
+
+    comp_color[3] = black;
 }
 
 
@@ -1175,9 +1177,9 @@ on_low_curve_box_leave_notify_event    (GtkWidget       *widget,
     comp_write_annotation (0, " ");
 
     gtk_widget_modify_fg ((GtkWidget *) l_low_comp_lbl, GTK_STATE_NORMAL, 
-        NULL);
+        &comp_color[3]);
     gtk_widget_modify_fg ((GtkWidget *) l_low_curve_lbl, GTK_STATE_NORMAL, 
-        NULL);
+        &comp_color[3]);
 
     return FALSE;
 }
@@ -1191,9 +1193,9 @@ on_mid_curve_box_leave_notify_event    (GtkWidget       *widget,
     comp_write_annotation (1, " ");
 
     gtk_widget_modify_fg ((GtkWidget *) l_mid_comp_lbl, GTK_STATE_NORMAL, 
-        NULL);
+         &comp_color[3]);
     gtk_widget_modify_fg ((GtkWidget *) l_mid_curve_lbl, GTK_STATE_NORMAL, 
-        NULL);
+         &comp_color[3]);
 
     return FALSE;
 }
@@ -1207,9 +1209,9 @@ on_high_curve_box_leave_notify_event   (GtkWidget       *widget,
     comp_write_annotation (2, " ");
 
     gtk_widget_modify_fg ((GtkWidget *) l_high_comp_lbl, GTK_STATE_NORMAL,
-        NULL);
+        &comp_color[3]);
     gtk_widget_modify_fg ((GtkWidget *) l_high_curve_lbl, GTK_STATE_NORMAL, 
-        NULL);
+        &comp_color[3]);
 
     return FALSE;
 }
@@ -1302,9 +1304,9 @@ on_low_comp_event_box_leave_notify_event
                                         gpointer         user_data)
 {
     gtk_widget_modify_fg ((GtkWidget *) l_low_comp_lbl, GTK_STATE_NORMAL, 
-        NULL);
+        &comp_color[3]);
     gtk_widget_modify_fg ((GtkWidget *) l_low_curve_lbl, GTK_STATE_NORMAL, 
-        NULL);
+        &comp_color[3]);
 
     return FALSE;
 }
@@ -1332,9 +1334,9 @@ on_mid_comp_event_box_leave_notify_event
                                         gpointer         user_data)
 {
     gtk_widget_modify_fg ((GtkWidget *) l_mid_comp_lbl, GTK_STATE_NORMAL, 
-        NULL);
+         &comp_color[3]);
     gtk_widget_modify_fg ((GtkWidget *) l_mid_curve_lbl, GTK_STATE_NORMAL, 
-        NULL);
+         &comp_color[3]);
 
     return FALSE;
 }
@@ -1362,9 +1364,9 @@ on_high_comp_event_box_leave_notify_event
                                         gpointer         user_data)
 {
     gtk_widget_modify_fg ((GtkWidget *) l_high_comp_lbl, GTK_STATE_NORMAL, 
-        NULL);
+        &comp_color[3]);
     gtk_widget_modify_fg ((GtkWidget *) l_high_curve_lbl, GTK_STATE_NORMAL, 
-        NULL);
+        &comp_color[3]);
 
     return FALSE;
 }
