@@ -4,7 +4,7 @@
 # Change this path or link it to your pixmaps dir
 #
 
- pixmap_path "/art/code/jam/pixmaps"
+ pixmap_path "/art/code/jam/pixmaps:/usr/local/src/1music/jack/jam/jam/pixmaps"
  
 #
 # style <name> [= <name>]
@@ -44,18 +44,18 @@
 # This sets a style called "button".  The name is not really important, as
 # it is assigned to the actual widgets at the bottom of the file.
 
-style "gold"
-{
-  #This sets the padding around the window to the pixmap specified.
-  #bg_pixmap[<STATE>] = "<pixmap filename>"
-   bg_pixmap[NORMAL] = "gold.xpm"
-  
-  #Sets the background color to red when in the "NORMAL"
-  #state.
-
-  #bg[NORMAL] = { 0, 0, 0 }
-
-}
+#style "example"
+#{
+#  #This sets the padding around the window to the pixmap specified.
+#  #bg_pixmap[<STATE>] = "<pixmap filename>"
+#  bg_pixmap[NORMAL] = "gold.xpm"
+#  
+#  #Sets the background color to red when in the "ACTIVE"
+#  #state.
+#
+#  bg[ACTIVE] = { 1.0, 0, 0 }
+#
+#}
 
 style "maori"
 {
@@ -63,10 +63,13 @@ style "maori"
   #bg_pixmap[<STATE>] = "<pixmap filename>"
    bg_pixmap[NORMAL] = "maori.xpm"
   
-  #Sets the background color to red when in the "NORMAL"
-  #state.
+}
 
-  #bg[NORMAL] = { 0, 0, 0 }
+style "brushed steel"
+{
+  #This sets the padding around the window to the pixmap specified.
+  #bg_pixmap[<STATE>] = "<pixmap filename>"
+   bg_pixmap[NORMAL] = "brushed-steel.png"
 
 }
 
@@ -143,12 +146,16 @@ style "ruler"
 # The widget types are listed in the class hierarchy, but could probably be
 # just listed in this document for the users reference.
 
-widget_class "GtkWindow" style "maori"
-widget_class "GtkDialog" style "gold"
-widget_class "GtkFileSelection" style "gold"
+# Only need to change these next two to get a different bg color
+
+# main window colors
+widget_class "GtkWindow" style "brushed steel"
 
 # comps and limiter colors
-widget_class "*Gtk*Box" style "maori"
+widget_class "*Gtk*Box" style "brushed steel"
+
+#widget_class "GtkDialog" style "gold"
+#widget_class "GtkFileSelection" style "gold"
 
 widget_class "*Gtk*Label" style "text"
 widget_class "*Gtk*Scale" style "scale"
