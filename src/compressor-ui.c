@@ -9,6 +9,10 @@
 #include "gtkmeter.h"
 #include "state.h"
 
+#define MUG_CORR_FACT 0.4f /* makeup gain correction factor - dampens the
+			      makeup gain correction to stop it over
+			      correcting */
+
 gboolean adj_cb(GtkAdjustment *adj, gpointer p);
 void at_changed(int id, float value);
 void re_changed(int id, float value);
@@ -130,7 +134,7 @@ void ma_changed(int id, float value)
 void calc_auto_gain(int i)
 {
     if (adj_ma[i] && adj_th[i] && adj_ra[i]) {
-	s_set_value_no_history(S_COMP_MAKEUP(i), adj_th[i]->value / adj_ra[i]->value - adj_th[i]->value);
+	s_set_value_no_history(S_COMP_MAKEUP(i), (adj_th[i]->value / adj_ra[i]->value - adj_th[i]->value) * MUG_CORR_FACT);
 	//gtk_adjustment_set_value(adj_ma[i], adj_th[i]->value / adj_ra[i]->value - adj_th[i]->value);
     }
 }

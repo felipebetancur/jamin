@@ -10,6 +10,8 @@ jamin_LDFLAGS = -lm
 
 bin_PROGRAMS = jamin
 
+man_MANS = jamin.1
+
 jamin_SOURCES = \
 	callbacks.c callbacks.h callbacks_help.h \
 	compressor.h \
