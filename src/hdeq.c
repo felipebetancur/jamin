@@ -102,7 +102,7 @@ static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0,
                        EQ_length = 0, comp_realized[3] = {0, 0, 0}, 
                        EQ_cleared = 1, EQ_realized = 0, xover_active = 0,
                        xover_handle_fa, xover_handle_fb, EQ_drag_fa = 0,
-                       EQ_drag_fb = 0, EQ_partial = 0,
+                       EQ_drag_fb = 0, EQ_partial = 0, part_x[2], part_y[2],
                        EQ_notch_drag[NOTCHES] = {0, 0, 0, 0, 0}, 
                        EQ_notch_Q_drag[NOTCHES] = {0, 0, 0, 0, 0},
                        EQ_notch_handle[2][3][NOTCHES], 
@@ -456,8 +456,12 @@ void draw_EQ_spectrum_curve (float single_levels[])
           {
             for (i = 1 ; i < EQ_INTERP ; i++)
               {
-                gdk_draw_line (EQ_drawable, EQ_gc, x[i - 1], y[i - 1], 
-                               x[i], y[i]);
+                if (!EQ_partial || x[i] < part_x[0] || x[i] > part_x[1] ||
+                    y[i] < part_y[0] || y[i] > part_y[1])
+                  {
+                    gdk_draw_line (EQ_drawable, EQ_gc, x[i - 1], y[i - 1], 
+                                   x[i], y[i]);
+                  }
               }
           }
         EQ_partial = 0;
@@ -950,11 +954,18 @@ void hdeq_curve_exposed (GtkWidget *widget, GdkEventExpose *event)
     EQ_curve_height = widget->allocation.height - 1;
 
 
-    /*  If we only get part of the height exposed we don't want to redraw the
-        entire spectrum.  This is a band-aid for a partial expose problem.  
-        I'm not sure what the best solution would be.  */
+    /*  If we only get part of the window exposed we don't want to redraw the
+        entire spectrum.  */
 
-    if (event->area.height != widget->allocation.height) EQ_partial = 1;
+    if (event->area.height != widget->allocation.height ||
+        event->area.width != widget->allocation.width ||
+        event->area.x != widget->allocation.x ||
+        event->area.y != widget->allocation.y) EQ_partial = 1;
+
+    part_x[0] = event->area.x;
+    part_y[0] = event->area.y;
+    part_x[1] = part_x[0] + event->area.width;
+    part_y[1] = part_y[0] + event->area.height;
 
     draw_EQ_curve ();
 }

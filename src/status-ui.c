@@ -78,7 +78,7 @@ void status_update(GtkWidget *main_window)
     else
 	rt = "";
 
-    snprintf(string, sizeof(string), "%s  |  %4.1f%% CPU  |  %ld xruns  |  %"
+    snprintf(string, sizeof(string), "%s  |  %4.1f%% CPU  |  %d xruns  |  %"
 	     PRIu32 " frames  |  %" PRIu32 " Hz%s",
              state_msg, j.cpu_load, j.xruns, j.buf_size, j.sample_rate, rt);
 
