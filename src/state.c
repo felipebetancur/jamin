@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.45 2004/01/22 01:54:13 jdepner Exp $
+ *  $Id: state.c,v 1.46 2004/04/05 23:37:36 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -769,6 +769,11 @@ void s_crossfade_ui()
 int s_have_filename()
 {
     return (filename != NULL);
+}
+
+char *s_get_filename()
+{
+    return (filename);
 }
 
 void s_update_title()

@@ -35,6 +35,8 @@ void s_suppress_push();
 void s_set_crossfade_time(float ct);
 void s_suppress_pop();
 int s_have_filename();
+char *s_get_filename();
+
 
 #define S_NONE -1
 #define S_LOAD 0

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.140 2004/04/05 21:31:09 jdepner Exp $
+ *  $Id: callbacks.c,v 1.141 2004/04/05 23:37:32 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1380,15 +1380,25 @@ on_save_as1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
     GtkFileSelection    *file_selector;
+    char *filename;
+
 
     file_selector = 
        (GtkFileSelection *) gtk_file_selection_new ("Select a session file");
 
-    if (jamin_dir) {
-	gtk_file_selection_set_filename (file_selector, jamin_dir);
-    }
+    if (s_have_filename())
+      {
+        filename = s_get_filename ();
+	gtk_file_selection_set_filename (file_selector, filename);
+      }
+    else
+      {
+        if (jamin_dir) 
+            gtk_file_selection_set_filename (file_selector, jamin_dir);
+        gtk_file_selection_complete (file_selector, "*.jam");
+      }
 
-    gtk_file_selection_complete (file_selector, "*.jam");
+
 
     g_signal_connect (GTK_OBJECT (file_selector->ok_button),
         "clicked", G_CALLBACK (s_save_session_from_ui), file_selector);
