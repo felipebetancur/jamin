@@ -98,8 +98,8 @@ void geq_set_gains()
 
 void geq_set_sliders(int length, float x[], float y[])
 {
-    int i, j, prev_band;
-    float dist, value;
+    int i, j;
+    float value;
 
 
     if (length != BINS / 2 - 1)
@@ -126,37 +126,27 @@ void geq_set_sliders(int length, float x[], float y[])
         EQ_drawn = 1;
 
 
-        /*  Convert to db and set the faders in the graphic EQ.  The previous
-            band stuff is purely cosmetic in the low end.  I don't think that 
-            31Hz actually gets used anyway.  */
+        /*  Set the faders in the graphic EQ.  First and last should be
+            exact since that's what we interpolated to.  Use linear 
+            interpolation for the others.  */
 
-        prev_band = -1;
-        for (j = 0 ; j < EQ_BANDS ; j++)
+        gtk_adjustment_set_value (geqa[0], y[0] / 0.05);
+        for (j = 1 ; j < EQ_BANDS - 1 ; j++)
           {
-            float nearest_dist = 9999999.0f;
-            int nearest_band = 0;
             for (i = 0 ; i < length ; i++)
               {
-                dist = fabs (x[i] - geq_freqs[j]);
-                if (dist < nearest_dist) 
+                if (geq_freqs[j] <= x[i])
                   {
-                    nearest_band = i;
-                    nearest_dist = dist;
+                    value = y[i - 1] + (y[i] - y[i - 1]) * ((geq_freqs[j] - 
+                        x[i - 1]) / (x[i] - x[i - 1]));
+
+                    gtk_adjustment_set_value (geqa[j], value / 0.05);
+
+                    break;
                   }
               }
-            if (nearest_band == prev_band)
-              {
-                value = (y[nearest_band] + y[nearest_band + 1]) * 0.5;
-              }
-            else
-              {
-                value = y[nearest_band];
-              }
-            prev_band = nearest_band;
-
-
-            gtk_adjustment_set_value (geqa[j], value / 0.05);
           }
+        gtk_adjustment_set_value (geqa[EQ_BANDS - 1], y[length - 1] / 0.05);
 
 
         /*  Release the restriction on the graphic EQ adjustments.  */
