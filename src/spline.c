@@ -5,6 +5,7 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 
 #define SPLINE_COL  53
@@ -145,9 +146,16 @@ void spline_cof (float *x, float *y, int pos, float *coeffs)
 void spline (float *x, float *y, int pos, float x_pos, float *y_pos, float *ater)
 {
     int            endloop1, endloop2;
-    float          coeffs[SPLINE_ROW + 1][SPLINE_COL];
-    static int     valpos;
-                
+    //float          coeffs[SPLINE_ROW + 1][SPLINE_COL];
+    float          *coeffs[SPLINE_ROW + 1];
+    float 	   *contig;
+    static int     valpos = 0;
+    int i;
+
+    contig = calloc((SPLINE_ROW + 1) * SPLINE_COL, sizeof(float)); 
+    for (i=0; i<SPLINE_ROW + 1; i++) {
+	coeffs[i] = contig + (i * SPLINE_COL);
+    }
 
     if ((*x + *(y + pos) + *(y + (pos - 1)) + *(x + (pos - 1)) +
         *(y + (pos - 2)) - *ater) != 0.0)

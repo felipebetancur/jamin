@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.51 2004/04/11 23:24:58 theno23 Exp $
+ *  $Id: process.c,v 1.52 2004/04/12 16:34:15 theno23 Exp $
  */
 
 #include <math.h>
@@ -236,10 +236,10 @@ void run_eq(unsigned int port, unsigned int in_ptr)
 	comp_tmp[i] = comp[i] * eq_gain;
 	comp_tmp[BINS - i] = comp[BINS - i] * eq_gain;
 
-	peak = peak_data[i] * peak_data[i] + peak_data[BINS - i] *
-		peak_data[BINS - i];
+	peak = sqrtf(peak_data[i] * peak_data[i] + peak_data[BINS - i] *
+		peak_data[BINS - i]);
 	if (peak > bin_peak[i]) {
-	    bin_peak[i] = sqrtf(peak);
+	    bin_peak[i] = peak;
 	}
     }
     fftwf_execute(plan_cr);
@@ -260,10 +260,10 @@ void run_eq(unsigned int port, unsigned int in_ptr)
 
 	comp_tmp[i] = comp[i] * eq_gain;
 	comp_tmp[BINS - i] = comp[BINS - i] * eq_gain;
-	peak = peak_data[i] * peak_data[i] + peak_data[BINS - i] *
-		peak_data[BINS - i];
+	peak = sqrtf(peak_data[i] * peak_data[i] + peak_data[BINS - i] *
+		peak_data[BINS - i]);
 	if (peak > bin_peak[i]) {
-	    bin_peak[i] = sqrtf(peak);
+	    bin_peak[i] = peak;
 	}
     }
     fftwf_execute(plan_cr);
@@ -283,10 +283,10 @@ void run_eq(unsigned int port, unsigned int in_ptr)
 
 	comp_tmp[i] = comp[i] * eq_gain;
 	comp_tmp[BINS - i] = comp[BINS - i] * eq_gain;
-	peak = peak_data[i] * peak_data[i] + peak_data[BINS - i] *
-		peak_data[BINS - i];
+	peak = sqrtf(peak_data[i] * peak_data[i] + peak_data[BINS - i] *
+		peak_data[BINS - i]);
 	if (peak > bin_peak[i]) {
-	    bin_peak[i] = sqrtf(peak);
+	    bin_peak[i] = peak;
 	}
     }
     fftwf_execute(plan_cr);
