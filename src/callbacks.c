@@ -322,7 +322,7 @@ on_window1_show                        (GtkWidget       *widget,
 
     blue.red = 0;
     blue.green = 0;
-    blue.blue = 655350;
+    blue.blue = 65535;
 
     gdk_colormap_alloc_color (colormap, &blue, FALSE, TRUE);
 }

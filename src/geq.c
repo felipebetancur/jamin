@@ -42,12 +42,12 @@ void bind_geq()
 
     for (i=0; i<EQ_BANDS; i++) {
 	sprintf(name, "eqb%d", i+1);
-	geqr[i] = lookup_widget(main_window, name);
+	geqr[i] = GTK_RANGE(lookup_widget(main_window, name));
 	snprintf(tip, 255, "%'.0f Hz", floor(geq_freqs[i] + 0.5));
-	gtk_tooltips_set_tip(tooltips, geqr[i], tip, NULL);
-	geqa[i] = gtk_range_get_adjustment(GTK_RANGE(geqr[i]));
-        gtk_signal_connect(geqa[i], "value-changed", GTK_SIGNAL_FUNC(eqb_mod), NULL);
-	gtk_signal_connect(geqa[i], "value-changed", GTK_SIGNAL_FUNC(eqb_changed), (gpointer)i+1);
+	gtk_tooltips_set_tip(tooltips, GTK_WIDGET(geqr[i]), tip, NULL);
+	geqa[i] = GTK_ADJUSTMENT(gtk_range_get_adjustment(GTK_RANGE(geqr[i])));
+        g_signal_connect(G_OBJECT(geqa[i]), "value-changed", G_CALLBACK(eqb_mod), NULL);
+	g_signal_connect(G_OBJECT(geqa[i]), "value-changed", G_CALLBACK(eqb_changed), (gpointer)i+1);
     }
 
     for (i=0; i<BANDS + 1; i++) {

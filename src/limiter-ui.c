@@ -18,11 +18,11 @@ void bind_limiter()
 
     scale = lookup_widget(main_window, "lim_lh_scale");
     lh_adj = gtk_range_get_adjustment(GTK_RANGE(scale));
-    gtk_signal_connect(lh_adj, "value-changed", GTK_SIGNAL_FUNC(lh_changed),
+    g_signal_connect(G_OBJECT(lh_adj), "value-changed", G_CALLBACK(lh_changed),
 	    NULL);
-    in_meter = lookup_widget(main_window, "lim_in_meter");
-    out_meter = lookup_widget(main_window, "lim_out_meter");
-    att_meter = lookup_widget(main_window, "lim_att_meter");
+    in_meter = GTK_PROGRESS_BAR(lookup_widget(main_window, "lim_in_meter"));
+    out_meter = GTK_PROGRESS_BAR(lookup_widget(main_window, "lim_out_meter"));
+    att_meter = GTK_PROGRESS_BAR(lookup_widget(main_window, "lim_att_meter"));
 }
 
 gboolean lh_changed(GtkAdjustment *adj, gpointer user_data)
@@ -34,9 +34,31 @@ gboolean lh_changed(GtkAdjustment *adj, gpointer user_data)
 
 void limiter_meters_update()
 {
-    gtk_progress_bar_set_fraction(att_meter, limiter.attenuation / 12.0f);
-    gtk_progress_bar_set_fraction(in_meter, iec_scale(20.0f * log10f(lim_peak[LIM_PEAK_IN])) * 0.01f);
-    gtk_progress_bar_set_fraction(out_meter, iec_scale(20.0f * log10f(lim_peak[LIM_PEAK_OUT])) * 0.01f);
+    float peak_in = iec_scale(20.0f * log10f(lim_peak[LIM_PEAK_IN])) * 0.01f;
+    float peak_out = iec_scale(20.0f * log10f(lim_peak[LIM_PEAK_OUT])) * 0.01f;
+    float atten = limiter.attenuation / 12.0f;
+
+    if (peak_in < 0.0f) {
+	peak_in = 0.0f;
+    } else if (peak_in > 1.0f) {
+	peak_in = 1.0f;
+    }
+    if (peak_out < 0.0f) {
+	peak_out = 0.0f;
+    } else if (peak_out > 1.0f) {
+	peak_out = 1.0f;
+    }
+
+    /* this one causes GTK warnings when you move the output gain slider */
+    if (atten < 0.0f) {
+	atten = 0.0f;
+    } else if (atten > 1.0f) {
+	atten = 1.0f;
+    }
+    
+    gtk_progress_bar_set_fraction(in_meter, peak_in);
+    gtk_progress_bar_set_fraction(out_meter, peak_out);
+    gtk_progress_bar_set_fraction(att_meter, atten);
 }
 
 /* vi:set ts=8 sts=4 sw=4: */
