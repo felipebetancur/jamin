@@ -24,6 +24,8 @@ void s_set_adjustment(int id, GtkAdjustment * adjustment);
 void s_undo();
 void s_save_session(GtkWidget * w, gpointer user_data);
 void s_load_session(GtkWidget * w, gpointer user_data);
+void s_crossfade(const int nframes);
+void s_crossfade_ui();
 void s_suppress_push();
 void s_suppress_pop();
 

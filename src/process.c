@@ -6,6 +6,7 @@
 #include <assert.h>
 
 #include "config.h"
+#include "state.h"
 #include "process.h"
 #include "compressor.h"
 #include "limiter.h"
@@ -250,6 +251,9 @@ int process_signal(jack_nframes_t nframes,
     plugin_connect_port(lim_plugin, limiter.handle, LIM_IN_2, out[CHANNEL_R]);
     plugin_connect_port(lim_plugin, limiter.handle, LIM_OUT_1, out[CHANNEL_L]);
     plugin_connect_port(lim_plugin, limiter.handle, LIM_OUT_2, out[CHANNEL_R]);
+
+    /* Crossfade parameter values from current to target */
+    s_crossfade(nframes);
 
     for (pos = 0; pos < nframes; pos++) {
 	const unsigned int op = (in_ptr - latency) & BUF_MASK;

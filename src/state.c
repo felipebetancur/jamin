@@ -7,6 +7,7 @@
 
 #include "config.h"
 #include "state.h"
+#include "process.h"
 #include "scenes.h"
 
 /* The smallest value that counts as a change, should be approximately
@@ -16,6 +17,7 @@
 float                   s_value[S_SIZE];
 static float            s_target[S_SIZE];
 static int              s_duration[S_SIZE];
+static int              s_changed[S_SIZE];
 static GtkAdjustment   *s_adjustment[S_SIZE];
 static s_callback_func  s_callback[S_SIZE];
 
@@ -40,6 +42,8 @@ void state_init()
     for (i=0; i<S_SIZE; i++) {
 	s_value[i] = 0.0f;
 	s_target[i] = 0.0f;
+	s_duration[i] = 0;
+	s_changed[i] = 0;
 	s_adjustment[i] = NULL;
 	s_callback[i] = NULL;
     }
@@ -85,7 +89,7 @@ void s_set_value_ui(int id, float value)
     }
 
 #if 0
-    /* This code is confusing in use, so I've removed it */
+    /* This code is confusing in use, so I've removed it - swh */
 
     if (value - MIN_CHANGE < last_state->value[id] &&
 	value + MIN_CHANGE > last_state->value[id]) {
@@ -104,8 +108,9 @@ void s_set_value_ui(int id, float value)
 
 void s_set_value(int id, float value, int duration)
 {
-    s_set_value_ui(id, value);
+    /* We dont want to call this yet... s_set_value_ui(id, value); */
     s_duration[id] = duration;
+    s_target[id] = value;
     if (s_adjustment[id]) {
 	gtk_adjustment_set_value(s_adjustment[id], value);
     }
@@ -126,6 +131,7 @@ void s_set_value_no_history(int id, float value)
 {
     suppress_feedback++;
     s_value[id] = value;
+    s_target[id] = value;
     s_set_events(id, value);
     suppress_feedback--;
 }
@@ -170,13 +176,17 @@ void s_undo()
 
 void s_restore_state(s_state *state)
 {
-    int i;
+    int i, duration;
 
     printf("restore %s\n", state->description);
+    duration = (int)sample_rate;
     suppress_feedback++;
     for (i=0; i<S_SIZE; i++) {
-	s_value[i] = state->value[i];
-	s_set_events(i, s_value[i]);
+	/* set the target and duration for crosssfade, but set the controls to
+	 * the endpoint */
+	s_target[i] = state->value[i];
+	s_duration[i] = duration;
+	//s_set_events(i, state->value[i]);
     }
     suppress_feedback--;
 }
@@ -351,6 +361,40 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
     if (!found) {
 	fprintf(stderr, "Unknown symbol: %s\n", *p);
     }
+}
+
+void s_crossfade(const int nframes)
+{
+    unsigned int i;
+
+    for (i=0; i<S_SIZE; i++) {
+        if (s_duration[i] != 0) {
+/* debug crap if (i == S_IN_GAIN) printf("%d\t%f\n", s_duration[i], s_value[i]); */
+            s_duration[i] -= nframes;
+            if (s_duration[i] > nframes) {
+                s_value[i] += ((float)nframes / (float)s_duration[i]) *
+                                (s_target[i] - s_value[i]);
+            } else {
+                s_value[i] = s_target[i];
+                s_duration[i] = 0;
+            }
+	    s_changed[i] = 1;
+        }
+    }
+}
+
+void s_crossfade_ui()
+{
+    unsigned int i;
+
+    suppress_feedback++;
+    for (i=0; i<S_SIZE; i++) {
+	if (s_changed[i]) {
+	    s_changed[i] = 0;
+	    s_set_events(i, s_value[i]);
+	}
+    }
+    suppress_feedback--;
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

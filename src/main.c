@@ -111,6 +111,7 @@ gboolean update_meters(gpointer data)
     limiter_meters_update();
     compressor_meters_update();
     spectrum_update();
+    s_crossfade_ui();
 
 
     /*  Only update the status once a second.  */
