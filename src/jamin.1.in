@@ -35,7 +35,7 @@ including some developer options not intended for normal users.
 \fB\-n\fR \fIclientname\fR
 .br 
 Set JACK \fIclientname\fR used to identify input and output ports.
-Otherwise, use "JAMin".
+Otherwise, use "jamin".
 .TP 
 \fB\-p\fR
 .br 
