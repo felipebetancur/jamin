@@ -3651,28 +3651,28 @@ create_window1 (void)
                     G_CALLBACK (on_scene9_eventbox_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) scene10_eventbox, "button_press_event",
-                    G_CALLBACK (on_scene6_eventbox_button_press_event),
+                    G_CALLBACK (on_scene10_eventbox_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) scene11_eventbox, "button_press_event",
                     G_CALLBACK (on_scene11_eventbox_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) scene12_eventbox, "button_press_event",
-                    G_CALLBACK (on_scene6_eventbox_button_press_event),
+                    G_CALLBACK (on_scene12_eventbox_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) scene13_eventbox, "button_press_event",
-                    G_CALLBACK (on_scene6_eventbox_button_press_event),
+                    G_CALLBACK (on_scene13_eventbox_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) scene14_eventbox, "button_press_event",
-                    G_CALLBACK (on_scene6_eventbox_button_press_event),
+                    G_CALLBACK (on_scene14_eventbox_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) scene15_eventbox, "button_press_event",
-                    G_CALLBACK (on_scene6_eventbox_button_press_event),
+                    G_CALLBACK (on_scene15_eventbox_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) scene16_eventbox, "button_press_event",
                     G_CALLBACK (on_scene16_eventbox_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) scene17_eventbox, "button_press_event",
-                    G_CALLBACK (on_scene6_eventbox_button_press_event),
+                    G_CALLBACK (on_scene17_eventbox_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) scene18_eventbox, "button_press_event",
                     G_CALLBACK (on_scene18_eventbox_button_press_event),

@@ -507,12 +507,42 @@ on_scene9_eventbox_button_press_event  (GtkWidget       *widget,
                                         gpointer         user_data);
 
 gboolean
+on_scene10_eventbox_button_press_event (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
 on_scene11_eventbox_button_press_event (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
 
 gboolean
+on_scene12_eventbox_button_press_event (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene13_eventbox_button_press_event (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene14_eventbox_button_press_event (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene15_eventbox_button_press_event (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
 on_scene16_eventbox_button_press_event (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene17_eventbox_button_press_event (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
 

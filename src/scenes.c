@@ -47,6 +47,8 @@ void bind_scenes ()
     int             i;
     char            *name;
 
+    GtkTooltips *tooltips = gtk_tooltips_new();
+
     name = malloc(sizeof(char) * 32);
 
     scene_menu = (GtkMenu *) create_scene_menu();
@@ -56,15 +58,18 @@ void bind_scenes ()
 
     for (i = 0 ; i < NUM_SCENES ; i++)
       {
-        sprintf (name, "scene%1d", i + 1);
+        sprintf (name, "scene%d", i + 1);
         l_scene[i] = GTK_IMAGE (lookup_widget (main_window, name));
-        sprintf (name, "scene%1d_eventbox", i + 1);
+        sprintf (name, "scene%d_eventbox", i + 1);
         l_scene_eventbox[i] = 
           GTK_EVENT_BOX (lookup_widget (main_window, name));
-        sprintf (l_scene_name[i], "scene%1d_name", i + 1);
         scene_loaded[i] = FALSE;
         scene_state[i].description = NULL; 
         gtk_widget_set_sensitive ((GtkWidget *) l_scene[i], FALSE);
+
+        gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[i]), 
+                              g_strdup_printf ("Scene %d, right click for menu", 
+                                               i + 1), NULL);
       }
 
       free(name);
@@ -310,14 +315,15 @@ void clear_scene (int scene_num)
     gtk_widget_set_sensitive ((GtkWidget *) l_scene[menu_scene], FALSE);
 
     gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[menu_scene]), 
-                          "Right click for menu", NULL);
+                          g_strdup_printf ("Scene %d, right click for menu", 
+                                           menu_scene + 1), NULL);
 
     gtk_image_set_from_stock (l_scene[menu_scene], GTK_STOCK_NO, 
                               GTK_ICON_SIZE_BUTTON);
 
     scene_loaded[menu_scene] = FALSE;
 
-    strcpy (l_scene_name[menu_scene], g_strdup_printf ("Scene %1d", 
+    strcpy (l_scene_name[menu_scene], g_strdup_printf ("Scene %d", 
                                                        menu_scene + 1));
 }
 
@@ -341,7 +347,7 @@ void unset_scene_buttons ()
 
         gtk_widget_set_sensitive ((GtkWidget *) l_scene[i], FALSE);
 
-        strcpy (l_scene_name[i], g_strdup_printf("Scene %1d", i + 1));
+        strcpy (l_scene_name[i], g_strdup_printf("Scene %d", i + 1));
       }
 }
 

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.137 2004/04/01 01:42:07 jdepner Exp $
+ *  $Id: callbacks.c,v 1.138 2004/04/01 22:22:40 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1758,12 +1758,12 @@ on_window1_key_press_event             (GtkWidget       *widget,
       }
 
 
-    //fprintf(stderr,"%s %d %x %x %d\n",__FILE__,__LINE__, key, state, scene);
-
     return FALSE;
 }
 
+
 /* JACK Ports menubar pulldown */
+
 void
 on_jack_ports_activate                 (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
@@ -1773,12 +1773,14 @@ on_jack_ports_activate                 (GtkMenuItem     *menuitem,
       iomenu_pull_down_ports(menuitem);
 }
 
+
 void
 on_out_trim_scale_value_changed        (GtkRange        *range,
                                         gpointer         user_data)
 {
     s_set_value_ui(S_OUT_GAIN, gtk_range_get_adjustment(range)->value);
 }
+
 
 gboolean
 scene_warning                          (GtkWidget       *widget,
@@ -2454,4 +2456,3 @@ on_scene_name_ok_clicked               (GtkButton       *button,
   set_scene_name (hot_scene, scene_name_text);
   popup_scene_name_dialog (0);
 }
-
