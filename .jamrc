@@ -4,7 +4,7 @@
 # Change this path or link it to your pixmaps dir
 #
 
- pixmap_path "/art/code/jam/pixmaps:/usr/local/src/1music/jack/jam/jam/pixmaps"
+ pixmap_path "/usr/local/src/1music/jack/jam/jam/pixmaps"
  
 #
 # style <name> [= <name>]
