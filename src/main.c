@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.37 2004/01/07 22:55:54 joq Exp $
+ *  $Id: main.c,v 1.38 2004/01/08 11:53:59 theno23 Exp $
  */
 
 /*
@@ -130,7 +130,6 @@ static void set_configuration_files(void)
 	jamin_dir = NULL;
 
     if ((dtest = opendir(jamin_dir))) {
-	fprintf(stderr, JAMIN_DIR " exists and is a directory\n");
 	closedir(dtest);
     } else {
 	if (errno == ENOTDIR) {
