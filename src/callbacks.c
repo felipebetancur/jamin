@@ -2710,3 +2710,27 @@ on_optionmenu1_realize                 (GtkWidget       *widget,
     gtk_option_menu_set_history (GTK_OPTION_MENU(widget), 1);
 }
 
+
+void
+on_high_meter_lbl_realize              (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_low_meter_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_mid_meter_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+
+}
+

@@ -447,3 +447,51 @@ on_load_button_clicked                 (GtkButton       *button,
 void
 on_optionmenu1_realize                 (GtkWidget       *widget,
                                         gpointer         user_data);
+
+void
+on_low_curve_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_mid_curve_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_high_curve_lbl_realize              (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_low_meter_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_mid_meter_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_high_meter_lbl_realize              (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_low_meter_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_mid_meter_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_high_meter_lbl_realize              (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_high_meter_lbl_realize              (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_low_meter_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_mid_meter_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data);
