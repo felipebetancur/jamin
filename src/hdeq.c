@@ -183,6 +183,12 @@ void clean_quit ()
     if (EQ_xinput) free (EQ_xinput);
     if (EQ_yinput) free (EQ_yinput);
 
+
+    /*  Write out the defaults file in case we've changed something.  */
+
+    pref_write_jamin_defaults ();
+
+
     gtk_main_quit();
 }
 

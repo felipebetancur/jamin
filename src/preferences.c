@@ -58,8 +58,30 @@ static void color_cancel_callback (GtkWidget *w, gpointer user_data);
 static void color_help_callback (GtkWidget *w, gpointer user_data);
 
 
+/*  Just like fgets but strips trailing LF/CR.  */
+
+char *ngets (char *s, int size, FILE *stream)
+{
+    if (fgets (s, size, stream) == NULL) return (NULL);
+
+    while( strlen(s)>0 && (s[strlen(s)-1] == '\n' || 
+                           s[strlen(s)-1] == '\r') )
+      s[strlen(s)-1] = '\0';
+
+    if (s[strlen (s) - 1] == '\n') s[strlen (s) - 1] = 0;
+
+
+    return (s);
+}
+
+
 void preferences_init()
 {
+    char            varin[128], info[128], file[512];
+    FILE            *fp = NULL;
+    unsigned short  i, j, k;
+
+
     preferences_dialog = create_preferences_dialog ();
 
     color_dialog = create_colorselectiondialog1 ();
@@ -81,6 +103,7 @@ void preferences_init()
 
     colormap = gdk_colormap_get_system ();
 
+
     set_color (&color[TEXT_COLOR], 0, 0, 0);
     set_color (&color[LOW_BAND_COLOR], 0, 50000, 0);
     set_color (&color[MID_BAND_COLOR], 0, 0, 60000);
@@ -96,6 +119,118 @@ void preferences_init()
     set_color (&color[METER_WARNING_COLOR], 50000, 55000, 0);
     set_color (&color[METER_OVER_COLOR], 60000, 0, 0);
     set_color (&color[METER_PEAK_COLOR], 60000, 60000, 0);
+
+
+    /*  Get user colors and possibly other things from the ~/.jamin-defaults 
+        file.  */
+
+    if (getenv ("HOME") != NULL)
+      {
+        /*  I know this looks weird (doing the getenv twice) but if you
+            don't do it this way and it's null it will segfault on an SGI
+            IRIX system.  What difference does that make to us?  Probably
+            none but what the hell?  JCD  */
+
+        strcpy (file, getenv ("HOME"));
+        strcat (file, "/.jamin-defaults");
+      }
+     
+    if ((fp = fopen (file, "r")) != NULL)
+      {
+        /*  Read each entry.    */
+        
+        while (ngets (varin, sizeof (varin), fp) != NULL)
+          {
+            /*  Put everything to the right of the equals sign in 'info'.  */
+            
+            if (strchr (varin, '=') != NULL)
+              strcpy (info, (strchr (varin, '=') + 1));
+
+
+            /*  Check input for matching strings and load values if
+                found.  */
+            
+            if (strstr (varin, "[TEXT COLOR]") != NULL)
+              {
+                sscanf (info, "%hu %hu %hu", &i, &j, &k);
+                set_color (&color[TEXT_COLOR], i, j, k);
+              }
+
+            if (strstr (varin, "[LOW BAND COMPRESSOR COLOR]") != NULL)
+              {
+                sscanf (info, "%hu %hu %hu", &i, &j, &k);
+                set_color (&color[LOW_BAND_COLOR], i, j, k);
+              }
+
+            if (strstr (varin, "[MID BAND COMPRESSOR COLOR]") != NULL)
+              {
+                sscanf (info, "%hu %hu %hu", &i, &j, &k);
+                set_color (&color[MID_BAND_COLOR], i, j, k);
+              }
+
+            if (strstr (varin, "[HIGH BAND COMPRESSOR COLOR]") != NULL)
+              {
+                sscanf (info, "%hu %hu %hu", &i, &j, &k);
+                set_color (&color[HIGH_BAND_COLOR], i, j, k);
+              }
+
+            if (strstr (varin, "[GANG HIGHLIGHT COLOR]") != NULL)
+              {
+                sscanf (info, "%hu %hu %hu", &i, &j, &k);
+                set_color (&color[GANG_HIGHLIGHT_COLOR], i, j, k);
+              }
+
+            if (strstr (varin, "[PARAMETRIC HANDLE COLOR]") != NULL)
+              {
+                sscanf (info, "%hu %hu %hu", &i, &j, &k);
+                set_color (&color[HANDLE_COLOR], i, j, k);
+              }
+
+            if (strstr (varin, "[HDEQ CURVE COLOR]") != NULL)
+              {
+                sscanf (info, "%hu %hu %hu", &i, &j, &k);
+                set_color (&color[HDEQ_CURVE_COLOR], i, j, k);
+              }
+
+            if (strstr (varin, "[HDEQ GRID COLOR]") != NULL)
+              {
+                sscanf (info, "%hu %hu %hu", &i, &j, &k);
+                set_color (&color[HDEQ_GRID_COLOR], i, j, k);
+              }
+
+            if (strstr (varin, "[HDEQ BACKGROUND COLOR]") != NULL)
+              {
+                sscanf (info, "%hu %hu %hu", &i, &j, &k);
+                set_color (&color[HDEQ_BACKGROUND_COLOR], i, j, k);
+              }
+
+            if (strstr (varin, "[METER NORMAL COLOR]") != NULL)
+              {
+                sscanf (info, "%hu %hu %hu", &i, &j, &k);
+                set_color (&color[METER_NORMAL_COLOR], i, j, k);
+              }
+
+            if (strstr (varin, "[METER WARNING COLOR]") != NULL)
+              {
+                sscanf (info, "%hu %hu %hu", &i, &j, &k);
+                set_color (&color[METER_WARNING_COLOR], i, j, k);
+              }
+
+            if (strstr (varin, "[METER OVER COLOR]") != NULL)
+              {
+                sscanf (info, "%hu %hu %hu", &i, &j, &k);
+                set_color (&color[METER_OVER_COLOR], i, j, k);
+              }
+
+            if (strstr (varin, "[METER PEAK COLOR]") != NULL)
+              {
+                sscanf (info, "%hu %hu %hu", &i, &j, &k);
+                set_color (&color[METER_PEAK_COLOR], i, j, k);
+              }
+          }
+
+        fclose (fp);
+      }
 }
 
 
@@ -196,4 +331,90 @@ static void color_cancel_callback (GtkWidget *w, gpointer user_data)
 static void color_help_callback (GtkWidget *w, gpointer user_data)
 {
   message (GTK_MESSAGE_INFO, color_help);
+}
+
+
+void pref_write_jamin_defaults ()
+{
+    char     file[512];
+    FILE     *fp = NULL;
+
+
+    if (getenv ("HOME") != NULL)
+      {
+        strcpy (file, getenv ("HOME"));
+        strcat (file, "/.jamin-defaults");
+      }
+     
+    if ((fp = fopen (file, "w")) != NULL)
+      {
+        fprintf (fp, "JAMin defaults file V%s\n",  VERSION);
+
+        fprintf (fp, "[TEXT COLOR]                 = %hu %hu %hu\n",
+                 color[TEXT_COLOR].red, 
+                 color[TEXT_COLOR].green,
+                 color[TEXT_COLOR].blue);
+
+        fprintf (fp, "[LOW BAND COMPRESSOR COLOR]  = %hu %hu %hu\n",
+                 color[LOW_BAND_COLOR].red, 
+                 color[LOW_BAND_COLOR].green,
+                 color[LOW_BAND_COLOR].blue);
+
+        fprintf (fp, "[MID BAND COMPRESSOR COLOR]  = %hu %hu %hu\n",
+                 color[MID_BAND_COLOR].red, 
+                 color[MID_BAND_COLOR].green,
+                 color[MID_BAND_COLOR].blue);
+
+        fprintf (fp, "[HIGH BAND COMPRESSOR COLOR] = %hu %hu %hu\n",
+                 color[HIGH_BAND_COLOR].red, 
+                 color[HIGH_BAND_COLOR].green,
+                 color[HIGH_BAND_COLOR].blue);
+
+        fprintf (fp, "[GANG HIGHLIGHT COLOR]       = %hu %hu %hu\n",
+                 color[GANG_HIGHLIGHT_COLOR].red, 
+                 color[GANG_HIGHLIGHT_COLOR].green,
+                 color[GANG_HIGHLIGHT_COLOR].blue);
+
+        fprintf (fp, "[PARAMETRIC HANDLE COLOR]    = %hu %hu %hu\n",
+                 color[HANDLE_COLOR].red, 
+                 color[HANDLE_COLOR].green,
+                 color[HANDLE_COLOR].blue);
+
+        fprintf (fp, "[HDEQ CURVE COLOR]           = %hu %hu %hu\n",
+                 color[HDEQ_CURVE_COLOR].red, 
+                 color[HDEQ_CURVE_COLOR].green,
+                 color[HDEQ_CURVE_COLOR].blue);
+
+        fprintf (fp, "[HDEQ GRID COLOR]            = %hu %hu %hu\n",
+                 color[HDEQ_GRID_COLOR].red, 
+                 color[HDEQ_GRID_COLOR].green,
+                 color[HDEQ_GRID_COLOR].blue);
+
+        fprintf (fp, "[HDEQ BACKGROUND COLOR]      = %hu %hu %hu\n",
+                 color[HDEQ_BACKGROUND_COLOR].red, 
+                 color[HDEQ_BACKGROUND_COLOR].green,
+                 color[HDEQ_BACKGROUND_COLOR].blue);
+
+        fprintf (fp, "[METER NORMAL COLOR]         = %hu %hu %hu\n",
+                 color[METER_NORMAL_COLOR].red, 
+                 color[METER_NORMAL_COLOR].green,
+                 color[METER_NORMAL_COLOR].blue);
+
+        fprintf (fp, "[METER WARNING COLOR]        = %hu %hu %hu\n",
+                 color[METER_WARNING_COLOR].red, 
+                 color[METER_WARNING_COLOR].green,
+                 color[METER_WARNING_COLOR].blue);
+
+        fprintf (fp, "[METER OVER COLOR]           = %hu %hu %hu\n",
+                 color[METER_OVER_COLOR].red, 
+                 color[METER_OVER_COLOR].green,
+                 color[METER_OVER_COLOR].blue);
+
+        fprintf (fp, "[METER PEAK COLOR]           = %hu %hu %hu\n",
+                 color[METER_PEAK_COLOR].red, 
+                 color[METER_PEAK_COLOR].green,
+                 color[METER_PEAK_COLOR].blue);
+
+        fclose (fp);
+      }
 }
