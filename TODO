@@ -24,8 +24,6 @@ TODO (owner)
 - man page
 - add test script directory (Jack)
 - UI for reporting JACK status, including transport state
-- JACK transport master control (Jack)
-- UI for JACK transport master
 
 
 TO THINK ABOUT
@@ -40,3 +38,5 @@ CLOSED (date)
 - capabilites support for DSP thread (2003/06/15)
 - AUTHORS file (2003/06/16)
 - add JACK transport position tracking (2003/06/17)
+- JACK transport master control (2003/06/25)
+- UI for JACK transport master (2003/06/25)
