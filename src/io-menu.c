@@ -24,7 +24,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.c,v 1.22 2003/12/04 07:10:51 joq Exp $
+ *  $Id: io-menu.c,v 1.23 2004/02/21 01:45:48 joq Exp $
  */
 
 #include <stdlib.h>
@@ -59,11 +59,14 @@ static const char **outports = NULL;
 /* NULL-terminated lists of client names from inports and outports,
  * each name ending in a ':'. */
 #define MAXGROUPS 32
-#define MAXNAMELEN (32+2)		/* JACK_CLIENT_NAME_SIZE + 2 */
 static const char *ingroups[MAXGROUPS]; 
 static const char *outgroups[MAXGROUPS];
 static size_t ngroup_names = 0;
-static char group_names[2*MAXGROUPS*MAXNAMELEN];
+static char *group_names;		/* group name buffer */
+
+#ifndef HAVE_JACK_CLIENT_NAME_SIZE	/* if earlier version of JACK */
+#define jack_client_name_size()		(32 + 1)
+#endif
 
 /* * * * * * * * * * * *   Callbacks   * * * * * * * * * * * * * * */
 
@@ -525,6 +528,11 @@ iomenu_bind(GtkWidget *main_window, jack_client_t *jack_client,
     client = jack_client;
     iports_list = input_ports;
     oports_list = output_ports;
+
+    /* Allocate buffer for up to MAXGROUPS input and output group
+     * names.  Each group name is a JACK client name followed by ':'
+     * and a zero byte. */
+    group_names = malloc(2 * MAXGROUPS * (jack_client_name_size() + 1));
 
     /* find JACK Ports menubar item */
     menubar_item = lookup_widget(main_window, "jack_ports");

@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_INIT(configure.in)
-AM_INIT_AUTOMAKE(jamin, 0.8.14)
+AM_INIT_AUTOMAKE(jamin, 0.8.15)
 AM_CONFIG_HEADER(config.h)
 AM_MAINTAINER_MODE
 
@@ -26,12 +26,14 @@ AC_SUBST(CFLAGS_OPT)
 AC_ARG_ENABLE(double-fft, [  --enable-double-fft Enable double precision fourier transform code - not recommended])
 
 # Checks for libraries.
-AC_CHECK_LIB([pthread], [pthread_self], , [AC_MSG_ERROR(You need libpthread installed)])
+AC_CHECK_LIB([pthread], [pthread_self],,
+	[AC_MSG_ERROR(You need libpthread installed)])
 PKG_CHECK_MODULES(JACK, jack >= 0.80.0)
 AC_CHECK_LIB(jack,jack_ringbuffer_create,
 	[AC_DEFINE(HAVE_JACK_RINGBUFFER,,[JACK has ringbuffer support])],)
-AC_CHECK_LIB(pthread, pthread_create,,
-	[AC_MSG_ERROR([you have no POSIX thread support])])
+AC_CHECK_LIB(jack,jack_client_name_size,
+	[AC_DEFINE(HAVE_JACK_CLIENT_NAME_SIZE,,
+		[JACK returns client name size])],)
 
 [if test "${enable_double_fft+set}" = set; then]
 	PKG_CHECK_MODULES(FFTW, fftw3 >= 3.0, AC_DEFINE(FFTW_TYPE, [double], [Datatype used by installed FFTW libraries]), [AC_MSG_ERROR([Didn't find any double precision FFTW3 libraries])])
