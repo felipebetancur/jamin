@@ -429,8 +429,14 @@ on_EQ_curve_expose_event               (GtkWidget       *widget,
     l_eqb1_adj = gtk_range_get_adjustment ((GtkRange *) l_eqb1);
     EQ_curve_range_x = l_low2mid_adj->upper - l_low2mid_adj->lower;
     EQ_curve_range_y = l_eqb1_adj->upper - l_eqb1_adj->lower;
-    EQ_curve_width = widget->allocation.width;
-    EQ_curve_height = widget->allocation.height;
+
+
+    /*  Since allocation width and height are inclusive we need to decrement
+        for calculations.  */
+
+    EQ_curve_width = widget->allocation.width - 1;
+    EQ_curve_height = widget->allocation.height - 1;
+
 
     draw_EQ_curve ();
 

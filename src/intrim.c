@@ -20,7 +20,8 @@ void bind_intrim()
     in_meter[0] = GTK_PROGRESS_BAR(lookup_widget(main_window, "inmeter_l"));
     in_meter[1] = GTK_PROGRESS_BAR(lookup_widget(main_window, "inmeter_r"));
     pan_label = GTK_LABEL(lookup_widget(main_window, "pan_label"));
-    gtk_progress_bar_set_fraction(in_meter, 0.5);
+    gtk_progress_bar_set_fraction(in_meter[0], 0.5);
+    gtk_progress_bar_set_fraction(in_meter[1], 0.5);
     update_pan_label(0.0);
 }
 
