@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.49 2004/04/11 11:55:52 theno23 Exp $
+ *  $Id: process.c,v 1.50 2004/04/11 15:30:10 jdepner Exp $
  */
 
 #include <math.h>
@@ -225,7 +225,6 @@ void run_eq(unsigned int port, unsigned int in_ptr)
 
     memset(comp_tmp, 0, BINS * sizeof(fft_data));
     targ_bin = xover_fa / sample_rate * ((float)BINS + 0.5f);
-/*fprintf(stderr,"%s %d %d %f %f\n",__FILE__,__LINE__,targ_bin,xover_fa,sample_rate);*/
 
     comp_tmp[0] = comp[0] * eq_coefs[0];
     if (comp_tmp[0] > bin_peak[0]) bin_peak[0] = comp_tmp[0];

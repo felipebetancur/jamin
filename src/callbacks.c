@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.143 2004/04/11 01:31:20 jdepner Exp $
+ *  $Id: callbacks.c,v 1.144 2004/04/11 15:30:09 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1555,13 +1555,27 @@ on_window1_key_press_event             (GtkWidget       *widget,
 {
     GtkToggleButton       *bypass;
     gboolean              tmp;
-    unsigned int          key = event->keyval, state = event->state;
+    unsigned int          key, state;
     int                   scene;
 
 
     /*  If a text widget has the focus we don't want to trap key presses.  */
 
     if (text_focus) return FALSE;
+
+
+    key = event->keyval;
+
+
+    /*  Trying to check for Num Lock and/or other weird modifiers that I 
+        don't know about.  */
+
+    state = event->state;
+    if (state & GDK_LOCK_MASK) state &= ~GDK_LOCK_MASK;
+    if (state & GDK_MOD2_MASK) state &= ~GDK_MOD2_MASK;
+    if (state & GDK_MOD3_MASK) state &= ~GDK_MOD3_MASK;
+    if (state & GDK_MOD4_MASK) state &= ~GDK_MOD4_MASK;
+    if (state & GDK_MOD5_MASK) state &= ~GDK_MOD5_MASK;
 
 
     scene = -1;

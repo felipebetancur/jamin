@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.27 2004/04/11 00:07:26 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.28 2004/04/11 15:30:10 jdepner Exp $
  */
 
 char general_help[] = {
@@ -259,13 +259,18 @@ settings have been changed.  If you want to save the settings you must use \
 the 'Set' entry in the button's right click menu.  You can clear settings \
 from a button using the right click menu and the 'Clear' entry.\n\n\
     The keyboard accelerators for the scene buttons are the number keys, \
-1 through 0.  Pressing the 1 key will cause scene 1 to become active.  The \
+1 through 0 for scenes 1 through 10.  <Shift>-1 through <Shift>-0 will access \
+scenes 11 through 20.  For example, pressing the 1 key will cause scene 1 to \
+become active.  Pressing <Shift>-5 will cause scene 15 to become active.  The \
 ALT modifier can be used to assign settings to a scene button (instead of \
-using the scene button menus).  Pressing <Alt>-1 will assign the current \
-settings to scene button 1 (you still need to set the name).  The CTRL \
-modifier can be used to clear a scene button.  Pressing <Ctrl>-1 will clear \
-that scene button.  To use the higher number scenes you can use the shift key \
-and the number keys.\n"
+using the scene button menus).  Pressing <Alt><Shift>-5 will assign the \
+current settings to scene button 15 (you may still want to change the name).  \
+The CTRL modifier can be used to clear a scene button.  Pressing <Ctrl>-4 \
+will clear scene button 4.  \n\n\
+    Note that the keypad keys may be used but only for scenes 1 through 10 \
+with Num Lock on.  Using the keypad with Num Lock off will access the cursor \
+keys (which can be used to control some aspects of the GUI).  Using <Shift> \
+with the keypad with Num Lock on will also access the cursor keys.\n"
 };
 
 
@@ -292,24 +297,26 @@ the other controls.\n"
 char keys_help[] = {
 "    Keyboard accelerators are available for many of the functions in \
 JAMin:\n\n\
-\tb\t\t-\tBypass\n\
-\tSpace\t-\tToggle play and pause\n\
-\tHome\t-\tPosition transport to beginning\n\
-\t<\t\t-\tMove transport backwards 5 sec.\n\
-\t>\t\t-\tMove transport forwards 5 sec.\n\
-\t1-0\t\t-\tSelect scene 1-10\n\
-\t<Ctrl>-o\t-\tOpen session file\n\
-\t<Ctrl>-s\t-\tSave to current session file\n\
-\t<Ctrl>-a\t-\tSave session file as new session file\n\
-\t<Ctrl>-q\t-\tQuit\n\
-\t<Ctrl>-u\t-\tUndo\n\
-\t<Ctrl>-r\t-\tRedo\n\
-\t<Ctrl>-h\t-\tGeneral help\n\
-\tF1\t\t-\tSet the notebook tab to HDEQ\n\
-\tF2\t\t-\tSet the notebook tab to 30 band EQ\n\
-\tF3\t\t-\tSet the notebook tab to Spectrum\n\
-\tF4\t\t-\tSet the notebook tab to Compressor \n \t\t\t\tcurves\n\
-\tF5\t\t-\tSet the notebook tab to the EQ Options\n\
-\t<Ctrl>-k\t-\tKeyboard accelerator help (this screen)\n\
-\t<Ctrl>-j\t-\tAbout JAMin\n"
+\tb\t\t\t-\tBypass\n\
+\tSpace\t\t-\tToggle play and pause\n\
+\tHome\t\t-\tPosition transport to beginning\n\
+\t<\t\t\t-\tMove transport backwards 5 sec.\n\
+\t>\t\t\t-\tMove transport forwards 5 sec.\n\
+\t1-0\t\t\t-\tSelect scene 1-10\n\
+\t<Shift>-1-0\t-\tSelect scene 11-20\n\
+\t\t\t\t\t<Alt> will set scene, <Ctrl> will clear\n\
+\t<Ctrl>-o\t\t-\tOpen session file\n\
+\t<Ctrl>-s\t\t-\tSave to current session file\n\
+\t<Ctrl>-a\t\t-\tSave session file as new session file\n\
+\t<Ctrl>-q\t\t-\tQuit\n\
+\t<Ctrl>-u\t\t-\tUndo\n\
+\t<Ctrl>-r\t\t-\tRedo\n\
+\t<Ctrl>-h\t\t-\tGeneral help\n\
+\tF1\t\t\t-\tSet the notebook tab to HDEQ\n\
+\tF2\t\t\t-\tSet the notebook tab to 30 band EQ\n\
+\tF3\t\t\t-\tSet the notebook tab to Spectrum\n\
+\tF4\t\t\t-\tSet the notebook tab to Compressor \n \t\t\t\t\tcurves\n\
+\tF5\t\t\t-\tSet the notebook tab to the EQ \n \t\t\t\t\tOptions\n\
+\t<Ctrl>-k\t\t-\tKeyboard accelerator help (this \n \t\t\t\t\tscreen)\n\
+\t<Ctrl>-j\t\t-\tAbout JAMin\n"
 };

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: geq.c,v 1.29 2004/04/04 15:47:15 jdepner Exp $
+ *  $Id: geq.c,v 1.30 2004/04/11 15:30:10 jdepner Exp $
  */
 
 /* code to control the graphic eq's, swh */
@@ -109,7 +109,6 @@ void geq_set_gains()
       {
         eq_coefs[0] = 1.0f;
         for (bin = 1; bin < (BINS/2 - 1); bin++) {
-          /*fprintf(stderr,"%s %d %d %d %f\n",__FILE__,__LINE__,bin,bin_base[bin],geq_gains[bin_base[bin]]);*/
           eq_coefs[bin] = ((1.0f-bin_delta[bin]) * geq_gains[bin_base[bin]])
             + (bin_delta[bin] * geq_gains[bin_base[bin]+1]);
         }
