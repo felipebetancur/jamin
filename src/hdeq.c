@@ -139,10 +139,11 @@ static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
                        EQ_y_notched[EQ_INTERP + 1], EQ_gain_lower = -12.0, 
                        EQ_gain_upper = 12.0, EQ_notch_default[NOTCHES];
 static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0, 
-                       EQ_length = 0, comp_realized[3] = {0, 0, 0}, 
-                       EQ_cleared = 1, EQ_realized = 0, xover_active = 0,
-                       xover_handle_l2m, xover_handle_m2h, EQ_drag_l2m = 0,
-                       EQ_drag_m2h = 0, EQ_exposed = 0, EQ_notch_drag[NOTCHES],
+                       EQ_length = 0, EQ_draw_dir = 0, 
+                       comp_realized[3] = {0, 0, 0}, EQ_cleared = 1, 
+                       EQ_realized = 0, xover_active = 0, xover_handle_l2m, 
+                       xover_handle_m2h, EQ_drag_l2m = 0, EQ_drag_m2h = 0, 
+                       EQ_exposed = 0, EQ_notch_drag[NOTCHES],
                        EQ_notch_Q_drag[NOTCHES], 
                        EQ_notch_handle[2][3][NOTCHES], EQ_notch_width[NOTCHES],
                        EQ_notch_index[NOTCHES], EQ_notch_flag[NOTCHES];
@@ -1323,33 +1324,52 @@ void hdeq_curve_motion (GdkEventMotion *event)
         /*  If we're in the midst of drawing the curve...  We're going to 
             build the EQ_input arrays from the cursor track.  */
 
-        if (EQ_drawing)
+        if (EQ_drawing && EQ_input_points)
           {
-            /*  Only allow the user to draw in the positive direction, i.e.
-                left to right.  Sorry, otherwise it's just too damn 
-                confusing.  */
+            /*  Make sure that we moved in the X direction so we can figure out
+                which direction we're drawing in.  */
 
-            if (!EQ_input_points || x > EQ_xinput[EQ_input_points - 1])
+            if (x != EQ_xinput[EQ_input_points - 1])
               {
-                gdk_gc_set_foreground (EQ_gc, get_color (HDEQ_CURVE_COLOR));
-                if (EQ_input_points) gdk_draw_line (EQ_drawable, EQ_gc, 
-                    NINT (EQ_xinput[EQ_input_points - 1]), 
-                    NINT (EQ_yinput[EQ_input_points - 1]), x, y);
-                gdk_gc_set_foreground (EQ_gc, get_color (TEXT_COLOR));
-
-                size = (EQ_input_points + 1) * sizeof (float);
-                EQ_xinput = (float *) realloc (EQ_xinput, size);
-                EQ_yinput = (float *) realloc (EQ_yinput, size);
-
-                if (EQ_yinput == NULL)
+                if (!EQ_draw_dir)
                   {
-                    perror (_("Allocating EQ_yinput in callbacks.c"));
-                    clean_quit ();
+                    if (x < EQ_xinput[EQ_input_points - 1])
+                      {
+                        EQ_draw_dir = -1;
+                      }
+                    else
+                      {
+                        EQ_draw_dir = 1;
+                      }
                   }
 
-                EQ_xinput[EQ_input_points] = (float) x;
-                EQ_yinput[EQ_input_points] = (float) y;
-                EQ_input_points++;
+
+                /*  Only grab the point if we're going in the proper direction
+                    based on the first two points drawn.  */
+
+                if ((EQ_draw_dir == 1 && x > EQ_xinput[EQ_input_points - 1]) ||
+                    (EQ_draw_dir == -1 && x < EQ_xinput[EQ_input_points - 1]))
+                  {
+                    gdk_gc_set_foreground (EQ_gc, get_color (HDEQ_CURVE_COLOR));
+                    gdk_draw_line (EQ_drawable, EQ_gc, 
+                                   NINT (EQ_xinput[EQ_input_points - 1]), 
+                                   NINT (EQ_yinput[EQ_input_points - 1]), x, y);
+                    gdk_gc_set_foreground (EQ_gc, get_color (TEXT_COLOR));
+
+                    size = (EQ_input_points + 1) * sizeof (float);
+                    EQ_xinput = (float *) realloc (EQ_xinput, size);
+                    EQ_yinput = (float *) realloc (EQ_yinput, size);
+
+                    if (EQ_yinput == NULL)
+                      {
+                        perror (_("Allocating EQ_yinput in callbacks.c"));
+                        clean_quit ();
+                      }
+
+                    EQ_xinput[EQ_input_points] = (float) x;
+                    EQ_yinput[EQ_input_points] = (float) y;
+                    EQ_input_points++;
+                  }
               }
           }
 
@@ -1681,7 +1701,8 @@ void hdeq_curve_button_press (GdkEventButton *event)
 {
     float               *x = NULL, *y = NULL;
     int                 diffx_l2m, diffx_m2h, diff_notch[2], i, j, i_start = 0, 
-                        i_end = 0, size, ex, ey;
+                        i_end = 0, size, ex, ey, *temp_x = NULL, 
+                        *temp_y = NULL;
     static int          interp_pad = 5;
 
 
@@ -1863,6 +1884,47 @@ void hdeq_curve_button_press (GdkEventButton *event)
 
         else
           {
+            /*  If the user drew right to left we need to reverse the 
+                field.  */
+
+            if (EQ_draw_dir == -1)
+              {
+                temp_x = (int *) calloc (EQ_input_points, sizeof (int));
+                if (temp_x == NULL)
+                  {
+                    perror ("Allocating direction memory X");
+                    exit (-1);
+                  }
+                temp_y = (int *) calloc (EQ_input_points, sizeof (int));
+                if (temp_y == NULL)
+                  {
+                    perror ("Allocating direction memory Y");
+                    exit (-1);
+                  }
+
+                for (i = 0 ; i < EQ_input_points ; i++)
+                  {
+                    temp_x[i] = EQ_xinput[i];
+                    temp_y[i] = EQ_yinput[i];
+                  }
+
+                for (i = 0, j = EQ_input_points - 1 ; i < EQ_input_points ; 
+                     i++, j--)
+                  {
+                    EQ_xinput[i] = temp_x[j];
+                    EQ_yinput[i] = temp_y[j];
+                  }
+
+                free (temp_x);
+                free (temp_y);
+              }
+
+
+            /*  Reset the drawing direction to none.  */
+
+            EQ_draw_dir = 0;
+
+
             /*  Convert the x and y input positions to "real" values.  */
 
             for (i = 0 ; i < EQ_input_points ; i++)
@@ -2059,6 +2121,7 @@ void hdeq_curve_button_release (GdkEventButton  *event)
         /*  We might have been drawing so we want to discard all of the drawn 
             data and redraw the curve.  */
 
+        EQ_draw_dir = 0;
         EQ_drawing = 0;
 
         EQ_input_points = 0;

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.30 2004/04/26 23:13:55 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.31 2004/04/28 19:01:51 jdepner Exp $
  */
 
 char general_help[] = {
@@ -82,11 +82,12 @@ the user to change the compressor crossover points.  The following is a quick \
 guide to using the HDEQ:\n\n\
     In the background window - left click and release to begin drawing the \
 curve.  Left click again to end the curve.  You can define any portion of the \
-curve, you don't have to define the entire curve.  Drawing is only allowed \
-from left to right.  You can discard the curve that you are drawing by \
-clicking the middle or right buttons.  Clicking the right mouse button in the \
-HDEQ when not drawing a curve will reset all EQ and notch values to their \
-original (flat) settings.\n\n\
+curve, you don't have to define the entire curve.  Drawing can be done from \
+left to right or right to left.  If you try to reverse direction while \
+drawing the data in the reverse direction will be ignored.  You can discard \
+the curve that you are drawing by clicking the middle or right buttons.  \
+Clicking the right mouse button in the HDEQ when not drawing a curve will \
+reset all EQ and notch values to their original (flat) settings.\n\n\
     Over the crossover bar handles - left click and hold to drag the \
 crossover bars.\n\n\
     Over the notch handles - left click and hold to drag the notch center or \
