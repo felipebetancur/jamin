@@ -30,7 +30,7 @@ static GtkProgressBar *le_meter[3], *ga_meter[3];
 	scale = lookup_widget(main_window, name); \
 	adj_##sym[i] = gtk_range_get_adjustment(GTK_RANGE(scale)); \
 	g_signal_connect(G_OBJECT(adj_##sym[i]), "value-changed", G_CALLBACK(sym##_changed), (gpointer)i); \
-	gtk_adjustment_set_value(adj_##sym[i], compressors[i].##member);
+	gtk_adjustment_set_value(adj_##sym[i], compressors[i].member);
 
 void bind_compressors()
 {

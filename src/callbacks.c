@@ -930,7 +930,8 @@ draw_comp_curve ()
             x1 = NINT (((x - comp_start_x) / comp_curve_range_x) * 
                 comp_curve_width);
 
-            y = eval_comp (comp.threshold, comp.ratio, comp.knee, x);
+	    y = eval_comp (comp.threshold, comp.ratio, comp.knee, x) +
+			comp.makeup_gain;
 
             y1 = comp_curve_height - NINT (((y - comp_start_y) / 
                 comp_curve_range_y) * comp_curve_height);
