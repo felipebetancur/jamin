@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.h,v 1.24 2004/04/04 15:47:15 jdepner Exp $
+ *  $Id: process.h,v 1.25 2004/04/10 15:25:43 jdepner Exp $
  */
 
 #ifndef PROCESS_H
@@ -63,7 +63,6 @@
 
 extern const jack_nframes_t dsp_block_size;
 extern float sample_rate;
-extern float xover_fa, xover_fb;
 extern float eq_coefs[];
 extern float in_peak[], out_peak[];
 extern float lim_peak[];
@@ -96,6 +95,11 @@ void process_set_xo_band_action(int band, int action);
 
 void process_set_eq_bypass(int bypass);
 void process_set_limiter_bypass(int bypass);
+
+void process_set_low2mid_xover (float freq);
+void process_set_mid2high_xover (float freq);
+float process_get_low2mid_xover ();
+float process_get_mid2high_xover ();
 
 extern comp_settings compressors[XO_NBANDS];
 extern lim_settings limiter;

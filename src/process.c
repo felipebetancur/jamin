@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.47 2004/04/09 17:37:49 theno23 Exp $
+ *  $Id: process.c,v 1.48 2004/04/10 15:25:43 jdepner Exp $
  */
 
 #include <math.h>
@@ -570,6 +570,26 @@ void process_set_eq_bypass(int bypass)
 void process_set_limiter_bypass(int bypass)
 {
     limiter_bypass_pending = bypass;
+}
+
+void process_set_low2mid_xover (float freq)
+{
+    xover_fa = freq;
+}
+
+void process_set_mid2high_xover (float freq)
+{
+    xover_fb = freq;
+}
+
+float process_get_low2mid_xover ()
+{
+    return (xover_fa);
+}
+
+float process_get_mid2high_xover ()
+{
+    return (xover_fb);
 }
 
 /* vi:set ts=8 sts=4 sw=4: */
