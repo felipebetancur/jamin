@@ -24,7 +24,6 @@
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
 
 #define EQ_INTERP                     (BINS / 2 - 1)
-#define EQ_INTRVL                     (EQ_INTERP / (EQ_BANDS + 1))
 #define EQ_SPECTRUM_RANGE             90.0
 #define XOVER_HANDLE_SIZE             10
 #define XOVER_HANDLE_HALF_SIZE        (XOVER_HANDLE_SIZE / 2)
@@ -724,8 +723,8 @@ on_EQ_curve_event_box_motion_notify_event
                     clean_quit ();
                   }
 
-                EQ_xinput[EQ_input_points] = x;
-                EQ_yinput[EQ_input_points] = y;
+                EQ_xinput[EQ_input_points] = (float) x;
+                EQ_yinput[EQ_input_points] = (float) y;
                 EQ_input_points++;
               }
           }
@@ -784,7 +783,7 @@ on_EQ_curve_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-    int    diffx_fa, diffx_fb;
+    int    diffx_fa, diffx_fb, size;
 
 
     switch (event->button)
@@ -809,6 +808,22 @@ on_EQ_curve_event_box_button_press_event
           }
         else
           {
+            /*  Save the first point so we can do real narrow EQ changes.  */
+
+            size = (EQ_input_points + 1) * sizeof (float);
+            EQ_xinput = (float *) realloc (EQ_xinput, size);
+            EQ_yinput = (float *) realloc (EQ_yinput, size);
+
+            if (EQ_yinput == NULL)
+              {
+                perror (_("Allocating EQ_yinput in callbacks.c"));
+                clean_quit ();
+              }
+
+            EQ_xinput[EQ_input_points] = (float) event->x;
+            EQ_yinput[EQ_input_points] = (float) event->y;
+            EQ_input_points++;
+
             EQ_drawing = 1;
           }
         break;
@@ -829,6 +844,7 @@ on_EQ_curve_event_box_button_release_event
 {
     float               *x = NULL, *y = NULL, interval;
     int                 i, j, i_start = 0, i_end = 0, size;
+    static int          interp_pad = 5;
 
 
     xover_active = 0;
@@ -851,9 +867,9 @@ on_EQ_curve_event_box_button_release_event
 
 
         /*  Button 3 - combine the drawn data with any parts of the previous 
-            that haven't been superceded by what was drawn.  Use an EQ_INTRVL 
-            cushion on either side of the drawn section so it will merge 
-            nicely with the old data.  */
+            that haven't been superceded by what was drawn.  Use an 
+            "interp_pad" cushion on either side of the drawn section so it 
+            will merge nicely with the old data.  */
 
       case 3:
         if (EQ_drawing)
@@ -881,7 +897,7 @@ on_EQ_curve_event_box_button_release_event
               {
                 if (EQ_xinterp[i] >= EQ_xinput[0])
                   {
-                    i_start = i - EQ_INTRVL;
+                    i_start = i - interp_pad;
                     break;
                   }
               }
@@ -890,7 +906,7 @@ on_EQ_curve_event_box_button_release_event
               {
                 if (EQ_xinterp[i] <= EQ_xinput[EQ_input_points - 1])
                   {
-                    i_end = i + EQ_INTRVL;
+                    i_end = i + interp_pad;
                     break;
                   }
               }
