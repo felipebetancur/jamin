@@ -16,7 +16,7 @@ TODO (owner)
 - Change all uses of JAM to JAMin
 - Commit documentation to CVS (Ron)
 - Make save and load work with multiple scenes (Steve)
-- Morph settings on scene changes (Steve)
+- Morph settings on scene changes (Jan/Steve)
 - Finish context sensitive help verbiage (everyone)
 - copyright headers in source code file (everyone)
 - move option parsing from io.c to main.c (Jack)
@@ -25,7 +25,7 @@ TODO (owner)
 - set JACK port latencies correctly (Jack, Steve)
 - man page (Jan)
 - add test script directory (Jack)
-- set hotkeys for most used stuff: volume/pan, tabs, transport (Jan)
+- finish hotkeys for most used stuff: volume/pan, tabs, transport (Jan)
 
 
 TO THINK ABOUT

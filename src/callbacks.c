@@ -11,6 +11,8 @@
 #include <math.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
+
 
 #include "main.h"
 #include "callbacks.h"
@@ -930,7 +932,7 @@ void
 on_setscene_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-    set_scene ();
+    set_scene (-1);
 }
 
 
@@ -938,7 +940,7 @@ void
 on_clearscene_activate                 (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-    clear_scene ();
+    clear_scene (-1);
 }
 
 
@@ -1275,3 +1277,49 @@ on_notebook1_switch_page               (GtkNotebook     *notebook,
 {
     hdeq_notebook1_set_page (page_num);
 }
+
+gboolean
+on_window1_key_press_event             (GtkWidget       *widget,
+                                        GdkEventKey     *event,
+                                        gpointer         user_data)
+{
+    unsigned int          key = event->keyval, state = event->state;
+    int scene = -1;
+
+    if (key == GDK_1 || key == GDK_KP_1 || key == GDK_KP_End) 
+      scene = 0;
+    if (key == GDK_2 || key == GDK_KP_2 || key == GDK_KP_Down) 
+      scene = 1;
+    if (key == GDK_3 || key == GDK_KP_3 || key == GDK_KP_Page_Down) 
+      scene = 2;
+    if (key == GDK_4 || key == GDK_KP_4 || key == GDK_KP_Left) 
+      scene = 3;
+    if (key == GDK_5 || key == GDK_KP_5 || key == GDK_KP_Begin) 
+      scene = 4;
+    if (key == GDK_6 || key == GDK_KP_6 || key == GDK_KP_Right) 
+      scene = 5;
+
+    if (scene >= 0)
+      {
+        switch (state)
+          {
+          case 0:
+            select_scene (scene, 1);
+            break;
+
+          case GDK_MOD1_MASK:
+            set_scene (scene);
+            break;
+
+          case GDK_CONTROL_MASK:
+            clear_scene (scene);
+            break;
+          }
+      }
+
+
+    //fprintf(stderr,"%s %d %x %x %d\n",__FILE__,__LINE__, key, state, scene);
+
+    return FALSE;
+}
+

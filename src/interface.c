@@ -457,9 +457,12 @@ create_window1 (void)
   GtkWidget *out_trim_scale;
   GtkWidget *outscale_R;
   GtkWidget *outmeter_r;
+  GtkAccelGroup *accel_group;
   GtkTooltips *tooltips;
 
   tooltips = gtk_tooltips_new ();
+
+  accel_group = gtk_accel_group_new ();
 
   window1 = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_widget_set_name (window1, "window1");
@@ -2868,6 +2871,9 @@ create_window1 (void)
   gtk_table_attach (GTK_TABLE (table23), bypass_button, 0, 1, 0, 1,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_add_accelerator (bypass_button, "clicked", accel_group,
+                              GDK_b, 0,
+                              GTK_ACCEL_VISIBLE);
 
   vbox121 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox121, "vbox121");
@@ -2886,30 +2892,45 @@ create_window1 (void)
   gtk_widget_show (load_button);
   gtk_container_add (GTK_CONTAINER (vbuttonbox1), load_button);
   GTK_WIDGET_SET_FLAGS (load_button, GTK_CAN_DEFAULT);
+  gtk_widget_add_accelerator (load_button, "clicked", accel_group,
+                              GDK_l, 0,
+                              GTK_ACCEL_VISIBLE);
 
   save_button = gtk_button_new_with_mnemonic (_("Save"));
   gtk_widget_set_name (save_button, "save_button");
   gtk_widget_show (save_button);
   gtk_container_add (GTK_CONTAINER (vbuttonbox1), save_button);
   GTK_WIDGET_SET_FLAGS (save_button, GTK_CAN_DEFAULT);
+  gtk_widget_add_accelerator (save_button, "clicked", accel_group,
+                              GDK_s, 0,
+                              GTK_ACCEL_VISIBLE);
 
   undo_button = gtk_button_new_with_mnemonic (_("Undo"));
   gtk_widget_set_name (undo_button, "undo_button");
   gtk_widget_show (undo_button);
   gtk_container_add (GTK_CONTAINER (vbuttonbox1), undo_button);
   GTK_WIDGET_SET_FLAGS (undo_button, GTK_CAN_DEFAULT);
+  gtk_widget_add_accelerator (undo_button, "clicked", accel_group,
+                              GDK_u, 0,
+                              GTK_ACCEL_VISIBLE);
 
   help_button = gtk_button_new_with_mnemonic (_("Help"));
   gtk_widget_set_name (help_button, "help_button");
   gtk_widget_show (help_button);
   gtk_container_add (GTK_CONTAINER (vbuttonbox1), help_button);
   GTK_WIDGET_SET_FLAGS (help_button, GTK_CAN_DEFAULT);
+  gtk_widget_add_accelerator (help_button, "clicked", accel_group,
+                              GDK_h, 0,
+                              GTK_ACCEL_VISIBLE);
 
   quit_button = gtk_button_new_with_mnemonic (_("Quit"));
   gtk_widget_set_name (quit_button, "quit_button");
   gtk_widget_show (quit_button);
   gtk_container_add (GTK_CONTAINER (vbuttonbox1), quit_button);
   GTK_WIDGET_SET_FLAGS (quit_button, GTK_CAN_DEFAULT);
+  gtk_widget_add_accelerator (quit_button, "clicked", accel_group,
+                              GDK_q, 0,
+                              GTK_ACCEL_VISIBLE);
 
   right_bottom_vbox = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (right_bottom_vbox, "right_bottom_vbox");
@@ -3161,6 +3182,9 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) window1, "show_help",
                     G_CALLBACK (on_show_help),
+                    NULL);
+  g_signal_connect ((gpointer) window1, "key_press_event",
+                    G_CALLBACK (on_window1_key_press_event),
                     NULL);
   g_signal_connect ((gpointer) input_eventbox, "enter_notify_event",
                     G_CALLBACK (on_input_eventbox_enter_notify_event),
@@ -3921,6 +3945,8 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, outscale_R, "outscale_R");
   GLADE_HOOKUP_OBJECT (window1, outmeter_r, "outmeter_r");
   GLADE_HOOKUP_OBJECT_NO_REF (window1, tooltips, "tooltips");
+
+  gtk_window_add_accel_group (GTK_WINDOW (window1), accel_group);
 
   return window1;
 }

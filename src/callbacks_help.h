@@ -37,7 +37,8 @@ char help_help[] = {
 one of the tool areas (compressor, EQ, limiter, input, etc) or over any of \
 the individual buttons (Help, Quit, Undo, etc) and pressing <Shift><F1>.  \
 Pressing <Shift><F1> while the cursor is over the Help button will cause the \
-general JAMin help message to be displayed.\n"
+general JAMin help message to be displayed.  The keyboard accelerator for \
+this button is the 'h' key.\n"
 };
 
 
@@ -72,7 +73,8 @@ bars that are visible in the HDEQ serve as a visual reference.\n"
 
 
 char quit_help[] = {
-"    Intuitively obvious to the most casual observer\n"
+"    Intuitively obvious to the most casual observer..  The keyboard \
+accelerator for this button is the 'q' key.\n"
 };
 
 
@@ -165,7 +167,7 @@ are Pre EQ, Post compressor, and Output.\n"
 
 
 char status_label_help[] = {
-"    Status label help not yet available.\n"
+"    This is information on the system and transport status.\n"
 };
 
 
@@ -175,25 +177,28 @@ char transport_controls_help[] = {
 
 
 char bypass_help[] = {
-"    Bypass help not yet available.\n"
+"    This button will bypass all of JAMin's functions.  The keyboard \
+accelerator for this button is the 'b' key.\n"
 };
 
 
 char load_help[] = {
 "    The load button allows you to load saved settings.  The default \
-directory for JAMin settings files (compressed XML) is ~/.jam.\n"
+directory for JAMin settings files (compressed XML) is ~/.jam.  The keyboard \
+accelerator for this button is the 'l' key.\n"
 };
 
 
 char save_help[] = {
 "    The save button allows you to save the JAMin settings.  The default \
-directory for JAMin settings files (compressed XML) is ~/.jam.\n"
+directory for JAMin settings files (compressed XML) is ~/.jam.  The keyboard \
+accelerator for this button is the 's' key.\n"
 };
 
 
 char undo_help[] = {
 "    Use this button to undo the most recent changes to the JAMin \
-parameters.\n"
+parameters.  The keyboard accelerator for this button is the 'u' key.\n"
 };
 
 
@@ -207,5 +212,13 @@ settings by left clicking on the scene button.  A green button means that \
 the scene associated with this button is currently loaded.  A bright red \
 button means that scene settings are available for this button.  A dull red \
 button means that no settings have been saved for this scene button.  You can \
-clear settings from a button using the right click menu and the 'Clear' entry.\n"
+clear settings from a button using the right click menu and the 'Clear' \
+entry.\n\n\
+    The keyboard accelerators for the scene buttons are the numeric keys, \
+1-6 or the keypad keys, 1-6.  Pressing the 1 key will cause scene 1 to become \
+active.  The ALT modifier can be used to assign settings to a scene button \
+(instead of using the scene button menus).  Pressing <Alt>-1 will assign the \
+current settings to scene button 1 (you still need to set the name).  The \
+CTRL modifier can be used to clear a scene button.  Pressing <Ctrl>-1 will \
+clear that scene button.\n"
 };

@@ -143,13 +143,17 @@ s_state *get_scene (int number)
 
 
 /*  Set the scene state from the current settings.  Get the scene name from
-    the scene_name text entry widget.  */
+    the scene_name text entry widget.  If scene_num is -1 use the last pressed
+    scene button number.  */
 
-void set_scene ()
+void set_scene (int scene_num)
 {
     int         i;
     char        name[256];
     GtkTooltips *tooltips = gtk_tooltips_new();
+
+
+    if (scene_num >= 0) menu_scene = scene_num;
 
 
     gtk_widget_set_sensitive ((GtkWidget *) l_scene[menu_scene], TRUE);
@@ -234,9 +238,16 @@ void set_scene_name (int number, char *scene_name)
 }
 
 
-void clear_scene ()
+/*  Clear the scene state.  If scene_num is -1 use the last pressed scene 
+    button number.  */
+
+void clear_scene (int scene_num)
 {
     GtkTooltips *tooltips = gtk_tooltips_new();
+
+
+    if (scene_num >= 0) menu_scene = scene_num;
+
 
     gtk_widget_set_sensitive ((GtkWidget *) l_scene[menu_scene], FALSE);
 
