@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.32 2004/04/28 23:15:43 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.33 2004/04/29 14:51:59 jdepner Exp $
  */
 
 char general_help[] = {
@@ -80,11 +80,10 @@ both the HDEQ and spectrum windows.  Spectrum update frequency can be set \
 here as well.  Up to 10 per second (default) and down to 0 (disabled).\n\
     Colors may be changed in the Options->Preferences dialog.  These colors \
 are saved in the file $HOME/.jamin-defaults.  This is done whenever you \
-exit from JAMin.  To reset to the default colors merely remove the file.  \
-You can actually edit this file and change the colors by hand.  They are just \
-RGB values in the 0-65535 range but it's much easier to use the GUI ;-).  You \
-may also set the crossfade time in this dialog (see the man page for more \
-information on crossfade time).\n\
+exit from JAMin.  You can actually edit this file and change the colors by \
+hand.  They are just RGB values in the 0-65535 range but it's much easier to \
+use the GUI ;-).  You may also set the crossfade time in this dialog (see the \
+man page for more information on crossfade time).\n\
     For help on the rest of the GUI, context specific help can be obtained \
 by moving the mouse pointer into one of the tool areas (compressor, EQ, \
 limiter, input, etc) and pressing <Shift><F1>.\n"
@@ -226,16 +225,21 @@ reset the value to 0.0.\n"
 
 
 char eq_options_help[] = {
-"    This dialog allows you to set the upper and lower gain values for both \
-the HDEQ and the GEQ.  You can also set the spectrum source and update \
-frequency.\n"
+"    The EQ Options dialog allows you to set the minimum and maximum gain \
+level in dB for both the HDEQ and GEQ.  You can also set the source of the \
+spectrum for both the HDEQ and spectrum windows.  Spectrum update frequency \
+can be set here as well.  Up to 10 per second (default) and down to 0 \
+(disabled).\n"
 };
 
 
 char preferences_help[] = {
-"    This dialog allows you to set the crossfade time (for transitioning \
-between states).  You can also set many of the colors used throughout the \
-GUI.\n"
+"    Colors may be changed in the Options->Preferences dialog.  These colors \
+are saved in the file $HOME/.jamin-defaults.  This is done whenever you \
+exit from JAMin.  You can actually edit this file and change the colors by \
+hand.  They are just RGB values in the 0-65535 range but it's much easier to \
+use the GUI ;-).  You may also set the crossfade time in this dialog (see the \
+man page for more information on crossfade time).\n"
 };
 
 

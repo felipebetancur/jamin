@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: gtkmeter.c,v 1.7 2004/04/26 20:44:25 jdepner Exp $
+ *  $Id: gtkmeter.c,v 1.8 2004/04/29 14:51:59 jdepner Exp $
  */
 
 #include <math.h>
@@ -21,6 +21,8 @@
 
 #include "gtkmeter.h"
 #include "preferences.h"
+#include "process.h"
+
 
 #define METER_DEFAULT_WIDTH 10
 #define METER_DEFAULT_LENGTH 100
@@ -44,6 +46,11 @@ static void gtk_meter_adjustment_value_changed (GtkAdjustment    *adjustment,
 						gpointer          data);
 
 static float iec_scale(float db);
+
+
+static GtkMeter *l_meter[BANDS + 20];
+static int meter_count = 0;
+
 
 /* Local data */
 
@@ -197,6 +204,12 @@ gtk_meter_realize (GtkWidget *widget)
 
   GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
   meter = GTK_METER (widget);
+
+
+  /*  Save meter widget for later color adjustment.  */
+
+  l_meter[meter_count++] = meter;
+
 
   attributes.x = widget->allocation.x;
   attributes.y = widget->allocation.y;
@@ -506,24 +519,34 @@ void gtk_meter_set_warn_point(GtkMeter *meter, gfloat pt)
 
 void gtk_meter_set_color (int color_id)
 {
-  switch (color_id)
+  int    i;
+
+
+  for (i = 0 ; i < meter_count ; i++)
     {
-    case METER_NORMAL_COLOR:
-      /*  Need to set meter normal color for all meters ??? */
-      break;
+      switch (color_id)
+        {
+        case METER_NORMAL_COLOR:
+          gdk_gc_set_foreground(l_meter[i]->normal_gc, 
+                                get_color (METER_NORMAL_COLOR));
+          break;
 
-    case METER_WARNING_COLOR:
-      /*  Need to set meter warning color for all meters ??? */
-      break;
+        case METER_WARNING_COLOR:
+          gdk_gc_set_foreground(l_meter[i]->warning_gc, 
+                                get_color (METER_WARNING_COLOR));
+          break;
 
 
-    case METER_OVER_COLOR:
-      /*  Need to set meter over color for all meters ??? */
-      break;
+        case METER_OVER_COLOR:
+          gdk_gc_set_foreground(l_meter[i]->over_gc, 
+                                get_color (METER_OVER_COLOR));
+          break;
 
 
-    case METER_PEAK_COLOR:
-      /*  Need to set meter peak color for all meters ??? */
-      break;
+        case METER_PEAK_COLOR:
+          gdk_gc_set_foreground(l_meter[i]->peak_gc, 
+                                get_color (METER_PEAK_COLOR));
+          break;
+        }
     }
 }

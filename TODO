@@ -7,14 +7,10 @@
 
 TO BE DECIDED (owner)
 
-- web site (Ron)
-- download site
-
 
 TODO (owner)
 
 - save compressor control ganging, min/max EQ values, other stuff with state (Steve)
-- no preliminary focus in preferences and options dialog so help works (Jan)
 - commit mastering documentation to CVS (Ron)
 - set JACK port latencies correctly (Jack, Steve)
 - error and debug message rationalization (???)
@@ -25,6 +21,7 @@ TODO (owner)
 - test automation (???)
 - scene automation -- MIDI? (???)
 - backend / UI seperation (everyone)
+
 
 TO THINK ABOUT
 
@@ -70,3 +67,4 @@ CLOSED (date)
 - update web pages to show Options menu (2004/03/??)
 - add all modifiable colors to preferences menu (2004/04/26)
 - save options to startup file (2004/04/28)
+- fixed help in preferences and options dialog (2004/04/29)

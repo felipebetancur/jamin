@@ -1234,3 +1234,7 @@ on_meter_over_color_activate           (GtkMenuItem     *menuitem,
 void
 on_meter_peak_color_activate           (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
+
+void
+on_reset_all_colors1_activate          (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);

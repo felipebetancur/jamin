@@ -104,21 +104,11 @@ void preferences_init()
     colormap = gdk_colormap_get_system ();
 
 
-    set_color (&color[TEXT_COLOR], 0, 0, 0);
-    set_color (&color[LOW_BAND_COLOR], 0, 50000, 0);
-    set_color (&color[MID_BAND_COLOR], 0, 0, 60000);
-    set_color (&color[HIGH_BAND_COLOR], 60000, 0, 0);
-    set_color (&color[GANG_HIGHLIGHT_COLOR], 65535, 0, 0);
+    /*  Set all of the colors to the defaults in case someone has edited the
+        ~/.jamin-defaults file and removed (or hosed) one or more of the
+        entries.  */
 
-    set_color (&color[HANDLE_COLOR], 65535, 65535, 0);
-    set_color (&color[HDEQ_CURVE_COLOR], 65535, 65535, 65535);
-    set_color (&color[HDEQ_GRID_COLOR], 0, 36611, 0);
-    set_color (&color[HDEQ_SPECTRUM_COLOR], 32768, 32768, 32768);
-    set_color (&color[HDEQ_BACKGROUND_COLOR], 0, 21611, 0);
-    set_color (&color[METER_NORMAL_COLOR], 0, 60000, 0);
-    set_color (&color[METER_WARNING_COLOR], 50000, 55000, 0);
-    set_color (&color[METER_OVER_COLOR], 60000, 0, 0);
-    set_color (&color[METER_PEAK_COLOR], 60000, 60000, 0);
+    pref_reset_all_colors ();
 
 
     /*  Get user colors and possibly other things from the ~/.jamin-defaults 
@@ -286,10 +276,45 @@ void popup_color_dialog (int id)
 }
 
 
+void pref_force_color_change ()
+{
+  static GdkRectangle rect;
+
+
+  repaint_gang_labels ();
+  draw_EQ_curve ();
+
+
+  /*  Force all compressor curves.  */
+
+  draw_comp_curve (0);
+  draw_comp_curve (1);
+  draw_comp_curve (2);
+
+
+  /*  Force all meter redraws.  */
+
+  gtk_meter_set_color (METER_NORMAL_COLOR);
+  gtk_meter_set_color (METER_WARNING_COLOR);
+  gtk_meter_set_color (METER_OVER_COLOR);
+  gtk_meter_set_color (METER_PEAK_COLOR);
+
+
+  /*  Force an expose to change the text color.  */
+
+  rect.x = main_window->allocation.x;
+  rect.y = main_window->allocation.y;
+  rect.width = main_window->allocation.width;
+  rect.height = main_window->allocation.height;
+
+  gdk_window_invalidate_rect (main_window->window, &rect, TRUE);
+  gdk_window_process_updates (main_window->window, TRUE);
+}
+
+
 static void color_ok_callback (GtkWidget *w, gpointer user_data)
 {
   GdkColor l_color;
-  static GdkRectangle rect;
 
 
   gtk_color_selection_get_current_color ((GtkColorSelection *) colorsel, 
@@ -297,26 +322,7 @@ static void color_ok_callback (GtkWidget *w, gpointer user_data)
 
   set_color (&color[color_id], l_color.red, l_color.green, l_color.blue);
 
-  rect.x = main_window->allocation.x;
-  rect.y = main_window->allocation.y;
-  rect.width = main_window->allocation.width;
-  rect.height = main_window->allocation.height;
-
-  repaint_gang_labels ();
-  draw_EQ_curve ();
-  draw_comp_curve (0);
-  draw_comp_curve (1);
-  draw_comp_curve (2);
-  gtk_meter_set_color (color_id);
-
-
-  /*  Force an expose to change the text color.  */
-
-  if (color_id == TEXT_COLOR)
-    {
-      gdk_window_invalidate_rect (main_window->window, &rect, TRUE);
-      gdk_window_process_updates (main_window->window, TRUE);
-    }
+  pref_force_color_change ();
 
   gtk_widget_hide (color_dialog);
 }
@@ -417,4 +423,24 @@ void pref_write_jamin_defaults ()
 
         fclose (fp);
       }
+}
+
+
+void pref_reset_all_colors ()
+{
+  set_color (&color[TEXT_COLOR], 0, 0, 0);
+  set_color (&color[LOW_BAND_COLOR], 0, 50000, 0);
+  set_color (&color[MID_BAND_COLOR], 0, 0, 60000);
+  set_color (&color[HIGH_BAND_COLOR], 60000, 0, 0);
+  set_color (&color[GANG_HIGHLIGHT_COLOR], 65535, 0, 0);
+
+  set_color (&color[HANDLE_COLOR], 65535, 65535, 0);
+  set_color (&color[HDEQ_CURVE_COLOR], 65535, 65535, 65535);
+  set_color (&color[HDEQ_GRID_COLOR], 0, 36611, 0);
+  set_color (&color[HDEQ_SPECTRUM_COLOR], 32768, 32768, 32768);
+  set_color (&color[HDEQ_BACKGROUND_COLOR], 0, 21611, 0);
+  set_color (&color[METER_NORMAL_COLOR], 0, 60000, 0);
+  set_color (&color[METER_WARNING_COLOR], 50000, 55000, 0);
+  set_color (&color[METER_OVER_COLOR], 60000, 0, 0);
+  set_color (&color[METER_PEAK_COLOR], 60000, 60000, 0);
 }

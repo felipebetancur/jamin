@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.47 2004/04/09 17:37:49 theno23 Exp $
+ *  $Id: main.c,v 1.48 2004/04/29 14:52:00 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -84,9 +84,9 @@ int main(int argc, char *argv[])
         
     resource_file_parse();
     state_init();
-    preferences_init();
     add_pixmap_directory(JAMIN_PIXMAP_DIR);
     add_pixmap_directory("pixmaps");
+    preferences_init();
     main_window = create_window1();
 
     snprintf(title, sizeof(title), PACKAGE " " VERSION);

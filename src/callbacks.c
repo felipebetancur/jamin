@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.146 2004/04/26 23:13:52 jdepner Exp $
+ *  $Id: callbacks.c,v 1.147 2004/04/29 14:51:58 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1559,11 +1559,6 @@ on_window1_key_press_event             (GtkWidget       *widget,
     int                   scene;
 
 
-    /*  If a text widget has the focus we don't want to trap key presses.  */
-
-    if (text_focus) return FALSE;
-
-
     key = event->keyval;
 
 
@@ -1576,6 +1571,22 @@ on_window1_key_press_event             (GtkWidget       *widget,
     if (state & GDK_MOD3_MASK) state &= ~GDK_MOD3_MASK;
     if (state & GDK_MOD4_MASK) state &= ~GDK_MOD4_MASK;
     if (state & GDK_MOD5_MASK) state &= ~GDK_MOD5_MASK;
+
+
+    /*  Force context help for EQ Options and Preferences dialogs.  This fixes
+        an initial focus problem with the dialogs.  There must be a better way
+        to do it but I don't know what it is.   JCD  */
+
+    if (help_ptr == eq_options_help || help_ptr == preferences_help)
+      {
+        if (key == GDK_F1 && state == GDK_SHIFT_MASK)   
+          message (GTK_MESSAGE_INFO, help_ptr);
+      }
+
+
+    /*  If a text widget has the focus we don't want to trap key presses.  */
+
+    if (text_focus) return FALSE;
 
 
     scene = -1;
@@ -2600,3 +2611,12 @@ on_meter_peak_color_activate           (GtkMenuItem     *menuitem,
 {
   popup_color_dialog (METER_PEAK_COLOR);
 }
+
+void
+on_reset_all_colors1_activate          (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  pref_reset_all_colors ();
+  pref_force_color_change ();
+}
+
