@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.55 2004/10/01 15:26:45 theno23 Exp $
+ *  $Id: main.c,v 1.56 2004/10/03 14:12:38 theno23 Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -19,7 +19,7 @@
 #endif
 
 #ifdef HAVE_OSC
-#include <lo.h>
+#include <lo/lo.h>
 #include "constants.h"
 #endif
 

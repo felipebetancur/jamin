@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.57 2004/07/17 10:38:23 theno23 Exp $
+ *  $Id: process.c,v 1.58 2004/10/03 14:12:38 theno23 Exp $
  */
 
 #include <math.h>
@@ -163,10 +163,10 @@ void process_init(float fs)
     plan_rc = fftwf_plan_r2r_1d(BINS, real, comp, FFTW_R2HC, FFTW_MEASURE);
     plan_cr = fftwf_plan_r2r_1d(BINS, comp_tmp, real, FFTW_HC2R, FFTW_MEASURE);
 
-    /* Calculate raised cosine window */
+    /* Calculate root raised cosine window */
     for (i = 0; i < BINS; i++) {
-	window[i] = -0.5f * cosf(2.0f * M_PI * (float) i /
-				 (float) BINS) + 0.5f;
+	window[i] = sqrtf(0.5f + -0.5 * cosf(2.0f * M_PI * (float) i /
+			  (float) BINS));
     }
 
     plugin_init();

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: spectrum.c,v 1.17 2004/05/06 10:28:00 jdepner Exp $
+ *  $Id: spectrum.c,v 1.18 2004/10/03 14:12:38 theno23 Exp $
  */
 
 #include <math.h>
@@ -135,11 +135,12 @@ gboolean spectrum_update(gpointer data)
 {
     int i, page, count;
     float levels[BANDS];
-    float single_levels[BINS/2];
+    static float single_levels[BINS/2];
 
     void draw_EQ_spectrum_curve (float *);
     int get_current_notebook1_page ();
 
+    float decay_rate = 0.05f;
 
     page = get_current_notebook1_page ();
     count = BINS / 2;
@@ -165,7 +166,8 @@ gboolean spectrum_update(gpointer data)
         levels[i] = 0.0f;
       }
       for (i=0; i<count; i++) {
-        single_levels[i] = bin_peak_read_and_clear(i);
+        single_levels[i] *= 1.0f - decay_rate;
+        single_levels[i] += bin_peak_read_and_clear(i) * decay_rate;
       }
       draw_EQ_spectrum_curve (single_levels);
     }
