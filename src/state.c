@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.37 2004/01/08 15:59:33 jdepner Exp $
+ *  $Id: state.c,v 1.38 2004/01/10 10:27:30 theno23 Exp $
  */
 
 #include <stdio.h>
@@ -19,6 +19,10 @@
 #include <string.h>
 #include <assert.h>
 #include <libgen.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <gtk/gtk.h>
 #include <libxml/parser.h>
 
@@ -448,8 +452,9 @@ void s_load_session (const char *fname)
 {
     xmlSAXHandlerPtr handler;
     int scene = -1;
-    saved_scene = -1;
+    int fd;
 
+    saved_scene = -1;
     unset_scene_buttons ();
 
     if (fname) {
@@ -458,6 +463,22 @@ void s_load_session (const char *fname)
     if (filename == NULL) {
 	filename = default_session;
     }
+
+    /* Check file exists */
+    if ((fd = open(filename, O_RDONLY)) >= 0) {
+	close(fd);
+    } else {
+	char *errstr = NULL;
+
+	errstr = g_strdup_printf("Error opening '%s'", filename);
+	perror(errstr);
+	free(errstr);
+
+	if (fname == NULL) {
+	    exit(1);
+	}
+    }
+	
     s_update_title();
 
     handler = calloc(1, sizeof(xmlSAXHandler));
