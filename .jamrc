@@ -61,7 +61,11 @@ style "steel"
 {
   #This sets the padding around the window to the pixmap specified.
   #bg_pixmap[<STATE>] = "<pixmap filename>"
-   bg_pixmap[NORMAL] = "brushed-steel.png"
+   	bg_pixmap[NORMAL] = "brushed-steel.png"
+   	bg_pixmap[ACTIVE] = "brushed-steel.png"
+   	bg_pixmap[PRELIGHT] = "brushed-steel.png"
+   	bg_pixmap[INSENSITIVE] = "brushed-steel.png"
+   	bg_pixmap[SELECTED] = "brushed-steel.png"
 
 }
 
@@ -74,7 +78,6 @@ style "thai-gold"
    	bg_pixmap[NORMAL] = "thai-gold.png"
     	bg_pixmap[ACTIVE] = "thai-gold.png"
   	bg_pixmap[PRELIGHT] = "thai-gold-knobs.png"
-  # 	bg_pixmap[INSENSITIVE] = "brushed-steel.png"
 
    # text and borders
 
@@ -125,19 +128,35 @@ style "toggle_button" = "button"
   # bg_pixmap[NORMAL] = "<parent>"
 }
 
-# This set the text for everything except the faders and buttons.
+style "radio_button" = "steel"
+{
+  fg[NORMAL] = { 0, 0, 0 }
+  fg[ACTIVE] = { 0, 0, 0 }
+  fg[PRELIGHT] = { 1.0, 0, 0 }
+  fg[SELECTED] = { 0, 0, 0 }
+  fg[INSENSITIVE] = { 0, 0, 0 }  
+  
 
-style "text"
+
+# This sets the text for everything except the faders and buttons.
+
+style "text" = "steel"
 {
 	fg[NORMAL] = { 0.74, 0.85, 0.93 }	# sky blue
 	fg[ACTIVE] = { 0.74, 0.85, 0.93 }
 	fg[PRELIGHT] = { 0.74, 0.85, 0.93 }
 	fg[SELECTED] = { 0.74, 0.85, 0.93 }
 	fg[INSENSITIVE] = { 0.5, 0.5, 0.5 }	# grey
-   	bg_pixmap[NORMAL] = "<parent>"
-   	bg_pixmap[ACTIVE] = "<parent>"
-   	bg_pixmap[PRELIGHT] = "<parent>"
-   	bg_pixmap[INSENSITIVE] = "<parent>"
+
+}
+
+style "menu_text" = "radio_button"
+
+{
+	fg[PRELIGHT] = {0.32, 0.39, 0.45 }
+	fg[INSENSITIVE] = { 0.5, 0.5, 0.5 }	# grey
+	bg[PRELIGHT] = {0.32, 0.39, 0.45 }
+	
 
 }
 
@@ -166,18 +185,23 @@ widget_class "*Gtk*Box" style "steel"
 # fader colors
 widget_class "*Gtk*Scale" style "thai-gold"
 
-widget_class "*Gtk*Label" style "text"
-widget_class "*GtkCheckButton*" style "toggle_button"
-widget_class "*GtkRadioButton*" style "toggle_button"
-widget_class "*GtkToggleButton*" style "toggle_button"
+
 widget_class "*GtkButton*" style "button"
+widget_class "*GtkCheckButton*" style "toggle_button"
+widget_class "*GtkToggleButton*" style "toggle_button"
+widget_class "*GtkCheckMenu*" style "radio_button"
+widget_class "*GtkRadioMenu*" style "radio_button"
 widget_class "*Ruler" style "ruler"
 widget_class "*GtkText" style "text"
+widget_class "*Gtk*Label" style "text"
+widget_class "*Gtk*Menu" style "text"
+widget_class "*GtkOptionMenu*" style "text"
 
 # notebook  color
 widget_class "*GtkNotebook" style "text"
 
-# This sets all the buttons that are children of the "main window" to
+# This sets all the buttons that are children of "window1" to
 # the main_button style.  These must be documented to be taken advantage of.
 widget "window1.*GtkButton*" style "main_button"
+#widget "menu1.*GtkRadioButton*" style "menu_text"
 
