@@ -36,7 +36,6 @@ gboolean update_meters(gpointer data);
 int main(int argc, char *argv[])
 {
     char rcfile[PATH_MAX];
-    gchar title[40];
     int fd;
 
 #ifdef ENABLE_NLS
@@ -45,7 +44,7 @@ int main(int argc, char *argv[])
     textdomain(GETTEXT_PACKAGE);
 #endif
 
-    printf("JAMin " VERSION "\n");
+    printf(PACKAGE " " VERSION "\n");
     printf("(c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker and P. Shirkey\n");
     printf("This is free software, and you are welcome to redistribute it\n" 
 	   "under certain conditions; see the file COPYING for details.\n");

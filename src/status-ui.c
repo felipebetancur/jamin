@@ -21,10 +21,7 @@
 #include <stdio.h>
 #include <gtk/gtk.h>
 #include <jack/jack.h>
-
-#include "debug.h"
-#include "main.h"
-#include "support.h"
+#include <config.h>
 #include "jackstatus.h"
 #include "transport.h"
 #include "status-ui.h"
@@ -63,9 +60,9 @@ void status_update(GtkWidget *main_window)
     else
       rt = "Not Realtime";
 
+    snprintf(title, sizeof(title), PACKAGE " " VERSION
+	     "     %s : %.1f%% CPU : %ld frames : %ld Hz : %s",
+	     state_msg, j.cpu_load, j.buf_size, j.sample_rate, rt);
 
-    sprintf (title, 
-        "JAMin %s     %s : %.1f%% CPU : %ld frames : %ld Hz : %s",
-        VERSION, state_msg, j.cpu_load, j.buf_size, j.sample_rate, rt);
     gtk_window_set_title ((GtkWindow *) main_window, title);
 }
