@@ -21,7 +21,6 @@ static GtkAdjustment *adjustment[BANDS];
 
 static int bin_bands[BINS];
 static int band_bin[BANDS];
-static GtkWidget *notebook;
 
 
 void bind_spectrum()
@@ -36,7 +35,6 @@ void bind_spectrum()
     float band_freq[BANDS];
     float band_bin_count[BANDS];
 
-    notebook = lookup_widget(main_window, "notebook1");
     root = lookup_widget(main_window, "spectrum_hbox");
     hbox = gtk_hbox_new(TRUE, 0);
     gtk_box_pack_start(GTK_BOX(root), hbox, FALSE, FALSE, 0);
@@ -124,9 +122,10 @@ void spectrum_update()
     float single_levels[BINS/2];
 
     void draw_EQ_spectrum_curve (float *);
+    int get_current_notebook1_page ();
 
 
-    page = gtk_notebook_get_current_page ((GtkNotebook *) notebook);
+    page = get_current_notebook1_page ();
     count = BINS / 2;
 
     if (page == 3) {

@@ -141,7 +141,7 @@ gtk_meterscale_realize (GtkWidget *widget)
   gint attributes_mask;
   PangoContext *pc = gtk_widget_get_pango_context(widget);
   PangoLayout *pl;
-  PangoFontDescription *pfd;
+  //PangoFontDescription *pfd;
   PangoRectangle rect;
 
   g_return_if_fail (widget != NULL);
@@ -169,10 +169,10 @@ gtk_meterscale_realize (GtkWidget *widget)
 
   gtk_style_set_background (widget->style, widget->window, GTK_STATE_ACTIVE);
 
-  pfd = pango_font_description_new();
-  pango_font_description_set_family(pfd, "sans-serif");
-  pango_font_description_set_size(pfd, METERSCALE_MAX_FONT_SIZE * PANGO_SCALE);
-  pango_context_set_font_description(pc, pfd);
+  //pfd = pango_font_description_new();
+  //pango_font_description_set_family(pfd, "sans-serif");
+  //pango_font_description_set_size(pfd, METERSCALE_MAX_FONT_SIZE * PANGO_SCALE);
+  //pango_context_set_font_description(pc, pfd);
   pl = pango_layout_new(pc);
   pango_layout_set_text(pl, "99", -1);
   pango_layout_get_pixel_extents(pl, &rect, NULL);
@@ -291,7 +291,7 @@ static void meterscale_draw_notch_label(GtkMeterScale *meterscale, float db,
     if (last_label_rect) {
         PangoContext *pc = gtk_widget_get_pango_context(widget);
         PangoLayout *pl;
-	PangoFontDescription *pfd;
+	//PangoFontDescription *pfd;
 	PangoRectangle rect;
 	char text[128];
 	int x, y, size;
@@ -300,10 +300,10 @@ static void meterscale_draw_notch_label(GtkMeterScale *meterscale, float db,
 	if (size > METERSCALE_MAX_FONT_SIZE) {
 	    size = METERSCALE_MAX_FONT_SIZE;
 	}
-	pfd = pango_font_description_new();
-	pango_font_description_set_family(pfd, "sans-serif");
-	pango_font_description_set_size(pfd, size * PANGO_SCALE);
-	pango_context_set_font_description(pc, pfd);
+	//pfd = pango_font_description_new();
+	//pango_font_description_set_family(pfd, "sans-serif");
+	//pango_font_description_set_size(pfd, size * PANGO_SCALE);
+	//pango_context_set_font_description(pc, pfd);
 
 	pl = pango_layout_new(pc);
 

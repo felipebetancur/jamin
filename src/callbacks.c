@@ -26,7 +26,7 @@
 #define EQ_INTERP                     (BINS / 2 - 1)
 #define EQ_INTRVL                     (EQ_INTERP / (EQ_BANDS + 1))
 #define EQ_SPECTRUM_RANGE             90.0
-#define XOVER_HANDLE_SIZE             8
+#define XOVER_HANDLE_SIZE             10
 #define XOVER_HANDLE_HALF_SIZE        (XOVER_HANDLE_SIZE / 2)
 
 /* vi:set ts=8 sts=4 sw=4: */
@@ -43,6 +43,7 @@ static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_low_comp_lbl,
                        *l_low_knee_lbl, *l_mid_knee_lbl, *l_high_knee_lbl,
                        *l_low_curve_lbl, *l_mid_curve_lbl, *l_high_curve_lbl;
 static GtkDrawingArea  *l_EQ_curve, *l_comp_curve[3];
+static GtkNotebook     *notebook1;
 static GdkDrawable     *EQ_drawable, *comp_drawable[3];
 static GdkColormap     *colormap;
 static GdkColor        white, grey, black, red, green, blue, comp_color[4];
@@ -500,8 +501,8 @@ draw_EQ_curve ()
     /*  Clear the curve drawing area.  */
 
     EQ_cleared = 1;
-    gdk_window_clear_area (EQ_drawable, 0, 0, EQ_curve_width, EQ_curve_height);
-    gdk_gc_set_foreground (EQ_gc, &grey);
+    gdk_window_clear_area (EQ_drawable, 0, 0, EQ_curve_width + 1, 
+        EQ_curve_height + 1);
     gdk_gc_set_foreground (EQ_gc, &black);
 
 
@@ -547,7 +548,14 @@ draw_EQ_curve ()
         XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE, 
         EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+    gdk_gc_set_foreground (EQ_gc, &black);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE, 0, 
+        XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE, 
+        EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+
     xover_handle_fa = x1;
+
 
     gdk_gc_set_foreground (EQ_gc, &blue);
     x1 = NINT (((log10 (xover_fb) - l_low2mid_adj->lower) / 
@@ -557,6 +565,12 @@ draw_EQ_curve ()
         XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE, 
         EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+    gdk_gc_set_foreground (EQ_gc, &black);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE, 0, 
+        XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE, 
+        EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+
     xover_handle_fb = x1;
 
     
@@ -658,8 +672,8 @@ on_EQ_curve_event_box_motion_notify_event
                                         GdkEventMotion  *event,
                                         gpointer         user_data)
 {
-    static int     prev_x = -1, prev_y = -1;
-    int            x, y, size;
+    static int     prev_x = -1, prev_y = -1, current_cursor = -1;
+    int            x, y, size, diffx_fa, diffx_fb;
     float          freq, gain, s_gain;
     char           coords[20];
 
@@ -683,8 +697,8 @@ on_EQ_curve_event_box_motion_notify_event
         s_gain = -(EQ_SPECTRUM_RANGE - (((((double) EQ_curve_height - 
             (double) y) / (double) EQ_curve_height) * EQ_SPECTRUM_RANGE)));
 
-        sprintf (coords, _("%dHz , EQ : %ddb , Spectrum : %ddb"), NINT (freq), NINT (gain), 
-            NINT (s_gain));
+        sprintf (coords, _("%dHz , EQ : %ddb , Spectrum : %ddb"), NINT (freq),
+            NINT (gain), NINT (s_gain));
         gtk_label_set_text (l_EQ_curve_lbl, coords);
 
 
@@ -724,6 +738,35 @@ on_EQ_curve_event_box_motion_notify_event
           {
             freq = log10f (freq);
             gtk_range_set_value ((GtkRange *) l_mid2high, freq);
+          }
+        else
+          {
+            diffx_fa = abs (x - xover_handle_fa);
+            diffx_fb = abs (x - xover_handle_fb);
+            if (EQ_drag_fa || EQ_drag_fb || 
+                (diffx_fa <= XOVER_HANDLE_HALF_SIZE && 
+                (y <= XOVER_HANDLE_SIZE ||
+                 y >= EQ_curve_height - XOVER_HANDLE_SIZE)) ||
+                (diffx_fb <= XOVER_HANDLE_HALF_SIZE && 
+                (y <= XOVER_HANDLE_SIZE ||
+                y >= EQ_curve_height - XOVER_HANDLE_SIZE)))
+              {
+                if (current_cursor != GDK_SB_H_DOUBLE_ARROW)
+                  {
+                    current_cursor = GDK_SB_H_DOUBLE_ARROW;
+                    gdk_window_set_cursor (EQ_drawable, 
+                        gdk_cursor_new (current_cursor));
+                  }
+              }
+            else
+              {
+                if (current_cursor != GDK_PENCIL)
+                  {
+                    current_cursor = GDK_PENCIL;
+                    gdk_window_set_cursor (EQ_drawable, 
+                        gdk_cursor_new (current_cursor));
+                  }
+              }
           }
 
         prev_x = x;
@@ -1791,5 +1834,18 @@ on_lim_input_hscale_realize            (GtkWidget       *widget,
 {
 	s_set_adjustment(S_LIM_INPUT,
 			gtk_range_get_adjustment(GTK_RANGE(widget)));
+}
+
+
+int get_current_notebook1_page ()
+{
+    return (gtk_notebook_get_current_page (notebook1));
+}
+
+void
+on_notebook1_realize                   (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    notebook1 = (GtkNotebook *) widget;
 }
 

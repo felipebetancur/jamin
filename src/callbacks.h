@@ -431,3 +431,7 @@ on_lim_input_hscale_value_changed      (GtkRange        *range,
 void
 on_lim_input_hscale_realize            (GtkWidget       *widget,
                                         gpointer         user_data);
+
+void
+on_notebook1_realize                   (GtkWidget       *widget,
+                                        gpointer         user_data);

@@ -87,6 +87,7 @@
 			      <child>
 				<widget class="Custom" id="inmeter_l">
 				  <property name="width_request">15</property>
+				  <property name="height_request">0</property>
 				  <property name="visible">True</property>
 				  <property name="creation_function">make_meter</property>
 				  <property name="int1">-60</property>
@@ -103,6 +104,7 @@
 			      <child>
 				<widget class="Custom" id="custom15">
 				  <property name="width_request">10</property>
+				  <property name="height_request">0</property>
 				  <property name="visible">True</property>
 				  <property name="creation_function">make_mscale</property>
 				  <property name="string1">left right</property>
@@ -120,6 +122,7 @@
 			      <child>
 				<widget class="Custom" id="inmeter_r">
 				  <property name="width_request">15</property>
+				  <property name="height_request">0</property>
 				  <property name="visible">True</property>
 				  <property name="creation_function">make_meter</property>
 				  <property name="int1">-60</property>
@@ -224,9 +227,8 @@
 			  <property name="show_border">True</property>
 			  <property name="tab_pos">GTK_POS_TOP</property>
 			  <property name="scrollable">False</property>
-			  <property name="tab_hborder">2</property>
-			  <property name="tab_vborder">2</property>
 			  <property name="enable_popup">False</property>
+			  <signal name="realize" handler="on_notebook1_realize" last_modification_time="Thu, 15 May 2003 14:56:56 GMT"/>
 
 			  <child>
 			    <widget class="GtkHBox" id="hbox21">
@@ -3991,8 +3993,6 @@
 			      <property name="show_border">True</property>
 			      <property name="tab_pos">GTK_POS_TOP</property>
 			      <property name="scrollable">False</property>
-			      <property name="tab_hborder">2</property>
-			      <property name="tab_vborder">2</property>
 			      <property name="enable_popup">False</property>
 
 			      <child>
@@ -4440,6 +4440,7 @@
 
 						      <child>
 							<widget class="Custom" id="comp_le_1">
+							  <property name="width_request">0</property>
 							  <property name="height_request">12</property>
 							  <property name="visible">True</property>
 							  <property name="creation_function">make_meter</property>
@@ -4459,6 +4460,7 @@
 
 						      <child>
 							<widget class="Custom" id="comp_ga_1">
+							  <property name="width_request">0</property>
 							  <property name="height_request">12</property>
 							  <property name="visible">True</property>
 							  <property name="creation_function">make_meter</property>
@@ -4479,6 +4481,7 @@
 
 						      <child>
 							<widget class="Custom" id="custom16">
+							  <property name="width_request">0</property>
 							  <property name="height_request">10</property>
 							  <property name="visible">True</property>
 							  <property name="creation_function">make_mscale</property>
@@ -4996,6 +4999,7 @@
 
 						      <child>
 							<widget class="Custom" id="comp_le_2">
+							  <property name="width_request">0</property>
 							  <property name="height_request">12</property>
 							  <property name="visible">True</property>
 							  <property name="creation_function">make_meter</property>
@@ -5015,6 +5019,7 @@
 
 						      <child>
 							<widget class="Custom" id="comp_ga_2">
+							  <property name="width_request">0</property>
 							  <property name="height_request">12</property>
 							  <property name="visible">True</property>
 							  <property name="creation_function">make_meter</property>
@@ -5035,6 +5040,7 @@
 
 						      <child>
 							<widget class="Custom" id="custom17">
+							  <property name="width_request">0</property>
 							  <property name="height_request">10</property>
 							  <property name="visible">True</property>
 							  <property name="creation_function">make_mscale</property>
@@ -5551,6 +5557,7 @@
 
 						      <child>
 							<widget class="Custom" id="comp_ga_3">
+							  <property name="width_request">0</property>
 							  <property name="height_request">12</property>
 							  <property name="visible">True</property>
 							  <property name="creation_function">make_meter</property>
@@ -5571,6 +5578,7 @@
 
 						      <child>
 							<widget class="Custom" id="comp_le_3">
+							  <property name="width_request">0</property>
 							  <property name="height_request">12</property>
 							  <property name="visible">True</property>
 							  <property name="creation_function">make_meter</property>
@@ -5590,6 +5598,7 @@
 
 						      <child>
 							<widget class="Custom" id="custom18">
+							  <property name="width_request">0</property>
 							  <property name="height_request">10</property>
 							  <property name="visible">True</property>
 							  <property name="creation_function">make_mscale</property>
@@ -6169,8 +6178,6 @@
 				  <property name="show_border">True</property>
 				  <property name="tab_pos">GTK_POS_TOP</property>
 				  <property name="scrollable">False</property>
-				  <property name="tab_hborder">2</property>
-				  <property name="tab_vborder">2</property>
 				  <property name="enable_popup">False</property>
 
 				  <child>
@@ -6242,6 +6249,7 @@
 
 					  <child>
 					    <widget class="Custom" id="custom19">
+					      <property name="width_request">0</property>
 					      <property name="height_request">12</property>
 					      <property name="visible">True</property>
 					      <property name="creation_function">make_mscale</property>
@@ -6259,6 +6267,7 @@
 
 					  <child>
 					    <widget class="Custom" id="lim_in_meter">
+					      <property name="width_request">0</property>
 					      <property name="height_request">12</property>
 					      <property name="visible">True</property>
 					      <property name="creation_function">make_meter</property>
@@ -6434,6 +6443,7 @@
 
 					  <child>
 					    <widget class="Custom" id="lim_att_meter">
+					      <property name="width_request">0</property>
 					      <property name="height_request">12</property>
 					      <property name="visible">True</property>
 					      <property name="creation_function">make_meter</property>
@@ -6451,6 +6461,7 @@
 
 					  <child>
 					    <widget class="Custom" id="custom20">
+					      <property name="width_request">0</property>
 					      <property name="height_request">10</property>
 					      <property name="visible">True</property>
 					      <property name="creation_function">make_mscale</property>
@@ -6468,6 +6479,7 @@
 
 					  <child>
 					    <widget class="Custom" id="lim_out_meter">
+					      <property name="width_request">0</property>
 					      <property name="height_request">12</property>
 					      <property name="visible">True</property>
 					      <property name="creation_function">make_meter</property>
@@ -6660,6 +6672,7 @@
 	  <child>
 	    <widget class="Custom" id="outmeter_l">
 	      <property name="width_request">15</property>
+	      <property name="height_request">0</property>
 	      <property name="visible">True</property>
 	      <property name="creation_function">make_meter</property>
 	      <property name="string1">up</property>
@@ -6677,6 +6690,7 @@
 	  <child>
 	    <widget class="Custom" id="outscale">
 	      <property name="width_request">10</property>
+	      <property name="height_request">0</property>
 	      <property name="visible">True</property>
 	      <property name="creation_function">make_mscale</property>
 	      <property name="string1">left right</property>
@@ -6694,6 +6708,7 @@
 	  <child>
 	    <widget class="Custom" id="outmeter_r">
 	      <property name="width_request">15</property>
+	      <property name="height_request">0</property>
 	      <property name="visible">True</property>
 	      <property name="creation_function">make_meter</property>
 	      <property name="string1">up</property>
