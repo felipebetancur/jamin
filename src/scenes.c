@@ -49,6 +49,8 @@ void select_scene (int number)
                 current_scene = i;
 
                 s_restore_state (&scene_state[i]);
+
+                set_EQ_curve_values ();
               }
             else
               {
