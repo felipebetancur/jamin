@@ -48,6 +48,10 @@ requirement.
        fftw-3 >= 3.0.0		<http://www.fftw.org>
 	 should have float support enabled
 
+       liblo >= 0.5		<http://plugin.org.uk/liblo>
+	 optional, but if you have it installed JAMin will support
+	 scene changes over OSC and a commandline tool will be built
+
 When compiling you can request that JAMin links with the (default)
 double precision FFTW library (using ./configure --enable-double-fft),
 but this is unlikely to result in a JAMin that will run in realtime,
