@@ -8,6 +8,7 @@
 #include "main.h"
 #include "gtkmeter.h"
 #include "state.h"
+#include "db.h"
 
 void lh_changed(int id, float value);
 void ll_changed(int id, float value);
@@ -73,8 +74,8 @@ void ll_changed(int id, float value)
 
 void limiter_meters_update()
 {
-    float peak_in = 20.0f * log10f(lim_peak[LIM_PEAK_IN]);
-    float peak_out = 20.0f * log10f(lim_peak[LIM_PEAK_OUT]);
+    float peak_in = lin2db(lim_peak[LIM_PEAK_IN]);
+    float peak_out = lin2db(lim_peak[LIM_PEAK_OUT]);
     float atten = -limiter.attenuation;
 
     gtk_adjustment_set_value(in_meter_adj, peak_in);

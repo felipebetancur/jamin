@@ -9,6 +9,7 @@
 #include "intrim.h"
 #include "gtkmeter.h"
 #include "state.h"
+#include "db.h"
 
 static GtkMeter *in_meter[2], *out_meter[2];
 static GtkAdjustment *in_meter_adj[2], *out_meter_adj[2];
@@ -41,9 +42,9 @@ void bind_intrim()
     update_pan_label(0.0);
 
     s_set_callback(S_IN_GAIN, intrim_cb);
-    s_set_adjustment(S_IN_GAIN, gtk_range_get_adjustment(lookup_widget(main_window, "in_trim_scale")));
+    s_set_adjustment(S_IN_GAIN, gtk_range_get_adjustment(GTK_RANGE(lookup_widget(main_window, "in_trim_scale"))));
     s_set_callback(S_IN_PAN, inpan_cb);
-    s_set_adjustment(S_IN_PAN, gtk_range_get_adjustment(lookup_widget(main_window, "pan_scale")));
+    s_set_adjustment(S_IN_PAN, gtk_range_get_adjustment(GTK_RANGE(lookup_widget(main_window, "pan_scale"))));
 }
 
 void intrim_cb(int id, float value)
@@ -64,16 +65,16 @@ void inpan_cb(int id, float value)
 
 void in_meter_value(float amp[])
 {
-    gtk_adjustment_set_value(in_meter_adj[0], 20.0f * log10f(amp[0]));
-    gtk_adjustment_set_value(in_meter_adj[1], 20.0f * log10f(amp[1]));
+    gtk_adjustment_set_value(in_meter_adj[0], lin2db(amp[0]));
+    gtk_adjustment_set_value(in_meter_adj[1], lin2db(amp[1]));
     amp[0] = 0.0f;
     amp[1] = 0.0f;
 }
 
 void out_meter_value(float amp[])
 {
-    gtk_adjustment_set_value(out_meter_adj[0], 20.0f * log10f(amp[0]));
-    gtk_adjustment_set_value(out_meter_adj[1], 20.0f * log10f(amp[1]));
+    gtk_adjustment_set_value(out_meter_adj[0], lin2db(amp[0]));
+    gtk_adjustment_set_value(out_meter_adj[1], lin2db(amp[1]));
     amp[0] = 0.0f;
     amp[1] = 0.0f;
 }
