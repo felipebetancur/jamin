@@ -1,6 +1,7 @@
 /* code to control the graphic eq's, swh */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <gtk/gtk.h>
 #include <math.h>
 
@@ -149,6 +150,15 @@ gboolean eqb_changed(GtkAdjustment *adj, gpointer user_data)
     geq_set_gains();
 
     return FALSE;
+}
+
+GtkAdjustment *geq_get_adjustment(int band)
+{
+    if (band < 0 || band > EQ_BANDS) {
+	fprintf(stderr, "jam error: Adjustment from out-of-range band %d requested\n", band);
+	exit(1);
+    }
+    return geqa[band];
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

@@ -10,6 +10,6 @@ void geq_set_sliders(int length, float x[], float y[]);
 void geq_set_range(double min, double max);
 void geq_get_freqs_and_gains(float *freqs, float *gains);
 
-extern GtkAdjustment *geqa[];
+GtkAdjustment *geq_get_adjustment(int band);
 
 #endif

@@ -843,7 +843,7 @@ void
 on_geq_min_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
                                         gpointer         user_data)
 {
-    geq_set_range (gtk_spin_button_get_value (spinbutton), geqa[0]->upper);
+    geq_set_range (gtk_spin_button_get_value (spinbutton), geq_get_adjustment(0)->upper);
 }
 
 
@@ -851,7 +851,7 @@ void
 on_geq_max_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
                                         gpointer         user_data)
 {
-    geq_set_range (geqa[0]->lower, gtk_spin_button_get_value (spinbutton));
+    geq_set_range (geq_get_adjustment(0)->lower, gtk_spin_button_get_value (spinbutton));
 }
 
 
