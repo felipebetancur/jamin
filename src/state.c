@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.27 2003/12/11 19:58:01 jdepner Exp $
+ *  $Id: state.c,v 1.28 2003/12/12 15:04:01 theno23 Exp $
  */
 
 #include <stdio.h>
@@ -287,7 +287,7 @@ void s_save_session (const char *fname)
     xmlDocPtr doc;
     xmlNodePtr rootnode, node, sc_node;
     unsigned int i, j;
-    int current_scene;
+    int curr_scene;
     char tmp[256];
 
     /* Check to see if we have been passed a filename, if not fall back to
@@ -301,11 +301,8 @@ void s_save_session (const char *fname)
 		__LINE__);
     }
 
-
     /*  Need to save this scene number.  */
-
-    current_scene = get_current_scene ();
-
+    curr_scene = get_current_scene ();
 
     xmlSetCompressMode(5);
     doc = xmlNewDoc("1.0");
@@ -339,6 +336,13 @@ void s_save_session (const char *fname)
 	    continue;
 	}
 	xmlSetProp(sc_node, "name", get_scene_name(j));
+	if (curr_scene == j) {
+	    xmlSetProp(sc_node, "active", "true");
+	    xmlSetProp(sc_node, "changed", "false");
+	} else if (curr_scene == changed_scene_no(j)) {
+	    xmlSetProp(sc_node, "active", "true");
+	    xmlSetProp(sc_node, "changed", "true");
+	}
 	node = xmlNewText("\n");
 	xmlAddChild(sc_node, node);
 	xmlAddChild(rootnode, sc_node);
@@ -396,25 +400,6 @@ void s_load_session (const char *fname)
 	filename = NULL;
     }
 
-
-    /*  Get the active scene number from XML (TODO) and then check it.  If it's
-        greater than 100 it's been modified and we need to set the warning.
-        That is, the current state is different than the state of the current 
-        scene number so we don't want it green, we want the warning flag.  
-        If it's -1 we don't have any scenes set.  */
-
-    if (scene > 100)
-      {
-        set_num_scene_warning_button (scene);
-      }
-    else if (scene > -1) 
-      {
-        /*  Need to fix this once we start saving the scene number.  */
-
-        //set_scene(scene);
-        set_scene(0);
-      }
-
     hdeq_set_xover ();
     set_EQ_curve_values ();
 }
@@ -425,6 +410,8 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
     unsigned int i, found = 0;
     const char *symbol = NULL, *value = NULL;
     int *scene = (int *)user_data;
+    int active = 0;
+    int changed = 0;
 
     if (!strcmp(name, "jam-param-list")) {
 	return;
@@ -438,7 +425,18 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 		sname = *(p+1);
 	    } else if (!strcmp(*p, "number")) {
 		*scene = atoi(*(p+1));
+	    } else if (!strcmp(*p, "active")) {
+		active = 1;
+	    } else if (!strcmp(*p, "changed")) {
+		changed = 1;
 	    }
+	}
+
+	if (active) {
+	    set_scene(*scene);
+	}
+	if (changed) {
+	    set_num_scene_warning_button(changed_scene_no(*scene));
 	}
 
 	if (sname && *scene > -1) {

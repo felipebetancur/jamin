@@ -366,10 +366,24 @@ void set_scene_warning_button ()
       {
         gtk_image_set_from_stock (l_scene[i], GTK_STOCK_DIALOG_WARNING, 
                                   GTK_ICON_SIZE_BUTTON);
-        current_scene = i + 100;
+        current_scene = changed_scene_no(i);
       }
 }
 
+/* Return the magic scene number that will be used to represent that scene if it has had unsaved changes made */
+
+int changed_scene_no(int s)
+{
+	return s + 100;
+}
+
+/* return TRUE if the scene number passed in represents a changes scene and
+ * FALSE otherwise */
+
+int is_changed_scene(int s)
+{
+	return s >= 100;
+}
 
 /*  Set a specific scene button to a warning.  Only done on load.  */
 
