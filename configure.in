@@ -95,8 +95,8 @@ AC_C_INLINE
 # Checks for library functions.
 AC_CHECK_FUNCS([atexit])
 
-dnl AC_CONFIG_FILES([Makefile src/Makefile po/Makefile.in])
-dnl AC_OUTPUT
+CATALOGS=ru.po
+AC_SUBST(CATALOGS)
 
 AC_OUTPUT([
 Makefile
