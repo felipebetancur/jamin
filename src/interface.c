@@ -536,7 +536,7 @@ create_window1 (void)
   GTK_WIDGET_SET_FLAGS (window1, GTK_CAN_FOCUS);
   gtk_window_set_title (GTK_WINDOW (window1), _("JAMin"));
   gtk_window_set_default_size (GTK_WINDOW (window1), 949, 680);
-  window1_icon_pixbuf = create_pixbuf ("LED_green_on.xpm");
+  window1_icon_pixbuf = create_pixbuf ("JAMin_icon.xpm");
   if (window1_icon_pixbuf)
     {
       gtk_window_set_icon (GTK_WINDOW (window1), window1_icon_pixbuf);

@@ -4,6 +4,7 @@ EXTRA_DIST = brushed-steel.png \
              play1.png \
              pause1.png \
              JAMin_splash.jpg \
+             JAMin_icon.xpm \
              LED_green_on.xpm \
              LED_green_off.xpm \
              LED_yellow.xpm \
