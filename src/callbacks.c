@@ -52,9 +52,10 @@ static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_low_comp_lbl,
 static GtkDrawingArea  *l_EQ_curve, *l_comp_curve[3];
 static GtkNotebook     *notebook1;
 static GdkDrawable     *EQ_drawable, *comp_drawable[3];
-static GdkColormap     *colormap;
-static GdkColor        white, grey, black, red, green, blue, yellow, 
-                       comp_color[4], EQ_back, EQ_fore;
+static GdkColormap     *colormap = NULL;
+static GdkColor        white, black, comp_color[4], EQ_back_color, 
+                       EQ_fore_color, EQ_spectrum_color, EQ_grid_color, 
+                       EQ_notch_color;
 static GdkGC           *EQ_gc, *comp_gc[3];
 static PangoContext    *comp_pc[3], *EQ_pc;
 static GtkAdjustment   *l_low2mid_adj;
@@ -380,6 +381,19 @@ on_label_High_realize                  (GtkWidget       *widget,
 }
 
 
+void set_color (GdkColor *color, unsigned short red, unsigned short green,
+                unsigned short blue)
+{
+    if (colormap == NULL) colormap = gdk_colormap_get_system ();
+
+    color->red = red;
+    color->green = green;
+    color->blue = blue;
+
+    gdk_colormap_alloc_color (colormap, color, FALSE, TRUE);
+}
+
+
 void
 on_window1_show                        (GtkWidget       *widget,
                                         gpointer         user_data)
@@ -389,67 +403,17 @@ on_window1_show                        (GtkWidget       *widget,
     on_mid2high_value_changed ((GtkRange *) l_mid2high, NULL);
 
 
-    colormap = gdk_colormap_get_system ();
-
-    white.red = 65535;
-    white.green = 65535;
-    white.blue = 65535;
-
-    gdk_colormap_alloc_color (colormap, &white, FALSE, TRUE);
-
-    black.red = 0;
-    black.green = 0;
-    black.blue = 0;
-
-    gdk_colormap_alloc_color (colormap, &black, FALSE, TRUE);
-
-    grey.red = 40000;
-    grey.green = 40000;
-    grey.blue = 40000;
-
-    gdk_colormap_alloc_color (colormap, &grey, FALSE, TRUE);
-
-    yellow.red = 65535;
-    yellow.green = 65535;
-    yellow.blue = 0;
-
-    gdk_colormap_alloc_color (colormap, &yellow, FALSE, TRUE);
-
-    red.red = 60000;
-    red.green = 0;
-    red.blue = 0;
-
-    gdk_colormap_alloc_color (colormap, &red, FALSE, TRUE);
-    comp_color[0] = red;
-
-    green.red = 0;
-    green.green = 50000;
-    green.blue = 0;
-
-    gdk_colormap_alloc_color (colormap, &green, FALSE, TRUE);
-    comp_color[1] = green;
-
-    blue.red = 0;
-    blue.green = 0;
-    blue.blue = 60000;
-
-    gdk_colormap_alloc_color (colormap, &blue, FALSE, TRUE);
-    comp_color[2] = blue;
-
-    comp_color[3] = black;
-
-
-    EQ_back.red = 0;
-    EQ_back.green = 21611;
-    EQ_back.blue = 0;
-
-    gdk_colormap_alloc_color (colormap, &EQ_back, FALSE, TRUE);
-
-    EQ_fore.red = 0;
-    EQ_fore.green = 65535;
-    EQ_fore.blue = 0;
-
-    gdk_colormap_alloc_color (colormap, &EQ_fore, FALSE, TRUE);
+    set_color (&white, 65535, 65535, 65535);
+    set_color (&black, 0, 0, 0);
+    set_color (&EQ_notch_color, 65535, 65535, 0);
+    set_color (&comp_color[0], 60000, 0, 0);
+    set_color (&comp_color[1], 0, 50000, 0);
+    set_color (&comp_color[2], 0, 0, 60000);
+    set_color (&comp_color[3], 0, 0, 0);
+    set_color (&EQ_back_color, 0, 21611, 0);
+    set_color (&EQ_fore_color, 65535, 65535, 65535);
+    set_color (&EQ_grid_color, 0, 36611, 0);
+    set_color (&EQ_spectrum_color, 32768, 32768, 32768);
 }
 
 
@@ -512,7 +476,7 @@ draw_EQ_spectrum_curve (float single_levels[])
       {
         /*  Plot the curve.  */
 
-        gdk_gc_set_foreground (EQ_gc, &grey);
+        gdk_gc_set_foreground (EQ_gc, &EQ_spectrum_color);
         gdk_gc_set_function (EQ_gc, GDK_XOR);
         gdk_gc_set_line_attributes (EQ_gc, 1, GDK_LINE_SOLID, GDK_CAP_BUTT,
                                     GDK_JOIN_MITER);
@@ -628,6 +592,11 @@ set_EQ ()
     /*  Set EQ coefficients based on the hand-drawn curve.  */
 
     geq_set_coefs (EQ_length, EQ_freq_xinterp, EQ_freq_yinterp);
+
+
+    /*  Set the graphic EQ sliders based on the hand-drawn curve.  */
+
+    geq_set_sliders (EQ_length, EQ_freq_xinterp, EQ_freq_yinterp);
 }
 
 
@@ -721,10 +690,9 @@ draw_EQ_curve ()
     /*  Clear the curve drawing area.  */
 
     EQ_cleared = 1;
-    gdk_gc_set_foreground (EQ_gc, &EQ_back);
+    gdk_gc_set_foreground (EQ_gc, &EQ_back_color);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, 0, 0, EQ_curve_width + 1, 
         EQ_curve_height + 1);
-    gdk_gc_set_foreground (EQ_gc, &EQ_fore);
 
 
     /*  Draw the grid lines.  */
@@ -732,8 +700,25 @@ draw_EQ_curve ()
     geq_get_freqs_and_gains (l_geq_freqs, l_geq_gains);
 
 
+    gdk_gc_set_foreground (EQ_gc, &EQ_grid_color);
+
+
+    /*  Box around the area.  */
+
+    gdk_gc_set_line_attributes (EQ_gc, 2, GDK_LINE_SOLID, GDK_CAP_BUTT,
+        GDK_JOIN_MITER);
+    gdk_draw_line (EQ_drawable, EQ_gc, 1, 1, 1, EQ_curve_height);
+    gdk_draw_line (EQ_drawable, EQ_gc, 1, EQ_curve_height, EQ_curve_width, 
+                   EQ_curve_height);
+    gdk_draw_line (EQ_drawable, EQ_gc, EQ_curve_width, EQ_curve_height, 
+                   EQ_curve_width, 1);
+    gdk_draw_line (EQ_drawable, EQ_gc, EQ_curve_width, 1, 1, 1);
+
+
     /*  Frequency lines on log scale in X.  */
 
+    gdk_gc_set_line_attributes (EQ_gc, 1, GDK_LINE_SOLID, GDK_CAP_BUTT,
+        GDK_JOIN_MITER);
     i = ((int) (l_geq_freqs[0] + 10.0) / 10) * 10;
     inc = 10;
     while (i < l_geq_freqs[EQ_BANDS - 1])
@@ -769,7 +754,7 @@ draw_EQ_curve ()
     gdk_gc_set_line_attributes (EQ_gc, 2, GDK_LINE_SOLID, GDK_CAP_BUTT,
         GDK_JOIN_MITER);
 
-    gdk_gc_set_foreground (EQ_gc, &red);
+    gdk_gc_set_foreground (EQ_gc, &comp_color[0]);
     freq2xpix (xover_fa, &x1);
     gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE,
@@ -787,7 +772,7 @@ draw_EQ_curve ()
     xover_handle_fa = x1;
 
 
-    gdk_gc_set_foreground (EQ_gc, &blue);
+    gdk_gc_set_foreground (EQ_gc, &comp_color[2]);
     freq2xpix (xover_fb, &x1);
     gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE,
@@ -855,7 +840,7 @@ draw_EQ_curve ()
 
     /*  Plot the curve.  */
 
-    gdk_gc_set_foreground (EQ_gc, &white);
+    gdk_gc_set_foreground (EQ_gc, &EQ_fore_color);
     for (i = 0 ; i < EQ_length ; i++)
       {
         logfreq2xpix (EQ_x_notched[i], &x1);
@@ -872,7 +857,7 @@ draw_EQ_curve ()
 
     for (i = 0 ; i < NOTCHES ; i++)
       {
-        gdk_gc_set_foreground (EQ_gc, &yellow);
+        gdk_gc_set_foreground (EQ_gc, &EQ_notch_color);
 
         logfreq2xpix (EQ_x_notched[EQ_notch_index[i]], &x1);
 
@@ -914,7 +899,7 @@ draw_EQ_curve ()
 
         if (i && i < NOTCHES - 1)
           {
-            gdk_gc_set_foreground (EQ_gc, &yellow);
+            gdk_gc_set_foreground (EQ_gc, &EQ_notch_color);
 
             x0 = EQ_notch_index[i] - EQ_notch_width[i];
 
@@ -936,7 +921,7 @@ draw_EQ_curve ()
             EQ_notch_handle[1][0][i] = y1;
 
 
-            gdk_gc_set_foreground (EQ_gc, &yellow);
+            gdk_gc_set_foreground (EQ_gc, &EQ_notch_color);
 
             x0 = EQ_notch_index[i] + EQ_notch_width[i];
 
@@ -1170,7 +1155,7 @@ on_EQ_curve_event_box_motion_notify_event
 
             if (!EQ_input_points || x > EQ_xinput[EQ_input_points - 1])
               {
-                gdk_gc_set_foreground (EQ_gc, &white);
+                gdk_gc_set_foreground (EQ_gc, &EQ_fore_color);
                 if (EQ_input_points) gdk_draw_line (EQ_drawable, EQ_gc, 
                     NINT (EQ_xinput[EQ_input_points - 1]), 
                     NINT (EQ_yinput[EQ_input_points - 1]), x, y);
@@ -1838,7 +1823,7 @@ set_EQ_curve_values (int id, float value)
     insert_notch ();
 
 
-    /*  Set the GEQ faders and the EQ coefs.  */
+    /*  Set the GEQ coefs and faders.  */
 
     set_EQ ();
 
@@ -2055,7 +2040,6 @@ draw_comp_curve (int i)
 
     gdk_window_clear_area (comp_drawable[i], 0, 0, comp_curve_width[i], 
         comp_curve_height[i]);
-    gdk_gc_set_foreground (comp_gc[i], &grey);
     gdk_gc_set_line_attributes (comp_gc[i], 1, GDK_LINE_SOLID, GDK_CAP_BUTT, 
         GDK_JOIN_MITER);
 
