@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: compressor-ui.c,v 1.27 2004/06/28 22:59:48 jdepner Exp $
+ *  $Id: compressor-ui.c,v 1.28 2004/09/08 13:44:03 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -139,13 +139,6 @@ void bind_compressors()
 	ma[i] = scale;
 
 	auto_gain[i] = 0;
-
-        prev_value_at[i] = -1.0;
-        prev_value_re[i] = -1.0;
-        prev_value_th[i] = 1.0;
-        prev_value_ra[i] = -1.0;
-        prev_value_kn[i] = -1.0;
-        prev_value_ma[i] = -1.0;
     }
 }
 
@@ -166,14 +159,7 @@ void at_changed(int id, float value)
 
   if (!suspend_gang && gang_at[i])
     {
-      if (prev_value_at[i] > 0.0)
-        {
-          diff = value - prev_value_at[i];
-        }
-      else
-        {
-          diff = 0.0;
-        }
+      diff = value - prev_value_at[i];
 
       for (j = 0 ; j < XO_BANDS ; j++)
         {
@@ -213,14 +199,7 @@ void re_changed(int id, float value)
 
   if (!suspend_gang && gang_re[i])
     {
-      if (prev_value_re[i] > 0.0)
-        {
-          diff = value - prev_value_re[i];
-        }
-      else
-        {
-          diff = 0.0;
-        }
+      diff = value - prev_value_re[i];
 
       for (j = 0 ; j < XO_BANDS ; j++)
         {
@@ -260,14 +239,7 @@ void th_changed(int id, float value)
 
   if (!suspend_gang && gang_th[i])
     {
-      if (prev_value_th[i] < 0.0)
-        {
-          diff = value - prev_value_th[i];
-        }
-      else
-        {
-          diff = 0.0;
-        }
+      diff = value - prev_value_th[i];
 
       for (j = 0 ; j < XO_BANDS ; j++)
         {
@@ -317,14 +289,7 @@ void ra_changed(int id, float value)
 
   if (!suspend_gang && gang_ra[i])
     {
-      if (prev_value_ra[i] > 0.0)
-        {
-          diff = value - prev_value_ra[i];
-        }
-      else
-        {
-          diff = 0.0;
-        }
+      diff = value - prev_value_ra[i];
 
       for (j = 0 ; j < XO_BANDS ; j++)
         {
@@ -374,14 +339,7 @@ void kn_changed(int id, float value)
 
   if (!suspend_gang && gang_kn[i])
     {
-      if (prev_value_kn[i] > 0.0)
-        {
-          diff = value - prev_value_kn[i];
-        }
-      else
-        {
-          diff = 0.0;
-        }
+      diff = value - prev_value_kn[i];
 
       for (j = 0 ; j < XO_BANDS ; j++)
         {
@@ -423,14 +381,7 @@ void ma_changed(int id, float value)
 
   if (!suspend_gang && gang_ma[i])
     {
-      if (prev_value_ma[i] > 0.0)
-        {
-          diff = value - prev_value_ma[i];
-        }
-      else
-        {
-          diff = 0.0;
-        }
+      diff = value - prev_value_ma[i];
 
       for (j = 0 ; j < XO_BANDS ; j++)
         {
@@ -581,7 +532,7 @@ void comp_gang_at (int band)
       gang_at[band] = FALSE;
       gtk_widget_modify_fg ((GtkWidget *) lab_at[band], GTK_STATE_NORMAL, 
                             get_color (TEXT_COLOR));
-      prev_value_at[band] = -1.0;
+      prev_value_at[band] = gtk_adjustment_get_value (adj_at[band]);
     }
   else
     {
@@ -598,7 +549,7 @@ void comp_gang_re (int band)
       gang_re[band] = FALSE;
       gtk_widget_modify_fg ((GtkWidget *) lab_re[band], GTK_STATE_NORMAL, 
                             get_color (TEXT_COLOR));
-      prev_value_re[band] = -1.0;
+      prev_value_re[band] = gtk_adjustment_get_value (adj_re[band]);
     }
   else
     {
@@ -615,7 +566,7 @@ void comp_gang_th (int band)
       gang_th[band] = FALSE;
       gtk_widget_modify_fg ((GtkWidget *) lab_th[band], GTK_STATE_NORMAL, 
                             get_color (TEXT_COLOR));
-      prev_value_th[band] = 1.0;
+      prev_value_th[band] = gtk_adjustment_get_value (adj_th[band]);
     }
   else
     {
@@ -632,7 +583,7 @@ void comp_gang_ra (int band)
       gang_ra[band] = FALSE;
       gtk_widget_modify_fg ((GtkWidget *) lab_ra[band], GTK_STATE_NORMAL, 
                             get_color (TEXT_COLOR));
-      prev_value_ra[band] = -1.0;
+      prev_value_ra[band] = gtk_adjustment_get_value (adj_ra[band]);
     }
   else
     {
@@ -648,7 +599,7 @@ void comp_gang_kn (int band)
       gang_kn[band] = FALSE;
       gtk_widget_modify_fg ((GtkWidget *) lab_kn[band], GTK_STATE_NORMAL, 
                             get_color (TEXT_COLOR));
-      prev_value_kn[band] = -1.0;
+      prev_value_kn[band] = gtk_adjustment_get_value (adj_kn[band]);
     }
   else
     {
@@ -665,7 +616,7 @@ void comp_gang_ma (int band)
       gang_ma[band] = FALSE;
       gtk_widget_modify_fg ((GtkWidget *) lab_ma[band], GTK_STATE_NORMAL, 
                             get_color (TEXT_COLOR));
-      prev_value_ma[band] = -1.0;
+      prev_value_ma[band] = gtk_adjustment_get_value (adj_ma[band]);
     }
   else
     {
