@@ -191,7 +191,7 @@ gtk_meter_realize (GtkWidget *widget)
 {
   GtkMeter *meter;
   GdkWindowAttr attributes;
-  GdkColor green, amber, red;
+  GdkColor green, amber, red, peak;
   gint attributes_mask;
 
   g_return_if_fail (widget != NULL);
@@ -227,8 +227,8 @@ gtk_meter_realize (GtkWidget *widget)
   gdk_gc_set_foreground(meter->green_gc, &green);
 
   meter->amber_gc = gdk_gc_new(widget->window);
-  amber.red = 60000;
-  amber.green = 60000;
+  amber.red = 50000;
+  amber.green = 55000;
   amber.blue = 0;
   gdk_colormap_alloc_color (attributes.colormap, &amber, FALSE, TRUE);
   gdk_gc_set_foreground(meter->amber_gc, &amber);
@@ -239,6 +239,13 @@ gtk_meter_realize (GtkWidget *widget)
   red.blue = 0;
   gdk_colormap_alloc_color (attributes.colormap, &red, FALSE, TRUE);
   gdk_gc_set_foreground(meter->red_gc, &red);
+
+  meter->peak_gc = gdk_gc_new(widget->window);
+  peak.red = 60000;
+  peak.green = 60000;
+  peak.blue = 0;
+  gdk_colormap_alloc_color (attributes.colormap, &peak, FALSE, TRUE);
+  gdk_gc_set_foreground(meter->peak_gc, &peak);
 }
 
 static void 
@@ -277,9 +284,9 @@ gtk_meter_expose (GtkWidget      *widget,
 		 GdkEventExpose *event)
 {
   GtkMeter *meter;
-  float val, frac;
+  float val, frac, peak_frac;
   int g_h, a_h, r_h;
-  int length = 0;
+  int length = 0, width = 0;
 
   g_return_val_if_fail (widget != NULL, FALSE);
   g_return_val_if_fail (GTK_IS_METER (widget), FALSE);
@@ -293,30 +300,43 @@ gtk_meter_expose (GtkWidget      *widget,
   switch (meter->direction) {
     case GTK_METER_UP:
     case GTK_METER_DOWN:
-      length = widget->allocation.height;
+      length = widget->allocation.height - 2;
+      width = widget->allocation.width - 2;
       break;
     case GTK_METER_LEFT:
     case GTK_METER_RIGHT:
-      length = widget->allocation.width;
+      length = widget->allocation.width - 2;
+      width = widget->allocation.height - 2;
       break;
   }
 
   val = iec_scale(meter->adjustment->value);
-  frac = (val - meter->iec_lower) / (meter->iec_upper - meter->iec_lower);
+  if (val > meter->peak) {
+    if (val > meter->iec_upper) {
+      meter->peak = meter->iec_upper;
+    } else {
+      meter->peak = val;
+    }
+  }
 
-  gdk_window_clear_area (widget->window,
-			 0, 0,
-			 widget->allocation.width,
-			 widget->allocation.height * (1.0 - frac));
+  frac = (val - meter->iec_lower) / (meter->iec_upper - meter->iec_lower);
+  peak_frac = (meter->peak - meter->iec_lower) / (meter->iec_upper -
+		  meter->iec_lower);
+
+  /* Draw the background */
+  gtk_paint_box (widget->style, widget->window, GTK_STATE_NORMAL,
+		  GTK_SHADOW_IN, NULL, widget, "trough", 0, 0,
+		  widget->allocation.width, widget->allocation.height);
+
 
   if (frac < meter->amber_frac) {
     g_h = frac * length;
-    a_h = 0;
-    r_h = 0;
+    a_h = g_h;
+    r_h = g_h;
   } else if (val <= 100.0f) {
     g_h = meter->amber_frac * length;
     a_h = frac * length;
-    r_h = 0;
+    r_h = a_h;
   } else {
     g_h = meter->amber_frac * length;
     a_h = length * (100.0f - meter->iec_lower) / (meter->iec_upper -
@@ -324,32 +344,52 @@ gtk_meter_expose (GtkWidget      *widget,
     r_h = frac * length;
   }
 
+  if (a_h > length) {
+    a_h = length;
+  }
+  if (r_h > length) {
+    r_h = length;
+  }
+
   switch (meter->direction) {
+    case GTK_METER_LEFT:
+      gdk_draw_rectangle (widget->window, meter->amber_gc, TRUE, a_h +
+		      1, 1, length - a_h, width);
+      /*
+      gdk_draw_rectangle (widget->window, meter->peak_gc, TRUE, length *
+		      (1.0 - peak_frac) + 1, 1, 1, width);
+		      */
+      break;
+
     case GTK_METER_RIGHT:
       gdk_draw_rectangle (widget->window, meter->green_gc, TRUE, 1, 1,
-		      g_h, widget->allocation.height - 2);
+		      g_h, width);
       if (a_h > g_h) {
 	gdk_draw_rectangle (widget->window, meter->amber_gc, TRUE, 1+g_h, 1,
-			a_h, widget->allocation.height - 2);
+			a_h - g_h, width);
       }
       if (r_h > a_h) {
 	gdk_draw_rectangle (widget->window, meter->red_gc, TRUE, 1+a_h, 1,
-			r_h, widget->allocation.height - 2);
+			r_h - a_h, width);
       }
+      gdk_draw_rectangle (widget->window, meter->peak_gc, TRUE, length *
+		      peak_frac, 1, 1, width);
       break;
 
     case GTK_METER_UP:
     default:
       gdk_draw_rectangle (widget->window, meter->green_gc, TRUE, 1, length -
-		      g_h, widget->allocation.width - 2, g_h - 1);
+		      g_h + 1, width, g_h);
       if (a_h > g_h) {
 	gdk_draw_rectangle (widget->window, meter->amber_gc, TRUE, 1, length -
-			a_h, widget->allocation.width - 2, a_h - g_h);
+			a_h + 1, width, a_h - g_h);
       }
       if (r_h > a_h) {
 	gdk_draw_rectangle (widget->window, meter->red_gc, TRUE, 1, length -
-			r_h, widget->allocation.width - 2, r_h - a_h);
+			r_h + 1, width, r_h - a_h);
       }
+      gdk_draw_rectangle (widget->window, meter->peak_gc, TRUE, 1, length *
+		      (1.0f - peak_frac) + 1, width, 1);
       break;
   }
   
@@ -392,20 +432,23 @@ gtk_meter_adjustment_changed (GtkAdjustment *adjustment,
 
   meter = GTK_METER (data);
 
-  if ((meter->old_value != adjustment->value) ||
-      (meter->old_lower != adjustment->lower) ||
+  if ((meter->old_lower != adjustment->lower) ||
       (meter->old_upper != adjustment->upper))
     {
       meter->iec_lower = iec_scale(adjustment->lower);
       meter->iec_upper = iec_scale(adjustment->upper);
-      meter->amber_frac = (iec_scale(meter->amber_level) - meter->iec_lower) /
-			    (meter->iec_upper - meter->iec_lower);
+
+      gtk_meter_set_warn_point(meter, meter->amber_level);
 
       gtk_meter_update (meter);
 
       meter->old_value = adjustment->value;
       meter->old_lower = adjustment->lower;
       meter->old_upper = adjustment->upper;
+    } else if (meter->old_value != adjustment->value) {
+      gtk_meter_update (meter);
+
+      meter->old_value = adjustment->value;
     }
 }
 
@@ -449,4 +492,22 @@ static float iec_scale(float db)
     }
 
     return def;
+}
+
+void gtk_meter_reset_peak(GtkMeter *meter)
+{
+    meter->peak = 0.0f;
+}
+
+void gtk_meter_set_warn_point(GtkMeter *meter, gfloat pt)
+{
+    meter->amber_level = pt;
+    if (meter->direction == GTK_METER_LEFT || meter->direction ==
+		    GTK_METER_DOWN) {
+	meter->amber_frac = 1.0f - (iec_scale(meter->amber_level) -
+		meter->iec_lower) / (meter->iec_upper - meter->iec_lower);
+    } else {
+        meter->amber_frac = (iec_scale(meter->amber_level) - meter->iec_lower) /
+		(meter->iec_upper - meter->iec_lower);
+    }
 }

@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <math.h>
+#include <string.h>
 #include <gtk/gtk.h>
 
 #include "callbacks.h"
@@ -35,7 +36,7 @@ static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_low_comp_lbl,
 static GtkDrawingArea  *l_EQ_curve, *l_comp_curve[3];
 static GdkDrawable     *EQ_drawable, *comp_drawable[3];
 static GdkColormap     *colormap;
-static GdkColor        white, black, red, green, blue, comp_color[4];
+static GdkColor        white, grey, black, red, green, blue, comp_color[4];
 static GdkGC           *EQ_gc, *comp_gc[3];
 static PangoContext    *comp_pc[3];
 static GtkAdjustment   *l_low2mid_adj, *l_eqb1_adj;
@@ -312,7 +313,13 @@ on_window1_show                        (GtkWidget       *widget,
 
     gdk_colormap_alloc_color (colormap, &black, FALSE, TRUE);
 
-    red.red = 65535;
+    grey.red = 40000;
+    grey.green = 40000;
+    grey.blue = 40000;
+
+    gdk_colormap_alloc_color (colormap, &grey, FALSE, TRUE);
+
+    red.red = 60000;
     red.green = 0;
     red.blue = 0;
 
@@ -320,7 +327,7 @@ on_window1_show                        (GtkWidget       *widget,
     comp_color[0] = red;
 
     green.red = 0;
-    green.green = 65535;
+    green.green = 50000;
     green.blue = 0;
 
     gdk_colormap_alloc_color (colormap, &green, FALSE, TRUE);
@@ -328,7 +335,7 @@ on_window1_show                        (GtkWidget       *widget,
 
     blue.red = 0;
     blue.green = 0;
-    blue.blue = 65535;
+    blue.blue = 60000;
 
     gdk_colormap_alloc_color (colormap, &blue, FALSE, TRUE);
     comp_color[2] = blue;
@@ -875,7 +882,7 @@ void
 on_out_trim_scale_value_changed        (GtkRange        *range,
                                         gpointer         user_data)
 {
-    limiter.attenuation = gtk_range_get_adjustment(range)->value;
+    limiter.limit = gtk_range_get_adjustment(range)->value;
 }
 
 
@@ -914,10 +921,12 @@ void comp_write_annotation (int i, char string[20])
     pl = pango_layout_new (comp_pc[i]);  
     pango_layout_set_text (pl, "-99 , -99", -1);
     pango_layout_get_pixel_extents (pl, &ink_rect, NULL);
-
+/*
     gdk_gc_set_foreground (comp_gc[i], &white);
     gdk_draw_rectangle (comp_drawable[i], comp_gc[i], TRUE, 3, 3, 
-        ink_rect.width + 5, ink_rect.height + 5);
+        ink_rect.width + 5, ink_rect.height + 5); */
+    gdk_window_clear_area (comp_drawable[i], 3, 3, ink_rect.width + 5,
+		    ink_rect.height + 5);
     gdk_gc_set_foreground (comp_gc[i], &black);
 
     pl = pango_layout_new (comp_pc[i]);  
@@ -941,10 +950,11 @@ draw_comp_curve (int i)
 
     /*  Clear the curve drawing area.  */
 
-    gdk_gc_set_foreground (comp_gc[i], &white);
+/*    gdk_gc_set_foreground (comp_gc[i], &white);
     gdk_draw_rectangle (comp_drawable[i], comp_gc[i], TRUE, 0, 0, 
-        comp_curve_width[i], comp_curve_height[i]);
-    gdk_gc_set_foreground (comp_gc[i], &black);
+        comp_curve_width[i], comp_curve_height[i]); */
+    gdk_window_clear_area (comp_drawable[i], 0, 0, comp_curve_width[i], comp_curve_height[i]);
+    gdk_gc_set_foreground (comp_gc[i], &grey);
     gdk_gc_set_line_attributes (comp_gc[i], 1, GDK_LINE_SOLID, GDK_CAP_BUTT, 
         GDK_JOIN_MITER);
 
@@ -986,7 +996,7 @@ draw_comp_curve (int i)
           }
       }
 
-    comp_write_annotation (i, " ");
+    //comp_write_annotation (i, " ");
 
 
     /*  Plot the curves.  */
@@ -1175,7 +1185,8 @@ on_low_curve_box_leave_notify_event    (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    comp_write_annotation (0, " ");
+    //comp_write_annotation (0, " ");
+    draw_comp_curve (0);
 
     gtk_widget_modify_fg ((GtkWidget *) l_low_comp_lbl, GTK_STATE_NORMAL, 
         &comp_color[3]);
@@ -1191,7 +1202,8 @@ on_mid_curve_box_leave_notify_event    (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    comp_write_annotation (1, " ");
+    //comp_write_annotation (1, " ");
+    draw_comp_curve (1);
 
     gtk_widget_modify_fg ((GtkWidget *) l_mid_comp_lbl, GTK_STATE_NORMAL, 
          &comp_color[3]);
@@ -1207,7 +1219,8 @@ on_high_curve_box_leave_notify_event   (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-    comp_write_annotation (2, " ");
+    //comp_write_annotation (2, " ");
+    draw_comp_curve (2);
 
     gtk_widget_modify_fg ((GtkWidget *) l_high_comp_lbl, GTK_STATE_NORMAL,
         &comp_color[3]);
@@ -1376,8 +1389,10 @@ GtkWidget*
 make_meter (gchar *widget_name, gchar *string1, gchar *string2,
                 gint int1, gint int2)
 {
+    GtkWidget *ret;
     gint dir = GTK_METER_UP;
-    GtkAdjustment *adjustment = (GtkAdjustment*) gtk_adjustment_new (0.0, (float)int1, (float)int2, 0.0, 0.0, 0.0);
+    GtkAdjustment *adjustment = (GtkAdjustment*) gtk_adjustment_new (0.0,
+		    (float)int1, (float)int2, 0.0, 0.0, 0.0);
 
     if (!string1 || !strcmp(string1, "up")) {
         dir = GTK_METER_UP;
@@ -1389,5 +1404,31 @@ make_meter (gchar *widget_name, gchar *string1, gchar *string2,
 	dir = GTK_METER_RIGHT;
     }
 
-    return gtk_meter_new(adjustment, dir);
+    ret = gtk_meter_new(adjustment, dir);
+    gtk_object_ref(GTK_OBJECT(ret));
+
+    return ret;
+}
+
+void
+on_autoutton1_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+    comp_set_auto(0, gtk_toggle_button_get_active(togglebutton));
+}
+
+
+void
+on_autoutton2_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+    comp_set_auto(1, gtk_toggle_button_get_active(togglebutton));
+}
+
+
+void
+on_autoutton3_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+    comp_set_auto(2, gtk_toggle_button_get_active(togglebutton));
 }

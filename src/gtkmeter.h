@@ -51,10 +51,16 @@ struct _GtkMeter
   /* Button currently pressed or 0 if none */
   guint8 button;
 
+  /* Amber dB and deflection points */
   gfloat amber_level;
   gfloat amber_frac;
+
+  /* Deflection limits */
   gfloat iec_lower;
   gfloat iec_upper;
+
+  /* Peak deflection */
+  gfloat peak;
 
   /* ID of update timer, or 0 if none */
   guint32 timer;
@@ -67,6 +73,7 @@ struct _GtkMeter
   GdkGC *green_gc;
   GdkGC *amber_gc;
   GdkGC *red_gc;
+  GdkGC *peak_gc;
 
   /* The adjustment object that stores the data for this meter */
   GtkAdjustment *adjustment;
@@ -86,6 +93,12 @@ GtkAdjustment* gtk_meter_get_adjustment         (GtkMeter     *meter);
 
 void           gtk_meter_set_adjustment         (GtkMeter     *meter,
 						 GtkAdjustment *adjustment);
+
+void	       gtk_meter_reset_peak		(GtkMeter     *meter);
+
+void           gtk_meter_set_warn_point         (GtkMeter *meter,
+						 gfloat pt);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

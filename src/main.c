@@ -84,6 +84,8 @@ gboolean update_meters(gpointer data)
     out_meter_value(out_peak);
     limiter_meters_update();
     compressor_meters_update();
+
+    return TRUE;
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

@@ -19,15 +19,15 @@ float in_pan_gain[2] = {1.0f, 1.0f};
 
 void bind_intrim()
 {
-    in_meter[0] = lookup_widget(main_window, "inmeter_l");
-    in_meter[1] = lookup_widget(main_window, "inmeter_r");
+    in_meter[0] = GTK_METER(lookup_widget(main_window, "inmeter_l"));
+    in_meter[1] = GTK_METER(lookup_widget(main_window, "inmeter_r"));
     in_meter_adj[0] = gtk_meter_get_adjustment(in_meter[0]);
     in_meter_adj[1] = gtk_meter_get_adjustment(in_meter[1]);
     gtk_adjustment_set_value(in_meter_adj[0], -60.0);
     gtk_adjustment_set_value(in_meter_adj[1], -60.0);
 
-    out_meter[0] = lookup_widget(main_window, "outmeter_l");
-    out_meter[1] = lookup_widget(main_window, "outmeter_r");
+    out_meter[0] = GTK_METER(lookup_widget(main_window, "outmeter_l"));
+    out_meter[1] = GTK_METER(lookup_widget(main_window, "outmeter_r"));
     out_meter_adj[0] = gtk_meter_get_adjustment(out_meter[0]);
     out_meter_adj[1] = gtk_meter_get_adjustment(out_meter[1]);
     gtk_adjustment_set_value(out_meter_adj[0], -60.0);
