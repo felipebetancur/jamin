@@ -91,7 +91,7 @@
 #include "help.h"
 #include "support.h"
 
-char *jamin_options = "dFf:n:hprTtvVs:c:i";   /* valid JAMin options */
+char *jamin_options = "dFf:j:n:hprTtvVs:c:i";   /* valid JAMin options */
 char *pname;				      /* `basename $0` */
 int dummy_mode = 0;			      /* -d option */
 int all_errors_fatal = 0;		      /* -F option */
@@ -134,6 +134,7 @@ static jack_ringbuffer_t *out_rb[NCHANNELS]; /* output channel buffers */
 io_jack_status_t jst = {0};		/* current JACK status */
 jack_client_t *client;			/* JACK client structure */
 char *client_name = NULL;		/* JACK client name (in heap) */
+char *server_name = NULL;		/* JACK server name (in heap) */
 int nchannels = NCHANNELS;		/* actual number of channels */
 
 /* These arrays are NULL-terminated... */
@@ -598,6 +599,16 @@ int io_bufsize(jack_nframes_t nframes, void *arg)
 }
 
 
+/* io_free_heap -- free heap entry, if allocated. */
+static inline void io_free_heap(char **p)
+{
+    if (*p) {				/* space allocated? */
+	free(*p);
+	*p = NULL;			/* mark space freed */
+    }
+}
+
+
 /* io_cleanup -- clean up all DSP I/O resources.
  *
  *  Called in main user interface thread after user requests "quit",
@@ -641,18 +652,15 @@ void io_cleanup()
     };	
 
     if (DSP_STATE_IS(DSP_STOPPING)) {
-	jack_client_t *client_save = client;
 
 	/* MUST stop using JACK services before jack_client_close() */
+	jack_client_t *client_save = client;
 	client = NULL;
-	if (client_name) {
-	    char *p = client_name;	/* memory to free */
-	    client_name = NULL;		/* stop using the name */
-	    free(p);
-	}
 	jst.active = 0;
 	io_new_state(DSP_STOPPED);
 	jack_client_close(client_save);	/* leave the jack graph */
+	io_free_heap(&client_name);
+	io_free_heap(&server_name);
 
 	/* free the ring buffers */
 	for (chan = 0; chan < nchannels; chan++) {
@@ -711,9 +719,15 @@ jack_client_t *io_jack_open()
 #ifdef HAVE_JACK_CLIENT_OPEN
     jack_status_t status;
 
-    client = jack_client_open(client_name, JackNullOption, &status);
+    if (server_name) {
+	    client = jack_client_open(client_name, JackServerName,
+				      &status, server_name);
+    } else {
+	    client = jack_client_open(client_name, JackNullOption, &status);
+    }
+
     if (client == NULL) {
-	fprintf(stderr, _("%s: jack_client_open() failed, status = %d\n"),
+	fprintf(stderr, _("%s: jack_client_open() failed, status = 0x%2.0x\n"),
 		PACKAGE, status);
 	return NULL;
     }
@@ -777,6 +791,9 @@ void io_init(int argc, char *argv[])
 		s_set_filename(session_file);
 	    }
             break;
+	case 'j':			/* Set JACK server name */
+	    server_name = strdup(optarg);
+	    break;
 	case 'n':			/* Set JACK client name */
 	    client_name = strdup(optarg);
 	    break;
@@ -845,18 +862,19 @@ void io_init(int argc, char *argv[])
                 "\nuser options:\n"
                 "\t-f file\tload session file on startup\n"
                 "\t-h\tshow this help\n"
-                "\t-n name\tset JACK client name\n"
+                "\t-j name\tJACK server name\n"
+                "\t-n name\tJACK client name\n"
                 "\t-s freq\tset spectrum update frequency\n"
-                "\t-c time\tset crossfade time\n"
+                "\t-c time\tcrossfade time\n"
                 "\t-r\tuse example GTK resource file\n"
-                "\t-p\tdon't automatically connect JACK output ports\n"
+                "\t-p\tdo not automatically connect JACK output ports\n"
                 "\t-v\tverbose output (use -vv... for more detail)\n"
-                "\t-V\tprint version and quit\n"
+                "\t-V\tprint JAMin version and quit\n"
                 "\ndeveloper options:\n"
-                "\t-d\tdummy mode (don't connect to jackd)\n"
+                "\t-d\tdummy mode (don't connect to JACK)\n"
                 "\t-F\ttreat all errors as fatal\n"
                 "\t-T\tprint trace buffer\n"
-                "\t-t\tdon't start DSP thread\n"
+                "\t-t\tdon't start separate DSP thread\n"
                 "\n"),
 		pname, jamin_options);
 	exit(1);

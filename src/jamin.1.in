@@ -1,4 +1,4 @@
-.TH JAMIN "1" @VERSION@ "October 2004" "Audio"
+.TH JAMIN "1" @VERSION@ "December 2004" "Audio"
 .SH "NAME"
 jamin \- JACK Audio Mastering interface
 
@@ -33,6 +33,11 @@ else uses some system-provided default settings.
 .br 
 Print a brief usage message describing the main \fBjamin\fR options,
 including some developer options not intended for normal users.
+.TP 
+\fB\-j\fR \fIservername\fR
+.br 
+Connect to JACK server \fIservername\fR.  Otherwise, use the default
+server.
 .TP 
 \fB\-n\fR \fIclientname\fR
 .br 

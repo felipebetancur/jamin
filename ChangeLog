@@ -1,3 +1,7 @@
+2004-12-15  Jack O'Quin  <joq@io.com>
+
+	* added -j servername option to select JACK server
+
 2004-12-06  Steve Harris  <steve@plugin.org.uk>
 
 	* jam_ui.glade: changed packing of about dialogue so that the logo
