@@ -57,15 +57,7 @@
 #
 #}
 
-style "maori"
-{
-  #This sets the padding around the window to the pixmap specified.
-  #bg_pixmap[<STATE>] = "<pixmap filename>"
-   bg_pixmap[NORMAL] = "maori.xpm"
-  
-}
-
-style "brushed steel"
+style "steel"
 {
   #This sets the padding around the window to the pixmap specified.
   #bg_pixmap[<STATE>] = "<pixmap filename>"
@@ -73,6 +65,13 @@ style "brushed steel"
 
 }
 
+style "thai-gold"
+{
+  #This sets the padding around the window to the pixmap specified.
+  #bg_pixmap[<STATE>] = "<pixmap filename>"
+   bg_pixmap[NORMAL] = "thai-gold.png"
+
+}
 
 style "scale"
 {
@@ -149,16 +148,18 @@ style "ruler"
 # Only need to change these next two to get a different bg color
 
 # main window colors
-widget_class "GtkWindow" style "brushed steel"
+widget_class "GtkWindow" style "steel"
 
 # comps and limiter colors
-widget_class "*Gtk*Box" style "brushed steel"
+widget_class "*Gtk*Box" style "steel"
 
 #widget_class "GtkDialog" style "gold"
 #widget_class "GtkFileSelection" style "gold"
 
+# fader colors
+widget_class "*Gtk*Scale" style "thai-gold"
+
 widget_class "*Gtk*Label" style "text"
-widget_class "*Gtk*Scale" style "scale"
 widget_class "*GtkCheckButton*" style "toggle_button"
 widget_class "*GtkRadioButton*" style "toggle_button"
 widget_class "*GtkButton*" style "button"
