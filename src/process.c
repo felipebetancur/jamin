@@ -177,10 +177,8 @@ void run_eq(unsigned int port, unsigned int in_ptr)
     memset(comp_tmp, 0, BINS * sizeof(float));
     targ_bin = xover_fb / sample_rate * (float) (BINS * 2);
     for (; i < targ_bin && i < BINS / 2 - 1; i++) {
-	//XXX comp_tmp[i] = comp[i] * eq_coefs[i];
-	//comp_tmp[BINS - i] = comp[BINS - i] * eq_coefs[i];
-	comp_tmp[i] = comp[i] * 0.0f;
-	comp_tmp[BINS - i] = comp[BINS - i] * 0.0f;
+	comp_tmp[i] = comp[i] * eq_coefs[i];
+	comp_tmp[BINS - i] = comp[BINS - i] * eq_coefs[i];
 	amp[bands[i]] += sqrtf(comp[i] * comp[i] + comp[BINS - i] *
 			      comp[BINS - i]) * gain_fix[bands[i]];
     }

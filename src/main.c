@@ -7,6 +7,12 @@
 #  include <config.h>
 #endif
 
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <gtk/gtk.h>
 
 #include "interface.h"
@@ -23,6 +29,8 @@ void cleanup();
 
 int main(int argc, char *argv[])
 {
+    char rcfile[256];
+    int fd;
 
 #ifdef ENABLE_NLS
     bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
@@ -30,7 +38,14 @@ int main(int argc, char *argv[])
     textdomain(GETTEXT_PACKAGE);
 #endif
 
-    gtk_rc_parse("/root/.jamrc");
+    /* look for the rcfile, if its there parse it */
+    snprintf(rcfile, 255, "%s/%s", getenv("HOME"), ".jamrc");
+    if ((fd = open(rcfile, O_RDONLY))) {
+	close(fd);
+	printf("Using jamrc file: %s\n", rcfile);
+	gtk_rc_parse("/root/.jamrc");
+    }
+
     gtk_set_locale();
     gtk_init(&argc, &argv);
     backend_init(argc, argv);
@@ -59,3 +74,5 @@ gboolean update_meters(gpointer data)
 {
     in_meter_value(in_peak);
 }
+
+/* vi:set ts=8 sts=4 sw=4: */

@@ -67,8 +67,9 @@
 			      <property name="spacing">0</property>
 
 			      <child>
-				<widget class="GtkVBox" id="vbox24-2">
-				  <property name="width_request">2</property>
+				<widget class="GtkVBox" id="input-vbox">
+				  <property name="width_request">40</property>
+				  <property name="height_request">246</property>
 				  <property name="visible">True</property>
 				  <property name="homogeneous">False</property>
 				  <property name="spacing">0</property>
@@ -82,7 +83,8 @@
 
 				      <child>
 					<widget class="GtkVScale" id="in_trim_scale">
-					  <property name="width_request">20</property>
+					  <property name="width_request">30</property>
+					  <property name="height_request">220</property>
 					  <property name="visible">True</property>
 					  <property name="can_focus">True</property>
 					  <property name="draw_value">True</property>
@@ -107,28 +109,23 @@
 					  <property name="orientation">GTK_PROGRESS_BOTTOM_TO_TOP</property>
 					  <property name="fraction">0</property>
 					  <property name="pulse_step">0.1</property>
-					  <property name="activity_mode">False</property>
-					  <property name="show_text">False</property>
-					  <property name="text_xalign">0.5</property>
-					  <property name="text_yalign">0.5</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
 					  <property name="expand">True</property>
-					  <property name="fill">False</property>
+					  <property name="fill">True</property>
 					</packing>
 				      </child>
 				    </widget>
 				    <packing>
 				      <property name="padding">5</property>
-				      <property name="expand">True</property>
+				      <property name="expand">False</property>
 				      <property name="fill">True</property>
 				    </packing>
 				  </child>
 
 				  <child>
 				    <widget class="GtkLabel" id="label61">
-				      <property name="width_request">2</property>
 				      <property name="visible">True</property>
 				      <property name="label" translatable="yes">Input</property>
 				      <property name="use_underline">False</property>
@@ -143,14 +140,14 @@
 				    </widget>
 				    <packing>
 				      <property name="padding">0</property>
-				      <property name="expand">False</property>
-				      <property name="fill">False</property>
+				      <property name="expand">True</property>
+				      <property name="fill">True</property>
 				    </packing>
 				  </child>
 				</widget>
 				<packing>
-				  <property name="padding">1</property>
-				  <property name="expand">True</property>
+				  <property name="padding">0</property>
+				  <property name="expand">False</property>
 				  <property name="fill">True</property>
 				</packing>
 			      </child>
@@ -171,8 +168,6 @@
 				      <property name="show_border">True</property>
 				      <property name="tab_pos">GTK_POS_TOP</property>
 				      <property name="scrollable">False</property>
-				      <property name="tab_hborder">2</property>
-				      <property name="tab_vborder">2</property>
 				      <property name="enable_popup">False</property>
 
 				      <child>
@@ -182,12 +177,15 @@
 					  <property name="spacing">0</property>
 
 					  <child>
+					    <placeholder/>
+					  </child>
+
+					  <child>
 					    <widget class="GtkEventBox" id="eventbox2">
 					      <property name="visible">True</property>
 
 					      <child>
 						<widget class="GtkHBox" id="eqb-hbox">
-						  <property name="border_width">1</property>
 						  <property name="visible">True</property>
 						  <property name="homogeneous">True</property>
 						  <property name="spacing">0</property>
@@ -212,7 +210,7 @@
 							      <property name="digits">0</property>
 							      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							      <property name="inverted">True</property>
-							      <property name="adjustment">0 -70 24 1 6 0</property>
+							      <property name="adjustment">-0 -70 24 1 6 0</property>
 							    </widget>
 							  </child>
 							</widget>
@@ -4581,10 +4579,6 @@
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
-						  <property name="activity_mode">False</property>
-						  <property name="show_text">False</property>
-						  <property name="text_xalign">0.5</property>
-						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -4654,10 +4648,6 @@
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
-						  <property name="activity_mode">False</property>
-						  <property name="show_text">False</property>
-						  <property name="text_xalign">0.5</property>
-						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -5042,10 +5032,6 @@
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
-						  <property name="activity_mode">False</property>
-						  <property name="show_text">False</property>
-						  <property name="text_xalign">0.5</property>
-						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -5115,10 +5101,6 @@
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
-						  <property name="activity_mode">False</property>
-						  <property name="show_text">False</property>
-						  <property name="text_xalign">0.5</property>
-						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -5503,10 +5485,6 @@
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
-						  <property name="activity_mode">False</property>
-						  <property name="show_text">False</property>
-						  <property name="text_xalign">0.5</property>
-						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -5576,10 +5554,6 @@
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
-						  <property name="activity_mode">False</property>
-						  <property name="show_text">False</property>
-						  <property name="text_xalign">0.5</property>
-						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -5851,10 +5825,6 @@
 								      <property name="orientation">GTK_PROGRESS_BOTTOM_TO_TOP</property>
 								      <property name="fraction">0</property>
 								      <property name="pulse_step">0.1</property>
-								      <property name="activity_mode">False</property>
-								      <property name="show_text">False</property>
-								      <property name="text_xalign">0.5</property>
-								      <property name="text_yalign">0.5</property>
 								    </widget>
 								    <packing>
 								      <property name="padding">0</property>
@@ -5999,10 +5969,6 @@
 								      <property name="orientation">GTK_PROGRESS_BOTTOM_TO_TOP</property>
 								      <property name="fraction">0</property>
 								      <property name="pulse_step">0.1</property>
-								      <property name="activity_mode">False</property>
-								      <property name="show_text">False</property>
-								      <property name="text_xalign">0.5</property>
-								      <property name="text_yalign">0.5</property>
 								    </widget>
 								    <packing>
 								      <property name="padding">5</property>

@@ -41,7 +41,7 @@ void bind_geq()
     for (i=0; i<EQ_BANDS; i++) {
 	sprintf(name, "eqb%d", i+1);
 	scale = lookup_widget(main_window, name);
-	snprintf(tip, 255, "%.0f Hz", floor(geq_freqs[i] + 0.5));
+	snprintf(tip, 255, "%'.0f Hz", floor(geq_freqs[i] + 0.5));
 	gtk_tooltips_set_tip(tooltips, scale, tip, NULL);
 	geqa[i] = gtk_range_get_adjustment(GTK_RANGE(scale));
 	gtk_signal_connect(geqa[i], "value-changed", GTK_SIGNAL_FUNC(eqb_changed), (gpointer)i+1);
