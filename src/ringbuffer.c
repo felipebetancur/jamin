@@ -20,6 +20,13 @@
   This is safe for the case of one read thread and one write thread.
 */
 
+/*
+ * This entire module is a fallback for use when running with an older
+ * version of JACK without ringbuffer support built-in.
+ */
+#include <config.h>
+#ifndef HAVE_JACK_RINGBUFFER
+
 #include <stdlib.h>
 #include <string.h>
 #include <sys/mman.h>
@@ -28,13 +35,13 @@
 /* Create a new ringbuffer to hold at least `sz' bytes of data. The
    actual buffer size is rounded up to the next power of two.  */
 
-ringbuffer_t *
-ringbuffer_create (int sz)
+jack_ringbuffer_t *
+jack_ringbuffer_create (size_t sz)
 {
   int power_of_two;
-  ringbuffer_t *rb;
+  jack_ringbuffer_t *rb;
 
-  rb = malloc (sizeof (ringbuffer_t));
+  rb = malloc (sizeof (jack_ringbuffer_t));
 
   for (power_of_two = 1; 1 << power_of_two < sz; power_of_two++);
 
@@ -52,7 +59,7 @@ ringbuffer_create (int sz)
 /* Free all data associated with the ringbuffer `rb'. */
 
 void
-ringbuffer_free (ringbuffer_t * rb)
+jack_ringbuffer_free (jack_ringbuffer_t * rb)
 {
   if (rb->mlocked) {
     munlock (rb->buf, rb->size);
@@ -63,7 +70,7 @@ ringbuffer_free (ringbuffer_t * rb)
 /* Lock the data block of `rb' using the system call 'mlock'.  */
 
 int
-ringbuffer_mlock (ringbuffer_t * rb)
+jack_ringbuffer_mlock (jack_ringbuffer_t * rb)
 {
   if (mlock (rb->buf, rb->size)) {
     return -1;
@@ -76,7 +83,7 @@ ringbuffer_mlock (ringbuffer_t * rb)
    safe. */
 
 void
-ringbuffer_reset (ringbuffer_t * rb)
+jack_ringbuffer_reset (jack_ringbuffer_t * rb)
 {
   rb->read_ptr = 0;
   rb->write_ptr = 0;
@@ -87,7 +94,7 @@ ringbuffer_reset (ringbuffer_t * rb)
    pointer.  */
 
 size_t
-ringbuffer_read_space (ringbuffer_t * rb)
+jack_ringbuffer_read_space (const jack_ringbuffer_t * rb)
 {
   size_t w, r;
 
@@ -106,7 +113,7 @@ ringbuffer_read_space (ringbuffer_t * rb)
    pointer.  */
 
 size_t
-ringbuffer_write_space (ringbuffer_t * rb)
+jack_ringbuffer_write_space (const jack_ringbuffer_t * rb)
 {
   size_t w, r;
 
@@ -126,14 +133,14 @@ ringbuffer_write_space (ringbuffer_t * rb)
    `dest'.  Returns the actual number of bytes copied. */
 
 size_t
-ringbuffer_read (ringbuffer_t * rb, char *dest, size_t cnt)
+jack_ringbuffer_read (jack_ringbuffer_t * rb, char *dest, size_t cnt)
 {
   size_t free_cnt;
   size_t cnt2;
   size_t to_read;
   size_t n1, n2;
 
-  if ((free_cnt = ringbuffer_read_space (rb)) == 0) {
+  if ((free_cnt = jack_ringbuffer_read_space (rb)) == 0) {
     return 0;
   }
 
@@ -166,14 +173,14 @@ ringbuffer_read (ringbuffer_t * rb, char *dest, size_t cnt)
    `src'.  Returns the actual number of bytes copied. */
 
 size_t
-ringbuffer_write (ringbuffer_t * rb, char *src, size_t cnt)
+jack_ringbuffer_write (jack_ringbuffer_t * rb, const char *src, size_t cnt)
 {
   size_t free_cnt;
   size_t cnt2;
   size_t to_write;
   size_t n1, n2;
 
-  if ((free_cnt = ringbuffer_write_space (rb)) == 0) {
+  if ((free_cnt = jack_ringbuffer_write_space (rb)) == 0) {
     return 0;
   }
 
@@ -205,7 +212,7 @@ ringbuffer_write (ringbuffer_t * rb, char *src, size_t cnt)
 /* Advance the read pointer `cnt' places. */
 
 void
-ringbuffer_read_advance (ringbuffer_t * rb, size_t cnt)
+jack_ringbuffer_read_advance (jack_ringbuffer_t * rb, size_t cnt)
 {
   rb->read_ptr += cnt;
   rb->read_ptr &= rb->size_mask;
@@ -214,7 +221,7 @@ ringbuffer_read_advance (ringbuffer_t * rb, size_t cnt)
 /* Advance the write pointer `cnt' places. */
 
 void
-ringbuffer_write_advance (ringbuffer_t * rb, size_t cnt)
+jack_ringbuffer_write_advance (jack_ringbuffer_t * rb, size_t cnt)
 {
   rb->write_ptr += cnt;
   rb->write_ptr &= rb->size_mask;
@@ -226,8 +233,8 @@ ringbuffer_write_advance (ringbuffer_t * rb, size_t cnt)
    length.  */
 
 void
-ringbuffer_get_read_vector (ringbuffer_t * rb,
-			    ringbuffer_data_t * vec)
+jack_ringbuffer_get_read_vector (const jack_ringbuffer_t * rb,
+				 jack_ringbuffer_data_t * vec)
 {
   size_t free_cnt;
   size_t cnt2;
@@ -270,8 +277,8 @@ ringbuffer_get_read_vector (ringbuffer_t * rb,
    length.  */
 
 void
-ringbuffer_get_write_vector (ringbuffer_t * rb,
-			     ringbuffer_data_t * vec)
+jack_ringbuffer_get_write_vector (const jack_ringbuffer_t * rb,
+				  jack_ringbuffer_data_t * vec)
 {
   size_t free_cnt;
   size_t cnt2;
@@ -305,3 +312,5 @@ ringbuffer_get_write_vector (ringbuffer_t * rb,
     vec[1].len = 0;
   }
 }
+
+#endif /* !HAVE_JACK_RINGBUFFER */

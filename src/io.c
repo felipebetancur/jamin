@@ -71,9 +71,9 @@
 #include <errno.h>
 #include <assert.h>
 #include <jack/jack.h>
-#include "config.h"
 
-#include "ringbuffer.h"
+#include "config.h"
+#include "ringbuffer.h"		/* uses <jack/ringbuffer.h>, if available */
 #include "process.h"
 #include "resource.h"
 #include "plugin.h"
@@ -117,8 +117,8 @@ static pthread_cond_t run_dsp = PTHREAD_COND_INITIALIZER;
 static pthread_mutex_t lock_dsp = PTHREAD_MUTEX_INITIALIZER;
 
 #define NCHUNKS 4		/* number of DSP blocks in ringbuffer */
-static ringbuffer_t *in_rb[NCHANNELS];	/* input channel ring buffers */
-static ringbuffer_t *out_rb[NCHANNELS];	/* output channel ring buffers */
+static jack_ringbuffer_t *in_rb[NCHANNELS];  /* input channel buffers */
+static jack_ringbuffer_t *out_rb[NCHANNELS]; /* output channel buffers */
 
 /* JACK connection data */
 jack_status_t jst = {0};		/* current JACK status */
@@ -317,11 +317,11 @@ int io_get_dsp_buffers(int nchannels,
 		       jack_default_audio_sample_t *out[NCHANNELS])
 {
     int chan;
-    ringbuffer_data_t io_vec[2];
+    jack_ringbuffer_data_t io_vec[2];
 
     for (chan = 0; chan < nchannels; chan++) {
-	if ((ringbuffer_read_space(in_rb[chan]) < dsp_block_bytes) ||
-	    (ringbuffer_write_space(out_rb[chan]) < dsp_block_bytes))
+	if ((jack_ringbuffer_read_space(in_rb[chan]) < dsp_block_bytes) ||
+	    (jack_ringbuffer_write_space(out_rb[chan]) < dsp_block_bytes))
 	    return 0;			/* not enough space */
 
 	/* Copy buffer pointers to in[] and out[].  If the ringbuffer
@@ -329,11 +329,11 @@ int io_get_dsp_buffers(int nchannels,
 	 * extend the interface to process_signal() to allow this
 	 * situation.  But, that's not implemented yet, hence the
 	 * asserts. */
-	ringbuffer_get_read_vector(in_rb[chan], io_vec);
+	jack_ringbuffer_get_read_vector(in_rb[chan], io_vec);
 	in[chan] = (jack_default_audio_sample_t *) io_vec[0].buf;
 	assert(io_vec[0].len >= dsp_block_bytes); /* must be contiguous */
 	    
-	ringbuffer_get_write_vector(out_rb[chan], io_vec);
+	jack_ringbuffer_get_write_vector(out_rb[chan], io_vec);
 	out[chan] = (jack_default_audio_sample_t *) io_vec[0].buf;
 	assert(io_vec[0].len >= dsp_block_bytes); /* must be contiguous */
     }
@@ -384,8 +384,8 @@ void *io_dsp_thread(void *arg)
 	     * space and queues the output for the JACK process
 	     * thread. */
 	    for (chan = 0; chan < nchannels; chan++) {
-		ringbuffer_write_advance(out_rb[chan], dsp_block_bytes);
-		ringbuffer_read_advance(in_rb[chan], dsp_block_bytes);
+		jack_ringbuffer_write_advance(out_rb[chan], dsp_block_bytes);
+		jack_ringbuffer_read_advance(in_rb[chan], dsp_block_bytes);
 	    }
 	    if (DSP_STATE_IS(DSP_STARTING))
 		io_new_state(DSP_RUNNING); /* output available */
@@ -452,7 +452,7 @@ int io_queue(jack_nframes_t nframes, int nchannels,
 
     /* queue JACK input buffers for DSP thread */
     for (chan = 0; chan < nchannels; chan++) {
-	count = ringbuffer_write(in_rb[chan], (void *) in[chan], nbytes);
+	count = jack_ringbuffer_write(in_rb[chan], (void *) in[chan], nbytes);
 	if (count != nbytes) {		/* buffer overflow? */
 
 	    /* This is a realtime bug.  We have input audio with no
@@ -468,12 +468,12 @@ int io_queue(jack_nframes_t nframes, int nchannels,
     } 
 
     /* if there is enough input, schedule the DSP thread */
-    if (ringbuffer_read_space(in_rb[0]) >= dsp_block_bytes)
+    if (jack_ringbuffer_read_space(in_rb[0]) >= dsp_block_bytes)
 	io_schedule();
 
     /* dequeue the next buffer that has been completed */
     for (chan = 0; chan < nchannels; chan++) {
-	count = ringbuffer_read(out_rb[chan], (void *) out[chan], nbytes);
+	count = jack_ringbuffer_read(out_rb[chan], (void *) out[chan], nbytes);
 	if (count != nbytes) {		/* not enough output? */
 
 	    /* this is only legit if we're just starting up */
@@ -641,9 +641,9 @@ void io_cleanup()
 	/* free the ring buffers */
 	for (chan = 0; chan < nchannels; chan++) {
 	    if (in_rb[chan])
-		ringbuffer_free(in_rb[chan]);
+		jack_ringbuffer_free(in_rb[chan]);
 	    if (out_rb[chan])
-		ringbuffer_free(out_rb[chan]);
+		jack_ringbuffer_free(out_rb[chan]);
 	}
     }
 
@@ -1014,9 +1014,9 @@ void io_activate()
      * touch all the pages in the buffers. */
     bufsize = dsp_block_bytes * NCHUNKS;
     for (chan = 0; chan < nchannels; chan++) {
-	in_rb[chan] = ringbuffer_create(bufsize);
+	in_rb[chan] = jack_ringbuffer_create(bufsize);
 	memset(in_rb[chan]->buf, 0, bufsize);
-	out_rb[chan] = ringbuffer_create(bufsize);
+	out_rb[chan] = jack_ringbuffer_create(bufsize);
 	memset(out_rb[chan]->buf, 0, bufsize);
     }
 
