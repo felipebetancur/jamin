@@ -1,3 +1,7 @@
+2004-12-26  Jack O'Quin  <joq@io.com>
+
+	* Updated ru.po from Alexandre
+
 2004-12-15  Jack O'Quin  <joq@io.com>
 
 	* added -j servername option to select JACK server
