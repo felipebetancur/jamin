@@ -111,6 +111,8 @@ static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0,
                        3 * NOTCH_INT, EQ_INTERP - 20}, 
                        EQ_notch_flag[NOTCHES] = {0, 0, 0, 0, 0};
 static guint           notebook1_page = 0;
+static gboolean        hdeq_ready = FALSE;
+
 
 
 /*  Clear out the hand drawn EQ curves on exit.  */
@@ -968,6 +970,8 @@ void hdeq_curve_exposed (GtkWidget *widget, GdkEventExpose *event)
     part_y[1] = part_y[0] + event->area.height;
 
     draw_EQ_curve ();
+
+    hdeq_ready = TRUE;
 }
 
 
@@ -1073,6 +1077,10 @@ void hdeq_curve_motion (GdkEventMotion *event)
     static clock_t old_clock = -1;
     struct tms     buf;
 
+
+    /*  We don't want motion events until the window is ready. */
+
+    if (!hdeq_ready) return;
 
 
     /*  Timing delay so we don't get five bazillion calls.  */

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.108 2003/12/10 01:48:41 jdepner Exp $
+ *  $Id: callbacks.c,v 1.109 2003/12/10 18:33:17 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -56,7 +56,6 @@
 
 static char *help_ptr = general_help;
 static gboolean text_focus = FALSE;
-
 
 void
 on_low2mid_value_changed               (GtkRange        *range,
