@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.116 2003/12/21 21:17:19 jdepner Exp $
+ *  $Id: callbacks.c,v 1.117 2003/12/24 18:47:17 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -56,6 +56,7 @@
 
 static char *help_ptr = general_help;
 static gboolean text_focus = FALSE;
+
 
 void
 on_low2mid_value_changed               (GtkRange        *range,
@@ -160,9 +161,9 @@ void
 on_window1_show                        (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-    crossover_init ();
+  crossover_init ();
 
-    l_notebook1 = GTK_NOTEBOOK (lookup_widget (main_window, "notebook1"));
+  l_notebook1 = GTK_NOTEBOOK (lookup_widget (main_window, "notebook1"));
 }
 
 
@@ -1334,23 +1335,16 @@ void
 on_about1_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  GtkImage     *splash;
-  GdkPixbuf    *pixbuf;
-  GtkWidget    *splash_dialog;
+  GtkWidget    *splash = NULL, *splash_dialog;
   gchar        title[128];
-  GError       *error = NULL;
 
 
-  if ((pixbuf = 
-       gdk_pixbuf_new_from_file ("/usr/local/share/jamin/JAMin_splash.jpg",
-                                 &error)) == NULL)
+  if ((splash = create_pixmap (main_window, "JAMin_splash.jpg")) == NULL)
     {
       help_message (general_help);
     }
   else
     {
-      splash = (GtkImage *) gtk_image_new_from_pixbuf (pixbuf);
-
       sprintf (title, "%s %s", PACKAGE, VERSION);
       splash_dialog = 
         gtk_dialog_new_with_buttons (title, (GtkWindow *) main_window,
