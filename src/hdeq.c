@@ -151,6 +151,7 @@ static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0,
 static guint           notebook1_page = 0;
 static gboolean        hdeq_ready = FALSE;
 static GtkSpinButton   *lgain_spin, *ugain_spin, *spec_freq_spin;
+static GtkMenu         *l_menu1;
 
 
 /*  Given the frequency this returns the nearest array index in the X direction
@@ -214,6 +215,7 @@ void bind_hdeq ()
                                                 "geq_max_gain_spinner"));
     spec_freq_spin = GTK_SPIN_BUTTON (lookup_widget (eq_options_dialog, 
                                                 "spectrum_freq_spinbutton"));
+    l_menu1 = GTK_MENU (lookup_widget (eq_options_dialog, "menu1"));
 
 
     /*  Looking up the widgets we'll need to work with based on the name
@@ -2245,6 +2247,9 @@ void popup_EQ_options_dialog (int updown)
       gtk_spin_button_set_value (lgain_spin, EQ_gain_lower);
       gtk_spin_button_set_value (ugain_spin, EQ_gain_upper);
       gtk_spin_button_set_value (spec_freq_spin, get_spectrum_freq ());
+
+      gtk_menu_set_active (l_menu1, process_get_spec_mode());
+
 
       gtk_widget_show (eq_options_dialog);
     }
