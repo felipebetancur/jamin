@@ -72,16 +72,20 @@ style "thai-gold"
    #Sets the colors for the faders
 
    	bg_pixmap[NORMAL] = "thai-gold.png"
-   	bg_pixmap[PRELIGHT] = "thai-gold.png"
-   	bg_pixmap[INSENSITIVE] = "thai-gold.png"
+    	bg_pixmap[ACTIVE] = "thai-gold.png"
+  	bg_pixmap[PRELIGHT] = "thai-gold.png"
+  # 	bg_pixmap[INSENSITIVE] = "brushed-steel.png"
 
-   # text
+   # text and borders
 
 	fg[NORMAL] = { 0.74, 0.85, 0.93 }	# sky blue
 	fg[ACTIVE] = { 0.74, 0.85, 0.93 }
 	fg[PRELIGHT] = { 0.74, 0.85, 0.93 }
 	fg[SELECTED] = { 0.74, 0.85, 0.93 }
 	fg[INSENSITIVE] = { 0.5, 0.5, 0.5 }	# grey
+	
+	bg[NORMAL] = { 0.7, 0.7, 0.7 }		# grey
+	bg[INSENSITIVE] = { 0.3, 0.3, 0.3 }	# grey
 }
 
 style "button"

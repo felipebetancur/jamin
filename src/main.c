@@ -14,6 +14,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <gtk/gtk.h>
+#include <limits.h>
 
 #include "interface.h"
 #include "support.h"
