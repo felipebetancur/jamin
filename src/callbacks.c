@@ -638,10 +638,10 @@ insert_notch ()
                 y[0] = EQ_notch_gain[j];
                 x[1] = EQ_x_notched[ndx - 9];
                 y[1] = EQ_notch_gain[j];
-                x[2] = EQ_x_notched[EQ_notch_index[j] - 1];
-                y[2] = EQ_y_notched[EQ_notch_index[j] - 1];
-                x[3] = EQ_x_notched[EQ_notch_index[j]];
-                y[3] = EQ_y_notched[EQ_notch_index[j]];
+                x[2] = EQ_x_notched[ndx - 1];
+                y[2] = EQ_y_notched[ndx - 1];
+                x[3] = EQ_x_notched[ndx];
+                y[3] = EQ_y_notched[ndx];
 
                 interpolate (EQ_interval, 4, x[0], x[3], &length, x, 
                     y, &EQ_x_notched[ndx - 10], &EQ_y_notched[ndx - 10]);
@@ -685,36 +685,6 @@ insert_notch ()
               }
           }
       }
-
-
-    /*  A "true notch filter".
-
-    for (i = 0 ; i < EQ_length ; i++)
-      {
-        EQ_x_notched[i] = EQ_xinterp[i];
-        EQ_y_notched[i] = EQ_yinterp[i];
-
-        for (j = 0 ; j < NOTCHES ; j++)
-          {
-            if (EQ_notch_gain[j] != 0.0)
-              {
-                if (!j || j == NOTCHES - 1)
-                  {
-                    if (i <= EQ_notch_index[j])
-                        EQ_y_notched[i] = EQ_notch_gain[j];
-                  }
-                else
-                  {
-                    if (i >= (EQ_notch_index[j] - EQ_notch_width[j]) &&
-                        i <= (EQ_notch_index[j] + EQ_notch_width[j]))
-                      {
-                        EQ_y_notched[i] = EQ_notch_gain[j];
-                      }
-                  }
-              }
-          }
-      }
-    */
 }
 
 void
@@ -739,15 +709,25 @@ draw_EQ_curve ()
 
     geq_get_freqs_and_gains (l_geq_freqs, l_geq_gains);
 
-    for (i = 0 ; i < EQ_BANDS ; i++)
+
+    /*  Frequency lines on log scale in X.  */
+
+    i = ((int) (l_geq_freqs[0] + 10.0) / 10) * 10;
+    inc = 10;
+    while (i < l_geq_freqs[EQ_BANDS - 1])
       {
-        x[i] = log10 (l_geq_freqs[i]);
-        y[i] = log10 (l_geq_gains[i]);
+        for (x0 = i ; x0 <= inc * 10 ; x0 += inc)
+          {
+            freq2xpix ((float) x0, &x1);
 
-        logfreq2xpix (x[i], &x1);
+            gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
+          }
+        i = inc * 10;
+        inc *= 10;
+      } 
+        
 
-        gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
-      }
+    /*  Gain lines in Y.  */
 
     inc = 10;
     if (EQ_curve_range_y < 10.0) inc = 1;
@@ -808,6 +788,13 @@ draw_EQ_curve ()
 
     if (EQ_mod) 
       {
+        for (i = 0 ; i < EQ_BANDS ; i++)
+          {
+            x[i] = log10 (l_geq_freqs[i]);
+            y[i] = log10 (l_geq_gains[i]);
+          }
+
+
         interpolate (EQ_interval, EQ_BANDS, EQ_start, EQ_end, 
             &EQ_length, x, y, EQ_xinterp, EQ_yinterp);
 
@@ -842,6 +829,7 @@ draw_EQ_curve ()
 
         insert_notch ();
       }
+
 
     /*  Plot the curve.  */
 
@@ -899,6 +887,8 @@ draw_EQ_curve ()
             EQ_notch_handle[0][2][i] = EQ_curve_width;
           }
 
+
+        /*  Notch handles, not shelf.  */
 
         if (i && i < NOTCHES - 1)
           {
@@ -961,7 +951,6 @@ on_EQ_curve_expose_event               (GtkWidget       *widget,
                                         gpointer         user_data)
 {
     l_low2mid_adj = gtk_range_get_adjustment ((GtkRange *) l_low2mid);
-    //l_eqb1_adj = gtk_range_get_adjustment ((GtkRange *) l_eqb1);
     EQ_curve_range_x = l_low2mid_adj->upper - l_low2mid_adj->lower;
 
     EQ_curve_range_y = EQ_gain_upper - EQ_gain_lower;
@@ -1020,16 +1009,27 @@ check_notch (int notch, int new, int q)
 
     ret = 1;
 
+
+    /*  Left shelf.  */
+
     if (!notch)
       {
         j = EQ_notch_index[notch + 1] - EQ_notch_width[notch + 1];
         if (new >= j || new < 10) ret = 0;
       }
+
+
+    /*  Right shelf.  */
+
     else if (notch == NOTCHES - 1)
       {
         k = EQ_notch_index[notch - 1] + EQ_notch_width[notch - 1];
         if (new <= k || new > EQ_length - 10) ret = 0;
       }
+
+
+    /*  Notches.  */
+
     else
       {
         j = EQ_notch_index[notch - 1] + EQ_notch_width[notch - 1];
