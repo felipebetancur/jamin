@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.26 2004/04/04 23:19:44 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.27 2004/04/11 00:07:26 jdepner Exp $
  */
 
 char general_help[] = {
@@ -264,8 +264,8 @@ ALT modifier can be used to assign settings to a scene button (instead of \
 using the scene button menus).  Pressing <Alt>-1 will assign the current \
 settings to scene button 1 (you still need to set the name).  The CTRL \
 modifier can be used to clear a scene button.  Pressing <Ctrl>-1 will clear \
-that scene button.  Obviously these only work for the first ten scenes.  Use \
-of the higher number scenes can only be done using the mouse.\n"
+that scene button.  To use the higher number scenes you can use the shift key \
+and the number keys.\n"
 };
 
 
