@@ -4982,11 +4982,11 @@ create_eq_options_dialog (void)
   gtk_dialog_add_action_widget (GTK_DIALOG (eq_options_dialog), eq_options_close, GTK_RESPONSE_CLOSE);
   GTK_WIDGET_SET_FLAGS (eq_options_close, GTK_CAN_DEFAULT);
 
-  g_signal_connect ((gpointer) eq_options_dialog, "key_press_event",
-                    G_CALLBACK (on_window1_key_press_event),
-                    NULL);
   g_signal_connect ((gpointer) eq_options_event_box, "enter_notify_event",
                     G_CALLBACK (on_eq_options_event_box_enter_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) eq_options_event_box, "key_press_event",
+                    G_CALLBACK (on_window1_key_press_event),
                     NULL);
   g_signal_connect ((gpointer) eq_options_eventbox, "enter_notify_event",
                     G_CALLBACK (on_eq_options_eventbox_enter_notify_event),
@@ -5346,11 +5346,11 @@ create_preferences_dialog (void)
   gtk_dialog_add_action_widget (GTK_DIALOG (preferences_dialog), preferences_close, GTK_RESPONSE_CLOSE);
   GTK_WIDGET_SET_FLAGS (preferences_close, GTK_CAN_DEFAULT);
 
-  g_signal_connect ((gpointer) preferences_dialog, "key_press_event",
-                    G_CALLBACK (on_window1_key_press_event),
-                    NULL);
   g_signal_connect ((gpointer) preferences_event_box, "enter_notify_event",
                     G_CALLBACK (on_preferences_event_box_enter_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) preferences_event_box, "key_press_event",
+                    G_CALLBACK (on_window1_key_press_event),
                     NULL);
   g_signal_connect ((gpointer) crossfade_spinbutton, "value_changed",
                     G_CALLBACK (on_crossfade_spinbutton_value_changed),

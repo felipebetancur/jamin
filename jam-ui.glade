@@ -7151,7 +7151,6 @@
   <property name="resizable">True</property>
   <property name="destroy_with_parent">False</property>
   <property name="has_separator">True</property>
-  <signal name="key_press_event" handler="on_window1_key_press_event" last_modification_time="Mon, 19 Jan 2004 20:01:09 GMT"/>
 
   <child internal-child="vbox">
     <widget class="GtkVBox" id="dialog-vbox1">
@@ -7189,6 +7188,7 @@
 	<widget class="GtkEventBox" id="eq_options_event_box">
 	  <property name="visible">True</property>
 	  <signal name="enter_notify_event" handler="on_eq_options_event_box_enter_notify_event" last_modification_time="Mon, 19 Jan 2004 20:04:49 GMT"/>
+	  <signal name="key_press_event" handler="on_window1_key_press_event" last_modification_time="Wed, 28 Apr 2004 23:31:23 GMT"/>
 
 	  <child>
 	    <widget class="GtkVBox" id="vbox122">
@@ -7537,7 +7537,6 @@
   <property name="resizable">True</property>
   <property name="destroy_with_parent">False</property>
   <property name="has_separator">True</property>
-  <signal name="key_press_event" handler="on_window1_key_press_event" last_modification_time="Mon, 19 Jan 2004 20:12:45 GMT"/>
 
   <child internal-child="vbox">
     <widget class="GtkVBox" id="preferences_vbox">
@@ -7575,6 +7574,7 @@
 	<widget class="GtkEventBox" id="preferences_event_box">
 	  <property name="visible">True</property>
 	  <signal name="enter_notify_event" handler="on_preferences_event_box_enter_notify_event" last_modification_time="Mon, 19 Jan 2004 20:04:09 GMT"/>
+	  <signal name="key_press_event" handler="on_window1_key_press_event" last_modification_time="Wed, 28 Apr 2004 23:32:05 GMT"/>
 
 	  <child>
 	    <widget class="GtkVBox" id="preferences_vbox2">
