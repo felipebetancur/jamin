@@ -1,3 +1,9 @@
+2004-05-02  Steve Harris  <steve@plugin.org.uk>
+
+	* process.c (latcorbuf): Fixed limiter bypass. Added yet another
+	  ringbuffer to hold the output of the compressors to allow the limiter
+	  to be bypassed correctly.
+
 2004-03-23  Jack O'Quin  <joq@io.com>
 
 	* io.c: use first two JACK driver playback ports for default

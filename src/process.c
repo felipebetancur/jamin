@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.53 2004/05/01 13:07:04 jdepner Exp $
+ *  $Id: process.c,v 1.54 2004/05/02 09:52:43 theno23 Exp $
  */
 
 #include <math.h>
@@ -76,6 +76,7 @@ static float ws_boost_a = 1.0f;
 static unsigned int latcorbuf_pos;
 static unsigned int latcorbuf_len;
 static float *latcorbuf[NCHANNELS];
+static float *latcorbuf_postcomp[NCHANNELS];
 
 static int spectrum_mode = SPEC_POST_EQ;
 
@@ -198,6 +199,7 @@ void process_init(float fs)
     latcorbuf_pos = 0;
     for (i=0; i < NCHANNELS; i++) {
 	latcorbuf[i] = calloc(latcorbuf_len, sizeof(float));
+	latcorbuf_postcomp[i] = calloc(latcorbuf_len, sizeof(float));
     }
 }
 
@@ -401,6 +403,10 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	    out[port][pos] =
 		out_tmp[port][XO_LOW][pos] + out_tmp[port][XO_MID][pos] +
 		out_tmp[port][XO_HIGH][pos];
+		/* Keep buffer of compressor oputputs incase we need it for
+		 * limiter bypass */
+		latcorbuf_postcomp[port][(latcorbuf_pos + pos) &
+		    (latcorbuf_len - 1)] = out[port][pos];
 	}
     }
 
@@ -443,7 +449,17 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 
     /* If bypass is on override all the stuff done by the crossover section,
      * limiter and so on */
-    if (global_bypass || limiter_bypass) {
+    if (limiter_bypass) {
+	const unsigned int limiter_latency = (unsigned int)limiter.latency;
+
+	for (port = 0; port < nchannels; port++) {
+	    for (pos = 0; pos < nframes; pos++) {
+		out[port][pos] = latcorbuf_postcomp[port][(latcorbuf_pos +
+			pos - limiter_latency - nframes) & (latcorbuf_len - 1)];
+	    }
+	}
+    }
+    if (global_bypass) {
 	const unsigned int limiter_latency = (unsigned int)limiter.latency;
 
 	for (port = 0; port < nchannels; port++) {
