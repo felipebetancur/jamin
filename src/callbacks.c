@@ -68,8 +68,7 @@ static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
                        EQ_freq_yinterp[EQ_INTERP + 1], 
                        EQ_notch_gain[NOTCHES] = {0.0, 0.0, 0.0, 0.0, 0.0},
                        EQ_x_notched[EQ_INTERP + 1], 
-                       EQ_y_notched[EQ_INTERP + 1], geq_min_gain = -12.0, 
-                       geq_max_gain = 12.0;
+                       EQ_y_notched[EQ_INTERP + 1];
 static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0, 
                        EQ_length = 0, comp_realized[3] = {0, 0, 0}, 
                        EQ_cleared = 1, EQ_realized = 0, xover_active = 0,
@@ -428,7 +427,7 @@ on_window1_show                        (GtkWidget       *widget,
 
 
 gboolean
-eqb_mod                                (GtkAdjustment *adj, gpointer user_data)
+eqb_mod (GtkAdjustment *adj, gpointer user_data)
 {
     EQ_mod = 1;
 
@@ -491,7 +490,7 @@ draw_EQ_spectrum_curve (float single_levels[])
                 EQ_curve_height);
 
             if (i) gdk_draw_line (EQ_drawable, EQ_gc, x[i - 1], y[i - 1], 
-                                  x[i], y[i]);
+                x[i], y[i]);
           }
 
         gdk_gc_set_line_attributes (EQ_gc, 1, GDK_LINE_SOLID, GDK_CAP_BUTT,
@@ -527,81 +526,81 @@ nearest_x (float freq)
 }
 
 
-void EQ_write_annotation (int x, int y, float db)
-{
-    PangoLayout    *pl;
-    PangoRectangle ink_rect;
-    char           string[6];
-    int            half_width, y_offset;
-
-
-    /*  Clear the annotation area.  */
-
-    pl = pango_layout_new (EQ_pc);  
-    pango_layout_set_text (pl, "+00db", -1);
-    pango_layout_get_pixel_extents (pl, &ink_rect, NULL);
-
-    half_width = ink_rect.width / 2;
-
-    if (y < EQ_curve_height / 2)
-      {
-        y_offset = ink_rect.height;
-      }
-    else
-      {
-        y_offset = -(2 * ink_rect.height);
-      }
-
-    sprintf (string, "%+03ddb", NINT (db));
-    gdk_window_clear_area (EQ_drawable, x - half_width, y + y_offset, 
-        ink_rect.width + 2, ink_rect.height + 2);
-    gdk_gc_set_foreground (EQ_gc, &black);
-
-    pl = pango_layout_new (EQ_pc);  
-    pango_layout_set_text (pl, string, -1);
-
-
-    gdk_draw_layout (EQ_drawable, EQ_gc, x - half_width, y + y_offset, pl);
-}
-
-
 void 
 insert_notch ()
 {
     int        i;
 
-
     for (i = 0 ; i < EQ_length ; i++)
       {
         EQ_x_notched[i] = EQ_xinterp[i];
-        if (i <= EQ_notch_index[0])
+        if (EQ_notch_gain[0] != 0.0 && i <= EQ_notch_index[0])
           {
-            EQ_y_notched[i] = EQ_yinterp[i] + EQ_notch_gain[0];
+            EQ_y_notched[i] = EQ_notch_gain[0];
           }
-        else if (i >= (EQ_notch_index[1] - EQ_notch_width[1]) &&
-                 i <= (EQ_notch_index[1] + EQ_notch_width[1]))
+        else if (EQ_notch_gain[1] != 0.0 && 
+            i >= (EQ_notch_index[1] - EQ_notch_width[1]) &&
+            i <= (EQ_notch_index[1] + EQ_notch_width[1]))
           {
-            EQ_y_notched[i] = EQ_yinterp[i] + EQ_notch_gain[1];
+            EQ_y_notched[i] = EQ_notch_gain[1];
           }
-        else if (i >= (EQ_notch_index[2] - EQ_notch_width[2]) &&
-                 i <= (EQ_notch_index[2] + EQ_notch_width[2]))
+        else if (EQ_notch_gain[2] != 0.0 && 
+            i >= (EQ_notch_index[2] - EQ_notch_width[2]) &&
+            i <= (EQ_notch_index[2] + EQ_notch_width[2]))
           {
-            EQ_y_notched[i] = EQ_yinterp[i] + EQ_notch_gain[2];
+            EQ_y_notched[i] = EQ_notch_gain[2];
           }
-        else if (i >= (EQ_notch_index[3] - EQ_notch_width[3]) &&
-                 i <= (EQ_notch_index[3] + EQ_notch_width[3]))
+        else if (EQ_notch_gain[3] != 0.0 && 
+            i >= (EQ_notch_index[3] - EQ_notch_width[3]) &&
+            i <= (EQ_notch_index[3] + EQ_notch_width[3]))
           {
-            EQ_y_notched[i] = EQ_yinterp[i] + EQ_notch_gain[3];
+            EQ_y_notched[i] = EQ_notch_gain[3];
           }
-        else if (i >= EQ_notch_index[4])
+        else if (EQ_notch_gain[4] != 0.0 && i >= EQ_notch_index[4])
           {
-            EQ_y_notched[i] = EQ_yinterp[i] + EQ_notch_gain[4];
+            EQ_y_notched[i] = EQ_notch_gain[4];
           }
         else
           {
             EQ_y_notched[i] = EQ_yinterp[i];
           }
       }
+}
+
+
+void
+logfreq2xpix (float log_freq, int *x)
+{
+    *x = NINT (((log_freq - l_low2mid_adj->lower) / EQ_curve_range_x) * 
+        EQ_curve_width);
+}
+
+
+void 
+freq2xpix (float freq, int *x)
+{
+    float log_freq;
+
+    log_freq = log10f (freq);
+    logfreq2xpix (log_freq, x);
+}
+
+
+void 
+gain2ypix (float gain, int *y)
+{
+    *y = EQ_curve_height - NINT (((gain - l_eqb1_adj->lower) / 
+                EQ_curve_range_y) * EQ_curve_height);
+}
+
+
+void
+loggain2ypix (float log_gain, int *y)
+{
+    float gain;
+
+    gain = log_gain * 20.0;
+    gain2ypix (gain, y);
 }
 
 
@@ -632,8 +631,7 @@ draw_EQ_curve ()
         x[i] = log10 (l_geq_freqs[i]);
         y[i] = log10 (l_geq_gains[i]);
 
-        x1 = NINT (((x[i] - l_low2mid_adj->lower) / EQ_curve_range_x) * 
-            EQ_curve_width);
+        logfreq2xpix (x[i], &x1);
 
         gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
       }
@@ -644,8 +642,7 @@ draw_EQ_curve ()
       {
         if (!(i % inc))
           {
-            y1 = EQ_curve_height - NINT (((i - l_eqb1_adj->lower) / 
-                EQ_curve_range_y) * EQ_curve_height);
+            gain2ypix ((float) i, &y1);
 
             gdk_draw_line (EQ_drawable, EQ_gc, 0, y1, EQ_curve_width, y1);
           }
@@ -658,8 +655,7 @@ draw_EQ_curve ()
         GDK_JOIN_MITER);
 
     gdk_gc_set_foreground (EQ_gc, &red);
-    x1 = NINT (((log10 (xover_fa) - l_low2mid_adj->lower) / 
-        EQ_curve_range_x) * EQ_curve_width);
+    freq2xpix (xover_fa, &x1);
     gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE, 0, 
         XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
@@ -675,8 +671,7 @@ draw_EQ_curve ()
 
 
     gdk_gc_set_foreground (EQ_gc, &blue);
-    x1 = NINT (((log10 (xover_fb) - l_low2mid_adj->lower) / 
-        EQ_curve_range_x) * EQ_curve_width);
+    freq2xpix (xover_fb, &x1);
     gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE, 0, 
         XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
@@ -708,18 +703,8 @@ draw_EQ_curve ()
     gdk_gc_set_foreground (EQ_gc, &red);
     for (i = 0 ; i < EQ_length ; i++)
       {
-        /*
-        x1 = NINT (((EQ_xinterp[i] - l_low2mid_adj->lower) / 
-            EQ_curve_range_x) * EQ_curve_width);
-
-        y1 = EQ_curve_height - NINT ((((EQ_yinterp[i] * 20.0) - 
-            l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
-        */
-        x1 = NINT (((EQ_x_notched[i] - l_low2mid_adj->lower) / 
-            EQ_curve_range_x) * EQ_curve_width);
-
-        y1 = EQ_curve_height - NINT ((((EQ_y_notched[i] * 20.0) - 
-            l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
+        logfreq2xpix (EQ_x_notched[i], &x1);
+        loggain2ypix (EQ_y_notched[i], &y1);
 
         if (i) gdk_draw_line (EQ_drawable, EQ_gc, x0, y0, x1, y1);
 
@@ -733,18 +718,9 @@ draw_EQ_curve ()
     for (i = 0 ; i < NOTCHES ; i++)
       {
         gdk_gc_set_foreground (EQ_gc, &green);
-        /*
-        x1 = NINT (((EQ_xinterp[EQ_notch_index[i]] - l_low2mid_adj->lower) / 
-            EQ_curve_range_x) * EQ_curve_width); 
 
-        y1 = EQ_curve_height - NINT ((((EQ_yinterp[EQ_notch_index[i]] * 20.0) -
-            l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
-        */
-        x1 = NINT (((EQ_x_notched[EQ_notch_index[i]] - l_low2mid_adj->lower) / 
-            EQ_curve_range_x) * EQ_curve_width); 
-
-        y1 = EQ_curve_height - NINT ((((EQ_y_notched[EQ_notch_index[i]] * 20.0) -
-            l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
+        logfreq2xpix (EQ_x_notched[EQ_notch_index[i]], &x1);
+        loggain2ypix (EQ_y_notched[EQ_notch_index[i]], &y1);
 
         gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, 
             x1 - NOTCH_HANDLE_HALF_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
@@ -768,29 +744,17 @@ draw_EQ_curve ()
           }
 
 
-        EQ_write_annotation (x1, y1, EQ_notch_gain[i]);
-
-
         if (i && i < NOTCHES - 1)
           {
             gdk_gc_set_foreground (EQ_gc, &green);
 
             x0 = EQ_notch_index[i] - EQ_notch_width[i];
-            /*
-            x1 = NINT (((EQ_xinterp[x0] - l_low2mid_adj->lower) / 
-                EQ_curve_range_x) * EQ_curve_width); 
-            */
-            x1 = NINT (((EQ_x_notched[x0] - l_low2mid_adj->lower) / 
-                EQ_curve_range_x) * EQ_curve_width); 
+
+            logfreq2xpix (EQ_x_notched[x0], &x1);
+            loggain2ypix (EQ_y_notched[x0], &y1);
 
             if (EQ_notch_handle[0][1][i] - x1 < NOTCH_HANDLE_HALF_WIDTH) 
                 x1 = EQ_notch_handle[0][1][i] - NOTCH_HANDLE_WIDTH;
-            /*
-            y1 = EQ_curve_height - NINT ((((EQ_yinterp[x0] * 20.0) -
-                l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
-            */
-            y1 = EQ_curve_height - NINT ((((EQ_y_notched[x0] * 20.0) -
-                l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
 
             gdk_draw_arc (EQ_drawable, EQ_gc, TRUE, 
                 x1 - NOTCH_HANDLE_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
@@ -807,21 +771,12 @@ draw_EQ_curve ()
             gdk_gc_set_foreground (EQ_gc, &green);
 
             x0 = EQ_notch_index[i] + EQ_notch_width[i];
-            /*            
-            x1 = NINT (((EQ_xinterp[x0] - l_low2mid_adj->lower) / 
-                EQ_curve_range_x) * EQ_curve_width); 
-            */
-            x1 = NINT (((EQ_x_notched[x0] - l_low2mid_adj->lower) / 
-                EQ_curve_range_x) * EQ_curve_width); 
+
+            logfreq2xpix (EQ_x_notched[x0], &x1);
+            loggain2ypix (EQ_y_notched[x0], &y1);
 
             if (x1 - EQ_notch_handle[0][1][i] < NOTCH_HANDLE_HALF_WIDTH) 
                 x1 = EQ_notch_handle[0][1][i] + NOTCH_HANDLE_WIDTH;
-            /*
-            y1 = EQ_curve_height - NINT ((((EQ_yinterp[x0] * 20.0) -
-                l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
-            */
-            y1 = EQ_curve_height - NINT ((((EQ_y_notched[x0] * 20.0) -
-                l_eqb1_adj->lower) / EQ_curve_range_y) * EQ_curve_height);
 
             gdk_draw_arc (EQ_drawable, EQ_gc, TRUE, 
                 x1 - NOTCH_HANDLE_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
@@ -1000,16 +955,9 @@ on_EQ_curve_event_box_motion_notify_event
                       {
                         if (y>= 0 && y <= EQ_curve_height)
                           {
-                            EQ_notch_gain[i] = geq_min_gain + ((geq_max_gain - 
-                                geq_min_gain) * ((EQ_curve_height - y) / 
-                                EQ_curve_height));
-
-
-                            /*  We only need to rewrite the annotation, not
-                                redraw everything.  */
-
-                            EQ_write_annotation (EQ_notch_handle[0][1][i], 
-                                EQ_notch_handle[1][1][i], EQ_notch_gain[i]);
+                            EQ_notch_gain[i] = (((((double) EQ_curve_height - 
+                                (double) y) / (double) EQ_curve_height) * 
+                                EQ_curve_range_y) + l_eqb1_adj->lower) * 0.05;
 
                             drag = 1;
                             notch_flag = i;
@@ -1167,8 +1115,9 @@ on_EQ_curve_event_box_motion_notify_event
                     j = EQ_length - 1;
                 lo = NINT (pow (10.0, EQ_xinterp[i]));
                 hi = NINT (pow (10.0, EQ_xinterp[j]));
-                sprintf (coords, _("%+03ddb , %dHz - %dHz"), 
-                    NINT (EQ_notch_gain[notch_flag]), lo, hi);
+
+                sprintf (coords, _("%ddb , %dHz - %dHz"), NINT (gain), lo, 
+                    hi);
                 gtk_label_set_text (l_EQ_curve_lbl, coords);
               }
           }
@@ -1203,9 +1152,10 @@ on_EQ_curve_event_box_button_press_event
 
         /*  Button 1 - start drawing or end drawing unless we're over a notch
             or xover handle in which case we will be grabbing and sliding the
-            handle in the X direction.  Shift button 1 is for grabbing and 
+            handle in the X direction.  <Shift> button 1 is for grabbing and 
             sliding in the Y direction (notch/shelf filters only - look at the
-            motion  callback).  */
+            motion callback).  <Ctrl> button 1 will reset shelf and notch
+            values to 0.0.  */
 
       case 1:
 
@@ -1241,8 +1191,19 @@ on_EQ_curve_event_box_button_press_event
                     if (diff_notch[0] <= NOTCH_HANDLE_HALF_WIDTH &&
                         diff_notch[1] <= NOTCH_HANDLE_HALF_HEIGHT)
                       {
-                        EQ_notch_drag[i] = 1;
+                        /*  Reset if <Ctrl> is pressed.  */
+
                         xover_active = 1;
+                        if (event->state & GDK_CONTROL_MASK)
+                          {
+                            EQ_notch_gain[i] = 0.0;
+                            insert_notch ();
+                            draw_EQ_curve ();
+                          }
+                        else
+                          {
+                            EQ_notch_drag[i] = 1;
+                          }
                         break;
                       }
 
@@ -1655,8 +1616,8 @@ void
 on_geq_min_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
                                         gpointer         user_data)
 {
-    geq_min_gain = gtk_spin_button_get_value (spinbutton);
-    geq_set_range (geq_min_gain, geq_get_adjustment(0)->upper);
+    geq_set_range (gtk_spin_button_get_value (spinbutton), 
+        geq_get_adjustment(0)->upper);
 }
 
 
@@ -1664,8 +1625,8 @@ void
 on_geq_max_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
                                         gpointer         user_data)
 {
-    geq_max_gain = gtk_spin_button_get_value (spinbutton);
-    geq_set_range (geq_get_adjustment(0)->lower, geq_max_gain);
+    geq_set_range (geq_get_adjustment(0)->lower, 
+        gtk_spin_button_get_value (spinbutton));
 }
 
 

@@ -189,6 +189,7 @@ gboolean eqb_changed(GtkAdjustment *adj, gpointer user_data)
     int band = (int)user_data;
 
     geq_gains[band-1] = db2lin(adj->value);
+
     geq_set_gains();
 
     return FALSE;
