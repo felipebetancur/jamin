@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.c,v 1.8 2003/11/21 03:42:11 joq Exp $
+ *  $Id: io-menu.c,v 1.9 2003/11/21 04:19:08 joq Exp $
  */
 
 /* The JACK I/O ports for each channel are defined here */
@@ -114,6 +114,9 @@ void
 iomenu_scan_port_names()
 {
     int i;
+
+    if (client == NULL)			/* not connected to JACK? */
+	return;
 
     /* populate input ports menu with JACK output ports */
     if (in_menu_ll)
