@@ -7,6 +7,7 @@ typedef struct {
     volatile jack_nframes_t guard1;
 
     int realtime;
+    int active;
     jack_nframes_t buf_size;
     jack_nframes_t latency;
     long sample_rate;

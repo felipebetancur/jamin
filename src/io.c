@@ -273,7 +273,7 @@ void io_get_status(jack_status_t *jp)
 	/* Throttle the busy wait if we don't get the a clean
 	 * copy very quickly. */
 	if (tries > 10) {
-	    usleep (20);
+	    usleep(20);
 	    tries = 0;
 	}
 	*jp = jst;
@@ -281,7 +281,8 @@ void io_get_status(jack_status_t *jp)
 
     } while (jp->guard1 != jp->guard2);
 
-    jp->cpu_load = jack_cpu_load(client);
+    if (client)
+	jp->cpu_load = jack_cpu_load(client);
 }
 
 
@@ -672,6 +673,7 @@ void io_cleanup()
     if (DSP_STATE_IS(DSP_STOPPING)) {
 
 	jack_client_close(client);	/* leave the jack graph */
+	jst.active = 0;
 	client = NULL;
 	io_new_state(DSP_STOPPED);
 
@@ -960,6 +962,8 @@ void io_activate()
 	fprintf(stderr, "%s: Cannot activate JACK client.", PACKAGE);
 	exit(2);
     }
+
+    jst.active = 1;
 
     /* connect all the JACK ports */
     for (chan = 0; chan < nchannels; chan++) {
