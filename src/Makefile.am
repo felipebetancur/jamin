@@ -52,4 +52,4 @@ state.h: mk-stateh.pl state-vars.txt
 	@echo "WARNING: Rebuilding state.h"
 	./mk-stateh.pl
 
-EXTRA_DIST = mk-stateh.pl jamin.1
+EXTRA_DIST = mk-stateh.pl $(man_MANS)

@@ -737,17 +737,17 @@ void io_init(int argc, char *argv[])
 	fprintf(stderr,
                 "Usage: %s [-%s] [inport1 inport2 [outport1 outport2]]\n"
                 "\nuser options:\n"
-                "\t-p\tdon't automatically connect to jack ports\n"
                 "\t-f file\tload session file on startup\n"
-                "\t-n name\tset AJCK client name\n"
-                "\t-V\tprint version\n"
                 "\t-h\tshow this help\n"
+                "\t-n name\tset JACK client name\n"
+                "\t-p\tdon't automatically connect JACK output ports\n"
+                "\t-v\tverbose output (use -vv... for more detail)\n"
+                "\t-V\tprint version and quit\n"
                 "\ndeveloper options:\n"
                 "\t-d\tdummy mode (don't connect to jackd)\n"
                 "\t-F\ttreat all errors as fatal\n"
                 "\t-T\tprint trace buffer\n"
-                "\t-t\tdont't start dsp thread\n"
-                "\t-v\tdebug level (use -vv...) for increased verbosity\n"
+                "\t-t\tdon't start DSP thread\n"
                 "\n",
 		pname, jamin_options);
 	exit(1);
