@@ -1907,7 +1907,7 @@ on_geq_max_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
 
 
 void
-on_out_trim_scale_value_changed        (GtkRange        *range,
+on_lim_out_trim_scale_value_changed        (GtkRange        *range,
                                         gpointer         user_data)
 {
     s_set_value_ui(S_LIM_LIMIT,

@@ -3100,7 +3100,7 @@ create_window1 (void)
                     G_CALLBACK (on_lim_lh_scale_value_changed),
                     NULL);
   g_signal_connect ((gpointer) lim_out_trim_scale, "value_changed",
-                    G_CALLBACK (on_out_trim_scale_value_changed),
+                    G_CALLBACK (on_lim_out_trim_scale_value_changed),
                     NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */

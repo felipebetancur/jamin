@@ -5606,7 +5606,7 @@
 						  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 						  <property name="inverted">False</property>
 						  <property name="adjustment">0 -12 0 1 3 0</property>
-						  <signal name="value_changed" handler="on_out_trim_scale_value_changed" last_modification_time="Mon, 21 Apr 2003 09:47:56 GMT"/>
+						  <signal name="value_changed" handler="on_lim_out_trim_scale_value_changed" last_modification_time="Wed, 09 Jul 2003 20:51:41 GMT"/>
 						</widget>
 						<packing>
 						  <property name="left_attach">2</property>
