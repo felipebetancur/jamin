@@ -5,6 +5,7 @@
 
 void transport_control(jack_nframes_t nframes);
 jack_transport_state_t transport_get_state();
+double transport_get_time();
 
 /* UI functions */
 void transport_play();

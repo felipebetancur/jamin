@@ -31,6 +31,7 @@
 
 
 static GtkLabel *l_status_label = NULL;
+static GtkLabel *l_time_label = NULL;
 static char focus_string[20];
 
 
@@ -84,10 +85,33 @@ void status_update(GtkWidget *main_window)
              focus_string);
 
     if (l_status_label == NULL)
-	    l_status_label =
-		    GTK_LABEL(lookup_widget(main_window, "status_label"));
+	l_status_label = GTK_LABEL(lookup_widget(main_window, "status_label"));
 
     gtk_label_set_text(l_status_label, string);
+}
+
+
+void status_set_time(GtkWidget *main_window)
+{
+    gchar string[32];
+    unsigned int hours, minutes, seconds, hundreths;
+    double time = transport_get_time();
+
+    hours = time / 3600.0;
+    time -=  hours * 3600.0;
+    minutes = time / 60.0;
+    time -= minutes * 60.0;
+    seconds = time;
+    time -= seconds;
+    hundreths = time * 100.0;
+
+    snprintf(string, sizeof(string), "%02u:%02u:%02u:%02u",
+             hours, minutes, seconds, hundreths);
+
+    if (l_time_label == NULL)
+	l_time_label = GTK_LABEL(lookup_widget(main_window, "time_label"));
+
+    gtk_label_set_text(l_time_label, string);
 }
 
 

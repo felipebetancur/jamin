@@ -103,8 +103,7 @@ int main(int argc, char *argv[])
 
 gboolean update_meters(gpointer data)
 {
-    static unsigned int    count = 0;
-
+    static unsigned int count = 1;
 
     in_meter_value(in_peak);
     out_meter_value(out_peak);
@@ -112,13 +111,13 @@ gboolean update_meters(gpointer data)
     compressor_meters_update();
     spectrum_update();
     s_crossfade_ui();
+    status_set_time(main_window);
 
-
-    /*  Only update the status once a second.  */
-
-    if (count % 10) status_update (main_window);
-    count++;
-
+    /*  Only update the remaining status once a second.  */
+    if (--count == 0) {
+	    status_update (main_window);
+	    count = 10;
+    }
 
     return TRUE;
 }

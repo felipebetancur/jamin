@@ -6,8 +6,8 @@
 typedef struct {
     int		realtime;
     int		active;
-    long	sample_rate;
     float	cpu_load;
+    jack_nframes_t sample_rate;
     jack_nframes_t buf_size;
     jack_nframes_t latency;
 } jack_status_t;

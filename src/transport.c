@@ -133,6 +133,23 @@ jack_transport_state_t transport_get_state()
 }
 
 
+double transport_get_time()
+{
+#ifdef NEW_JACK_TRANSPORT
+    jack_position_t pos;
+
+    jack_transport_query(client, &pos);
+
+    return pos.frame / (double) pos.frame_rate;
+
+#else /* old JACK transport interface */
+
+    return tpt.info.frame / (double) tpt.info.frame_rate;
+
+#endif /* NEW_JACK_TRANSPORT */
+}
+
+
 void transport_play()
 {
 #ifdef NEW_JACK_TRANSPORT

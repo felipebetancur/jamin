@@ -575,7 +575,7 @@ create_window1 (void)
   gtk_widget_set_name (transport_controls, "transport_controls");
   gtk_widget_show (transport_controls);
   gtk_container_add (GTK_CONTAINER (transport_controls_eventbox), transport_controls);
-  gtk_table_set_col_spacings (GTK_TABLE (transport_controls), 15);
+  gtk_table_set_col_spacings (GTK_TABLE (transport_controls), 26);
 
   rewind_button = gtk_event_box_new ();
   gtk_widget_set_name (rewind_button, "rewind_button");
@@ -634,11 +634,11 @@ create_window1 (void)
   gtk_widget_show (vseparator1);
   gtk_box_pack_start (GTK_BOX (top_hbox), vseparator1, FALSE, TRUE, 0);
 
-  time_label = gtk_label_new (_("Time label"));
+  time_label = gtk_label_new (_("HH:MM:SS:xx"));
   gtk_widget_set_name (time_label, "time_label");
   gtk_widget_show (time_label);
   gtk_box_pack_start (GTK_BOX (top_hbox), time_label, FALSE, TRUE, 4);
-  gtk_label_set_justify (GTK_LABEL (time_label), GTK_JUSTIFY_LEFT);
+  gtk_misc_set_padding (GTK_MISC (time_label), 41, 0);
 
   vseparator2 = gtk_vseparator_new ();
   gtk_widget_set_name (vseparator2, "vseparator2");
@@ -648,8 +648,9 @@ create_window1 (void)
   status_label = gtk_label_new (_("Stopped | some CPU | some frames | 96000 Hz | Focus - something"));
   gtk_widget_set_name (status_label, "status_label");
   gtk_widget_show (status_label);
-  gtk_box_pack_start (GTK_BOX (top_hbox), status_label, TRUE, TRUE, 4);
+  gtk_box_pack_start (GTK_BOX (top_hbox), status_label, FALSE, TRUE, 4);
   gtk_label_set_justify (GTK_LABEL (status_label), GTK_JUSTIFY_LEFT);
+  gtk_misc_set_padding (GTK_MISC (status_label), 26, 0);
 
   hseparator2 = gtk_hseparator_new ();
   gtk_widget_set_name (hseparator2, "hseparator2");
@@ -3692,6 +3693,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, label318, "label318");
   GLADE_HOOKUP_OBJECT_NO_REF (window1, tooltips, "tooltips");
 
+  gtk_widget_grab_focus (in_trim_scale);
   return window1;
 }
 
