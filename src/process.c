@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.33 2003/12/09 15:57:20 theno23 Exp $
+ *  $Id: process.c,v 1.34 2003/12/18 18:40:58 theno23 Exp $
  */
 
 #include <math.h>
@@ -68,6 +68,10 @@ static float limiter_gain = 1.0f;
 
 static float ws_boost_wet = 0.0f;
 static float ws_boost_a = 1.0f;
+
+static unsigned int latcorbuf_pos;
+static unsigned int latcorbuf_len;
+static float *latcorbuf[NCHANNELS];
 
 static int spectrum_mode = SPEC_POST_EQ;
 
@@ -178,6 +182,13 @@ void process_init(float fs)
 
     limiter.handle = plugin_instantiate(lim_plugin, fs);
     lim_connect(lim_plugin, &limiter, NULL, NULL);
+
+    /* Allocate at least 1 second of latency correction buffer */
+    for (latcorbuf_len = 256; latcorbuf_len < fs * 1.0f; latcorbuf_len *= 2);
+    latcorbuf_pos = 0;
+    for (i=0; i < NCHANNELS; i++) {
+	latcorbuf[i] = calloc(latcorbuf_len, sizeof(float));
+    }
 }
 
 void run_eq(unsigned int port, unsigned int in_ptr)
@@ -388,15 +399,27 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	}
     }
 
+    /* Keep a buffer of old input data, incase we need it for bypass */
+    for (port = 0; port < nchannels; port++) {
+	for (pos = 0; pos < nframes; pos++) {
+	    latcorbuf[port][(latcorbuf_pos + pos) & (latcorbuf_len - 1)] =
+		in[port][pos];
+	}
+    }
+
     /* If bypass is on override all the stuff done by the crossover section,
      * limiter and so on */
     if (global_bypass) {
+	const unsigned int limiter_latency = (unsigned int)limiter.latency;
+
 	for (port = 0; port < nchannels; port++) {
 	    for (pos = 0; pos < nframes; pos++) {
-		out[port][pos] = in_buf[port][(in_ptr + pos - latency) & BUF_MASK];
+		out[port][pos] = latcorbuf[port][(latcorbuf_pos +
+			pos - limiter_latency - nframes) & (latcorbuf_len - 1)];
 	    }
 	}
     }
+    latcorbuf_pos += nframes;
 
     for (pos = 0; pos < nframes; pos++) {
 	for (port = 0; port < nchannels; port++) {
