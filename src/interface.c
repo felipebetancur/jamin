@@ -30,6 +30,7 @@ GtkWidget*
 create_window1 (void)
 {
   GtkWidget *window1;
+  GdkPixbuf *window1_icon_pixbuf;
   GtkWidget *outer_vbox;
   GtkWidget *menubar1;
   GtkWidget *menuitem1;
@@ -535,6 +536,12 @@ create_window1 (void)
   GTK_WIDGET_SET_FLAGS (window1, GTK_CAN_FOCUS);
   gtk_window_set_title (GTK_WINDOW (window1), _("JAMin"));
   gtk_window_set_default_size (GTK_WINDOW (window1), 949, 680);
+  window1_icon_pixbuf = create_pixbuf ("LED_green_on.xpm");
+  if (window1_icon_pixbuf)
+    {
+      gtk_window_set_icon (GTK_WINDOW (window1), window1_icon_pixbuf);
+      gdk_pixbuf_unref (window1_icon_pixbuf);
+    }
 
   outer_vbox = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (outer_vbox, "outer_vbox");
