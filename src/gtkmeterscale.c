@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: gtkmeterscale.c,v 1.8 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: gtkmeterscale.c,v 1.9 2005/02/22 17:21:54 theno23 Exp $
  */
 
 #include <math.h>
@@ -388,9 +388,9 @@ static float iec_scale(float db)
     } else if (db < -60.0f) {
 	def = (db + 70.0f) * 0.25f;
     } else if (db < -50.0f) {
-	def = (db + 60.0f) * 0.5f + 5.0f;
+	def = (db + 60.0f) * 0.5f + 2.5f;
     } else if (db < -40.0f) {
-	def = (db + 50.0f) * 0.75f + 7.5;
+	def = (db + 50.0f) * 0.75f + 7.5f;
     } else if (db < -30.0f) {
 	def = (db + 40.0f) * 1.5f + 15.0f;
     } else if (db < -20.0f) {

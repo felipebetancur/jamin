@@ -1,7 +1,7 @@
 2005-01-22  Steve Harris  <steve@plugin.org.uk>
 
 	* gtkmeter.c: fixed incorrect constant in gtkmeter.c that caused the
-	  meter to just between -50 and -60 dB's.
+	  meter to jump between -50 and -60 dB's.
 
 2004-12-26  Jack O'Quin  <joq@io.com>
 
