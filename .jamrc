@@ -73,7 +73,7 @@ style "thai-gold"
 
    	bg_pixmap[NORMAL] = "thai-gold.png"
     	bg_pixmap[ACTIVE] = "thai-gold.png"
-  	bg_pixmap[PRELIGHT] = "thai-gold.png"
+  	bg_pixmap[PRELIGHT] = "thai-gold-knobs.png"
   # 	bg_pixmap[INSENSITIVE] = "brushed-steel.png"
 
    # text and borders
