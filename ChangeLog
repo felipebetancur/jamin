@@ -1,7 +1,20 @@
+2004-01-13  Steve Harris  <steve@plugin.org.uk>
+
+	* hdeq.c (hdeq_low2mid_set, hdeq_mid2high_set, comp_curve_box_motion):
+	  replace stack allocated char arrays with pointers and
+	  g_strdup_printf
+
+	* scenes.c (clear_scene, unset_scene_buttons): replace stack
+	  allocated char arrays with pointers and g_strdup_printf
+
+	* configure.in: version -> 0.8.2
+
 2004-01-12  Steve Harris  <steve@plugin.org.uk>
 
 	* hdeq.c (hdeq_curve_motion): Changed stack alloced sprintfs to be
 	  heap alloced (with g_strdup_printf)
+
+	* configure.in: version -> 0.8.1
 
 2004-01-12  Jack O'Quin  <joq@io.com>
 
