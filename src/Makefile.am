@@ -5,13 +5,14 @@ INCLUDES = \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	@PACKAGE_CFLAGS@
 
-jam_CFLAGS = -g -ffast-math
+jamin_CFLAGS = -g -ffast-math
+jamin_LDFLAGS = -lm
 
-bin_PROGRAMS = jam
+bin_PROGRAMS = jamin
 
 # EXTRA_DIST = *.h
 
-jam_SOURCES = \
+jamin_SOURCES = \
 	main.c main.h \
 	support.c support.h \
 	interface.c interface.h \
@@ -28,6 +29,4 @@ jam_SOURCES = \
 	compressor-ui.c compressor-ui.h \
 	gtkmeter.c gtkmeter.h
 
-jam_LDADD = @PACKAGE_LIBS@
-
-jam_LDFLAGS = -lm
+jamin_LDADD = @PACKAGE_LIBS@
