@@ -272,39 +272,6 @@ void io_get_status(jack_status_t *jp)
 }
 
 
-void io_print_status()
-{
-    char *state;
-    jack_status_t j;
-
-    io_get_status(&j);
-
-    printf("JACK %s running realtime.\n", j.realtime? "is": "not");
-    printf("  buffer size: %ld\n", j.buf_size);
-    printf("  sample rate: %ld\n", j.sample_rate);
-    printf("  latency: %ld\n", j.latency);
-    printf("  CPU load: %.2f%%\n", j.cpu_load);
-    if (j.tinfo.valid & JackTransportState) {
-	switch (j.tinfo.transport_state) {
-	case JackTransportStopped:
-	    state = "Stopped";
-	    break;
-	case JackTransportRolling:
-	    state = "Rolling";
-	    break;
-	case JackTransportLooping:
-	    state = "Looping";
-	    break;
-	default:
-	    state = "[unknown]";
-	}
-    } else {
-	state = "[not valid]";
-    }
-    printf("  transport state: %s\n", state);
-}
-
-
 /* io_set_latency -- set DSP engine latencies. */
 void io_set_latency(int source, jack_nframes_t delay)
 {
@@ -996,8 +963,6 @@ void io_activate()
      * additional latency caused by the extra buffering. */
     io_set_latency(LAT_BUFFERS, (use_dsp_thread? dsp_block_size: 0));
     pthread_mutex_unlock(&lock_dsp);
-
-    IF_DEBUG(DBG_TERSE, io_print_status());
 }
 
 /* vi:set ts=8 sts=4 sw=4: */
