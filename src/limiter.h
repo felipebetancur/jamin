@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: limiter.h,v 1.6 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: limiter.h,v 1.7 2003/11/20 08:43:40 theno23 Exp $
  */
 
 #ifndef LIMITER_H
@@ -26,11 +26,13 @@
 #define LIM_IN_2          4
 #define LIM_OUT_1         5
 #define LIM_OUT_2         6
+#define LIM_LATENCY       7
 
 typedef struct {
 	float limit;
 	float delay;
 	float attenuation;
+	float latency;
 	LADSPA_Handle handle;
 } lim_settings;
 
@@ -43,6 +45,7 @@ static inline void lim_connect(plugin *p, lim_settings *s, float *left, float
 	plugin_connect_port(p, s->handle, LIM_IN_2, right);
 	plugin_connect_port(p, s->handle, LIM_OUT_1, left);
 	plugin_connect_port(p, s->handle, LIM_OUT_2, right);
+	plugin_connect_port(p, s->handle, LIM_LATENCY, &(s->latency));
 
 	/* Make sure that it is set to something */
 	s->limit = 0.0f;
