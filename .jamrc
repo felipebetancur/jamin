@@ -160,6 +160,18 @@ style "menu_text" = "radio_button"
 
 }
 
+style "sys_label" = "radio_button"
+
+{
+	fg[PRELIGHT] = {0.32, 0.39, 0.45 }
+	fg[NORMAL] = { 1.0, 1.0, 1.0 }	
+	fg[INSENSITIVE] = { 0.5, 0.5, 0.5 }	# grey
+	bg[PRELIGHT] = {0.32, 0.39, 0.45 }
+	bg[NORMAL] = { 1.0, 1.0, 1.0 }	
+
+}
+
+
 style "ruler"
 {
   font = "-adobe-helvetica-medium-r-normal--*-80-*-*-*-*-*-*"
@@ -203,5 +215,4 @@ widget_class "*GtkNotebook" style "text"
 # This sets all the buttons that are children of "window1" to
 # the main_button style.  These must be documented to be taken advantage of.
 widget "window1.*GtkButton*" style "main_button"
-#widget "menu1.*GtkRadioButton*" style "menu_text"
 
