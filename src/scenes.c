@@ -31,7 +31,7 @@ static GtkMenu           *scene_menu;
 static GtkImage          *l_scene[NUM_SCENES];
 static GtkEventBox       *l_scene_eventbox[NUM_SCENES];
 static GtkEntry          *l_scene_name[NUM_SCENES];
-static int               current_scene = -1, menu_scene;
+static int               current_scene = -1, menu_scene, prev_scene = -999;
 static gboolean          scene_loaded[NUM_SCENES];
 static s_state           scene_state[NUM_SCENES];
 
@@ -349,6 +349,12 @@ void unset_scene_buttons ()
 }
 
 
+int get_previous_scene_num ()
+{
+  return (prev_scene);
+}
+
+
 /*  Set the current scene button to a warning.  This is done whenever any 
     state changes are made while a scene is active.  */
 
@@ -359,24 +365,28 @@ void set_scene_warning_button ()
 
   i = current_scene % 100;
 
+  if (current_scene < 100 && current_scene > -1)
+    {
+      prev_scene = i;
 
-    if (current_scene != -1)
-      {
-        gtk_image_set_from_stock (l_scene[i], GTK_STOCK_DIALOG_WARNING, 
-                                  GTK_ICON_SIZE_BUTTON);
-        current_scene = changed_scene_no(i);
-      }
+      gtk_image_set_from_stock (l_scene[i], GTK_STOCK_DIALOG_WARNING, 
+                                GTK_ICON_SIZE_BUTTON);
+      current_scene = changed_scene_no(i);
+    }
 }
 
-/* Return the magic scene number that will be used to represent that scene if it has had unsaved changes made */
+
+/* Return the magic scene number that will be used to represent that scene if 
+   it has had unsaved changes made */
 
 int changed_scene_no(int s)
 {
 	return s + 100;
 }
 
+
 /* return TRUE if the scene number passed in represents a changes scene and
- * FALSE otherwise */
+   FALSE otherwise */
 
 int is_changed_scene(int s)
 {

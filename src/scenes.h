@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: scenes.h,v 1.10 2003/12/12 15:04:01 theno23 Exp $
+ *  $Id: scenes.h,v 1.11 2003/12/21 19:38:06 jdepner Exp $
  */
 
 #ifndef SCENES_H
@@ -37,6 +37,7 @@ const char *get_scene_name(int number);
 void set_scene_name (int number, const char *scene_name);
 void unset_scene_buttons ();
 s_state *get_scene (int number);
+int get_previous_scene_num ();
 void set_scene_warning_button ();
 void set_num_scene_warning_button (int scene);
 int changed_scene_no(int s);

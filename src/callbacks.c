@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.114 2003/12/21 14:15:02 joq Exp $
+ *  $Id: callbacks.c,v 1.115 2003/12/21 19:38:06 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1327,7 +1327,12 @@ void
 on_about1_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-    help_message (general_help);
+  GtkImage     *splash;
+
+  splash = (GtkImage *) gtk_image_new_from_file ("/usr/local/share/jamin/JAMin54.jpg");
+
+  
+  help_message (general_help);
 }
 
 
@@ -1335,7 +1340,7 @@ void
 on_about_prerequisites1_activate       (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-    help_message (prerequisites_help);
+  help_message (prerequisites_help);
 }
 
 
