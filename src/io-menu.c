@@ -2,14 +2,28 @@
  *  iomenu.c -- GTK-2 interface for managing JACK port connections.
  *
  *  This is intended as a general, reusable interface for applications
- *  using GTK-2 and JACK.  The bind_iomenu() initialization should be
- *  called before entering gtk_main().  If using glade-2, define a
- *  menubar item named "jack_ports" and call iomenu_pull_down_ports()
- *  from its "activate" signal handler.
+ *  using GTK-2 and JACK.  
+ *
+ *  The bind_iomenu() initialization should be called before entering gtk_main().  
+ *
+ *  If using glade-2, define a menubar item named "jack_ports"
+ *  and call iomenu_pull_down_ports() from its "activate" signal handler.
  *
  *  The current implementation still uses some JAMin global variables
  *  to access JACK client and port information.  This should be passed
- *  to initialization, instead.
+ *  to initialization, instead. Until then...
+ *
+ *  You need these globals somewhere:
+ *
+ *  #define nchannels 2    -- The actual number of ports your app has
+ *  extern jack_client_t *client;
+ *  extern jack_port_t *input_ports[];
+ *  extern jack_port_t *output_ports[];
+ *  
+ *  After that you need to set up the various i/o ports in 
+ *
+ *	iomenu_pull_down_ports()
+ *
  */
 
 /*
@@ -25,7 +39,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.c,v 1.13 2003/11/24 21:02:06 joq Exp $
+ *  $Id: io-menu.c,v 1.14 2003/11/25 19:26:32 kotau Exp $
  */
 
 #include <stdio.h>
@@ -44,8 +58,8 @@
 
 static GtkWidget   *menubar_item;	/* "Ports" menubar item */
 static GtkWidget   *pulldown_menu;	/* "Ports" pulldown menu */
-static GtkWidget   *connect_item;	/* "Connect" menubar item */
-static GtkWidget   *disconnect_item;	/* "Disconnect" menubar item */
+static GtkWidget   *in_item;		/* "Connect" menubar item */
+static GtkWidget   *out_item;		/* "Disconnect" menubar item */
 
 static jack_port_t *selected_port;	/* currently selected port */
 
@@ -138,13 +152,21 @@ GtkWidget *
 iomenu_connection_item(iomenu_callback handler, jack_port_t *port,
 		       const char *connection_name)
 {
-    GtkWidget *item = gtk_menu_item_new_with_label(connection_name);
+    GtkWidget *item = gtk_check_menu_item_new_with_label(connection_name);
+    
+    if(!jack_port_connected_to(port, connection_name)){
+	handler = iomenu_connect;
+    } else {
+	handler = iomenu_disconnect;
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
+    }
 
     /* iomenu_select_port() must run before the other callback */
-    g_signal_connect(G_OBJECT(item), "activate",
+    g_signal_connect(G_OBJECT(item), "toggled",
 		     G_CALLBACK(iomenu_select_port), port);
-    g_signal_connect(G_OBJECT(item), "activate",
+    g_signal_connect(G_OBJECT(item), "toggled",
 		     G_CALLBACK(handler), (char *) connection_name);
+    
     return item;
 }
 
@@ -215,40 +237,37 @@ void
 iomenu_pull_down_ports()
 {
     int i;
-    static GtkWidget *cports_menu = NULL; /* connection ports menu */
-    static GtkWidget *dports_menu = NULL; /* disconnection ports menu */
+    static GtkWidget *iports_menu = NULL; /* In ports menu */
+    static GtkWidget *oports_menu = NULL; /* Out ports menu */
 
     if (iomenu_list_jack_ports() != 0)	/* not connected to JACK? */
 	return;
 
     /* recreate port menu widgets, connect to menubar items */
-    if (cports_menu) {
-	gtk_widget_destroy(cports_menu);
-	gtk_widget_destroy(dports_menu);
+    if (iports_menu) {
+	gtk_widget_destroy(iports_menu);
+	gtk_widget_destroy(oports_menu);
     }
-    cports_menu = gtk_menu_new();
-    dports_menu = gtk_menu_new();
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(connect_item), cports_menu);
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(disconnect_item), dports_menu);
+    iports_menu = gtk_menu_new();
+    oports_menu = gtk_menu_new();
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(in_item), iports_menu);
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(out_item), oports_menu);
 
     /* create menu items for each input port */
     for (i = 0; i < nchannels; ++i) {
-	iomenu_add_port(cports_menu, iomenu_connect, input_ports[i]);
-	iomenu_add_port(dports_menu, iomenu_disconnect, input_ports[i]);
+	iomenu_add_port(iports_menu, iomenu_connect, input_ports[i]);
     }
 
     /* separate in and out ports */
-    iomenu_add_item(cports_menu, gtk_separator_menu_item_new());
-    iomenu_add_item(dports_menu, gtk_separator_menu_item_new());
+//    iomenu_add_item(cports_menu, gtk_separator_menu_item_new());
 
     /* create menu items for each output port */
     for (i = 0; i < nchannels; ++i) {
-	iomenu_add_port(cports_menu, iomenu_connect, output_ports[i]);
-	iomenu_add_port(dports_menu, iomenu_disconnect, output_ports[i]);
+	iomenu_add_port(oports_menu, iomenu_connect, output_ports[i]);
     }
 
-    gtk_widget_show(cports_menu);
-    gtk_widget_show(dports_menu);
+    gtk_widget_show(iports_menu);
+    gtk_widget_show(oports_menu);
 }
 
 /* initialization */
@@ -267,11 +286,11 @@ bind_iomenu()
      * submenus are not created until the pulldown is selected. */
     pulldown_menu = gtk_menu_new();
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(menubar_item), pulldown_menu);
-    connect_item =
+    in_item =
 	iomenu_add_item(pulldown_menu,
-			gtk_menu_item_new_with_label("Connect"));
-    disconnect_item =
+			gtk_menu_item_new_with_label("In"));
+    out_item =
 	iomenu_add_item(pulldown_menu,
-			gtk_menu_item_new_with_label("Disconnect"));
+			gtk_menu_item_new_with_label("Out"));
     gtk_widget_show(pulldown_menu);
 }

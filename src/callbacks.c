@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.105 2003/11/24 05:02:08 joq Exp $
+ *  $Id: callbacks.c,v 1.106 2003/11/25 19:26:32 kotau Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1615,8 +1615,9 @@ void
 on_jack_ports_activate                 (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
+
     // fprintf(stderr, "JACK Ports menu selected.\n");
-    iomenu_pull_down_ports();
+      iomenu_pull_down_ports(menuitem);
 }
 
 void
