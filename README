@@ -46,4 +46,9 @@ requirement.
        LADSPA SDK		<http://www.ladspa.org>
        swh-plugins >= 0.4.2	<http://www.plugin.org.uk>
        fftw-3 >= 3.0.0		<http://www.fftw.org>
-	 must have float support enabled
+	 should have float support enabled
+
+When compiling you can request that JAMin links with the (default) double
+precision FFTW library (using ./configure --enable-double-fft), but this is
+unlikly to result in a JAMin that will run in realtime, nad is untested. You
+have been warned.
