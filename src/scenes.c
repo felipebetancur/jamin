@@ -19,6 +19,26 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+
+/*
+
+    A few programmer notes:
+
+    We're trying to stay away from extern'ed global variables as much as
+    possible (I've been tainted by C++  ;-)  If you need to access a variable
+    that is used here (set or get) write a liitle one line function that
+    returns or sets it.  You can call it scenes_set_... or scenes_get_...  Yes,
+    there is some overhead associated with it but it makes tracking things
+    much easier.
+
+    Scene numbers for scenes that have been modified are set to the scene
+    number plus 100 (yeah, I know, it's kinda cheesy but it works).  A scene
+    number of -1 means use whatever scene is current or last had its button
+    pressed.
+
+*/
+
+
 #include <glib.h>
 
 #include "scenes.h"
@@ -50,6 +70,7 @@ void bind_scenes ()
     int             i, j;
     char            *name;
 
+
     GtkTooltips *tooltips = gtk_tooltips_new();
 
     name = malloc(sizeof(char) * 32);
@@ -58,6 +79,11 @@ void bind_scenes ()
 
     current_scene = -1;
     menu_scene = -1;
+
+
+    /*  Looking up the widgets we'll need to work with based on the name
+        that was set in glade-2.  If you change the widget name in glade-2
+        you'll break the app.  */
 
     for (i = 0 ; i < NUM_SCENES ; i++)
       {
@@ -71,6 +97,9 @@ void bind_scenes ()
           GTK_EVENT_BOX (lookup_widget (main_window, name));
 
         scene_loaded[i] = FALSE;
+
+
+        /*  Initialize the scene states.  */
 
         for (j = 0 ; j < S_SIZE ; j++) scene_state[i].value[j] = 0.0;
 
@@ -86,17 +115,16 @@ void bind_scenes ()
 
 
         gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[i]), 
-                              g_strdup_printf ("Scene %d, right click for menu", 
-                                               i + 1), NULL);
+                              g_strdup_printf 
+                              ("Scene %d, right click for menu", i + 1), NULL);
       }
 
     free(name);
 
 
-    /*  We're cheating here.  I've set the first four images in the scene
+    /*  We're cheating here.  I've set the first four images in the glade scene
         "buttons" to be green_on, green_off, yellow, and red so I can grab
         easily.  Don't change them in glade!  JCD  */
-
 
     for (i = 0 ; i < 4 ; i++)
       buttons[i] = GTK_IMAGE (gtk_image_new_from_pixbuf (gtk_image_get_pixbuf 
@@ -118,6 +146,8 @@ void select_scene (int number, int button)
     gboolean        warning;
 
 
+    /*  Check for modified scene.  */
+
     warning = FALSE;
     if (number > 99)
       {
@@ -126,15 +156,17 @@ void select_scene (int number, int button)
       }
 
 
-    /*  Left button selects the scene.  */
-
     switch (button)
       {
+        /*  Left button selects the scene.  */
+
       case 1:
         if (scene_loaded[number])
           {
             for (i = 0 ; i < NUM_SCENES ; i++)
               {
+                /*  The matching scene.  */
+
                 if (i == number)
                   {
                     if (warning)
@@ -185,6 +217,11 @@ void select_scene (int number, int button)
                         gtk_image_set_from_pixbuf (l_scene[i], LED_green_on);
                       }
                   }
+
+
+                /*  Non-matching scenes - set to green off or red if not 
+                    loaded.  */
+
                 else
                   {
                     if (scene_loaded[i])
@@ -243,7 +280,7 @@ s_state *get_scene (int number)
 
 /*  Set the scene state from the current settings.  Get the scene name from
     the scene_name text entry widget.  If scene_num is -1 use the last pressed
-    scene button number.  */
+    scene button number (menu_scene).  */
 
 void set_scene (int scene_num)
 {
@@ -259,6 +296,8 @@ void set_scene (int scene_num)
 
     if (scene_num >= 0) menu_scene = prev_scene = scene_num;
 
+
+    /*  Grab the current state.  */
 
     for (i = 0 ; i < S_SIZE ; i++) 
       scene_state[menu_scene].value[i] = s_get_value(i);
@@ -279,12 +318,18 @@ void set_scene (int scene_num)
 
     for (i = 0 ; i < NUM_SCENES ; i++)
       {
+        /*  Matching scene.  */
+
         if (i == menu_scene)
           {
             gtk_image_set_from_pixbuf (l_scene[i], LED_green_on);
 
             current_scene = i;
           }
+
+
+        /*  Non-matching scene - set to green off or red.  */
+
         else
           {
             if (scene_loaded[i])
@@ -307,9 +352,9 @@ void set_scene (int scene_num)
 }
 
 
-/* Gets the scene name */
+/* Gets the scene name for scene "number".  */
 
-const char *get_scene_name(int number)
+const char *get_scene_name (int number)
 {
   int        i;
 
@@ -349,8 +394,8 @@ void set_scene_name (int number, const char *scene_name)
 
     strcpy (scene_state[menu_scene].description, l_scene_name[i]);
 
-    /*  Set the tooltip to the full name (it may be too long to show up
-        completely in the text widget).  */
+
+    /*  Set the tooltip to the name.  */
 
     gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[menu_scene]), 
                           scene_state[menu_scene].description, NULL);
@@ -368,6 +413,7 @@ void clear_scene (int scene_num)
     GtkTooltips *tooltips = gtk_tooltips_new();
 
 
+    /*  Strip off the warning if set.  */
 
     i = scene_num % 100;
 
@@ -379,9 +425,15 @@ void clear_scene (int scene_num)
                           g_strdup_printf ("Scene %d, right click for menu", 
                                            menu_scene + 1), NULL);
 
+
+    /*  Set the button to red.  */
+
     gtk_image_set_from_pixbuf (l_scene[menu_scene], LED_red);
 
     scene_loaded[menu_scene] = FALSE;
+
+
+    /*  Resety the scene name to the default.  */
 
     strcpy (l_scene_name[menu_scene], g_strdup_printf ("Scene %d", 
                                                        menu_scene + 1));
@@ -389,8 +441,7 @@ void clear_scene (int scene_num)
 
 
 /*  Set all of the buttons to unselected state.  This should be done whenever 
-    there is a state change.  I'm not sure quite where to put the calls at
-    present.  */
+    there is a state change.  */
 
 void unset_scene_buttons ()
 {
@@ -408,6 +459,8 @@ void unset_scene_buttons ()
       }
 }
 
+
+/*  This is used in state.c to find out if we need to undo/redo.  */
 
 int get_previous_scene_num ()
 {

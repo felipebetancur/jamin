@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.48 2004/04/09 16:25:53 jdepner Exp $
+ *  $Id: state.c,v 1.49 2004/04/10 18:25:46 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -62,8 +62,6 @@ static int saved_scene;
 static float crossfade_time = 1.0;
 
 static void s_set_events(int id, float value);
-void set_EQ_curve_values ();
-void unset_scene_buttons ();
 void s_update_title();
 void s_history_add(const char *description);
 
@@ -343,7 +341,7 @@ void s_undo()
         if (crc[0] == crc[1]) set_scene_button (scene);
       }
 
-    set_EQ_curve_values ();
+    set_EQ_curve_values (0, 0.0);
     last_changed = S_LOAD;
 }
 
@@ -388,7 +386,7 @@ void s_redo()
                 set_scene_warning_button (scene);
               }
           }
-        set_EQ_curve_values ();
+        set_EQ_curve_values (0, 0.0);
       }
 }
 
@@ -619,7 +617,7 @@ void s_load_session (const char *fname)
     }
 
     hdeq_set_xover ();
-    set_EQ_curve_values ();
+    set_EQ_curve_values (0, 0.0);
 
     s_clear_history();
 }

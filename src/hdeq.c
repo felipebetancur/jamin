@@ -1215,7 +1215,7 @@ void hdeq_curve_init (GtkWidget *widget)
 
     /*  Setting a callback based on notch gain changes.  */
 
-    s_set_callback(S_NOTCH_GAIN(0), set_EQ_curve_values);
+    s_set_callback (S_NOTCH_GAIN(0), set_EQ_curve_values);
 
     EQ_realized = 1;
 }
@@ -2120,7 +2120,10 @@ void hdeq_curve_set_label (char *string)
 }
 
 
-/*  Gets the gain values from the state functions and sets up everything.  */
+/*  Gets the gain values from the state functions and sets up everything.  
+    We're carrying the two unused variable (id, value) so that we can use this
+    as a callback that we set up with s_set_callback above.  They're not ever
+    used for anything.  */
 
 void set_EQ_curve_values (int id, float value)
 {
