@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: scenes.h,v 1.12 2004/01/08 15:59:33 jdepner Exp $
+ *  $Id: scenes.h,v 1.13 2004/04/01 01:42:08 jdepner Exp $
  */
 
 #ifndef SCENES_H
@@ -25,7 +25,7 @@
 #include "state.h"
 
 
-#define NUM_SCENES 6
+#define NUM_SCENES 20
 
 
 void bind_scenes ();

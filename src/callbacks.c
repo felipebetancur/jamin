@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.136 2004/02/22 18:18:02 theno23 Exp $
+ *  $Id: callbacks.c,v 1.137 2004/04/01 01:42:07 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -56,9 +56,12 @@
 /* vi:set ts=8 sts=4 sw=4: */
 
 
-static char             *help_ptr = general_help;
+static char             *help_ptr = general_help, scene_name_text[100];
 static gboolean         text_focus = FALSE;
 static GtkToggleButton  *l_solo_button[XO_NBANDS], *l_bypass_button[XO_NBANDS];
+static int              hot_scene = 0;
+static GtkWidget        *scene_name_dialog;
+static GtkEntry         *l_scene_name_entry;
 
 
 void
@@ -182,6 +185,11 @@ on_window1_show                        (GtkWidget       *widget,
                                                        "high_solo"));
   l_bypass_button[2] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
                                                        "high_bypass"));
+
+  scene_name_dialog = create_scene_name_dialog ();
+
+  l_scene_name_entry = GTK_ENTRY (lookup_widget (scene_name_dialog, 
+                                                 "scene_name_entry"));
 }
 
 
@@ -883,6 +891,7 @@ on_scene1_eventbox_button_press_event  (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
+  hot_scene = 0;
   select_scene (0, event->button);
 
   return FALSE;
@@ -894,6 +903,7 @@ on_scene2_eventbox_button_press_event  (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
+  hot_scene = 1;
   select_scene (1, event->button);
 
   return FALSE;
@@ -905,6 +915,7 @@ on_scene3_eventbox_button_press_event  (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
+  hot_scene = 2;
   select_scene (2, event->button);
 
   return FALSE;
@@ -916,6 +927,7 @@ on_scene4_eventbox_button_press_event  (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
+  hot_scene = 3;
   select_scene (3, event->button);
 
   return FALSE;
@@ -927,6 +939,7 @@ on_scene5_eventbox_button_press_event  (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
+  hot_scene = 4;
   select_scene (4, event->button);
 
   return FALSE;
@@ -938,7 +951,176 @@ on_scene6_eventbox_button_press_event  (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
+  hot_scene = 5;
   select_scene (5, event->button);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene7_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  hot_scene = 6;
+  select_scene (6, event->button);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene8_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  hot_scene = 7;
+  select_scene (7, event->button);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene9_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  hot_scene = 8;
+  select_scene (8, event->button);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene10_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  hot_scene = 9;
+  select_scene (9, event->button);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene11_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  hot_scene = 10;
+  select_scene (10, event->button);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene12_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  hot_scene = 11;
+  select_scene (11, event->button);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene13_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  hot_scene = 12;
+  select_scene (12, event->button);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene14_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  hot_scene = 13;
+  select_scene (13, event->button);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene15_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  hot_scene = 14;
+  select_scene (14, event->button);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene16_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  hot_scene = 15;
+  select_scene (15, event->button);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene17_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  hot_scene = 16;
+  select_scene (16, event->button);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene18_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  hot_scene = 17;
+  select_scene (17, event->button);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene19_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  hot_scene = 18;
+  select_scene (18, event->button);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene20_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  hot_scene = 19;
+  select_scene (19, event->button);
 
   return FALSE;
 }
@@ -957,54 +1139,6 @@ on_clearscene_activate                 (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
     clear_scene (-1);
-}
-
-
-void
-on_scene1_name_changed                 (GtkEditable     *editable,
-                                        gpointer         user_data)
-{
-    set_scene_name (0, NULL);
-}
-
-
-void
-on_scene2_name_changed                 (GtkEditable     *editable,
-                                        gpointer         user_data)
-{
-    set_scene_name (1, NULL);
-}
-
-
-void
-on_scene3_name_changed                 (GtkEditable     *editable,
-                                        gpointer         user_data)
-{
-    set_scene_name (2, NULL);
-}
-
-
-void
-on_scene4_name_changed                 (GtkEditable     *editable,
-                                        gpointer         user_data)
-{
-    set_scene_name (3, NULL);
-}
-
-
-void
-on_scene5_name_changed                 (GtkEditable     *editable,
-                                        gpointer         user_data)
-{
-    set_scene_name (4, NULL);
-}
-
-
-void
-on_scene6_name_changed                 (GtkEditable     *editable,
-                                        gpointer         user_data)
-{
-    set_scene_name (5, NULL);
 }
 
 
@@ -1512,6 +1646,42 @@ on_window1_key_press_event             (GtkWidget       *widget,
       case GDK_KP_6:
       case GDK_KP_Right:
         scene = 5;
+        break;
+
+ 
+        /*  Select scene 7  */
+
+      case GDK_7:
+      case GDK_KP_7:
+      case GDK_KP_Home:
+        scene = 6;
+        break;
+
+ 
+        /*  Select scene 8  */
+
+      case GDK_8:
+      case GDK_KP_8:
+      case GDK_KP_Up:
+        scene = 7;
+        break;
+
+ 
+        /*  Select scene 9  */
+
+      case GDK_9:
+      case GDK_KP_9:
+      case GDK_KP_Page_Up:
+        scene = 8;
+        break;
+
+ 
+        /*  Select scene 10  */
+
+      case GDK_0:
+      case GDK_KP_0:
+      case GDK_KP_Insert:
+        scene = 9;
         break;
 
  
@@ -2232,5 +2402,56 @@ on_limiter_bypass_event_box_enter_notify_event
   help_ptr = limiter_bypass_help;
 
   return FALSE;
+}
+
+
+/*  Pop up the scene name dialog.  */
+
+void popup_scene_name_dialog (int updown)
+{
+  if (updown)
+    {
+      gtk_widget_show (scene_name_dialog);
+    }
+  else
+    {
+      gtk_widget_hide (scene_name_dialog);
+    }
+}
+
+
+void
+on_name_activate                       (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  gtk_window_set_title (GTK_WINDOW (scene_name_dialog), 
+                        get_scene_name (hot_scene));
+
+  popup_scene_name_dialog (1);
+}
+
+
+void
+on_scene_name_entry_changed            (GtkEditable     *editable,
+                                        gpointer         user_data)
+{
+  strcpy (scene_name_text, gtk_entry_get_text (l_scene_name_entry));
+}
+
+
+void
+on_scene_name_cancel_clicked           (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  popup_scene_name_dialog (0);
+}
+
+
+void
+on_scene_name_ok_clicked               (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  set_scene_name (hot_scene, scene_name_text);
+  popup_scene_name_dialog (0);
 }
 

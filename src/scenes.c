@@ -31,7 +31,7 @@
 static GtkMenu           *scene_menu;
 static GtkImage          *l_scene[NUM_SCENES];
 static GtkEventBox       *l_scene_eventbox[NUM_SCENES];
-static GtkEntry          *l_scene_name[NUM_SCENES];
+static char              l_scene_name[NUM_SCENES][100];
 static int               current_scene = -1, menu_scene, prev_scene = -999;
 static gboolean          scene_loaded[NUM_SCENES];
 static s_state           scene_state[NUM_SCENES];
@@ -61,9 +61,7 @@ void bind_scenes ()
         sprintf (name, "scene%1d_eventbox", i + 1);
         l_scene_eventbox[i] = 
           GTK_EVENT_BOX (lookup_widget (main_window, name));
-        sprintf (name, "scene%1d_name", i + 1);
-        l_scene_name[i] = 
-          GTK_ENTRY (lookup_widget (main_window, name));
+        sprintf (l_scene_name[i], "scene%1d_name", i + 1);
         scene_loaded[i] = FALSE;
         scene_state[i].description = NULL; 
         gtk_widget_set_sensitive ((GtkWidget *) l_scene[i], FALSE);
@@ -182,9 +180,9 @@ s_state *get_scene (int number)
 void set_scene (int scene_num, gboolean morph)
 {
     int         i;
-    char        *name = NULL;
 
     GtkTooltips *tooltips = gtk_tooltips_new();
+
 
     /*  Only save the scene settings if we're going from the current settings.
         That is, scene_num = -1.  Otherwise we may be in the middle of 
@@ -198,16 +196,11 @@ void set_scene (int scene_num, gboolean morph)
         for (i = 0 ; i < S_SIZE ; i++) 
           scene_state[menu_scene].value[i] = s_get_value(i);
 
-        name = malloc(sizeof(char) * 256);
-
-        strcpy (name, gtk_entry_get_text (l_scene_name[menu_scene]));
         scene_state[menu_scene].description = 
           (char *) realloc (scene_state[menu_scene].description, 
-                            strlen (name) + 1);
+                            strlen (l_scene_name[menu_scene]) + 1);
 
-        strcpy (scene_state[menu_scene].description, name);
-
-        free(name);
+        strcpy (scene_state[menu_scene].description, l_scene_name[menu_scene]);
       }
 
 
@@ -256,7 +249,7 @@ const char *get_scene_name(int number)
   i = number % 100;
 
   if (!scene_loaded[i]) return (NULL);
-  return gtk_entry_get_text(l_scene_name[i]);
+  return (l_scene_name[i]);
 }
 
 
@@ -266,7 +259,6 @@ const char *get_scene_name(int number)
 
 void set_scene_name (int number, const char *scene_name)
 {
-    char        *name = NULL;
     GtkTooltips *tooltips = gtk_tooltips_new();
     int         i;
 
@@ -280,32 +272,20 @@ void set_scene_name (int number, const char *scene_name)
     if (menu_scene < 0) return;
 
 
-    if (scene_name == NULL)
-      {
-        name = strdup(gtk_entry_get_text (l_scene_name[i]));
-      }
-    else
-      {
-        name = strdup(scene_name);
-
-        gtk_entry_set_text (l_scene_name[i], name);
-      }
+    if (scene_name != NULL)
+        strcpy (l_scene_name[i], scene_name);
 
     scene_state[i].description = 
         (char *) realloc (scene_state[i].description, 
-        strlen (name) + 1);
+        strlen (l_scene_name[i]) + 1);
 
-    strcpy (scene_state[menu_scene].description, name);
+    strcpy (scene_state[menu_scene].description, l_scene_name[i]);
 
     /*  Set the tooltip to the full name (it may be too long to show up
         completely in the text widget).  */
 
     gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[menu_scene]), 
                           scene_state[menu_scene].description, NULL);
-
-    free(name);
-
-    //set_scene_warning_button ();
 }
 
 
@@ -314,7 +294,6 @@ void set_scene_name (int number, const char *scene_name)
 
 void clear_scene (int scene_num)
 {
-    char        *name = NULL;
     int         i;
 
 
@@ -338,9 +317,8 @@ void clear_scene (int scene_num)
 
     scene_loaded[menu_scene] = FALSE;
 
-    name = g_strdup_printf("Scene %1d", menu_scene + 1);
-    gtk_entry_set_text (l_scene_name[menu_scene], name);
-    free(name);
+    strcpy (l_scene_name[menu_scene], g_strdup_printf ("Scene %1d", 
+                                                       menu_scene + 1));
 }
 
 
@@ -351,7 +329,6 @@ void clear_scene (int scene_num)
 void unset_scene_buttons ()
 {
     int         i;
-    char        *name;
 
 
     current_scene = -1;
@@ -364,9 +341,7 @@ void unset_scene_buttons ()
 
         gtk_widget_set_sensitive ((GtkWidget *) l_scene[i], FALSE);
 
-        name = g_strdup_printf("Scene %1d", i + 1);
-        gtk_entry_set_text (l_scene_name[i], name);
-        free(name);
+        strcpy (l_scene_name[i], g_strdup_printf("Scene %1d", i + 1));
       }
 }
 

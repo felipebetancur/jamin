@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.24 2004/02/22 12:55:59 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.25 2004/04/01 01:42:07 jdepner Exp $
  */
 
 char general_help[] = {
@@ -247,24 +247,26 @@ accelerator for this button is the 'b' key.\n"
 char scenes_help[] = {
 "    Scenes are used to save and recall an entire group of JAMin parameter \
 settings during a session.  After setting all of the parameters for a \
-specific section of music (verse, chorus, bridge) you can right click on a \
-scene button, use the menu to 'Set' that scene, then use the text box to \
-enter a name for that scene (Back Alley Fugue - verse).  You can recall these \
-settings by left clicking on the scene button.  A green button means that \
-the scene associated with this button is currently loaded.  A bright red \
-button means that scene settings are available for this button but not \
-currently loaded.  A dull red button means that no settings have been saved \
-for this scene button.  A yellow warning button means that this scene was \
-active but the settings have been changed.  If you want to save the settings \
-you must use the 'Set' entry in the right click menu.  You can clear settings \
-from a button using the right click menu and the 'Clear' entry.\n\n\
+specific section of music (verse, chorus, bridge) or a complete song you can \
+right click on a scene button, use the menu to 'Set' that scene, then use the \
+'Name' entry of the menu to enter a name for that scene (Back Alley Fugue - \
+verse).  You can recall these settings by left clicking on the scene button.  \
+A green button means that the scene associated with this button is currently \
+loaded.  A bright red button means that scene settings are available for this \
+button but not currently loaded.  A dull red button means that no settings \
+have been saved for this scene button.  A yellow warning button means that \
+this scene was active but the settings have been changed.  If you want to \
+save the settings you must use the 'Set' entry in the right click menu.  You \
+can clear settings from a button using the right click menu and the 'Clear' \
+entry.\n\n\
     The keyboard accelerators for the scene buttons are the number keys, \
-1 through 6.  Pressing the 1 key will cause scene 1 to become active.  The \
+1 through 0.  Pressing the 1 key will cause scene 1 to become active.  The \
 ALT modifier can be used to assign settings to a scene button (instead of \
 using the scene button menus).  Pressing <Alt>-1 will assign the current \
 settings to scene button 1 (you still need to set the name).  The CTRL \
 modifier can be used to clear a scene button.  Pressing <Ctrl>-1 will clear \
-that scene button.\n"
+that scene button.  Obviously these only work for the first ten scenes.  Use \
+of the higher number scenes can only be done using the mouse.\n"
 };
 
 
@@ -296,7 +298,7 @@ JAMin:\n\n\
 \tHome\t-\tPosition transport to beginning\n\
 \t<\t\t-\tMove transport backwards 5 sec.\n\
 \t>\t\t-\tMove transport forwards 5 sec.\n\
-\t1-6\t\t-\tSelect scene 1-6\n\
+\t1-0\t\t-\tSelect scene 1-10\n\
 \t<Ctrl>-o\t-\tOpen session file\n\
 \t<Ctrl>-s\t-\tSave to current session file\n\
 \t<Ctrl>-a\t-\tSave session file as new session file\n\

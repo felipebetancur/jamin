@@ -491,36 +491,52 @@ on_scene6_eventbox_button_press_event  (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
 
+gboolean
+on_scene7_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene8_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene9_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene11_eventbox_button_press_event (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene16_eventbox_button_press_event (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene18_eventbox_button_press_event (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene19_eventbox_button_press_event (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_scene20_eventbox_button_press_event (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
 void
 on_setscene_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
 void
 on_clearscene_activate                 (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_scene1_name_changed                 (GtkEditable     *editable,
-                                        gpointer         user_data);
-
-void
-on_scene2_name_changed                 (GtkEditable     *editable,
-                                        gpointer         user_data);
-
-void
-on_scene3_name_changed                 (GtkEditable     *editable,
-                                        gpointer         user_data);
-
-void
-on_scene4_name_changed                 (GtkEditable     *editable,
-                                        gpointer         user_data);
-
-void
-on_scene5_name_changed                 (GtkEditable     *editable,
-                                        gpointer         user_data);
-
-void
-on_scene6_name_changed                 (GtkEditable     *editable,
                                         gpointer         user_data);
 
 void
@@ -1135,4 +1151,20 @@ gboolean
 on_limiter_bypass_event_box_enter_notify_event
                                         (GtkWidget       *widget,
                                         GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+void
+on_name_activate                       (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_scene_name_entry_changed            (GtkEditable     *editable,
+                                        gpointer         user_data);
+
+void
+on_scene_name_cancel_clicked           (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_scene_name_ok_clicked               (GtkButton       *button,
                                         gpointer         user_data);

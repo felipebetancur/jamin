@@ -83,31 +83,49 @@ create_window1 (void)
   GtkWidget *status_label;
   GtkWidget *hseparator2;
   GtkWidget *scenes_eventbox;
+  GtkWidget *hbox60;
+  GtkWidget *scenes_label;
   GtkWidget *scenes_hbox;
-  GtkWidget *scene1_hbox;
   GtkWidget *scene1_eventbox;
   GtkWidget *scene1;
-  GtkWidget *scene1_name;
-  GtkWidget *scene2_hbox;
   GtkWidget *scene2_eventbox;
   GtkWidget *scene2;
-  GtkWidget *scene2_name;
-  GtkWidget *scene3_hbox;
   GtkWidget *scene3_eventbox;
   GtkWidget *scene3;
-  GtkWidget *scene3_name;
-  GtkWidget *scene4_hbox;
   GtkWidget *scene4_eventbox;
   GtkWidget *scene4;
-  GtkWidget *scene4_name;
-  GtkWidget *scene5_hbox;
   GtkWidget *scene5_eventbox;
   GtkWidget *scene5;
-  GtkWidget *scene5_name;
-  GtkWidget *scene6_hbox;
   GtkWidget *scene6_eventbox;
   GtkWidget *scene6;
-  GtkWidget *scene6_name;
+  GtkWidget *scene7_eventbox;
+  GtkWidget *scene7;
+  GtkWidget *scene8_eventbox;
+  GtkWidget *scene8;
+  GtkWidget *scene9_eventbox;
+  GtkWidget *scene9;
+  GtkWidget *scene10_eventbox;
+  GtkWidget *scene10;
+  GtkWidget *scene11_eventbox;
+  GtkWidget *scene11;
+  GtkWidget *scene12_eventbox;
+  GtkWidget *scene12;
+  GtkWidget *scene13_eventbox;
+  GtkWidget *scene13;
+  GtkWidget *scene14_eventbox;
+  GtkWidget *scene14;
+  GtkWidget *scene15_eventbox;
+  GtkWidget *scene15;
+  GtkWidget *scene16_eventbox;
+  GtkWidget *scene16;
+  GtkWidget *scene17_eventbox;
+  GtkWidget *scene17;
+  GtkWidget *scene18_eventbox;
+  GtkWidget *scene18;
+  GtkWidget *scene19_eventbox;
+  GtkWidget *scene19;
+  GtkWidget *scene20_eventbox;
+  GtkWidget *scene20;
   GtkWidget *hseparator1;
   GtkWidget *alignment2;
   GtkWidget *bighbox;
@@ -527,7 +545,7 @@ create_window1 (void)
   window1 = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_widget_set_name (window1, "window1");
   GTK_WIDGET_SET_FLAGS (window1, GTK_CAN_FOCUS);
-  gtk_window_set_title (GTK_WINDOW (window1), _("JAM"));
+  gtk_window_set_title (GTK_WINDOW (window1), _("JAMin"));
   gtk_window_set_default_size (GTK_WINDOW (window1), 949, -1);
 
   outer_vbox = gtk_vbox_new (FALSE, 0);
@@ -836,21 +854,27 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (outer_vbox), scenes_eventbox, FALSE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (scenes_eventbox), 3);
 
+  hbox60 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox60, "hbox60");
+  gtk_widget_show (hbox60);
+  gtk_container_add (GTK_CONTAINER (scenes_eventbox), hbox60);
+
+  scenes_label = gtk_label_new (_("Scenes"));
+  gtk_widget_set_name (scenes_label, "scenes_label");
+  gtk_widget_show (scenes_label);
+  gtk_box_pack_start (GTK_BOX (hbox60), scenes_label, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (scenes_label), GTK_JUSTIFY_LEFT);
+
   scenes_hbox = gtk_hbox_new (TRUE, 0);
   gtk_widget_set_name (scenes_hbox, "scenes_hbox");
   gtk_widget_show (scenes_hbox);
-  gtk_container_add (GTK_CONTAINER (scenes_eventbox), scenes_hbox);
+  gtk_box_pack_start (GTK_BOX (hbox60), scenes_hbox, TRUE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (scenes_hbox), 1);
-
-  scene1_hbox = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (scene1_hbox, "scene1_hbox");
-  gtk_widget_show (scene1_hbox);
-  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene1_hbox, TRUE, TRUE, 0);
 
   scene1_eventbox = gtk_event_box_new ();
   gtk_widget_set_name (scene1_eventbox, "scene1_eventbox");
   gtk_widget_show (scene1_eventbox);
-  gtk_box_pack_start (GTK_BOX (scene1_hbox), scene1_eventbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene1_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene1_eventbox, _("Right click for menu"), NULL);
 
   scene1 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
@@ -858,23 +882,10 @@ create_window1 (void)
   gtk_widget_show (scene1);
   gtk_container_add (GTK_CONTAINER (scene1_eventbox), scene1);
 
-  scene1_name = gtk_entry_new ();
-  gtk_widget_set_name (scene1_name, "scene1_name");
-  gtk_widget_show (scene1_name);
-  gtk_box_pack_start (GTK_BOX (scene1_hbox), scene1_name, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (scene1_name, 50, 24);
-  gtk_tooltips_set_tip (tooltips, scene1_name, _("Scene 1 name"), NULL);
-  gtk_entry_set_text (GTK_ENTRY (scene1_name), _("Scene 1"));
-
-  scene2_hbox = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (scene2_hbox, "scene2_hbox");
-  gtk_widget_show (scene2_hbox);
-  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene2_hbox, TRUE, TRUE, 0);
-
   scene2_eventbox = gtk_event_box_new ();
   gtk_widget_set_name (scene2_eventbox, "scene2_eventbox");
   gtk_widget_show (scene2_eventbox);
-  gtk_box_pack_start (GTK_BOX (scene2_hbox), scene2_eventbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene2_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene2_eventbox, _("Right click for menu"), NULL);
 
   scene2 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
@@ -882,23 +893,10 @@ create_window1 (void)
   gtk_widget_show (scene2);
   gtk_container_add (GTK_CONTAINER (scene2_eventbox), scene2);
 
-  scene2_name = gtk_entry_new ();
-  gtk_widget_set_name (scene2_name, "scene2_name");
-  gtk_widget_show (scene2_name);
-  gtk_box_pack_start (GTK_BOX (scene2_hbox), scene2_name, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (scene2_name, 50, 24);
-  gtk_tooltips_set_tip (tooltips, scene2_name, _("Scene 2 name"), NULL);
-  gtk_entry_set_text (GTK_ENTRY (scene2_name), _("Scene 2"));
-
-  scene3_hbox = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (scene3_hbox, "scene3_hbox");
-  gtk_widget_show (scene3_hbox);
-  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene3_hbox, TRUE, TRUE, 0);
-
   scene3_eventbox = gtk_event_box_new ();
   gtk_widget_set_name (scene3_eventbox, "scene3_eventbox");
   gtk_widget_show (scene3_eventbox);
-  gtk_box_pack_start (GTK_BOX (scene3_hbox), scene3_eventbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene3_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene3_eventbox, _("Right click for menu"), NULL);
 
   scene3 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
@@ -906,23 +904,10 @@ create_window1 (void)
   gtk_widget_show (scene3);
   gtk_container_add (GTK_CONTAINER (scene3_eventbox), scene3);
 
-  scene3_name = gtk_entry_new ();
-  gtk_widget_set_name (scene3_name, "scene3_name");
-  gtk_widget_show (scene3_name);
-  gtk_box_pack_start (GTK_BOX (scene3_hbox), scene3_name, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (scene3_name, 50, 24);
-  gtk_tooltips_set_tip (tooltips, scene3_name, _("Scene 3 name"), NULL);
-  gtk_entry_set_text (GTK_ENTRY (scene3_name), _("Scene 3"));
-
-  scene4_hbox = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (scene4_hbox, "scene4_hbox");
-  gtk_widget_show (scene4_hbox);
-  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene4_hbox, TRUE, TRUE, 0);
-
   scene4_eventbox = gtk_event_box_new ();
   gtk_widget_set_name (scene4_eventbox, "scene4_eventbox");
   gtk_widget_show (scene4_eventbox);
-  gtk_box_pack_start (GTK_BOX (scene4_hbox), scene4_eventbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene4_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene4_eventbox, _("Right click for menu"), NULL);
 
   scene4 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
@@ -930,23 +915,10 @@ create_window1 (void)
   gtk_widget_show (scene4);
   gtk_container_add (GTK_CONTAINER (scene4_eventbox), scene4);
 
-  scene4_name = gtk_entry_new ();
-  gtk_widget_set_name (scene4_name, "scene4_name");
-  gtk_widget_show (scene4_name);
-  gtk_box_pack_start (GTK_BOX (scene4_hbox), scene4_name, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (scene4_name, 50, 24);
-  gtk_tooltips_set_tip (tooltips, scene4_name, _("Scene 4 name"), NULL);
-  gtk_entry_set_text (GTK_ENTRY (scene4_name), _("Scene 4"));
-
-  scene5_hbox = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (scene5_hbox, "scene5_hbox");
-  gtk_widget_show (scene5_hbox);
-  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene5_hbox, TRUE, TRUE, 0);
-
   scene5_eventbox = gtk_event_box_new ();
   gtk_widget_set_name (scene5_eventbox, "scene5_eventbox");
   gtk_widget_show (scene5_eventbox);
-  gtk_box_pack_start (GTK_BOX (scene5_hbox), scene5_eventbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene5_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene5_eventbox, _("Right click for menu"), NULL);
 
   scene5 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
@@ -954,23 +926,10 @@ create_window1 (void)
   gtk_widget_show (scene5);
   gtk_container_add (GTK_CONTAINER (scene5_eventbox), scene5);
 
-  scene5_name = gtk_entry_new ();
-  gtk_widget_set_name (scene5_name, "scene5_name");
-  gtk_widget_show (scene5_name);
-  gtk_box_pack_start (GTK_BOX (scene5_hbox), scene5_name, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (scene5_name, 50, 24);
-  gtk_tooltips_set_tip (tooltips, scene5_name, _("Scene 5 name"), NULL);
-  gtk_entry_set_text (GTK_ENTRY (scene5_name), _("Scene 5"));
-
-  scene6_hbox = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (scene6_hbox, "scene6_hbox");
-  gtk_widget_show (scene6_hbox);
-  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene6_hbox, TRUE, TRUE, 0);
-
   scene6_eventbox = gtk_event_box_new ();
   gtk_widget_set_name (scene6_eventbox, "scene6_eventbox");
   gtk_widget_show (scene6_eventbox);
-  gtk_box_pack_start (GTK_BOX (scene6_hbox), scene6_eventbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene6_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene6_eventbox, _("Right click for menu"), NULL);
 
   scene6 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
@@ -978,13 +937,159 @@ create_window1 (void)
   gtk_widget_show (scene6);
   gtk_container_add (GTK_CONTAINER (scene6_eventbox), scene6);
 
-  scene6_name = gtk_entry_new ();
-  gtk_widget_set_name (scene6_name, "scene6_name");
-  gtk_widget_show (scene6_name);
-  gtk_box_pack_start (GTK_BOX (scene6_hbox), scene6_name, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (scene6_name, 50, 24);
-  gtk_tooltips_set_tip (tooltips, scene6_name, _("Scene 6 name"), NULL);
-  gtk_entry_set_text (GTK_ENTRY (scene6_name), _("Scene 6"));
+  scene7_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (scene7_eventbox, "scene7_eventbox");
+  gtk_widget_show (scene7_eventbox);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene7_eventbox, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, scene7_eventbox, _("Right click for menu"), NULL);
+
+  scene7 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (scene7, "scene7");
+  gtk_widget_show (scene7);
+  gtk_container_add (GTK_CONTAINER (scene7_eventbox), scene7);
+
+  scene8_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (scene8_eventbox, "scene8_eventbox");
+  gtk_widget_show (scene8_eventbox);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene8_eventbox, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, scene8_eventbox, _("Right click for menu"), NULL);
+
+  scene8 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (scene8, "scene8");
+  gtk_widget_show (scene8);
+  gtk_container_add (GTK_CONTAINER (scene8_eventbox), scene8);
+
+  scene9_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (scene9_eventbox, "scene9_eventbox");
+  gtk_widget_show (scene9_eventbox);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene9_eventbox, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, scene9_eventbox, _("Right click for menu"), NULL);
+
+  scene9 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (scene9, "scene9");
+  gtk_widget_show (scene9);
+  gtk_container_add (GTK_CONTAINER (scene9_eventbox), scene9);
+
+  scene10_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (scene10_eventbox, "scene10_eventbox");
+  gtk_widget_show (scene10_eventbox);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene10_eventbox, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, scene10_eventbox, _("Right click for menu"), NULL);
+
+  scene10 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (scene10, "scene10");
+  gtk_widget_show (scene10);
+  gtk_container_add (GTK_CONTAINER (scene10_eventbox), scene10);
+
+  scene11_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (scene11_eventbox, "scene11_eventbox");
+  gtk_widget_show (scene11_eventbox);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene11_eventbox, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, scene11_eventbox, _("Right click for menu"), NULL);
+
+  scene11 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (scene11, "scene11");
+  gtk_widget_show (scene11);
+  gtk_container_add (GTK_CONTAINER (scene11_eventbox), scene11);
+
+  scene12_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (scene12_eventbox, "scene12_eventbox");
+  gtk_widget_show (scene12_eventbox);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene12_eventbox, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, scene12_eventbox, _("Right click for menu"), NULL);
+
+  scene12 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (scene12, "scene12");
+  gtk_widget_show (scene12);
+  gtk_container_add (GTK_CONTAINER (scene12_eventbox), scene12);
+
+  scene13_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (scene13_eventbox, "scene13_eventbox");
+  gtk_widget_show (scene13_eventbox);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene13_eventbox, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, scene13_eventbox, _("Right click for menu"), NULL);
+
+  scene13 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (scene13, "scene13");
+  gtk_widget_show (scene13);
+  gtk_container_add (GTK_CONTAINER (scene13_eventbox), scene13);
+
+  scene14_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (scene14_eventbox, "scene14_eventbox");
+  gtk_widget_show (scene14_eventbox);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene14_eventbox, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, scene14_eventbox, _("Right click for menu"), NULL);
+
+  scene14 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (scene14, "scene14");
+  gtk_widget_show (scene14);
+  gtk_container_add (GTK_CONTAINER (scene14_eventbox), scene14);
+
+  scene15_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (scene15_eventbox, "scene15_eventbox");
+  gtk_widget_show (scene15_eventbox);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene15_eventbox, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, scene15_eventbox, _("Right click for menu"), NULL);
+
+  scene15 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (scene15, "scene15");
+  gtk_widget_show (scene15);
+  gtk_container_add (GTK_CONTAINER (scene15_eventbox), scene15);
+
+  scene16_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (scene16_eventbox, "scene16_eventbox");
+  gtk_widget_show (scene16_eventbox);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene16_eventbox, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, scene16_eventbox, _("Right click for menu"), NULL);
+
+  scene16 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (scene16, "scene16");
+  gtk_widget_show (scene16);
+  gtk_container_add (GTK_CONTAINER (scene16_eventbox), scene16);
+
+  scene17_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (scene17_eventbox, "scene17_eventbox");
+  gtk_widget_show (scene17_eventbox);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene17_eventbox, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, scene17_eventbox, _("Right click for menu"), NULL);
+
+  scene17 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (scene17, "scene17");
+  gtk_widget_show (scene17);
+  gtk_container_add (GTK_CONTAINER (scene17_eventbox), scene17);
+
+  scene18_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (scene18_eventbox, "scene18_eventbox");
+  gtk_widget_show (scene18_eventbox);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene18_eventbox, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, scene18_eventbox, _("Right click for menu"), NULL);
+
+  scene18 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (scene18, "scene18");
+  gtk_widget_show (scene18);
+  gtk_container_add (GTK_CONTAINER (scene18_eventbox), scene18);
+
+  scene19_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (scene19_eventbox, "scene19_eventbox");
+  gtk_widget_show (scene19_eventbox);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene19_eventbox, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, scene19_eventbox, _("Right click for menu"), NULL);
+
+  scene19 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (scene19, "scene19");
+  gtk_widget_show (scene19);
+  gtk_container_add (GTK_CONTAINER (scene19_eventbox), scene19);
+
+  scene20_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (scene20_eventbox, "scene20_eventbox");
+  gtk_widget_show (scene20_eventbox);
+  gtk_box_pack_start (GTK_BOX (scenes_hbox), scene20_eventbox, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, scene20_eventbox, _("Right click for menu"), NULL);
+
+  scene20 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (scene20, "scene20");
+  gtk_widget_show (scene20);
+  gtk_container_add (GTK_CONTAINER (scene20_eventbox), scene20);
 
   hseparator1 = gtk_hseparator_new ();
   gtk_widget_set_name (hseparator1, "hseparator1");
@@ -3521,74 +3626,62 @@ create_window1 (void)
   g_signal_connect ((gpointer) scene1_eventbox, "button_press_event",
                     G_CALLBACK (on_scene1_eventbox_button_press_event),
                     NULL);
-  g_signal_connect ((gpointer) scene1_name, "changed",
-                    G_CALLBACK (on_scene1_name_changed),
-                    NULL);
-  g_signal_connect ((gpointer) scene1_name, "focus_in_event",
-                    G_CALLBACK (on_text_focus_in_event),
-                    NULL);
-  g_signal_connect ((gpointer) scene1_name, "focus_out_event",
-                    G_CALLBACK (on_text_focus_out_event),
-                    NULL);
   g_signal_connect ((gpointer) scene2_eventbox, "button_press_event",
                     G_CALLBACK (on_scene2_eventbox_button_press_event),
-                    NULL);
-  g_signal_connect ((gpointer) scene2_name, "changed",
-                    G_CALLBACK (on_scene2_name_changed),
-                    NULL);
-  g_signal_connect ((gpointer) scene2_name, "focus_in_event",
-                    G_CALLBACK (on_text_focus_in_event),
-                    NULL);
-  g_signal_connect ((gpointer) scene2_name, "focus_out_event",
-                    G_CALLBACK (on_text_focus_out_event),
                     NULL);
   g_signal_connect ((gpointer) scene3_eventbox, "button_press_event",
                     G_CALLBACK (on_scene3_eventbox_button_press_event),
                     NULL);
-  g_signal_connect ((gpointer) scene3_name, "changed",
-                    G_CALLBACK (on_scene3_name_changed),
-                    NULL);
-  g_signal_connect ((gpointer) scene3_name, "focus_in_event",
-                    G_CALLBACK (on_text_focus_in_event),
-                    NULL);
-  g_signal_connect ((gpointer) scene3_name, "focus_out_event",
-                    G_CALLBACK (on_text_focus_out_event),
-                    NULL);
   g_signal_connect ((gpointer) scene4_eventbox, "button_press_event",
                     G_CALLBACK (on_scene4_eventbox_button_press_event),
-                    NULL);
-  g_signal_connect ((gpointer) scene4_name, "changed",
-                    G_CALLBACK (on_scene4_name_changed),
-                    NULL);
-  g_signal_connect ((gpointer) scene4_name, "focus_in_event",
-                    G_CALLBACK (on_text_focus_in_event),
-                    NULL);
-  g_signal_connect ((gpointer) scene4_name, "focus_out_event",
-                    G_CALLBACK (on_text_focus_out_event),
                     NULL);
   g_signal_connect ((gpointer) scene5_eventbox, "button_press_event",
                     G_CALLBACK (on_scene5_eventbox_button_press_event),
                     NULL);
-  g_signal_connect ((gpointer) scene5_name, "changed",
-                    G_CALLBACK (on_scene5_name_changed),
-                    NULL);
-  g_signal_connect ((gpointer) scene5_name, "focus_in_event",
-                    G_CALLBACK (on_text_focus_in_event),
-                    NULL);
-  g_signal_connect ((gpointer) scene5_name, "focus_out_event",
-                    G_CALLBACK (on_text_focus_out_event),
-                    NULL);
   g_signal_connect ((gpointer) scene6_eventbox, "button_press_event",
                     G_CALLBACK (on_scene6_eventbox_button_press_event),
                     NULL);
-  g_signal_connect ((gpointer) scene6_name, "changed",
-                    G_CALLBACK (on_scene6_name_changed),
+  g_signal_connect ((gpointer) scene7_eventbox, "button_press_event",
+                    G_CALLBACK (on_scene7_eventbox_button_press_event),
                     NULL);
-  g_signal_connect ((gpointer) scene6_name, "focus_in_event",
-                    G_CALLBACK (on_text_focus_in_event),
+  g_signal_connect ((gpointer) scene8_eventbox, "button_press_event",
+                    G_CALLBACK (on_scene8_eventbox_button_press_event),
                     NULL);
-  g_signal_connect ((gpointer) scene6_name, "focus_out_event",
-                    G_CALLBACK (on_text_focus_out_event),
+  g_signal_connect ((gpointer) scene9_eventbox, "button_press_event",
+                    G_CALLBACK (on_scene9_eventbox_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene10_eventbox, "button_press_event",
+                    G_CALLBACK (on_scene6_eventbox_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene11_eventbox, "button_press_event",
+                    G_CALLBACK (on_scene11_eventbox_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene12_eventbox, "button_press_event",
+                    G_CALLBACK (on_scene6_eventbox_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene13_eventbox, "button_press_event",
+                    G_CALLBACK (on_scene6_eventbox_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene14_eventbox, "button_press_event",
+                    G_CALLBACK (on_scene6_eventbox_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene15_eventbox, "button_press_event",
+                    G_CALLBACK (on_scene6_eventbox_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene16_eventbox, "button_press_event",
+                    G_CALLBACK (on_scene16_eventbox_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene17_eventbox, "button_press_event",
+                    G_CALLBACK (on_scene6_eventbox_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene18_eventbox, "button_press_event",
+                    G_CALLBACK (on_scene18_eventbox_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene19_eventbox, "button_press_event",
+                    G_CALLBACK (on_scene19_eventbox_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) scene20_eventbox, "button_press_event",
+                    G_CALLBACK (on_scene20_eventbox_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) input_eventbox, "enter_notify_event",
                     G_CALLBACK (on_input_eventbox_enter_notify_event),
@@ -4159,31 +4252,49 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, status_label, "status_label");
   GLADE_HOOKUP_OBJECT (window1, hseparator2, "hseparator2");
   GLADE_HOOKUP_OBJECT (window1, scenes_eventbox, "scenes_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, hbox60, "hbox60");
+  GLADE_HOOKUP_OBJECT (window1, scenes_label, "scenes_label");
   GLADE_HOOKUP_OBJECT (window1, scenes_hbox, "scenes_hbox");
-  GLADE_HOOKUP_OBJECT (window1, scene1_hbox, "scene1_hbox");
   GLADE_HOOKUP_OBJECT (window1, scene1_eventbox, "scene1_eventbox");
   GLADE_HOOKUP_OBJECT (window1, scene1, "scene1");
-  GLADE_HOOKUP_OBJECT (window1, scene1_name, "scene1_name");
-  GLADE_HOOKUP_OBJECT (window1, scene2_hbox, "scene2_hbox");
   GLADE_HOOKUP_OBJECT (window1, scene2_eventbox, "scene2_eventbox");
   GLADE_HOOKUP_OBJECT (window1, scene2, "scene2");
-  GLADE_HOOKUP_OBJECT (window1, scene2_name, "scene2_name");
-  GLADE_HOOKUP_OBJECT (window1, scene3_hbox, "scene3_hbox");
   GLADE_HOOKUP_OBJECT (window1, scene3_eventbox, "scene3_eventbox");
   GLADE_HOOKUP_OBJECT (window1, scene3, "scene3");
-  GLADE_HOOKUP_OBJECT (window1, scene3_name, "scene3_name");
-  GLADE_HOOKUP_OBJECT (window1, scene4_hbox, "scene4_hbox");
   GLADE_HOOKUP_OBJECT (window1, scene4_eventbox, "scene4_eventbox");
   GLADE_HOOKUP_OBJECT (window1, scene4, "scene4");
-  GLADE_HOOKUP_OBJECT (window1, scene4_name, "scene4_name");
-  GLADE_HOOKUP_OBJECT (window1, scene5_hbox, "scene5_hbox");
   GLADE_HOOKUP_OBJECT (window1, scene5_eventbox, "scene5_eventbox");
   GLADE_HOOKUP_OBJECT (window1, scene5, "scene5");
-  GLADE_HOOKUP_OBJECT (window1, scene5_name, "scene5_name");
-  GLADE_HOOKUP_OBJECT (window1, scene6_hbox, "scene6_hbox");
   GLADE_HOOKUP_OBJECT (window1, scene6_eventbox, "scene6_eventbox");
   GLADE_HOOKUP_OBJECT (window1, scene6, "scene6");
-  GLADE_HOOKUP_OBJECT (window1, scene6_name, "scene6_name");
+  GLADE_HOOKUP_OBJECT (window1, scene7_eventbox, "scene7_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, scene7, "scene7");
+  GLADE_HOOKUP_OBJECT (window1, scene8_eventbox, "scene8_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, scene8, "scene8");
+  GLADE_HOOKUP_OBJECT (window1, scene9_eventbox, "scene9_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, scene9, "scene9");
+  GLADE_HOOKUP_OBJECT (window1, scene10_eventbox, "scene10_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, scene10, "scene10");
+  GLADE_HOOKUP_OBJECT (window1, scene11_eventbox, "scene11_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, scene11, "scene11");
+  GLADE_HOOKUP_OBJECT (window1, scene12_eventbox, "scene12_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, scene12, "scene12");
+  GLADE_HOOKUP_OBJECT (window1, scene13_eventbox, "scene13_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, scene13, "scene13");
+  GLADE_HOOKUP_OBJECT (window1, scene14_eventbox, "scene14_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, scene14, "scene14");
+  GLADE_HOOKUP_OBJECT (window1, scene15_eventbox, "scene15_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, scene15, "scene15");
+  GLADE_HOOKUP_OBJECT (window1, scene16_eventbox, "scene16_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, scene16, "scene16");
+  GLADE_HOOKUP_OBJECT (window1, scene17_eventbox, "scene17_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, scene17, "scene17");
+  GLADE_HOOKUP_OBJECT (window1, scene18_eventbox, "scene18_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, scene18, "scene18");
+  GLADE_HOOKUP_OBJECT (window1, scene19_eventbox, "scene19_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, scene19, "scene19");
+  GLADE_HOOKUP_OBJECT (window1, scene20_eventbox, "scene20_eventbox");
+  GLADE_HOOKUP_OBJECT (window1, scene20, "scene20");
   GLADE_HOOKUP_OBJECT (window1, hseparator1, "hseparator1");
   GLADE_HOOKUP_OBJECT (window1, alignment2, "alignment2");
   GLADE_HOOKUP_OBJECT (window1, bighbox, "bighbox");
@@ -4606,9 +4717,11 @@ create_scene_menu (void)
 {
   GtkWidget *scene_menu;
   GtkWidget *setscene;
-  GtkWidget *image6;
+  GtkWidget *image224;
   GtkWidget *clearscene;
-  GtkWidget *image7;
+  GtkWidget *image225;
+  GtkWidget *name;
+  GtkWidget *image226;
   GtkTooltips *tooltips;
 
   tooltips = gtk_tooltips_new ();
@@ -4622,10 +4735,10 @@ create_scene_menu (void)
   gtk_container_add (GTK_CONTAINER (scene_menu), setscene);
   gtk_tooltips_set_tip (tooltips, setscene, _("Assign settings to button"), NULL);
 
-  image6 = gtk_image_new_from_stock ("gtk-apply", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_name (image6, "image6");
-  gtk_widget_show (image6);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (setscene), image6);
+  image224 = gtk_image_new_from_stock ("gtk-apply", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image224, "image224");
+  gtk_widget_show (image224);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (setscene), image224);
 
   clearscene = gtk_image_menu_item_new_with_mnemonic (_("Clear"));
   gtk_widget_set_name (clearscene, "clearscene");
@@ -4633,10 +4746,21 @@ create_scene_menu (void)
   gtk_container_add (GTK_CONTAINER (scene_menu), clearscene);
   gtk_tooltips_set_tip (tooltips, clearscene, _("Clear settings from button"), NULL);
 
-  image7 = gtk_image_new_from_stock ("gtk-clear", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_name (image7, "image7");
-  gtk_widget_show (image7);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (clearscene), image7);
+  image225 = gtk_image_new_from_stock ("gtk-clear", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image225, "image225");
+  gtk_widget_show (image225);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (clearscene), image225);
+
+  name = gtk_image_menu_item_new_with_mnemonic (_("Name"));
+  gtk_widget_set_name (name, "name");
+  gtk_widget_show (name);
+  gtk_container_add (GTK_CONTAINER (scene_menu), name);
+  gtk_tooltips_set_tip (tooltips, name, _("Set scene name"), NULL);
+
+  image226 = gtk_image_new_from_stock ("gtk-properties", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image226, "image226");
+  gtk_widget_show (image226);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (name), image226);
 
   g_signal_connect ((gpointer) setscene, "activate",
                     G_CALLBACK (on_setscene_activate),
@@ -4644,13 +4768,18 @@ create_scene_menu (void)
   g_signal_connect ((gpointer) clearscene, "activate",
                     G_CALLBACK (on_clearscene_activate),
                     NULL);
+  g_signal_connect ((gpointer) name, "activate",
+                    G_CALLBACK (on_name_activate),
+                    NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
   GLADE_HOOKUP_OBJECT_NO_REF (scene_menu, scene_menu, "scene_menu");
   GLADE_HOOKUP_OBJECT (scene_menu, setscene, "setscene");
-  GLADE_HOOKUP_OBJECT (scene_menu, image6, "image6");
+  GLADE_HOOKUP_OBJECT (scene_menu, image224, "image224");
   GLADE_HOOKUP_OBJECT (scene_menu, clearscene, "clearscene");
-  GLADE_HOOKUP_OBJECT (scene_menu, image7, "image7");
+  GLADE_HOOKUP_OBJECT (scene_menu, image225, "image225");
+  GLADE_HOOKUP_OBJECT (scene_menu, name, "name");
+  GLADE_HOOKUP_OBJECT (scene_menu, image226, "image226");
   GLADE_HOOKUP_OBJECT_NO_REF (scene_menu, tooltips, "tooltips");
 
   return scene_menu;
@@ -5265,5 +5394,67 @@ create_colorselectiondialog1 (void)
   GLADE_HOOKUP_OBJECT_NO_REF (colorselectiondialog1, color_selection1, "color_selection1");
 
   return colorselectiondialog1;
+}
+
+GtkWidget*
+create_scene_name_dialog (void)
+{
+  GtkWidget *scene_name_dialog;
+  GtkWidget *dialog_vbox2;
+  GtkWidget *scene_name_entry;
+  GtkWidget *dialog_action_area3;
+  GtkWidget *scene_name_cancel;
+  GtkWidget *scene_name_ok;
+
+  scene_name_dialog = gtk_dialog_new ();
+  gtk_widget_set_name (scene_name_dialog, "scene_name_dialog");
+  gtk_window_set_title (GTK_WINDOW (scene_name_dialog), _("Scene X Name"));
+
+  dialog_vbox2 = GTK_DIALOG (scene_name_dialog)->vbox;
+  gtk_widget_set_name (dialog_vbox2, "dialog_vbox2");
+  gtk_widget_show (dialog_vbox2);
+
+  scene_name_entry = gtk_entry_new ();
+  gtk_widget_set_name (scene_name_entry, "scene_name_entry");
+  gtk_widget_show (scene_name_entry);
+  gtk_box_pack_start (GTK_BOX (dialog_vbox2), scene_name_entry, FALSE, FALSE, 0);
+  gtk_entry_set_max_length (GTK_ENTRY (scene_name_entry), 99);
+
+  dialog_action_area3 = GTK_DIALOG (scene_name_dialog)->action_area;
+  gtk_widget_set_name (dialog_action_area3, "dialog_action_area3");
+  gtk_widget_show (dialog_action_area3);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area3), GTK_BUTTONBOX_END);
+
+  scene_name_cancel = gtk_button_new_from_stock ("gtk-cancel");
+  gtk_widget_set_name (scene_name_cancel, "scene_name_cancel");
+  gtk_widget_show (scene_name_cancel);
+  gtk_dialog_add_action_widget (GTK_DIALOG (scene_name_dialog), scene_name_cancel, GTK_RESPONSE_CANCEL);
+  GTK_WIDGET_SET_FLAGS (scene_name_cancel, GTK_CAN_DEFAULT);
+
+  scene_name_ok = gtk_button_new_from_stock ("gtk-ok");
+  gtk_widget_set_name (scene_name_ok, "scene_name_ok");
+  gtk_widget_show (scene_name_ok);
+  gtk_dialog_add_action_widget (GTK_DIALOG (scene_name_dialog), scene_name_ok, GTK_RESPONSE_OK);
+  GTK_WIDGET_SET_FLAGS (scene_name_ok, GTK_CAN_DEFAULT);
+
+  g_signal_connect ((gpointer) scene_name_entry, "changed",
+                    G_CALLBACK (on_scene_name_entry_changed),
+                    NULL);
+  g_signal_connect ((gpointer) scene_name_cancel, "clicked",
+                    G_CALLBACK (on_scene_name_cancel_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) scene_name_ok, "clicked",
+                    G_CALLBACK (on_scene_name_ok_clicked),
+                    NULL);
+
+  /* Store pointers to all widgets, for use by lookup_widget(). */
+  GLADE_HOOKUP_OBJECT_NO_REF (scene_name_dialog, scene_name_dialog, "scene_name_dialog");
+  GLADE_HOOKUP_OBJECT_NO_REF (scene_name_dialog, dialog_vbox2, "dialog_vbox2");
+  GLADE_HOOKUP_OBJECT (scene_name_dialog, scene_name_entry, "scene_name_entry");
+  GLADE_HOOKUP_OBJECT_NO_REF (scene_name_dialog, dialog_action_area3, "dialog_action_area3");
+  GLADE_HOOKUP_OBJECT (scene_name_dialog, scene_name_cancel, "scene_name_cancel");
+  GLADE_HOOKUP_OBJECT (scene_name_dialog, scene_name_ok, "scene_name_ok");
+
+  return scene_name_dialog;
 }
 
