@@ -803,7 +803,8 @@ int io_create_dsp_thread()
 	IF_DEBUG(DBG_TERSE, io_trace("DSP thread created"));
 	return 0;
     }
-    io_errlog(ECHILD, "first pthread_create() returns %d\n", rc);
+
+    IF_DEBUG(DBG_TERSE, io_trace("first pthread_create() returns %d\n", rc));
 
     /* The following comment was copied from jack/libjack/client.c
      * along with most of this code... */
@@ -863,7 +864,8 @@ int io_create_dsp_thread()
 		"%s: not permitted to create realtime DSP thread.\n"
 		"\tYou must run as root or use JACK capabilities.\n"
 		"\tContinuing operation, but ignoring -t option.\n", PACKAGE);
-	io_errlog(ECHILD, "second pthread_create() returns %d\n", rc);
+	IF_DEBUG(DBG_TERSE,
+		 io_trace("second pthread_create() returns %d\n", rc));
 	return rc;
     }
 

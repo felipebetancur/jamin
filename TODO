@@ -13,15 +13,14 @@ TO BE DECIDED (owner)
 
 TODO (owner)
 
-- Change all uses of JAM to JAMIN
+- Change all uses of JAM to JAMin
 - Commit documentation to CVS (Ron)
 - Save state/scene/settings (Jan)
-- source code copyright headers (everyone)
+- copyright headers in source code file (everyone)
 - move option parsing from io.c to main.c (Jack)
 - option to start up with no ports connected (Jack)
 - set JACK port latencies correctly (Jack, Steve)
 - README file
-- AUTHORS file
 - man page
 - add test script directory (Jack)
 - add UI for reporting JACK status
@@ -40,3 +39,4 @@ CLOSED (date, who, comment)
 
 - remove use of <asm/atomic.h> (2003/06/03, Jack, use volatile attribute)
 - capabilites support for DSP thread (2003/06/15, Jack)
+- AUTHORS file (2003/06/16, Jack)

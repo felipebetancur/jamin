@@ -17,6 +17,7 @@ void s_set_value_ui(int id, float value);
 void s_set_value(int id, float value, int time);
 void s_set_value_block(float *values, int base, int count);
 void s_set_value_no_history(int id, float value);
+void s_set_description(int id, const char *desc);
 void s_clear_history();
 void s_set_callback(int id, s_callback_func callback);
 void s_set_adjustment(int id, GtkAdjustment * adjustment);
@@ -25,36 +26,47 @@ void s_save_session(GtkWidget * w, gpointer user_data);
 void s_load_session(GtkWidget * w, gpointer user_data);
 
 #define S_NONE -1
-#define S_IN_GAIN 0
-#define S_IN_PAN 1
-#define S_EQ_GAIN(n) (2 + n)
-#define S_XOVER_FREQ(n) (1026 + n)
-#define S_COMP_ATTACK(n) (1028 + n)
-#define S_COMP_RELEASE(n) (1031 + n)
-#define S_COMP_THRESH(n) (1034 + n)
-#define S_COMP_RATIO(n) (1037 + n)
-#define S_COMP_KNEE(n) (1040 + n)
-#define S_COMP_MAKEUP(n) (1043 + n)
-#define S_STEREO_WIDTH(n) (1046 + n)
-#define S_LIM_INPUT 1049
-#define S_LIM_TIME 1050
-#define S_LIM_LIMIT 1051
-#define S_NOTCH_GAIN(n) (1052 + n)
-#define S_NOTCH_FREQ(n) (1057 + n)
-#define S_NOTCH_Q(n) (1062 + n)
-#define S_NOTCH_FLAG(n) (1067 + n)
-#define S_SIZE 1072
+#define S_LOAD 0
+#define S_IN_GAIN 1
+#define S_IN_PAN 2
+#define S_EQ_GAIN(n) (3 + n)
+#define S_XOVER_FREQ(n) (1027 + n)
+#define S_COMP_ATTACK(n) (1029 + n)
+#define S_COMP_RELEASE(n) (1032 + n)
+#define S_COMP_THRESH(n) (1035 + n)
+#define S_COMP_RATIO(n) (1038 + n)
+#define S_COMP_KNEE(n) (1041 + n)
+#define S_COMP_MAKEUP(n) (1044 + n)
+#define S_STEREO_WIDTH(n) (1047 + n)
+#define S_LIM_INPUT 1050
+#define S_LIM_TIME 1051
+#define S_LIM_LIMIT 1052
+#define S_NOTCH_GAIN(n) (1053 + n)
+#define S_NOTCH_FREQ(n) (1058 + n)
+#define S_NOTCH_Q(n) (1063 + n)
+#define S_NOTCH_FLAG(n) (1068 + n)
+#define S_SIZE 1073
 
 extern float s_value[S_SIZE];
+
+/* fetch cureently used value */
 
 inline static float s_get_value(int id)
 {
     return s_value[id];
 }
+
+/* set value with no side effects */
+
+inline static void s_set_value_ns(int id, float value)
+{
+    s_value[id] = value;
+}
+
 static const char *const s_description[S_SIZE] = {
-    "Input gain", "Input pan", "EQ Gain 1", "EQ Gain 2", "EQ Gain 3",
-	"EQ Gain 4", "EQ Gain 5", "EQ Gain 6", "EQ Gain 7", "EQ Gain 8",
-	"EQ Gain 9", "EQ Gain 10", "EQ Gain 11", "EQ Gain 12",
+    "Load file", "Input gain", "Input pan", "EQ Gain 1", "EQ Gain 2",
+	"EQ Gain 3", "EQ Gain 4", "EQ Gain 5", "EQ Gain 6", "EQ Gain 7",
+	"EQ Gain 8", "EQ Gain 9", "EQ Gain 10", "EQ Gain 11", "EQ Gain 12",
 	"EQ Gain 13", "EQ Gain 14", "EQ Gain 15", "EQ Gain 16",
 	"EQ Gain 17", "EQ Gain 18", "EQ Gain 19", "EQ Gain 20",
 	"EQ Gain 21", "EQ Gain 22", "EQ Gain 23", "EQ Gain 24",
@@ -329,27 +341,27 @@ static const char *const s_description[S_SIZE] = {
 };
 
 static const char *const s_symbol[S_SIZE] = {
-    "in-gain", "in-pan", "eq-gain0", "eq-gain1", "eq-gain2", "eq-gain3",
-	"eq-gain4", "eq-gain5", "eq-gain6", "eq-gain7", "eq-gain8",
-	"eq-gain9", "eq-gain10", "eq-gain11", "eq-gain12", "eq-gain13",
-	"eq-gain14", "eq-gain15", "eq-gain16", "eq-gain17", "eq-gain18",
-	"eq-gain19", "eq-gain20", "eq-gain21", "eq-gain22", "eq-gain23",
-	"eq-gain24", "eq-gain25", "eq-gain26", "eq-gain27", "eq-gain28",
-	"eq-gain29", "eq-gain30", "eq-gain31", "eq-gain32", "eq-gain33",
-	"eq-gain34", "eq-gain35", "eq-gain36", "eq-gain37", "eq-gain38",
-	"eq-gain39", "eq-gain40", "eq-gain41", "eq-gain42", "eq-gain43",
-	"eq-gain44", "eq-gain45", "eq-gain46", "eq-gain47", "eq-gain48",
-	"eq-gain49", "eq-gain50", "eq-gain51", "eq-gain52", "eq-gain53",
-	"eq-gain54", "eq-gain55", "eq-gain56", "eq-gain57", "eq-gain58",
-	"eq-gain59", "eq-gain60", "eq-gain61", "eq-gain62", "eq-gain63",
-	"eq-gain64", "eq-gain65", "eq-gain66", "eq-gain67", "eq-gain68",
-	"eq-gain69", "eq-gain70", "eq-gain71", "eq-gain72", "eq-gain73",
-	"eq-gain74", "eq-gain75", "eq-gain76", "eq-gain77", "eq-gain78",
-	"eq-gain79", "eq-gain80", "eq-gain81", "eq-gain82", "eq-gain83",
-	"eq-gain84", "eq-gain85", "eq-gain86", "eq-gain87", "eq-gain88",
-	"eq-gain89", "eq-gain90", "eq-gain91", "eq-gain92", "eq-gain93",
-	"eq-gain94", "eq-gain95", "eq-gain96", "eq-gain97", "eq-gain98",
-	"eq-gain99", "eq-gain100", "eq-gain101", "eq-gain102",
+    "load", "in-gain", "in-pan", "eq-gain0", "eq-gain1", "eq-gain2",
+	"eq-gain3", "eq-gain4", "eq-gain5", "eq-gain6", "eq-gain7",
+	"eq-gain8", "eq-gain9", "eq-gain10", "eq-gain11", "eq-gain12",
+	"eq-gain13", "eq-gain14", "eq-gain15", "eq-gain16", "eq-gain17",
+	"eq-gain18", "eq-gain19", "eq-gain20", "eq-gain21", "eq-gain22",
+	"eq-gain23", "eq-gain24", "eq-gain25", "eq-gain26", "eq-gain27",
+	"eq-gain28", "eq-gain29", "eq-gain30", "eq-gain31", "eq-gain32",
+	"eq-gain33", "eq-gain34", "eq-gain35", "eq-gain36", "eq-gain37",
+	"eq-gain38", "eq-gain39", "eq-gain40", "eq-gain41", "eq-gain42",
+	"eq-gain43", "eq-gain44", "eq-gain45", "eq-gain46", "eq-gain47",
+	"eq-gain48", "eq-gain49", "eq-gain50", "eq-gain51", "eq-gain52",
+	"eq-gain53", "eq-gain54", "eq-gain55", "eq-gain56", "eq-gain57",
+	"eq-gain58", "eq-gain59", "eq-gain60", "eq-gain61", "eq-gain62",
+	"eq-gain63", "eq-gain64", "eq-gain65", "eq-gain66", "eq-gain67",
+	"eq-gain68", "eq-gain69", "eq-gain70", "eq-gain71", "eq-gain72",
+	"eq-gain73", "eq-gain74", "eq-gain75", "eq-gain76", "eq-gain77",
+	"eq-gain78", "eq-gain79", "eq-gain80", "eq-gain81", "eq-gain82",
+	"eq-gain83", "eq-gain84", "eq-gain85", "eq-gain86", "eq-gain87",
+	"eq-gain88", "eq-gain89", "eq-gain90", "eq-gain91", "eq-gain92",
+	"eq-gain93", "eq-gain94", "eq-gain95", "eq-gain96", "eq-gain97",
+	"eq-gain98", "eq-gain99", "eq-gain100", "eq-gain101", "eq-gain102",
 	"eq-gain103", "eq-gain104", "eq-gain105", "eq-gain106",
 	"eq-gain107", "eq-gain108", "eq-gain109", "eq-gain110",
 	"eq-gain111", "eq-gain112", "eq-gain113", "eq-gain114",
