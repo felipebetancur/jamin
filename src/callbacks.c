@@ -823,6 +823,7 @@ draw_EQ_curve ()
                 EQ_notch_width[i] = 5;
               }
 
+            s_set_value_ui (S_NOTCH_Q (i), (float) EQ_notch_width[i]);
           }
 
         insert_notch ();
@@ -1147,6 +1148,10 @@ on_EQ_curve_event_box_motion_notify_event
                             drag = 1;
                             notch_flag = i;
                             EQ_notch_flag[i] = 1;
+
+                            s_set_value_ui (S_NOTCH_GAIN (i), 
+                                EQ_notch_gain[i]);
+
                             break;
                           }
                       }
@@ -1169,6 +1174,10 @@ on_EQ_curve_event_box_motion_notify_event
 
                                 drag = 1;
                                 notch_flag = i;
+
+                                s_set_value_ui (S_NOTCH_GAIN (i), 
+                                    EQ_notch_gain[i]);
+                                s_set_value_ui (S_NOTCH_FREQ (i), freq);
                               }
                             break;
                           }
@@ -1198,6 +1207,9 @@ on_EQ_curve_event_box_motion_notify_event
 
                             drag = 1;
                             notch_flag = i;
+
+                            s_set_value_ui (S_NOTCH_Q (i), 
+                                (float) EQ_notch_width[i]);
                           }
                         break;
                       }
@@ -1410,6 +1422,9 @@ on_EQ_curve_event_box_button_press_event
                             EQ_notch_flag[i] = 0;
                             EQ_notch_gain[i] = 0.0;
 
+                            s_set_value_ui (S_NOTCH_GAIN (i), 
+                                    (float) EQ_notch_gain[i]);
+
                             if (!i || i == NOTCHES - 1)
                               {
                                 EQ_notch_width[i] = 0;
@@ -1418,6 +1433,9 @@ on_EQ_curve_event_box_button_press_event
                               {
                                 EQ_notch_width[i] = 5;
                               }
+
+                            s_set_value_ui (S_NOTCH_Q (i), 
+                                (float) EQ_notch_width[i]);
 
                             insert_notch ();
                             set_EQ ();

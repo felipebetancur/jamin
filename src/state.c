@@ -253,6 +253,7 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 	    s_value[i] = atof(value);
 	    suppress_feedback++;
 	    s_set_events(i, s_value[i]);
+fprintf(stderr,"%s %d %s %d %f\n",__FILE__,__LINE__,s_symbol[i],i,s_value[i]);
 	    suppress_feedback--;
 	    //printf("load %s = %g\n", symbol, s_value[i]);
 	    found = 1;

@@ -39,7 +39,10 @@ void s_load_session(GtkWidget * w, gpointer user_data);
 #define S_LIM_INPUT 1049
 #define S_LIM_TIME 1050
 #define S_LIM_LIMIT 1051
-#define S_SIZE 1052
+#define S_NOTCH_GAIN(n) (1052 + n)
+#define S_NOTCH_FREQ(n) (1057 + n)
+#define S_NOTCH_Q(n) (1062 + n)
+#define S_SIZE 1067
 
 extern float s_value[S_SIZE];
 
@@ -315,7 +318,11 @@ static const char *const s_description[S_SIZE] = {
 	"Compressor makeup gain 1", "Compressor makeup gain 2",
 	"Compressor makeup gain 3", "Stereo width 1", "Stereo width 2",
 	"Stereo width 3", "Limiter input gain", "Limiter time",
-	"Limiter level"
+	"Limiter level", "Notch gain 1", "Notch gain 2", "Notch gain 3",
+	"Notch gain 4", "Notch gain 5", "Notch frequency 1",
+	"Notch frequency 2", "Notch frequency 3", "Notch frequency 4",
+	"Notch frequency 5", "Notch Q 1", "Notch Q 2", "Notch Q 3",
+	"Notch Q 4", "Notch Q 5"
 };
 
 static const char *const s_symbol[S_SIZE] = {
@@ -576,7 +583,10 @@ static const char *const s_symbol[S_SIZE] = {
 	"comp-ratio0", "comp-ratio1", "comp-ratio2", "comp-knee0",
 	"comp-knee1", "comp-knee2", "comp-makeup0", "comp-makeup1",
 	"comp-makeup2", "stereo-width0", "stereo-width1", "stereo-width2",
-	"lim-input", "lim-time", "lim-limit"
+	"lim-input", "lim-time", "lim-limit", "notch-gain0", "notch-gain1",
+	"notch-gain2", "notch-gain3", "notch-gain4", "notch-freq0",
+	"notch-freq1", "notch-freq2", "notch-freq3", "notch-freq4",
+	"notch-q0", "notch-q1", "notch-q2", "notch-q3", "notch-q4"
 };
 
 #endif
