@@ -31,22 +31,23 @@ static GtkWidget       *l_low_comp, *l_mid_comp, *l_high_comp;
 static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_low_comp_lbl, 
                        *l_mid_comp_lbl, *l_high_comp_lbl, *l_EQ_curve_lbl,
                        *l_low_knee_lbl, *l_mid_knee_lbl, *l_high_knee_lbl;
-static GtkDrawingArea  *l_EQ_curve, *l_comp_curve;
-static GdkDrawable     *EQ_drawable, *comp_drawable;
+static GtkDrawingArea  *l_EQ_curve, *l_comp_curve[3];
+static GdkDrawable     *EQ_drawable, *comp_drawable[3];
 static GdkColormap     *colormap;
 static GdkColor        white, black, red, green, blue;
-static GdkGC           *EQ_gc, *comp_gc;
+static GdkGC           *EQ_gc, *comp_gc[3];
 static GtkAdjustment   *l_low2mid_adj, *l_eqb1_adj;
 static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
                        EQ_curve_height, EQ_xinterp[EQ_INTERP + 1], EQ_start, 
                        EQ_end, EQ_interval, EQ_yinterp[EQ_INTERP + 1], 
                        *EQ_xinput = NULL, *EQ_yinput = NULL, 
                        l_geq_freqs[EQ_BANDS], l_geq_gains[EQ_BANDS], 
-                       comp_curve_range_x, comp_curve_range_y, 
-                       comp_curve_width, comp_curve_height, comp_start_x,
-                       comp_start_y, comp_end_x;
+                       comp_curve_range_x[3], comp_curve_range_y[3], 
+                       comp_curve_width[3], comp_curve_height[3] , 
+                       comp_start_x[3], comp_start_y[3], comp_end_x[3], 
+                       comp_end_y[3];
 static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0, 
-                       EQ_length = 0, comp_realized = 0;
+                       EQ_length = 0, comp_realized[3] = {0, 0, 0};
 
 
 void
@@ -883,107 +884,212 @@ on_pan_scale_value_changed             (GtkRange        *range,
 
 
 void
-draw_comp_curve ()
+draw_comp_curve (int i)
 {
-    int              i, x0, y0 = 0.0, x1 = 0.0, y1 = 0.0;
+    int              x0, y0 = 0.0, x1 = 0.0, y1 = 0.0;
     float            x, y;
     comp_settings    comp;
 
 
-    if (!comp_realized) return;
+    if (!comp_realized[i]) return;
 
 
     /*  Clear the curve drawing area.  */
 
-    gdk_gc_set_foreground (comp_gc, &white);
-    gdk_draw_rectangle (comp_drawable, comp_gc, TRUE, 0, 0, comp_curve_width, 
-        comp_curve_height);
-    gdk_gc_set_foreground (comp_gc, &black);
+    gdk_gc_set_foreground (comp_gc[i], &white);
+    gdk_draw_rectangle (comp_drawable[i], comp_gc[i], TRUE, 0, 0, 
+        comp_curve_width[i], comp_curve_height[i]);
+    gdk_gc_set_foreground (comp_gc[i], &black);
 
 
     /*  Plot the curves.  */
 
-    gdk_gc_set_line_attributes (comp_gc, 2, GDK_LINE_SOLID, GDK_CAP_BUTT,
+    gdk_gc_set_line_attributes (comp_gc[i], 2, GDK_LINE_SOLID, GDK_CAP_BUTT,
         GDK_JOIN_MITER);
-    for (i = 0 ; i < 3 ; i++)
+
+    switch (i)
       {
-        switch (i)
-          {
-          case 0:
-            gdk_gc_set_foreground (comp_gc, &red);
-            break;
+      case 0:
+        gdk_gc_set_foreground (comp_gc[i], &red);
+        break;
 
-          case 1:
-            gdk_gc_set_foreground (comp_gc, &green);
-            break;
+      case 1:
+        gdk_gc_set_foreground (comp_gc[i], &green);
+        break;
 
-          case 2:
-            gdk_gc_set_foreground (comp_gc, &blue);
-            break;
-          }
-
-        comp_get_settings (i, &comp);
-
-        x0 = 999.0;
-	for (x = comp_start_x ; x <= comp_end_x ; x += 0.5f) 
-          {
-            x1 = NINT (((x - comp_start_x) / comp_curve_range_x) * 
-                comp_curve_width);
-
-	    y = eval_comp (comp.threshold, comp.ratio, comp.knee, x) +
-			comp.makeup_gain;
-
-            y1 = comp_curve_height - NINT (((y - comp_start_y) / 
-                comp_curve_range_y) * comp_curve_height);
-
-            if (x0 != 999.0) 
-                gdk_draw_line (comp_drawable, comp_gc, x0, y0, x1, y1);
-
-            x0 = x1;
-            y0 = y1;
-          }
+      case 2:
+        gdk_gc_set_foreground (comp_gc[i], &blue);
+        break;
       }
-    gdk_gc_set_line_attributes (comp_gc, 1, GDK_LINE_SOLID, GDK_CAP_BUTT,
+
+    comp_get_settings (i, &comp);
+
+    x0 = 999.0;
+    for (x = comp_start_x[i] ; x <= comp_end_x[i] ; x += 0.5f) 
+      {
+        x1 = NINT (((x - comp_start_x[i]) / comp_curve_range_x[i]) * 
+            comp_curve_width[i]);
+
+        y = eval_comp (comp.threshold, comp.ratio, comp.knee, x) +
+	    comp.makeup_gain;
+
+        y1 = comp_curve_height[i] - NINT (((y - comp_start_y[i]) / 
+            comp_curve_range_y[i]) * comp_curve_height[i]);
+
+        if (x0 != 999.0) 
+            gdk_draw_line (comp_drawable[i], comp_gc[i], x0, y0, x1, y1);
+
+        x0 = x1;
+        y0 = y1;
+      }
+    gdk_gc_set_line_attributes (comp_gc[i], 1, GDK_LINE_SOLID, GDK_CAP_BUTT,
         GDK_JOIN_MITER);
-    gdk_gc_set_foreground (comp_gc, &black);
+    gdk_gc_set_foreground (comp_gc[i], &black);
 }
 
 
-gboolean
-on_comp_curve_expose_event             (GtkWidget       *widget,
-                                        GdkEventExpose  *event,
-                                        gpointer         user_data)
+void
+comp_curve_expose (GtkWidget *widget, int i)
 {
-    comp_curve_range_x = 60.0;
-    comp_curve_range_y = 60.0;
-
-
     /*  Since we're doing inclusive plots on the compressor curves we'll
         not decrement the width and height.  */
 
-    comp_curve_width = widget->allocation.width;
-    comp_curve_height = widget->allocation.height;
+    comp_curve_width[i] = widget->allocation.width;
+    comp_curve_height[i] = widget->allocation.height;
 
-    comp_realized = 1;
+    comp_realized[i] = 1;
 
-    draw_comp_curve ();
+    draw_comp_curve (i);
 
     return FALSE;
 }
 
 
 void
-on_comp_curve_realize                  (GtkWidget       *widget,
-                                        gpointer         user_data)
+comp_curve_realize (GtkWidget *widget, int i)
 {
-    l_comp_curve = (GtkDrawingArea *) widget;
+    l_comp_curve[i] = (GtkDrawingArea *) widget;
 
-    comp_drawable = widget->window;
+    comp_drawable[i] = widget->window;
 
-    comp_start_x = -60.0;
-    comp_end_x = 0.0;
-    comp_start_y = -60.0;
+    comp_start_x[i] = -60.0;
+    comp_end_x[i] = 0.0;
+    comp_start_y[i] = -60.0;
+    comp_end_y[i] = 30.0;
 
-    comp_gc = widget->style->fg_gc[GTK_WIDGET_STATE (widget)];
+    comp_curve_range_x[i] = comp_end_x[i] - comp_start_x[i];
+    comp_curve_range_y[i] = comp_end_y[i] - comp_start_y[i];
+
+
+    comp_gc[i] = widget->style->fg_gc[GTK_WIDGET_STATE (widget)];
 }
 
+
+
+gboolean
+on_comp1_curve_expose_event            (GtkWidget       *widget,
+                                        GdkEventExpose  *event,
+                                        gpointer         user_data)
+{
+    comp_curve_expose (widget, 0);
+
+    return FALSE;
+}
+
+
+void
+on_comp1_curve_realize                 (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    comp_curve_realize (widget, 0);
+}
+
+
+gboolean
+on_comp2_curve_expose_event            (GtkWidget       *widget,
+                                        GdkEventExpose  *event,
+                                        gpointer         user_data)
+{
+    comp_curve_expose (widget, 1);
+
+    return FALSE;
+}
+
+
+void
+on_comp2_curve_realize                 (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    comp_curve_realize (widget, 1);
+}
+
+
+gboolean
+on_comp3_curve_expose_event            (GtkWidget       *widget,
+                                        GdkEventExpose  *event,
+                                        gpointer         user_data)
+{
+    comp_curve_expose (widget, 2);
+
+    return FALSE;
+}
+
+
+void
+on_comp3_curve_realize                 (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    comp_curve_realize (widget, 2);
+}
+
+
+void 
+comp_curve_box_motion (int i, GdkEventMotion  *event)
+{
+    float          x, y;
+    char           coords[20];
+
+
+    x = comp_start_x[i] + (((double) event->x / 
+        (double) comp_curve_width[i]) * comp_curve_range_x[i]);
+
+
+    y = ((((double) comp_curve_height[i] - (double) event->y) / 
+            (double) comp_curve_height[i]) * comp_curve_range_y[i]) + 
+            comp_start_y[i];
+
+    /*  Print the coordinates in the box somewhere.  Maybe tomorrow.  */
+}
+
+
+gboolean
+on_low_curve_box_motion_notify_event   (GtkWidget       *widget,
+                                        GdkEventMotion  *event,
+                                        gpointer         user_data)
+{
+    comp_curve_box_motion (0, event);
+
+    return FALSE;
+}
+
+
+gboolean
+on_mid_curve_box_motion_notify_event   (GtkWidget       *widget,
+                                        GdkEventMotion  *event,
+                                        gpointer         user_data)
+{
+    comp_curve_box_motion (1, event);
+
+    return FALSE;
+}
+
+
+gboolean
+on_high_curve_box_motion_notify_event  (GtkWidget       *widget,
+                                        GdkEventMotion  *event,
+                                        gpointer         user_data)
+{
+    comp_curve_box_motion (2, event);
+
+    return FALSE;
+}

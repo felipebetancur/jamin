@@ -14,7 +14,7 @@ gboolean ra_changed(GtkAdjustment *adj, gpointer user_data);
 gboolean kn_changed(GtkAdjustment *adj, gpointer user_data);
 gboolean ma_changed(GtkAdjustment *adj, gpointer user_data);
 
-void draw_comp_curve ();
+void draw_comp_curve (int i);
 
 static GtkAdjustment *adj_at[3];
 static GtkAdjustment *adj_re[3];
@@ -56,7 +56,7 @@ void bind_compressors()
 gboolean at_changed(GtkAdjustment *adj, gpointer user_data)
 {
     compressors[(int)user_data].attack = adj->value;
-    draw_comp_curve();
+    draw_comp_curve((int)user_data);
 
     return FALSE;
 }
@@ -64,7 +64,7 @@ gboolean at_changed(GtkAdjustment *adj, gpointer user_data)
 gboolean re_changed(GtkAdjustment *adj, gpointer user_data)
 {
     compressors[(int)user_data].release = adj->value;
-    draw_comp_curve();
+    draw_comp_curve((int)user_data);
 
     return FALSE;
 }
@@ -72,7 +72,7 @@ gboolean re_changed(GtkAdjustment *adj, gpointer user_data)
 gboolean th_changed(GtkAdjustment *adj, gpointer user_data)
 {
     compressors[(int)user_data].threshold = adj->value;
-    draw_comp_curve();
+    draw_comp_curve((int)user_data);
 
     return FALSE;
 }
@@ -80,7 +80,7 @@ gboolean th_changed(GtkAdjustment *adj, gpointer user_data)
 gboolean ra_changed(GtkAdjustment *adj, gpointer user_data)
 {
     compressors[(int)user_data].ratio = adj->value;
-    draw_comp_curve();
+    draw_comp_curve((int)user_data);
 
     return FALSE;
 }
@@ -88,7 +88,7 @@ gboolean ra_changed(GtkAdjustment *adj, gpointer user_data)
 gboolean kn_changed(GtkAdjustment *adj, gpointer user_data)
 {
     compressors[(int)user_data].knee = adj->value * 9.0f + 1.0f;
-    draw_comp_curve();
+    draw_comp_curve((int)user_data);
 
     return FALSE;
 }
@@ -96,7 +96,7 @@ gboolean kn_changed(GtkAdjustment *adj, gpointer user_data)
 gboolean ma_changed(GtkAdjustment *adj, gpointer user_data)
 {
     compressors[(int)user_data].makeup_gain = adj->value;
-    draw_comp_curve();
+    draw_comp_curve((int)user_data);
 
     return FALSE;
 }
