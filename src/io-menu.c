@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.c,v 1.10 2003/11/21 04:42:54 joq Exp $
+ *  $Id: io-menu.c,v 1.11 2003/11/21 14:38:42 joq Exp $
  */
 
 /* The JACK I/O ports for each channel are defined here */
@@ -106,6 +106,13 @@ GSList      *group_out_r = NULL;
 const char **inports = NULL;
 const char **outports = NULL;
 
+gboolean
+iomenu_connect(GtkWidget *widget, GdkEvent *event, char *port_name)
+{
+    fprintf(stderr, "connecting port %s\n", port_name);
+    return TRUE;
+}
+
 void
 iomenu_scan_port_names()
 {
@@ -134,15 +141,20 @@ iomenu_scan_port_names()
 	GtkWidget   *item;
 
 	item = gtk_radio_menu_item_new_with_label(group_in_l, outports[i]);
-	group_in_l = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM (item));
+	g_signal_connect(G_OBJECT(item), "button_release_event",
+			 G_CALLBACK(iomenu_connect), 
+			 (char *) outports[i]);
+	group_in_l = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(item));
 	gtk_menu_shell_append(GTK_MENU_SHELL(in_menu_ll), item);
-	gtk_widget_show (item);
+	gtk_widget_show(item);
 
 	item = gtk_radio_menu_item_new_with_label(group_in_r, outports[i]);
-	group_in_r = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM (item));
+	g_signal_connect(G_OBJECT(item), "button_release_event",
+			 G_CALLBACK(iomenu_connect), 
+			 (char *) outports[i]);
+	group_in_r = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(item));
 	gtk_menu_shell_append(GTK_MENU_SHELL(in_menu_rr), item);
-	gtk_widget_show (item);
-
+	gtk_widget_show(item);
     }
 
     /* populate output ports menu with JACK input ports */
