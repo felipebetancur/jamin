@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: geq.c,v 1.27 2003/12/10 01:48:41 jdepner Exp $
+ *  $Id: geq.c,v 1.28 2004/01/16 03:12:06 jdepner Exp $
  */
 
 /* code to control the graphic eq's, swh */
@@ -29,11 +29,13 @@
 #include "state.h"
 #include "scenes.h"
 #include "callbacks.h"
+#include "help.h"
 
 GtkAdjustment *geqa[EQ_BANDS];
 GtkRange *geqr[EQ_BANDS];
 
 static int EQ_drawn = 0;
+static char *errstr = NULL;
 
 /* Linear gain of the 1/3rd octave EQ bands */
 float geq_gains[EQ_BANDS + 1];
@@ -120,9 +122,12 @@ void geq_set_coefs (int length, float x[], float y[])
 
     if (length != BINS / 2 - 1)
       {
-        fprintf (stderr, 
-            _("Splined length %d does not match BINS / 2 - 1 (%d)\n"), length,
-             BINS / 2 - 1);
+        errstr = g_strdup_printf (_("Splined length %d does not match BINS / 2 - 1 (%d)"), 
+                                  length, BINS / 2 - 1);
+
+        fprintf (stderr, "%s\n", errstr);
+        message (GTK_MESSAGE_WARNING, errstr);
+        free (errstr);
       }
     else
       {
@@ -145,9 +150,12 @@ void geq_set_sliders(int length, float x[], float y[])
 
     if (length != BINS / 2 - 1)
       {
-        fprintf (stderr, 
-            _("Splined length %d does not match BINS / 2 - 1 (%d)\n"), length,
-             BINS / 2 - 1);
+        errstr = g_strdup_printf (_("Splined length %d does not match BINS / 2 - 1 (%d)"), 
+                                  length, BINS / 2 - 1);
+
+        fprintf (stderr, "%s\n", errstr);
+        message (GTK_MESSAGE_WARNING, errstr);
+        free (errstr);
       }
     else
       {

@@ -82,6 +82,7 @@
 #include "jackstatus.h"
 #include "state.h"
 #include "debug.h"
+#include "help.h"
 
 char *jamin_options = "dFf:n:hprTtvV"; /* valid JAMin options */
 char *pname;				/* `basename $0` */
@@ -92,6 +93,8 @@ int connect_ports = 1;			/* -p option */
 int trace_option = 0;			/* -T option */
 int thread_option = 1;			/* -t option */
 int debug_level = DBG_OFF;		/* -v option */
+
+static char *errstr;
 
 /*  Synchronization within the DSP engine is managed as a finite state
  *  machine.  These state transitions are the key to understanding
@@ -669,9 +672,11 @@ gboolean check_file (char *optarg)
 
   if ((fp = fopen (optarg, "r")) == NULL)
     {
-      fprintf (stderr, "\n\n");
-      perror (optarg);
-      fprintf (stderr, "Using default.\n\n");
+      errstr = g_strdup_printf ("File %s : %s\nUsing default.", optarg, 
+                                strerror (errno));
+      fprintf (stderr, "%s\n", errstr);
+      message (GTK_MESSAGE_ERROR, errstr);
+      free (errstr);
       return (FALSE);
     }
 
@@ -933,10 +938,15 @@ int io_create_dsp_thread()
     rc = pthread_create(&dsp_thread, &attributes, io_dsp_thread, NULL);
     if (rc != 0) {
 	sched_setscheduler(0, policy, &my_param);
-	fprintf(stderr,
-		"%s: not permitted to create realtime DSP thread.\n"
+
+        errstr = g_strdup_printf (
+                "%s: not permitted to create realtime DSP thread.\n"
 		"\tYou must run as root or use JACK capabilities.\n"
 		"\tContinuing operation, but with -t option.\n", PACKAGE);
+        fprintf (stderr, "%s\n", errstr);
+        message (GTK_MESSAGE_WARNING, errstr);
+        free (errstr);
+
 	IF_DEBUG(DBG_TERSE,
 		 io_trace("second pthread_create() returns %d\n", rc));
 	return rc;
@@ -995,14 +1005,24 @@ void io_activate()
 	    if (iports[chan] && *iports[chan]) {
 		if (jack_connect(client, iports[chan],
 				 jack_port_name(input_ports[chan])))
-		    fprintf(stderr, "Cannot connect input port \"%s\"\n",
-			    iports[chan]);
+                  {
+                    errstr = g_strdup_printf (
+                        "Cannot connect input port \"%s\"\n", iports[chan]);
+                    fprintf (stderr, "%s\n", errstr);
+                    message (GTK_MESSAGE_WARNING, errstr);
+                    free (errstr);
+                  }
 	    }
 	    if (oports[chan] && *oports[chan]) {
 		if (jack_connect(client, jack_port_name(output_ports[chan]),
 				 oports[chan]))
-		    fprintf(stderr, "Cannot connect output port \"%s\"\n",
-			    oports[chan]);
+                  {
+                    errstr = g_strdup_printf (
+                        "Cannot connect output port \"%s\"\n", oports[chan]);
+                    fprintf (stderr, "%s\n", errstr);
+                    message (GTK_MESSAGE_WARNING, errstr);
+                    free (errstr);
+                  }
 	    }
 	}
     }

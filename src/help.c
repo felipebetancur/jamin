@@ -54,8 +54,4 @@ void message (GtkMessageType type, char *string)
                            GTK_OBJECT (message_dialog));
 
     gtk_widget_show (message_dialog);
-
-
-    gdk_window_set_cursor (main_window->window, 
-                           gdk_cursor_new (GDK_LEFT_PTR));
 }
