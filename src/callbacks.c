@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.149 2004/05/01 17:00:23 jdepner Exp $
+ *  $Id: callbacks.c,v 1.150 2004/05/08 21:29:38 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -190,15 +190,6 @@ on_window1_show                        (GtkWidget       *widget,
 
   l_scene_name_entry = GTK_ENTRY (lookup_widget (scene_name_dialog, 
                                                  "scene_name_entry"));
-}
-
-
-gboolean
-eqb_mod (GtkAdjustment *adj, gpointer user_data)
-{
-    hdeq_eqb_mod ();
-
-    return FALSE;
 }
 
 

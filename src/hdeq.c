@@ -510,13 +510,16 @@ void crossover_init ()
 
 
 /*  If we've modified the graphic EQ (geq) then we want to build the hand
-    drawn EQ from the geq.  This flag will cause that to happen on the next
+    drawn EQ from the geq.  EQ_mod flag will cause that to happen on the next
     redraw (draw_EQ_curve).  This is a callback that is set up in the GEQ
-    code.  It is actually called from callbacks.c though.  */
+    code.  */
 
-void hdeq_eqb_mod ()
+gboolean 
+hdeq_eqb_mod (GtkAdjustment *adj, gpointer user_data)
 {
     EQ_mod = 1;
+
+    return FALSE;
 }
 
 
@@ -871,7 +874,6 @@ void draw_EQ_curve ()
     float          x[EQ_BANDS], y[EQ_BANDS];
 
 
-
     /*  If the EQ widget has not been realized (not visible), go away.  */
 
     if (!EQ_realized) return;
@@ -998,7 +1000,7 @@ void draw_EQ_curve ()
         /*  Spline the bands to 1024 points.  */
 
         interpolate (EQ_interval, EQ_BANDS, EQ_start, EQ_end, 
-            &EQ_length, x, y, EQ_xinterp, EQ_yinterp);
+                     &EQ_length, x, y, EQ_xinterp, EQ_yinterp);
 
 
         /*  Save state of the EQ curve (for scene changes, etc).  */

@@ -344,8 +344,7 @@ void set_scene (int scene_num)
       }
 
 
-    /*  Set the tooltip to the full name (it may be too long to show up
-        completely in the text widget).  */
+    /*  Set the tooltip to the full name.  */
 
     gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[menu_scene]), 
                           scene_state[menu_scene].description, NULL);

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: geq.c,v 1.30 2004/04/11 15:30:10 jdepner Exp $
+ *  $Id: geq.c,v 1.31 2004/05/08 21:29:39 jdepner Exp $
  */
 
 /* code to control the graphic eq's, swh */
@@ -22,6 +22,7 @@
 #include <math.h>
 
 #include "geq.h"
+#include "hdeq.h"
 #include "process.h"
 #include "support.h"
 #include "main.h"
@@ -45,7 +46,6 @@ int bin_base[BINS];
 float bin_delta[BINS];
 
 gboolean eqb_changed(GtkAdjustment *adj, gpointer user_data);
-gboolean eqb_mod(GtkAdjustment *adj, gpointer user_data);
 void geq_set_gains();
 
 void bind_geq()
@@ -68,8 +68,10 @@ void bind_geq()
 	snprintf(tip, 255, "%'.0f Hz", floor(geq_freqs[i] + 0.5));
 	gtk_tooltips_set_tip(tooltips, GTK_WIDGET(geqr[i]), tip, NULL);
 	geqa[i] = GTK_ADJUSTMENT(gtk_range_get_adjustment(GTK_RANGE(geqr[i])));
-        g_signal_connect(G_OBJECT(geqa[i]), "value-changed", G_CALLBACK(eqb_mod), NULL);
-	g_signal_connect(G_OBJECT(geqa[i]), "value-changed", G_CALLBACK(eqb_changed), (gpointer)i+1);
+	g_signal_connect(G_OBJECT(geqa[i]), "value-changed", 
+                         G_CALLBACK(eqb_changed), (gpointer)i+1);
+        g_signal_connect(G_OBJECT(geqa[i]), "value-changed", 
+                         G_CALLBACK(hdeq_eqb_mod), NULL);
     }
 
     for (i=0; i<BANDS + 1; i++) {
@@ -225,9 +227,14 @@ gboolean eqb_changed(GtkAdjustment *adj, gpointer user_data)
 
     /*  If the adjustment was made by hand set the scene warning.  If it was 
         set automatically by the set_EQ function we don't want to set it 
-        because this could just be a scene change.  */
+        because this could just be a scene change.  We are drawing the curve
+        in order to set the state values.  */
 
-    if (!EQ_drawn) set_scene_warning_button ();
+    if (!EQ_drawn) 
+      {
+        set_scene_warning_button ();
+        draw_EQ_curve ();
+      }
 
     return FALSE;
 }
