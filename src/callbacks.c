@@ -852,7 +852,18 @@ draw_EQ_curve ()
         gdk_gc_set_foreground (EQ_gc, &green);
 
         logfreq2xpix (EQ_x_notched[EQ_notch_index[i]], &x1);
-        loggain2ypix (EQ_y_notched[EQ_notch_index[i]], &y1);
+
+
+        /*  Make the shelf handles follow the shelf.  */
+
+        if (!i || i == NOTCHES - 1)
+          {
+            loggain2ypix (EQ_notch_gain[i], &y1);
+          }
+        else
+          {
+            loggain2ypix (EQ_y_notched[EQ_notch_index[i]], &y1);
+          }
 
         gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, 
             x1 - NOTCH_HANDLE_HALF_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
