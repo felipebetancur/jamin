@@ -3360,10 +3360,10 @@ create_window1 (void)
                     G_CALLBACK (on_scene1_name_changed),
                     NULL);
   g_signal_connect ((gpointer) scene1_name, "focus_in_event",
-                    G_CALLBACK (on_scene1_name_focus_in_event),
+                    G_CALLBACK (on_scene_name_focus_in_event),
                     NULL);
   g_signal_connect ((gpointer) scene1_name, "focus_out_event",
-                    G_CALLBACK (on_scene1_name_focus_out_event),
+                    G_CALLBACK (on_scene_name_focus_out_event),
                     NULL);
   g_signal_connect ((gpointer) scene2_eventbox, "button_press_event",
                     G_CALLBACK (on_scene2_eventbox_button_press_event),
@@ -3372,10 +3372,10 @@ create_window1 (void)
                     G_CALLBACK (on_scene2_name_changed),
                     NULL);
   g_signal_connect ((gpointer) scene2_name, "focus_in_event",
-                    G_CALLBACK (on_scene2_name_focus_in_event),
+                    G_CALLBACK (on_scene_name_focus_in_event),
                     NULL);
   g_signal_connect ((gpointer) scene2_name, "focus_out_event",
-                    G_CALLBACK (on_scene2_name_focus_out_event),
+                    G_CALLBACK (on_scene_name_focus_out_event),
                     NULL);
   g_signal_connect ((gpointer) scene3_eventbox, "button_press_event",
                     G_CALLBACK (on_scene3_eventbox_button_press_event),
@@ -3384,10 +3384,10 @@ create_window1 (void)
                     G_CALLBACK (on_scene3_name_changed),
                     NULL);
   g_signal_connect ((gpointer) scene3_name, "focus_in_event",
-                    G_CALLBACK (on_scene3_name_focus_in_event),
+                    G_CALLBACK (on_scene_name_focus_in_event),
                     NULL);
   g_signal_connect ((gpointer) scene3_name, "focus_out_event",
-                    G_CALLBACK (on_scene3_name_focus_out_event),
+                    G_CALLBACK (on_scene_name_focus_out_event),
                     NULL);
   g_signal_connect ((gpointer) scene4_eventbox, "button_press_event",
                     G_CALLBACK (on_scene4_eventbox_button_press_event),
@@ -3396,10 +3396,10 @@ create_window1 (void)
                     G_CALLBACK (on_scene4_name_changed),
                     NULL);
   g_signal_connect ((gpointer) scene4_name, "focus_in_event",
-                    G_CALLBACK (on_scene4_name_focus_in_event),
+                    G_CALLBACK (on_scene_name_focus_in_event),
                     NULL);
   g_signal_connect ((gpointer) scene4_name, "focus_out_event",
-                    G_CALLBACK (on_scene4_name_focus_out_event),
+                    G_CALLBACK (on_scene_name_focus_out_event),
                     NULL);
   g_signal_connect ((gpointer) scene5_eventbox, "button_press_event",
                     G_CALLBACK (on_scene5_eventbox_button_press_event),
@@ -3408,10 +3408,10 @@ create_window1 (void)
                     G_CALLBACK (on_scene5_name_changed),
                     NULL);
   g_signal_connect ((gpointer) scene5_name, "focus_in_event",
-                    G_CALLBACK (on_scene5_name_focus_in_event),
+                    G_CALLBACK (on_scene_name_focus_in_event),
                     NULL);
   g_signal_connect ((gpointer) scene5_name, "focus_out_event",
-                    G_CALLBACK (on_scene5_name_focus_out_event),
+                    G_CALLBACK (on_scene_name_focus_out_event),
                     NULL);
   g_signal_connect ((gpointer) scene6_eventbox, "button_press_event",
                     G_CALLBACK (on_scene6_eventbox_button_press_event),
@@ -3420,10 +3420,10 @@ create_window1 (void)
                     G_CALLBACK (on_scene6_name_changed),
                     NULL);
   g_signal_connect ((gpointer) scene6_name, "focus_in_event",
-                    G_CALLBACK (on_scene6_name_focus_in_event),
+                    G_CALLBACK (on_scene_name_focus_in_event),
                     NULL);
   g_signal_connect ((gpointer) scene6_name, "focus_out_event",
-                    G_CALLBACK (on_scene6_name_focus_out_event),
+                    G_CALLBACK (on_scene_name_focus_out_event),
                     NULL);
   g_signal_connect ((gpointer) input_eventbox, "enter_notify_event",
                     G_CALLBACK (on_input_eventbox_enter_notify_event),
@@ -3569,6 +3569,24 @@ create_window1 (void)
   g_signal_connect ((gpointer) frame_l, "enter_notify_event",
                     G_CALLBACK (on_frame_l_enter_notify_event),
                     NULL);
+  g_signal_connect ((gpointer) comp_at_1, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_re_1, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_th_1, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_ra_1, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_kn_1, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_ma_1, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
   g_signal_connect ((gpointer) autobutton_l, "toggled",
                     G_CALLBACK (on_autobutton_l_toggled),
                     NULL);
@@ -3587,6 +3605,24 @@ create_window1 (void)
   g_signal_connect ((gpointer) frame_m, "enter_notify_event",
                     G_CALLBACK (on_frame_m_enter_notify_event),
                     NULL);
+  g_signal_connect ((gpointer) comp_at_2, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_re_2, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_th_2, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_ra_2, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_kn_2, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_ma_2, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
   g_signal_connect ((gpointer) autobutton_m, "toggled",
                     G_CALLBACK (on_autobutton_m_toggled),
                     NULL);
@@ -3604,6 +3640,24 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) frame_h, "enter_notify_event",
                     G_CALLBACK (on_frame_h_enter_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_at_3, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_re_3, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_th_3, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_ra_3, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_kn_3, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) comp_ma_3, "button_press_event",
+                    G_CALLBACK (on_comp_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) autobutton_h, "toggled",
                     G_CALLBACK (on_autobutton_h_toggled),

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.103 2003/11/21 03:42:11 joq Exp $
+ *  $Id: callbacks.c,v 1.104 2003/11/21 13:09:39 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1205,9 +1205,9 @@ on_notebook1_switch_page               (GtkNotebook     *notebook,
 
 
 gboolean
-on_scene1_name_focus_in_event          (GtkWidget       *widget,
-                                        GdkEventFocus   *event,
-                                        gpointer         user_data)
+on_scene_name_focus_in_event          (GtkWidget       *widget,
+                                       GdkEventFocus   *event,
+                                       gpointer         user_data)
 {
     text_focus = TRUE;
     return FALSE;
@@ -1215,109 +1215,9 @@ on_scene1_name_focus_in_event          (GtkWidget       *widget,
 
 
 gboolean
-on_scene1_name_focus_out_event         (GtkWidget       *widget,
-                                        GdkEventFocus   *event,
-                                        gpointer         user_data)
-{
-    text_focus = FALSE;
-    return FALSE;
-}
-
-
-gboolean
-on_scene2_name_focus_in_event          (GtkWidget       *widget,
-                                        GdkEventFocus   *event,
-                                        gpointer         user_data)
-{
-    text_focus = TRUE;
-    return FALSE;
-}
-
-
-gboolean
-on_scene2_name_focus_out_event         (GtkWidget       *widget,
-                                        GdkEventFocus   *event,
-                                        gpointer         user_data)
-{
-    text_focus = FALSE;
-    return FALSE;
-}
-
-
-gboolean
-on_scene3_name_focus_in_event          (GtkWidget       *widget,
-                                        GdkEventFocus   *event,
-                                        gpointer         user_data)
-{
-    text_focus = TRUE;
-    return FALSE;
-}
-
-
-gboolean
-on_scene3_name_focus_out_event         (GtkWidget       *widget,
-                                        GdkEventFocus   *event,
-                                        gpointer         user_data)
-{
-    text_focus = FALSE;
-    return FALSE;
-}
-
-
-gboolean
-on_scene4_name_focus_in_event          (GtkWidget       *widget,
-                                        GdkEventFocus   *event,
-                                        gpointer         user_data)
-{
-    text_focus = TRUE;
-    return FALSE;
-}
-
-
-gboolean
-on_scene4_name_focus_out_event         (GtkWidget       *widget,
-                                        GdkEventFocus   *event,
-                                        gpointer         user_data)
-{
-    text_focus = FALSE;
-    return FALSE;
-}
-
-
-gboolean
-on_scene5_name_focus_in_event          (GtkWidget       *widget,
-                                        GdkEventFocus   *event,
-                                        gpointer         user_data)
-{
-    text_focus = TRUE;
-    return FALSE;
-}
-
-
-gboolean
-on_scene5_name_focus_out_event         (GtkWidget       *widget,
-                                        GdkEventFocus   *event,
-                                        gpointer         user_data)
-{
-    text_focus = FALSE;
-    return FALSE;
-}
-
-
-gboolean
-on_scene6_name_focus_in_event          (GtkWidget       *widget,
-                                        GdkEventFocus   *event,
-                                        gpointer         user_data)
-{
-    text_focus = TRUE;
-    return FALSE;
-}
-
-
-gboolean
-on_scene6_name_focus_out_event         (GtkWidget       *widget,
-                                        GdkEventFocus   *event,
-                                        gpointer         user_data)
+on_scene_name_focus_out_event         (GtkWidget       *widget,
+                                       GdkEventFocus   *event,
+                                       gpointer         user_data)
 {
     text_focus = FALSE;
     return FALSE;
@@ -1774,4 +1674,14 @@ on_out_trim_scale_value_changed        (GtkRange        *range,
     s_set_value_ui(S_OUT_GAIN, gtk_range_get_adjustment(range)->value);
 
     set_scene_warning_button ();
+}
+
+gboolean
+on_comp_button_press_event             (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  set_scene_warning_button ();
+
+  return FALSE;
 }

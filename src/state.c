@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.25 2003/11/21 01:30:20 jdepner Exp $
+ *  $Id: state.c,v 1.26 2003/11/21 13:09:39 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -97,17 +97,13 @@ void s_set_adjustment(int id, GtkAdjustment *adjustment)
 
 void s_set_value_ui(int id, float value)
 {
-    /*  Don't set the scene warning mask for automatic operations.  Only for 
-        manual ops.  */
-
-    suppress_scene_warning (TRUE);
-
     s_value[id] = value;
 
     if (suppress_feedback) {
 	return;
     }
     assert(id >= 0 && id < S_SIZE);
+
 
     if (last_changed != id) {
 	s_history_add(g_strdup_printf("%s = %f", s_description[id],
@@ -131,11 +127,6 @@ void s_set_value_ui(int id, float value)
     if (s_callback[id]) {
 	(*s_callback[id])(id, value);
     }
-
-
-    /*  Allow scene warnings.  */
-
-    suppress_scene_warning (FALSE);
 }
 
 void s_set_value(int id, float value, int duration)

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: compressor-ui.c,v 1.14 2003/11/21 01:30:20 jdepner Exp $
+ *  $Id: compressor-ui.c,v 1.15 2003/11/21 13:09:39 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -95,8 +95,6 @@ void bind_compressors()
 gboolean adj_cb(GtkAdjustment *adj, gpointer p)
 {
     s_set_value_ui((int)p, adj->value);
-
-    set_scene_warning_button ();
 
     return FALSE;
 }

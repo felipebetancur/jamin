@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.10 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: callbacks_help.h,v 1.11 2003/11/21 13:09:39 jdepner Exp $
  */
 
 char general_help[] = {
@@ -28,11 +28,9 @@ a number of other features.\n\n\
     Steve Harris\n\
     Jack O'Quin\n\
     Ron Parker\n\
-    Alexandre Prokoudine\n\
     Patrick Shirkey\n\n\
     JAMin is released under the GNU General Public License and is copyright \
-(c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, A. Prokoudine, and \
-P. Shirkey. \n\
+(c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, and P. Shirkey. \n\
     This program is free software; you can redistribute it and/or modify it \
 under the terms of the GNU General Public License as published by the Free \
 Software Foundation; either version 2 of the License, or (at your option) any \
@@ -196,10 +194,12 @@ scene button, use the menu to 'Set' that scene, then use the text box to \
 enter a name for that scene (Back Alley Fugue - verse).  You can recall these \
 settings by left clicking on the scene button.  A green button means that \
 the scene associated with this button is currently loaded.  A bright red \
-button means that scene settings are available for this button.  A dull red \
-button means that no settings have been saved for this scene button.  You can \
-clear settings from a button using the right click menu and the 'Clear' \
-entry.\n\n\
+button means that scene settings are available for this button but not \
+currently loaded.  A dull red button means that no settings have been saved \
+for this scene button.  A yellow warning button means that this scene was \
+active but the settings have been changed.  If you want to save the settings \
+you must use the 'Set' entry in the right click menu.  You can clear settings \
+from a button using the right click menu and the 'Clear' entry.\n\n\
     The keyboard accelerators for the scene buttons are the number keys, \
 1 through 6.  Pressing the 1 key will cause scene 1 to become active.  The \
 ALT modifier can be used to assign settings to a scene button (instead of \

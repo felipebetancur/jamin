@@ -31,8 +31,8 @@ static GtkMenu           *scene_menu;
 static GtkImage          *l_scene[NUM_SCENES];
 static GtkEventBox       *l_scene_eventbox[NUM_SCENES];
 static GtkEntry          *l_scene_name[NUM_SCENES];
-static int               current_scene, menu_scene;
-static gboolean          scene_loaded[NUM_SCENES], suppress_warning = FALSE;
+static int               current_scene = -1, menu_scene;
+static gboolean          scene_loaded[NUM_SCENES];
 static s_state           scene_state[NUM_SCENES];
 
 
@@ -76,6 +76,15 @@ void bind_scenes ()
 void select_scene (int number, int button)
 {
     int             i;
+    gboolean        warning;
+
+
+    warning = FALSE;
+    if (number > 99)
+      {
+        number -= 100;
+        warning = TRUE;
+      }
 
 
     /*  Left button selects the scene.  */
@@ -89,14 +98,25 @@ void select_scene (int number, int button)
               {
                 if (i == number)
                   {
-                    current_scene = i;
+                    if (warning)
+                      {
+                        gtk_image_set_from_stock (l_scene[i], 
+                                                  GTK_STOCK_DIALOG_WARNING, 
+                                                  GTK_ICON_SIZE_BUTTON);
 
-                    s_crossfade_to_state (&scene_state[i], 1.0f);
+                        current_scene = number;
+                      }
+                    else
+                      {
+                        current_scene = i;
 
-                    set_EQ_curve_values ();
+                        s_crossfade_to_state (&scene_state[i], 1.0f);
 
-                    gtk_image_set_from_stock (l_scene[i], GTK_STOCK_YES, 
-                                              GTK_ICON_SIZE_BUTTON);
+                        set_EQ_curve_values ();
+
+                        gtk_image_set_from_stock (l_scene[i], GTK_STOCK_YES, 
+                                                  GTK_ICON_SIZE_BUTTON);
+                      }
                   }
                 else
                   {
@@ -117,7 +137,7 @@ void select_scene (int number, int button)
         /*  Right button pops up the set/clear menu.  */
 
       case 3:
-        menu_scene = number;
+        menu_scene = number % 100;
         gtk_menu_popup (scene_menu, NULL, NULL, NULL, NULL, button, 
                         gtk_get_current_event_time());
         break;
@@ -137,9 +157,14 @@ int get_current_scene ()
 
 s_state *get_scene (int number)
 {
-  if (!scene_loaded[number]) return (NULL);
+  int       i;
 
-  return (&scene_state[number]);
+
+  i = number % 100;
+
+  if (!scene_loaded[i]) return (NULL);
+
+  return (&scene_state[i]);
 }
 
 
@@ -207,8 +232,13 @@ void set_scene (int scene_num)
 
 const char *get_scene_name(int number)
 {
-    if (!scene_loaded[number]) return (NULL);
-    return gtk_entry_get_text(l_scene_name[number]);
+  int        i;
+
+
+  i = number % 100;
+
+  if (!scene_loaded[i]) return (NULL);
+  return gtk_entry_get_text(l_scene_name[i]);
 }
 
 
@@ -220,6 +250,10 @@ void set_scene_name (int number, const char *scene_name)
 {
     char        name[256];
     GtkTooltips *tooltips = gtk_tooltips_new();
+    int         i;
+
+
+    i = number % 100;
 
 
     /*  If we are trying to modify the name without anything loaded, bypass
@@ -230,17 +264,17 @@ void set_scene_name (int number, const char *scene_name)
 
     if (scene_name == NULL)
       {
-        strcpy (name, gtk_entry_get_text (l_scene_name[number]));
+        strcpy (name, gtk_entry_get_text (l_scene_name[i]));
       }
     else
       {
         strcpy (name, scene_name);
 
-        gtk_entry_set_text (l_scene_name[number], name);
+        gtk_entry_set_text (l_scene_name[i], name);
       }
 
-    scene_state[number].description = 
-        (char *) realloc (scene_state[number].description, 
+    scene_state[i].description = 
+        (char *) realloc (scene_state[i].description, 
         strlen (name) + 1);
 
     strcpy (scene_state[menu_scene].description, name);
@@ -253,7 +287,7 @@ void set_scene_name (int number, const char *scene_name)
                           scene_state[menu_scene].description, NULL);
 
 
-    set_scene_warning_button ();
+    //set_scene_warning_button ();
 }
 
 
@@ -263,12 +297,17 @@ void set_scene_name (int number, const char *scene_name)
 void clear_scene (int scene_num)
 {
     char        name[20];
+    int         i;
 
 
     GtkTooltips *tooltips = gtk_tooltips_new();
 
 
-    if (scene_num >= 0) menu_scene = scene_num;
+
+    i = scene_num % 100;
+
+
+    if (i >= 0) menu_scene = i;
 
 
     gtk_widget_set_sensitive ((GtkWidget *) l_scene[menu_scene], FALSE);
@@ -317,16 +356,16 @@ void unset_scene_buttons ()
 
 void set_scene_warning_button ()
 {
-    if (current_scene != -1 && !suppress_warning)
-      gtk_image_set_from_stock (l_scene[current_scene], 
-                                GTK_STOCK_DIALOG_WARNING, 
-                                GTK_ICON_SIZE_BUTTON);
-}
+  int        i;
 
 
-/*  Suppress or unsupress the scene change warning flag.  */
+  i = current_scene % 100;
 
-void suppress_scene_warning (gboolean i)
-{
-  suppress_warning = i;
+
+    if (current_scene != -1)
+      {
+        gtk_image_set_from_stock (l_scene[i], GTK_STOCK_DIALOG_WARNING, 
+                                  GTK_ICON_SIZE_BUTTON);
+        current_scene = i + 100;
+      }
 }
