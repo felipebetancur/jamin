@@ -37,7 +37,7 @@ printf(". %d\n", scene);
 	  if (last_scene != scene) {
 	    last_scene = scene;
 	    if (last_scene > 0 && last_scene <= NUM_SCENES) {
-	      lo_send(address, "/scene", "i", last_scene);
+	      lo_send(address, SCENE_URI, "i", last_scene);
 	    }
 	  }
 #ifdef DEBUG

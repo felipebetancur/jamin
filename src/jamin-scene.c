@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: jamin-scene.c,v 1.3 2004/05/09 15:54:01 theno23 Exp $
+ *  $Id: jamin-scene.c,v 1.4 2004/05/26 23:23:27 joq Exp $
  */
 
 #include <stdlib.h>
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     }
 
     addr = lo_address_new(NULL, OSC_PORT);
-    lo_send(addr, "/scene", "i", scene);
+    lo_send(addr, SCENE_URI, "i", scene);
 
     return 0;
 }

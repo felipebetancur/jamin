@@ -11,11 +11,16 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.53 2004/05/09 15:54:01 theno23 Exp $
+ *  $Id: main.c,v 1.54 2004/05/26 23:23:27 joq Exp $
  */
 
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
+#endif
+
+#ifdef HAVE_OSC
+#include <lo.h>
+#include "constants.h"
 #endif
 
 #include <stdlib.h>
@@ -28,9 +33,6 @@
 #include <limits.h>
 #include <errno.h>
 #include <dirent.h>
-#ifdef HAVE_OSC
-#include <lo.h>
-#endif
 
 #include "main.h"
 #include "interface.h"
@@ -123,7 +125,7 @@ int main(int argc, char *argv[])
 
 #ifdef HAVE_OSC
     st = lo_server_thread_new(OSC_PORT, error);
-    lo_server_thread_add_method(st, "/scene", "i", scene_handler, NULL);
+    lo_server_thread_add_method(st, SCENE_URI, "i", scene_handler, NULL);
     lo_server_thread_start(st);
 #endif
 
@@ -238,6 +240,6 @@ void error(int num, const char *msg, const char *path)
     printf("liblo server error %d in path %s: %s\n", num, path, msg);
 }
 
-#endif
+#endif /* HAVE_OSC */
 
 /* vi:set ts=8 sts=4 sw=4: */
