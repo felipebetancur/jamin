@@ -597,6 +597,8 @@ set_EQ ()
     /*  Set the graphic EQ sliders based on the hand-drawn curve.  */
 
     geq_set_sliders (EQ_length, EQ_freq_xinterp, EQ_freq_yinterp);
+
+    EQ_mod = 0;
 }
 
 
