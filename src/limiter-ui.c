@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: limiter-ui.c,v 1.14 2004/07/17 10:38:23 theno23 Exp $
+ *  $Id: limiter-ui.c,v 1.15 2004/12/02 16:40:56 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -82,9 +82,9 @@ void lh_changed(int id, float value)
 
     const float val = powf(10.0f, value);
     if (val >= 100.0f) {
-	snprintf(text, 255, "%.3g s", val * 0.001f);
+      snprintf(text, 255, _("%.3g s"), val * 0.001f);
     } else {
-	snprintf(text, 255, "%.4g ms", val);
+      snprintf(text, 255, _("%.4g ms"), val);
     }
     gtk_label_set_text(lh_label, text);
 
@@ -97,7 +97,7 @@ void ll_changed(int id, float value)
 
     limiter.limit = value;
 	        
-    snprintf(text, 255, "%.1f dB", value);
+    snprintf(text, 255, _("%.1f dB"), value);
     gtk_label_set_text(ll_label, text);
 }
 

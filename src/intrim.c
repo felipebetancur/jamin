@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: intrim.c,v 1.13 2003/11/20 21:19:55 theno23 Exp $
+ *  $Id: intrim.c,v 1.14 2004/12/02 16:40:56 jdepner Exp $
  */
 
 #include <gtk/gtk.h>
@@ -110,11 +110,11 @@ void update_pan_label(float balance)
     char tmp[256];
 
     if (balance < -0.5f) {
-	snprintf(tmp, 255, "left %.0fdB", -balance);
+      snprintf(tmp, 255, _("left %.0fdB"), -balance);
     } else if (balance > 0.5f) {
-	snprintf(tmp, 255, "right %.0fdB", balance);
+      snprintf(tmp, 255, _("right %.0fdB"), balance);
     } else {
-	sprintf(tmp, "centre");
+      sprintf(tmp, _("centre"));
     }
     gtk_label_set_label(pan_label, tmp);
 }
