@@ -1,0 +1,13 @@
+# symbol(card)	description
+in-gain		Input gain
+in-pan		Input pan
+eq-gain(1024)	EQ Gain
+xover-freq(2)	Crossover frequency
+comp-attack(3)	Compressor attack
+comp-release(3)	Compressor release
+comp-thresh(3)	Compressor threshold
+comp-ratio(3)	Compressor ratio
+comp-knee(3)	Compressor knee
+comp-makeup(3)	Compressor makeup gain
+lim-time	Limiter time
+lim-limit	Limiter level
