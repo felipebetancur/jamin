@@ -469,12 +469,12 @@ create_window1 (void)
   GtkWidget *custom19;
   GtkWidget *lim_in_meter;
   GtkWidget *table15;
-  GtkWidget *label218;
-  GtkWidget *label217;
   GtkWidget *limit_val_label;
   GtkWidget *release_val_label;
   GtkWidget *lim_lh_scale;
   GtkWidget *lim_out_trim_scale;
+  GtkWidget *label218;
+  GtkWidget *label217;
   GtkWidget *vbox159;
   GtkWidget *lim_att_meter;
   GtkWidget *custom20;
@@ -508,6 +508,7 @@ create_window1 (void)
   gtk_widget_set_name (window1, "window1");
   GTK_WIDGET_SET_FLAGS (window1, GTK_CAN_FOCUS);
   gtk_window_set_title (GTK_WINDOW (window1), _("JAM"));
+  gtk_window_set_default_size (GTK_WINDOW (window1), 949, -1);
 
   outer_vbox = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (outer_vbox, "outer_vbox");
@@ -980,6 +981,7 @@ create_window1 (void)
   gtk_widget_show (bighbox);
   gtk_container_add (GTK_CONTAINER (alignment2), bighbox);
   gtk_widget_set_size_request (bighbox, 800, 476);
+  gtk_container_set_border_width (GTK_CONTAINER (bighbox), 2);
 
   vbox1 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox1, "vbox1");
@@ -992,6 +994,7 @@ create_window1 (void)
   gtk_widget_show (hbox13);
   gtk_box_pack_start (GTK_BOX (vbox1), hbox13, TRUE, TRUE, 0);
   gtk_widget_set_size_request (hbox13, 677, 230);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox13), 1);
 
   input_eventbox = gtk_event_box_new ();
   gtk_widget_set_name (input_eventbox, "input_eventbox");
@@ -1002,7 +1005,7 @@ create_window1 (void)
   gtk_widget_set_name (input_frame, "input_frame");
   gtk_widget_show (input_frame);
   gtk_container_add (GTK_CONTAINER (input_eventbox), input_frame);
-  gtk_container_set_border_width (GTK_CONTAINER (input_frame), 1);
+  gtk_container_set_border_width (GTK_CONTAINER (input_frame), 2);
   gtk_frame_set_label_align (GTK_FRAME (input_frame), 0.5, 0.5);
 
   input_vbox = gtk_vbox_new (FALSE, 0);
@@ -2166,6 +2169,7 @@ create_window1 (void)
   gtk_widget_show (frame_l);
   gtk_container_add (GTK_CONTAINER (low_comp_event_box), frame_l);
   gtk_widget_set_size_request (frame_l, 196, 207);
+  gtk_container_set_border_width (GTK_CONTAINER (frame_l), 1);
 
   vbox_l = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox_l, "vbox_l");
@@ -2460,6 +2464,7 @@ create_window1 (void)
   gtk_widget_show (frame_m);
   gtk_container_add (GTK_CONTAINER (mid_comp_event_box), frame_m);
   gtk_widget_set_size_request (frame_m, 196, 207);
+  gtk_container_set_border_width (GTK_CONTAINER (frame_m), 1);
 
   vbox_m = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox_m, "vbox_m");
@@ -2754,6 +2759,7 @@ create_window1 (void)
   gtk_widget_show (frame_h);
   gtk_container_add (GTK_CONTAINER (high_comp_event_box), frame_h);
   gtk_widget_set_size_request (frame_h, 196, 207);
+  gtk_container_set_border_width (GTK_CONTAINER (frame_h), 1);
 
   vbox_h = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox_h, "vbox_h");
@@ -3059,6 +3065,7 @@ create_window1 (void)
   gtk_widget_set_name (frame25, "frame25");
   gtk_widget_show (frame25);
   gtk_container_add (GTK_CONTAINER (limiter_eventbox), frame25);
+  gtk_container_set_border_width (GTK_CONTAINER (frame25), 1);
 
   vbox105 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox105, "vbox105");
@@ -3073,7 +3080,7 @@ create_window1 (void)
   label258 = gtk_label_new (_("Input"));
   gtk_widget_set_name (label258, "label258");
   gtk_widget_show (label258);
-  gtk_box_pack_start (GTK_BOX (hbox40), label258, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox40), label258, FALSE, FALSE, 1);
   gtk_label_set_justify (GTK_LABEL (label258), GTK_JUSTIFY_LEFT);
 
   lim_input_hscale = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -20, 20, 0, 0, 0)));
@@ -3086,6 +3093,7 @@ create_window1 (void)
   gtk_widget_set_name (vbox158, "vbox158");
   gtk_widget_show (vbox158);
   gtk_box_pack_start (GTK_BOX (vbox105), vbox158, TRUE, FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox158), 1);
 
   custom19 = make_mscale ("custom19", "bottom", NULL, -40, 6);
   gtk_widget_set_name (custom19, "custom19");
@@ -3107,24 +3115,7 @@ create_window1 (void)
   gtk_widget_set_name (table15, "table15");
   gtk_widget_show (table15);
   gtk_box_pack_start (GTK_BOX (vbox105), table15, FALSE, FALSE, 0);
-
-  label218 = gtk_label_new (_("Release"));
-  gtk_widget_set_name (label218, "label218");
-  gtk_widget_show (label218);
-  gtk_table_attach (GTK_TABLE (table15), label218, 0, 1, 1, 2,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_label_set_justify (GTK_LABEL (label218), GTK_JUSTIFY_LEFT);
-  gtk_misc_set_alignment (GTK_MISC (label218), 0, 0.5);
-
-  label217 = gtk_label_new (_("Limit"));
-  gtk_widget_set_name (label217, "label217");
-  gtk_widget_show (label217);
-  gtk_table_attach (GTK_TABLE (table15), label217, 0, 1, 0, 1,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_label_set_justify (GTK_LABEL (label217), GTK_JUSTIFY_LEFT);
-  gtk_misc_set_alignment (GTK_MISC (label217), 0, 0.5);
+  gtk_container_set_border_width (GTK_CONTAINER (table15), 1);
 
   limit_val_label = gtk_label_new (_("----"));
   gtk_widget_set_name (limit_val_label, "limit_val_label");
@@ -3166,10 +3157,29 @@ create_window1 (void)
   gtk_scale_set_draw_value (GTK_SCALE (lim_out_trim_scale), FALSE);
   gtk_scale_set_value_pos (GTK_SCALE (lim_out_trim_scale), GTK_POS_LEFT);
 
+  label218 = gtk_label_new (_("Release"));
+  gtk_widget_set_name (label218, "label218");
+  gtk_widget_show (label218);
+  gtk_table_attach (GTK_TABLE (table15), label218, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_label_set_justify (GTK_LABEL (label218), GTK_JUSTIFY_LEFT);
+  gtk_misc_set_alignment (GTK_MISC (label218), 0, 0.5);
+
+  label217 = gtk_label_new (_("Limit"));
+  gtk_widget_set_name (label217, "label217");
+  gtk_widget_show (label217);
+  gtk_table_attach (GTK_TABLE (table15), label217, 0, 1, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_label_set_justify (GTK_LABEL (label217), GTK_JUSTIFY_LEFT);
+  gtk_misc_set_alignment (GTK_MISC (label217), 0, 0.5);
+
   vbox159 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox159, "vbox159");
   gtk_widget_show (vbox159);
   gtk_box_pack_start (GTK_BOX (vbox105), vbox159, TRUE, FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox159), 1);
 
   lim_att_meter = make_meter ("lim_att_meter", "left", NULL, -20, 0);
   gtk_widget_set_name (lim_att_meter, "lim_att_meter");
@@ -3210,6 +3220,7 @@ create_window1 (void)
   gtk_widget_set_name (frame26, "frame26");
   gtk_widget_show (frame26);
   gtk_container_add (GTK_CONTAINER (boost_eventbox), frame26);
+  gtk_container_set_border_width (GTK_CONTAINER (frame26), 1);
 
   hbox53 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox53, "hbox53");
@@ -3219,7 +3230,7 @@ create_window1 (void)
   label316 = gtk_label_new (_("Amount "));
   gtk_widget_set_name (label316, "label316");
   gtk_widget_show (label316);
-  gtk_box_pack_start (GTK_BOX (hbox53), label316, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox53), label316, FALSE, FALSE, 1);
   gtk_label_set_justify (GTK_LABEL (label316), GTK_JUSTIFY_LEFT);
 
   boost_scale = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 10, 0.25, 1, 0)));
@@ -3238,6 +3249,7 @@ create_window1 (void)
   gtk_widget_set_name (frame27, "frame27");
   gtk_widget_show (frame27);
   gtk_box_pack_start (GTK_BOX (bighbox), frame27, FALSE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (frame27), 1);
 
   output_vbox = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (output_vbox, "output_vbox");
@@ -4368,12 +4380,12 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, custom19, "custom19");
   GLADE_HOOKUP_OBJECT (window1, lim_in_meter, "lim_in_meter");
   GLADE_HOOKUP_OBJECT (window1, table15, "table15");
-  GLADE_HOOKUP_OBJECT (window1, label218, "label218");
-  GLADE_HOOKUP_OBJECT (window1, label217, "label217");
   GLADE_HOOKUP_OBJECT (window1, limit_val_label, "limit_val_label");
   GLADE_HOOKUP_OBJECT (window1, release_val_label, "release_val_label");
   GLADE_HOOKUP_OBJECT (window1, lim_lh_scale, "lim_lh_scale");
   GLADE_HOOKUP_OBJECT (window1, lim_out_trim_scale, "lim_out_trim_scale");
+  GLADE_HOOKUP_OBJECT (window1, label218, "label218");
+  GLADE_HOOKUP_OBJECT (window1, label217, "label217");
   GLADE_HOOKUP_OBJECT (window1, vbox159, "vbox159");
   GLADE_HOOKUP_OBJECT (window1, lim_att_meter, "lim_att_meter");
   GLADE_HOOKUP_OBJECT (window1, custom20, "custom20");
