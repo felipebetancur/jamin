@@ -12,7 +12,7 @@ void hdeq_mid2high_init ();
 void crossover_init ();
 void hdeq_eqb_mod ();
 void draw_EQ_spectrum_curve (float single_levels[]);
-void hdeq_curve_exposed (GtkWidget *widget);
+void hdeq_curve_exposed (GtkWidget *widget, GdkEventExpose  *event);
 void hdeq_curve_init (GtkWidget *widget);
 void hdeq_curve_motion (GdkEventMotion *event);
 void hdeq_curve_button_press (GdkEventButton *event);

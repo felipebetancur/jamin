@@ -174,7 +174,7 @@ on_EQ_curve_expose_event               (GtkWidget       *widget,
                                         GdkEventExpose  *event,
                                         gpointer         user_data)
 {
-    hdeq_curve_exposed (widget);
+    hdeq_curve_exposed (widget, event);
 
     return FALSE;
 }
@@ -1907,4 +1907,3 @@ on_frame_h_enter_notify_event          (GtkWidget       *widget,
 
   return FALSE;
 }
-

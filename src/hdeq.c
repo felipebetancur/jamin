@@ -102,7 +102,7 @@ static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0,
                        EQ_length = 0, comp_realized[3] = {0, 0, 0}, 
                        EQ_cleared = 1, EQ_realized = 0, xover_active = 0,
                        xover_handle_fa, xover_handle_fb, EQ_drag_fa = 0,
-                       EQ_drag_fb = 0, 
+                         EQ_drag_fb = 0, EQ_partial = 0,
                        EQ_notch_drag[NOTCHES] = {0, 0, 0, 0, 0}, 
                        EQ_notch_Q_drag[NOTCHES] = {0, 0, 0, 0, 0},
                        EQ_notch_handle[2][3][NOTCHES], 
@@ -451,7 +451,7 @@ void draw_EQ_spectrum_curve (float single_levels[])
         /*  If we've just cleared (redrawn) the curve, don't erase the previous
             line.  */
 
-        if (!EQ_cleared)
+        if (EQ_partial || !EQ_cleared)
           {
             for (i = 1 ; i < EQ_INTERP ; i++)
               {
@@ -459,6 +459,7 @@ void draw_EQ_spectrum_curve (float single_levels[])
                     x[i], y[i]);
               }
           }
+        EQ_partial = 0;
 
 
         /*  Convert the single levels to db, plot, and save the pixel positions
@@ -933,7 +934,7 @@ static void draw_EQ_curve ()
 /*  Whenever the curve is exposed, which will happen on a resize, we need to
     get the current dimensions and redraw the curve.  */
 
-void hdeq_curve_exposed (GtkWidget *widget)
+void hdeq_curve_exposed (GtkWidget *widget, GdkEventExpose  *event)
 {
     l_low2mid_adj = gtk_range_get_adjustment ((GtkRange *) l_low2mid);
     EQ_curve_range_x = l_low2mid_adj->upper - l_low2mid_adj->lower;
@@ -946,6 +947,13 @@ void hdeq_curve_exposed (GtkWidget *widget)
 
     EQ_curve_width = widget->allocation.width - 1;
     EQ_curve_height = widget->allocation.height - 1;
+
+
+    /*  If we only get part of the height exposed we don't want to redraw the
+        spectrum.  This is a band-aid fo a partial expose problem.  I'm not
+        sure what the best solution would be.  */
+
+    if (event->area.height != widget->allocation.height) EQ_partial = 1;
 
 
     draw_EQ_curve ();
