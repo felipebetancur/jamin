@@ -25,6 +25,8 @@ extern float eq_coefs[];
 extern float in_trim_gain, in_peak;
 extern float lim_peak[];
 
+extern int global_bypass;
+
 void process_init(float fs, int buffer_size);
 
 int iec_scale(float db);

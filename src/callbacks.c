@@ -14,7 +14,6 @@
 #include "support.h"
 #include "process.h"
 
-
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
 #define EQ_INTRVL 10
 #define EQ_INTERP ((EQ_BANDS + 1) * EQ_INTRVL)
@@ -673,5 +672,13 @@ on_EQ_curve_event_box_button_release_event
       }
 
     return FALSE;
+}
+
+
+void
+on_bypass_button_toggled               (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+	global_bypass = gtk_toggle_button_get_active(togglebutton);
 }
 

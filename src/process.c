@@ -21,6 +21,8 @@ float eq_coefs[BINS]; /* Linear gain of each FFT bin */
 float in_trim_gain = 1.0f;
 float lim_peak[2];
 
+int global_bypass = 0;
+
 float in_peak;
 
 static float band_f[BANDS];
@@ -36,7 +38,6 @@ static float *real;
 static float *comp;
 static float *comp_tmp;
 static float *out_tmp[2][3];
-
 
 /* Data for plugins */
 plugin *comp_plugin, *lim_plugin;
@@ -264,7 +265,7 @@ int process(jack_nframes_t nframes, void *arg)
 
 	in_ptr = (in_ptr + 1) & BUF_MASK;
 
-	if (in_ptr == n_calc_pt) {
+	if (in_ptr == n_calc_pt && !global_bypass) {
 	    run_eq(0, in_ptr);
 	    run_eq(1, in_ptr);
 
@@ -304,6 +305,16 @@ int process(jack_nframes_t nframes, void *arg)
     plugin_run(lim_plugin, limiter.handle, nframes);
 
     //printf("run limiter...\n");
+
+    /* If bypass is on override all the stuff done by the crossover section,
+     * limiter and so on */
+    if (global_bypass) {
+	for (port = 0; port < 2; port++) {
+	    for (pos = 0; pos < nframes; pos++) {
+		out[port][pos] = in_buf[port][(in_ptr + pos - latency) & BUF_MASK];
+	    }
+	}
+    }
 
     for (pos = 0; pos < nframes; pos++) {
 	for (port = 0; port < 2; port++) {

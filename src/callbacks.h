@@ -157,3 +157,7 @@ on_EQ_curve_event_box_button_release_event
                                         (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
+
+void
+on_bypass_button_toggled               (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
