@@ -79,6 +79,10 @@
 			  <property name="orientation">GTK_PROGRESS_BOTTOM_TO_TOP</property>
 			  <property name="fraction">0</property>
 			  <property name="pulse_step">0.1</property>
+			  <property name="activity_mode">False</property>
+			  <property name="show_text">False</property>
+			  <property name="text_xalign">0.5</property>
+			  <property name="text_yalign">0.5</property>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>
@@ -138,6 +142,8 @@
 		      <property name="show_border">True</property>
 		      <property name="tab_pos">GTK_POS_TOP</property>
 		      <property name="scrollable">False</property>
+		      <property name="tab_hborder">2</property>
+		      <property name="tab_vborder">2</property>
 		      <property name="enable_popup">False</property>
 
 		      <child>
@@ -158,7 +164,7 @@
 				<widget class="GtkHBox" id="eqb-hbox">
 				  <property name="visible">True</property>
 				  <property name="homogeneous">True</property>
-				  <property name="spacing">0</property>
+				  <property name="spacing">1</property>
 
 				  <child>
 				    <widget class="GtkVBox" id="vbox41">
@@ -3342,20 +3348,70 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkHandleBox" id="handlebox1">
-			  <property name="width_request">510</property>
-			  <property name="height_request">200</property>
+			<widget class="GtkHBox" id="hbox26">
 			  <property name="visible">True</property>
-			  <property name="shadow_type">GTK_SHADOW_OUT</property>
-			  <property name="handle_position">GTK_POS_LEFT</property>
-			  <property name="snap_edge">GTK_POS_TOP</property>
+			  <property name="homogeneous">False</property>
+			  <property name="spacing">0</property>
 
 			  <child>
-			    <widget class="GtkDrawingArea" id="drawingarea4">
-			      <property name="width_request">500</property>
-			      <property name="height_request">200</property>
+			    <widget class="GtkLabel" id="label211">
 			      <property name="visible">True</property>
+			      <property name="label" translatable="yes"></property>
+			      <property name="use_underline">False</property>
+			      <property name="use_markup">False</property>
+			      <property name="justify">GTK_JUSTIFY_LEFT</property>
+			      <property name="wrap">False</property>
+			      <property name="selectable">False</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
 			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">True</property>
+			      <property name="fill">True</property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkEventBox" id="eventbox48">
+			      <property name="visible">True</property>
+
+			      <child>
+				<widget class="GtkDrawingArea" id="drawingarea2">
+				  <property name="width_request">520</property>
+				  <property name="height_request">0</property>
+				  <property name="visible">True</property>
+				</widget>
+			      </child>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">True</property>
+			      <property name="fill">True</property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkLabel" id="label212">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes"></property>
+			      <property name="use_underline">False</property>
+			      <property name="use_markup">False</property>
+			      <property name="justify">GTK_JUSTIFY_LEFT</property>
+			      <property name="wrap">False</property>
+			      <property name="selectable">False</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">True</property>
+			      <property name="fill">True</property>
+			    </packing>
 			  </child>
 			</widget>
 			<packing>
@@ -3442,31 +3498,6 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="low2mid_lbl">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">00000</property>
-			  <property name="use_underline">False</property>
-			  <property name="use_markup">False</property>
-			  <property name="justify">GTK_JUSTIFY_LEFT</property>
-			  <property name="wrap">False</property>
-			  <property name="selectable">False</property>
-			  <property name="xalign">0</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
-			  <signal name="realize" handler="on_low2mid_lbl_realize" last_modification_time="Mon, 14 Apr 2003 21:16:46 GMT"/>
-			</widget>
-			<packing>
-			  <property name="left_attach">0</property>
-			  <property name="right_attach">1</property>
-			  <property name="top_attach">0</property>
-			  <property name="bottom_attach">1</property>
-			  <property name="x_options">fill</property>
-			  <property name="y_options"></property>
-			</packing>
-		      </child>
-
-		      <child>
 			<widget class="GtkHScale" id="mid2high2">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
@@ -3508,15 +3539,40 @@
 			  <property name="right_attach">1</property>
 			  <property name="top_attach">1</property>
 			  <property name="bottom_attach">2</property>
-			  <property name="x_options">fill</property>
-			  <property name="y_options"></property>
+			  <property name="x_options">shrink|fill</property>
+			  <property name="y_options">shrink|fill</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkLabel" id="low2mid_lbl">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">00000</property>
+			  <property name="use_underline">False</property>
+			  <property name="use_markup">False</property>
+			  <property name="justify">GTK_JUSTIFY_LEFT</property>
+			  <property name="wrap">False</property>
+			  <property name="selectable">False</property>
+			  <property name="xalign">0</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			  <signal name="realize" handler="on_low2mid_lbl_realize" last_modification_time="Mon, 14 Apr 2003 21:16:46 GMT"/>
+			</widget>
+			<packing>
+			  <property name="left_attach">0</property>
+			  <property name="right_attach">1</property>
+			  <property name="top_attach">0</property>
+			  <property name="bottom_attach">1</property>
+			  <property name="x_options">shrink|fill</property>
+			  <property name="y_options">shrink|fill</property>
 			</packing>
 		      </child>
 		    </widget>
 		    <packing>
 		      <property name="padding">0</property>
-		      <property name="expand">True</property>
-		      <property name="fill">False</property>
+		      <property name="expand">False</property>
+		      <property name="fill">True</property>
 		    </packing>
 		  </child>
 		</widget>
@@ -4016,33 +4072,41 @@
 					      </child>
 
 					      <child>
-						<widget class="GtkProgressBar" id="comp_ga_1">
-						  <property name="visible">True</property>
-						  <property name="orientation">GTK_PROGRESS_RIGHT_TO_LEFT</property>
-						  <property name="fraction">0</property>
-						  <property name="pulse_step">0.1</property>
-						</widget>
-						<packing>
-						  <property name="left_attach">1</property>
-						  <property name="right_attach">2</property>
-						  <property name="top_attach">1</property>
-						  <property name="bottom_attach">2</property>
-						  <property name="y_options"></property>
-						</packing>
-					      </child>
-
-					      <child>
 						<widget class="GtkProgressBar" id="comp_le_1">
 						  <property name="visible">True</property>
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
+						  <property name="activity_mode">False</property>
+						  <property name="show_text">False</property>
+						  <property name="text_xalign">0.5</property>
+						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
 						  <property name="right_attach">2</property>
 						  <property name="top_attach">0</property>
 						  <property name="bottom_attach">1</property>
+						  <property name="y_options"></property>
+						</packing>
+					      </child>
+
+					      <child>
+						<widget class="GtkProgressBar" id="comp_ga_1">
+						  <property name="visible">True</property>
+						  <property name="orientation">GTK_PROGRESS_RIGHT_TO_LEFT</property>
+						  <property name="fraction">0</property>
+						  <property name="pulse_step">0.1</property>
+						  <property name="activity_mode">False</property>
+						  <property name="show_text">False</property>
+						  <property name="text_xalign">0.5</property>
+						  <property name="text_yalign">0.5</property>
+						</widget>
+						<packing>
+						  <property name="left_attach">1</property>
+						  <property name="right_attach">2</property>
+						  <property name="top_attach">1</property>
+						  <property name="bottom_attach">2</property>
 						  <property name="y_options"></property>
 						</packing>
 					      </child>
@@ -4465,33 +4529,41 @@
 					      </child>
 
 					      <child>
-						<widget class="GtkProgressBar" id="comp_ga_2">
-						  <property name="visible">True</property>
-						  <property name="orientation">GTK_PROGRESS_RIGHT_TO_LEFT</property>
-						  <property name="fraction">0</property>
-						  <property name="pulse_step">0.1</property>
-						</widget>
-						<packing>
-						  <property name="left_attach">1</property>
-						  <property name="right_attach">2</property>
-						  <property name="top_attach">1</property>
-						  <property name="bottom_attach">2</property>
-						  <property name="y_options"></property>
-						</packing>
-					      </child>
-
-					      <child>
 						<widget class="GtkProgressBar" id="comp_le_2">
 						  <property name="visible">True</property>
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
+						  <property name="activity_mode">False</property>
+						  <property name="show_text">False</property>
+						  <property name="text_xalign">0.5</property>
+						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
 						  <property name="right_attach">2</property>
 						  <property name="top_attach">0</property>
 						  <property name="bottom_attach">1</property>
+						  <property name="y_options"></property>
+						</packing>
+					      </child>
+
+					      <child>
+						<widget class="GtkProgressBar" id="comp_ga_2">
+						  <property name="visible">True</property>
+						  <property name="orientation">GTK_PROGRESS_RIGHT_TO_LEFT</property>
+						  <property name="fraction">0</property>
+						  <property name="pulse_step">0.1</property>
+						  <property name="activity_mode">False</property>
+						  <property name="show_text">False</property>
+						  <property name="text_xalign">0.5</property>
+						  <property name="text_yalign">0.5</property>
+						</widget>
+						<packing>
+						  <property name="left_attach">1</property>
+						  <property name="right_attach">2</property>
+						  <property name="top_attach">1</property>
+						  <property name="bottom_attach">2</property>
 						  <property name="y_options"></property>
 						</packing>
 					      </child>
@@ -4918,6 +4990,10 @@
 						  <property name="orientation">GTK_PROGRESS_RIGHT_TO_LEFT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
+						  <property name="activity_mode">False</property>
+						  <property name="show_text">False</property>
+						  <property name="text_xalign">0.5</property>
+						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -4934,6 +5010,10 @@
 						  <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 						  <property name="fraction">0</property>
 						  <property name="pulse_step">0.1</property>
+						  <property name="activity_mode">False</property>
+						  <property name="show_text">False</property>
+						  <property name="text_xalign">0.5</property>
+						  <property name="text_yalign">0.5</property>
 						</widget>
 						<packing>
 						  <property name="left_attach">1</property>
@@ -5044,7 +5124,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkFrame" id="frame10">
+			    <widget class="GtkFrame" id="limiter_frame">
 			      <property name="visible">True</property>
 			      <property name="label_xalign">0.5</property>
 			      <property name="label_yalign">0.5</property>
@@ -5083,6 +5163,10 @@
 				      <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 				      <property name="fraction">0</property>
 				      <property name="pulse_step">0.1</property>
+				      <property name="activity_mode">False</property>
+				      <property name="show_text">False</property>
+				      <property name="text_xalign">0.5</property>
+				      <property name="text_yalign">0.5</property>
 				    </widget>
 				    <packing>
 				      <property name="padding">0</property>
@@ -5136,6 +5220,10 @@
 				      <property name="orientation">GTK_PROGRESS_RIGHT_TO_LEFT</property>
 				      <property name="fraction">0</property>
 				      <property name="pulse_step">0.1</property>
+				      <property name="activity_mode">False</property>
+				      <property name="show_text">False</property>
+				      <property name="text_xalign">0.5</property>
+				      <property name="text_yalign">0.5</property>
 				    </widget>
 				    <packing>
 				      <property name="padding">0</property>
@@ -5171,6 +5259,10 @@
 				      <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
 				      <property name="fraction">0</property>
 				      <property name="pulse_step">0.1</property>
+				      <property name="activity_mode">False</property>
+				      <property name="show_text">False</property>
+				      <property name="text_xalign">0.5</property>
+				      <property name="text_yalign">0.5</property>
 				    </widget>
 				    <packing>
 				      <property name="padding">0</property>
@@ -5208,56 +5300,87 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkVButtonBox" id="vbuttonbox1">
-			      <property name="width_request">90</property>
-			      <property name="height_request">108</property>
+			    <widget class="GtkVBox" id="vbox121">
 			      <property name="visible">True</property>
-			      <property name="layout_style">GTK_BUTTONBOX_SPREAD</property>
+			      <property name="homogeneous">False</property>
 			      <property name="spacing">0</property>
 
 			      <child>
-				<widget class="GtkButton" id="button8">
+				<widget class="GtkVButtonBox" id="vbuttonbox1">
+				  <property name="width_request">90</property>
+				  <property name="height_request">108</property>
 				  <property name="visible">True</property>
-				  <property name="can_default">True</property>
-				  <property name="can_focus">True</property>
-				  <property name="label" translatable="yes">Load</property>
-				  <property name="use_underline">True</property>
-				  <property name="relief">GTK_RELIEF_NORMAL</property>
+				  <property name="layout_style">GTK_BUTTONBOX_SPREAD</property>
+				  <property name="spacing">0</property>
+
+				  <child>
+				    <widget class="GtkButton" id="button8">
+				      <property name="visible">True</property>
+				      <property name="can_default">True</property>
+				      <property name="can_focus">True</property>
+				      <property name="label" translatable="yes">Load</property>
+				      <property name="use_underline">True</property>
+				      <property name="relief">GTK_RELIEF_NORMAL</property>
+				    </widget>
+				  </child>
+
+				  <child>
+				    <widget class="GtkButton" id="button9">
+				      <property name="visible">True</property>
+				      <property name="can_default">True</property>
+				      <property name="can_focus">True</property>
+				      <property name="label" translatable="yes">Save</property>
+				      <property name="use_underline">True</property>
+				      <property name="relief">GTK_RELIEF_NORMAL</property>
+				    </widget>
+				  </child>
+
+				  <child>
+				    <widget class="GtkButton" id="button10">
+				      <property name="visible">True</property>
+				      <property name="can_default">True</property>
+				      <property name="can_focus">True</property>
+				      <property name="label" translatable="yes">Help</property>
+				      <property name="use_underline">True</property>
+				      <property name="relief">GTK_RELIEF_NORMAL</property>
+				    </widget>
+				  </child>
+
+				  <child>
+				    <widget class="GtkButton" id="quit">
+				      <property name="visible">True</property>
+				      <property name="can_default">True</property>
+				      <property name="can_focus">True</property>
+				      <property name="label" translatable="yes">Quit</property>
+				      <property name="use_underline">True</property>
+				      <property name="relief">GTK_RELIEF_NORMAL</property>
+				      <signal name="clicked" handler="on_quit_clicked" last_modification_time="Sat, 12 Apr 2003 22:40:03 GMT"/>
+				    </widget>
+				  </child>
 				</widget>
+				<packing>
+				  <property name="padding">0</property>
+				  <property name="expand">True</property>
+				  <property name="fill">True</property>
+				</packing>
 			      </child>
 
 			      <child>
-				<widget class="GtkButton" id="button9">
+				<widget class="GtkToggleButton" id="bypass_button">
 				  <property name="visible">True</property>
-				  <property name="can_default">True</property>
 				  <property name="can_focus">True</property>
-				  <property name="label" translatable="yes">Save</property>
+				  <property name="label" translatable="yes">Bypass</property>
 				  <property name="use_underline">True</property>
 				  <property name="relief">GTK_RELIEF_NORMAL</property>
+				  <property name="active">False</property>
+				  <property name="inconsistent">False</property>
+				  <signal name="toggled" handler="on_bypass_button_toggled" last_modification_time="Sun, 20 Apr 2003 16:13:35 GMT"/>
 				</widget>
-			      </child>
-
-			      <child>
-				<widget class="GtkButton" id="button10">
-				  <property name="visible">True</property>
-				  <property name="can_default">True</property>
-				  <property name="can_focus">True</property>
-				  <property name="label" translatable="yes">Help</property>
-				  <property name="use_underline">True</property>
-				  <property name="relief">GTK_RELIEF_NORMAL</property>
-				</widget>
-			      </child>
-
-			      <child>
-				<widget class="GtkButton" id="quit">
-				  <property name="visible">True</property>
-				  <property name="can_default">True</property>
-				  <property name="can_focus">True</property>
-				  <property name="label" translatable="yes">Quit</property>
-				  <property name="use_underline">True</property>
-				  <property name="relief">GTK_RELIEF_NORMAL</property>
-				  <signal name="clicked" handler="on_quit_clicked" last_modification_time="Sat, 12 Apr 2003 22:40:03 GMT"/>
-				</widget>
+				<packing>
+				  <property name="padding">0</property>
+				  <property name="expand">False</property>
+				  <property name="fill">False</property>
+				</packing>
 			      </child>
 			    </widget>
 			    <packing>
@@ -5270,7 +5393,7 @@
 			<packing>
 			  <property name="padding">3</property>
 			  <property name="expand">False</property>
-			  <property name="fill">True</property>
+			  <property name="fill">False</property>
 			</packing>
 		      </child>
 		    </widget>
