@@ -1407,7 +1407,6 @@ make_meter (gchar *widget_name, gchar *string1, gchar *string2,
     }
 
     ret = gtk_meter_new(adjustment, dir);
-    gtk_object_ref(GTK_OBJECT(ret));
 
     return ret;
 }
@@ -1417,7 +1416,7 @@ GtkWidget*
 make_mscale (gchar *widget_name, gchar *string1, gchar *string2,
                 gint int1, gint int2)
 {
-    int sides;
+    int sides = 0;
     GtkWidget *ret;
 
     if (string1 && strstr(string1, "left")) {
@@ -1434,7 +1433,6 @@ make_mscale (gchar *widget_name, gchar *string1, gchar *string2,
     }
 
     ret = gtk_meterscale_new(sides, int1, int2);
-    gtk_object_ref(GTK_OBJECT(ret));
 
     return ret;
 }
@@ -1461,3 +1459,36 @@ on_autoutton3_toggled                  (GtkToggleButton *togglebutton,
 {
     comp_set_auto(2, gtk_toggle_button_get_active(togglebutton));
 }
+
+
+void
+on_pre_eq_activate                     (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+    process_set_spec_mode(SPEC_PRE_EQ);
+}
+
+
+void
+on_post_eq_activate                    (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+    process_set_spec_mode(SPEC_POST_EQ);
+}
+
+
+void
+on_post_compressor_activate            (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_output_activate                     (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+
+}
+

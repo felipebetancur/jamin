@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-04-21 16:29+0100\n"
+"POT-Creation-Date: 2003-04-27 02:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,462 +15,490 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/interface.c:381
+#: src/interface.c:442
 msgid "JAM"
 msgstr ""
 
-#: src/interface.c:422
+#: src/interface.c:511
+msgid "pan_label"
+msgstr ""
+
+#: src/interface.c:524
 msgid "Input"
 msgstr ""
 
-#: src/interface.c:463
+#: src/interface.c:565
 msgid "25 Hz"
 msgstr ""
 
-#: src/interface.c:472
+#: src/interface.c:574
 msgid "25"
 msgstr ""
 
-#: src/interface.c:492
+#: src/interface.c:594
 msgid "31 Hz"
 msgstr ""
 
-#: src/interface.c:501
+#: src/interface.c:603
 msgid "31"
 msgstr ""
 
-#: src/interface.c:521
+#: src/interface.c:623
 msgid "39 Hz"
 msgstr ""
 
-#: src/interface.c:530
+#: src/interface.c:632
 msgid "39"
 msgstr ""
 
-#: src/interface.c:550
+#: src/interface.c:652
 msgid "50 Hz"
 msgstr ""
 
-#: src/interface.c:559
+#: src/interface.c:661
 msgid "50"
 msgstr ""
 
-#: src/interface.c:579
+#: src/interface.c:681
 msgid "62 Hz"
 msgstr ""
 
-#: src/interface.c:588
+#: src/interface.c:690
 msgid "62"
 msgstr ""
 
-#: src/interface.c:608
+#: src/interface.c:710
 msgid "79 Hz"
 msgstr ""
 
-#: src/interface.c:617
+#: src/interface.c:719
 msgid "79"
 msgstr ""
 
-#: src/interface.c:637
+#: src/interface.c:739
 msgid "100 Hz"
 msgstr ""
 
-#: src/interface.c:646
+#: src/interface.c:748
 msgid "100"
 msgstr ""
 
-#: src/interface.c:666
+#: src/interface.c:768
 msgid "125 Hz"
 msgstr ""
 
-#: src/interface.c:675
+#: src/interface.c:777
 msgid "125"
 msgstr ""
 
-#: src/interface.c:695
+#: src/interface.c:797
 msgid "158 Hz"
 msgstr ""
 
-#: src/interface.c:704
+#: src/interface.c:806
 msgid "158"
 msgstr ""
 
-#: src/interface.c:724
+#: src/interface.c:826
 msgid "200 Hz"
 msgstr ""
 
-#: src/interface.c:733
+#: src/interface.c:835
 msgid "200"
 msgstr ""
 
-#: src/interface.c:753
+#: src/interface.c:855
 msgid "251 Hz"
 msgstr ""
 
-#: src/interface.c:762
+#: src/interface.c:864
 msgid "251"
 msgstr ""
 
-#: src/interface.c:777
+#: src/interface.c:879
 msgid "317 Hz"
 msgstr ""
 
-#: src/interface.c:786
+#: src/interface.c:888
 msgid "317"
 msgstr ""
 
-#: src/interface.c:801
+#: src/interface.c:903
 msgid "400 Hz"
 msgstr ""
 
-#: src/interface.c:810
+#: src/interface.c:912
 msgid "400"
 msgstr ""
 
-#: src/interface.c:825
+#: src/interface.c:927
 msgid "503 Hz"
 msgstr ""
 
-#: src/interface.c:834
+#: src/interface.c:936
 msgid "503"
 msgstr ""
 
-#: src/interface.c:849
+#: src/interface.c:951
 msgid "634 Hz"
 msgstr ""
 
-#: src/interface.c:858
+#: src/interface.c:960
 msgid "634"
 msgstr ""
 
-#: src/interface.c:873
+#: src/interface.c:975
 msgid "800 Hz"
 msgstr ""
 
-#: src/interface.c:882
+#: src/interface.c:984
 msgid "800"
 msgstr ""
 
-#: src/interface.c:897
+#: src/interface.c:999
 msgid "1000 Hz"
 msgstr ""
 
-#: src/interface.c:906
-msgid "1K"
+#: src/interface.c:1008
+msgid "1k"
 msgstr ""
 
-#: src/interface.c:921
+#: src/interface.c:1023
 msgid "1200 Hz"
 msgstr ""
 
-#: src/interface.c:930
-msgid "1K2"
+#: src/interface.c:1032
+msgid "1k2"
 msgstr ""
 
-#: src/interface.c:945
+#: src/interface.c:1047
 msgid "1500 Hz"
 msgstr ""
 
-#: src/interface.c:954
-msgid "1K5"
+#: src/interface.c:1056
+msgid "1k5"
 msgstr ""
 
-#: src/interface.c:969 src/interface.c:993 src/interface.c:1214
+#: src/interface.c:1071 src/interface.c:1095 src/interface.c:1316
 msgid "2000 Hz"
 msgstr ""
 
-#: src/interface.c:978
-msgid "2K"
+#: src/interface.c:1080
+msgid "2k"
 msgstr ""
 
-#: src/interface.c:1002
-msgid "2K5"
+#: src/interface.c:1104
+msgid "2k5"
 msgstr ""
 
-#: src/interface.c:1017
+#: src/interface.c:1119
 msgid "3200 Hz"
 msgstr ""
 
-#: src/interface.c:1026
-msgid "3K2"
+#: src/interface.c:1128
+msgid "3k2"
 msgstr ""
 
-#: src/interface.c:1041
+#: src/interface.c:1143
 msgid "4000 Hz"
 msgstr ""
 
-#: src/interface.c:1050
-msgid "4K"
+#: src/interface.c:1152
+msgid "4k"
 msgstr ""
 
-#: src/interface.c:1065
+#: src/interface.c:1167
 msgid "5000 Hz"
 msgstr ""
 
-#: src/interface.c:1074
-msgid "5K"
+#: src/interface.c:1176
+msgid "5k"
 msgstr ""
 
-#: src/interface.c:1089
+#: src/interface.c:1191
 msgid "6000 Hz"
 msgstr ""
 
-#: src/interface.c:1103
-msgid "6K"
+#: src/interface.c:1205
+msgid "6k"
 msgstr ""
 
-#: src/interface.c:1118
+#: src/interface.c:1220
 msgid "8000 Hz"
 msgstr ""
 
-#: src/interface.c:1127
-msgid "8K"
+#: src/interface.c:1229
+msgid "8k"
 msgstr ""
 
-#: src/interface.c:1142
+#: src/interface.c:1244
 msgid "10 KHz"
 msgstr ""
 
-#: src/interface.c:1151
-msgid "10K"
+#: src/interface.c:1253
+msgid "10k"
 msgstr ""
 
-#: src/interface.c:1166
+#: src/interface.c:1268
 msgid "12 KHz"
 msgstr ""
 
-#: src/interface.c:1175
-msgid "12K"
+#: src/interface.c:1277
+msgid "12k"
 msgstr ""
 
-#: src/interface.c:1190
+#: src/interface.c:1292
 msgid "16 KHz"
 msgstr ""
 
-#: src/interface.c:1199
-msgid "16K"
+#: src/interface.c:1301
+msgid "16k"
 msgstr ""
 
-#: src/interface.c:1223
-msgid "20K"
+#: src/interface.c:1325
+msgid "20k"
 msgstr ""
 
-#: src/interface.c:1229
+#: src/interface.c:1331
 msgid "Faders"
 msgstr ""
 
-#: src/interface.c:1245
-msgid "Left button-start, Middle button-abort, Right button-accept"
-msgstr ""
-
-#: src/interface.c:1258
+#: src/interface.c:1364
 msgid "     "
 msgstr ""
 
-#: src/interface.c:1264
+#: src/interface.c:1370
 msgid "Graph"
 msgstr ""
 
-#: src/interface.c:1295 src/interface.c:1386 src/interface.c:1477
-#: src/interface.c:1568 src/interface.c:1659
+#: src/interface.c:1401 src/interface.c:1493 src/interface.c:1585
+#: src/interface.c:1677 src/interface.c:1769
 msgid "db"
 msgstr ""
 
-#: src/interface.c:1305
+#: src/interface.c:1411
 msgid "Low-Shelving gain"
 msgstr ""
 
-#: src/interface.c:1320 src/interface.c:1411 src/interface.c:1502
-#: src/interface.c:1593 src/interface.c:1684
+#: src/interface.c:1426 src/interface.c:1518 src/interface.c:1610
+#: src/interface.c:1702 src/interface.c:1794
 msgid "Hz"
 msgstr ""
 
-#: src/interface.c:1330
+#: src/interface.c:1436
 msgid "Low-Shelving frequency"
 msgstr ""
 
-#: src/interface.c:1345 src/interface.c:1709
+#: src/interface.c:1451 src/interface.c:1819
 msgid "slope"
 msgstr ""
 
-#: src/interface.c:1355
+#: src/interface.c:1461
 msgid "Low-Shelving slope"
 msgstr ""
 
-#: src/interface.c:1365
+#: src/interface.c:1471 src/interface.c:2735
 msgid "Low"
 msgstr ""
 
-#: src/interface.c:1396
+#: src/interface.c:1503
 msgid "Band 1 gain"
 msgstr ""
 
-#: src/interface.c:1421
+#: src/interface.c:1528
 msgid "Band 1 frequency"
 msgstr ""
 
-#: src/interface.c:1436 src/interface.c:1527 src/interface.c:1618
+#: src/interface.c:1543 src/interface.c:1635 src/interface.c:1727
 msgid "oct"
 msgstr ""
 
-#: src/interface.c:1446
+#: src/interface.c:1553
 msgid "Band 1 bandwidth"
 msgstr ""
 
-#: src/interface.c:1456
+#: src/interface.c:1563
 msgid "Band 1"
 msgstr ""
 
-#: src/interface.c:1487
+#: src/interface.c:1595
 msgid "Band 2 gain"
 msgstr ""
 
-#: src/interface.c:1512
+#: src/interface.c:1620
 msgid "Band 2 frequency"
 msgstr ""
 
-#: src/interface.c:1537
+#: src/interface.c:1645
 msgid "Band 2 bandwidth"
 msgstr ""
 
-#: src/interface.c:1547
+#: src/interface.c:1655
 msgid "Band 2"
 msgstr ""
 
-#: src/interface.c:1578
+#: src/interface.c:1687
 msgid "Band 3 gain"
 msgstr ""
 
-#: src/interface.c:1603
+#: src/interface.c:1712
 msgid "Band 3 frequency"
 msgstr ""
 
-#: src/interface.c:1628
+#: src/interface.c:1737
 msgid "Band 3 bandwidth"
 msgstr ""
 
-#: src/interface.c:1638
+#: src/interface.c:1747
 msgid "Band 3"
 msgstr ""
 
-#: src/interface.c:1669
+#: src/interface.c:1779
 msgid "High-Shelving gain"
 msgstr ""
 
-#: src/interface.c:1694
+#: src/interface.c:1804
 msgid "High-Shelving frequency"
 msgstr ""
 
-#: src/interface.c:1719
+#: src/interface.c:1829
 msgid "High-Shelving slope"
 msgstr ""
 
-#: src/interface.c:1729
+#: src/interface.c:1839 src/interface.c:2789
 msgid "High"
 msgstr ""
 
-#: src/interface.c:1741
+#: src/interface.c:1852 src/interface.c:1937
 msgid "Parametric"
 msgstr ""
 
-#: src/interface.c:1758
+#: src/interface.c:1869 src/interface.c:1948
 msgid "Spectrum"
 msgstr ""
 
-#: src/interface.c:1764
+#: src/interface.c:1895
+msgid "Minimum Gain"
+msgstr ""
+
+#: src/interface.c:1913
+msgid "Maximum Gain"
+msgstr ""
+
+#: src/interface.c:1926
+msgid "Graphic"
+msgstr ""
+
+#: src/interface.c:1954
+msgid "EQ Options"
+msgstr ""
+
+#: src/interface.c:1960
 msgid "Crossover"
 msgstr ""
 
-#: src/interface.c:1791 src/interface.c:1800
+#: src/interface.c:1987 src/interface.c:1997
 msgid "00000"
 msgstr ""
 
-#: src/interface.c:1847
+#: src/interface.c:2045
 msgid "Compressors"
 msgstr ""
 
-#: src/interface.c:1886 src/interface.c:2060 src/interface.c:2226
+#: src/interface.c:2094 src/interface.c:2316 src/interface.c:2529
 msgid "Release"
 msgstr ""
 
-#: src/interface.c:1894 src/interface.c:2068 src/interface.c:2234
+#: src/interface.c:2102 src/interface.c:2324 src/interface.c:2537
 msgid "Thresh"
 msgstr ""
 
-#: src/interface.c:1902 src/interface.c:2076 src/interface.c:2242
+#: src/interface.c:2110 src/interface.c:2332 src/interface.c:2545
 msgid "Ratio"
 msgstr ""
 
-#: src/interface.c:1923 src/interface.c:2097 src/interface.c:2264
-msgid "Knee"
-msgstr ""
-
-#: src/interface.c:1935 src/interface.c:2052 src/interface.c:2218
+#: src/interface.c:2118 src/interface.c:2308 src/interface.c:2521
 msgid "Attack"
 msgstr ""
 
-#: src/interface.c:1943 src/interface.c:2109 src/interface.c:2276
+#: src/interface.c:2126 src/interface.c:2368 src/interface.c:2582
 msgid "Makeup"
 msgstr ""
 
-#: src/interface.c:1989 src/interface.c:2155 src/interface.c:2322
+#: src/interface.c:2173 src/interface.c:2354 src/interface.c:2568
+msgid "Knee"
+msgstr ""
+
+#: src/interface.c:2200 src/interface.c:2413 src/interface.c:2627
+msgid "auto"
+msgstr ""
+
+#: src/interface.c:2211 src/interface.c:2424 src/interface.c:2638
 msgid "Level"
 msgstr ""
 
-#: src/interface.c:1999 src/interface.c:2165 src/interface.c:2332
+#: src/interface.c:2221 src/interface.c:2434 src/interface.c:2648
 msgid "Gain"
 msgstr ""
 
-#: src/interface.c:2024
+#: src/interface.c:2270
 msgid "Low : 00000 - 00000"
 msgstr ""
 
-#: src/interface.c:2190
+#: src/interface.c:2483
 msgid "Mid : 00000 - 00000"
 msgstr ""
 
-#: src/interface.c:2357
+#: src/interface.c:2697
 msgid "High : 00000 - 00000"
 msgstr ""
 
-#: src/interface.c:2380
-msgid "Compressor curves"
+#: src/interface.c:2722 src/interface.c:2749 src/interface.c:2776
+msgid "X=input db , Y=output db"
 msgstr ""
 
-#: src/interface.c:2397
+#: src/interface.c:2762
+msgid "Mid"
+msgstr ""
+
+#: src/interface.c:2810
 msgid "  Input"
 msgstr ""
 
-#: src/interface.c:2408
+#: src/interface.c:2824
 msgid "  Lookahead (ms)"
 msgstr ""
 
-#: src/interface.c:2428
+#: src/interface.c:2846
 msgid "  Output"
 msgstr ""
 
-#: src/interface.c:2446
-msgid "Limiter"
+#: src/interface.c:2868
+msgid "limiter"
 msgstr ""
 
-#: src/interface.c:2464
+#: src/interface.c:2878
+msgid "Output"
+msgstr ""
+
+#: src/interface.c:2889
+msgid "Bypass"
+msgstr ""
+
+#: src/interface.c:2902
 msgid "Load"
 msgstr ""
 
-#: src/interface.c:2470
+#: src/interface.c:2908
 msgid "Save"
 msgstr ""
 
-#: src/interface.c:2476
+#: src/interface.c:2914
 msgid "Help"
 msgstr ""
 
-#: src/interface.c:2482
+#: src/interface.c:2920
 msgid "Quit"
-msgstr ""
-
-#: src/interface.c:2488
-msgid "Bypass"
 msgstr ""
 
 #: src/support.c:90 src/support.c:114

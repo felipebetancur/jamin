@@ -24,6 +24,7 @@
 #include "compressor-ui.h"
 #include "intrim.h"
 #include "process.h"
+#include "spectrum.h"
 
 GtkWidget *main_window;
 
@@ -62,6 +63,7 @@ int main(int argc, char *argv[])
     bind_intrim();
     bind_limiter();
     bind_compressors();
+    bind_spectrum();
 
     g_timeout_add(100, update_meters, NULL);
 
@@ -84,6 +86,7 @@ gboolean update_meters(gpointer data)
     out_meter_value(out_peak);
     limiter_meters_update();
     compressor_meters_update();
+    spectrum_update();
 
     return TRUE;
 }

@@ -120,8 +120,8 @@ gtk_meter_new (GtkAdjustment *adjustment, gint direction)
     adjustment = (GtkAdjustment*) gtk_adjustment_new (0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
   gtk_meter_set_adjustment (meter, adjustment);
-
   meter->direction = direction;
+  gtk_object_ref(GTK_OBJECT(meter));
 
   return GTK_WIDGET (meter);
 }
@@ -388,8 +388,10 @@ gtk_meter_expose (GtkWidget      *widget,
 	gdk_draw_rectangle (widget->window, meter->red_gc, TRUE, 1, length -
 			r_h + 1, width, r_h - a_h);
       }
-      gdk_draw_rectangle (widget->window, meter->peak_gc, TRUE, 1, length *
+      if (peak_frac > 0) {
+        gdk_draw_rectangle (widget->window, meter->peak_gc, TRUE, 1, length *
 		      (1.0f - peak_frac) + 1, width, 1);
+      }
       break;
   }
   

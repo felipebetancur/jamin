@@ -28,6 +28,7 @@ jamin_SOURCES = \
 	limiter-ui.c limiter-ui.h \
 	compressor-ui.c compressor-ui.h \
 	gtkmeter.c gtkmeter.h \
-	gtkmeterscale.c gtkmeterscale.h
+	gtkmeterscale.c gtkmeterscale.h \
+	spectrum.c spectrum.h
 
 jamin_LDADD = @PACKAGE_LIBS@

@@ -343,3 +343,27 @@ on_autoutton2_toggled                  (GtkToggleButton *togglebutton,
 void
 on_autoutton3_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data);
+
+void
+on_button11_clicked                    (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button12_clicked                    (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_pre_eq_activate                     (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_post_eq_activate                    (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_post_compressor_activate            (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_output_activate                     (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);

@@ -28,7 +28,7 @@ float in_peak[2], out_peak[2];
 
 static float band_f[BANDS];
 static float gain_fix[BANDS];
-static float band_amp[BANDS];
+static float bin_peak[BINS];
 static int peaks[BANDS];
 static int ptime[BANDS];
 static int bands[BINS];
@@ -39,6 +39,8 @@ static float *real;
 static float *comp;
 static float *comp_tmp;
 static float *out_tmp[2][3];
+
+static int spectrum_mode = SPEC_PRE_EQ;
 
 /* Data for plugins */
 plugin *comp_plugin, *lim_plugin;
@@ -145,9 +147,10 @@ void process_init(float fs, int buffer_size)
 void run_eq(unsigned int port, unsigned int in_ptr)
 {
     const float fix = 2.0f / ((float) BINS * (float) OVER_SAMP);
-    float amp[BANDS];
+    float peak;
     unsigned int i, j;
     int targ_bin;
+    float *peak_data;
 
     for (i = 0; i < BINS; i++) {
 	real[i] = window[i] * in_buf[port][(in_ptr + i) & BUF_MASK];
@@ -157,18 +160,24 @@ void run_eq(unsigned int port, unsigned int in_ptr)
 
     /* run the EQ + spectrum an. + xover process */
 
-    for (i = 0; i < BANDS; i++) {
-	amp[i] = 0.0f;
+    if (spectrum_mode == SPEC_PRE_EQ) {
+	peak_data = comp;
+    } else {
+	peak_data = comp_tmp;
     }
 
     memset(comp_tmp, 0, BINS * sizeof(float));
     targ_bin = xover_fa / sample_rate * (float) (BINS * 2);
     comp_tmp[0] = comp[0];
-    for (i = 1; i < targ_bin && i < BINS / 2 - 1; i++) {
+    for (i = 0; i < targ_bin && i < BINS / 2 - 1; i++) {
 	comp_tmp[i] = comp[i] * eq_coefs[i];
 	comp_tmp[BINS - i] = comp[BINS - i] * eq_coefs[i];
-	amp[bands[i]] += sqrtf(comp[i] * comp[i] + comp[BINS - i] *
-			      comp[BINS - i]) * gain_fix[bands[i]];
+
+	peak = sqrtf(peak_data[i] * peak_data[i] + peak_data[BINS - i] *
+		peak_data[BINS - i]);
+	if (peak > bin_peak[i]) {
+	    bin_peak[i] = peak;
+	}
     }
     fftwf_execute(plan_cr);
     for (j = 0; j < BINS; j++) {
@@ -181,8 +190,11 @@ void run_eq(unsigned int port, unsigned int in_ptr)
     for (; i < targ_bin && i < BINS / 2 - 1; i++) {
 	comp_tmp[i] = comp[i] * eq_coefs[i];
 	comp_tmp[BINS - i] = comp[BINS - i] * eq_coefs[i];
-	amp[bands[i]] += sqrtf(comp[i] * comp[i] + comp[BINS - i] *
-			      comp[BINS - i]) * gain_fix[bands[i]];
+	peak = sqrtf(peak_data[i] * peak_data[i] + peak_data[BINS - i] *
+		peak_data[BINS - i]);
+	if (peak > bin_peak[i]) {
+	    bin_peak[i] = peak;
+	}
     }
     fftwf_execute(plan_cr);
     for (j = 0; j < BINS; j++) {
@@ -194,19 +206,27 @@ void run_eq(unsigned int port, unsigned int in_ptr)
     for (; i < BINS / 2 - 1; i++) {
 	comp_tmp[i] = comp[i] * eq_coefs[i];
 	comp_tmp[BINS - i] = comp[BINS - i] * eq_coefs[i];
-	amp[bands[i]] += sqrtf(comp[i] * comp[i] + comp[BINS - i] *
-			      comp[BINS - i]) * gain_fix[bands[i]];
+	peak = sqrtf(peak_data[i] * peak_data[i] + peak_data[BINS - i] *
+		peak_data[BINS - i]);
+	if (peak > bin_peak[i]) {
+	    bin_peak[i] = peak;
+	}
     }
     fftwf_execute(plan_cr);
     for (j = 0; j < BINS; j++) {
 	out_buf[port][XO_HIGH][(in_ptr + j) & BUF_MASK] += real[j] * fix *
 	    window[j];
     }
+}
 
-    for (i = 0; i < BANDS; i++) {
-	band_amp[i] =
-	    (amp[i] * fix * BANDS - band_amp[i]) * 0.3f + band_amp[i];
-    }
+float bin_peak_read_and_clear(int bin)
+{
+    float ret = bin_peak[bin];
+    const float fix = 2.0f / ((float) BINS * (float) OVER_SAMP);
+
+    bin_peak[bin] = 0.0f;
+
+    return ret * fix;
 }
 
 int process(jack_nframes_t nframes, void *arg)
@@ -370,6 +390,11 @@ float eval_comp(float thresh, float ratio, float knee, float in)
 
     /* Above knee */
     return in + (thresh - in) * (ratio - 1.0f) / ratio;
+}
+
+void process_set_spec_mode(int mode)
+{
+    spectrum_mode = mode;
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

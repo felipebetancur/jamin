@@ -112,6 +112,8 @@ gtk_meterscale_new (gint direction, float min, float max)
   meterscale->iec_lower = iec_scale(min);
   meterscale->iec_upper = iec_scale(max);
 
+  gtk_object_ref(GTK_OBJECT(meterscale));
+
   return GTK_WIDGET(meterscale);
 }
 
@@ -135,6 +137,10 @@ gtk_meterscale_realize (GtkWidget *widget)
   GtkMeterScale *meterscale;
   GdkWindowAttr attributes;
   gint attributes_mask;
+  PangoContext *pc = gtk_widget_get_pango_context(widget);
+  PangoLayout *pl;
+  PangoFontDescription *pfd;
+  PangoRectangle rect;
 
   g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_METERSCALE (widget));
@@ -161,10 +167,6 @@ gtk_meterscale_realize (GtkWidget *widget)
 
   gtk_style_set_background (widget->style, widget->window, GTK_STATE_ACTIVE);
 
-  PangoContext *pc = gtk_widget_get_pango_context(widget);
-  PangoLayout *pl;
-  PangoFontDescription *pfd;
-  PangoRectangle rect;
   pfd = pango_font_description_new();
   pango_font_description_set_family(pfd, "sans-serif");
   pango_font_description_set_size(pfd, METERSCALE_MAX_FONT_SIZE * PANGO_SCALE);
