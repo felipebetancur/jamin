@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.35 2003/12/21 11:42:31 theno23 Exp $
+ *  $Id: main.c,v 1.36 2004/01/07 16:31:14 theno23 Exp $
  */
 
 /*
@@ -31,7 +31,10 @@
 #include <fcntl.h>
 #include <gtk/gtk.h>
 #include <limits.h>
+#include <errno.h>
+#include <dirent.h>
 
+#include "main.h"
 #include "interface.h"
 #include "support.h"
 #include "io.h"
@@ -57,6 +60,8 @@ int main(int argc, char *argv[])
 {
     char rcfile[PATH_MAX], title[128];
     int fd;
+    DIR *dtest;
+    char *settings_dir;
 
 #ifdef ENABLE_NLS
     bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
@@ -73,11 +78,28 @@ int main(int argc, char *argv[])
     /* look for the rcfile, if its there parse it */
 
     snprintf(rcfile, PATH_MAX, "%s/%s", getenv("HOME"), ".jamrc");
-    if ((fd = open(rcfile, O_RDONLY)) >= 0) {	close(fd);
+    if ((fd = open(rcfile, O_RDONLY)) >= 0) {
+	close(fd);
 	printf("Using jamrc file: %s\n", rcfile);
 	gtk_rc_parse(rcfile);
     }
 
+    settings_dir = g_strdup_printf("%s/%s", getenv("HOME"), SETTINGS_DIR);
+    if ((dtest = opendir(settings_dir))) {
+fprintf(stderr, ".jamin exists and is a dir\n");
+	closedir(dtest);
+    } else {
+	if (errno == ENOTDIR) {
+	    fprintf(stderr, "%s exists, but its not a directory\n", settings_dir);
+	} else if (errno == ENOENT) {
+	    fprintf(stderr, "%s does not exist, creating it...\n", settings_dir);
+	    if (mkdir(settings_dir, 0755) != 0) {
+		perror("Failed to create dir");
+	    }
+	} else {
+	    fprintf(stderr, "Unknown error trying to stat %s\n", settings_dir);
+	}
+    }
 
     gtk_set_locale();
     gtk_init(&argc, &argv);

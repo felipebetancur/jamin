@@ -11,12 +11,15 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.h,v 1.4 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: main.h,v 1.5 2004/01/07 16:31:14 theno23 Exp $
  */
 
 #ifndef MAIN_H
 #define MAIN_H
 
 extern GtkWidget *main_window;
+
+/* Dir that settings will be stored in by default, relative to $HOME */
+#define SETTINGS_DIR ".jamin"
 
 #endif
