@@ -24,6 +24,8 @@
 #include "state.h"
 #include "db.h"
 #include "transport.h"
+#include "scenes.h"
+
 
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
 
@@ -2751,5 +2753,71 @@ on_boost_scale_value_changed           (GtkRange        *range,
 {
 	s_set_value_ui(S_BOOST,
 			gtk_range_get_adjustment(GTK_RANGE(range))->value);
+}
+
+
+gboolean
+on_scene1_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  select_scene (0);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene2_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  select_scene (1);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene3_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  select_scene (2);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene4_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  select_scene (3);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene5_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  select_scene (4);
+
+  return FALSE;
+}
+
+
+gboolean
+on_scene6_eventbox_button_press_event  (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  select_scene (5);
+
+  return FALSE;
 }
 

@@ -35,7 +35,7 @@ gboolean update_meters(gpointer data);
 
 int main(int argc, char *argv[])
 {
-    char rcfile[PATH_MAX];
+    char rcfile[PATH_MAX], title[128];
     int fd;
 
 #ifdef ENABLE_NLS
@@ -65,6 +65,10 @@ int main(int argc, char *argv[])
     state_init();
     add_pixmap_directory(PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
     main_window = create_window1();
+
+    snprintf(title, sizeof(title), PACKAGE " " VERSION);
+    gtk_window_set_title ((GtkWindow *) main_window, title);
+
     //status_init();
 
 
