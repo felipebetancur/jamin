@@ -26,7 +26,7 @@
       static void *controller_thread(void *p)
       {
 	int last_scene = -1;
-      	lo_address address = lo_address_new(NULL, "4444");
+      	lo_address address = lo_address_new(NULL, OSC_PORT);
 
 	printf("THREAD\n");
 
