@@ -136,7 +136,7 @@ style "radio_button" = "steel"
   fg[SELECTED] = { 0, 0, 0 }
   fg[INSENSITIVE] = { 0, 0, 0 }  
   
-
+}
 
 # This sets the text for everything except the faders and buttons.
 

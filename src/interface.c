@@ -46,6 +46,13 @@ create_window1 (void)
   GtkWidget *label252;
   GtkWidget *vbox78;
   GtkWidget *notebook1;
+  GtkWidget *vbox99;
+  GtkWidget *frame9;
+  GtkWidget *EQ_curve_event_box;
+  GtkWidget *alignment6;
+  GtkWidget *EQ_curve;
+  GtkWidget *EQ_curve_lbl;
+  GtkWidget *label47;
   GtkWidget *hbox21;
   GtkWidget *eventbox2;
   GtkWidget *eqb_hbox;
@@ -180,93 +187,7 @@ create_window1 (void)
   GtkWidget *eventbox50;
   GtkWidget *eqb30;
   GtkWidget *alabel;
-  GtkWidget *label47;
-  GtkWidget *vbox99;
-  GtkWidget *frame9;
-  GtkWidget *EQ_curve_event_box;
-  GtkWidget *alignment6;
-  GtkWidget *EQ_curve;
-  GtkWidget *EQ_curve_lbl;
   GtkWidget *label48;
-  GtkWidget *hbox27;
-  GtkWidget *hbox24;
-  GtkWidget *low_para;
-  GtkWidget *hbox30;
-  GtkWidget *low_vbox;
-  GtkWidget *label226;
-  GtkWidget *lsgain;
-  GtkWidget *lsg_scale;
-  GtkWidget *vbox107;
-  GtkWidget *label227;
-  GtkWidget *lsfreq;
-  GtkWidget *vscale106;
-  GtkWidget *vbox108;
-  GtkWidget *label228;
-  GtkWidget *lsslope;
-  GtkWidget *lss_scale;
-  GtkWidget *low_shelving_lbl;
-  GtkWidget *band_1_para;
-  GtkWidget *hbox31;
-  GtkWidget *vbox109;
-  GtkWidget *label229;
-  GtkWidget *b1gain;
-  GtkWidget *b1g_scale;
-  GtkWidget *vbox110;
-  GtkWidget *label230;
-  GtkWidget *b1freq;
-  GtkWidget *b1f_scale;
-  GtkWidget *vbox111;
-  GtkWidget *label231;
-  GtkWidget *b1bw;
-  GtkWidget *b1b_scale;
-  GtkWidget *label232;
-  GtkWidget *band_2_para;
-  GtkWidget *hbox32;
-  GtkWidget *vbox112;
-  GtkWidget *label233;
-  GtkWidget *b2gain;
-  GtkWidget *b2g_scale;
-  GtkWidget *vbox113;
-  GtkWidget *label234;
-  GtkWidget *b2freq;
-  GtkWidget *b2f_scale;
-  GtkWidget *vbox114;
-  GtkWidget *label235;
-  GtkWidget *b2bw;
-  GtkWidget *b2b_scale;
-  GtkWidget *label236;
-  GtkWidget *band_3_para;
-  GtkWidget *hbox33;
-  GtkWidget *vbox115;
-  GtkWidget *label237;
-  GtkWidget *b3gain;
-  GtkWidget *b3g_scale;
-  GtkWidget *vbox116;
-  GtkWidget *label238;
-  GtkWidget *b3freq;
-  GtkWidget *b3f_scale;
-  GtkWidget *vbox117;
-  GtkWidget *label239;
-  GtkWidget *b3bw;
-  GtkWidget *b3b_scale;
-  GtkWidget *label240;
-  GtkWidget *high_para;
-  GtkWidget *hbox34;
-  GtkWidget *vbox118;
-  GtkWidget *label241;
-  GtkWidget *hsgain;
-  GtkWidget *hsg_scale;
-  GtkWidget *vbox119;
-  GtkWidget *label242;
-  GtkWidget *hsfreq;
-  GtkWidget *hsf_scale;
-  GtkWidget *vbox120;
-  GtkWidget *label243;
-  GtkWidget *hsslope;
-  GtkWidget *hss_scale;
-  GtkWidget *label244;
-  GtkWidget *curve2;
-  GtkWidget *label49;
   GtkWidget *handlebox1;
   GtkWidget *spectrum_hbox;
   GtkWidget *label78;
@@ -466,7 +387,7 @@ create_window1 (void)
   gtk_widget_set_name (window1, "window1");
   GTK_WIDGET_SET_FLAGS (window1, GTK_CAN_FOCUS);
   gtk_window_set_title (GTK_WINDOW (window1), _("JAM"));
-  gtk_window_set_default_size (GTK_WINDOW (window1), 750, 650);
+  gtk_window_set_default_size (GTK_WINDOW (window1), 800, 650);
 
   alignment2 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_widget_set_name (alignment2, "alignment2");
@@ -565,6 +486,45 @@ create_window1 (void)
   gtk_widget_show (notebook1);
   gtk_box_pack_start (GTK_BOX (vbox78), notebook1, TRUE, TRUE, 0);
   gtk_widget_set_size_request (notebook1, 600, 150);
+
+  vbox99 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox99, "vbox99");
+  gtk_widget_show (vbox99);
+  gtk_container_add (GTK_CONTAINER (notebook1), vbox99);
+  gtk_widget_set_size_request (vbox99, 30, 160);
+
+  frame9 = gtk_frame_new (NULL);
+  gtk_widget_set_name (frame9, "frame9");
+  gtk_widget_show (frame9);
+  gtk_box_pack_start (GTK_BOX (vbox99), frame9, TRUE, TRUE, 0);
+
+  EQ_curve_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (EQ_curve_event_box, "EQ_curve_event_box");
+  gtk_widget_show (EQ_curve_event_box);
+  gtk_container_add (GTK_CONTAINER (frame9), EQ_curve_event_box);
+
+  alignment6 = gtk_alignment_new (0.5, 0.5, 1, 1);
+  gtk_widget_set_name (alignment6, "alignment6");
+  gtk_widget_show (alignment6);
+  gtk_container_add (GTK_CONTAINER (EQ_curve_event_box), alignment6);
+
+  EQ_curve = gtk_drawing_area_new ();
+  gtk_widget_set_name (EQ_curve, "EQ_curve");
+  gtk_widget_show (EQ_curve);
+  gtk_container_add (GTK_CONTAINER (alignment6), EQ_curve);
+  gtk_widget_set_events (EQ_curve, GDK_POINTER_MOTION_MASK);
+
+  EQ_curve_lbl = gtk_label_new (_("     "));
+  gtk_widget_set_name (EQ_curve_lbl, "EQ_curve_lbl");
+  gtk_widget_show (EQ_curve_lbl);
+  gtk_frame_set_label_widget (GTK_FRAME (frame9), EQ_curve_lbl);
+  gtk_label_set_justify (GTK_LABEL (EQ_curve_lbl), GTK_JUSTIFY_LEFT);
+
+  label47 = gtk_label_new (_("HDEQ"));
+  gtk_widget_set_name (label47, "label47");
+  gtk_widget_show (label47);
+  gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 0), label47);
+  gtk_label_set_justify (GTK_LABEL (label47), GTK_JUSTIFY_LEFT);
 
   hbox21 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox21, "hbox21");
@@ -1356,532 +1316,11 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox101), alabel, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (alabel), GTK_JUSTIFY_LEFT);
 
-  label47 = gtk_label_new (_("Faders"));
-  gtk_widget_set_name (label47, "label47");
-  gtk_widget_show (label47);
-  gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 0), label47);
-  gtk_label_set_justify (GTK_LABEL (label47), GTK_JUSTIFY_LEFT);
-
-  vbox99 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox99, "vbox99");
-  gtk_widget_show (vbox99);
-  gtk_container_add (GTK_CONTAINER (notebook1), vbox99);
-  gtk_widget_set_size_request (vbox99, 30, 160);
-
-  frame9 = gtk_frame_new (NULL);
-  gtk_widget_set_name (frame9, "frame9");
-  gtk_widget_show (frame9);
-  gtk_box_pack_start (GTK_BOX (vbox99), frame9, TRUE, TRUE, 0);
-
-  EQ_curve_event_box = gtk_event_box_new ();
-  gtk_widget_set_name (EQ_curve_event_box, "EQ_curve_event_box");
-  gtk_widget_show (EQ_curve_event_box);
-  gtk_container_add (GTK_CONTAINER (frame9), EQ_curve_event_box);
-
-  alignment6 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_widget_set_name (alignment6, "alignment6");
-  gtk_widget_show (alignment6);
-  gtk_container_add (GTK_CONTAINER (EQ_curve_event_box), alignment6);
-
-  EQ_curve = gtk_drawing_area_new ();
-  gtk_widget_set_name (EQ_curve, "EQ_curve");
-  gtk_widget_show (EQ_curve);
-  gtk_container_add (GTK_CONTAINER (alignment6), EQ_curve);
-  gtk_widget_set_events (EQ_curve, GDK_POINTER_MOTION_MASK);
-
-  EQ_curve_lbl = gtk_label_new (_("     "));
-  gtk_widget_set_name (EQ_curve_lbl, "EQ_curve_lbl");
-  gtk_widget_show (EQ_curve_lbl);
-  gtk_frame_set_label_widget (GTK_FRAME (frame9), EQ_curve_lbl);
-  gtk_label_set_justify (GTK_LABEL (EQ_curve_lbl), GTK_JUSTIFY_LEFT);
-
-  label48 = gtk_label_new (_("Graph"));
+  label48 = gtk_label_new (_("32band EQ"));
   gtk_widget_set_name (label48, "label48");
   gtk_widget_show (label48);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 1), label48);
   gtk_label_set_justify (GTK_LABEL (label48), GTK_JUSTIFY_LEFT);
-
-  hbox27 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (hbox27, "hbox27");
-  gtk_widget_show (hbox27);
-  gtk_container_add (GTK_CONTAINER (notebook1), hbox27);
-
-  hbox24 = gtk_hbox_new (TRUE, 0);
-  gtk_widget_set_name (hbox24, "hbox24");
-  gtk_widget_show (hbox24);
-  gtk_box_pack_start (GTK_BOX (hbox27), hbox24, TRUE, TRUE, 0);
-
-  low_para = gtk_frame_new (NULL);
-  gtk_widget_set_name (low_para, "low_para");
-  gtk_widget_show (low_para);
-  gtk_box_pack_start (GTK_BOX (hbox24), low_para, TRUE, TRUE, 0);
-
-  hbox30 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (hbox30, "hbox30");
-  gtk_widget_show (hbox30);
-  gtk_container_add (GTK_CONTAINER (low_para), hbox30);
-
-  low_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (low_vbox, "low_vbox");
-  gtk_widget_show (low_vbox);
-  gtk_box_pack_start (GTK_BOX (hbox30), low_vbox, TRUE, TRUE, 0);
-
-  label226 = gtk_label_new (_("db"));
-  gtk_widget_set_name (label226, "label226");
-  gtk_widget_show (label226);
-  gtk_box_pack_start (GTK_BOX (low_vbox), label226, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label226), GTK_JUSTIFY_LEFT);
-
-  lsgain = gtk_event_box_new ();
-  gtk_widget_set_name (lsgain, "lsgain");
-  gtk_widget_show (lsgain);
-  gtk_box_pack_start (GTK_BOX (low_vbox), lsgain, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, lsgain, _("Low-Shelving gain"), NULL);
-
-  lsg_scale = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 0, 0, 0)));
-  gtk_widget_set_name (lsg_scale, "lsg_scale");
-  gtk_widget_show (lsg_scale);
-  gtk_container_add (GTK_CONTAINER (lsgain), lsg_scale);
-  gtk_scale_set_value_pos (GTK_SCALE (lsg_scale), GTK_POS_BOTTOM);
-  gtk_scale_set_digits (GTK_SCALE (lsg_scale), 0);
-  gtk_range_set_inverted (GTK_RANGE (lsg_scale), TRUE);
-
-  vbox107 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox107, "vbox107");
-  gtk_widget_show (vbox107);
-  gtk_box_pack_start (GTK_BOX (hbox30), vbox107, TRUE, TRUE, 0);
-
-  label227 = gtk_label_new (_("Hz"));
-  gtk_widget_set_name (label227, "label227");
-  gtk_widget_show (label227);
-  gtk_box_pack_start (GTK_BOX (vbox107), label227, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label227), GTK_JUSTIFY_LEFT);
-
-  lsfreq = gtk_event_box_new ();
-  gtk_widget_set_name (lsfreq, "lsfreq");
-  gtk_widget_show (lsfreq);
-  gtk_box_pack_start (GTK_BOX (vbox107), lsfreq, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, lsfreq, _("Low-Shelving frequency"), NULL);
-
-  vscale106 = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 0, 0, 0)));
-  gtk_widget_set_name (vscale106, "vscale106");
-  gtk_widget_show (vscale106);
-  gtk_container_add (GTK_CONTAINER (lsfreq), vscale106);
-  gtk_scale_set_value_pos (GTK_SCALE (vscale106), GTK_POS_BOTTOM);
-  gtk_scale_set_digits (GTK_SCALE (vscale106), 0);
-  gtk_range_set_inverted (GTK_RANGE (vscale106), TRUE);
-
-  vbox108 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox108, "vbox108");
-  gtk_widget_show (vbox108);
-  gtk_box_pack_start (GTK_BOX (hbox30), vbox108, TRUE, TRUE, 0);
-
-  label228 = gtk_label_new (_("slope"));
-  gtk_widget_set_name (label228, "label228");
-  gtk_widget_show (label228);
-  gtk_box_pack_start (GTK_BOX (vbox108), label228, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label228), GTK_JUSTIFY_LEFT);
-
-  lsslope = gtk_event_box_new ();
-  gtk_widget_set_name (lsslope, "lsslope");
-  gtk_widget_show (lsslope);
-  gtk_box_pack_start (GTK_BOX (vbox108), lsslope, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, lsslope, _("Low-Shelving slope"), NULL);
-
-  lss_scale = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 0, 0, 0)));
-  gtk_widget_set_name (lss_scale, "lss_scale");
-  gtk_widget_show (lss_scale);
-  gtk_container_add (GTK_CONTAINER (lsslope), lss_scale);
-  gtk_scale_set_value_pos (GTK_SCALE (lss_scale), GTK_POS_BOTTOM);
-  gtk_scale_set_digits (GTK_SCALE (lss_scale), 0);
-  gtk_range_set_inverted (GTK_RANGE (lss_scale), TRUE);
-
-  low_shelving_lbl = gtk_label_new (_("Low"));
-  gtk_widget_set_name (low_shelving_lbl, "low_shelving_lbl");
-  gtk_widget_show (low_shelving_lbl);
-  gtk_frame_set_label_widget (GTK_FRAME (low_para), low_shelving_lbl);
-  gtk_widget_set_size_request (low_shelving_lbl, 23, 14);
-  gtk_label_set_justify (GTK_LABEL (low_shelving_lbl), GTK_JUSTIFY_LEFT);
-
-  band_1_para = gtk_frame_new (NULL);
-  gtk_widget_set_name (band_1_para, "band_1_para");
-  gtk_widget_show (band_1_para);
-  gtk_box_pack_start (GTK_BOX (hbox24), band_1_para, TRUE, TRUE, 0);
-
-  hbox31 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (hbox31, "hbox31");
-  gtk_widget_show (hbox31);
-  gtk_container_add (GTK_CONTAINER (band_1_para), hbox31);
-
-  vbox109 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox109, "vbox109");
-  gtk_widget_show (vbox109);
-  gtk_box_pack_start (GTK_BOX (hbox31), vbox109, TRUE, TRUE, 0);
-
-  label229 = gtk_label_new (_("db"));
-  gtk_widget_set_name (label229, "label229");
-  gtk_widget_show (label229);
-  gtk_box_pack_start (GTK_BOX (vbox109), label229, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label229), GTK_JUSTIFY_LEFT);
-
-  b1gain = gtk_event_box_new ();
-  gtk_widget_set_name (b1gain, "b1gain");
-  gtk_widget_show (b1gain);
-  gtk_box_pack_start (GTK_BOX (vbox109), b1gain, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, b1gain, _("Band 1 gain"), NULL);
-
-  b1g_scale = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 0, 0, 0)));
-  gtk_widget_set_name (b1g_scale, "b1g_scale");
-  gtk_widget_show (b1g_scale);
-  gtk_container_add (GTK_CONTAINER (b1gain), b1g_scale);
-  gtk_scale_set_value_pos (GTK_SCALE (b1g_scale), GTK_POS_BOTTOM);
-  gtk_scale_set_digits (GTK_SCALE (b1g_scale), 0);
-  gtk_range_set_inverted (GTK_RANGE (b1g_scale), TRUE);
-
-  vbox110 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox110, "vbox110");
-  gtk_widget_show (vbox110);
-  gtk_box_pack_start (GTK_BOX (hbox31), vbox110, TRUE, TRUE, 0);
-
-  label230 = gtk_label_new (_("Hz"));
-  gtk_widget_set_name (label230, "label230");
-  gtk_widget_show (label230);
-  gtk_box_pack_start (GTK_BOX (vbox110), label230, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label230), GTK_JUSTIFY_LEFT);
-
-  b1freq = gtk_event_box_new ();
-  gtk_widget_set_name (b1freq, "b1freq");
-  gtk_widget_show (b1freq);
-  gtk_box_pack_start (GTK_BOX (vbox110), b1freq, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, b1freq, _("Band 1 frequency"), NULL);
-
-  b1f_scale = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 0, 0, 0)));
-  gtk_widget_set_name (b1f_scale, "b1f_scale");
-  gtk_widget_show (b1f_scale);
-  gtk_container_add (GTK_CONTAINER (b1freq), b1f_scale);
-  gtk_scale_set_value_pos (GTK_SCALE (b1f_scale), GTK_POS_BOTTOM);
-  gtk_scale_set_digits (GTK_SCALE (b1f_scale), 0);
-  gtk_range_set_inverted (GTK_RANGE (b1f_scale), TRUE);
-
-  vbox111 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox111, "vbox111");
-  gtk_widget_show (vbox111);
-  gtk_box_pack_start (GTK_BOX (hbox31), vbox111, TRUE, TRUE, 0);
-
-  label231 = gtk_label_new (_("oct"));
-  gtk_widget_set_name (label231, "label231");
-  gtk_widget_show (label231);
-  gtk_box_pack_start (GTK_BOX (vbox111), label231, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label231), GTK_JUSTIFY_LEFT);
-
-  b1bw = gtk_event_box_new ();
-  gtk_widget_set_name (b1bw, "b1bw");
-  gtk_widget_show (b1bw);
-  gtk_box_pack_start (GTK_BOX (vbox111), b1bw, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, b1bw, _("Band 1 bandwidth"), NULL);
-
-  b1b_scale = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 0, 0, 0)));
-  gtk_widget_set_name (b1b_scale, "b1b_scale");
-  gtk_widget_show (b1b_scale);
-  gtk_container_add (GTK_CONTAINER (b1bw), b1b_scale);
-  gtk_scale_set_value_pos (GTK_SCALE (b1b_scale), GTK_POS_BOTTOM);
-  gtk_scale_set_digits (GTK_SCALE (b1b_scale), 0);
-  gtk_range_set_inverted (GTK_RANGE (b1b_scale), TRUE);
-
-  label232 = gtk_label_new (_("Band 1"));
-  gtk_widget_set_name (label232, "label232");
-  gtk_widget_show (label232);
-  gtk_frame_set_label_widget (GTK_FRAME (band_1_para), label232);
-  gtk_widget_set_size_request (label232, 40, 14);
-  gtk_label_set_justify (GTK_LABEL (label232), GTK_JUSTIFY_LEFT);
-
-  band_2_para = gtk_frame_new (NULL);
-  gtk_widget_set_name (band_2_para, "band_2_para");
-  gtk_widget_show (band_2_para);
-  gtk_box_pack_start (GTK_BOX (hbox24), band_2_para, TRUE, TRUE, 0);
-
-  hbox32 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (hbox32, "hbox32");
-  gtk_widget_show (hbox32);
-  gtk_container_add (GTK_CONTAINER (band_2_para), hbox32);
-
-  vbox112 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox112, "vbox112");
-  gtk_widget_show (vbox112);
-  gtk_box_pack_start (GTK_BOX (hbox32), vbox112, TRUE, TRUE, 0);
-
-  label233 = gtk_label_new (_("db"));
-  gtk_widget_set_name (label233, "label233");
-  gtk_widget_show (label233);
-  gtk_box_pack_start (GTK_BOX (vbox112), label233, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label233), GTK_JUSTIFY_LEFT);
-
-  b2gain = gtk_event_box_new ();
-  gtk_widget_set_name (b2gain, "b2gain");
-  gtk_widget_show (b2gain);
-  gtk_box_pack_start (GTK_BOX (vbox112), b2gain, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, b2gain, _("Band 2 gain"), NULL);
-
-  b2g_scale = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 0, 0, 0)));
-  gtk_widget_set_name (b2g_scale, "b2g_scale");
-  gtk_widget_show (b2g_scale);
-  gtk_container_add (GTK_CONTAINER (b2gain), b2g_scale);
-  gtk_scale_set_value_pos (GTK_SCALE (b2g_scale), GTK_POS_BOTTOM);
-  gtk_scale_set_digits (GTK_SCALE (b2g_scale), 0);
-  gtk_range_set_inverted (GTK_RANGE (b2g_scale), TRUE);
-
-  vbox113 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox113, "vbox113");
-  gtk_widget_show (vbox113);
-  gtk_box_pack_start (GTK_BOX (hbox32), vbox113, TRUE, TRUE, 0);
-
-  label234 = gtk_label_new (_("Hz"));
-  gtk_widget_set_name (label234, "label234");
-  gtk_widget_show (label234);
-  gtk_box_pack_start (GTK_BOX (vbox113), label234, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label234), GTK_JUSTIFY_LEFT);
-
-  b2freq = gtk_event_box_new ();
-  gtk_widget_set_name (b2freq, "b2freq");
-  gtk_widget_show (b2freq);
-  gtk_box_pack_start (GTK_BOX (vbox113), b2freq, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, b2freq, _("Band 2 frequency"), NULL);
-
-  b2f_scale = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 0, 0, 0)));
-  gtk_widget_set_name (b2f_scale, "b2f_scale");
-  gtk_widget_show (b2f_scale);
-  gtk_container_add (GTK_CONTAINER (b2freq), b2f_scale);
-  gtk_scale_set_value_pos (GTK_SCALE (b2f_scale), GTK_POS_BOTTOM);
-  gtk_scale_set_digits (GTK_SCALE (b2f_scale), 0);
-  gtk_range_set_inverted (GTK_RANGE (b2f_scale), TRUE);
-
-  vbox114 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox114, "vbox114");
-  gtk_widget_show (vbox114);
-  gtk_box_pack_start (GTK_BOX (hbox32), vbox114, TRUE, TRUE, 0);
-
-  label235 = gtk_label_new (_("oct"));
-  gtk_widget_set_name (label235, "label235");
-  gtk_widget_show (label235);
-  gtk_box_pack_start (GTK_BOX (vbox114), label235, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label235), GTK_JUSTIFY_LEFT);
-
-  b2bw = gtk_event_box_new ();
-  gtk_widget_set_name (b2bw, "b2bw");
-  gtk_widget_show (b2bw);
-  gtk_box_pack_start (GTK_BOX (vbox114), b2bw, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, b2bw, _("Band 2 bandwidth"), NULL);
-
-  b2b_scale = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 0, 0, 0)));
-  gtk_widget_set_name (b2b_scale, "b2b_scale");
-  gtk_widget_show (b2b_scale);
-  gtk_container_add (GTK_CONTAINER (b2bw), b2b_scale);
-  gtk_scale_set_value_pos (GTK_SCALE (b2b_scale), GTK_POS_BOTTOM);
-  gtk_scale_set_digits (GTK_SCALE (b2b_scale), 0);
-  gtk_range_set_inverted (GTK_RANGE (b2b_scale), TRUE);
-
-  label236 = gtk_label_new (_("Band 2"));
-  gtk_widget_set_name (label236, "label236");
-  gtk_widget_show (label236);
-  gtk_frame_set_label_widget (GTK_FRAME (band_2_para), label236);
-  gtk_widget_set_size_request (label236, 40, 14);
-  gtk_label_set_justify (GTK_LABEL (label236), GTK_JUSTIFY_LEFT);
-
-  band_3_para = gtk_frame_new (NULL);
-  gtk_widget_set_name (band_3_para, "band_3_para");
-  gtk_widget_show (band_3_para);
-  gtk_box_pack_start (GTK_BOX (hbox24), band_3_para, TRUE, TRUE, 0);
-
-  hbox33 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (hbox33, "hbox33");
-  gtk_widget_show (hbox33);
-  gtk_container_add (GTK_CONTAINER (band_3_para), hbox33);
-
-  vbox115 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox115, "vbox115");
-  gtk_widget_show (vbox115);
-  gtk_box_pack_start (GTK_BOX (hbox33), vbox115, TRUE, TRUE, 0);
-
-  label237 = gtk_label_new (_("db"));
-  gtk_widget_set_name (label237, "label237");
-  gtk_widget_show (label237);
-  gtk_box_pack_start (GTK_BOX (vbox115), label237, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label237), GTK_JUSTIFY_LEFT);
-
-  b3gain = gtk_event_box_new ();
-  gtk_widget_set_name (b3gain, "b3gain");
-  gtk_widget_show (b3gain);
-  gtk_box_pack_start (GTK_BOX (vbox115), b3gain, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, b3gain, _("Band 3 gain"), NULL);
-
-  b3g_scale = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 0, 0, 0)));
-  gtk_widget_set_name (b3g_scale, "b3g_scale");
-  gtk_widget_show (b3g_scale);
-  gtk_container_add (GTK_CONTAINER (b3gain), b3g_scale);
-  gtk_scale_set_value_pos (GTK_SCALE (b3g_scale), GTK_POS_BOTTOM);
-  gtk_scale_set_digits (GTK_SCALE (b3g_scale), 0);
-  gtk_range_set_inverted (GTK_RANGE (b3g_scale), TRUE);
-
-  vbox116 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox116, "vbox116");
-  gtk_widget_show (vbox116);
-  gtk_box_pack_start (GTK_BOX (hbox33), vbox116, TRUE, TRUE, 0);
-
-  label238 = gtk_label_new (_("Hz"));
-  gtk_widget_set_name (label238, "label238");
-  gtk_widget_show (label238);
-  gtk_box_pack_start (GTK_BOX (vbox116), label238, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label238), GTK_JUSTIFY_LEFT);
-
-  b3freq = gtk_event_box_new ();
-  gtk_widget_set_name (b3freq, "b3freq");
-  gtk_widget_show (b3freq);
-  gtk_box_pack_start (GTK_BOX (vbox116), b3freq, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, b3freq, _("Band 3 frequency"), NULL);
-
-  b3f_scale = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 0, 0, 0)));
-  gtk_widget_set_name (b3f_scale, "b3f_scale");
-  gtk_widget_show (b3f_scale);
-  gtk_container_add (GTK_CONTAINER (b3freq), b3f_scale);
-  gtk_scale_set_value_pos (GTK_SCALE (b3f_scale), GTK_POS_BOTTOM);
-  gtk_scale_set_digits (GTK_SCALE (b3f_scale), 0);
-  gtk_range_set_inverted (GTK_RANGE (b3f_scale), TRUE);
-
-  vbox117 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox117, "vbox117");
-  gtk_widget_show (vbox117);
-  gtk_box_pack_start (GTK_BOX (hbox33), vbox117, TRUE, TRUE, 0);
-
-  label239 = gtk_label_new (_("oct"));
-  gtk_widget_set_name (label239, "label239");
-  gtk_widget_show (label239);
-  gtk_box_pack_start (GTK_BOX (vbox117), label239, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label239), GTK_JUSTIFY_LEFT);
-
-  b3bw = gtk_event_box_new ();
-  gtk_widget_set_name (b3bw, "b3bw");
-  gtk_widget_show (b3bw);
-  gtk_box_pack_start (GTK_BOX (vbox117), b3bw, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, b3bw, _("Band 3 bandwidth"), NULL);
-
-  b3b_scale = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 0, 0, 0)));
-  gtk_widget_set_name (b3b_scale, "b3b_scale");
-  gtk_widget_show (b3b_scale);
-  gtk_container_add (GTK_CONTAINER (b3bw), b3b_scale);
-  gtk_scale_set_value_pos (GTK_SCALE (b3b_scale), GTK_POS_BOTTOM);
-  gtk_scale_set_digits (GTK_SCALE (b3b_scale), 0);
-  gtk_range_set_inverted (GTK_RANGE (b3b_scale), TRUE);
-
-  label240 = gtk_label_new (_("Band 3"));
-  gtk_widget_set_name (label240, "label240");
-  gtk_widget_show (label240);
-  gtk_frame_set_label_widget (GTK_FRAME (band_3_para), label240);
-  gtk_widget_set_size_request (label240, 40, 14);
-  gtk_label_set_justify (GTK_LABEL (label240), GTK_JUSTIFY_LEFT);
-
-  high_para = gtk_frame_new (NULL);
-  gtk_widget_set_name (high_para, "high_para");
-  gtk_widget_show (high_para);
-  gtk_box_pack_start (GTK_BOX (hbox24), high_para, TRUE, TRUE, 0);
-
-  hbox34 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (hbox34, "hbox34");
-  gtk_widget_show (hbox34);
-  gtk_container_add (GTK_CONTAINER (high_para), hbox34);
-
-  vbox118 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox118, "vbox118");
-  gtk_widget_show (vbox118);
-  gtk_box_pack_start (GTK_BOX (hbox34), vbox118, TRUE, TRUE, 0);
-
-  label241 = gtk_label_new (_("db"));
-  gtk_widget_set_name (label241, "label241");
-  gtk_widget_show (label241);
-  gtk_box_pack_start (GTK_BOX (vbox118), label241, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label241), GTK_JUSTIFY_LEFT);
-
-  hsgain = gtk_event_box_new ();
-  gtk_widget_set_name (hsgain, "hsgain");
-  gtk_widget_show (hsgain);
-  gtk_box_pack_start (GTK_BOX (vbox118), hsgain, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, hsgain, _("High-Shelving gain"), NULL);
-
-  hsg_scale = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 0, 0, 0)));
-  gtk_widget_set_name (hsg_scale, "hsg_scale");
-  gtk_widget_show (hsg_scale);
-  gtk_container_add (GTK_CONTAINER (hsgain), hsg_scale);
-  gtk_scale_set_value_pos (GTK_SCALE (hsg_scale), GTK_POS_BOTTOM);
-  gtk_scale_set_digits (GTK_SCALE (hsg_scale), 0);
-  gtk_range_set_inverted (GTK_RANGE (hsg_scale), TRUE);
-
-  vbox119 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox119, "vbox119");
-  gtk_widget_show (vbox119);
-  gtk_box_pack_start (GTK_BOX (hbox34), vbox119, TRUE, TRUE, 0);
-
-  label242 = gtk_label_new (_("Hz"));
-  gtk_widget_set_name (label242, "label242");
-  gtk_widget_show (label242);
-  gtk_box_pack_start (GTK_BOX (vbox119), label242, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label242), GTK_JUSTIFY_LEFT);
-
-  hsfreq = gtk_event_box_new ();
-  gtk_widget_set_name (hsfreq, "hsfreq");
-  gtk_widget_show (hsfreq);
-  gtk_box_pack_start (GTK_BOX (vbox119), hsfreq, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, hsfreq, _("High-Shelving frequency"), NULL);
-
-  hsf_scale = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 0, 0, 0)));
-  gtk_widget_set_name (hsf_scale, "hsf_scale");
-  gtk_widget_show (hsf_scale);
-  gtk_container_add (GTK_CONTAINER (hsfreq), hsf_scale);
-  gtk_scale_set_value_pos (GTK_SCALE (hsf_scale), GTK_POS_BOTTOM);
-  gtk_scale_set_digits (GTK_SCALE (hsf_scale), 0);
-  gtk_range_set_inverted (GTK_RANGE (hsf_scale), TRUE);
-
-  vbox120 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox120, "vbox120");
-  gtk_widget_show (vbox120);
-  gtk_box_pack_start (GTK_BOX (hbox34), vbox120, TRUE, TRUE, 0);
-
-  label243 = gtk_label_new (_("slope"));
-  gtk_widget_set_name (label243, "label243");
-  gtk_widget_show (label243);
-  gtk_box_pack_start (GTK_BOX (vbox120), label243, FALSE, FALSE, 0);
-  gtk_label_set_justify (GTK_LABEL (label243), GTK_JUSTIFY_LEFT);
-
-  hsslope = gtk_event_box_new ();
-  gtk_widget_set_name (hsslope, "hsslope");
-  gtk_widget_show (hsslope);
-  gtk_box_pack_start (GTK_BOX (vbox120), hsslope, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, hsslope, _("High-Shelving slope"), NULL);
-
-  hss_scale = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -70, 24, 0, 0, 0)));
-  gtk_widget_set_name (hss_scale, "hss_scale");
-  gtk_widget_show (hss_scale);
-  gtk_container_add (GTK_CONTAINER (hsslope), hss_scale);
-  gtk_scale_set_value_pos (GTK_SCALE (hss_scale), GTK_POS_BOTTOM);
-  gtk_scale_set_digits (GTK_SCALE (hss_scale), 0);
-  gtk_range_set_inverted (GTK_RANGE (hss_scale), TRUE);
-
-  label244 = gtk_label_new (_("High"));
-  gtk_widget_set_name (label244, "label244");
-  gtk_widget_show (label244);
-  gtk_frame_set_label_widget (GTK_FRAME (high_para), label244);
-  gtk_widget_set_size_request (label244, 26, 14);
-  gtk_label_set_justify (GTK_LABEL (label244), GTK_JUSTIFY_LEFT);
-
-  curve2 = gtk_curve_new ();
-  gtk_widget_set_name (curve2, "curve2");
-  gtk_widget_show (curve2);
-  gtk_box_pack_start (GTK_BOX (hbox27), curve2, TRUE, TRUE, 0);
-  gtk_curve_set_range (GTK_CURVE (curve2), 0, 1, 0, 1);
-
-  label49 = gtk_label_new (_("Parametric"));
-  gtk_widget_set_name (label49, "label49");
-  gtk_widget_show (label49);
-  gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 2), label49);
-  gtk_label_set_justify (GTK_LABEL (label49), GTK_JUSTIFY_LEFT);
 
   handlebox1 = gtk_handle_box_new ();
   gtk_widget_set_name (handlebox1, "handlebox1");
@@ -1897,15 +1336,13 @@ create_window1 (void)
   label78 = gtk_label_new (_("Spectrum"));
   gtk_widget_set_name (label78, "label78");
   gtk_widget_show (label78);
-  gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 3), label78);
+  gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 2), label78);
   gtk_label_set_justify (GTK_LABEL (label78), GTK_JUSTIFY_LEFT);
 
   vbox122 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox122, "vbox122");
   gtk_widget_show (vbox122);
   gtk_container_add (GTK_CONTAINER (notebook1), vbox122);
-  gtk_notebook_set_tab_label_packing (GTK_NOTEBOOK (notebook1), vbox122,
-                                      FALSE, FALSE, GTK_PACK_START);
 
   frame12 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame12, "frame12");
@@ -2019,7 +1456,7 @@ create_window1 (void)
   eq_options_lbl = gtk_label_new (_("EQ Options"));
   gtk_widget_set_name (eq_options_lbl, "eq_options_lbl");
   gtk_widget_show (eq_options_lbl);
-  gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 4), eq_options_lbl);
+  gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 3), eq_options_lbl);
   gtk_label_set_justify (GTK_LABEL (eq_options_lbl), GTK_JUSTIFY_LEFT);
 
   cross_lbl = gtk_label_new (_("Crossover"));
@@ -2665,6 +2102,7 @@ create_window1 (void)
   gtk_widget_set_name (autobutton3, "autobutton3");
   gtk_widget_show (autobutton3);
   gtk_box_pack_start (GTK_BOX (vbox125), autobutton3, FALSE, FALSE, 0);
+  gtk_widget_set_size_request (autobutton3, 30, 30);
 
   table11 = gtk_table_new (3, 2, FALSE);
   gtk_widget_set_name (table11, "table11");
@@ -3164,9 +2602,6 @@ create_window1 (void)
   g_signal_connect ((gpointer) notebook1, "realize",
                     G_CALLBACK (on_notebook1_realize),
                     NULL);
-  g_signal_connect ((gpointer) eqb1, "realize",
-                    G_CALLBACK (on_eqb1_realize),
-                    NULL);
   g_signal_connect ((gpointer) EQ_curve_event_box, "button_press_event",
                     G_CALLBACK (on_EQ_curve_event_box_button_press_event),
                     NULL);
@@ -3187,6 +2622,9 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) EQ_curve_lbl, "realize",
                     G_CALLBACK (on_EQ_curve_lbl_realize),
+                    NULL);
+  g_signal_connect ((gpointer) eqb1, "realize",
+                    G_CALLBACK (on_eqb1_realize),
                     NULL);
   g_signal_connect ((gpointer) geq_min_gain_spinner, "value_changed",
                     G_CALLBACK (on_geq_min_gain_spinner_value_changed),
@@ -3414,6 +2852,13 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, label252, "label252");
   GLADE_HOOKUP_OBJECT (window1, vbox78, "vbox78");
   GLADE_HOOKUP_OBJECT (window1, notebook1, "notebook1");
+  GLADE_HOOKUP_OBJECT (window1, vbox99, "vbox99");
+  GLADE_HOOKUP_OBJECT (window1, frame9, "frame9");
+  GLADE_HOOKUP_OBJECT (window1, EQ_curve_event_box, "EQ_curve_event_box");
+  GLADE_HOOKUP_OBJECT (window1, alignment6, "alignment6");
+  GLADE_HOOKUP_OBJECT (window1, EQ_curve, "EQ_curve");
+  GLADE_HOOKUP_OBJECT (window1, EQ_curve_lbl, "EQ_curve_lbl");
+  GLADE_HOOKUP_OBJECT (window1, label47, "label47");
   GLADE_HOOKUP_OBJECT (window1, hbox21, "hbox21");
   GLADE_HOOKUP_OBJECT (window1, eventbox2, "eventbox2");
   GLADE_HOOKUP_OBJECT (window1, eqb_hbox, "eqb_hbox");
@@ -3548,93 +2993,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, eventbox50, "eventbox50");
   GLADE_HOOKUP_OBJECT (window1, eqb30, "eqb30");
   GLADE_HOOKUP_OBJECT (window1, alabel, "alabel");
-  GLADE_HOOKUP_OBJECT (window1, label47, "label47");
-  GLADE_HOOKUP_OBJECT (window1, vbox99, "vbox99");
-  GLADE_HOOKUP_OBJECT (window1, frame9, "frame9");
-  GLADE_HOOKUP_OBJECT (window1, EQ_curve_event_box, "EQ_curve_event_box");
-  GLADE_HOOKUP_OBJECT (window1, alignment6, "alignment6");
-  GLADE_HOOKUP_OBJECT (window1, EQ_curve, "EQ_curve");
-  GLADE_HOOKUP_OBJECT (window1, EQ_curve_lbl, "EQ_curve_lbl");
   GLADE_HOOKUP_OBJECT (window1, label48, "label48");
-  GLADE_HOOKUP_OBJECT (window1, hbox27, "hbox27");
-  GLADE_HOOKUP_OBJECT (window1, hbox24, "hbox24");
-  GLADE_HOOKUP_OBJECT (window1, low_para, "low_para");
-  GLADE_HOOKUP_OBJECT (window1, hbox30, "hbox30");
-  GLADE_HOOKUP_OBJECT (window1, low_vbox, "low_vbox");
-  GLADE_HOOKUP_OBJECT (window1, label226, "label226");
-  GLADE_HOOKUP_OBJECT (window1, lsgain, "lsgain");
-  GLADE_HOOKUP_OBJECT (window1, lsg_scale, "lsg_scale");
-  GLADE_HOOKUP_OBJECT (window1, vbox107, "vbox107");
-  GLADE_HOOKUP_OBJECT (window1, label227, "label227");
-  GLADE_HOOKUP_OBJECT (window1, lsfreq, "lsfreq");
-  GLADE_HOOKUP_OBJECT (window1, vscale106, "vscale106");
-  GLADE_HOOKUP_OBJECT (window1, vbox108, "vbox108");
-  GLADE_HOOKUP_OBJECT (window1, label228, "label228");
-  GLADE_HOOKUP_OBJECT (window1, lsslope, "lsslope");
-  GLADE_HOOKUP_OBJECT (window1, lss_scale, "lss_scale");
-  GLADE_HOOKUP_OBJECT (window1, low_shelving_lbl, "low_shelving_lbl");
-  GLADE_HOOKUP_OBJECT (window1, band_1_para, "band_1_para");
-  GLADE_HOOKUP_OBJECT (window1, hbox31, "hbox31");
-  GLADE_HOOKUP_OBJECT (window1, vbox109, "vbox109");
-  GLADE_HOOKUP_OBJECT (window1, label229, "label229");
-  GLADE_HOOKUP_OBJECT (window1, b1gain, "b1gain");
-  GLADE_HOOKUP_OBJECT (window1, b1g_scale, "b1g_scale");
-  GLADE_HOOKUP_OBJECT (window1, vbox110, "vbox110");
-  GLADE_HOOKUP_OBJECT (window1, label230, "label230");
-  GLADE_HOOKUP_OBJECT (window1, b1freq, "b1freq");
-  GLADE_HOOKUP_OBJECT (window1, b1f_scale, "b1f_scale");
-  GLADE_HOOKUP_OBJECT (window1, vbox111, "vbox111");
-  GLADE_HOOKUP_OBJECT (window1, label231, "label231");
-  GLADE_HOOKUP_OBJECT (window1, b1bw, "b1bw");
-  GLADE_HOOKUP_OBJECT (window1, b1b_scale, "b1b_scale");
-  GLADE_HOOKUP_OBJECT (window1, label232, "label232");
-  GLADE_HOOKUP_OBJECT (window1, band_2_para, "band_2_para");
-  GLADE_HOOKUP_OBJECT (window1, hbox32, "hbox32");
-  GLADE_HOOKUP_OBJECT (window1, vbox112, "vbox112");
-  GLADE_HOOKUP_OBJECT (window1, label233, "label233");
-  GLADE_HOOKUP_OBJECT (window1, b2gain, "b2gain");
-  GLADE_HOOKUP_OBJECT (window1, b2g_scale, "b2g_scale");
-  GLADE_HOOKUP_OBJECT (window1, vbox113, "vbox113");
-  GLADE_HOOKUP_OBJECT (window1, label234, "label234");
-  GLADE_HOOKUP_OBJECT (window1, b2freq, "b2freq");
-  GLADE_HOOKUP_OBJECT (window1, b2f_scale, "b2f_scale");
-  GLADE_HOOKUP_OBJECT (window1, vbox114, "vbox114");
-  GLADE_HOOKUP_OBJECT (window1, label235, "label235");
-  GLADE_HOOKUP_OBJECT (window1, b2bw, "b2bw");
-  GLADE_HOOKUP_OBJECT (window1, b2b_scale, "b2b_scale");
-  GLADE_HOOKUP_OBJECT (window1, label236, "label236");
-  GLADE_HOOKUP_OBJECT (window1, band_3_para, "band_3_para");
-  GLADE_HOOKUP_OBJECT (window1, hbox33, "hbox33");
-  GLADE_HOOKUP_OBJECT (window1, vbox115, "vbox115");
-  GLADE_HOOKUP_OBJECT (window1, label237, "label237");
-  GLADE_HOOKUP_OBJECT (window1, b3gain, "b3gain");
-  GLADE_HOOKUP_OBJECT (window1, b3g_scale, "b3g_scale");
-  GLADE_HOOKUP_OBJECT (window1, vbox116, "vbox116");
-  GLADE_HOOKUP_OBJECT (window1, label238, "label238");
-  GLADE_HOOKUP_OBJECT (window1, b3freq, "b3freq");
-  GLADE_HOOKUP_OBJECT (window1, b3f_scale, "b3f_scale");
-  GLADE_HOOKUP_OBJECT (window1, vbox117, "vbox117");
-  GLADE_HOOKUP_OBJECT (window1, label239, "label239");
-  GLADE_HOOKUP_OBJECT (window1, b3bw, "b3bw");
-  GLADE_HOOKUP_OBJECT (window1, b3b_scale, "b3b_scale");
-  GLADE_HOOKUP_OBJECT (window1, label240, "label240");
-  GLADE_HOOKUP_OBJECT (window1, high_para, "high_para");
-  GLADE_HOOKUP_OBJECT (window1, hbox34, "hbox34");
-  GLADE_HOOKUP_OBJECT (window1, vbox118, "vbox118");
-  GLADE_HOOKUP_OBJECT (window1, label241, "label241");
-  GLADE_HOOKUP_OBJECT (window1, hsgain, "hsgain");
-  GLADE_HOOKUP_OBJECT (window1, hsg_scale, "hsg_scale");
-  GLADE_HOOKUP_OBJECT (window1, vbox119, "vbox119");
-  GLADE_HOOKUP_OBJECT (window1, label242, "label242");
-  GLADE_HOOKUP_OBJECT (window1, hsfreq, "hsfreq");
-  GLADE_HOOKUP_OBJECT (window1, hsf_scale, "hsf_scale");
-  GLADE_HOOKUP_OBJECT (window1, vbox120, "vbox120");
-  GLADE_HOOKUP_OBJECT (window1, label243, "label243");
-  GLADE_HOOKUP_OBJECT (window1, hsslope, "hsslope");
-  GLADE_HOOKUP_OBJECT (window1, hss_scale, "hss_scale");
-  GLADE_HOOKUP_OBJECT (window1, label244, "label244");
-  GLADE_HOOKUP_OBJECT (window1, curve2, "curve2");
-  GLADE_HOOKUP_OBJECT (window1, label49, "label49");
   GLADE_HOOKUP_OBJECT (window1, handlebox1, "handlebox1");
   GLADE_HOOKUP_OBJECT (window1, spectrum_hbox, "spectrum_hbox");
   GLADE_HOOKUP_OBJECT (window1, label78, "label78");
