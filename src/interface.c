@@ -146,8 +146,11 @@ create_window1 (void)
   GtkWidget *label49;
   GtkWidget *label78;
   GtkWidget *cross_lbl;
+  GtkWidget *table14;
   GtkWidget *low2mid;
-  GtkWidget *mid2high;
+  GtkWidget *low2mid_lbl;
+  GtkWidget *mid2high2;
+  GtkWidget *mid2high_lbl;
   GtkWidget *alignment1;
   GtkWidget *eventbox1;
   GtkWidget *vbox11;
@@ -203,7 +206,7 @@ create_window1 (void)
   GtkWidget *label92;
   GtkWidget *label93;
   GtkWidget *progressbar23;
-  GtkWidget *label94;
+  GtkWidget *label_Mid;
   GtkWidget *frame6;
   GtkWidget *high_comp;
   GtkWidget *vbox18;
@@ -226,7 +229,7 @@ create_window1 (void)
   GtkWidget *label84;
   GtkWidget *label85;
   GtkWidget *progressbar21;
-  GtkWidget *label68;
+  GtkWidget *label_High;
   GtkWidget *hbox7;
   GtkWidget *curve1;
   GtkWidget *vbox15;
@@ -958,19 +961,44 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (vbox78), cross_lbl, FALSE, FALSE, 0);
   gtk_label_set_justify (GTK_LABEL (cross_lbl), GTK_JUSTIFY_LEFT);
 
-  low2mid = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1230, 25, 20000, 10, 100, 0)));
+  table14 = gtk_table_new (2, 2, FALSE);
+  gtk_widget_set_name (table14, "table14");
+  gtk_widget_show (table14);
+  gtk_box_pack_start (GTK_BOX (vbox78), table14, TRUE, FALSE, 0);
+
+  low2mid = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (3.09691, 1.39794, 4.30103, 0.01, 0.1, 0)));
   gtk_widget_set_name (low2mid, "low2mid");
   gtk_widget_show (low2mid);
-  gtk_box_pack_start (GTK_BOX (vbox78), low2mid, FALSE, FALSE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (low2mid), GTK_POS_LEFT);
-  gtk_scale_set_digits (GTK_SCALE (low2mid), 0);
+  gtk_table_attach (GTK_TABLE (table14), low2mid, 1, 2, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+  gtk_scale_set_draw_value (GTK_SCALE (low2mid), FALSE);
 
-  mid2high = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (12500, 25, 20000, 10, 100, 0)));
-  gtk_widget_set_name (mid2high, "mid2high");
-  gtk_widget_show (mid2high);
-  gtk_box_pack_start (GTK_BOX (vbox78), mid2high, FALSE, FALSE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (mid2high), GTK_POS_LEFT);
-  gtk_scale_set_digits (GTK_SCALE (mid2high), 0);
+  low2mid_lbl = gtk_label_new (_("00000"));
+  gtk_widget_set_name (low2mid_lbl, "low2mid_lbl");
+  gtk_widget_show (low2mid_lbl);
+  gtk_table_attach (GTK_TABLE (table14), low2mid_lbl, 0, 1, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_label_set_justify (GTK_LABEL (low2mid_lbl), GTK_JUSTIFY_LEFT);
+  gtk_misc_set_alignment (GTK_MISC (low2mid_lbl), 0, 0.5);
+
+  mid2high2 = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (4.09691, 1.39794, 4.30103, 0.01, 0.1, 0)));
+  gtk_widget_set_name (mid2high2, "mid2high2");
+  gtk_widget_show (mid2high2);
+  gtk_table_attach (GTK_TABLE (table14), mid2high2, 1, 2, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+  gtk_scale_set_draw_value (GTK_SCALE (mid2high2), FALSE);
+
+  mid2high_lbl = gtk_label_new (_("00000"));
+  gtk_widget_set_name (mid2high_lbl, "mid2high_lbl");
+  gtk_widget_show (mid2high_lbl);
+  gtk_table_attach (GTK_TABLE (table14), mid2high_lbl, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_label_set_justify (GTK_LABEL (mid2high_lbl), GTK_JUSTIFY_LEFT);
+  gtk_misc_set_alignment (GTK_MISC (mid2high_lbl), 0, 0.5);
 
   alignment1 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_widget_set_name (alignment1, "alignment1");
@@ -1195,7 +1223,7 @@ create_window1 (void)
                     (GtkAttachOptions) (GTK_EXPAND), 0, 0);
   gtk_widget_set_size_request (progressbar14, -2, 10);
 
-  label_Low = gtk_label_new (_("Low"));
+  label_Low = gtk_label_new (_("Low : 00000 - 00000"));
   gtk_widget_set_name (label_Low, "label_Low");
   gtk_widget_show (label_Low);
   gtk_frame_set_label_widget (GTK_FRAME (frame7), label_Low);
@@ -1368,11 +1396,11 @@ create_window1 (void)
                     (GtkAttachOptions) (GTK_EXPAND), 0, 0);
   gtk_widget_set_size_request (progressbar23, -2, 10);
 
-  label94 = gtk_label_new (_("Mid"));
-  gtk_widget_set_name (label94, "label94");
-  gtk_widget_show (label94);
-  gtk_frame_set_label_widget (GTK_FRAME (frame8), label94);
-  gtk_label_set_justify (GTK_LABEL (label94), GTK_JUSTIFY_LEFT);
+  label_Mid = gtk_label_new (_("Mid : 00000 - 00000"));
+  gtk_widget_set_name (label_Mid, "label_Mid");
+  gtk_widget_show (label_Mid);
+  gtk_frame_set_label_widget (GTK_FRAME (frame8), label_Mid);
+  gtk_label_set_justify (GTK_LABEL (label_Mid), GTK_JUSTIFY_LEFT);
 
   frame6 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame6, "frame6");
@@ -1541,11 +1569,11 @@ create_window1 (void)
                     (GtkAttachOptions) (GTK_EXPAND), 0, 0);
   gtk_widget_set_size_request (progressbar21, -2, 10);
 
-  label68 = gtk_label_new (_("High"));
-  gtk_widget_set_name (label68, "label68");
-  gtk_widget_show (label68);
-  gtk_frame_set_label_widget (GTK_FRAME (frame6), label68);
-  gtk_label_set_justify (GTK_LABEL (label68), GTK_JUSTIFY_LEFT);
+  label_High = gtk_label_new (_("High : 00000 - 00000"));
+  gtk_widget_set_name (label_High, "label_High");
+  gtk_widget_show (label_High);
+  gtk_frame_set_label_widget (GTK_FRAME (frame6), label_High);
+  gtk_label_set_justify (GTK_LABEL (label_High), GTK_JUSTIFY_LEFT);
 
   hbox7 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox7, "hbox7");
@@ -1747,6 +1775,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) window1, "delete_event",
                     G_CALLBACK (on_window1_delete_event),
                     NULL);
+  g_signal_connect ((gpointer) window1, "show",
+                    G_CALLBACK (on_window1_show),
+                    NULL);
   g_signal_connect ((gpointer) in_trim_scale, "value_changed",
                     G_CALLBACK (on_in_trim_scale_value_changed),
                     NULL);
@@ -1756,20 +1787,35 @@ create_window1 (void)
   g_signal_connect ((gpointer) low2mid, "realize",
                     G_CALLBACK (on_low2mid_realize),
                     NULL);
-  g_signal_connect ((gpointer) mid2high, "value_changed",
+  g_signal_connect ((gpointer) low2mid_lbl, "realize",
+                    G_CALLBACK (on_low2mid_lbl_realize),
+                    NULL);
+  g_signal_connect ((gpointer) mid2high2, "value_changed",
                     G_CALLBACK (on_mid2high_value_changed),
                     NULL);
-  g_signal_connect ((gpointer) mid2high, "realize",
+  g_signal_connect ((gpointer) mid2high2, "realize",
                     G_CALLBACK (on_mid2high_realize),
+                    NULL);
+  g_signal_connect ((gpointer) mid2high_lbl, "realize",
+                    G_CALLBACK (on_mid2high_lbl_realize),
                     NULL);
   g_signal_connect ((gpointer) low_comp, "realize",
                     G_CALLBACK (on_low_comp_realize),
                     NULL);
+  g_signal_connect ((gpointer) label_Low, "realize",
+                    G_CALLBACK (on_label_Low_realize),
+                    NULL);
   g_signal_connect ((gpointer) mid_comp, "realize",
                     G_CALLBACK (on_mid_comp_realize),
                     NULL);
+  g_signal_connect ((gpointer) label_Mid, "realize",
+                    G_CALLBACK (on_label_Mid_realize),
+                    NULL);
   g_signal_connect ((gpointer) high_comp, "realize",
                     G_CALLBACK (on_high_comp_realize),
+                    NULL);
+  g_signal_connect ((gpointer) label_High, "realize",
+                    G_CALLBACK (on_label_High_realize),
                     NULL);
   g_signal_connect ((gpointer) quit, "clicked",
                     G_CALLBACK (on_quit_clicked),
@@ -1892,8 +1938,11 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, label49, "label49");
   GLADE_HOOKUP_OBJECT (window1, label78, "label78");
   GLADE_HOOKUP_OBJECT (window1, cross_lbl, "cross_lbl");
+  GLADE_HOOKUP_OBJECT (window1, table14, "table14");
   GLADE_HOOKUP_OBJECT (window1, low2mid, "low2mid");
-  GLADE_HOOKUP_OBJECT (window1, mid2high, "mid2high");
+  GLADE_HOOKUP_OBJECT (window1, low2mid_lbl, "low2mid_lbl");
+  GLADE_HOOKUP_OBJECT (window1, mid2high2, "mid2high2");
+  GLADE_HOOKUP_OBJECT (window1, mid2high_lbl, "mid2high_lbl");
   GLADE_HOOKUP_OBJECT (window1, alignment1, "alignment1");
   GLADE_HOOKUP_OBJECT (window1, eventbox1, "eventbox1");
   GLADE_HOOKUP_OBJECT (window1, vbox11, "vbox11");
@@ -1949,7 +1998,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, label92, "label92");
   GLADE_HOOKUP_OBJECT (window1, label93, "label93");
   GLADE_HOOKUP_OBJECT (window1, progressbar23, "progressbar23");
-  GLADE_HOOKUP_OBJECT (window1, label94, "label94");
+  GLADE_HOOKUP_OBJECT (window1, label_Mid, "label_Mid");
   GLADE_HOOKUP_OBJECT (window1, frame6, "frame6");
   GLADE_HOOKUP_OBJECT (window1, high_comp, "high_comp");
   GLADE_HOOKUP_OBJECT (window1, vbox18, "vbox18");
@@ -1972,7 +2021,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, label84, "label84");
   GLADE_HOOKUP_OBJECT (window1, label85, "label85");
   GLADE_HOOKUP_OBJECT (window1, progressbar21, "progressbar21");
-  GLADE_HOOKUP_OBJECT (window1, label68, "label68");
+  GLADE_HOOKUP_OBJECT (window1, label_High, "label_High");
   GLADE_HOOKUP_OBJECT (window1, hbox7, "hbox7");
   GLADE_HOOKUP_OBJECT (window1, curve1, "curve1");
   GLADE_HOOKUP_OBJECT (window1, vbox15, "vbox15");

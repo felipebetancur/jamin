@@ -13,21 +13,27 @@
 #include "process.h"
 
 
-static GtkHScale *l_low2mid, *l_mid2high;
-static GtkWidget *l_low_comp, *l_mid_comp, *l_high_comp;
+#define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
+
+
+static GtkHScale   *l_low2mid, *l_mid2high;
+static GtkWidget   *l_low_comp, *l_mid_comp, *l_high_comp;
+static GtkLabel    *l_low2mid_lbl, *l_mid2high_lbl, *l_low_comp_lbl, 
+                   *l_mid_comp_lbl, *l_high_comp_lbl;
+
 
 
 void
 on_low2mid_value_changed               (GtkRange        *range,
                                         gpointer         user_data)
 {
-    double          value, other_value;
+    double          value, other_value,lvalue, mvalue, hvalue;
+    GtkAdjustment   *adj;
+    char            label[6];
 
     value = gtk_range_get_value (range);
     other_value = gtk_range_get_value ((GtkRange *) l_mid2high);
 
-    /* Write value into DSP code */
-    xover_fa = value;
 
     /*  Don't let the two sliders cross each other and desensitize the mid
         band compressor if they are the same value.  */
@@ -43,10 +49,12 @@ on_low2mid_value_changed               (GtkRange        *range,
       }
 
 
-    /*  If the low slider is set to zero, desensitize the low band
-        compressor.  */
+    /*  If the low slider is at the bottom of it's range, desensitize the low 
+        band compressor.  */
 
-    if (value <= 25.1)
+    adj = gtk_range_get_adjustment (range);
+
+    if (value == adj->lower)
       {
         gtk_widget_set_sensitive (l_low_comp, FALSE);
       }
@@ -54,6 +62,30 @@ on_low2mid_value_changed               (GtkRange        *range,
       {
         gtk_widget_set_sensitive (l_low_comp, TRUE);
       }
+
+
+    /*  Set the label using log scale.  */
+
+    lvalue = pow (10.0, value);
+    sprintf (label, "%05d", NINT (lvalue));
+    gtk_label_set_label (l_low2mid_lbl, label);
+
+
+    /* Write value into DSP code */
+
+    xover_fa = lvalue;
+
+
+    /*  Set the compressor labels.  */
+
+    hvalue = pow (10.0, other_value);
+    sprintf (label, "Mid : %d - %d", NINT (lvalue), NINT (hvalue));
+    gtk_label_set_label (l_mid_comp_lbl, label);
+
+    lvalue = pow (10.0, adj->lower);
+    mvalue = pow (10.0, value);
+    sprintf (label, "Low : %d - %d", NINT (lvalue), NINT (mvalue));
+    gtk_label_set_label (l_low_comp_lbl, label);
 }
 
 
@@ -61,15 +93,13 @@ void
 on_mid2high_value_changed              (GtkRange        *range,
                                         gpointer         user_data)
 {
-    double          value, other_value;
+    double          value, other_value, lvalue, mvalue, hvalue;
     GtkAdjustment   *adj;
+    char            label[6];
 
 
     value = gtk_range_get_value (range);
     other_value = gtk_range_get_value ((GtkRange *) l_low2mid);
-
-    /* Write value into DSP code */
-    xover_fb = value;
 
 
     /*  Don't let the two sliders cross each other and desensitize the mid
@@ -100,6 +130,29 @@ on_mid2high_value_changed              (GtkRange        *range,
       {
         gtk_widget_set_sensitive (l_high_comp, TRUE);
       }
+
+
+    /*  Set the label using log scale.  */
+
+    mvalue = pow (10.0, value);
+    sprintf (label, "%05d", NINT (mvalue));
+    gtk_label_set_label (l_mid2high_lbl, label);
+
+
+    /* Write value into DSP code */
+
+    xover_fb = mvalue;
+
+
+    /*  Set the compressor labels.  */
+
+    lvalue = pow (10.0, other_value);
+    sprintf (label, "Mid : %d - %d", NINT (lvalue), NINT (mvalue));
+    gtk_label_set_label (l_mid_comp_lbl, label);
+
+    hvalue = pow (10.0, adj->upper);
+    sprintf (label, "High : %d - %d", NINT (mvalue), NINT (hvalue));
+    gtk_label_set_label (l_high_comp_lbl, label);
 }
 
 
@@ -117,6 +170,23 @@ on_mid2high_realize                    (GtkWidget       *widget,
 {
     l_mid2high = (GtkHScale *) widget;
 }
+
+
+void
+on_low2mid_lbl_realize                 (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    l_low2mid_lbl = (GtkLabel *) widget;
+}
+
+
+void
+on_mid2high_lbl_realize                (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    l_mid2high_lbl = (GtkLabel *) widget;
+}
+
 
 void
 on_low_comp_realize                    (GtkWidget       *widget,
@@ -160,6 +230,7 @@ on_window1_delete_event                (GtkWidget       *widget,
   return FALSE;
 }
 
+
 void
 on_in_trim_scale_value_changed         (GtkRange        *range,
                                         gpointer         user_data)
@@ -167,3 +238,35 @@ on_in_trim_scale_value_changed         (GtkRange        *range,
   in_trim_gain = powf(10.0f, gtk_range_get_adjustment(range)->value * 0.05f);
 }
 
+void
+on_label_Low_realize                   (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    l_low_comp_lbl = (GtkLabel *) widget;
+}
+
+
+void
+on_label_Mid_realize                   (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    l_mid_comp_lbl = (GtkLabel *) widget;
+}
+
+
+void
+on_label_High_realize                  (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    l_high_comp_lbl = (GtkLabel *) widget;
+}
+
+
+void
+on_window1_show                        (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+    on_low2mid_value_changed ((GtkRange *) l_low2mid, NULL);
+
+    on_mid2high_value_changed ((GtkRange *) l_mid2high, NULL);
+}
