@@ -35,10 +35,7 @@ Mass Ave, Cambridge, MA 02139, USA.\n"
 char help_help[] = {
 "    Context specific help can be obtained by moving the mouse pointer into \
 one of the tool areas (compressor, EQ, limiter, input, etc) or over any of \
-the individual buttons (Help, Quit, Undo, etc) and pressing <Shift><F1>.  \
-Pressing <Shift><F1> while the cursor is over the Help button will cause the \
-general JAMin help message to be displayed.  The keyboard accelerator for \
-this button is the 'h' key.\n"
+the individual buttons (Help, Quit, Undo, etc) and pressing <Shift><F1>.\n"
 };
 
 
@@ -89,7 +86,9 @@ notch settings in the HDEQ.\n"
 
 char input_help[] = {
 "    The input section allows you to set the input gain to the JAMin system.  \
-You can also pan the input left or right.\n"
+You can also pan the input left or right.  If you have set the keyboard \
+focus to the input section (using the 'I' key) the left, right, up, and down \
+arrows can be used to adjust the gain and pan.\n"
 };
 
 
@@ -214,11 +213,32 @@ button means that scene settings are available for this button.  A dull red \
 button means that no settings have been saved for this scene button.  You can \
 clear settings from a button using the right click menu and the 'Clear' \
 entry.\n\n\
-    The keyboard accelerators for the scene buttons are the function keys, \
-F1 through F6.  Pressing the F1 key will cause scene 1 to become active.  The \
+    The keyboard accelerators for the scene buttons are the number keys, \
+1 through 6.  Pressing the 1 key will cause scene 1 to become active.  The \
 ALT modifier can be used to assign settings to a scene button (instead of \
-using the scene button menus).  Pressing <Alt>-F1 will assign the current \
+using the scene button menus).  Pressing <Alt>-1 will assign the current \
 settings to scene button 1 (you still need to set the name).  The CTRL \
-modifier can be used to clear a scene button.  Pressing <Ctrl>-F1 will clear \
+modifier can be used to clear a scene button.  Pressing <Ctrl>-1 will clear \
 that scene button.\n"
+};
+
+
+char keys_help[] = {
+"    Keyboard accelerators are available for almost all of the functions in \
+JAMin.  Some of the keys change the system focus so that common keys can \
+be used for multiple actions.  Please use <Shift><F1> with the mouse in the \
+focus area for specifics on key accelerators for each area.\n\n\
+\tPause\t-\tBypass\n\
+\tSpace\t-\tToggle play\n\
+\tHome\t-\tPosition transport to beginning\n\
+\tEnd\t\t-\tPosition transport to end\n\
+\t1-6\t\t-\tSelect scene 1-6\n\
+\th\t\t-\tGeneral help\n\
+\tI\t\t-\tSet focus to input section\n\
+\tD\t\t-\tSet focus to hand-drawn EQ\n\
+\tE\t\t-\tSet focus to EQ options\n\
+\tL\t\t-\tSet focus to low band compressor\n\
+\tM\t\t-\tSet focus to mid band compressor\n\
+\tH\t\t-\tSet focus to high band compressor\n\
+\tO\t\t-\tSet focus to output section\n"
 };

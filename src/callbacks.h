@@ -830,3 +830,11 @@ gboolean
 on_frame_h_enter_notify_event          (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data);
+
+void
+on_help1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_keys1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);

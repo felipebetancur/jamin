@@ -37,20 +37,20 @@
 /* vi:set ts=8 sts=4 sw=4: */
 
 
-#define MAIN_BUTTONS             0
-#define INPUT                    1
-#define HDEQ                     2
-#define EQ_OPTIONS               3
-#define LOW                      4
-#define MID                      5
-#define HIGH                     6
-#define LIMITER                  7
-#define OUTPUT                   8
+#define INPUT                    0
+#define HDEQ                     1
+#define EQ_OPTIONS               2
+#define LOW                      3
+#define MID                      4
+#define HIGH                     5
+#define LIMITER                  6
+#define OUTPUT                   7
+
 
 
 static char *help_ptr = general_help;
 static gboolean text_focus = FALSE;
-static unsigned short focus = MAIN_BUTTONS;
+static unsigned short focus = INPUT;
 
 GtkButton *graph_tb = NULL;
 
@@ -156,7 +156,7 @@ on_window1_show                        (GtkWidget       *widget,
 {
     crossover_init ();
 
-    status_set_focus (main_window, "Main buttons");
+    status_set_focus (main_window, "Input");
 }
 
 
@@ -1382,11 +1382,6 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
         /*  Non-maskable, change focus. */
 
-      case GDK_B:
-        focus = MAIN_BUTTONS;
-        status_set_focus (main_window, "Main buttons");
-        return FALSE;
-
       case GDK_I:
         focus = INPUT;
         status_set_focus (main_window, "Input");
@@ -1455,31 +1450,6 @@ on_window1_key_press_event             (GtkWidget       *widget,
 
     switch (focus)
       {
-      case MAIN_BUTTONS:
-        switch (key)
-          {
-          case GDK_l:
-            on_load_button_clicked (NULL, NULL);
-            break;
-
-          case GDK_s:
-            on_save_button_clicked (NULL, NULL);
-            break;
-
-          case GDK_u:
-            s_undo();
-            break;
-
-          case GDK_r:
-            s_redo();
-            break;
-
-          case GDK_q:
-            on_quit_button_clicked (NULL, NULL);
-            break;
-          }
-        break;
-
       case INPUT:
         switch (key)
           {
@@ -1872,15 +1842,15 @@ void
 on_about1_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-
+    help_message (general_help);
 }
+
 
 gboolean
 on_frame_l_enter_notify_event          (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-printf("L\n");
   comp_box_enter (0);
 
   return FALSE;
@@ -1907,3 +1877,20 @@ on_frame_h_enter_notify_event          (GtkWidget       *widget,
 
   return FALSE;
 }
+
+
+void
+on_help1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  help_message (help_help);
+}
+
+
+void
+on_keys1_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  help_message (keys_help);
+}
+
