@@ -29,7 +29,7 @@ void bind_geq()
     unsigned int i, bin;
     float last_bin, next_bin;
     GtkWidget *scale;
-    double freq, cubr2, hz_per_bin = sample_rate / (double)BINS;
+    const double hz_per_bin = sample_rate / (double)BINS;
 
     for (i=0; i<EQ_BANDS; i++) {
 	sprintf(name, "eqb%d", i+1);
@@ -38,11 +38,9 @@ void bind_geq()
 	gtk_signal_connect(geqa[i], "value-changed", GTK_SIGNAL_FUNC(eqb_changed), (gpointer)i+1);
     }
 
-    freq = 25.0;
-    cubr2 = pow(2.0, 1.0/3.0); /* cube root of 3 */
     for (i=0; i<EQ_BANDS; i++) {
-	geq_freqs[i] = freq;
-	freq *= cubr2;
+	geq_freqs[i] = 1000.0 * pow(10.0, (double)(i-16)/10.0);
+	printf("GEQ band %d = %g Hz", i, geq_freqs[i]);
     }
 
     for (i=0; i<BANDS + 1; i++) {
