@@ -1020,3 +1020,113 @@ gboolean
 on_text_focus_out_event                (GtkWidget       *widget,
                                         GdkEventFocus   *event,
                                         gpointer         user_data);
+
+void
+on_low_active_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_low_bypass_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_low_mute_toggled                    (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_mid_active_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_mid_bypass_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_mid_mute_toggled                    (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_high_active_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_high_bypass_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_high_mute_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_hscale_1_l_value_changed            (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_hscale_1_l_realize                  (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+gboolean
+on_stereo_balance_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+void
+on_low_balance_scale_value_changed     (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_low_active_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_low_bypass_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_low_mute_toggled                    (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_hscale_1_m_value_changed            (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_hscale_1_m_realize                  (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_high_balance_scale_value_changed    (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_mid_active_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_mid_bypass_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_mid_mute_toggled                    (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_hscale_1_h_value_changed            (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_hscale_1_h_realize                  (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_high_active_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_high_bypass_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_high_mute_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);

@@ -374,7 +374,7 @@ void hdeq_eqb_mod ()
 static void
 logfreq2xpix (float log_freq, int *x)
 {
-    *x = NINT (((log_freq - l_low2mid_adj->lower) / EQ_curve_range_x) * 
+  *x = NINT (((log_freq - l_low2mid_adj->lower) / EQ_curve_range_x) * 
         EQ_curve_width);
 }
 
@@ -458,7 +458,6 @@ void draw_EQ_spectrum_curve (float single_levels[])
 
         range = l_geq_freqs[EQ_BANDS - 1] - l_geq_freqs[0];
         step = range / (float) EQ_INTERP;
-
         for (i = 0 ; i < EQ_INTERP ; i++)
           {
             freq = l_geq_freqs[0] + (float) i * step;

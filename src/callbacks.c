@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.131 2004/01/22 01:54:13 jdepner Exp $
+ *  $Id: callbacks.c,v 1.132 2004/02/10 01:52:14 joq Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -58,6 +58,7 @@
 
 static char *help_ptr = general_help;
 static gboolean text_focus = FALSE;
+
 
 void
 on_low2mid_value_changed               (GtkRange        *range,
@@ -2032,3 +2033,101 @@ on_text_focus_out_event                (GtkWidget       *widget,
   return FALSE;
 }
 
+
+void
+on_low_active_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  if (gtk_toggle_button_get_active (togglebutton))
+    {
+      process_set_xo_band_action (0, ACTIVE);
+    }
+}
+
+
+void
+on_low_bypass_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  if (gtk_toggle_button_get_active (togglebutton))
+    {
+      process_set_xo_band_action (0, BYPASS);
+    }
+}
+
+
+void
+on_low_mute_toggled                    (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  if (gtk_toggle_button_get_active (togglebutton))
+    {
+      process_set_xo_band_action (0, MUTE);
+    }
+}
+
+
+void
+on_mid_active_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  if (gtk_toggle_button_get_active (togglebutton))
+    {
+      process_set_xo_band_action (1, ACTIVE);
+    }
+}
+
+
+void
+on_mid_bypass_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  if (gtk_toggle_button_get_active (togglebutton))
+    {
+      process_set_xo_band_action (1, BYPASS);
+    }
+}
+
+
+void
+on_mid_mute_toggled                    (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  if (gtk_toggle_button_get_active (togglebutton))
+    {
+      process_set_xo_band_action (1, MUTE);
+    }
+}
+
+
+void
+on_high_active_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  if (gtk_toggle_button_get_active (togglebutton))
+    {
+      process_set_xo_band_action (2, ACTIVE);
+    }
+}
+
+
+void
+on_high_bypass_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  if (gtk_toggle_button_get_active (togglebutton))
+    {
+      process_set_xo_band_action (2, BYPASS);
+    }
+}
+
+
+void
+on_high_mute_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  if (gtk_toggle_button_get_active (togglebutton))
+    {
+      process_set_xo_band_action (2, MUTE);
+    }
+}
