@@ -377,11 +377,11 @@ create_window1 (void)
   GtkWidget *hbox47;
   GtkWidget *table23;
   GtkWidget *bypass_button;
-  GtkWidget *label296;
-  GtkWidget *label297;
-  GtkWidget *label298;
-  GtkWidget *label299;
-  GtkWidget *syslabel1;
+  GtkWidget *JACK_CPU_load;
+  GtkWidget *JACK_period;
+  GtkWidget *JACK_sample_rate;
+  GtkWidget *JACK_realtime;
+  GtkWidget *JACK_transport_state;
   GtkWidget *vbox121;
   GtkWidget *vbuttonbox1;
   GtkWidget *load_button;
@@ -2596,50 +2596,50 @@ create_window1 (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_size_request (bypass_button, 19, 24);
 
-  label296 = gtk_label_new ("");
-  gtk_widget_set_name (label296, "label296");
-  gtk_widget_show (label296);
-  gtk_table_attach (GTK_TABLE (table23), label296, 0, 1, 2, 3,
+  JACK_CPU_load = gtk_label_new ("");
+  gtk_widget_set_name (JACK_CPU_load, "JACK_CPU_load");
+  gtk_widget_show (JACK_CPU_load);
+  gtk_table_attach (GTK_TABLE (table23), JACK_CPU_load, 0, 1, 2, 3,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_label_set_justify (GTK_LABEL (label296), GTK_JUSTIFY_LEFT);
-  gtk_misc_set_alignment (GTK_MISC (label296), 0, 0.5);
+  gtk_label_set_justify (GTK_LABEL (JACK_CPU_load), GTK_JUSTIFY_LEFT);
+  gtk_misc_set_alignment (GTK_MISC (JACK_CPU_load), 0, 0.5);
 
-  label297 = gtk_label_new ("");
-  gtk_widget_set_name (label297, "label297");
-  gtk_widget_show (label297);
-  gtk_table_attach (GTK_TABLE (table23), label297, 0, 1, 4, 5,
+  JACK_period = gtk_label_new ("");
+  gtk_widget_set_name (JACK_period, "JACK_period");
+  gtk_widget_show (JACK_period);
+  gtk_table_attach (GTK_TABLE (table23), JACK_period, 0, 1, 4, 5,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_label_set_justify (GTK_LABEL (label297), GTK_JUSTIFY_LEFT);
-  gtk_misc_set_alignment (GTK_MISC (label297), 0, 0.5);
+  gtk_label_set_justify (GTK_LABEL (JACK_period), GTK_JUSTIFY_LEFT);
+  gtk_misc_set_alignment (GTK_MISC (JACK_period), 0, 0.5);
 
-  label298 = gtk_label_new ("");
-  gtk_widget_set_name (label298, "label298");
-  gtk_widget_show (label298);
-  gtk_table_attach (GTK_TABLE (table23), label298, 0, 1, 3, 4,
+  JACK_sample_rate = gtk_label_new ("");
+  gtk_widget_set_name (JACK_sample_rate, "JACK_sample_rate");
+  gtk_widget_show (JACK_sample_rate);
+  gtk_table_attach (GTK_TABLE (table23), JACK_sample_rate, 0, 1, 3, 4,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_label_set_justify (GTK_LABEL (label298), GTK_JUSTIFY_LEFT);
-  gtk_misc_set_alignment (GTK_MISC (label298), 0, 0.5);
+  gtk_label_set_justify (GTK_LABEL (JACK_sample_rate), GTK_JUSTIFY_LEFT);
+  gtk_misc_set_alignment (GTK_MISC (JACK_sample_rate), 0, 0.5);
 
-  label299 = gtk_label_new ("");
-  gtk_widget_set_name (label299, "label299");
-  gtk_widget_show (label299);
-  gtk_table_attach (GTK_TABLE (table23), label299, 0, 1, 5, 6,
+  JACK_realtime = gtk_label_new ("");
+  gtk_widget_set_name (JACK_realtime, "JACK_realtime");
+  gtk_widget_show (JACK_realtime);
+  gtk_table_attach (GTK_TABLE (table23), JACK_realtime, 0, 1, 5, 6,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_label_set_justify (GTK_LABEL (label299), GTK_JUSTIFY_RIGHT);
-  gtk_misc_set_alignment (GTK_MISC (label299), 0, 0.5);
+  gtk_label_set_justify (GTK_LABEL (JACK_realtime), GTK_JUSTIFY_RIGHT);
+  gtk_misc_set_alignment (GTK_MISC (JACK_realtime), 0, 0.5);
 
-  syslabel1 = gtk_label_new ("");
-  gtk_widget_set_name (syslabel1, "syslabel1");
-  gtk_widget_show (syslabel1);
-  gtk_table_attach (GTK_TABLE (table23), syslabel1, 0, 1, 1, 2,
+  JACK_transport_state = gtk_label_new ("");
+  gtk_widget_set_name (JACK_transport_state, "JACK_transport_state");
+  gtk_widget_show (JACK_transport_state);
+  gtk_table_attach (GTK_TABLE (table23), JACK_transport_state, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_label_set_justify (GTK_LABEL (syslabel1), GTK_JUSTIFY_RIGHT);
-  gtk_misc_set_alignment (GTK_MISC (syslabel1), 0, 0.5);
+  gtk_label_set_justify (GTK_LABEL (JACK_transport_state), GTK_JUSTIFY_RIGHT);
+  gtk_misc_set_alignment (GTK_MISC (JACK_transport_state), 0, 0.5);
 
   vbox121 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox121, "vbox121");
@@ -3485,11 +3485,11 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, hbox47, "hbox47");
   GLADE_HOOKUP_OBJECT (window1, table23, "table23");
   GLADE_HOOKUP_OBJECT (window1, bypass_button, "bypass_button");
-  GLADE_HOOKUP_OBJECT (window1, label296, "label296");
-  GLADE_HOOKUP_OBJECT (window1, label297, "label297");
-  GLADE_HOOKUP_OBJECT (window1, label298, "label298");
-  GLADE_HOOKUP_OBJECT (window1, label299, "label299");
-  GLADE_HOOKUP_OBJECT (window1, syslabel1, "syslabel1");
+  GLADE_HOOKUP_OBJECT (window1, JACK_CPU_load, "JACK_CPU_load");
+  GLADE_HOOKUP_OBJECT (window1, JACK_period, "JACK_period");
+  GLADE_HOOKUP_OBJECT (window1, JACK_sample_rate, "JACK_sample_rate");
+  GLADE_HOOKUP_OBJECT (window1, JACK_realtime, "JACK_realtime");
+  GLADE_HOOKUP_OBJECT (window1, JACK_transport_state, "JACK_transport_state");
   GLADE_HOOKUP_OBJECT (window1, vbox121, "vbox121");
   GLADE_HOOKUP_OBJECT (window1, vbuttonbox1, "vbuttonbox1");
   GLADE_HOOKUP_OBJECT (window1, load_button, "load_button");

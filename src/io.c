@@ -516,6 +516,7 @@ int io_queue(jack_nframes_t nframes, int nchannels,
 		     ((chan == 0)?
 		      io_trace("input overflow, %ld bytes written.", count):
 		      NULL));
+	    abort();			/* take a dump */
 	    rc = ENOSPC;		/* out of space */
 	}
     } 
@@ -748,6 +749,8 @@ void io_init(int argc, char *argv[])
 
     if (dummy_mode) {
 	io_new_state(DSP_STOPPED);
+	jst.buf_size = 1024;
+	jst.sample_rate = 48000;
 	process_init(48000.0f, 1024);
 	return;
     }
@@ -762,6 +765,7 @@ void io_init(int argc, char *argv[])
 		"%s: Cannot contact JACK server, is it running?\n", PACKAGE);
 	exit(2);
     }
+
     jst.buf_size = jack_get_buffer_size(client);
     jst.sample_rate = jack_get_sample_rate(client);
 

@@ -27,6 +27,7 @@
 #include "spectrum.h"
 #include "stereo.h"
 #include "state.h"
+#include "status-ui.h"
 
 GtkWidget *main_window;
 
@@ -57,12 +58,11 @@ int main(int argc, char *argv[])
 
     gtk_set_locale();
     gtk_init(&argc, &argv);
-    io_init(argc, argv);		/* set up I/O processing */
+    io_init(argc, argv);
     state_init();
-
     add_pixmap_directory(PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
-
     main_window = create_window1();
+    status_init();
 
     /* bind the graphic equaliser sliders to adjustments */
     bind_geq();
@@ -72,17 +72,13 @@ int main(int argc, char *argv[])
     bind_compressors();
     bind_spectrum();
     bind_stereo();
-
-
     s_clear_history();
 
+    /* start I/O processing, then run GTK main loop, until "quit" */
+    io_activate();
     g_timeout_add(100, update_meters, NULL);
-
-    io_activate();			/* start I/O processing */
-
     gtk_main();
-
-    io_cleanup();			/* clean up I/O resources */
+    io_cleanup();
 
     return 0;
 }
@@ -94,6 +90,7 @@ gboolean update_meters(gpointer data)
     limiter_meters_update();
     compressor_meters_update();
     spectrum_update();
+    status_update();
 
     return TRUE;
 }

@@ -5246,7 +5246,7 @@
 					      </child>
 
 					      <child>
-						<widget class="GtkLabel" id="label296">
+						<widget class="GtkLabel" id="JACK_CPU_load">
 						  <property name="visible">True</property>
 						  <property name="label" translatable="yes"></property>
 						  <property name="use_underline">False</property>
@@ -5270,7 +5270,7 @@
 					      </child>
 
 					      <child>
-						<widget class="GtkLabel" id="label297">
+						<widget class="GtkLabel" id="JACK_period">
 						  <property name="visible">True</property>
 						  <property name="label" translatable="yes"></property>
 						  <property name="use_underline">False</property>
@@ -5294,7 +5294,7 @@
 					      </child>
 
 					      <child>
-						<widget class="GtkLabel" id="label298">
+						<widget class="GtkLabel" id="JACK_sample_rate">
 						  <property name="visible">True</property>
 						  <property name="label" translatable="yes"></property>
 						  <property name="use_underline">False</property>
@@ -5318,7 +5318,7 @@
 					      </child>
 
 					      <child>
-						<widget class="GtkLabel" id="label299">
+						<widget class="GtkLabel" id="JACK_realtime">
 						  <property name="visible">True</property>
 						  <property name="label" translatable="yes"></property>
 						  <property name="use_underline">False</property>
@@ -5342,7 +5342,7 @@
 					      </child>
 
 					      <child>
-						<widget class="GtkLabel" id="syslabel1">
+						<widget class="GtkLabel" id="JACK_transport_state">
 						  <property name="visible">True</property>
 						  <property name="label" translatable="yes"></property>
 						  <property name="use_underline">False</property>

@@ -32,6 +32,7 @@ jamin_SOURCES = \
 	spectrum.c spectrum.h \
 	spline.c \
 	state.c state.h \
+	status-ui.c status-ui.h \
 	stereo.c stereo.h \
 	support.c support.h \
 	transport.c transport.h
