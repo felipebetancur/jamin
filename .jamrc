@@ -218,6 +218,7 @@ widget_class "*GtkRadioMenu*" style "radio_button"
 widget_class "*Ruler" style "ruler"
 widget_class "*GtkText" style "text"
 widget_class "*Gtk*Label" style "text"
+widget_class "*GtkMenuBar*" style "text"
 widget_class "*Gtk*Menu" style "text"
 widget_class "*GtkOptionMenu*" style "text"
 

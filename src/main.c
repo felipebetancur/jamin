@@ -24,6 +24,7 @@
 #include "limiter-ui.h"
 #include "compressor-ui.h"
 #include "intrim.h"
+#include "io-menu.h"
 #include "process.h"
 #include "spectrum.h"
 #include "stereo.h"
@@ -81,6 +82,7 @@ int main(int argc, char *argv[])
     bind_hdeq();
     gtk_widget_show(main_window);
     bind_intrim();
+    bind_iomenu();
     bind_limiter();
     bind_compressors();
     bind_spectrum();
