@@ -54,7 +54,7 @@ jamin_SOURCES = \
 
 jamin_scene_CFLAGS 	= @OSC_CFLAGS@
 jamin_scene_LDADD 	= @OSC_LIBS@
-jamin_scene_SOURCES 	= jamin-scene.c
+jamin_scene_SOURCES 	= jamin-scene.c constants.h
 
 state.h: mk-stateh.pl state-vars.txt
 	@echo "WARNING: Rebuilding state.h"

@@ -11,12 +11,13 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: jamin-scene.c,v 1.1 2004/05/04 17:30:09 theno23 Exp $
+ *  $Id: jamin-scene.c,v 1.2 2004/05/08 01:51:42 joq Exp $
  */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <lo.h>
+#include "constants.h"
 
 int main(int argc, char *argv[])
 {
@@ -30,8 +31,8 @@ int main(int argc, char *argv[])
     }
 
     scene = atoi(argv[1]);
-    if (scene < 1 || scene > 20) {
-	fprintf(stderr, "Scene must be between 1 and 20\n");
+    if (scene < 1 || scene > NUM_SCENES) {
+	fprintf(stderr, "Scene must be between 1 and %d\n", NUM_SCENES);
 
 	return 1;
     }
