@@ -1,6 +1,13 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = src pixmaps examples controller po
+if USE_OSC
+CONTROLLER = controller
+else
+CONTROLLER =
+endif
+
+SUBDIRS = src pixmaps examples $(CONTROLLER) po
+DIST_SUBDIRS = src pixmaps examples controller po
 
 EXTRA_DIST = \
 	autogen.sh \

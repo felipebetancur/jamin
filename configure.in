@@ -50,11 +50,23 @@ configure: error: era machines])])
 
 PKG_CHECK_MODULES(XML, libxml-2.0 >= 2.0)
 
-PKG_CHECK_MODULES(OSC, liblo >= 0.5,
+# build OSC interface if enabled and liblo available
+AC_ARG_ENABLE(osc,
+	AC_HELP_STRING([--disable-osc],
+		       [do not include Open Sound Control interface]),
+	[], enable_osc=yes)
+if test "$enable_osc" = yes; then
+	USE_OSC="yes"
+fi
+if test "x$USE_OSC" = "xyes"; then
+    PKG_CHECK_MODULES(OSC, liblo >= 0.5,
 	[AC_DEFINE(HAVE_OSC, [yes], [Whether liblo OSC library is available])
 	 [OSC_PROGS="jamin-scene"]],
-	[AC_MSG_WARN([liblo not available, OSC support will not be built])]
-)
+	[AC_MSG_WARN([liblo not available, OSC support will not be built])
+	 [USE_OSC="no"]])
+fi
+AC_SUBST(OSC_PROGS)
+AM_CONDITIONAL(USE_OSC, test "x$USE_OSC" = "xyes")
 
 # On Mac OS X the float functions for <math.h> are in -lmx
 AC_CHECK_LIB([m], [sqrt],, [AC_MSG_ERROR(Can't find libm)])
@@ -74,8 +86,6 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE")
 dnl Add the languages which your application supports here.
 ALL_LINGUAS=""
 AM_GLIB_GNU_GETTEXT
-
-AC_SUBST(OSC_PROGS)
 
 JAMIN_LIBS="$FFTW_LIBS $XML_LIBS $JACK_LIBS $OSC_LIBS"
 AC_SUBST(JAMIN_LIBS)

@@ -23,6 +23,7 @@ jamin_SOURCES = \
 	callbacks.c callbacks.h callbacks_help.h \
 	compressor.h \
 	compressor-ui.c compressor-ui.h \
+	constants.h \
 	db.h \
 	debug.h \
 	geq.c geq.h \
