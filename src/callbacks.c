@@ -881,9 +881,7 @@ void
 on_scene1_name_changed                 (GtkEditable     *editable,
                                         gpointer         user_data)
 {
-    fprintf(stderr,"%s %d\n",__FILE__,__LINE__);
     set_scene_name (0, NULL);
-    fprintf(stderr,"%s %d\n",__FILE__,__LINE__);
 }
 
 
@@ -1169,7 +1167,6 @@ on_scene1_name_focus_in_event          (GtkWidget       *widget,
                                         GdkEventFocus   *event,
                                         gpointer         user_data)
 {
-    fprintf(stderr,"%s %d\n",__FILE__,__LINE__);
     text_focus = TRUE;
     return FALSE;
 }
@@ -1180,7 +1177,6 @@ on_scene1_name_focus_out_event         (GtkWidget       *widget,
                                         GdkEventFocus   *event,
                                         gpointer         user_data)
 {
-    fprintf(stderr,"%s %d\n",__FILE__,__LINE__);
     text_focus = FALSE;
     return FALSE;
 }
