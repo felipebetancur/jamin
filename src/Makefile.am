@@ -39,3 +39,6 @@ jamin_LDADD = @PACKAGE_LIBS@
 state.h: mk-stateh.pl state-vars.txt
 	@echo "WARNING: Rebuilding state.h"
 	./mk-stateh.pl
+
+quickly:
+	(cd .. && make quickly)
