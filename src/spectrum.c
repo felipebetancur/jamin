@@ -8,6 +8,7 @@
 #include "process.h"
 #include "gtkmeter.h"
 #include "gtkmeterscale.h"
+#include "db.h"
 
 static char *band_lbls[BANDS] = {
     "25.0", "31.5", "40.0", "50.0", "63.0", "80.0", "100", "125", "160", "200",
@@ -137,7 +138,7 @@ void spectrum_update()
           levels[i] = (single_levels[band_bin[i]] +
                        single_levels[band_bin[i]+1]) * 0.5;
         }
-        gtk_adjustment_set_value(adjustment[i], 20.0f * log10f(levels[i]));
+        gtk_adjustment_set_value(adjustment[i], lin2db(levels[i]));
       }
     }
     else if (page == 1) {

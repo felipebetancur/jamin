@@ -306,9 +306,6 @@ int process_signal(jack_nframes_t nframes,
 	for (port = 0; port < nchannels; port++) {
 	    if (out[port][pos] > lim_peak[LIM_PEAK_IN]) {
 		lim_peak[LIM_PEAK_IN] = out[port][pos];
-	    } else {
-		lim_peak[LIM_PEAK_IN] = lim_peak[LIM_PEAK_IN] * 0.9999f +
-		    out[port][pos] * 0.0001f;
 	    }
 	}
     }
@@ -333,9 +330,6 @@ int process_signal(jack_nframes_t nframes,
 
 	    if (oa > lim_peak[LIM_PEAK_OUT]) {
 		lim_peak[LIM_PEAK_OUT] = oa;
-	    } else {
-		lim_peak[LIM_PEAK_OUT] = lim_peak[LIM_PEAK_OUT] * 0.9999f +
-		    oa * 0.0001f;
 	    }
 	    if (oa > out_peak[port]) {
 		out_peak[port] = oa;

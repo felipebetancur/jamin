@@ -19,6 +19,7 @@
 #include "gtkmeter.h"
 #include "gtkmeterscale.h"
 #include "state.h"
+#include "db.h"
 
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
 
@@ -417,8 +418,6 @@ draw_EQ_spectrum_curve (float single_levels[])
 {
     static int     x[EQ_INTERP], y[EQ_INTERP];
     int            i;
-    float          fix_y;
-    const float    fix = 2.0f / ((float) BINS * (float) OVER_SAMP);
 
 
     /*  Don't update if we're drawing an EQ curve.  */
@@ -454,9 +453,7 @@ draw_EQ_spectrum_curve (float single_levels[])
             x[i] = NINT (((EQ_xinterp[i] - l_low2mid_adj->lower) / 
                           EQ_curve_range_x) * EQ_curve_width);
 
-            fix_y = single_levels[i] / fix;
-            y[i] = NINT ((((log10f (fix_y) * 20.0) - (-60.0)) / (63.0)) * 
-                         EQ_curve_height);
+            y[i] = NINT (-(lin2db(single_levels[i]) / 90.0f) * EQ_curve_height);
 
             if (i) gdk_draw_line (EQ_drawable, EQ_gc, x[i - 1], y[i - 1], 
                                   x[i], y[i]);
