@@ -372,8 +372,8 @@ create_window1 (void)
   GtkWidget *vbox121;
   GtkWidget *bypass_button;
   GtkWidget *vbuttonbox1;
-  GtkWidget *button8;
-  GtkWidget *button9;
+  GtkWidget *load_button;
+  GtkWidget *save_button;
   GtkWidget *button10;
   GtkWidget *quit;
   GtkWidget *outmeter_l;
@@ -2539,17 +2539,17 @@ create_window1 (void)
   gtk_widget_set_size_request (vbuttonbox1, 90, 108);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (vbuttonbox1), GTK_BUTTONBOX_SPREAD);
 
-  button8 = gtk_button_new_with_mnemonic (_("Load"));
-  gtk_widget_set_name (button8, "button8");
-  gtk_widget_show (button8);
-  gtk_container_add (GTK_CONTAINER (vbuttonbox1), button8);
-  GTK_WIDGET_SET_FLAGS (button8, GTK_CAN_DEFAULT);
+  load_button = gtk_button_new_with_mnemonic (_("Load"));
+  gtk_widget_set_name (load_button, "load_button");
+  gtk_widget_show (load_button);
+  gtk_container_add (GTK_CONTAINER (vbuttonbox1), load_button);
+  GTK_WIDGET_SET_FLAGS (load_button, GTK_CAN_DEFAULT);
 
-  button9 = gtk_button_new_with_mnemonic (_("Save"));
-  gtk_widget_set_name (button9, "button9");
-  gtk_widget_show (button9);
-  gtk_container_add (GTK_CONTAINER (vbuttonbox1), button9);
-  GTK_WIDGET_SET_FLAGS (button9, GTK_CAN_DEFAULT);
+  save_button = gtk_button_new_with_mnemonic (_("Save"));
+  gtk_widget_set_name (save_button, "save_button");
+  gtk_widget_show (save_button);
+  gtk_container_add (GTK_CONTAINER (vbuttonbox1), save_button);
+  GTK_WIDGET_SET_FLAGS (save_button, GTK_CAN_DEFAULT);
 
   button10 = gtk_button_new_with_mnemonic (_("Undo"));
   gtk_widget_set_name (button10, "button10");
@@ -2823,6 +2823,12 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) bypass_button, "toggled",
                     G_CALLBACK (on_bypass_button_toggled),
+                    NULL);
+  g_signal_connect ((gpointer) load_button, "clicked",
+                    G_CALLBACK (on_load_button_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) save_button, "clicked",
+                    G_CALLBACK (on_save_button_clicked),
                     NULL);
   g_signal_connect ((gpointer) button10, "clicked",
                     G_CALLBACK (on_button10_clicked),
@@ -3172,8 +3178,8 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, vbox121, "vbox121");
   GLADE_HOOKUP_OBJECT (window1, bypass_button, "bypass_button");
   GLADE_HOOKUP_OBJECT (window1, vbuttonbox1, "vbuttonbox1");
-  GLADE_HOOKUP_OBJECT (window1, button8, "button8");
-  GLADE_HOOKUP_OBJECT (window1, button9, "button9");
+  GLADE_HOOKUP_OBJECT (window1, load_button, "load_button");
+  GLADE_HOOKUP_OBJECT (window1, save_button, "save_button");
   GLADE_HOOKUP_OBJECT (window1, button10, "button10");
   GLADE_HOOKUP_OBJECT (window1, quit, "quit");
   GLADE_HOOKUP_OBJECT (window1, outmeter_l, "outmeter_l");

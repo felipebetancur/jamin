@@ -13,6 +13,8 @@ void s_clear_history();
 void s_set_callback(int id, s_callback_func callback);
 void s_set_adjustment(int id, GtkAdjustment * adjustment);
 void s_undo();
+void s_save_session (GtkWidget *w, gpointer user_data);
+void s_load_session (GtkWidget *w, gpointer user_data);
 
 #define S_NONE -1
 #define S_IN_GAIN 0
@@ -29,8 +31,16 @@ void s_undo();
 #define S_LIM_INPUT 1049
 #define S_LIM_TIME 1050
 #define S_LIM_LIMIT 1051
+#define S_NOTCH_FREQ(n) (1052 + n)
+#define S_NOTCH_GAIN(n) (1057 + n)
+#define S_NOTCH_Q(n) (1062 + n)       /*  Note: Q is stored in number of bands 
+                                          (1024 log frequency bands) left
+                                          of notch-gain.  Q(0) and Q(4) are 
+                                          always 0 since shelf Q is defined
+                                          by frequency but this makes 
+                                          computations easier.  */
 
-#define S_SIZE 1052
+#define S_SIZE 1067
 
 static const char *const s_description[S_SIZE] = {
     "Input gain", "Input pan", "EQ Gain 1", "EQ Gain 2", "EQ Gain 3",
@@ -300,7 +310,11 @@ static const char *const s_description[S_SIZE] = {
 	"Compressor makeup gain 1", "Compressor makeup gain 2",
 	"Compressor makeup gain 3", "Stereo width 1", "Stereo width 2",
 	"Stereo width 3", "Limiter input gain", "Limiter time",
-	"Limiter level"
+        "Limiter level", "Notch frequency 1", "Notch frequency 2",
+        "Notch frequency 3", "Notch frequency 4", "Notch frequency 5",
+        "Notch gain 1", "Notch gain 2", "Notch gain 3", "Notch gain 4", 
+        "Notch gain 5", "Notch Q 1", "Notch Q 2", "Notch Q 3", "Notch Q 4",
+        "Notch Q 5"
 };
 
 static const char *const s_symbol[S_SIZE] = {
@@ -561,7 +575,10 @@ static const char *const s_symbol[S_SIZE] = {
 	"comp-ratio0", "comp-ratio1", "comp-ratio2", "comp-knee0",
 	"comp-knee1", "comp-knee2", "comp-makeup0", "comp-makeup1",
 	"comp-makeup2", "stereo-width0", "stereo-width1", "stereo-width2",
-	"lim-input", "lim-time", "lim-limit"
+	"lim-input", "lim-time", "lim-limit", "notch-freq-0", "notch-freq-1",
+        "notch-freq-2", "notch-freq-3", "notch-freq-4", "notch-gain-0", 
+        "notch-gain-1", "notch-gain-2", "notch-gain-3", "notch-gain-4",
+        "notch-q-0", "notch-q-1", "notch-q-2", "notch-q-3", "notch-q-4"
 };
 
 #endif

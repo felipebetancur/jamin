@@ -158,4 +158,26 @@ static void s_set_events(int id, float value)
     }
 }
 
+void s_save_session (GtkWidget *w, gpointer user_data)
+{
+    const gchar      *filename;
+    GtkFileSelection *file_selector = (GtkFileSelection *) user_data;
+
+
+    filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_selector));
+
+    fprintf (stderr,"%s %d %s\n",__FILE__,__LINE__,filename);
+}
+
+void s_load_session (GtkWidget *w, gpointer user_data)
+{
+    const gchar      *filename;
+    GtkFileSelection *file_selector = (GtkFileSelection *) user_data;
+
+
+    filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_selector));
+
+    fprintf (stderr,"%s %d %s\n",__FILE__,__LINE__,filename);
+}
+
 /* vi:set ts=8 sts=4 sw=4: */

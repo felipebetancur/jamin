@@ -435,3 +435,11 @@ on_lim_input_hscale_realize            (GtkWidget       *widget,
 void
 on_notebook1_realize                   (GtkWidget       *widget,
                                         gpointer         user_data);
+
+void
+on_save_button_clicked                 (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_load_button_clicked                 (GtkButton       *button,
+                                        gpointer         user_data);

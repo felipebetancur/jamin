@@ -2539,3 +2539,67 @@ on_notebook1_realize                   (GtkWidget       *widget,
 {
     notebook1 = (GtkNotebook *) widget;
 }
+
+void
+on_save_button_clicked                 (GtkButton       *button,
+                                        gpointer         user_data)
+{
+    GtkFileSelection    *file_selector;
+    gchar               string[512];
+
+
+    file_selector = 
+       (GtkFileSelection *) gtk_file_selection_new ("Select a session file");
+
+    if (getenv ("HOME") != NULL)
+      {
+        sprintf (string, "%s/.jam/", getenv ("HOME"));
+        gtk_file_selection_set_filename (file_selector, string);
+      }
+
+    gtk_file_selection_complete (file_selector, "*.jam");
+
+    g_signal_connect (GTK_OBJECT (file_selector->ok_button),
+        "clicked", G_CALLBACK (s_save_session), file_selector);
+
+    g_signal_connect_swapped (GTK_OBJECT (file_selector->ok_button),
+        "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
+
+    g_signal_connect_swapped (GTK_OBJECT (file_selector->cancel_button),
+        "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
+
+    gtk_widget_show ((GtkWidget *) file_selector);
+}
+
+
+void
+on_load_button_clicked                 (GtkButton       *button,
+                                        gpointer         user_data)
+{
+    GtkFileSelection    *file_selector;
+    gchar               string[512];
+
+
+    file_selector = 
+       (GtkFileSelection *) gtk_file_selection_new ("Select a session file");
+
+    if (getenv ("HOME") != NULL)
+      {
+        sprintf (string, "%s/.jam/", getenv ("HOME"));
+        gtk_file_selection_set_filename (file_selector, string);
+      }
+
+    gtk_file_selection_complete (file_selector, "*.jam");
+
+    g_signal_connect (GTK_OBJECT (file_selector->ok_button),
+        "clicked", G_CALLBACK (s_load_session), file_selector);
+
+    g_signal_connect_swapped (GTK_OBJECT (file_selector->ok_button),
+        "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
+
+    g_signal_connect_swapped (GTK_OBJECT (file_selector->cancel_button),
+        "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
+
+    gtk_widget_show ((GtkWidget *) file_selector);
+}
+
