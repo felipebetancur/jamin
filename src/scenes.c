@@ -27,14 +27,15 @@
 #include "support.h"
 #include "interface.h"
 
-
 static GtkMenu           *scene_menu;
-static GtkImage          *l_scene[NUM_SCENES];
+static GtkImage          *l_scene[NUM_SCENES], *buttons[4];
 static GtkEventBox       *l_scene_eventbox[NUM_SCENES];
 static char              l_scene_name[NUM_SCENES][100];
 static int               current_scene = -1, menu_scene, prev_scene = -999;
 static gboolean          scene_loaded[NUM_SCENES];
 static s_state           scene_state[NUM_SCENES];
+static GdkPixbuf         *LED_green_on = NULL, *LED_green_off = NULL, 
+                         *LED_yellow = NULL, *LED_red = NULL;
 
 
 void set_EQ_curve_values ();
@@ -65,14 +66,28 @@ void bind_scenes ()
           GTK_EVENT_BOX (lookup_widget (main_window, name));
         scene_loaded[i] = FALSE;
         scene_state[i].description = NULL; 
-        gtk_widget_set_sensitive ((GtkWidget *) l_scene[i], FALSE);
 
         gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[i]), 
                               g_strdup_printf ("Scene %d, right click for menu", 
                                                i + 1), NULL);
       }
 
-      free(name);
+    free(name);
+
+
+    /*  We're cheating here.  I've set the first four images in the scene
+        "buttons" to be green_on, green_off, yellow, and red so I can grab
+        easily.  Don't change them in glade!  JCD  */
+
+
+    for (i = 0 ; i < 4 ; i++)
+      buttons[i] = GTK_IMAGE (gtk_image_new_from_pixbuf (gtk_image_get_pixbuf 
+                                                         (l_scene[i])));
+
+    LED_green_on = gtk_image_get_pixbuf (buttons[0]);
+    LED_green_off = gtk_image_get_pixbuf (buttons[1]);
+    LED_yellow = gtk_image_get_pixbuf (buttons[2]);
+    LED_red = gtk_image_get_pixbuf (buttons[3]);
 }
 
 
@@ -106,9 +121,7 @@ void select_scene (int number, int button)
                   {
                     if (warning)
                       {
-                        gtk_image_set_from_stock (l_scene[i], 
-                                                  GTK_STOCK_DIALOG_WARNING, 
-                                                  GTK_ICON_SIZE_BUTTON);
+                        gtk_image_set_from_pixbuf (l_scene[i], LED_yellow);
 
                         current_scene = number;
                       }
@@ -122,14 +135,19 @@ void select_scene (int number, int button)
 
                         s_history_add_state (scene_state[i]);
 
-                        gtk_image_set_from_stock (l_scene[i], GTK_STOCK_YES, 
-                                                  GTK_ICON_SIZE_BUTTON);
+                        gtk_image_set_from_pixbuf (l_scene[i], LED_green_on);
                       }
                   }
                 else
                   {
-                    gtk_image_set_from_stock (l_scene[i], GTK_STOCK_NO, 
-                                              GTK_ICON_SIZE_BUTTON);
+                    if (scene_loaded[i])
+                      {
+                        gtk_image_set_from_pixbuf (l_scene[i], LED_green_off);
+                      }
+                    else
+                      {
+                        gtk_image_set_from_pixbuf (l_scene[i], LED_red);
+                      }
                   }
               }
           }
@@ -209,29 +227,31 @@ void set_scene (int scene_num, gboolean morph)
       }
 
 
-    gtk_widget_set_sensitive ((GtkWidget *) l_scene[menu_scene], TRUE);
-
-
     /*  Set the scene loaded flag.  */
 
     scene_loaded[menu_scene] = TRUE;
 
 
-    /*  Change the selected icon to green/yes.  */
+    /*  Change the selected icon to green.  */
 
     for (i = 0 ; i < NUM_SCENES ; i++)
       {
         if (i == menu_scene)
           {
-            gtk_image_set_from_stock (l_scene[i], GTK_STOCK_YES, 
-                                      GTK_ICON_SIZE_BUTTON);
+            gtk_image_set_from_pixbuf (l_scene[i], LED_green_on);
 
             current_scene = i;
           }
         else
           {
-            gtk_image_set_from_stock (l_scene[i], GTK_STOCK_NO, 
-                                      GTK_ICON_SIZE_BUTTON);
+            if (scene_loaded[i])
+              {
+                gtk_image_set_from_pixbuf (l_scene[i], LED_green_off);
+              }
+            else
+              {
+                gtk_image_set_from_pixbuf (l_scene[i], LED_red);
+              }
           }
       }
 
@@ -312,14 +332,11 @@ void clear_scene (int scene_num)
     if (i >= 0) menu_scene = i;
 
 
-    gtk_widget_set_sensitive ((GtkWidget *) l_scene[menu_scene], FALSE);
-
     gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[menu_scene]), 
                           g_strdup_printf ("Scene %d, right click for menu", 
                                            menu_scene + 1), NULL);
 
-    gtk_image_set_from_stock (l_scene[menu_scene], GTK_STOCK_NO, 
-                              GTK_ICON_SIZE_BUTTON);
+    gtk_image_set_from_pixbuf (l_scene[i], LED_red);
 
     scene_loaded[menu_scene] = FALSE;
 
@@ -340,12 +357,9 @@ void unset_scene_buttons ()
     current_scene = -1;
     for (i = 0 ; i < NUM_SCENES ; i++)
       {
-        gtk_image_set_from_stock (l_scene[i], GTK_STOCK_NO, 
-                                  GTK_ICON_SIZE_BUTTON);
+        gtk_image_set_from_pixbuf (l_scene[i], LED_red);
 
         scene_loaded[i] = FALSE;
-
-        gtk_widget_set_sensitive ((GtkWidget *) l_scene[i], FALSE);
 
         strcpy (l_scene_name[i], g_strdup_printf("Scene %d", i + 1));
       }
@@ -372,8 +386,7 @@ void set_scene_warning_button ()
     {
       prev_scene = i;
 
-      gtk_image_set_from_stock (l_scene[i], GTK_STOCK_DIALOG_WARNING, 
-                                GTK_ICON_SIZE_BUTTON);
+      gtk_image_set_from_pixbuf (l_scene[i], LED_yellow);
       current_scene = changed_scene_no(i);
     }
 }
@@ -392,15 +405,20 @@ void set_scene_button (int scene)
       {
         if (i == scene)
           {
-            gtk_image_set_from_stock (l_scene[i], GTK_STOCK_YES, 
-                                      GTK_ICON_SIZE_BUTTON);
+            gtk_image_set_from_pixbuf (l_scene[i], LED_green_on);
 
             current_scene = i;
           }
         else
           {
-            gtk_image_set_from_stock (l_scene[i], GTK_STOCK_NO, 
-                                      GTK_ICON_SIZE_BUTTON);
+            if (scene_loaded[i])
+              {
+                gtk_image_set_from_pixbuf (l_scene[i], LED_green_off);
+              }
+            else
+              {
+                gtk_image_set_from_pixbuf (l_scene[i], LED_red);
+              }
           }
       }
 }
@@ -433,6 +451,5 @@ void set_num_scene_warning_button (int scene)
   i = scene % 100;
 
 
-  gtk_image_set_from_stock (l_scene[i], GTK_STOCK_DIALOG_WARNING, 
-                            GTK_ICON_SIZE_BUTTON);
+  gtk_image_set_from_pixbuf (l_scene[i], LED_yellow);
 }

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.138 2004/04/01 22:22:40 jdepner Exp $
+ *  $Id: callbacks.c,v 1.139 2004/04/04 23:19:44 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1341,6 +1341,7 @@ on_new1_activate                       (GtkMenuItem     *menuitem,
 
   unset_scene_buttons ();
   set_scene_button (0);
+
 
   reset_hdeq ();
 }

@@ -546,7 +546,7 @@ create_window1 (void)
   gtk_widget_set_name (window1, "window1");
   GTK_WIDGET_SET_FLAGS (window1, GTK_CAN_FOCUS);
   gtk_window_set_title (GTK_WINDOW (window1), _("JAMin"));
-  gtk_window_set_default_size (GTK_WINDOW (window1), 949, -1);
+  gtk_window_set_default_size (GTK_WINDOW (window1), 949, 680);
 
   outer_vbox = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (outer_vbox, "outer_vbox");
@@ -875,9 +875,9 @@ create_window1 (void)
   gtk_widget_set_name (scene1_eventbox, "scene1_eventbox");
   gtk_widget_show (scene1_eventbox);
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene1_eventbox, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, scene1_eventbox, _("Right click for menu"), NULL);
+  gtk_tooltips_set_tip (tooltips, scene1_eventbox, _("Don't change this pixmap!!!"), NULL);
 
-  scene1 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene1 = create_pixmap (window1, "LED_green_on.xpm");
   gtk_widget_set_name (scene1, "scene1");
   gtk_widget_show (scene1);
   gtk_container_add (GTK_CONTAINER (scene1_eventbox), scene1);
@@ -886,9 +886,9 @@ create_window1 (void)
   gtk_widget_set_name (scene2_eventbox, "scene2_eventbox");
   gtk_widget_show (scene2_eventbox);
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene2_eventbox, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, scene2_eventbox, _("Right click for menu"), NULL);
+  gtk_tooltips_set_tip (tooltips, scene2_eventbox, _("Don't change this pixmap!!!"), NULL);
 
-  scene2 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene2 = create_pixmap (window1, "LED_green_off.xpm");
   gtk_widget_set_name (scene2, "scene2");
   gtk_widget_show (scene2);
   gtk_container_add (GTK_CONTAINER (scene2_eventbox), scene2);
@@ -897,9 +897,9 @@ create_window1 (void)
   gtk_widget_set_name (scene3_eventbox, "scene3_eventbox");
   gtk_widget_show (scene3_eventbox);
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene3_eventbox, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, scene3_eventbox, _("Right click for menu"), NULL);
+  gtk_tooltips_set_tip (tooltips, scene3_eventbox, _("Don't change this pixmap!!!"), NULL);
 
-  scene3 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene3 = create_pixmap (window1, "LED_yellow.xpm");
   gtk_widget_set_name (scene3, "scene3");
   gtk_widget_show (scene3);
   gtk_container_add (GTK_CONTAINER (scene3_eventbox), scene3);
@@ -908,9 +908,9 @@ create_window1 (void)
   gtk_widget_set_name (scene4_eventbox, "scene4_eventbox");
   gtk_widget_show (scene4_eventbox);
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene4_eventbox, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, scene4_eventbox, _("Right click for menu"), NULL);
+  gtk_tooltips_set_tip (tooltips, scene4_eventbox, _("Don't change this pixmap!!!"), NULL);
 
-  scene4 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene4 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene4, "scene4");
   gtk_widget_show (scene4);
   gtk_container_add (GTK_CONTAINER (scene4_eventbox), scene4);
@@ -921,7 +921,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene5_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene5_eventbox, _("Right click for menu"), NULL);
 
-  scene5 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene5 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene5, "scene5");
   gtk_widget_show (scene5);
   gtk_container_add (GTK_CONTAINER (scene5_eventbox), scene5);
@@ -932,7 +932,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene6_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene6_eventbox, _("Right click for menu"), NULL);
 
-  scene6 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene6 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene6, "scene6");
   gtk_widget_show (scene6);
   gtk_container_add (GTK_CONTAINER (scene6_eventbox), scene6);
@@ -943,7 +943,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene7_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene7_eventbox, _("Right click for menu"), NULL);
 
-  scene7 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene7 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene7, "scene7");
   gtk_widget_show (scene7);
   gtk_container_add (GTK_CONTAINER (scene7_eventbox), scene7);
@@ -954,7 +954,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene8_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene8_eventbox, _("Right click for menu"), NULL);
 
-  scene8 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene8 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene8, "scene8");
   gtk_widget_show (scene8);
   gtk_container_add (GTK_CONTAINER (scene8_eventbox), scene8);
@@ -965,7 +965,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene9_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene9_eventbox, _("Right click for menu"), NULL);
 
-  scene9 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene9 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene9, "scene9");
   gtk_widget_show (scene9);
   gtk_container_add (GTK_CONTAINER (scene9_eventbox), scene9);
@@ -976,7 +976,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene10_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene10_eventbox, _("Right click for menu"), NULL);
 
-  scene10 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene10 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene10, "scene10");
   gtk_widget_show (scene10);
   gtk_container_add (GTK_CONTAINER (scene10_eventbox), scene10);
@@ -987,7 +987,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene11_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene11_eventbox, _("Right click for menu"), NULL);
 
-  scene11 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene11 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene11, "scene11");
   gtk_widget_show (scene11);
   gtk_container_add (GTK_CONTAINER (scene11_eventbox), scene11);
@@ -998,7 +998,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene12_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene12_eventbox, _("Right click for menu"), NULL);
 
-  scene12 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene12 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene12, "scene12");
   gtk_widget_show (scene12);
   gtk_container_add (GTK_CONTAINER (scene12_eventbox), scene12);
@@ -1009,7 +1009,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene13_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene13_eventbox, _("Right click for menu"), NULL);
 
-  scene13 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene13 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene13, "scene13");
   gtk_widget_show (scene13);
   gtk_container_add (GTK_CONTAINER (scene13_eventbox), scene13);
@@ -1020,7 +1020,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene14_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene14_eventbox, _("Right click for menu"), NULL);
 
-  scene14 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene14 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene14, "scene14");
   gtk_widget_show (scene14);
   gtk_container_add (GTK_CONTAINER (scene14_eventbox), scene14);
@@ -1031,7 +1031,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene15_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene15_eventbox, _("Right click for menu"), NULL);
 
-  scene15 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene15 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene15, "scene15");
   gtk_widget_show (scene15);
   gtk_container_add (GTK_CONTAINER (scene15_eventbox), scene15);
@@ -1042,7 +1042,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene16_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene16_eventbox, _("Right click for menu"), NULL);
 
-  scene16 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene16 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene16, "scene16");
   gtk_widget_show (scene16);
   gtk_container_add (GTK_CONTAINER (scene16_eventbox), scene16);
@@ -1053,7 +1053,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene17_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene17_eventbox, _("Right click for menu"), NULL);
 
-  scene17 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene17 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene17, "scene17");
   gtk_widget_show (scene17);
   gtk_container_add (GTK_CONTAINER (scene17_eventbox), scene17);
@@ -1064,7 +1064,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene18_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene18_eventbox, _("Right click for menu"), NULL);
 
-  scene18 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene18 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene18, "scene18");
   gtk_widget_show (scene18);
   gtk_container_add (GTK_CONTAINER (scene18_eventbox), scene18);
@@ -1075,7 +1075,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene19_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene19_eventbox, _("Right click for menu"), NULL);
 
-  scene19 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene19 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene19, "scene19");
   gtk_widget_show (scene19);
   gtk_container_add (GTK_CONTAINER (scene19_eventbox), scene19);
@@ -1086,7 +1086,7 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (scenes_hbox), scene20_eventbox, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, scene20_eventbox, _("Right click for menu"), NULL);
 
-  scene20 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_BUTTON);
+  scene20 = create_pixmap (window1, "LED_red.xpm");
   gtk_widget_set_name (scene20, "scene20");
   gtk_widget_show (scene20);
   gtk_container_add (GTK_CONTAINER (scene20_eventbox), scene20);

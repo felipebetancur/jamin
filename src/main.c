@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.43 2004/01/22 01:54:13 jdepner Exp $
+ *  $Id: main.c,v 1.44 2004/04/04 23:19:44 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -105,6 +105,7 @@ int main(int argc, char *argv[])
     bind_spectrum();
     bind_stereo();
     bind_scenes();
+
     s_clear_history();
 
 

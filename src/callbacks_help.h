@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.25 2004/04/01 01:42:07 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.26 2004/04/04 23:19:44 jdepner Exp $
  */
 
 char general_help[] = {
@@ -251,14 +251,13 @@ specific section of music (verse, chorus, bridge) or a complete song you can \
 right click on a scene button, use the menu to 'Set' that scene, then use the \
 'Name' entry of the menu to enter a name for that scene (Back Alley Fugue - \
 verse).  You can recall these settings by left clicking on the scene button.  \
-A green button means that the scene associated with this button is currently \
-loaded.  A bright red button means that scene settings are available for this \
-button but not currently loaded.  A dull red button means that no settings \
-have been saved for this scene button.  A yellow warning button means that \
-this scene was active but the settings have been changed.  If you want to \
-save the settings you must use the 'Set' entry in the right click menu.  You \
-can clear settings from a button using the right click menu and the 'Clear' \
-entry.\n\n\
+A bright green button means that the scene associated with this button is \
+currently the active scene.  A dull green button signifies that the scene is \
+loaded but not active.  A red button means that the scene has no settings \
+loaded.  A bright yellow button means that this scene is active but the \
+settings have been changed.  If you want to save the settings you must use \
+the 'Set' entry in the button's right click menu.  You can clear settings \
+from a button using the right click menu and the 'Clear' entry.\n\n\
     The keyboard accelerators for the scene buttons are the number keys, \
 1 through 0.  Pressing the 1 key will cause scene 1 to become active.  The \
 ALT modifier can be used to assign settings to a scene button (instead of \
