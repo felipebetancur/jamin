@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.46 2004/04/05 23:37:36 jdepner Exp $
+ *  $Id: state.c,v 1.47 2004/04/06 04:10:17 joq Exp $
  */
 
 #include <stdio.h>
@@ -773,7 +773,7 @@ int s_have_filename()
 
 char *s_get_filename()
 {
-    return (filename);
+    return ((char *) filename);
 }
 
 void s_update_title()
