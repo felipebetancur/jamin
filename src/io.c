@@ -215,7 +215,7 @@ void io_errlog(int err, char *fmt, ...)
     va_end(ap);
 
     IF_DEBUG(DBG_TERSE,
-	     io_trace("error %d: %s\n", err, buffer));
+	     io_trace("error %d: %s", err, buffer));
     fprintf(stderr, "%s internal error %d: %s\n", PACKAGE, err, buffer);
     if (all_errors_fatal) {
 	fprintf(stderr, " Terminating due to -F option.\n");
@@ -497,6 +497,9 @@ int io_queue(jack_nframes_t nframes, int nchannels,
 	    /* fill rest of JACK buffer with zeroes */
 	    if (count < nbytes) {
 		void *addr = ((void *) out[chan]) + count;
+		IF_DEBUG(DBG_TERSE,
+			 io_trace(" zero %ld bytes of output at 0x%lx.",
+				  nbytes-count, addr));
 		memset(addr, 0, nbytes-count);
 	    }
 	}
@@ -583,7 +586,7 @@ void io_cleanup()
 {
     int chan;
 
-    IF_DEBUG(DBG_TERSE, io_trace("%s shutting down I/O", PACKAGE));
+    IF_DEBUG(DBG_TERSE, io_trace("shutting down I/O and DSP"));
 
     switch (atomic_read(&dsp_state)) {
 
