@@ -68,8 +68,8 @@ create_window1 (void)
   GtkWidget *backward;
   GtkWidget *play_button;
   GtkWidget *play;
-  GtkWidget *stop_button;
-  GtkWidget *stop;
+  GtkWidget *pause_button;
+  GtkWidget *pause;
   GtkWidget *forward_button;
   GtkWidget *forward;
   GtkWidget *vseparator1;
@@ -712,23 +712,23 @@ create_window1 (void)
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
   gtk_tooltips_set_tip (tooltips, play_button, _("play transport"), NULL);
 
-  play = gtk_image_new_from_stock ("gtk-jump-to", GTK_ICON_SIZE_BUTTON);
+  play = create_pixmap (window1, "play1.png");
   gtk_widget_set_name (play, "play");
   gtk_widget_show (play);
   gtk_container_add (GTK_CONTAINER (play_button), play);
 
-  stop_button = gtk_event_box_new ();
-  gtk_widget_set_name (stop_button, "stop_button");
-  gtk_widget_show (stop_button);
-  gtk_table_attach (GTK_TABLE (transport_controls), stop_button, 3, 4, 0, 1,
+  pause_button = gtk_event_box_new ();
+  gtk_widget_set_name (pause_button, "pause_button");
+  gtk_widget_show (pause_button);
+  gtk_table_attach (GTK_TABLE (transport_controls), pause_button, 3, 4, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_tooltips_set_tip (tooltips, stop_button, _("stop transport"), NULL);
+  gtk_tooltips_set_tip (tooltips, pause_button, _("pause transport"), NULL);
 
-  stop = gtk_image_new_from_stock ("gtk-stop", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_set_name (stop, "stop");
-  gtk_widget_show (stop);
-  gtk_container_add (GTK_CONTAINER (stop_button), stop);
+  pause = create_pixmap (window1, "pause1.png");
+  gtk_widget_set_name (pause, "pause");
+  gtk_widget_show (pause);
+  gtk_container_add (GTK_CONTAINER (pause_button), pause);
 
   forward_button = gtk_event_box_new ();
   gtk_widget_set_name (forward_button, "forward_button");
@@ -3266,8 +3266,8 @@ create_window1 (void)
   g_signal_connect ((gpointer) play_button, "button_press_event",
                     G_CALLBACK (play_transport),
                     NULL);
-  g_signal_connect ((gpointer) stop_button, "button_press_event",
-                    G_CALLBACK (stop_transport),
+  g_signal_connect ((gpointer) pause_button, "button_press_event",
+                    G_CALLBACK (pause_transport_toggle),
                     NULL);
   g_signal_connect ((gpointer) forward_button, "button_press_event",
                     G_CALLBACK (forward_transport),
@@ -3700,8 +3700,8 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, backward, "backward");
   GLADE_HOOKUP_OBJECT (window1, play_button, "play_button");
   GLADE_HOOKUP_OBJECT (window1, play, "play");
-  GLADE_HOOKUP_OBJECT (window1, stop_button, "stop_button");
-  GLADE_HOOKUP_OBJECT (window1, stop, "stop");
+  GLADE_HOOKUP_OBJECT (window1, pause_button, "pause_button");
+  GLADE_HOOKUP_OBJECT (window1, pause, "pause");
   GLADE_HOOKUP_OBJECT (window1, forward_button, "forward_button");
   GLADE_HOOKUP_OBJECT (window1, forward, "forward");
   GLADE_HOOKUP_OBJECT (window1, vseparator1, "vseparator1");

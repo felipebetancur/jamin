@@ -369,8 +369,7 @@
 		      <child>
 			<widget class="GtkImage" id="play">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-jump-to</property>
-			  <property name="icon_size">4</property>
+			  <property name="pixbuf">play1.png</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
@@ -388,16 +387,15 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkEventBox" id="stop_button">
+		    <widget class="GtkEventBox" id="pause_button">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">stop transport</property>
-		      <signal name="button_press_event" handler="stop_transport" last_modification_time="Sun, 21 Dec 2003 03:45:47 GMT"/>
+		      <property name="tooltip" translatable="yes">pause transport</property>
+		      <signal name="button_press_event" handler="pause_transport_toggle" last_modification_time="Sun, 21 Dec 2003 13:59:18 GMT"/>
 
 		      <child>
-			<widget class="GtkImage" id="stop">
+			<widget class="GtkImage" id="pause">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-stop</property>
-			  <property name="icon_size">4</property>
+			  <property name="pixbuf">pause1.png</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>

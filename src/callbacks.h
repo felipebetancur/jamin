@@ -828,3 +828,13 @@ gboolean
 forward_transport                      (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
+
+gboolean
+toggle_transport_pause                 (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+pause_transport_toggle                 (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);

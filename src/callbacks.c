@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.113 2003/12/21 05:03:01 joq Exp $
+ *  $Id: callbacks.c,v 1.114 2003/12/21 14:15:02 joq Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -789,6 +789,16 @@ forward_transport                      (GtkWidget       *widget,
                                         gpointer         user_data)
 {
     transport_skip(5.0);
+    return FALSE;
+}
+
+
+gboolean
+pause_transport_toggle                 (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+    transport_toggle_play();
     return FALSE;
 }
 
