@@ -26,6 +26,8 @@
 #include "main.h"
 #include "support.h"
 #include "interface.h"
+#include "hdeq.h"
+
 
 static GtkMenu           *scene_menu;
 static GtkImage          *l_scene[NUM_SCENES], *buttons[4];
@@ -45,7 +47,7 @@ void set_EQ_curve_values ();
 
 void bind_scenes ()
 {
-    int             i;
+    int             i, j;
     char            *name;
 
     GtkTooltips *tooltips = gtk_tooltips_new();
@@ -61,11 +63,27 @@ void bind_scenes ()
       {
         sprintf (name, "scene%d", i + 1);
         l_scene[i] = GTK_IMAGE (lookup_widget (main_window, name));
+
+        scene_state[i].description = name;
+
         sprintf (name, "scene%d_eventbox", i + 1);
         l_scene_eventbox[i] = 
           GTK_EVENT_BOX (lookup_widget (main_window, name));
+
         scene_loaded[i] = FALSE;
-        scene_state[i].description = NULL; 
+
+        for (j = 0 ; j < S_SIZE ; j++) scene_state[i].value[j] = 0.0;
+
+        scene_state[i].value[S_NOTCH_Q(1)] = 5.0;
+        scene_state[i].value[S_NOTCH_Q(2)] = 5.0;
+        scene_state[i].value[S_NOTCH_Q(3)] = 5.0;
+
+        scene_state[i].value[S_NOTCH_FREQ(0)] = 29.0;
+        scene_state[i].value[S_NOTCH_FREQ(1)] = 131.0;
+        scene_state[i].value[S_NOTCH_FREQ(2)] = 710.0;
+        scene_state[i].value[S_NOTCH_FREQ(3)] = 3719.0;
+        scene_state[i].value[S_NOTCH_FREQ(4)] = 16903.0;
+
 
         gtk_tooltips_set_tip (tooltips, GTK_WIDGET (l_scene_eventbox[i]), 
                               g_strdup_printf ("Scene %d, right click for menu", 
@@ -96,7 +114,7 @@ void bind_scenes ()
 
 void select_scene (int number, int button)
 {
-    int             i;
+    int             i, j;
     gboolean        warning;
 
 
@@ -128,6 +146,35 @@ void select_scene (int number, int button)
                     else
                       {
                         current_scene = i;
+
+
+                        /*  This is a fix for an earlier screwup that may or
+                            may not exist in some saved .jam files.  Basically,
+                            the default notch frequencies were set to 0.0
+                            which is way wrong and causes problems during
+                            crossfading.  This code just checks them and 
+                            resets them to the default if they aren't set
+                            correctly.  */
+
+                        /****************************************************/
+
+                        for (j = 0 ; j < NOTCHES ; j++)
+                          {
+                            if (scene_state[i].value[(S_NOTCH_FREQ(j))] == 0.0)
+                              {
+                                scene_state[i].value[S_NOTCH_FREQ(j)] = 
+                                  hdeq_get_notch_default_freq (j);
+
+                                scene_state[i].value[S_NOTCH_Q(j)] = 5.0;
+                                scene_state[i].value[S_NOTCH_GAIN(j)] = 0.0;
+
+                                if (!j || j == NOTCHES - 1)
+                                    scene_state[i].value[S_NOTCH_Q(j)] = 0.0;
+                              }
+                          }
+
+                        /****************************************************/
+
 
                         s_crossfade_to_state (&scene_state[i], -1.0f);
 
@@ -196,35 +243,31 @@ s_state *get_scene (int number)
 
 /*  Set the scene state from the current settings.  Get the scene name from
     the scene_name text entry widget.  If scene_num is -1 use the last pressed
-    scene button number.  If morph is set to TRUE we are in the midst of a
-    crossfade/morph to an already existing scene so we don't want to save the
-    scene settings.  */
+    scene button number.  */
 
-void set_scene (int scene_num, gboolean morph)
+void set_scene (int scene_num)
 {
     int         i;
 
     GtkTooltips *tooltips = gtk_tooltips_new();
 
 
+
     /*  Only save the scene settings if we're going from the current settings.
         That is, scene_num = -1.  Otherwise we may be in the middle of 
-        crossfading/morphing to a new state.  */
+        crossfading to a new state.  */
 
     if (scene_num >= 0) menu_scene = prev_scene = scene_num;
 
 
-    if (!morph)
-      {
-        for (i = 0 ; i < S_SIZE ; i++) 
-          scene_state[menu_scene].value[i] = s_get_value(i);
+    for (i = 0 ; i < S_SIZE ; i++) 
+      scene_state[menu_scene].value[i] = s_get_value(i);
 
-        scene_state[menu_scene].description = 
-          (char *) realloc (scene_state[menu_scene].description, 
-                            strlen (l_scene_name[menu_scene]) + 1);
+    scene_state[menu_scene].description = 
+      (char *) realloc (scene_state[menu_scene].description, 
+                        strlen (l_scene_name[menu_scene]) + 1);
 
-        strcpy (scene_state[menu_scene].description, l_scene_name[menu_scene]);
-      }
+    strcpy (scene_state[menu_scene].description, l_scene_name[menu_scene]);
 
 
     /*  Set the scene loaded flag.  */
@@ -336,7 +379,7 @@ void clear_scene (int scene_num)
                           g_strdup_printf ("Scene %d, right click for menu", 
                                            menu_scene + 1), NULL);
 
-    gtk_image_set_from_pixbuf (l_scene[i], LED_red);
+    gtk_image_set_from_pixbuf (l_scene[menu_scene], LED_red);
 
     scene_loaded[menu_scene] = FALSE;
 

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.141 2004/04/05 23:37:32 jdepner Exp $
+ *  $Id: callbacks.c,v 1.142 2004/04/09 16:25:53 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1130,7 +1130,7 @@ void
 on_setscene_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-    set_scene (-1, FALSE);
+    set_scene (-1);
 }
 
 
@@ -1806,7 +1806,7 @@ on_window1_key_press_event             (GtkWidget       *widget,
             break;
 
           case GDK_MOD1_MASK:
-            set_scene (scene, FALSE);
+            set_scene (scene);
             break;
 
           case GDK_CONTROL_MASK:

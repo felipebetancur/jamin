@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: scenes.h,v 1.13 2004/04/01 01:42:08 jdepner Exp $
+ *  $Id: scenes.h,v 1.14 2004/04/09 16:25:53 jdepner Exp $
  */
 
 #ifndef SCENES_H
@@ -31,7 +31,7 @@
 void bind_scenes ();
 void select_scene (int number, int button);
 int get_current_scene ();
-void set_scene (int scene_num, gboolean morph);
+void set_scene (int scene_num);
 void clear_scene (int scene_num);
 const char *get_scene_name(int number);
 void set_scene_name (int number, const char *scene_name);

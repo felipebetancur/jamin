@@ -11,15 +11,23 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: hdeq.h,v 1.9 2004/01/19 23:20:38 jdepner Exp $
+ *  $Id: hdeq.h,v 1.10 2004/04/09 16:25:53 jdepner Exp $
  */
 
 #ifndef HDEQ_H
 #define HDEQ_H
 
+
+#include "process.h"
+
+#define EQ_INTERP                     (BINS / 2 - 1)
+#define NOTCHES                       5
+
+
 void clean_quit ();
 GdkColor *get_band_color (int band);
 void bind_hdeq ();
+float hdeq_get_notch_default_freq (int i);
 void hdeq_low2mid_set (GtkRange *range);
 void hdeq_mid2high_set (GtkRange *range);
 void hdeq_low2mid_button (int active);

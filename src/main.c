@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.45 2004/04/08 15:37:37 joq Exp $
+ *  $Id: main.c,v 1.46 2004/04/09 16:25:53 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -190,11 +190,11 @@ static gboolean update_meters(gpointer data)
     s_crossfade_ui();
     status_set_time(main_window);
 
+
     /*  Only update the remaining status once a second.  */
-    if (--count == 0) {
-	    status_update (main_window);
-	    count = 10;
-    }
+
+    if (!(count = (count + 1) % 10)) status_update (main_window);
+
 
     return TRUE;
 }

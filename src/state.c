@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.47 2004/04/06 04:10:17 joq Exp $
+ *  $Id: state.c,v 1.48 2004/04/09 16:25:53 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -82,6 +82,21 @@ void state_init()
 	s_adjustment[i] = NULL;
 	s_callback[i] = NULL;
     }
+
+
+    /*  Defaults for notches.  */
+
+    s_value[S_NOTCH_Q(1)] = 5.0;
+    s_value[S_NOTCH_Q(2)] = 5.0;
+    s_value[S_NOTCH_Q(3)] = 5.0;
+
+    s_value[S_NOTCH_FREQ(0)] = hdeq_get_notch_default_freq (0);
+    s_value[S_NOTCH_FREQ(1)] = hdeq_get_notch_default_freq (1);
+    s_value[S_NOTCH_FREQ(2)] = hdeq_get_notch_default_freq (2);
+    s_value[S_NOTCH_FREQ(3)] = hdeq_get_notch_default_freq (3);
+    s_value[S_NOTCH_FREQ(4)] = hdeq_get_notch_default_freq (4);
+
+
     s_history_add("Initial state");
 }
 
@@ -592,7 +607,7 @@ void s_load_session (const char *fname)
 
     if (saved_scene < 100)
       {
-        set_scene (saved_scene, FALSE);
+        set_scene (saved_scene);
       }
     else
       {
@@ -643,7 +658,7 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 
 	if (active) {
             saved_scene = *scene;
-	    set_scene(*scene, FALSE);
+	    set_scene(*scene);
 	}
 	if (changed) {
             saved_scene = *scene + 100;
@@ -651,7 +666,7 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 	}
 
 	if (sname && *scene > -1) {
-	    set_scene(*scene, FALSE);
+	    set_scene(*scene);
 	    set_scene_name(*scene, sname);
 	}
 
@@ -734,8 +749,6 @@ void s_crossfade(const int nframes)
     unsigned int i;
 
 
-    /*  We don't want warning flags when we're cross fading.  */
-
     for (i=0; i<S_SIZE; i++) {
         if (s_duration[i] != 0) {
 /* debug crap if (i == S_IN_GAIN) printf("%d\t%f\n", s_duration[i], s_value[i]); */
@@ -755,6 +768,7 @@ void s_crossfade(const int nframes)
 void s_crossfade_ui()
 {
     unsigned int i;
+
 
     suppress_feedback++;
     for (i=0; i<S_SIZE; i++) {

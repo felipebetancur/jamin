@@ -37,7 +37,6 @@
 #include "geq.h"
 #include "interface.h"
 #include "support.h"
-#include "process.h"
 #include "intrim.h"
 #include "compressor-ui.h"
 #include "gtkmeter.h"
@@ -49,16 +48,13 @@
 #include "preferences.h"
 
 
-#define EQ_INTERP                     (BINS / 2 - 1)
 #define EQ_SPECTRUM_RANGE             90.0
 #define XOVER_HANDLE_SIZE             10
 #define XOVER_HANDLE_HALF_SIZE        (XOVER_HANDLE_SIZE / 2)
-#define NOTCH_HANDLE_HEIGHT           14
+#define NOTCH_HANDLE_HEIGHT           16
 #define NOTCH_HANDLE_HALF_HEIGHT      (NOTCH_HANDLE_HEIGHT / 2)
-#define NOTCH_HANDLE_WIDTH            6
+#define NOTCH_HANDLE_WIDTH            8
 #define NOTCH_HANDLE_HALF_WIDTH       (NOTCH_HANDLE_WIDTH / 2)
-#define NOTCHES                       5
-#define NOTCH_INT                     ((int) ((EQ_INTERP + 1) / (NOTCHES - 1)))
 #define MOTION_CLOCK_DIFF             ((int) (sysconf (_SC_CLK_TCK) * 0.05))
 
 
@@ -95,24 +91,44 @@ static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
                        comp_start_x[3], comp_start_y[3], comp_end_x[3], 
                        comp_end_y[3], EQ_freq_xinterp[EQ_INTERP + 1],
                        EQ_freq_yinterp[EQ_INTERP + 1], 
-                       EQ_notch_gain[NOTCHES] = {0.0, 0.0, 0.0, 0.0, 0.0},
-                       EQ_x_notched[EQ_INTERP + 1], 
+                       EQ_notch_gain[NOTCHES], EQ_x_notched[EQ_INTERP + 1], 
                        EQ_y_notched[EQ_INTERP + 1], EQ_gain_lower = -12.0, 
-                       EQ_gain_upper = 12.0;
+                       EQ_gain_upper = 12.0, EQ_notch_default[NOTCHES];
 static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0, 
                        EQ_length = 0, comp_realized[3] = {0, 0, 0}, 
                        EQ_cleared = 1, EQ_realized = 0, xover_active = 0,
                        xover_handle_fa, xover_handle_fb, EQ_drag_fa = 0,
                        EQ_drag_fb = 0, EQ_partial = 0, part_x[2], part_y[2],
-                       EQ_notch_drag[NOTCHES] = {0, 0, 0, 0, 0}, 
-                       EQ_notch_Q_drag[NOTCHES] = {0, 0, 0, 0, 0},
-                       EQ_notch_handle[2][3][NOTCHES], 
-                       EQ_notch_width[NOTCHES] = {0, 5, 5, 5, 0},
-                       EQ_notch_index[NOTCHES] = {20, NOTCH_INT, 2 * NOTCH_INT,
-                       3 * NOTCH_INT, EQ_INTERP - 20}, 
-                       EQ_notch_flag[NOTCHES] = {0, 0, 0, 0, 0};
+                       EQ_notch_drag[NOTCHES], EQ_notch_Q_drag[NOTCHES],
+                       EQ_notch_handle[2][3][NOTCHES], EQ_notch_width[NOTCHES],
+                       EQ_notch_index[NOTCHES], EQ_notch_flag[NOTCHES];
 static guint           notebook1_page = 0;
 static gboolean        hdeq_ready = FALSE;
+
+
+/*  Given the frequency this returns the nearest array index in the X direction
+    in the hand drawn EQ curve.  This will be one of 1024 values.  */
+
+static int nearest_x (float freq)
+{
+    int          i, j = 0;
+    float        dist, ndist;
+
+
+    dist = 99999999.0;
+
+    for (i = 0 ; i < EQ_length ; i++)
+      {
+        ndist = log10f (freq);
+        if (fabs (ndist - EQ_xinterp[i]) < dist)
+          {
+            dist = fabs (ndist - EQ_xinterp[i]);
+            j = i;
+          }
+      }
+
+  return (j);
+}
 
 
 /*  Clear out the hand drawn EQ curves on exit.  */
@@ -131,6 +147,9 @@ void clean_quit ()
 
 void bind_hdeq ()
 {
+    int    i;
+
+
     eq_options_dialog = create_eq_options_dialog();
 
 
@@ -172,6 +191,33 @@ void bind_hdeq ()
     set_color (&EQ_fore_color, 65535, 65535, 65535);
     set_color (&EQ_grid_color, 0, 36611, 0);
     set_color (&EQ_spectrum_color, 32768, 32768, 32768);
+
+
+    EQ_notch_default[0] = 29.0;
+    EQ_notch_default[1] = 131.0;
+    EQ_notch_default[2] = 710.0;
+    EQ_notch_default[3] = 3719.0;
+    EQ_notch_default[4] = 16903.0;
+
+    for (i = 0 ; i < NOTCHES ; i++)
+      {
+        EQ_notch_gain[i] = 0.0;
+        EQ_notch_width[i] = 5;
+        EQ_notch_drag[i] = 0; 
+        EQ_notch_Q_drag[i] = 0;
+        EQ_notch_flag[i] = 0;
+        EQ_notch_index[i] = nearest_x (EQ_notch_default[i]);
+      }
+
+    EQ_notch_width[0] = 0;
+    EQ_notch_width[NOTCHES - 1] = 0;
+
+}
+
+
+float hdeq_get_notch_default_freq (int i)
+{
+  return (EQ_notch_default[i]);
 }
 
 
@@ -296,6 +342,7 @@ void hdeq_mid2high_set (GtkRange *range)
     label = g_strdup_printf ("%05d", NINT (mvalue));
     gtk_label_set_label (l_mid2high_lbl, label);
     free(label);
+
 
     /* Write value into DSP code */
 
@@ -496,31 +543,6 @@ void draw_EQ_spectrum_curve (float single_levels[])
 }
 
 
-/*  Given the frequency this returns the nearest array index in the X direction
-    in the hand drawn EQ curve.  This will be one of 1024 values.  */
-
-static int nearest_x (float freq)
-{
-    int          i, j = 0;
-    float        dist, ndist;
-
-
-    dist = 99999999.0;
-
-    for (i = 0 ; i < EQ_length ; i++)
-      {
-        ndist = log10f (freq);
-        if (fabs (ndist - EQ_xinterp[i]) < dist)
-          {
-            dist = fabs (ndist - EQ_xinterp[i]);
-            j = i;
-          }
-      }
-
-  return (j);
-}
-
-
 /*  Set the graphic EQ (geq) sliders and the full set of EQ coefficients
     based on the hand drawn EQ curve.  */
 
@@ -595,12 +617,10 @@ void reset_hdeq ()
         else
           {
             EQ_notch_width[i] = 5;
-            EQ_notch_index[i] = i * NOTCH_INT;
           }
+        EQ_notch_index[i] = nearest_x (EQ_notch_default[i]);
       }
 
-    EQ_notch_index[0] = 20;
-    EQ_notch_index[4] = EQ_INTERP - 20;
 
     set_EQ ();
 
@@ -832,10 +852,12 @@ void draw_EQ_curve ()
 
         /*  Reset all of the shelves/notches.  */
 
+
         for (i = 0 ; i < NOTCHES ; i++)
           {
             EQ_notch_flag[i] = 0;
             EQ_notch_gain[i] = 0.0;
+            EQ_notch_index[i] = nearest_x (EQ_notch_default[i]);
 
             if (!i || i == NOTCHES - 1)
               {
@@ -850,6 +872,7 @@ void draw_EQ_curve ()
 			       g_strdup_printf("Reset notch %d", i));
             s_set_value_ns (S_NOTCH_GAIN (i), EQ_notch_gain[i]);
             s_set_value_ns (S_NOTCH_Q (i), (float) EQ_notch_width[i]);
+            s_set_value_ns (S_NOTCH_FREQ (i), EQ_x_notched[EQ_notch_index[i]]);
             s_set_value_ns (S_NOTCH_FLAG (i), (float) EQ_notch_flag[i]);
           }
 
@@ -881,7 +904,8 @@ void draw_EQ_curve ()
         logfreq2xpix (EQ_x_notched[EQ_notch_index[i]], &x1);
 
 
-        /*  Make the shelf handles follow the shelf.  */
+        /*  Make the shelf handles follow the shelf instead of staying with
+            the EQ curve.  */
 
         if (EQ_notch_flag[i] && (!i || i == NOTCHES - 1))
           {
@@ -1219,8 +1243,11 @@ void hdeq_curve_motion (GdkEventMotion *event)
 			       g_strdup_printf("Move notch %d", i));
                             s_set_value_ns (S_NOTCH_GAIN (i), 
                                 EQ_notch_gain[i]);
+                            s_set_value_ns (S_NOTCH_FREQ (i), freq);
                             s_set_value_ns (S_NOTCH_FLAG (i), 
                                 (float) EQ_notch_flag[i]);
+                            s_set_value_ns (S_NOTCH_Q (i), 
+                                (float) EQ_notch_width[i]);
 
                             break;
                           }
@@ -1248,10 +1275,12 @@ void hdeq_curve_motion (GdkEventMotion *event)
 			        s_set_description (S_NOTCH_GAIN (i) ,
 			            g_strdup_printf("Move notch %d", i));
                                 s_set_value_ns (S_NOTCH_GAIN (i), 
-                                    EQ_notch_gain[i]);
+                                                EQ_notch_gain[i]);
                                 s_set_value_ns (S_NOTCH_FREQ (i), freq);
                                 s_set_value_ns (S_NOTCH_FLAG (i), 
-                                    (float) EQ_notch_flag[i]);
+                                                (float) EQ_notch_flag[i]);
+                                s_set_value_ns (S_NOTCH_Q (i), 
+                                                (float) EQ_notch_width[i]);
                               }
                             break;
                           }
@@ -1284,8 +1313,11 @@ void hdeq_curve_motion (GdkEventMotion *event)
 
 			    s_set_description (S_NOTCH_GAIN (i) ,
 			       g_strdup_printf("Move notch %d", i));
-			    s_set_value_ns (S_NOTCH_GAIN (i), 
-                                    EQ_notch_gain[i]);
+                            s_set_value_ns (S_NOTCH_GAIN (i), 
+                                EQ_notch_gain[i]);
+                            s_set_value_ns (S_NOTCH_FREQ (i), freq);
+                            s_set_value_ns (S_NOTCH_FLAG (i), 
+                                (float) EQ_notch_flag[i]);
                             s_set_value_ns (S_NOTCH_Q (i), 
                                 (float) EQ_notch_width[i]);
                           }
@@ -1812,16 +1844,13 @@ void set_EQ_curve_values (int id, float value)
         EQ_yinterp[i] = s_get_value (S_EQ_GAIN (0) + i);
       }
 
-
     for (i = 0 ; i < NOTCHES ; i++)
       {
         EQ_notch_flag[i] = NINT (s_get_value (S_NOTCH_FLAG (i)));
-        if (EQ_notch_flag[i])
-          {
-            EQ_notch_width[i] = NINT (s_get_value (S_NOTCH_Q (i)));
-            EQ_notch_index[i] = nearest_x (s_get_value (S_NOTCH_FREQ (i)));
-            EQ_notch_gain[i] = s_get_value (S_NOTCH_GAIN (i));
-          }
+
+        EQ_notch_width[i] = NINT (s_get_value (S_NOTCH_Q (i)));
+        EQ_notch_index[i] = nearest_x (s_get_value (S_NOTCH_FREQ (i)));
+        EQ_notch_gain[i] = s_get_value (S_NOTCH_GAIN (i));
       }
 
 
