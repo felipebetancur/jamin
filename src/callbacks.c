@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.119 2004/01/03 13:57:44 jdepner Exp $
+ *  $Id: callbacks.c,v 1.120 2004/01/03 14:14:10 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1628,26 +1628,26 @@ scene_warning                          (GtkWidget       *widget,
 
 
 void
-on_low_pan_scale_value_changed         (GtkRange        *range,
+on_low_balance_scale_value_changed         (GtkRange        *range,
                                         gpointer         user_data)
 {
-  s_set_value_ui(S_STEREO_PAN(0), gtk_range_get_adjustment(range)->value);
+  s_set_value_ui(S_STEREO_BALANCE(0), gtk_range_get_adjustment(range)->value);
 }
 
 
 void
-on_mid_pan_scale_value_changed         (GtkRange        *range,
+on_mid_balance_scale_value_changed         (GtkRange        *range,
                                         gpointer         user_data)
 {
-  s_set_value_ui(S_STEREO_PAN(1), gtk_range_get_adjustment(range)->value);
+  s_set_value_ui(S_STEREO_BALANCE(1), gtk_range_get_adjustment(range)->value);
 }
 
 
 void
-on_high_pan_scale_value_changed        (GtkRange        *range,
+on_high_balance_scale_value_changed        (GtkRange        *range,
                                         gpointer         user_data)
 {
-  s_set_value_ui(S_STEREO_PAN(2), gtk_range_get_adjustment(range)->value);
+  s_set_value_ui(S_STEREO_BALANCE(2), gtk_range_get_adjustment(range)->value);
 }
 
 
@@ -1675,12 +1675,12 @@ on_stereo_event_box_enter_notify_event
 
 
 gboolean
-on_stereo_pan_event_box_enter_notify_event
+on_stereo_balance_event_box_enter_notify_event
                                         (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
 {
-  help_ptr = stereo_pan_help;
+  help_ptr = stereo_balance_help;
 
   return FALSE;
 }

@@ -20,4 +20,4 @@ notch-gain(5)	Notch gain
 notch-freq(5)	Notch frequency
 notch-q(5)	Notch Q
 notch-flag(5)	Notch active flag
-stereo-pan(3)	Stereo pan
+stereo-balance(3)	Stereo balance

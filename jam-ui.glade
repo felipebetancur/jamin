@@ -4638,13 +4638,13 @@
 						  </child>
 
 						  <child>
-						    <widget class="GtkHBox" id="low_pan_hbox">
+						    <widget class="GtkHBox" id="low_balance_hbox">
 						      <property name="visible">True</property>
 						      <property name="homogeneous">True</property>
 						      <property name="spacing">0</property>
 
 						      <child>
-							<widget class="GtkLabel" id="low_pan_label">
+							<widget class="GtkLabel" id="low_balance_label">
 							  <property name="visible">True</property>
 							  <property name="label" translatable="yes">centre</property>
 							  <property name="use_underline">False</property>
@@ -4665,13 +4665,13 @@
 						      </child>
 
 						      <child>
-							<widget class="GtkEventBox" id="low_pan_event_box">
+							<widget class="GtkEventBox" id="low_balance_event_box">
 							  <property name="visible">True</property>
-							  <property name="tooltip" translatable="yes">Low Band Stereo Pan</property>
-							  <signal name="enter_notify_event" handler="on_stereo_pan_event_box_enter_notify_event" last_modification_time="Sat, 03 Jan 2004 00:43:48 GMT"/>
+							  <property name="tooltip" translatable="yes">Low Band Stereo Balance</property>
+							  <signal name="enter_notify_event" handler="on_stereo_balance_event_box_enter_notify_event" last_modification_time="Sat, 03 Jan 2004 14:04:34 GMT"/>
 
 							  <child>
-							    <widget class="GtkHScale" id="low_pan_scale">
+							    <widget class="GtkHScale" id="low_balance_scale">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">False</property>
@@ -4680,7 +4680,7 @@
 							      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							      <property name="inverted">False</property>
 							      <property name="adjustment">0 -6 6 0.25 1 0</property>
-							      <signal name="value_changed" handler="on_low_pan_scale_value_changed" last_modification_time="Fri, 02 Jan 2004 23:43:43 GMT"/>
+							      <signal name="value_changed" handler="on_low_balance_scale_value_changed" last_modification_time="Sat, 03 Jan 2004 14:04:23 GMT"/>
 							      <signal name="button_press_event" handler="scene_warning" last_modification_time="Fri, 02 Jan 2004 23:44:05 GMT"/>
 							    </widget>
 							  </child>
@@ -5286,13 +5286,13 @@
 						  </child>
 
 						  <child>
-						    <widget class="GtkHBox" id="mid_pan_hbox">
+						    <widget class="GtkHBox" id="mid_balance_hbox">
 						      <property name="visible">True</property>
 						      <property name="homogeneous">True</property>
 						      <property name="spacing">0</property>
 
 						      <child>
-							<widget class="GtkLabel" id="mid_pan_label">
+							<widget class="GtkLabel" id="mid_balance_label">
 							  <property name="visible">True</property>
 							  <property name="label" translatable="yes">centre</property>
 							  <property name="use_underline">False</property>
@@ -5313,13 +5313,13 @@
 						      </child>
 
 						      <child>
-							<widget class="GtkEventBox" id="mid_pan_event_box">
+							<widget class="GtkEventBox" id="mid_balance_event_box">
 							  <property name="visible">True</property>
-							  <property name="tooltip" translatable="yes">Mid Band Stereo Pan</property>
-							  <signal name="enter_notify_event" handler="on_stereo_pan_event_box_enter_notify_event" last_modification_time="Sat, 03 Jan 2004 00:44:10 GMT"/>
+							  <property name="tooltip" translatable="yes">Mid Band Stereo Balance</property>
+							  <signal name="enter_notify_event" handler="on_stereo_balance_event_box_enter_notify_event" last_modification_time="Sat, 03 Jan 2004 14:05:20 GMT"/>
 
 							  <child>
-							    <widget class="GtkHScale" id="mid_pan_scale">
+							    <widget class="GtkHScale" id="mid_balance_scale">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">False</property>
@@ -5328,7 +5328,7 @@
 							      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							      <property name="inverted">False</property>
 							      <property name="adjustment">0 -6 6 0.25 1 0</property>
-							      <signal name="value_changed" handler="on_mid_pan_scale_value_changed" last_modification_time="Fri, 02 Jan 2004 23:46:41 GMT"/>
+							      <signal name="value_changed" handler="on_mid_balance_scale_value_changed" last_modification_time="Sat, 03 Jan 2004 14:05:29 GMT"/>
 							      <signal name="button_press_event" handler="scene_warning" last_modification_time="Fri, 02 Jan 2004 23:44:05 GMT"/>
 							    </widget>
 							  </child>
@@ -5934,13 +5934,13 @@
 						  </child>
 
 						  <child>
-						    <widget class="GtkHBox" id="high_pan_hbox">
+						    <widget class="GtkHBox" id="high_balance_hbox">
 						      <property name="visible">True</property>
 						      <property name="homogeneous">True</property>
 						      <property name="spacing">0</property>
 
 						      <child>
-							<widget class="GtkLabel" id="high_pan_label">
+							<widget class="GtkLabel" id="high_balance_label">
 							  <property name="visible">True</property>
 							  <property name="label" translatable="yes">centre</property>
 							  <property name="use_underline">False</property>
@@ -5961,13 +5961,13 @@
 						      </child>
 
 						      <child>
-							<widget class="GtkEventBox" id="high_pan_event_box">
+							<widget class="GtkEventBox" id="high_balance_event_box">
 							  <property name="visible">True</property>
-							  <property name="tooltip" translatable="yes">High Band Stereo Pan</property>
-							  <signal name="enter_notify_event" handler="on_stereo_pan_event_box_enter_notify_event" last_modification_time="Sat, 03 Jan 2004 00:44:19 GMT"/>
+							  <property name="tooltip" translatable="yes">High Band Stereo Balance</property>
+							  <signal name="enter_notify_event" handler="on_stereo_balance_event_box_enter_notify_event" last_modification_time="Sat, 03 Jan 2004 14:06:15 GMT"/>
 
 							  <child>
-							    <widget class="GtkHScale" id="high_pan_scale">
+							    <widget class="GtkHScale" id="high_balance_scale">
 							      <property name="visible">True</property>
 							      <property name="can_focus">True</property>
 							      <property name="draw_value">False</property>
@@ -5976,7 +5976,7 @@
 							      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 							      <property name="inverted">False</property>
 							      <property name="adjustment">0 -6 6 0.25 1 0</property>
-							      <signal name="value_changed" handler="on_high_pan_scale_value_changed" last_modification_time="Fri, 02 Jan 2004 23:49:29 GMT"/>
+							      <signal name="value_changed" handler="on_high_balance_scale_value_changed" last_modification_time="Sat, 03 Jan 2004 14:06:24 GMT"/>
 							      <signal name="button_press_event" handler="scene_warning" last_modification_time="Fri, 02 Jan 2004 23:44:05 GMT"/>
 							    </widget>
 							  </child>

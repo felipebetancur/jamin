@@ -830,15 +830,15 @@ pause_transport_toggle                 (GtkWidget       *widget,
                                         gpointer         user_data);
 
 void
-on_low_pan_scale_value_changed         (GtkRange        *range,
+on_low_balance_scale_value_changed         (GtkRange        *range,
                                         gpointer         user_data);
 
 void
-on_mid_pan_scale_value_changed         (GtkRange        *range,
+on_mid_balance_scale_value_changed         (GtkRange        *range,
                                         gpointer         user_data);
 
 void
-on_high_pan_scale_value_changed        (GtkRange        *range,
+on_high_balance_scale_value_changed        (GtkRange        *range,
                                         gpointer         user_data);
 
 gboolean
@@ -853,23 +853,6 @@ on_stereo_event_box_enter_notify_event
                                         gpointer         user_data);
 
 gboolean
-on_stereo_pan_event_box_enter_notify_event (GtkWidget       *widget,
+on_stereo_balance_event_box_enter_notify_event (GtkWidget       *widget,
                                             GdkEventCrossing *event,
                                             gpointer         user_data);
-
-
-gboolean
-on_comp_event_box_enter_notify_event   (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data);
-
-gboolean
-on_stereo_event_box_enter_notify_event (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data);
-
-gboolean
-on_stereo_pan_event_box_enter_notify_event
-                                        (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data);
