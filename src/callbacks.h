@@ -145,3 +145,7 @@ on_geq_max_gain_spinner_value_changed  (GtkSpinButton   *spinbutton,
 void
 on_out_trim_scale_value_changed        (GtkRange        *range,
                                         gpointer         user_data);
+
+void
+on_pan_scale_value_changed             (GtkRange        *range,
+                                        gpointer         user_data);

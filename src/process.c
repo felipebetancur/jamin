@@ -9,6 +9,7 @@
 #include "compressor.h"
 #include "limiter.h"
 #include "geq.h"
+#include "intrim.h"
 
 #define BUF_MASK   (BINS-1)
 #define OVER_SAMP  8
@@ -19,12 +20,11 @@ float xover_fb = 2048.0f;
 comp_settings compressors[3];
 lim_settings limiter;
 float eq_coefs[BINS]; /* Linear gain of each FFT bin */
-float in_trim_gain = 1.0f;
 float lim_peak[2];
 
 int global_bypass = 0;
 
-float in_peak;
+float in_peak[2];
 
 static float band_f[BANDS];
 static float gain_fix[BANDS];
@@ -244,12 +244,12 @@ int process(jack_nframes_t nframes, void *arg)
 	float amp;
 
 	for (port = 0; port < 2; port++) {
-	    in_buf[port][in_ptr] = in[port][pos] * in_trim_gain;
+	    in_buf[port][in_ptr] = in[port][pos] * in_gain[port];
 	    amp = fabs(in_buf[port][in_ptr]);
-	    if (amp > in_peak) {
-		in_peak = amp;
+	    if (amp > in_peak[port]) {
+		in_peak[port] = amp;
 	    } else {
-		in_peak = in_peak * 0.99f + amp * 0.01f;
+		in_peak[port] = in_peak[port] * 0.99f + amp * 0.01f;
 	    }
 
 	    out_tmp[port][XO_LOW][pos] = out_buf[port][XO_LOW][op];

@@ -13,15 +13,16 @@
 #include "interface.h"
 #include "support.h"
 #include "process.h"
+#include "intrim.h"
 
 #define NINT(a) ((a)<0.0 ? (int) ((a) - 0.5) : (int) ((a) + 0.5))
 #define EQ_INTERP (BINS / 2 - 1)
 #define EQ_INTRVL (EQ_INTERP / (EQ_BANDS + 1))
 
+/* vi:set ts=8 sts=4 sw=4: */
 
 void interpolate (float, int, float, float, int *, float *, float *, float *, 
                   float *);
-
 
 static GtkHScale       *l_low2mid, *l_mid2high;
 static GtkVScale       *l_eqb1;
@@ -255,14 +256,6 @@ on_window1_delete_event                (GtkWidget       *widget,
     clean_quit ();
 
     return FALSE;
-}
-
-
-void
-on_in_trim_scale_value_changed         (GtkRange        *range,
-                                        gpointer         user_data)
-{
-    in_trim_gain = powf(10.0f, gtk_range_get_adjustment(range)->value * 0.05f);
 }
 
 void
@@ -860,5 +853,28 @@ void
 on_out_trim_scale_value_changed        (GtkRange        *range,
                                         gpointer         user_data)
 {
-	limiter.attenuation = gtk_range_get_adjustment(range)->value;
+    limiter.attenuation = gtk_range_get_adjustment(range)->value;
+}
+
+
+void
+on_in_trim_scale_value_changed         (GtkRange        *range,
+                                        gpointer         user_data)
+{
+    in_trim_gain = powf(10.0f, gtk_range_get_adjustment(range)->value * 0.05f);
+    in_gain[0] = in_trim_gain * in_pan_gain[0];
+    in_gain[1] = in_trim_gain * in_pan_gain[1];
+}
+
+void
+on_pan_scale_value_changed             (GtkRange        *range,
+                                        gpointer         user_data)
+{
+    const float balance = gtk_range_get_adjustment(range)->value;
+
+    in_pan_gain[0] = powf(10.0f, balance * -0.025f);
+    in_pan_gain[1] = powf(10.0f, balance * 0.025f);
+    in_gain[0] = in_trim_gain * in_pan_gain[0];
+    in_gain[1] = in_trim_gain * in_pan_gain[1];
+    update_pan_label(balance);
 }
