@@ -176,7 +176,7 @@ void spline (float *x, float *y, int pos, float x_pos, float *y_pos, float *ater
                
                 /*  Extrapolate with average slope of closest two       */
                 /*  intervals.                                          */
-                
+
                 *y_pos = *y + (x_pos - *x) * ((*(y + 1) - *y) /
                     (*(x + 1) - *x) + (*(y + 2) - *(y + 1)) / (*(x + 2) -
                     *(x + 1))) * 0.5;

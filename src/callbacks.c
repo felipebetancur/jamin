@@ -79,7 +79,8 @@ static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0,
                        EQ_notch_handle[2][3][NOTCHES], 
                        EQ_notch_width[NOTCHES] = {0, 5, 5, 5, 0},
                        EQ_notch_index[NOTCHES] = {20, NOTCH_INT, 2 * NOTCH_INT,
-                       3 * NOTCH_INT, EQ_INTERP - 20};
+                       3 * NOTCH_INT, EQ_INTERP - 20}, 
+                       EQ_notch_flag[NOTCHES] = {0, 0, 0, 0, 0};
 
 
 void
@@ -562,10 +563,126 @@ nearest_x (float freq)
 
 
 void 
+set_EQ ()
+{
+    float    *x = NULL, *y = NULL, interval;
+    int      i, size;
+
+
+    /*  Make sure we have enough space.  */
+
+    size = EQ_length * sizeof (float);
+    x = (float *) realloc (x, size);
+    y = (float *) realloc (y, size);
+
+    if (y == NULL)
+      {
+        perror (_("Allocating y in callbacks.c"));
+        clean_quit ();
+      }
+
+
+    /*  Recompute the splined curve in the freq domain for setting 
+        the eq_coefs.  */
+
+    for (i = 0 ; i < EQ_length ; i++)
+        x[i] = pow (10.0, (double) EQ_x_notched[i]);
+
+    interval = ((l_geq_freqs[EQ_BANDS - 1]) - l_geq_freqs[0]) / EQ_INTERP;
+
+    interpolate (interval, EQ_length, l_geq_freqs[0], 
+        l_geq_freqs[EQ_BANDS - 1], &EQ_length, x, EQ_y_notched, 
+        EQ_freq_xinterp, EQ_freq_yinterp);
+
+
+    if (x) free (x);
+    if (y) free (y);
+
+
+    /*  Set EQ coefficients based on the hand-drawn curve.  */
+
+    geq_set_coefs (EQ_length, EQ_freq_xinterp, EQ_freq_yinterp);
+}
+
+
+void 
 insert_notch ()
 {
-    int        i, j;
+    int        i, j, ndx, left, right, length;
+    float      x[5], y[5];
 
+
+    for (i = 0 ; i < EQ_length ; i++)
+      {
+        EQ_x_notched[i] = EQ_xinterp[i];
+        EQ_y_notched[i] = EQ_yinterp[i];
+      }
+
+
+    for (j = 0 ; j < NOTCHES ; j++)
+      {
+        if (EQ_notch_flag[j])
+          {
+            if (!j)
+              {
+                ndx = EQ_notch_index[j];
+                for (i = 0 ; i < ndx - 10 ; i++)
+                    EQ_y_notched[i] = EQ_notch_gain[j];
+
+                x[0] = EQ_x_notched[ndx - 10];
+                y[0] = EQ_notch_gain[j];
+                x[1] = EQ_x_notched[ndx - 9];
+                y[1] = EQ_notch_gain[j];
+                x[2] = EQ_x_notched[EQ_notch_index[j] - 1];
+                y[2] = EQ_y_notched[EQ_notch_index[j] - 1];
+                x[3] = EQ_x_notched[EQ_notch_index[j]];
+                y[3] = EQ_y_notched[EQ_notch_index[j]];
+
+                interpolate (EQ_interval, 4, x[0], x[3], &length, x, 
+                    y, &EQ_x_notched[ndx - 10], &EQ_y_notched[ndx - 10]);
+              }
+            else if (j == NOTCHES - 1)
+              {
+                ndx = EQ_notch_index[j];
+                for (i = ndx + 10 ; i < EQ_length ; i++)
+                    EQ_y_notched[i] = EQ_notch_gain[j];
+
+                x[0] = EQ_x_notched[ndx];
+                y[0] = EQ_y_notched[ndx];
+                x[1] = EQ_x_notched[ndx + 1];
+                y[1] = EQ_y_notched[ndx + 1];
+                x[2] = EQ_x_notched[ndx + 9];
+                y[2] = EQ_notch_gain[j];
+                x[3] = EQ_x_notched[ndx + 10];
+                y[3] = EQ_notch_gain[j];
+
+                interpolate (EQ_interval, 4, x[0], x[3], &length, x, 
+                    y, &EQ_x_notched[ndx], &EQ_y_notched[ndx]);
+              }
+            else
+              {
+                left = EQ_notch_index[j] - EQ_notch_width[j];
+                right = EQ_notch_index[j] + EQ_notch_width[j];
+
+                x[0] = EQ_x_notched[left];
+                y[0] = EQ_y_notched[left];
+                x[1] = EQ_x_notched[left + 1];
+                y[1] = EQ_y_notched[left + 1];
+                x[2] = EQ_x_notched[EQ_notch_index[j]];
+                y[2] = EQ_notch_gain[j];
+                x[3] = EQ_x_notched[right - 1];
+                y[3] = EQ_y_notched[right - 1];
+                x[4] = EQ_x_notched[right];
+                y[4] = EQ_y_notched[right];
+
+                interpolate (EQ_interval, 5, x[0], x[4], &length, x, 
+                    y, &EQ_x_notched[left], &EQ_y_notched[left]);
+              }
+          }
+      }
+
+
+    /*  A "true notch filter".
 
     for (i = 0 ; i < EQ_length ; i++)
       {
@@ -574,22 +691,25 @@ insert_notch ()
 
         for (j = 0 ; j < NOTCHES ; j++)
           {
-            if (!j || j == NOTCHES - 1)
+            if (EQ_notch_gain[j] != 0.0)
               {
-                if (EQ_notch_gain[j] != 0.0 && i <= EQ_notch_index[j])
-                    EQ_y_notched[i] = EQ_notch_gain[j];
-              }
-            else
-              {
-                if (EQ_notch_gain[j] != 0.0 && 
-                    i >= (EQ_notch_index[j] - EQ_notch_width[j]) &&
-                    i <= (EQ_notch_index[j] + EQ_notch_width[j]))
+                if (!j || j == NOTCHES - 1)
                   {
-                    EQ_y_notched[i] = EQ_notch_gain[j];
+                    if (i <= EQ_notch_index[j])
+                        EQ_y_notched[i] = EQ_notch_gain[j];
+                  }
+                else
+                  {
+                    if (i >= (EQ_notch_index[j] - EQ_notch_width[j]) &&
+                        i <= (EQ_notch_index[j] + EQ_notch_width[j]))
+                      {
+                        EQ_y_notched[i] = EQ_notch_gain[j];
+                      }
                   }
               }
           }
       }
+    */
 }
 
 
@@ -646,15 +766,17 @@ draw_EQ_curve ()
     gdk_gc_set_foreground (EQ_gc, &red);
     freq2xpix (xover_fa, &x1);
     gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
-    gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE, 0, 
-        XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE,
+        0, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
     gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE, 
-        EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+        EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, 
+        XOVER_HANDLE_SIZE);
     gdk_gc_set_foreground (EQ_gc, &black);
-    gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE, 0, 
-        XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
-    gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE, 
-        EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE,
+        0, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE,
+        EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, 
+        XOVER_HANDLE_SIZE);
 
     xover_handle_fa = x1;
 
@@ -662,15 +784,17 @@ draw_EQ_curve ()
     gdk_gc_set_foreground (EQ_gc, &blue);
     freq2xpix (xover_fb, &x1);
     gdk_draw_line (EQ_drawable, EQ_gc, x1, 0, x1, EQ_curve_height);
-    gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE, 0, 
-        XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
-    gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE, 
-        EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE,
+        0, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, x1 - XOVER_HANDLE_HALF_SIZE,
+        EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, 
+        XOVER_HANDLE_SIZE);
     gdk_gc_set_foreground (EQ_gc, &black);
-    gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE, 0, 
-        XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
-    gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE, 
-        EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE,
+        0, XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE);
+    gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, x1 - XOVER_HANDLE_HALF_SIZE,
+        EQ_curve_height - XOVER_HANDLE_SIZE, XOVER_HANDLE_SIZE, 
+        XOVER_HANDLE_SIZE);
 
     xover_handle_fb = x1;
 
@@ -861,12 +985,12 @@ check_notch (int notch, int new, int q)
     if (!notch)
       {
         j = EQ_notch_index[notch + 1] - EQ_notch_width[notch + 1];
-        if (new >= j) ret = 0;
+        if (new >= j || new < 10) ret = 0;
       }
     else if (notch == NOTCHES - 1)
       {
         k = EQ_notch_index[notch - 1] + EQ_notch_width[notch - 1];
-        if (new <= k) ret = 0;
+        if (new <= k || new > EQ_length - 10) ret = 0;
       }
     else
       {
@@ -878,7 +1002,7 @@ check_notch (int notch, int new, int q)
             width = EQ_notch_index[notch] - left;
             right = left + 2 * width;
 
-            if (EQ_notch_index[notch] - left < 1) ret = 0;
+            if (EQ_notch_index[notch] - left < 5) ret = 0;
           }
         else if (q == 2)
           {
@@ -886,7 +1010,7 @@ check_notch (int notch, int new, int q)
             width = right - EQ_notch_index[notch];
             left = right - 2 * width;
 
-            if (right - EQ_notch_index[notch] < 1) ret = 0;
+            if (right - EQ_notch_index[notch] < 5) ret = 0;
           }
         else
           {
@@ -1000,6 +1124,7 @@ on_EQ_curve_event_box_motion_notify_event
 
                             drag = 1;
                             notch_flag = i;
+                            EQ_notch_flag[i] = 1;
                             break;
                           }
                       }
@@ -1054,6 +1179,7 @@ on_EQ_curve_event_box_motion_notify_event
             if (drag)
               {
                 insert_notch ();
+                set_EQ ();
                 draw_EQ_curve ();
               }
             else
@@ -1185,7 +1311,7 @@ on_EQ_curve_event_box_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-    float               *x = NULL, *y = NULL, interval;
+    float               *x = NULL, *y = NULL;
     int                 diffx_fa, diffx_fb, diff_notch[2], i, j, i_start = 0, 
                         i_end = 0, size, ex, ey;
     static int          interp_pad = 5;
@@ -1243,8 +1369,10 @@ on_EQ_curve_event_box_button_press_event
                         xover_active = 1;
                         if (event->state & GDK_CONTROL_MASK)
                           {
+                            EQ_notch_flag[i] = 0;
                             EQ_notch_gain[i] = 0.0;
                             insert_notch ();
+                            set_EQ ();
                             draw_EQ_curve ();
                           }
                         else
@@ -1413,33 +1541,6 @@ on_EQ_curve_event_box_button_press_event
                 y, EQ_xinterp, EQ_yinterp);
 
 
-            /*  Make sure we have enough space.  */
-
-            size = EQ_length * sizeof (float);
-            x = (float *) realloc (x, size);
-            y = (float *) realloc (y, size);
-
-            if (y == NULL)
-              {
-                perror (_("Allocating y in callbacks.c"));
-                clean_quit ();
-              }
-
-
-            /*  Recompute the splined curve in the freq domain for setting 
-                the eq_coefs.  */
-
-            for (i = 0 ; i < EQ_length ; i++)
-                x[i] = pow (10.0, (double) EQ_xinterp[i]);
-
-            interval = ((l_geq_freqs[EQ_BANDS - 1]) - l_geq_freqs[0]) / 
-                EQ_INTERP;
-
-            interpolate (interval, EQ_length, l_geq_freqs[0], 
-                l_geq_freqs[EQ_BANDS - 1], &EQ_length, x, EQ_yinterp, 
-                EQ_freq_xinterp, EQ_freq_yinterp);
-
-
             if (x) free (x);
             if (y) free (y);
 
@@ -1452,14 +1553,9 @@ on_EQ_curve_event_box_button_press_event
             insert_notch ();
 
 
-            /*  Set the graphic EQ sliders based on the hand-drawn curve.  */
+            /*  Set the GEQ faders and the EQ coefs.  */
 
-            geq_set_sliders (EQ_length, EQ_freq_xinterp, EQ_freq_yinterp);
-
-
-            /*  Set EQ coefficients based on the hand-drawn curve.  */
-
-            geq_set_coefs (EQ_length, EQ_freq_xinterp, EQ_freq_yinterp);
+            set_EQ ();
 
 
             EQ_mod = 0;
@@ -1500,6 +1596,14 @@ on_EQ_curve_event_box_button_release_event
           {
             EQ_drawing = 0;
           }
+
+
+        /*  Set the graphic EQ sliders based on the hand-drawn curve.  */
+
+        geq_set_sliders (EQ_length, EQ_freq_xinterp, EQ_freq_yinterp);
+
+        EQ_mod = 0;
+
         break;
 
 
