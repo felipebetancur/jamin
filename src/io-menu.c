@@ -24,7 +24,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: io-menu.c,v 1.19 2003/12/03 08:59:11 kotau Exp $
+ *  $Id: io-menu.c,v 1.20 2003/12/03 09:40:06 kotau Exp $
  */
 
 #include <stdio.h>
@@ -277,10 +277,15 @@ iomenu_group_item(iomenu_callback handler, const char *group)
     const char **g_outports = jack_get_ports(client, group,
 					 JACK_DEFAULT_AUDIO_TYPE,
 					 JackPortIsInput);
-    if (g_inports == NULL || g_outports == NULL) {
-	iomenu_error(_("no %s ports available\n"), group);
-	return 0;
+					 
+    if (g_inports == NULL) {
+	iomenu_error(_("no %s inports available\n"), group);
     }
+					 
+    if (g_outports == NULL) {
+	iomenu_error(_("no %s outports available\n"), group);
+    }
+    
     
     GtkWidget *item = gtk_check_menu_item_new_with_label(group);
     
