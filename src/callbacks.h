@@ -1239,3 +1239,11 @@ on_ft_rez_lp_b_value_changed           (GtkRange        *range,
 void
 on_ft_rez_hp_b_value_changed           (GtkRange        *range,
                                         gpointer         user_data);
+
+void
+on_ft_bias_a_hp_value_changed          (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_ft_bias_b_hp_value_changed          (GtkRange        *range,
+                                        gpointer         user_data);

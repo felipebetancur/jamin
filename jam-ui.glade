@@ -8324,6 +8324,7 @@
 </widget>
 
 <widget class="GtkWindow" id="filter_tuning">
+  <property name="width_request">300</property>
   <property name="visible">True</property>
   <property name="title" translatable="yes">filter tuning [DEBUG]</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
@@ -8372,9 +8373,51 @@
 	  </child>
 
 	  <child>
+	    <widget class="GtkLabel" id="label326">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">HPA bias</property>
+	      <property name="use_underline">False</property>
+	      <property name="use_markup">False</property>
+	      <property name="justify">GTK_JUSTIFY_LEFT</property>
+	      <property name="wrap">False</property>
+	      <property name="selectable">False</property>
+	      <property name="xalign">0</property>
+	      <property name="yalign">0.5</property>
+	      <property name="xpad">0</property>
+	      <property name="ypad">0</property>
+	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">False</property>
+	      <property name="fill">False</property>
+	    </packing>
+	  </child>
+
+	  <child>
 	    <widget class="GtkLabel" id="label320">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">Bar B bias</property>
+	      <property name="use_underline">False</property>
+	      <property name="use_markup">False</property>
+	      <property name="justify">GTK_JUSTIFY_LEFT</property>
+	      <property name="wrap">False</property>
+	      <property name="selectable">False</property>
+	      <property name="xalign">0</property>
+	      <property name="yalign">0.5</property>
+	      <property name="xpad">0</property>
+	      <property name="ypad">0</property>
+	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">False</property>
+	      <property name="fill">False</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkLabel" id="label325">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">HPB bias</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">False</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -8496,11 +8539,31 @@
 	      <property name="can_focus">True</property>
 	      <property name="draw_value">True</property>
 	      <property name="value_pos">GTK_POS_LEFT</property>
-	      <property name="digits">1</property>
+	      <property name="digits">2</property>
 	      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 	      <property name="inverted">False</property>
-	      <property name="adjustment">0 -25 25 1 5 0</property>
+	      <property name="adjustment">1 0.5 2 0.01 0.1 0</property>
 	      <signal name="value_changed" handler="on_ft_bias_a_value_changed" last_modification_time="Tue, 26 Oct 2004 20:45:51 GMT"/>
+	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">True</property>
+	      <property name="fill">True</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkHScale" id="ft_bias_a_hp">
+	      <property name="width_request">65</property>
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="draw_value">True</property>
+	      <property name="value_pos">GTK_POS_LEFT</property>
+	      <property name="digits">2</property>
+	      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+	      <property name="inverted">False</property>
+	      <property name="adjustment">1 0.5 2 0.01 0.1 0</property>
+	      <signal name="value_changed" handler="on_ft_bias_a_hp_value_changed" last_modification_time="Wed, 27 Oct 2004 16:37:00 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="padding">0</property>
@@ -8515,11 +8578,30 @@
 	      <property name="can_focus">True</property>
 	      <property name="draw_value">True</property>
 	      <property name="value_pos">GTK_POS_LEFT</property>
-	      <property name="digits">1</property>
+	      <property name="digits">2</property>
 	      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 	      <property name="inverted">False</property>
-	      <property name="adjustment">0 -50 50 1 5 0</property>
+	      <property name="adjustment">1 0.5 2 0.01 0.1 0</property>
 	      <signal name="value_changed" handler="on_ft_bias_b_value_changed" last_modification_time="Tue, 26 Oct 2004 20:46:17 GMT"/>
+	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">True</property>
+	      <property name="fill">True</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkHScale" id="ft_bias_b_hp">
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="draw_value">True</property>
+	      <property name="value_pos">GTK_POS_LEFT</property>
+	      <property name="digits">2</property>
+	      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+	      <property name="inverted">False</property>
+	      <property name="adjustment">1 0.5 2 0.01 0.1 0</property>
+	      <signal name="value_changed" handler="on_ft_bias_b_hp_value_changed" last_modification_time="Wed, 27 Oct 2004 16:36:04 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="padding">0</property>
@@ -8534,10 +8616,10 @@
 	      <property name="can_focus">True</property>
 	      <property name="draw_value">True</property>
 	      <property name="value_pos">GTK_POS_LEFT</property>
-	      <property name="digits">1</property>
+	      <property name="digits">2</property>
 	      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 	      <property name="inverted">False</property>
-	      <property name="adjustment">1.2 0.1 1.41 0.05 0.1 0</property>
+	      <property name="adjustment">1.2 0 1.41 0.01 0.1 0</property>
 	      <signal name="value_changed" handler="on_ft_rez_lp_a_value_changed" last_modification_time="Tue, 26 Oct 2004 20:46:25 GMT"/>
 	    </widget>
 	    <packing>
@@ -8550,10 +8632,11 @@
 	  <child>
 	    <widget class="GtkHScale" id="ft_rez_hp_a">
 	      <property name="visible">True</property>
+	      <property name="sensitive">False</property>
 	      <property name="can_focus">True</property>
 	      <property name="draw_value">True</property>
 	      <property name="value_pos">GTK_POS_LEFT</property>
-	      <property name="digits">1</property>
+	      <property name="digits">2</property>
 	      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 	      <property name="inverted">False</property>
 	      <property name="adjustment">1.2 0.1 1.41 0.05 0.1 0</property>
@@ -8572,10 +8655,10 @@
 	      <property name="can_focus">True</property>
 	      <property name="draw_value">True</property>
 	      <property name="value_pos">GTK_POS_LEFT</property>
-	      <property name="digits">1</property>
+	      <property name="digits">2</property>
 	      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 	      <property name="inverted">False</property>
-	      <property name="adjustment">1.2 0.1 1.41 0.05 0.1 0</property>
+	      <property name="adjustment">1.2 0 1.41 0.01 0.1 0</property>
 	      <signal name="value_changed" handler="on_ft_rez_lp_b_value_changed" last_modification_time="Tue, 26 Oct 2004 20:46:41 GMT"/>
 	    </widget>
 	    <packing>
@@ -8588,10 +8671,11 @@
 	  <child>
 	    <widget class="GtkHScale" id="ft_rez_hp_b">
 	      <property name="visible">True</property>
+	      <property name="sensitive">False</property>
 	      <property name="can_focus">True</property>
 	      <property name="draw_value">True</property>
 	      <property name="value_pos">GTK_POS_LEFT</property>
-	      <property name="digits">1</property>
+	      <property name="digits">2</property>
 	      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 	      <property name="inverted">False</property>
 	      <property name="adjustment">1.2 0.1 1.41 0.05 0.1 0</property>

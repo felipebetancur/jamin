@@ -1,3 +1,8 @@
+2004-10-28  Steve Harris  <steve@plugin.org.uk>
+
+	* src/process.c: added some code to change the bandwidth of the filters
+	  dynamically with cutoff freq. doesnt work that well
+
 2004-10-26  Steve Harris  <steve@plugin.org.uk>
 
 	* src/process.c: added a #ifdef'd section on FILER_TUNING that allows

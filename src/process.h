@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.h,v 1.30 2004/10/26 21:35:09 theno23 Exp $
+ *  $Id: process.h,v 1.31 2004/10/28 08:20:33 theno23 Exp $
  */
 
 #ifndef PROCESS_H
@@ -113,7 +113,9 @@ extern plugin *comp_plugin;
 
 #ifdef FILTER_TUNING
 extern float ft_bias_a_val;
+extern float ft_bias_a_hp_val;
 extern float ft_bias_b_val;
+extern float ft_bias_b_hp_val;
 extern float ft_rez_lp_a_val;
 extern float ft_rez_hp_a_val;
 extern float ft_rez_lp_b_val;

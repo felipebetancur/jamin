@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.154 2004/10/26 21:34:16 theno23 Exp $
+ *  $Id: callbacks.c,v 1.155 2004/10/28 08:20:30 theno23 Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -2651,6 +2651,26 @@ on_ft_rez_hp_b_value_changed           (GtkRange        *range,
 {
 #ifdef FILTER_TUNING
   ft_rez_hp_b_val = gtk_range_get_adjustment(GTK_RANGE(range))->value;
+#endif
+}
+
+
+void
+on_ft_bias_a_hp_value_changed          (GtkRange        *range,
+                                        gpointer         user_data)
+{
+#ifdef FILTER_TUNING
+  ft_bias_a_hp_val = gtk_range_get_adjustment(GTK_RANGE(range))->value;
+#endif
+}
+
+
+void
+on_ft_bias_b_hp_value_changed          (GtkRange        *range,
+                                        gpointer         user_data)
+{
+#ifdef FILTER_TUNING
+  ft_bias_b_hp_val = gtk_range_get_adjustment(GTK_RANGE(range))->value;
 #endif
 }
 

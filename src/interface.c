@@ -5425,14 +5425,18 @@ create_filter_tuning (void)
   GtkWidget *hbox66;
   GtkWidget *vbox160;
   GtkWidget *label319;
+  GtkWidget *label326;
   GtkWidget *label320;
+  GtkWidget *label325;
   GtkWidget *label321;
   GtkWidget *label322;
   GtkWidget *label323;
   GtkWidget *label324;
   GtkWidget *vbox161;
   GtkWidget *ft_bias_a;
+  GtkWidget *ft_bias_a_hp;
   GtkWidget *ft_bias_b;
+  GtkWidget *ft_bias_b_hp;
   GtkWidget *ft_rez_lp_a;
   GtkWidget *ft_rez_hp_a;
   GtkWidget *ft_rez_lp_b;
@@ -5440,6 +5444,7 @@ create_filter_tuning (void)
 
   filter_tuning = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_widget_set_name (filter_tuning, "filter_tuning");
+  gtk_widget_set_size_request (filter_tuning, 300, -1);
   gtk_window_set_title (GTK_WINDOW (filter_tuning), _("filter tuning [DEBUG]"));
   gtk_window_set_position (GTK_WINDOW (filter_tuning), GTK_WIN_POS_CENTER);
   gtk_window_set_destroy_with_parent (GTK_WINDOW (filter_tuning), TRUE);
@@ -5461,11 +5466,23 @@ create_filter_tuning (void)
   gtk_box_pack_start (GTK_BOX (vbox160), label319, FALSE, FALSE, 0);
   gtk_misc_set_alignment (GTK_MISC (label319), 0, 0.5);
 
+  label326 = gtk_label_new (_("HPA bias"));
+  gtk_widget_set_name (label326, "label326");
+  gtk_widget_show (label326);
+  gtk_box_pack_start (GTK_BOX (vbox160), label326, FALSE, FALSE, 0);
+  gtk_misc_set_alignment (GTK_MISC (label326), 0, 0.5);
+
   label320 = gtk_label_new (_("Bar B bias"));
   gtk_widget_set_name (label320, "label320");
   gtk_widget_show (label320);
   gtk_box_pack_start (GTK_BOX (vbox160), label320, FALSE, FALSE, 0);
   gtk_misc_set_alignment (GTK_MISC (label320), 0, 0.5);
+
+  label325 = gtk_label_new (_("HPB bias"));
+  gtk_widget_set_name (label325, "label325");
+  gtk_widget_show (label325);
+  gtk_box_pack_start (GTK_BOX (vbox160), label325, FALSE, FALSE, 0);
+  gtk_misc_set_alignment (GTK_MISC (label325), 0, 0.5);
 
   label321 = gtk_label_new (_("LPA rez"));
   gtk_widget_set_name (label321, "label321");
@@ -5496,48 +5513,77 @@ create_filter_tuning (void)
   gtk_widget_show (vbox161);
   gtk_box_pack_start (GTK_BOX (hbox66), vbox161, TRUE, TRUE, 0);
 
-  ft_bias_a = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -25, 25, 1, 5, 0)));
+  ft_bias_a = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1, 0.5, 2, 0.01, 0.1, 0)));
   gtk_widget_set_name (ft_bias_a, "ft_bias_a");
   gtk_widget_show (ft_bias_a);
   gtk_box_pack_start (GTK_BOX (vbox161), ft_bias_a, TRUE, TRUE, 0);
   gtk_widget_set_size_request (ft_bias_a, 65, -1);
   gtk_scale_set_value_pos (GTK_SCALE (ft_bias_a), GTK_POS_LEFT);
+  gtk_scale_set_digits (GTK_SCALE (ft_bias_a), 2);
 
-  ft_bias_b = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -50, 50, 1, 5, 0)));
+  ft_bias_a_hp = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1, 0.5, 2, 0.01, 0.1, 0)));
+  gtk_widget_set_name (ft_bias_a_hp, "ft_bias_a_hp");
+  gtk_widget_show (ft_bias_a_hp);
+  gtk_box_pack_start (GTK_BOX (vbox161), ft_bias_a_hp, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (ft_bias_a_hp, 65, -1);
+  gtk_scale_set_value_pos (GTK_SCALE (ft_bias_a_hp), GTK_POS_LEFT);
+  gtk_scale_set_digits (GTK_SCALE (ft_bias_a_hp), 2);
+
+  ft_bias_b = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1, 0.5, 2, 0.01, 0.1, 0)));
   gtk_widget_set_name (ft_bias_b, "ft_bias_b");
   gtk_widget_show (ft_bias_b);
   gtk_box_pack_start (GTK_BOX (vbox161), ft_bias_b, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (ft_bias_b), GTK_POS_LEFT);
+  gtk_scale_set_digits (GTK_SCALE (ft_bias_b), 2);
 
-  ft_rez_lp_a = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1.2, 0.1, 1.41, 0.05, 0.1, 0)));
+  ft_bias_b_hp = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1, 0.5, 2, 0.01, 0.1, 0)));
+  gtk_widget_set_name (ft_bias_b_hp, "ft_bias_b_hp");
+  gtk_widget_show (ft_bias_b_hp);
+  gtk_box_pack_start (GTK_BOX (vbox161), ft_bias_b_hp, TRUE, TRUE, 0);
+  gtk_scale_set_value_pos (GTK_SCALE (ft_bias_b_hp), GTK_POS_LEFT);
+  gtk_scale_set_digits (GTK_SCALE (ft_bias_b_hp), 2);
+
+  ft_rez_lp_a = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1.2, 0, 1.41, 0.01, 0.1, 0)));
   gtk_widget_set_name (ft_rez_lp_a, "ft_rez_lp_a");
   gtk_widget_show (ft_rez_lp_a);
   gtk_box_pack_start (GTK_BOX (vbox161), ft_rez_lp_a, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (ft_rez_lp_a), GTK_POS_LEFT);
+  gtk_scale_set_digits (GTK_SCALE (ft_rez_lp_a), 2);
 
   ft_rez_hp_a = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1.2, 0.1, 1.41, 0.05, 0.1, 0)));
   gtk_widget_set_name (ft_rez_hp_a, "ft_rez_hp_a");
   gtk_widget_show (ft_rez_hp_a);
   gtk_box_pack_start (GTK_BOX (vbox161), ft_rez_hp_a, TRUE, TRUE, 0);
+  gtk_widget_set_sensitive (ft_rez_hp_a, FALSE);
   gtk_scale_set_value_pos (GTK_SCALE (ft_rez_hp_a), GTK_POS_LEFT);
+  gtk_scale_set_digits (GTK_SCALE (ft_rez_hp_a), 2);
 
-  ft_rez_lp_b = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1.2, 0.1, 1.41, 0.05, 0.1, 0)));
+  ft_rez_lp_b = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1.2, 0, 1.41, 0.01, 0.1, 0)));
   gtk_widget_set_name (ft_rez_lp_b, "ft_rez_lp_b");
   gtk_widget_show (ft_rez_lp_b);
   gtk_box_pack_start (GTK_BOX (vbox161), ft_rez_lp_b, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (ft_rez_lp_b), GTK_POS_LEFT);
+  gtk_scale_set_digits (GTK_SCALE (ft_rez_lp_b), 2);
 
   ft_rez_hp_b = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (1.2, 0.1, 1.41, 0.05, 0.1, 0)));
   gtk_widget_set_name (ft_rez_hp_b, "ft_rez_hp_b");
   gtk_widget_show (ft_rez_hp_b);
   gtk_box_pack_start (GTK_BOX (vbox161), ft_rez_hp_b, TRUE, TRUE, 0);
+  gtk_widget_set_sensitive (ft_rez_hp_b, FALSE);
   gtk_scale_set_value_pos (GTK_SCALE (ft_rez_hp_b), GTK_POS_LEFT);
+  gtk_scale_set_digits (GTK_SCALE (ft_rez_hp_b), 2);
 
   g_signal_connect ((gpointer) ft_bias_a, "value_changed",
                     G_CALLBACK (on_ft_bias_a_value_changed),
                     NULL);
+  g_signal_connect ((gpointer) ft_bias_a_hp, "value_changed",
+                    G_CALLBACK (on_ft_bias_a_hp_value_changed),
+                    NULL);
   g_signal_connect ((gpointer) ft_bias_b, "value_changed",
                     G_CALLBACK (on_ft_bias_b_value_changed),
+                    NULL);
+  g_signal_connect ((gpointer) ft_bias_b_hp, "value_changed",
+                    G_CALLBACK (on_ft_bias_b_hp_value_changed),
                     NULL);
   g_signal_connect ((gpointer) ft_rez_lp_a, "value_changed",
                     G_CALLBACK (on_ft_rez_lp_a_value_changed),
@@ -5557,14 +5603,18 @@ create_filter_tuning (void)
   GLADE_HOOKUP_OBJECT (filter_tuning, hbox66, "hbox66");
   GLADE_HOOKUP_OBJECT (filter_tuning, vbox160, "vbox160");
   GLADE_HOOKUP_OBJECT (filter_tuning, label319, "label319");
+  GLADE_HOOKUP_OBJECT (filter_tuning, label326, "label326");
   GLADE_HOOKUP_OBJECT (filter_tuning, label320, "label320");
+  GLADE_HOOKUP_OBJECT (filter_tuning, label325, "label325");
   GLADE_HOOKUP_OBJECT (filter_tuning, label321, "label321");
   GLADE_HOOKUP_OBJECT (filter_tuning, label322, "label322");
   GLADE_HOOKUP_OBJECT (filter_tuning, label323, "label323");
   GLADE_HOOKUP_OBJECT (filter_tuning, label324, "label324");
   GLADE_HOOKUP_OBJECT (filter_tuning, vbox161, "vbox161");
   GLADE_HOOKUP_OBJECT (filter_tuning, ft_bias_a, "ft_bias_a");
+  GLADE_HOOKUP_OBJECT (filter_tuning, ft_bias_a_hp, "ft_bias_a_hp");
   GLADE_HOOKUP_OBJECT (filter_tuning, ft_bias_b, "ft_bias_b");
+  GLADE_HOOKUP_OBJECT (filter_tuning, ft_bias_b_hp, "ft_bias_b_hp");
   GLADE_HOOKUP_OBJECT (filter_tuning, ft_rez_lp_a, "ft_rez_lp_a");
   GLADE_HOOKUP_OBJECT (filter_tuning, ft_rez_hp_a, "ft_rez_hp_a");
   GLADE_HOOKUP_OBJECT (filter_tuning, ft_rez_lp_b, "ft_rez_lp_b");
