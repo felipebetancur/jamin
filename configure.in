@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_INIT(configure.in)
-AM_INIT_AUTOMAKE(jamin, 0.8.30)
+AM_INIT_AUTOMAKE(jamin, 0.8.31)
 AM_CONFIG_HEADER(config.h)
 AM_MAINTAINER_MODE
 
@@ -97,6 +97,8 @@ AC_CHECK_FUNCS([atexit])
 
 CATALOGS=ru.po
 AC_SUBST(CATALOGS)
+POFILES=ru.po
+AC_SUBST(POFILES)
 
 AC_OUTPUT([
 Makefile
