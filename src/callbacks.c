@@ -780,3 +780,10 @@ on_comp_kn_3_value_changed             (GtkRange        *range,
         gtk_label_set_label (l_high_knee_lbl, "Soft");
       }
 }
+
+void
+on_out_trim_scale_value_changed        (GtkRange        *range,
+                                        gpointer         user_data)
+{
+	limiter.attenuation = gtk_range_get_adjustment(range)->value;
+}

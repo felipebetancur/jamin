@@ -185,3 +185,7 @@ on_mid_knee_lbl_realize                (GtkWidget       *widget,
 void
 on_high_knee_lbl_realize               (GtkWidget       *widget,
                                         gpointer         user_data);
+
+void
+on_out_trim_scale_value_changed        (GtkRange        *range,
+                                        gpointer         user_data);

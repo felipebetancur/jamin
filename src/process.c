@@ -236,8 +236,6 @@ int process(jack_nframes_t nframes, void *arg)
 
     if (!lim_connected) {
 	lim_connect(lim_plugin, &limiter, out[0], out[1]);
-	//plugin_connect_port(lim_plugin, limiter.handle, LIM_DELAY,
-	//		    &limiter_delay);
 	lim_connected = 1;
 	//printf("connected the limiter...\n");
     }
