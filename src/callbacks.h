@@ -515,3 +515,11 @@ gboolean
 stop_toggle                            (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
+
+void
+on_EQ_cureve_lbl_realize               (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_EQ_curve_lbl_realize                (GtkWidget       *widget,
+                                        gpointer         user_data);

@@ -47,10 +47,10 @@ create_window1 (void)
   GtkWidget *vbox78;
   GtkWidget *notebook1;
   GtkWidget *vbox99;
-  GtkWidget *frame9;
   GtkWidget *EQ_curve_event_box;
   GtkWidget *alignment6;
   GtkWidget *EQ_curve;
+  GtkWidget *eventbox62;
   GtkWidget *EQ_curve_lbl;
   GtkWidget *label47;
   GtkWidget *hbox21;
@@ -204,7 +204,7 @@ create_window1 (void)
   GtkWidget *geq_max_gain_spinner;
   GtkWidget *graphic_lbl;
   GtkWidget *frame13;
-  GtkWidget *parametric_lbl;
+  GtkWidget *paragraphic_lbl;
   GtkWidget *frame14;
   GtkWidget *hbox39;
   GtkWidget *optionmenu1;
@@ -426,13 +426,13 @@ create_window1 (void)
   gtk_widget_set_name (bighbox, "bighbox");
   gtk_widget_show (bighbox);
   gtk_container_add (GTK_CONTAINER (alignment2), bighbox);
-  gtk_widget_set_size_request (bighbox, 760, 635);
+  gtk_widget_set_size_request (bighbox, 800, 635);
 
   vbox1 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox1, "vbox1");
   gtk_widget_show (vbox1);
   gtk_box_pack_start (GTK_BOX (bighbox), vbox1, FALSE, FALSE, 0);
-  gtk_widget_set_size_request (vbox1, 760, 635);
+  gtk_widget_set_size_request (vbox1, 745, 635);
 
   hbox13 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox13, "hbox13");
@@ -523,15 +523,11 @@ create_window1 (void)
   gtk_container_add (GTK_CONTAINER (notebook1), vbox99);
   gtk_widget_set_size_request (vbox99, 30, 160);
 
-  frame9 = gtk_frame_new (NULL);
-  gtk_widget_set_name (frame9, "frame9");
-  gtk_widget_show (frame9);
-  gtk_box_pack_start (GTK_BOX (vbox99), frame9, TRUE, TRUE, 0);
-
   EQ_curve_event_box = gtk_event_box_new ();
   gtk_widget_set_name (EQ_curve_event_box, "EQ_curve_event_box");
   gtk_widget_show (EQ_curve_event_box);
-  gtk_container_add (GTK_CONTAINER (frame9), EQ_curve_event_box);
+  gtk_box_pack_start (GTK_BOX (vbox99), EQ_curve_event_box, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (EQ_curve_event_box, 0, 0);
 
   alignment6 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_widget_set_name (alignment6, "alignment6");
@@ -544,11 +540,16 @@ create_window1 (void)
   gtk_container_add (GTK_CONTAINER (alignment6), EQ_curve);
   gtk_widget_set_events (EQ_curve, GDK_POINTER_MOTION_MASK);
 
-  EQ_curve_lbl = gtk_label_new (_("     "));
+  eventbox62 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox62, "eventbox62");
+  gtk_widget_show (eventbox62);
+  gtk_box_pack_start (GTK_BOX (vbox99), eventbox62, FALSE, FALSE, 0);
+
+  EQ_curve_lbl = gtk_label_new ("");
   gtk_widget_set_name (EQ_curve_lbl, "EQ_curve_lbl");
   gtk_widget_show (EQ_curve_lbl);
-  gtk_frame_set_label_widget (GTK_FRAME (frame9), EQ_curve_lbl);
-  gtk_label_set_justify (GTK_LABEL (EQ_curve_lbl), GTK_JUSTIFY_LEFT);
+  gtk_container_add (GTK_CONTAINER (eventbox62), EQ_curve_lbl);
+  gtk_widget_set_size_request (EQ_curve_lbl, 0, 15);
 
   label47 = gtk_label_new (_("HDEQ"));
   gtk_widget_set_name (label47, "label47");
@@ -1431,11 +1432,11 @@ create_window1 (void)
   gtk_widget_show (frame13);
   gtk_box_pack_start (GTK_BOX (vbox122), frame13, TRUE, FALSE, 0);
 
-  parametric_lbl = gtk_label_new (_("Parametric"));
-  gtk_widget_set_name (parametric_lbl, "parametric_lbl");
-  gtk_widget_show (parametric_lbl);
-  gtk_frame_set_label_widget (GTK_FRAME (frame13), parametric_lbl);
-  gtk_label_set_justify (GTK_LABEL (parametric_lbl), GTK_JUSTIFY_LEFT);
+  paragraphic_lbl = gtk_label_new (_("Paragraphic"));
+  gtk_widget_set_name (paragraphic_lbl, "paragraphic_lbl");
+  gtk_widget_show (paragraphic_lbl);
+  gtk_frame_set_label_widget (GTK_FRAME (frame13), paragraphic_lbl);
+  gtk_label_set_justify (GTK_LABEL (paragraphic_lbl), GTK_JUSTIFY_LEFT);
 
   frame14 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame14, "frame14");
@@ -3101,10 +3102,10 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, vbox78, "vbox78");
   GLADE_HOOKUP_OBJECT (window1, notebook1, "notebook1");
   GLADE_HOOKUP_OBJECT (window1, vbox99, "vbox99");
-  GLADE_HOOKUP_OBJECT (window1, frame9, "frame9");
   GLADE_HOOKUP_OBJECT (window1, EQ_curve_event_box, "EQ_curve_event_box");
   GLADE_HOOKUP_OBJECT (window1, alignment6, "alignment6");
   GLADE_HOOKUP_OBJECT (window1, EQ_curve, "EQ_curve");
+  GLADE_HOOKUP_OBJECT (window1, eventbox62, "eventbox62");
   GLADE_HOOKUP_OBJECT (window1, EQ_curve_lbl, "EQ_curve_lbl");
   GLADE_HOOKUP_OBJECT (window1, label47, "label47");
   GLADE_HOOKUP_OBJECT (window1, hbox21, "hbox21");
@@ -3256,7 +3257,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, geq_max_gain_spinner, "geq_max_gain_spinner");
   GLADE_HOOKUP_OBJECT (window1, graphic_lbl, "graphic_lbl");
   GLADE_HOOKUP_OBJECT (window1, frame13, "frame13");
-  GLADE_HOOKUP_OBJECT (window1, parametric_lbl, "parametric_lbl");
+  GLADE_HOOKUP_OBJECT (window1, paragraphic_lbl, "paragraphic_lbl");
   GLADE_HOOKUP_OBJECT (window1, frame14, "frame14");
   GLADE_HOOKUP_OBJECT (window1, hbox39, "hbox39");
   GLADE_HOOKUP_OBJECT (window1, optionmenu1, "optionmenu1");
