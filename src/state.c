@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.52 2004/05/06 09:42:59 theno23 Exp $
+ *  $Id: state.c,v 1.53 2004/05/06 09:49:43 theno23 Exp $
  */
 
 #include <stdio.h>
@@ -505,7 +505,9 @@ void s_save_session (const char *fname)
 // XXX Jan, these need to be replaced with the real, live values 
     s_save_global_int(doc, "mode", SPEC_POST_EQ);
     s_save_global_float(doc, "ct", 1.0);
+//  ...
 
+    /* record the current gang state of the compressor controls */
     for (i = 0 ; i < XO_BANDS ; i++) {
         s_save_global_gang(doc, "at", i, comp_at_ganged(i));
         s_save_global_gang(doc, "re", i, comp_re_ganged(i));
