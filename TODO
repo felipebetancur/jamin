@@ -13,19 +13,23 @@ TO BE DECIDED (owner)
 
 TODO (owner)
 
-- Commit documentation to CVS (Ron)
-- Finish context sensitive help verbiage (everyone)
+- commit documentation to CVS (Ron)
+- finish context sensitive help verbiage (everyone)
 - set JACK port latencies correctly (Jack, Steve)
-
-TODO -- post 0.8 (owner)
-
-- XML parser error/warning reporting (Steve)
+- error and debug message rationalization (???)
+	IF_DEBUG(), -v option, error dialogue
+- allow jamin to run (disconnected) without JACK server (???)
+	connect (or reconnect) at any time
+- i18n cleanup (???)
+- test automation (???)
+- scene automation -- MIDI? (???)
+- bypass / solo for bands (Jan, Steve)
+- bypass for components (everyone)
+- backend / UI seperation (everyone)
 
 TO THINK ABOUT
 
 - making the DocBook/XML documentation compatible with Yelp (Alexandre)
-- error and debug message rationalization, IF_DEBUG(), -v option
-	maybe incude error dialogue?
 - add test script directory (Jack)
 
 
@@ -56,3 +60,4 @@ CLOSED (date)
 - make JAMin survive denormals and so on (2003/12/09)
 - fix crash on startup using gcc-2.95.4 (2003/12/13)
 - Correct for limiter latency in bypass (2003/12/??)
+- XML parser error/warning reporting (2004/01/10
