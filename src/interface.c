@@ -227,19 +227,17 @@ create_window1 (void)
   GtkWidget *hbox41;
   GtkWidget *center_left_hbox;
   GtkWidget *hbox45;
-  GtkWidget *table23;
-  GtkWidget *eventbox57;
-  GtkWidget *rev;
-  GtkWidget *eventbox59;
-  GtkWidget *fwd;
-  GtkWidget *eventbox60;
+  GtkWidget *transport_controls;
+  GtkWidget *rewind_button;
+  GtkWidget *rewind;
+  GtkWidget *play_button;
   GtkWidget *play;
   AtkRelationSet *tmp_relation_set;
   AtkRelationType tmp_relationship;
   AtkRelation *tmp_relation;
   AtkObject *play_relation_targets[1];
   AtkObject *atko;
-  GtkWidget *eventbox61;
+  GtkWidget *stop_button;
   GtkWidget *stop;
   AtkObject *stop_relation_targets[1];
   GtkWidget *sysinfo_hbox;
@@ -1571,63 +1569,50 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (center_left_hbox), hbox45, TRUE, TRUE, 0);
   gtk_widget_set_size_request (hbox45, 95, 64);
 
-  table23 = gtk_table_new (2, 2, FALSE);
-  gtk_widget_set_name (table23, "table23");
-  gtk_widget_show (table23);
-  gtk_box_pack_start (GTK_BOX (hbox45), table23, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (table23, 36, 40);
+  transport_controls = gtk_table_new (2, 2, FALSE);
+  gtk_widget_set_name (transport_controls, "transport_controls");
+  gtk_widget_show (transport_controls);
+  gtk_box_pack_start (GTK_BOX (hbox45), transport_controls, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (transport_controls, 36, 40);
 
-  eventbox57 = gtk_event_box_new ();
-  gtk_widget_set_name (eventbox57, "eventbox57");
-  gtk_widget_show (eventbox57);
-  gtk_table_attach (GTK_TABLE (table23), eventbox57, 0, 1, 0, 1,
+  rewind_button = gtk_event_box_new ();
+  gtk_widget_set_name (rewind_button, "rewind_button");
+  gtk_widget_show (rewind_button);
+  gtk_table_attach (GTK_TABLE (transport_controls), rewind_button, 0, 1, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-  gtk_tooltips_set_tip (tooltips, eventbox57, _("rewind transport"), NULL);
+  gtk_tooltips_set_tip (tooltips, rewind_button, _("rewind transport"), NULL);
 
-  rev = gtk_image_new_from_stock ("gtk-go-back", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_set_name (rev, "rev");
-  gtk_widget_show (rev);
-  gtk_container_add (GTK_CONTAINER (eventbox57), rev);
+  rewind = gtk_image_new_from_stock ("gtk-goto-first", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_name (rewind, "rewind");
+  gtk_widget_show (rewind);
+  gtk_container_add (GTK_CONTAINER (rewind_button), rewind);
 
-  eventbox59 = gtk_event_box_new ();
-  gtk_widget_set_name (eventbox59, "eventbox59");
-  gtk_widget_show (eventbox59);
-  gtk_table_attach (GTK_TABLE (table23), eventbox59, 0, 1, 1, 2,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-  gtk_tooltips_set_tip (tooltips, eventbox59, _("fast forward transport"), NULL);
-
-  fwd = gtk_image_new_from_stock ("gtk-go-forward", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_set_name (fwd, "fwd");
-  gtk_widget_show (fwd);
-  gtk_container_add (GTK_CONTAINER (eventbox59), fwd);
-
-  eventbox60 = gtk_event_box_new ();
-  gtk_widget_set_name (eventbox60, "eventbox60");
-  gtk_widget_show (eventbox60);
-  gtk_table_attach (GTK_TABLE (table23), eventbox60, 1, 2, 0, 1,
+  play_button = gtk_event_box_new ();
+  gtk_widget_set_name (play_button, "play_button");
+  gtk_widget_show (play_button);
+  gtk_table_attach (GTK_TABLE (transport_controls), play_button, 1, 2, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_tooltips_set_tip (tooltips, eventbox60, _("play transport"), NULL);
+  gtk_tooltips_set_tip (tooltips, play_button, _("play transport"), NULL);
 
-  play = create_pixmap (window1, "play.xpm");
+  play = gtk_image_new_from_stock ("gtk-go-forward", GTK_ICON_SIZE_BUTTON);
   gtk_widget_set_name (play, "play");
   gtk_widget_show (play);
-  gtk_container_add (GTK_CONTAINER (eventbox60), play);
+  gtk_container_add (GTK_CONTAINER (play_button), play);
 
-  eventbox61 = gtk_event_box_new ();
-  gtk_widget_set_name (eventbox61, "eventbox61");
-  gtk_widget_show (eventbox61);
-  gtk_table_attach (GTK_TABLE (table23), eventbox61, 1, 2, 1, 2,
+  stop_button = gtk_event_box_new ();
+  gtk_widget_set_name (stop_button, "stop_button");
+  gtk_widget_show (stop_button);
+  gtk_table_attach (GTK_TABLE (transport_controls), stop_button, 1, 2, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_tooltips_set_tip (tooltips, eventbox61, _("stop transport"), NULL);
+  gtk_tooltips_set_tip (tooltips, stop_button, _("stop transport"), NULL);
 
-  stop = create_pixmap (window1, "stop.xpm");
+  stop = gtk_image_new_from_stock ("gtk-stop", GTK_ICON_SIZE_BUTTON);
   gtk_widget_set_name (stop, "stop");
   gtk_widget_show (stop);
-  gtk_container_add (GTK_CONTAINER (eventbox61), stop);
+  gtk_container_add (GTK_CONTAINER (stop_button), stop);
 
   sysinfo_hbox = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (sysinfo_hbox, "sysinfo_hbox");
@@ -2877,16 +2862,13 @@ create_window1 (void)
   g_signal_connect ((gpointer) low2mid_lbl, "realize",
                     G_CALLBACK (on_low2mid_lbl_realize),
                     NULL);
-  g_signal_connect ((gpointer) rev, "button_press_event",
-                    G_CALLBACK (rev_button),
+  g_signal_connect ((gpointer) rewind_button, "button_press_event",
+                    G_CALLBACK (rewind_transport),
                     NULL);
-  g_signal_connect ((gpointer) fwd, "button_press_event",
-                    G_CALLBACK (fwd_button),
-                    NULL);
-  g_signal_connect ((gpointer) play, "button_press_event",
+  g_signal_connect ((gpointer) play_button, "button_press_event",
                     G_CALLBACK (play_toggle),
                     NULL);
-  g_signal_connect ((gpointer) stop, "button_press_event",
+  g_signal_connect ((gpointer) stop_button, "button_press_event",
                     G_CALLBACK (stop_toggle),
                     NULL);
   g_signal_connect ((gpointer) label289, "realize",
@@ -3280,14 +3262,12 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, hbox41, "hbox41");
   GLADE_HOOKUP_OBJECT (window1, center_left_hbox, "center_left_hbox");
   GLADE_HOOKUP_OBJECT (window1, hbox45, "hbox45");
-  GLADE_HOOKUP_OBJECT (window1, table23, "table23");
-  GLADE_HOOKUP_OBJECT (window1, eventbox57, "eventbox57");
-  GLADE_HOOKUP_OBJECT (window1, rev, "rev");
-  GLADE_HOOKUP_OBJECT (window1, eventbox59, "eventbox59");
-  GLADE_HOOKUP_OBJECT (window1, fwd, "fwd");
-  GLADE_HOOKUP_OBJECT (window1, eventbox60, "eventbox60");
+  GLADE_HOOKUP_OBJECT (window1, transport_controls, "transport_controls");
+  GLADE_HOOKUP_OBJECT (window1, rewind_button, "rewind_button");
+  GLADE_HOOKUP_OBJECT (window1, rewind, "rewind");
+  GLADE_HOOKUP_OBJECT (window1, play_button, "play_button");
   GLADE_HOOKUP_OBJECT (window1, play, "play");
-  GLADE_HOOKUP_OBJECT (window1, eventbox61, "eventbox61");
+  GLADE_HOOKUP_OBJECT (window1, stop_button, "stop_button");
   GLADE_HOOKUP_OBJECT (window1, stop, "stop");
   GLADE_HOOKUP_OBJECT (window1, sysinfo_hbox, "sysinfo_hbox");
   GLADE_HOOKUP_OBJECT (window1, vbox146, "vbox146");

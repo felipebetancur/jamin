@@ -2858,7 +2858,7 @@
 				      <property name="spacing">0</property>
 
 				      <child>
-					<widget class="GtkTable" id="table23">
+					<widget class="GtkTable" id="transport_controls">
 					  <property name="width_request">36</property>
 					  <property name="height_request">40</property>
 					  <property name="visible">True</property>
@@ -2869,20 +2869,20 @@
 					  <property name="column_spacing">0</property>
 
 					  <child>
-					    <widget class="GtkEventBox" id="eventbox57">
+					    <widget class="GtkEventBox" id="rewind_button">
 					      <property name="visible">True</property>
 					      <property name="tooltip" translatable="yes">rewind transport</property>
+					      <signal name="button_press_event" handler="rewind_transport" last_modification_time="Thu, 26 Jun 2003 03:59:53 GMT"/>
 
 					      <child>
-						<widget class="GtkImage" id="rev">
+						<widget class="GtkImage" id="rewind">
 						  <property name="visible">True</property>
-						  <property name="stock">gtk-go-back</property>
+						  <property name="stock">gtk-goto-first</property>
 						  <property name="icon_size">4</property>
 						  <property name="xalign">0.5</property>
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
-						  <signal name="button_press_event" handler="rev_button" last_modification_time="Thu, 19 Jun 2003 12:56:42 GMT"/>
 						</widget>
 					      </child>
 					    </widget>
@@ -2895,12 +2895,13 @@
 					  </child>
 
 					  <child>
-					    <widget class="GtkEventBox" id="eventbox59">
+					    <widget class="GtkEventBox" id="play_button">
 					      <property name="visible">True</property>
-					      <property name="tooltip" translatable="yes">fast forward transport</property>
+					      <property name="tooltip" translatable="yes">play transport</property>
+					      <signal name="button_press_event" handler="play_toggle" last_modification_time="Thu, 26 Jun 2003 03:43:28 GMT"/>
 
 					      <child>
-						<widget class="GtkImage" id="fwd">
+						<widget class="GtkImage" id="play">
 						  <property name="visible">True</property>
 						  <property name="stock">gtk-go-forward</property>
 						  <property name="icon_size">4</property>
@@ -2908,36 +2909,9 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
-						  <signal name="button_press_event" handler="fwd_button" last_modification_time="Thu, 19 Jun 2003 12:56:29 GMT"/>
-						</widget>
-					      </child>
-					    </widget>
-					    <packing>
-					      <property name="left_attach">0</property>
-					      <property name="right_attach">1</property>
-					      <property name="top_attach">1</property>
-					      <property name="bottom_attach">2</property>
-					      <property name="x_options">fill</property>
-					    </packing>
-					  </child>
-
-					  <child>
-					    <widget class="GtkEventBox" id="eventbox60">
-					      <property name="visible">True</property>
-					      <property name="tooltip" translatable="yes">play transport</property>
-
-					      <child>
-						<widget class="GtkImage" id="play">
-						  <property name="visible">True</property>
-						  <property name="pixbuf">play.xpm</property>
-						  <property name="xalign">0.5</property>
-						  <property name="yalign">0.5</property>
-						  <property name="xpad">0</property>
-						  <property name="ypad">0</property>
 						  <accessibility>
 						    <atkrelation target="play" type="embeds"/>
 						  </accessibility>
-						  <signal name="button_press_event" handler="play_toggle" last_modification_time="Thu, 19 Jun 2003 12:57:28 GMT"/>
 						</widget>
 					      </child>
 					    </widget>
@@ -2951,14 +2925,16 @@
 					  </child>
 
 					  <child>
-					    <widget class="GtkEventBox" id="eventbox61">
+					    <widget class="GtkEventBox" id="stop_button">
 					      <property name="visible">True</property>
 					      <property name="tooltip" translatable="yes">stop transport</property>
+					      <signal name="button_press_event" handler="stop_toggle" last_modification_time="Thu, 26 Jun 2003 03:44:42 GMT"/>
 
 					      <child>
 						<widget class="GtkImage" id="stop">
 						  <property name="visible">True</property>
-						  <property name="pixbuf">stop.xpm</property>
+						  <property name="stock">gtk-stop</property>
+						  <property name="icon_size">4</property>
 						  <property name="xalign">0.5</property>
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
@@ -2966,7 +2942,6 @@
 						  <accessibility>
 						    <atkrelation target="stop" type="embeds"/>
 						  </accessibility>
-						  <signal name="button_press_event" handler="stop_toggle" last_modification_time="Thu, 19 Jun 2003 12:57:45 GMT"/>
 						</widget>
 					      </child>
 					    </widget>

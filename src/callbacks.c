@@ -2737,26 +2737,6 @@ on_mid_meter_lbl_realize               (GtkWidget       *widget,
 
 
 gboolean
-rev_button                             (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data)
-{
-    transport_rewind();
-    return FALSE;
-}
-
-
-gboolean
-fwd_button                             (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data)
-{
-    transport_play();
-    return FALSE;
-}
-
-
-gboolean
 play_toggle                            (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
@@ -2774,3 +2754,13 @@ stop_toggle                            (GtkWidget       *widget,
     transport_stop();
     return FALSE;
 }
+
+gboolean
+rewind_transport                       (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+    transport_rewind();
+    return FALSE;
+}
+

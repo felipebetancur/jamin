@@ -523,3 +523,28 @@ on_EQ_cureve_lbl_realize               (GtkWidget       *widget,
 void
 on_EQ_curve_lbl_realize                (GtkWidget       *widget,
                                         gpointer         user_data);
+
+gboolean
+stop_toggle                            (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+rewind_button                          (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+play_toggle                            (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+stop_toggle                            (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+rewind_transport                       (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);

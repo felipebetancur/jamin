@@ -137,9 +137,12 @@ void transport_play()
 {
     if (transport_master()) {
 	tpt.info.transport_state = JackTransportRolling;
-	fprintf(stderr,"Transport started.");
-    } else
-	fprintf(stderr,"Not transport master.");
+	IF_DEBUG(DBG_TERSE,
+		 fprintf(stderr,"Transport started.\n"));
+    } else {
+	IF_DEBUG(DBG_TERSE,
+		 fprintf(stderr,"Not transport master.\n"));
+    }
 }
 
 
@@ -148,9 +151,12 @@ void transport_rewind()
     if (transport_master()) {
 	tpt.info.transport_state = JackTransportStopped;
 	tpt.info.frame = 0;
-	fprintf(stderr,"Transport rewound.");
-    } else
-	fprintf(stderr,"Not transport master.");
+	IF_DEBUG(DBG_TERSE,
+		 fprintf(stderr,"Transport rewound.\n"));
+    } else {
+	IF_DEBUG(DBG_TERSE,
+		 fprintf(stderr,"Not transport master.\n"));
+    }
 }
 
 
@@ -158,7 +164,10 @@ void transport_stop()
 {
     if (transport_master()) {
 	tpt.info.transport_state = JackTransportStopped;
-	fprintf(stderr,"Transport stopped.");
-    } else
-	fprintf(stderr,"Not transport master.");
+	IF_DEBUG(DBG_TERSE,
+		 fprintf(stderr,"Transport stopped.\n"));
+    } else {
+	IF_DEBUG(DBG_TERSE,
+		 fprintf(stderr,"Not transport master.\n"));
+    }
 }
