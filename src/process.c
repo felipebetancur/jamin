@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.37 2003/12/21 03:31:16 joq Exp $
+ *  $Id: process.c,v 1.38 2004/01/03 12:43:28 theno23 Exp $
  */
 
 #include <math.h>
@@ -30,6 +30,7 @@
 #include "scenes.h"
 #include "intrim.h"
 #include "io.h"
+#include "db.h"
 
 #define BUF_MASK   (BINS-1)		/* BINS is a power of two */
 
@@ -64,6 +65,8 @@ static fft_data *comp_tmp;
 static float *out_tmp[NCHANNELS][XO_NBANDS];
 static float sw_m_gain[XO_NBANDS];
 static float sw_s_gain[XO_NBANDS];
+static float sb_l_gain[XO_NBANDS];
+static float sb_r_gain[XO_NBANDS];
 static float limiter_gain = 1.0f;
 
 static float ws_boost_wet = 0.0f;
@@ -474,6 +477,14 @@ void process_set_stereo_width(int xo_band, float width)
     sw_s_gain[xo_band] = sinf((width + 1.0f) * 0.78539815f) * 0.7071067811f;
 }
 
+void process_set_stereo_balance(int xo_band, float bias)
+{
+    assert(xo_band >= 0 && xo_band < XO_NBANDS);
+
+    sb_l_gain[xo_band] = db2lin(bias * -0.5f);
+    sb_r_gain[xo_band] = db2lin(bias * 0.5f);
+}
+
 void run_width(int xo_band, float *left, float *right, int nframes)
 {
     unsigned int pos;
@@ -482,8 +493,8 @@ void run_width(int xo_band, float *left, float *right, int nframes)
 	const float mid = (left[pos] + right[pos]) * sw_m_gain[xo_band];
 	const float side = (left[pos] - right[pos]) * sw_s_gain[xo_band];
 
-	left[pos] = mid + side;
-	right[pos] = mid - side;
+	left[pos] = (mid + side) * sb_l_gain[xo_band];
+	right[pos] = (mid - side) * sb_r_gain[xo_band];
     }
 }
 

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: stereo.c,v 1.3 2004/01/03 00:52:34 jdepner Exp $
+ *  $Id: stereo.c,v 1.4 2004/01/03 12:43:28 theno23 Exp $
  */
 
 #include <stdio.h>
@@ -56,6 +56,7 @@ void bind_stereo()
 	process_set_stereo_width(i, 0.0f);
 
         s_set_callback(S_STEREO_PAN(i), stereo_pan_cb);
+	process_set_stereo_balance(i, 0.0f);
         update_band_pan_label(i, 0.0);
     }
 }
@@ -72,5 +73,6 @@ void stereo_pan_cb(int id, float value)
 {
     int band = id - S_STEREO_PAN(0);
 
+    process_set_stereo_balance(band, value);
     update_band_pan_label(band, value);
 }
