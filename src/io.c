@@ -190,7 +190,7 @@ void io_list_trace()
     t = tr_next;
     do {
 	if (tr_buf[t].message[0] != '\0')
-	    fprintf(stderr, "%s trace [%ld]: %s\n", PACKAGE,
+	    fprintf(stderr, "%s trace [%lu]: %s\n", PACKAGE,
 		    tr_buf[t].timestamp, tr_buf[t].message);
 	t = (t+1) & (TR_BUFSIZE-1);
     } while (t != tr_next);
