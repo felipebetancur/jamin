@@ -170,7 +170,7 @@ gtk_meterscale_realize (GtkWidget *widget)
   gtk_style_set_background (widget->style, widget->window, GTK_STATE_ACTIVE);
 
   pfd = pango_font_description_new();
-  pango_font_description_set_family(pfd, "default");
+  pango_font_description_set_family(pfd, "sans");
   pango_font_description_set_size(pfd, METERSCALE_MAX_FONT_SIZE * PANGO_SCALE);
   pango_context_set_font_description(pc, pfd);
   pl = pango_layout_new(pc);
@@ -301,7 +301,7 @@ static void meterscale_draw_notch_label(GtkMeterScale *meterscale, float db,
 	    size = METERSCALE_MAX_FONT_SIZE;
 	}
 	pfd = pango_font_description_new();
-	pango_font_description_set_family(pfd, "default");
+	pango_font_description_set_family(pfd, "sans");
 	pango_font_description_set_size(pfd, size * PANGO_SCALE);
 	pango_context_set_font_description(pc, pfd);
 
