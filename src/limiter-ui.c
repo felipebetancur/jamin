@@ -32,7 +32,7 @@ void bind_limiter()
     s_set_adjustment(S_LIM_TIME, lh_adj);
     s_set_callback(S_LIM_TIME, lh_changed);
 
-    scale = lookup_widget(main_window, "out_trim_scale");
+    scale = lookup_widget(main_window, "lim_out_trim_scale");
     ll_adj = gtk_range_get_adjustment(GTK_RANGE(scale));
     ll_label = GTK_LABEL(lookup_widget(main_window, "limit_val_label"));
     s_set_adjustment(S_LIM_LIMIT, ll_adj);
