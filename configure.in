@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_INIT(configure.in)
-AM_INIT_AUTOMAKE(jamin, 0.95.0-rc6)
+AM_INIT_AUTOMAKE(jamin, 0.95.0-rc7)
 AM_CONFIG_HEADER(config.h)
 AM_MAINTAINER_MODE
 
@@ -36,8 +36,11 @@ AC_CHECK_FUNC(sched_getscheduler,
 	[AC_DEFINE(HAVE_POSIX_SCHED,,[POSIX scheduler support])])
 
 PKG_CHECK_MODULES(JACK, jack >= 0.80.0)
+AC_CHECK_LIB(jack,jack_client_create_thread,
+	[AC_DEFINE(HAVE_JACK_CLIENT_CREATE_THREAD,,[newer JACK thread creation])]
+	[AC_DEFINE(HAVE_JACK_CREATE_THREAD,,[JACK thread creation support])])
 AC_CHECK_LIB(jack,jack_create_thread,
-	[AC_DEFINE(HAVE_JACK_CREATE_THREAD,,[JACK supports thread creation])])
+	[AC_DEFINE(HAVE_JACK_CREATE_THREAD,,[older JACK thread creation support])])
 AC_CHECK_LIB(jack,jack_ringbuffer_create,
 	[AC_DEFINE(HAVE_JACK_RINGBUFFER,,[JACK has ringbuffer support])])
 AC_CHECK_LIB(jack,jack_client_name_size,

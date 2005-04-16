@@ -951,10 +951,19 @@ int io_create_dsp_thread()
     } else
 	IF_DEBUG(DBG_TERSE, io_trace("JACK subsystem not realtime"));
 
-#ifdef HAVE_JACK_CREATE_THREAD
+#ifdef HAVE_JACK_CREATE_THREAD		/* JACK thread support */
+#ifdef HAVE_JACK_CLIENT_CREATE_THREAD	/* newer interface */
+
+    rc = jack_client_create_thread(client, &dsp_thread, rt_param.sched_priority,
+				   jst.realtime, io_dsp_thread, NULL);
+
+#else  /* older interface */
 
     rc = jack_create_thread(&dsp_thread, rt_param.sched_priority,
 			    jst.realtime, io_dsp_thread, NULL);
+
+#endif /* HAVE_JACK_CLIENT_CREATE_THREAD */
+
     switch (rc) {
     case 0:
 	IF_DEBUG(DBG_TERSE, io_trace("DSP thread created"));
@@ -966,7 +975,7 @@ int io_create_dsp_thread()
 	io_errlog(rc, "error creating DSP thread");
     }
 
-#else  /* !HAVE_JACK_CREATE_THREAD */
+#else  /* no JACK thread creation support */
 
     rc = pthread_attr_setschedpolicy(&attributes, policy);
     if (rc) {
