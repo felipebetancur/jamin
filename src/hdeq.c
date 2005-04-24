@@ -95,9 +95,14 @@
 #include "preferences.h"
 
 
+/*  What I'm referring to as notches are actually slidable parametric EQ 
+    controls.  */
+
 #define EQ_SPECTRUM_RANGE             90.0
 #define XOVER_HANDLE_SIZE             10
 #define XOVER_HANDLE_HALF_SIZE        (XOVER_HANDLE_SIZE / 2)
+#define NOTCH_CENTER_HEIGHT           32
+#define NOTCH_CENTER_HALF_HEIGHT      (NOTCH_CENTER_HEIGHT / 2)
 #define NOTCH_HANDLE_HEIGHT           16
 #define NOTCH_HANDLE_HALF_HEIGHT      (NOTCH_HANDLE_HEIGHT / 2)
 #define NOTCH_HANDLE_WIDTH            8
@@ -139,6 +144,12 @@ static float           EQ_curve_range_x, EQ_curve_range_y, EQ_curve_width,
                        EQ_notch_gain[NOTCHES], EQ_x_notched[EQ_INTERP + 1], 
                        EQ_y_notched[EQ_INTERP + 1], EQ_gain_lower = -12.0, 
                        EQ_gain_upper = 12.0, EQ_notch_default[NOTCHES];
+
+/*  Note the array dimensions for the parametric notch handles.  Here's how 
+    they're laid out - first dimension [2] = X and Y indexes; second dimension [3] =
+    left handle, center handle, right handle (left shelf 0 is 0, right shelf 2 is
+    EQ_CURVE_width); third dimension is notch number from left (0).  */
+
 static int             EQ_mod = 1, EQ_drawing = 0, EQ_input_points = 0, 
                        EQ_length = 0, EQ_draw_dir = 0, 
                        comp_realized[3] = {0, 0, 0}, EQ_cleared = 1, 
@@ -1071,12 +1082,12 @@ void draw_EQ_curve ()
           }
 
         gdk_draw_rectangle (EQ_drawable, EQ_gc, TRUE, 
-            x1 - NOTCH_HANDLE_HALF_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
-            NOTCH_HANDLE_WIDTH, NOTCH_HANDLE_HEIGHT);
+            x1 - NOTCH_HANDLE_HALF_WIDTH, y1 - NOTCH_CENTER_HALF_HEIGHT, 
+            NOTCH_HANDLE_WIDTH, NOTCH_CENTER_HEIGHT);
         gdk_gc_set_foreground (EQ_gc, get_color (TEXT_COLOR));
         gdk_draw_rectangle (EQ_drawable, EQ_gc, FALSE, 
-            x1 - NOTCH_HANDLE_HALF_WIDTH, y1 - NOTCH_HANDLE_HALF_HEIGHT, 
-            NOTCH_HANDLE_WIDTH, NOTCH_HANDLE_HEIGHT);
+            x1 - NOTCH_HANDLE_HALF_WIDTH, y1 - NOTCH_CENTER_HALF_HEIGHT, 
+            NOTCH_HANDLE_WIDTH, NOTCH_CENTER_HEIGHT);
 
         EQ_notch_handle[0][0][i] = EQ_notch_handle[0][1][i] = 
             EQ_notch_handle[0][2][i]= x1;
@@ -1211,6 +1222,9 @@ void hdeq_curve_init (GtkWidget *widget)
 
 /*  Don't let the notches overlap.  */
 
+/*  notch is the notch number (0-4), new is the nearest frequency index to the cursor, 
+    q is 0 for center of notch, 1 for left handle, 2 for right handle.  */
+
 static int check_notch (int notch, int new, int q)
 {
     int         j, k, left, right, width, ret;
@@ -1241,8 +1255,12 @@ static int check_notch (int notch, int new, int q)
 
     else
       {
-        j = EQ_notch_index[notch - 1] + EQ_notch_width[notch - 1];
-        k = EQ_notch_index[notch + 1] - EQ_notch_width[notch + 1];
+        j = EQ_notch_index[notch - 1];
+        k = EQ_notch_index[notch + 1];
+
+
+        /*  Left handle  */
+
         if (q == 1)
           {
             left = new;
@@ -1251,6 +1269,10 @@ static int check_notch (int notch, int new, int q)
 
             if (EQ_notch_index[notch] - left < 5) ret = 0;
           }
+
+
+        /*  Right handle  */
+
         else if (q == 2)
           {
             right = new;
@@ -1259,6 +1281,10 @@ static int check_notch (int notch, int new, int q)
 
             if (right - EQ_notch_index[notch] < 5) ret = 0;
           }
+
+
+        /*  Center handle  */
+
         else
           {
             left = new - EQ_notch_width[notch];
@@ -1567,17 +1593,18 @@ void hdeq_curve_motion (GdkEventMotion *event)
                 diffx_l2m = abs (x - xover_handle_l2m);
                 diffx_m2h = abs (x - xover_handle_m2h);
 
+
+                /*  No point in checking for notches if we're already passing 
+                    over one of the xover bars.  */
+
                 if ((diffx_l2m <= XOVER_HANDLE_HALF_SIZE ||
                     diffx_m2h <= XOVER_HANDLE_HALF_SIZE) &&
                     (y <= XOVER_HANDLE_SIZE ||
                     y >= EQ_curve_height - XOVER_HANDLE_SIZE)) 
+                  {
                     cursor = GDK_SB_H_DOUBLE_ARROW;
-
-
-                /*  No point in checking all these if we're already passing 
-                    over one of the xover bars.  */
-
-                if (cursor != GDK_SB_H_DOUBLE_ARROW)
+                  }
+                else
                   {
                     for (i = 0 ; i < NOTCHES ; i++)
                       {
@@ -1614,7 +1641,7 @@ void hdeq_curve_motion (GdkEventMotion *event)
                         diff_notch[1] = abs (y - EQ_notch_handle[1][1][i]);
 
                         if (diff_notch[0] <= NOTCH_HANDLE_HALF_WIDTH &&
-                            diff_notch[1] <= NOTCH_HANDLE_HALF_HEIGHT)
+                            diff_notch[1] <= NOTCH_CENTER_HEIGHT)
                           {
                             /*  Shift is pressed so we can only adjust gain,
                                 therefore we want the vertical double 
@@ -1724,14 +1751,17 @@ void hdeq_curve_button_press (GdkEventButton *event)
     switch (event->button)
       {
 
-        /*  Button 1 - start drawing or end drawing unless we're over a notch
+        /*  Button 1 or 2 - start drawing or end drawing unless we're over a notch
             or xover handle in which case we will be grabbing and sliding the
-            handle in the X or X/Y direction(s).  <Shift> button 1 is for 
+            handle in the X or X/Y direction(s).  <Shift> button 1 or 2 is for 
             grabbing and sliding only in the Y direction (notch/shelf filters 
-            only - look at the motion callback).  <Ctrl> button 1 will reset 
-            shelf and notch values to 0.0.  */
+            only - look at the motion callback).  <Ctrl> button 1 or 2 will reset 
+            shelf and notch values to 0.0.  If you use button 2 you will only
+            be able to drag handles, not draw the curve.  This can make life a bit 
+            easier since you won't start drawing a curve if you miss the handle.  */
 
       case 1:
+      case 2:
 
         /*  Start drawing.  */
 
@@ -1775,11 +1805,14 @@ void hdeq_curve_button_press (GdkEventButton *event)
 
                 for (i = 0 ; i < NOTCHES ; i++)
                   {
+
+                    /*  Check the center of the notches first  */
+
                     diff_notch[0] = abs (ex - EQ_notch_handle[0][1][i]);
                     diff_notch[1] = abs (ey - EQ_notch_handle[1][1][i]);
 
                     if (diff_notch[0] <= NOTCH_HANDLE_HALF_WIDTH &&
-                        diff_notch[1] <= NOTCH_HANDLE_HALF_HEIGHT)
+                        diff_notch[1] <= NOTCH_CENTER_HALF_HEIGHT)
                       {
                         /*  Reset if <Ctrl> is pressed.  */
 
@@ -1825,10 +1858,13 @@ void hdeq_curve_button_press (GdkEventButton *event)
                       }
 
 
-                    /*  "Normal" notch handles.  */
+                    /*  "Normal" (non-shelving) notch handles.  */
 
                     if (i && i < NOTCHES - 1)
                       {
+
+                        /*  Check left handle  */
+
                         diff_notch[0] = abs (ex - EQ_notch_handle[0][0][i]);
                         diff_notch[1] = abs (ey - EQ_notch_handle[1][0][i]);
 
@@ -1843,6 +1879,8 @@ void hdeq_curve_button_press (GdkEventButton *event)
                             break;
                           }
 
+
+                        /*  Check right handle  */
 
                         diff_notch[0] = abs (ex - EQ_notch_handle[0][2][i]);
                         diff_notch[1] = abs (ey - EQ_notch_handle[1][2][i]);
@@ -1864,7 +1902,7 @@ void hdeq_curve_button_press (GdkEventButton *event)
                 /*  If we aren't over a handle we must be starting to draw 
                     the curve so mark the starting point.  */
 
-                if (!xover_active)
+                if (!xover_active && event->button == 1)
                   {
                     /*  Save the first point so we can do real narrow EQ 
                         changes.  */
@@ -1894,7 +1932,7 @@ void hdeq_curve_button_press (GdkEventButton *event)
             an "interp_pad" cushion on either side of the drawn section 
             so it will merge nicely with the old data.  */
 
-        else
+        else if (event->button == 1)
           {
             /*  If the user drew right to left we need to reverse the 
                 field.  */

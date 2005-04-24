@@ -4670,7 +4670,6 @@ create_pref_dialog (void)
   gtk_widget_set_name (pref_dialog, "pref_dialog");
   gtk_container_set_border_width (GTK_CONTAINER (pref_dialog), 10);
   gtk_window_set_title (GTK_WINDOW (pref_dialog), _("Preferences"));
-  gtk_window_set_type_hint (GTK_WINDOW (pref_dialog), GDK_WINDOW_TYPE_HINT_DIALOG);
 
   dialog_vbox1 = GTK_DIALOG (pref_dialog)->vbox;
   gtk_widget_set_name (dialog_vbox1, "dialog_vbox1");
@@ -4754,8 +4753,8 @@ create_pref_dialog (void)
   gtk_widget_show (CrossfadeTimeLabel);
   gtk_box_pack_start (GTK_BOX (hbox72), CrossfadeTimeLabel, FALSE, FALSE, 0);
 
-  CrossfadeTimeSpin_adj = gtk_adjustment_new (1, 0, 2, 0.01, 0.01, 0.01);
-  CrossfadeTimeSpin = gtk_spin_button_new (GTK_ADJUSTMENT (CrossfadeTimeSpin_adj), 1, 0);
+  CrossfadeTimeSpin_adj = gtk_adjustment_new (1, 0, 2, 0.1, 0.1, 0.1);
+  CrossfadeTimeSpin = gtk_spin_button_new (GTK_ADJUSTMENT (CrossfadeTimeSpin_adj), 1, 1);
   gtk_widget_set_name (CrossfadeTimeSpin, "CrossfadeTimeSpin");
   gtk_widget_show (CrossfadeTimeSpin);
   gtk_box_pack_start (GTK_BOX (hbox72), CrossfadeTimeSpin, TRUE, TRUE, 0);
@@ -5215,7 +5214,6 @@ create_colorselectiondialog1 (void)
   colorselectiondialog1 = gtk_color_selection_dialog_new (_("Select Color"));
   gtk_widget_set_name (colorselectiondialog1, "colorselectiondialog1");
   gtk_window_set_resizable (GTK_WINDOW (colorselectiondialog1), FALSE);
-  gtk_window_set_type_hint (GTK_WINDOW (colorselectiondialog1), GDK_WINDOW_TYPE_HINT_DIALOG);
 
   ok_button1 = GTK_COLOR_SELECTION_DIALOG (colorselectiondialog1)->ok_button;
   gtk_widget_set_name (ok_button1, "ok_button1");
@@ -5260,7 +5258,6 @@ create_scene_name_dialog (void)
   scene_name_dialog = gtk_dialog_new ();
   gtk_widget_set_name (scene_name_dialog, "scene_name_dialog");
   gtk_window_set_title (GTK_WINDOW (scene_name_dialog), _("Scene X Name"));
-  gtk_window_set_type_hint (GTK_WINDOW (scene_name_dialog), GDK_WINDOW_TYPE_HINT_DIALOG);
 
   dialog_vbox2 = GTK_DIALOG (scene_name_dialog)->vbox;
   gtk_widget_set_name (dialog_vbox2, "dialog_vbox2");
@@ -5541,7 +5538,6 @@ create_about_dialog (void)
   about_dialog = gtk_dialog_new ();
   gtk_widget_set_name (about_dialog, "about_dialog");
   gtk_window_set_title (GTK_WINDOW (about_dialog), _("About JAMin"));
-  gtk_window_set_type_hint (GTK_WINDOW (about_dialog), GDK_WINDOW_TYPE_HINT_DIALOG);
 
   dialog_vbox3 = GTK_DIALOG (about_dialog)->vbox;
   gtk_widget_set_name (dialog_vbox3, "dialog_vbox3");
