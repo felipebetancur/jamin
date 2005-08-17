@@ -6976,13 +6976,14 @@
 	      <property name="visible">True</property>
 	      <property name="label_xalign">0</property>
 	      <property name="label_yalign">0.5</property>
-	      <property name="shadow_type">GTK_SHADOW_NONE</property>
+	      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
 
 	      <child>
 		<widget class="GtkVBox" id="vbox163">
+		  <property name="border_width">6</property>
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
-		  <property name="spacing">0</property>
+		  <property name="spacing">6</property>
 
 		  <child>
 		    <widget class="GtkHBox" id="hbox70">
@@ -7014,7 +7015,7 @@
 		      <child>
 			<widget class="GtkSpinButton" id="MinGainSpin">
 			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">Set the minimum gain level for the EQ</property>
+			  <property name="tooltip" translatable="yes">Set the minimum gain level for the EQs</property>
 			  <property name="can_focus">True</property>
 			  <property name="climb_rate">1</property>
 			  <property name="digits">0</property>
@@ -7071,7 +7072,7 @@
 		      <child>
 			<widget class="GtkSpinButton" id="MaxGainSpin">
 			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">Set the maximum gain level for the EQ</property>
+			  <property name="tooltip" translatable="yes">Set the maximum gain level for the EQs</property>
 			  <property name="can_focus">True</property>
 			  <property name="climb_rate">1</property>
 			  <property name="digits">0</property>
@@ -7139,10 +7140,11 @@
 	      <property name="visible">True</property>
 	      <property name="label_xalign">0</property>
 	      <property name="label_yalign">0.5</property>
-	      <property name="shadow_type">GTK_SHADOW_NONE</property>
+	      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
 
 	      <child>
 		<widget class="GtkHBox" id="hbox72">
+		  <property name="border_width">6</property>
 		  <property name="visible">True</property>
 		  <property name="homogeneous">True</property>
 		  <property name="spacing">0</property>
@@ -7232,13 +7234,14 @@
 	      <property name="visible">True</property>
 	      <property name="label_xalign">0</property>
 	      <property name="label_yalign">0.5</property>
-	      <property name="shadow_type">GTK_SHADOW_NONE</property>
+	      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
 
 	      <child>
 		<widget class="GtkVBox" id="vbox164">
+		  <property name="border_width">6</property>
 		  <property name="visible">True</property>
 		  <property name="homogeneous">True</property>
-		  <property name="spacing">0</property>
+		  <property name="spacing">12</property>
 
 		  <child>
 		    <widget class="GtkOptionMenu" id="SpectrumMenu">
@@ -7393,10 +7396,11 @@
 	      <property name="visible">True</property>
 	      <property name="label_xalign">0</property>
 	      <property name="label_yalign">0.5</property>
-	      <property name="shadow_type">GTK_SHADOW_NONE</property>
+	      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
 
 	      <child>
 		<widget class="GtkVBox" id="vbox165">
+		  <property name="border_width">6</property>
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">0</property>
@@ -7404,6 +7408,7 @@
 		  <child>
 		    <widget class="GtkRadioButton" id="FFTButton">
 		      <property name="visible">True</property>
+		      <property name="tooltip" translatable="yes">FFT is more CPU intensive but is the best choice</property>
 		      <property name="can_focus">True</property>
 		      <property name="label" translatable="yes">FFT</property>
 		      <property name="use_underline">True</property>
@@ -7423,6 +7428,7 @@
 		  <child>
 		    <widget class="GtkRadioButton" id="IIRButton">
 		      <property name="visible">True</property>
+		      <property name="tooltip" translatable="yes">IIR is less CPU intensive but is not recommended for serious work</property>
 		      <property name="can_focus">True</property>
 		      <property name="label" translatable="yes">IIR</property>
 		      <property name="use_underline">True</property>
@@ -7481,10 +7487,11 @@
 	      <property name="visible">True</property>
 	      <property name="label_xalign">0</property>
 	      <property name="label_yalign">0.5</property>
-	      <property name="shadow_type">GTK_SHADOW_NONE</property>
+	      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
 
 	      <child>
 		<widget class="GtkOptionMenu" id="ColorsMenu">
+		  <property name="border_width">6</property>
 		  <property name="visible">True</property>
 		  <property name="tooltip" translatable="yes">Set colors for GUI components</property>
 		  <property name="can_focus">True</property>

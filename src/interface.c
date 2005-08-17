@@ -4685,12 +4685,12 @@ create_pref_dialog (void)
   gtk_widget_show (GraphicEQ);
   gtk_container_add (GTK_CONTAINER (GraphicEqEvent), GraphicEQ);
   gtk_container_set_border_width (GTK_CONTAINER (GraphicEQ), 5);
-  gtk_frame_set_shadow_type (GTK_FRAME (GraphicEQ), GTK_SHADOW_NONE);
 
-  vbox163 = gtk_vbox_new (FALSE, 0);
+  vbox163 = gtk_vbox_new (FALSE, 6);
   gtk_widget_set_name (vbox163, "vbox163");
   gtk_widget_show (vbox163);
   gtk_container_add (GTK_CONTAINER (GraphicEQ), vbox163);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox163), 6);
 
   hbox70 = gtk_hbox_new (TRUE, 0);
   gtk_widget_set_name (hbox70, "hbox70");
@@ -4707,7 +4707,7 @@ create_pref_dialog (void)
   gtk_widget_set_name (MinGainSpin, "MinGainSpin");
   gtk_widget_show (MinGainSpin);
   gtk_box_pack_start (GTK_BOX (hbox70), MinGainSpin, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, MinGainSpin, _("Set the minimum gain level for the EQ"), NULL);
+  gtk_tooltips_set_tip (tooltips, MinGainSpin, _("Set the minimum gain level for the EQs"), NULL);
 
   hbox71 = gtk_hbox_new (TRUE, 0);
   gtk_widget_set_name (hbox71, "hbox71");
@@ -4724,7 +4724,7 @@ create_pref_dialog (void)
   gtk_widget_set_name (MaxGainSpin, "MaxGainSpin");
   gtk_widget_show (MaxGainSpin);
   gtk_box_pack_start (GTK_BOX (hbox71), MaxGainSpin, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, MaxGainSpin, _("Set the maximum gain level for the EQ"), NULL);
+  gtk_tooltips_set_tip (tooltips, MaxGainSpin, _("Set the maximum gain level for the EQs"), NULL);
 
   GraphicEQLabel = gtk_label_new (_("Graphic EQ"));
   gtk_widget_set_name (GraphicEQLabel, "GraphicEQLabel");
@@ -4741,12 +4741,12 @@ create_pref_dialog (void)
   gtk_widget_show (CrossfadeFrame);
   gtk_container_add (GTK_CONTAINER (CrossfadeEvent), CrossfadeFrame);
   gtk_container_set_border_width (GTK_CONTAINER (CrossfadeFrame), 5);
-  gtk_frame_set_shadow_type (GTK_FRAME (CrossfadeFrame), GTK_SHADOW_NONE);
 
   hbox72 = gtk_hbox_new (TRUE, 0);
   gtk_widget_set_name (hbox72, "hbox72");
   gtk_widget_show (hbox72);
   gtk_container_add (GTK_CONTAINER (CrossfadeFrame), hbox72);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox72), 6);
 
   CrossfadeTimeLabel = gtk_label_new (_("Crossfade time (sec):"));
   gtk_widget_set_name (CrossfadeTimeLabel, "CrossfadeTimeLabel");
@@ -4776,12 +4776,12 @@ create_pref_dialog (void)
   gtk_widget_show (SpectrumFrame);
   gtk_container_add (GTK_CONTAINER (SpectrumEvent), SpectrumFrame);
   gtk_container_set_border_width (GTK_CONTAINER (SpectrumFrame), 5);
-  gtk_frame_set_shadow_type (GTK_FRAME (SpectrumFrame), GTK_SHADOW_NONE);
 
-  vbox164 = gtk_vbox_new (TRUE, 0);
+  vbox164 = gtk_vbox_new (TRUE, 12);
   gtk_widget_set_name (vbox164, "vbox164");
   gtk_widget_show (vbox164);
   gtk_container_add (GTK_CONTAINER (SpectrumFrame), vbox164);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox164), 6);
 
   SpectrumMenu = gtk_option_menu_new ();
   gtk_widget_set_name (SpectrumMenu, "SpectrumMenu");
@@ -4846,17 +4846,18 @@ create_pref_dialog (void)
   gtk_widget_show (CrossoverFrame);
   gtk_container_add (GTK_CONTAINER (CrossoverEvent), CrossoverFrame);
   gtk_container_set_border_width (GTK_CONTAINER (CrossoverFrame), 5);
-  gtk_frame_set_shadow_type (GTK_FRAME (CrossoverFrame), GTK_SHADOW_NONE);
 
   vbox165 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox165, "vbox165");
   gtk_widget_show (vbox165);
   gtk_container_add (GTK_CONTAINER (CrossoverFrame), vbox165);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox165), 6);
 
   FFTButton = gtk_radio_button_new_with_mnemonic (NULL, _("FFT"));
   gtk_widget_set_name (FFTButton, "FFTButton");
   gtk_widget_show (FFTButton);
   gtk_box_pack_start (GTK_BOX (vbox165), FFTButton, FALSE, FALSE, 0);
+  gtk_tooltips_set_tip (tooltips, FFTButton, _("FFT is more CPU intensive but is the best choice"), NULL);
   gtk_radio_button_set_group (GTK_RADIO_BUTTON (FFTButton), FFTButton_group);
   FFTButton_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (FFTButton));
 
@@ -4864,6 +4865,7 @@ create_pref_dialog (void)
   gtk_widget_set_name (IIRButton, "IIRButton");
   gtk_widget_show (IIRButton);
   gtk_box_pack_start (GTK_BOX (vbox165), IIRButton, FALSE, FALSE, 0);
+  gtk_tooltips_set_tip (tooltips, IIRButton, _("IIR is less CPU intensive but is not recommended for serious work"), NULL);
   gtk_radio_button_set_group (GTK_RADIO_BUTTON (IIRButton), FFTButton_group);
   FFTButton_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (IIRButton));
 
@@ -4882,12 +4884,12 @@ create_pref_dialog (void)
   gtk_widget_show (ColorsFrame);
   gtk_container_add (GTK_CONTAINER (ColorsEvent), ColorsFrame);
   gtk_container_set_border_width (GTK_CONTAINER (ColorsFrame), 5);
-  gtk_frame_set_shadow_type (GTK_FRAME (ColorsFrame), GTK_SHADOW_NONE);
 
   ColorsMenu = gtk_option_menu_new ();
   gtk_widget_set_name (ColorsMenu, "ColorsMenu");
   gtk_widget_show (ColorsMenu);
   gtk_container_add (GTK_CONTAINER (ColorsFrame), ColorsMenu);
+  gtk_container_set_border_width (GTK_CONTAINER (ColorsMenu), 6);
   gtk_tooltips_set_tip (tooltips, ColorsMenu, _("Set colors for GUI components"), NULL);
 
   menu4 = gtk_menu_new ();
