@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.60 2005/02/20 15:58:49 jdepner Exp $
+ *  $Id: main.c,v 1.61 2005/11/15 11:08:43 theno23 Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
 #ifdef HAVE_OSC
     st = lo_server_thread_new(OSC_PORT, error);
     if (st) {
-	lo_server_thread_add_method(st, SCENE_URI, "i", scene_handler, NULL);
+	lo_server_thread_add_method(st, OSC_PATH, "i", scene_handler, NULL);
 	lo_server_thread_start(st);
     } else {
 	fprintf(stderr, "This " PACKAGE " instance will not have OSC support,\n"		"probably the port is allread in use\n");

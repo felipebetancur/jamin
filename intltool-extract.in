@@ -32,7 +32,7 @@
 ## Release information
 my $PROGRAM      = "intltool-extract";
 my $PACKAGE      = "intltool";
-my $VERSION      = "0.27.2";
+my $VERSION      = "0.33";
 
 ## Loaded modules
 use strict; 
@@ -46,6 +46,7 @@ my $HELP_ARG 	= "0";
 my $VERSION_ARG = "0";
 my $UPDATE_ARG  = "0";
 my $QUIET_ARG   = "0";
+my $SRCDIR_ARG	= ".";
 
 my $FILE;
 my $OUTFILE;
@@ -53,6 +54,10 @@ my $OUTFILE;
 my $gettext_type = "";
 my $input;
 my %messages = ();
+my %loc = ();
+my %count = ();
+my %comments = ();
+my $strcount = 0;
 
 ## Use this instead of \w for XML files to handle more possible characters.
 my $w = "[-A-Za-z0-9._:]";
@@ -68,6 +73,7 @@ GetOptions (
             "version|v"  => \$VERSION_ARG,
             "update"     => \$UPDATE_ARG,
 	    "quiet|q"    => \$QUIET_ARG,
+	    "srcdir=s"	 => \$SRCDIR_ARG,
             ) or &error;
 
 &split_on_argument;
@@ -109,6 +115,7 @@ sub place_normal {
 }   
 
 sub place_local {
+    $FILE	 = $ARGV[0];
     $OUTFILE     = fileparse($FILE, ());
     if (!-e "tmp/") { 
         system("mkdir tmp/"); 
@@ -152,6 +159,7 @@ XML files. Read manpage (man ${PROGRAM}) for more info.
                     (conflicts with --update)
       --update      Writes output into the same directory the source file 
                     reside (conflicts with --local)
+      --srcdir      Root of the source tree
   -v, --version     Output version information and exit
   -h, --help        Display this help and exit
   -q, --quiet       Quiet mode
@@ -175,7 +183,7 @@ sub message {
 sub extract {
     &determine_type;
 
-    &convert ($FILE);
+    &convert;
 
     open OUT, ">$OUTFILE";
     &msg_write;
@@ -184,13 +192,13 @@ sub extract {
     print "Wrote $OUTFILE\n" unless $QUIET_ARG;
 }
 
-sub convert($) {
+sub convert {
 
     ## Reading the file
     {
 	local (*IN);
 	local $/; #slurp mode
-	open (IN, "<$FILE") || die "can't open $FILE: $!";
+	open (IN, "<$SRCDIR_ARG/$FILE") || die "can't open $SRCDIR_ARG/$FILE: $!";
 	$input = <IN>;
     }
 
@@ -259,18 +267,20 @@ sub type_keys {
 sub type_xml {
     ### For generic translatable XML files ###
         
-    while ($input =~ /\s_$w+\s*=\s*\"([^"]+)\"/sg) { # "
-        $messages{entity_decode_minimal($1)} = [];
+    while ($input =~ /(?:<!--([^>]*?)-->[^\n]*\n?[^\n]*)?\s_$w+\s*=\s*\"([^"]*)\"/sg) { # "
+        $messages{entity_decode_minimal($2)} = [];
+        $comments{entity_decode_minimal($2)} = $1 if (defined($1));
     }
 
-    while ($input =~ /<_($w+)(?: xml:space="($w+)")?>(.+?)<\/_\1>/sg) {
-        $_ = $3;
-        if (!defined($2) || $2 ne "preserve") {
+    while ($input =~ /(?:<!--([^>]*?)-->\s*)?<_($w+)(?: xml:space="($w+)")?[^>]*>(.*?)<\/_\2>/sg) {
+        $_ = $4;
+        if (!defined($3) || $3 ne "preserve") {
             s/\s+/ /g;
             s/^ //;
             s/ $//;
         }
-        $messages{entity_decode_minimal($_)} = [];
+        $messages{$_} = [];
+        $comments{$_} = $1 if (defined($1));
     }
 }
 
@@ -280,16 +290,19 @@ sub type_schemas {
     # FIXME: We should handle escaped < (less than)
     while ($input =~ /
                       <locale\ name="C">\s*
-                          (<default>\s*(.*?)\s*<\/default>\s*)?
-                          (<short>\s*(.*?)\s*<\/short>\s*)?
-                          (<long>\s*(.*?)\s*<\/long>\s*)?
+                          (<default>\s*(?:<!--([^>]*?)-->\s*)?(.*?)\s*<\/default>\s*)?
+                          (<short>\s*(?:<!--([^>]*?)-->\s*)?(.*?)\s*<\/short>\s*)?
+                          (<long>\s*(?:<!--([^>]*?)-->\s*)?(.*?)\s*<\/long>\s*)?
                       <\/locale>
                      /sgx) {
-        my @totranslate = ($2,$4,$6);
+        my @totranslate = ($3,$6,$9);
+        my @eachcomment = ($2,$5,$8);
         foreach (@totranslate) {
+            my $currentcomment = shift @eachcomment;
             next if !$_;
-        s/\s+/ /g;
-        $messages{entity_decode_minimal($_)} = [];
+            s/\s+/ /g;
+            $messages{entity_decode_minimal($_)} = [];
+            $comments{entity_decode_minimal($_)} = $currentcomment if (defined($currentcomment));
         }
     }
 }
@@ -297,16 +310,31 @@ sub type_schemas {
 sub type_rfc822deb {
     ### For rfc822-style Debian configuration files ###
 
-    while ($input =~ /(?:^|\n)_[^:]+:\s*(.*?)(?=\n\S|$)/sg) {
-        my @str_list = rfc822deb_split($1);
-        for my $str (@str_list) {
-            #   As rfc822deb is for configuration files, duplicates
-            #   should never happen.  Developers must use the
-            #   [] construct to make msgid unique, see also intltool-merge
-            print STDERR "Warning: msgid multiply defined:\n  $str\n"
-                if defined($messages{$str});
-            $messages{$str} = [];
+    my $lineno = 1;
+    my $type = '';
+    while ($input =~ /\G(.*?)(^|\n)(_+)([^:]+):[ \t]*(.*?)(?=\n\S|$)/sg)
+    {
+        my ($pre, $newline, $underscore, $tag, $text) = ($1, $2, $3, $4, $5);
+        while ($pre =~ m/\n/g)
+        {
+            $lineno ++;
         }
+        $lineno += length($newline);
+        my @str_list = rfc822deb_split(length($underscore), $text);
+        for my $str (@str_list)
+        {
+            $strcount++;
+            $messages{$str} = [];
+            $loc{$str} = $lineno;
+            $count{$str} = $strcount;
+            my $usercomment = '';
+            while($pre =~ s/(^|\n)#([^\n]*)$//s)
+            {
+                $usercomment = "\n" . $2 . $usercomment;
+            }
+            $comments{$str} = $tag . $usercomment;
+        }
+        $lineno += ($text =~ s/\n//g);
     }
 }
 
@@ -318,28 +346,38 @@ sub rfc822deb_split {
     #       and paragraphs are separated by a single dot on a line
     # This routine returns an array of all paragraphs, and reformat
     # them.
+    # When first argument is 2, the string is a comma separated list of
+    # values.
+    my $type = shift;
     my $text = shift;
-    $text =~ s/^ //mg;
+    $text =~ s/^[ \t]//mg;
+    return (split(/, */, $text, 0)) if $type ne 1;
     return ($text) if $text !~ /\n/;
 
     $text =~ s/([^\n]*)\n//;
     my @list = ($1);
     my $str = '';
-    for my $line (split (/\n/, $text)) {
+    for my $line (split (/\n/, $text))
+    {
         chomp $line;
-        $line =~ /\s+$/;
-        if ($line =~ /^\.$/) {
+        if ($line =~ /^\.\s*$/)
+        {
             #  New paragraph
             $str =~ s/\s*$//;
             push(@list, $str);
             $str = '';
-        } elsif ($line =~ /^\s/) {
+        }
+        elsif ($line =~ /^\s/)
+        {
             #  Line which must not be reformatted
             $str .= "\n" if length ($str) && $str !~ /\n$/;
+            $line =~ s/\s+$//;
             $str .= $line."\n";
-        } else {
+        }
+        else
+        {
             #  Continuation line, remove newline
-            $str .= " " if length ($str) && $str !~ /[\n ]$/;
+            $str .= " " if length ($str) && $str !~ /\n$/;
             $str .= $line;
         }
     }
@@ -357,7 +395,7 @@ sub type_glade {
 	# Glade sometimes uses tags that normally mark translatable things for
         # little bits of non-translatable content. We work around this by not
         # translating strings that only includes something like label4 or window1.
-	$messages{entity_decode($2)} = [] unless $2 =~ /^(window|label)[0-9]+$/;
+	$messages{entity_decode($2)} = [] unless $2 =~ /^(window|label|dialog)[0-9]+$/;
     }
     
     while ($input =~ /<items>(..[^<]*)<\/items>/sg) {
@@ -367,8 +405,11 @@ sub type_glade {
     }
 
     ## handle new glade files
-    while ($input =~ /<(property|atkproperty)\s+[^>]*translatable\s*=\s*"yes"[^>]*>([^<]+)<\/\1>/sg) {
-	$messages{entity_decode($2)} = [] unless $2 =~ /^(window|label)[0-9]+$/;
+    while ($input =~ /<(property|atkproperty)\s+[^>]*translatable\s*=\s*"yes"(?:\s+[^>]*comments\s*=\s*"([^"]*)")?[^>]*>([^<]+)<\/\1>/sg) {
+	$messages{entity_decode($3)} = [] unless $3 =~ /^(window|label)[0-9]+$/;
+        if (defined($2) and !($3 =~ /^(window|label)[0-9]+$/)) {
+	   $comments{entity_decode($3)} = entity_decode($2) ;
+        }
     }
     while ($input =~ /<atkaction\s+action_name="([^>]*)"\s+description="([^>]+)"\/>/sg) {
         $messages{entity_decode_minimal($2)} = [];
@@ -376,29 +417,98 @@ sub type_glade {
 }
 
 sub type_scheme {
-    while ($input =~ /_\w*\(?"((?:[^"\\]+|\\.)*)"\)?/sg) {
-	$messages{$1} = [];
+    my ($line, $i, $state, $str, $trcomment, $char);
+    for $line (split(/\n/, $input)) {
+        $i = 0;
+        $state = 0; # 0 - nothing, 1 - string, 2 - translatable string
+        while ($i < length($line)) {
+            if (substr($line,$i,1) eq "\"") {
+                if ($state == 2) {
+                    $comments{$str} = $trcomment if ($trcomment);
+                    $messages{$str} = [];
+                    $str = '';
+                    $state = 0; $trcomment = "";
+                } elsif ($state == 1) {
+                    $str = '';
+                    $state = 0; $trcomment = "";
+                } else {
+                    $state = 1;
+                    $str = '';
+                    if ($i>0 && substr($line,$i-1,1) eq '_') {
+                        $state = 2;
+                    }
+                }
+            } elsif (!$state) {
+                if (substr($line,$i,1) eq ";") {
+                    $trcomment = substr($line,$i+1);
+                    $trcomment =~ s/^;*\s*//;
+                    $i = length($line);
+                } elsif ($trcomment && substr($line,$i,1) !~ /\s|\(|\)|_/) {
+                    $trcomment = "";
+                }
+            } else {
+                if (substr($line,$i,1) eq "\\") {
+                    $char = substr($line,$i+1,1);
+                    if ($char ne "\"" && $char ne "\\") {
+                       $str = $str . "\\";
+                    }
+                    $i++;
+                }
+                $str = $str . substr($line,$i,1);
+            }
+            $i++;
+        }
     }
 }
 
 sub msg_write {
-    for my $message (sort keys %messages) { 
+    my @msgids;
+    if (%count)
+    {
+        @msgids = sort { $count{$a} <=> $count{$b} } keys %count;
+    }
+    else
+    {
+        @msgids = sort keys %messages;
+    }
+    for my $message (@msgids)
+    {
+	my $offsetlines = 1;
+	$offsetlines++ if $message =~ /%/;
+	if (defined ($comments{$message}))
+	{
+		while ($comments{$message} =~ m/\n/g)
+		{
+		    $offsetlines++;
+		}
+	}
+	print OUT "# ".($loc{$message} - $offsetlines).  " \"$FILE\"\n"
+	        if defined $loc{$message};
+   	print OUT "/* ".$comments{$message}." */\n"
+                if defined $comments{$message};
    	print OUT "/* xgettext:no-c-format */\n" if $message =~ /%/;
         
     	my @lines = split (/\n/, $message, -1);
-    	for (my $n = 0; $n < @lines; $n++) {
-            if ($n == 0) { 
+    	for (my $n = 0; $n < @lines; $n++)
+	{
+            if ($n == 0)
+            {
  		print OUT "char *s = N_(\""; 
-            } else {  
- 		print OUT "             \""; 
-	    }
+            }
+            else
+            {  
+                print OUT "             \""; 
+            }
 
             print OUT escape($lines[$n]);
 
-            if ($n < @lines - 1) { 
-		print OUT "\\n\"\n"; 
- 	    } else { 
-		print OUT "\");\n";  
+            if ($n < @lines - 1)
+            {
+                print OUT "\\n\"\n"; 
+            }
+            else
+            {
+                print OUT "\");\n";  
 	    }
         }
     }

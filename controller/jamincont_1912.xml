@@ -4,7 +4,7 @@
 
 <ladspa>
   <global>
-    <meta name="maker" value="xxx &lt;yyy@zzz.com&gt;"/>
+    <meta name="maker" value="Steve Harris &lt;steve@plugin.org.uk&gt;"/>
     <meta name="copyright" value="GPL"/>
     <meta name="properties" value="HARD_RT_CAPABLE"/>
     <code><![CDATA[
