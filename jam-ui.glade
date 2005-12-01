@@ -15,6 +15,13 @@
   <property name="resizable">True</property>
   <property name="destroy_with_parent">False</property>
   <property name="icon">JAMin_icon.xpm</property>
+  <property name="decorated">True</property>
+  <property name="skip_taskbar_hint">False</property>
+  <property name="skip_pager_hint">False</property>
+  <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
+  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
+  <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
   <signal name="delete_event" handler="on_window1_delete_event" last_modification_time="Sun, 13 Apr 2003 17:21:07 GMT"/>
   <signal name="show" handler="on_window1_show" last_modification_time="Mon, 14 Apr 2003 23:25:04 GMT"/>
   <signal name="show_help" handler="on_show_help" last_modification_time="Sun, 20 Jul 2003 23:54:56 GMT"/>
@@ -29,6 +36,8 @@
       <child>
 	<widget class="GtkMenuBar" id="menubar1">
 	  <property name="visible">True</property>
+	  <property name="pack_direction">GTK_PACK_DIRECTION_LTR</property>
+	  <property name="child_pack_direction">GTK_PACK_DIRECTION_LTR</property>
 
 	  <child>
 	    <widget class="GtkMenuItem" id="menuitem1">
@@ -308,6 +317,8 @@
 	    <widget class="GtkEventBox" id="transport_controls_eventbox">
 	      <property name="border_width">10</property>
 	      <property name="visible">True</property>
+	      <property name="visible_window">True</property>
+	      <property name="above_child">False</property>
 	      <signal name="enter_notify_event" handler="on_transport_controls_eventbox_enter_notify_event" last_modification_time="Mon, 21 Jul 2003 00:46:44 GMT"/>
 
 	      <child>
@@ -323,12 +334,14 @@
 		    <widget class="GtkEventBox" id="rewind_button">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">rewind transport</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="rewind_transport" last_modification_time="Thu, 26 Jun 2003 03:59:53 GMT"/>
 
 		      <child>
 			<widget class="GtkImage" id="rewind">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-goto-first</property>
+			  <property name="stock">gtk-media-previous</property>
 			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
@@ -349,12 +362,14 @@
 		    <widget class="GtkEventBox" id="backward_button">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">backward transport</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="backward_transport" last_modification_time="Sun, 21 Dec 2003 03:45:09 GMT"/>
 
 		      <child>
 			<widget class="GtkImage" id="backward">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-go-back</property>
+			  <property name="stock">gtk-media-rewind</property>
 			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
@@ -376,12 +391,15 @@
 		    <widget class="GtkEventBox" id="play_button">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">play transport</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="play_transport" last_modification_time="Sun, 21 Dec 2003 03:45:36 GMT"/>
 
 		      <child>
 			<widget class="GtkImage" id="play">
 			  <property name="visible">True</property>
-			  <property name="pixbuf">play1.png</property>
+			  <property name="stock">gtk-media-play</property>
+			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
@@ -402,12 +420,15 @@
 		    <widget class="GtkEventBox" id="pause_button">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">pause transport</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="pause_transport_toggle" last_modification_time="Sun, 21 Dec 2003 13:59:18 GMT"/>
 
 		      <child>
 			<widget class="GtkImage" id="pause">
 			  <property name="visible">True</property>
-			  <property name="pixbuf">pause1.png</property>
+			  <property name="stock">gtk-media-pause</property>
+			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
@@ -428,12 +449,14 @@
 		    <widget class="GtkEventBox" id="forward_button">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">forward transport</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="forward_transport" last_modification_time="Sun, 21 Dec 2003 03:43:20 GMT"/>
 
 		      <child>
 			<widget class="GtkImage" id="forward">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-go-forward</property>
+			  <property name="stock">gtk-media-next</property>
 			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
@@ -484,6 +507,10 @@
 	      <property name="yalign">0.5</property>
 	      <property name="xpad">41</property>
 	      <property name="ypad">0</property>
+	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+	      <property name="width_chars">-1</property>
+	      <property name="single_line_mode">False</property>
+	      <property name="angle">0</property>
 	    </widget>
 	    <packing>
 	      <property name="padding">4</property>
@@ -516,6 +543,10 @@
 	      <property name="yalign">0.5</property>
 	      <property name="xpad">26</property>
 	      <property name="ypad">0</property>
+	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+	      <property name="width_chars">-1</property>
+	      <property name="single_line_mode">False</property>
+	      <property name="angle">0</property>
 	    </widget>
 	    <packing>
 	      <property name="padding">4</property>
@@ -546,6 +577,8 @@
 	<widget class="GtkEventBox" id="scenes_eventbox">
 	  <property name="border_width">3</property>
 	  <property name="visible">True</property>
+	  <property name="visible_window">True</property>
+	  <property name="above_child">False</property>
 	  <signal name="enter_notify_event" handler="on_scenes_eventbox_enter_notify_event" last_modification_time="Mon, 21 Jul 2003 01:00:24 GMT"/>
 
 	  <child>
@@ -567,6 +600,10 @@
 		  <property name="yalign">0.5</property>
 		  <property name="xpad">0</property>
 		  <property name="ypad">0</property>
+		  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		  <property name="width_chars">-1</property>
+		  <property name="single_line_mode">False</property>
+		  <property name="angle">0</property>
 		</widget>
 		<packing>
 		  <property name="padding">0</property>
@@ -586,6 +623,8 @@
 		    <widget class="GtkEventBox" id="scene1_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Don't change this pixmap!!!</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene1_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:05:56 GMT"/>
 
 		      <child>
@@ -610,6 +649,8 @@
 		    <widget class="GtkEventBox" id="scene2_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Don't change this pixmap!!!</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene2_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:06:05 GMT"/>
 
 		      <child>
@@ -634,6 +675,8 @@
 		    <widget class="GtkEventBox" id="scene3_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Don't change this pixmap!!!</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene3_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:06:09 GMT"/>
 
 		      <child>
@@ -658,6 +701,8 @@
 		    <widget class="GtkEventBox" id="scene4_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Don't change this pixmap!!!</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene4_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:06:15 GMT"/>
 
 		      <child>
@@ -682,6 +727,8 @@
 		    <widget class="GtkEventBox" id="scene5_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Right click for menu</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene5_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:06:21 GMT"/>
 
 		      <child>
@@ -706,6 +753,8 @@
 		    <widget class="GtkEventBox" id="scene6_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Right click for menu</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene6_eventbox_button_press_event" last_modification_time="Fri, 11 Jul 2003 20:06:27 GMT"/>
 
 		      <child>
@@ -730,6 +779,8 @@
 		    <widget class="GtkEventBox" id="scene7_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Right click for menu</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene7_eventbox_button_press_event" last_modification_time="Wed, 31 Mar 2004 22:56:26 GMT"/>
 
 		      <child>
@@ -754,6 +805,8 @@
 		    <widget class="GtkEventBox" id="scene8_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Right click for menu</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene8_eventbox_button_press_event" last_modification_time="Wed, 31 Mar 2004 22:56:53 GMT"/>
 
 		      <child>
@@ -778,6 +831,8 @@
 		    <widget class="GtkEventBox" id="scene9_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Right click for menu</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene9_eventbox_button_press_event" last_modification_time="Wed, 31 Mar 2004 22:57:17 GMT"/>
 
 		      <child>
@@ -802,6 +857,8 @@
 		    <widget class="GtkEventBox" id="scene10_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Right click for menu</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene10_eventbox_button_press_event" last_modification_time="Thu, 01 Apr 2004 22:00:19 GMT"/>
 
 		      <child>
@@ -826,6 +883,8 @@
 		    <widget class="GtkEventBox" id="scene11_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Right click for menu</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene11_eventbox_button_press_event" last_modification_time="Wed, 31 Mar 2004 22:58:05 GMT"/>
 
 		      <child>
@@ -850,6 +909,8 @@
 		    <widget class="GtkEventBox" id="scene12_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Right click for menu</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene12_eventbox_button_press_event" last_modification_time="Thu, 01 Apr 2004 21:59:19 GMT"/>
 
 		      <child>
@@ -874,6 +935,8 @@
 		    <widget class="GtkEventBox" id="scene13_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Right click for menu</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene13_eventbox_button_press_event" last_modification_time="Thu, 01 Apr 2004 21:59:27 GMT"/>
 
 		      <child>
@@ -898,6 +961,8 @@
 		    <widget class="GtkEventBox" id="scene14_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Right click for menu</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene14_eventbox_button_press_event" last_modification_time="Thu, 01 Apr 2004 21:59:34 GMT"/>
 
 		      <child>
@@ -922,6 +987,8 @@
 		    <widget class="GtkEventBox" id="scene15_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Right click for menu</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene15_eventbox_button_press_event" last_modification_time="Thu, 01 Apr 2004 21:59:43 GMT"/>
 
 		      <child>
@@ -946,6 +1013,8 @@
 		    <widget class="GtkEventBox" id="scene16_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Right click for menu</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene16_eventbox_button_press_event" last_modification_time="Wed, 31 Mar 2004 23:00:04 GMT"/>
 
 		      <child>
@@ -970,6 +1039,8 @@
 		    <widget class="GtkEventBox" id="scene17_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Right click for menu</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene17_eventbox_button_press_event" last_modification_time="Thu, 01 Apr 2004 21:59:52 GMT"/>
 
 		      <child>
@@ -994,6 +1065,8 @@
 		    <widget class="GtkEventBox" id="scene18_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Right click for menu</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene18_eventbox_button_press_event" last_modification_time="Wed, 31 Mar 2004 23:01:07 GMT"/>
 
 		      <child>
@@ -1018,6 +1091,8 @@
 		    <widget class="GtkEventBox" id="scene19_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Right click for menu</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene19_eventbox_button_press_event" last_modification_time="Wed, 31 Mar 2004 23:01:28 GMT"/>
 
 		      <child>
@@ -1042,6 +1117,8 @@
 		    <widget class="GtkEventBox" id="scene20_eventbox">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Right click for menu</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 		      <signal name="button_press_event" handler="on_scene20_eventbox_button_press_event" last_modification_time="Wed, 31 Mar 2004 23:01:50 GMT"/>
 
 		      <child>
@@ -1096,6 +1173,10 @@
 	  <property name="yalign">0.5</property>
 	  <property name="xscale">1</property>
 	  <property name="yscale">1</property>
+	  <property name="top_padding">0</property>
+	  <property name="bottom_padding">0</property>
+	  <property name="left_padding">0</property>
+	  <property name="right_padding">0</property>
 
 	  <child>
 	    <widget class="GtkHBox" id="bighbox">
@@ -1126,6 +1207,8 @@
 		      <child>
 			<widget class="GtkEventBox" id="input_eventbox">
 			  <property name="visible">True</property>
+			  <property name="visible_window">True</property>
+			  <property name="above_child">False</property>
 			  <signal name="enter_notify_event" handler="on_input_eventbox_enter_notify_event" last_modification_time="Mon, 21 Jul 2003 00:02:58 GMT"/>
 
 			  <child>
@@ -1152,6 +1235,8 @@
 					<widget class="GtkEventBox" id="in_trim_scale_event_box">
 					  <property name="visible">True</property>
 					  <property name="tooltip" translatable="yes">Input Gain</property>
+					  <property name="visible_window">True</property>
+					  <property name="above_child">False</property>
 
 					  <child>
 					    <widget class="GtkVScale" id="in_trim_scale">
@@ -1179,6 +1264,8 @@
 				      <child>
 					<widget class="GtkEventBox" id="inmeter_eventbox">
 					  <property name="visible">True</property>
+					  <property name="visible_window">True</property>
+					  <property name="above_child">False</property>
 					  <signal name="button_press_event" handler="on_inmeter_eventbox_button_press_event" last_modification_time="Sun, 06 Feb 2005 23:35:28 GMT"/>
 
 					  <child>
@@ -1268,6 +1355,10 @@
 				      <property name="yalign">0.5</property>
 				      <property name="xpad">0</property>
 				      <property name="ypad">0</property>
+				      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+				      <property name="width_chars">-1</property>
+				      <property name="single_line_mode">False</property>
+				      <property name="angle">0</property>
 				    </widget>
 				    <packing>
 				      <property name="padding">0</property>
@@ -1280,6 +1371,8 @@
 				    <widget class="GtkEventBox" id="pan_scale_event_box">
 				      <property name="visible">True</property>
 				      <property name="tooltip" translatable="yes">Input Balance</property>
+				      <property name="visible_window">True</property>
+				      <property name="above_child">False</property>
 
 				      <child>
 					<widget class="GtkHScale" id="pan_scale">
@@ -1318,6 +1411,10 @@
 				  <property name="yalign">0.5</property>
 				  <property name="xpad">0</property>
 				  <property name="ypad">0</property>
+				  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+				  <property name="width_chars">-1</property>
+				  <property name="single_line_mode">False</property>
+				  <property name="angle">0</property>
 				</widget>
 				<packing>
 				  <property name="type">label_item</property>
@@ -1365,6 +1462,8 @@
 				      <property name="width_request">0</property>
 				      <property name="height_request">0</property>
 				      <property name="visible">True</property>
+				      <property name="visible_window">True</property>
+				      <property name="above_child">False</property>
 				      <signal name="button_press_event" handler="on_EQ_curve_event_box_button_press_event" last_modification_time="Thu, 24 Apr 2003 15:14:24 GMT"/>
 				      <signal name="button_release_event" handler="on_EQ_curve_event_box_button_release_event" last_modification_time="Thu, 24 Apr 2003 15:14:31 GMT"/>
 				      <signal name="leave_notify_event" handler="on_EQ_curve_event_box_leave_notify_event" last_modification_time="Thu, 24 Apr 2003 15:14:46 GMT"/>
@@ -1378,6 +1477,10 @@
 					  <property name="yalign">0.5</property>
 					  <property name="xscale">1</property>
 					  <property name="yscale">1</property>
+					  <property name="top_padding">0</property>
+					  <property name="bottom_padding">0</property>
+					  <property name="left_padding">0</property>
+					  <property name="right_padding">0</property>
 
 					  <child>
 					    <widget class="GtkDrawingArea" id="EQ_curve">
@@ -1400,6 +1503,8 @@
 				  <child>
 				    <widget class="GtkEventBox" id="eventbox62">
 				      <property name="visible">True</property>
+				      <property name="visible_window">True</property>
+				      <property name="above_child">False</property>
 
 				      <child>
 					<widget class="GtkLabel" id="EQ_curve_lbl">
@@ -1415,6 +1520,10 @@
 					  <property name="yalign">0.5</property>
 					  <property name="xpad">0</property>
 					  <property name="ypad">0</property>
+					  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+					  <property name="width_chars">-1</property>
+					  <property name="single_line_mode">False</property>
+					  <property name="angle">0</property>
 					</widget>
 				      </child>
 				    </widget>
@@ -1444,6 +1553,10 @@
 				  <property name="yalign">0.5</property>
 				  <property name="xpad">0</property>
 				  <property name="ypad">0</property>
+				  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+				  <property name="width_chars">-1</property>
+				  <property name="single_line_mode">False</property>
+				  <property name="angle">0</property>
 				</widget>
 				<packing>
 				  <property name="type">tab</property>
@@ -1463,6 +1576,8 @@
 				  <child>
 				    <widget class="GtkEventBox" id="geq_eventbox">
 				      <property name="visible">True</property>
+				      <property name="visible_window">True</property>
+				      <property name="above_child">False</property>
 				      <signal name="enter_notify_event" handler="on_geq_eventbox_enter_notify_event" last_modification_time="Mon, 21 Jul 2003 00:16:56 GMT"/>
 
 				      <child>
@@ -1481,6 +1596,8 @@
 						<widget class="GtkEventBox" id="eventbox3">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">25 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb1">
@@ -1516,6 +1633,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -1547,6 +1668,8 @@
 						    <widget class="GtkEventBox" id="eventbox4">
 						      <property name="visible">True</property>
 						      <property name="tooltip" translatable="yes">31 Hz</property>
+						      <property name="visible_window">True</property>
+						      <property name="above_child">False</property>
 
 						      <child>
 							<widget class="GtkVScale" id="eqb2">
@@ -1582,6 +1705,10 @@
 						      <property name="yalign">0.5</property>
 						      <property name="xpad">0</property>
 						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
 						    </widget>
 						    <packing>
 						      <property name="padding">0</property>
@@ -1620,6 +1747,8 @@
 						    <widget class="GtkEventBox" id="eventbox5">
 						      <property name="visible">True</property>
 						      <property name="tooltip" translatable="yes">39 Hz</property>
+						      <property name="visible_window">True</property>
+						      <property name="above_child">False</property>
 
 						      <child>
 							<widget class="GtkVScale" id="eqb3">
@@ -1655,6 +1784,10 @@
 						      <property name="yalign">0.5</property>
 						      <property name="xpad">0</property>
 						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
 						    </widget>
 						    <packing>
 						      <property name="padding">0</property>
@@ -1693,6 +1826,8 @@
 						    <widget class="GtkEventBox" id="eventbox6">
 						      <property name="visible">True</property>
 						      <property name="tooltip" translatable="yes">50 Hz</property>
+						      <property name="visible_window">True</property>
+						      <property name="above_child">False</property>
 
 						      <child>
 							<widget class="GtkVScale" id="eqb4">
@@ -1728,6 +1863,10 @@
 						      <property name="yalign">0.5</property>
 						      <property name="xpad">0</property>
 						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
 						    </widget>
 						    <packing>
 						      <property name="padding">0</property>
@@ -1766,6 +1905,8 @@
 						    <widget class="GtkEventBox" id="eventbox7">
 						      <property name="visible">True</property>
 						      <property name="tooltip" translatable="yes">62 Hz</property>
+						      <property name="visible_window">True</property>
+						      <property name="above_child">False</property>
 
 						      <child>
 							<widget class="GtkVScale" id="eqb5">
@@ -1801,6 +1942,10 @@
 						      <property name="yalign">0.5</property>
 						      <property name="xpad">0</property>
 						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
 						    </widget>
 						    <packing>
 						      <property name="padding">0</property>
@@ -1839,6 +1984,8 @@
 						    <widget class="GtkEventBox" id="eventbox8">
 						      <property name="visible">True</property>
 						      <property name="tooltip" translatable="yes">79 Hz</property>
+						      <property name="visible_window">True</property>
+						      <property name="above_child">False</property>
 
 						      <child>
 							<widget class="GtkVScale" id="eqb6">
@@ -1874,6 +2021,10 @@
 						      <property name="yalign">0.5</property>
 						      <property name="xpad">0</property>
 						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
 						    </widget>
 						    <packing>
 						      <property name="padding">0</property>
@@ -1912,6 +2063,8 @@
 						    <widget class="GtkEventBox" id="eventbox9">
 						      <property name="visible">True</property>
 						      <property name="tooltip" translatable="yes">100 Hz</property>
+						      <property name="visible_window">True</property>
+						      <property name="above_child">False</property>
 
 						      <child>
 							<widget class="GtkVScale" id="eqb7">
@@ -1947,6 +2100,10 @@
 						      <property name="yalign">0.5</property>
 						      <property name="xpad">0</property>
 						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
 						    </widget>
 						    <packing>
 						      <property name="padding">0</property>
@@ -1985,6 +2142,8 @@
 						    <widget class="GtkEventBox" id="eventbox10">
 						      <property name="visible">True</property>
 						      <property name="tooltip" translatable="yes">125 Hz</property>
+						      <property name="visible_window">True</property>
+						      <property name="above_child">False</property>
 
 						      <child>
 							<widget class="GtkVScale" id="eqb8">
@@ -2020,6 +2179,10 @@
 						      <property name="yalign">0.5</property>
 						      <property name="xpad">0</property>
 						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
 						    </widget>
 						    <packing>
 						      <property name="padding">0</property>
@@ -2058,6 +2221,8 @@
 						    <widget class="GtkEventBox" id="eventbox11">
 						      <property name="visible">True</property>
 						      <property name="tooltip" translatable="yes">158 Hz</property>
+						      <property name="visible_window">True</property>
+						      <property name="above_child">False</property>
 
 						      <child>
 							<widget class="GtkVScale" id="eqb9">
@@ -2093,6 +2258,10 @@
 						      <property name="yalign">0.5</property>
 						      <property name="xpad">0</property>
 						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
 						    </widget>
 						    <packing>
 						      <property name="padding">0</property>
@@ -2131,6 +2300,8 @@
 						    <widget class="GtkEventBox" id="eventbox12">
 						      <property name="visible">True</property>
 						      <property name="tooltip" translatable="yes">200 Hz</property>
+						      <property name="visible_window">True</property>
+						      <property name="above_child">False</property>
 
 						      <child>
 							<widget class="GtkVScale" id="eqb10">
@@ -2166,6 +2337,10 @@
 						      <property name="yalign">0.5</property>
 						      <property name="xpad">0</property>
 						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
 						    </widget>
 						    <packing>
 						      <property name="padding">0</property>
@@ -2204,6 +2379,8 @@
 						    <widget class="GtkEventBox" id="eventbox13">
 						      <property name="visible">True</property>
 						      <property name="tooltip" translatable="yes">251 Hz</property>
+						      <property name="visible_window">True</property>
+						      <property name="above_child">False</property>
 
 						      <child>
 							<widget class="GtkVScale" id="eqb11">
@@ -2239,6 +2416,10 @@
 						      <property name="yalign">0.5</property>
 						      <property name="xpad">0</property>
 						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
 						    </widget>
 						    <packing>
 						      <property name="padding">0</property>
@@ -2271,6 +2452,8 @@
 						<widget class="GtkEventBox" id="eventbox14">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">317 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb12">
@@ -2306,6 +2489,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -2331,6 +2518,8 @@
 						<widget class="GtkEventBox" id="eventbox15">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">400 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb13">
@@ -2366,6 +2555,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -2391,6 +2584,8 @@
 						<widget class="GtkEventBox" id="eventbox16">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">503 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb14">
@@ -2426,6 +2621,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -2451,6 +2650,8 @@
 						<widget class="GtkEventBox" id="eventbox17">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">634 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb15">
@@ -2486,6 +2687,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -2511,6 +2716,8 @@
 						<widget class="GtkEventBox" id="eventbox18">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">800 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb16">
@@ -2546,6 +2753,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -2571,6 +2782,8 @@
 						<widget class="GtkEventBox" id="eventbox19">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">1000 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb17">
@@ -2606,6 +2819,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -2631,6 +2848,8 @@
 						<widget class="GtkEventBox" id="eventbox20">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">1200 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb18">
@@ -2666,6 +2885,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -2691,6 +2914,8 @@
 						<widget class="GtkEventBox" id="eventbox21">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">1500 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb19">
@@ -2726,6 +2951,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -2751,6 +2980,8 @@
 						<widget class="GtkEventBox" id="eventbox22">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">2000 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb20">
@@ -2786,6 +3017,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -2811,6 +3046,8 @@
 						<widget class="GtkEventBox" id="eventbox49">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">2500 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb21">
@@ -2846,6 +3083,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -2871,6 +3112,8 @@
 						<widget class="GtkEventBox" id="eventbox23">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">3200 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb22">
@@ -2906,6 +3149,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -2931,6 +3178,8 @@
 						<widget class="GtkEventBox" id="eventbox24">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">4000 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb23">
@@ -2966,6 +3215,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -2991,6 +3244,8 @@
 						<widget class="GtkEventBox" id="eventbox25">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">5000 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb24">
@@ -3026,6 +3281,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -3051,10 +3310,14 @@
 						<widget class="GtkEventBox" id="eventbox26">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">6000 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkEventBox" id="eventbox27">
 						      <property name="visible">True</property>
+						      <property name="visible_window">True</property>
+						      <property name="above_child">False</property>
 
 						      <child>
 							<widget class="GtkVScale" id="eqb25">
@@ -3092,6 +3355,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -3117,6 +3384,8 @@
 						<widget class="GtkEventBox" id="eventbox28">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">8000 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb26">
@@ -3152,6 +3421,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -3177,6 +3450,8 @@
 						<widget class="GtkEventBox" id="eventbox29">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">10 KHz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb27">
@@ -3212,6 +3487,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -3237,6 +3516,8 @@
 						<widget class="GtkEventBox" id="eventbox30">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">12 KHz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb28">
@@ -3272,6 +3553,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -3297,6 +3582,8 @@
 						<widget class="GtkEventBox" id="eventbox31">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">16 KHz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb29">
@@ -3332,6 +3619,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -3357,6 +3648,8 @@
 						<widget class="GtkEventBox" id="eventbox50">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">20000 Hz</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 
 						  <child>
 						    <widget class="GtkVScale" id="eqb30">
@@ -3392,6 +3685,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
@@ -3439,6 +3736,10 @@
 				  <property name="yalign">0.5</property>
 				  <property name="xpad">0</property>
 				  <property name="ypad">0</property>
+				  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+				  <property name="width_chars">-1</property>
+				  <property name="single_line_mode">False</property>
+				  <property name="angle">0</property>
 				</widget>
 				<packing>
 				  <property name="type">tab</property>
@@ -3455,6 +3756,8 @@
 				  <child>
 				    <widget class="GtkEventBox" id="spectrum_eventbox">
 				      <property name="visible">True</property>
+				      <property name="visible_window">True</property>
+				      <property name="above_child">False</property>
 				      <signal name="enter_notify_event" handler="on_spectrum_eventbox_enter_notify_event" last_modification_time="Mon, 21 Jul 2003 00:17:55 GMT"/>
 
 				      <child>
@@ -3490,6 +3793,10 @@
 				  <property name="yalign">0.5</property>
 				  <property name="xpad">0</property>
 				  <property name="ypad">0</property>
+				  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+				  <property name="width_chars">-1</property>
+				  <property name="single_line_mode">False</property>
+				  <property name="angle">0</property>
 				</widget>
 				<packing>
 				  <property name="type">tab</property>
@@ -3526,6 +3833,8 @@
 					      <property name="visible">True</property>
 					      <property name="tooltip" translatable="yes">X=input db , Y=output db</property>
 					      <property name="events">GDK_POINTER_MOTION_MASK</property>
+					      <property name="visible_window">True</property>
+					      <property name="above_child">False</property>
 					      <signal name="leave_notify_event" handler="on_low_curve_box_leave_notify_event" last_modification_time="Thu, 24 Apr 2003 15:02:12 GMT"/>
 					      <signal name="motion_notify_event" handler="on_low_curve_box_motion_notify_event" last_modification_time="Thu, 24 Apr 2003 15:02:23 GMT"/>
 					      <signal name="enter_notify_event" handler="on_low_curve_box_enter_notify_event" last_modification_time="Thu, 24 Apr 2003 18:31:36 GMT"/>
@@ -3537,6 +3846,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xscale">1</property>
 						  <property name="yscale">1</property>
+						  <property name="top_padding">0</property>
+						  <property name="bottom_padding">0</property>
+						  <property name="left_padding">0</property>
+						  <property name="right_padding">0</property>
 
 						  <child>
 						    <widget class="GtkDrawingArea" id="comp1_curve">
@@ -3563,6 +3876,10 @@
 					      <property name="yalign">0.5</property>
 					      <property name="xpad">0</property>
 					      <property name="ypad">0</property>
+					      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+					      <property name="width_chars">-1</property>
+					      <property name="single_line_mode">False</property>
+					      <property name="angle">0</property>
 					    </widget>
 					    <packing>
 					      <property name="type">label_item</property>
@@ -3604,6 +3921,8 @@
 					      <property name="visible">True</property>
 					      <property name="tooltip" translatable="yes">X=input db , Y=output db</property>
 					      <property name="events">GDK_POINTER_MOTION_MASK</property>
+					      <property name="visible_window">True</property>
+					      <property name="above_child">False</property>
 					      <signal name="leave_notify_event" handler="on_mid_curve_box_leave_notify_event" last_modification_time="Thu, 24 Apr 2003 15:08:54 GMT"/>
 					      <signal name="motion_notify_event" handler="on_mid_curve_box_motion_notify_event" last_modification_time="Thu, 24 Apr 2003 15:09:04 GMT"/>
 					      <signal name="enter_notify_event" handler="on_mid_curve_box_enter_notify_event" last_modification_time="Thu, 24 Apr 2003 18:40:30 GMT"/>
@@ -3615,6 +3934,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xscale">1</property>
 						  <property name="yscale">1</property>
+						  <property name="top_padding">0</property>
+						  <property name="bottom_padding">0</property>
+						  <property name="left_padding">0</property>
+						  <property name="right_padding">0</property>
 
 						  <child>
 						    <widget class="GtkDrawingArea" id="comp2_curve">
@@ -3641,6 +3964,10 @@
 					      <property name="yalign">0.5</property>
 					      <property name="xpad">0</property>
 					      <property name="ypad">0</property>
+					      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+					      <property name="width_chars">-1</property>
+					      <property name="single_line_mode">False</property>
+					      <property name="angle">0</property>
 					    </widget>
 					    <packing>
 					      <property name="type">label_item</property>
@@ -3682,6 +4009,8 @@
 					      <property name="visible">True</property>
 					      <property name="tooltip" translatable="yes">X=input db , Y=output db</property>
 					      <property name="events">GDK_POINTER_MOTION_MASK</property>
+					      <property name="visible_window">True</property>
+					      <property name="above_child">False</property>
 					      <signal name="leave_notify_event" handler="on_high_curve_box_leave_notify_event" last_modification_time="Thu, 24 Apr 2003 15:09:53 GMT"/>
 					      <signal name="motion_notify_event" handler="on_high_curve_box_motion_notify_event" last_modification_time="Thu, 24 Apr 2003 15:10:02 GMT"/>
 					      <signal name="enter_notify_event" handler="on_high_curve_box_enter_notify_event" last_modification_time="Thu, 24 Apr 2003 18:40:44 GMT"/>
@@ -3693,6 +4022,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xscale">1</property>
 						  <property name="yscale">1</property>
+						  <property name="top_padding">0</property>
+						  <property name="bottom_padding">0</property>
+						  <property name="left_padding">0</property>
+						  <property name="right_padding">0</property>
 
 						  <child>
 						    <widget class="GtkDrawingArea" id="comp3_curve">
@@ -3719,6 +4052,10 @@
 					      <property name="yalign">0.5</property>
 					      <property name="xpad">0</property>
 					      <property name="ypad">0</property>
+					      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+					      <property name="width_chars">-1</property>
+					      <property name="single_line_mode">False</property>
+					      <property name="angle">0</property>
 					    </widget>
 					    <packing>
 					      <property name="type">label_item</property>
@@ -3758,6 +4095,10 @@
 				  <property name="yalign">0.5</property>
 				  <property name="xpad">0</property>
 				  <property name="ypad">0</property>
+				  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+				  <property name="width_chars">-1</property>
+				  <property name="single_line_mode">False</property>
+				  <property name="angle">0</property>
 				</widget>
 				<packing>
 				  <property name="type">tab</property>
@@ -3780,6 +4121,8 @@
 			      <child>
 				<widget class="GtkEventBox" id="eq_bypass_event_box">
 				  <property name="visible">True</property>
+				  <property name="visible_window">True</property>
+				  <property name="above_child">False</property>
 				  <signal name="enter_notify_event" handler="on_eq_bypass_event_box_enter_notify_event" last_modification_time="Sun, 22 Feb 2004 12:21:15 GMT"/>
 
 				  <child>
@@ -3789,6 +4132,7 @@
 				      <property name="label" translatable="yes">EQ bypass</property>
 				      <property name="use_underline">True</property>
 				      <property name="relief">GTK_RELIEF_NORMAL</property>
+				      <property name="focus_on_click">True</property>
 				      <property name="active">False</property>
 				      <property name="inconsistent">False</property>
 				      <property name="draw_indicator">True</property>
@@ -3806,6 +4150,8 @@
 			      <child>
 				<widget class="GtkEventBox" id="crossover_label_eventbox">
 				  <property name="visible">True</property>
+				  <property name="visible_window">True</property>
+				  <property name="above_child">False</property>
 				  <signal name="enter_notify_event" handler="on_crossover_eventbox_enter_notify_event" last_modification_time="Tue, 22 Jul 2003 23:14:44 GMT"/>
 
 				  <child>
@@ -3827,6 +4173,10 @@
 					  <property name="yalign">0.5</property>
 					  <property name="xpad">1</property>
 					  <property name="ypad">0</property>
+					  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+					  <property name="width_chars">-1</property>
+					  <property name="single_line_mode">False</property>
+					  <property name="angle">0</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -3848,6 +4198,10 @@
 					  <property name="yalign">0.5</property>
 					  <property name="xpad">0</property>
 					  <property name="ypad">0</property>
+					  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+					  <property name="width_chars">-1</property>
+					  <property name="single_line_mode">False</property>
+					  <property name="angle">0</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -3869,6 +4223,10 @@
 					  <property name="yalign">0.5</property>
 					  <property name="xpad">1</property>
 					  <property name="ypad">0</property>
+					  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+					  <property name="width_chars">-1</property>
+					  <property name="single_line_mode">False</property>
+					  <property name="angle">0</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -3896,6 +4254,8 @@
 			  <child>
 			    <widget class="GtkEventBox" id="crossover_eventbox">
 			      <property name="visible">True</property>
+			      <property name="visible_window">True</property>
+			      <property name="above_child">False</property>
 			      <signal name="enter_notify_event" handler="on_crossover_eventbox_enter_notify_event" last_modification_time="Mon, 21 Jul 2003 00:15:39 GMT"/>
 
 			      <child>
@@ -3911,6 +4271,8 @@
 				    <widget class="GtkEventBox" id="low2mid_event_box">
 				      <property name="visible">True</property>
 				      <property name="tooltip" translatable="yes">Low to Mid Band Crossover</property>
+				      <property name="visible_window">True</property>
+				      <property name="above_child">False</property>
 
 				      <child>
 					<widget class="GtkHScale" id="low2mid">
@@ -3942,6 +4304,8 @@
 				    <widget class="GtkEventBox" id="mid2high_event_box">
 				      <property name="visible">True</property>
 				      <property name="tooltip" translatable="yes">Mid to High Band Crossover</property>
+				      <property name="visible_window">True</property>
+				      <property name="above_child">False</property>
 				      <signal name="button_press_event" handler="scene_warning" last_modification_time="Wed, 10 Dec 2003 00:58:28 GMT"/>
 
 				      <child>
@@ -4000,10 +4364,16 @@
 		      <property name="yalign">0.5</property>
 		      <property name="xscale">1</property>
 		      <property name="yscale">1</property>
+		      <property name="top_padding">0</property>
+		      <property name="bottom_padding">0</property>
+		      <property name="left_padding">0</property>
+		      <property name="right_padding">0</property>
 
 		      <child>
 			<widget class="GtkEventBox" id="eventbox1">
 			  <property name="visible">True</property>
+			  <property name="visible_window">True</property>
+			  <property name="above_child">False</property>
 
 			  <child>
 			    <widget class="GtkHBox" id="hbox49">
@@ -4028,6 +4398,8 @@
 				      <child>
 					<widget class="GtkEventBox" id="low_comp_event_box">
 					  <property name="visible">True</property>
+					  <property name="visible_window">True</property>
+					  <property name="above_child">False</property>
 					  <signal name="enter_notify_event" handler="on_low_comp_event_box_enter_notify_event" last_modification_time="Sun, 31 Aug 2003 15:21:53 GMT"/>
 					  <signal name="leave_notify_event" handler="on_low_comp_event_box_leave_notify_event" last_modification_time="Sun, 31 Aug 2003 15:22:00 GMT"/>
 
@@ -4051,6 +4423,8 @@
 						  <child>
 						    <widget class="GtkEventBox" id="comp_l_event_box">
 						      <property name="visible">True</property>
+						      <property name="visible_window">True</property>
+						      <property name="above_child">False</property>
 						      <signal name="enter_notify_event" handler="on_comp_event_box_enter_notify_event" last_modification_time="Sat, 03 Jan 2004 00:42:37 GMT"/>
 
 						      <child>
@@ -4076,6 +4450,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_at_label_1_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_at_label_1_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:11:56 GMT"/>
 
 								      <child>
@@ -4091,6 +4467,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -4105,6 +4485,8 @@
 								    <widget class="GtkEventBox" id="comp_at_1_event_box">
 								      <property name="visible">True</property>
 								      <property name="tooltip" translatable="yes">Attack</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 
 								      <child>
 									<widget class="GtkVScale" id="comp_at_1">
@@ -4145,6 +4527,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_re_label_1_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_re_label_1_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:12:45 GMT"/>
 
 								      <child>
@@ -4160,6 +4544,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -4174,6 +4562,8 @@
 								    <widget class="GtkEventBox" id="comp_re_1_event_box">
 								      <property name="visible">True</property>
 								      <property name="tooltip" translatable="yes">Release</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 
 								      <child>
 									<widget class="GtkVScale" id="comp_re_1">
@@ -4214,6 +4604,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_th_label_1_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_th_label_1_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:13:23 GMT"/>
 
 								      <child>
@@ -4229,6 +4621,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -4243,6 +4639,8 @@
 								    <widget class="GtkEventBox" id="comp_th_1_event_box">
 								      <property name="visible">True</property>
 								      <property name="tooltip" translatable="yes">Threshold</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 
 								      <child>
 									<widget class="GtkVScale" id="comp_th_1">
@@ -4283,6 +4681,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_ra_label_1_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_ra_label_1_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:14:00 GMT"/>
 
 								      <child>
@@ -4298,6 +4698,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -4312,6 +4716,8 @@
 								    <widget class="GtkEventBox" id="comp_ra_1_event_box">
 								      <property name="visible">True</property>
 								      <property name="tooltip" translatable="yes">Ratio</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 
 								      <child>
 									<widget class="GtkVScale" id="comp_ra_1">
@@ -4352,6 +4758,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_kn_label_1_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_kn_label_1_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:14:21 GMT"/>
 
 								      <child>
@@ -4367,6 +4775,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -4381,6 +4793,8 @@
 								    <widget class="GtkEventBox" id="comp_kn_1_event_box">
 								      <property name="visible">True</property>
 								      <property name="tooltip" translatable="yes">Knee</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 
 								      <child>
 									<widget class="GtkVScale" id="comp_kn_1">
@@ -4421,6 +4835,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_ma_label_1_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_ma_label_1_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:14:41 GMT"/>
 
 								      <child>
@@ -4436,6 +4852,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -4460,6 +4880,7 @@
 									  <property name="label" translatable="yes">0.0</property>
 									  <property name="use_underline">True</property>
 									  <property name="relief">GTK_RELIEF_NORMAL</property>
+									  <property name="focus_on_click">True</property>
 									  <property name="active">False</property>
 									  <property name="inconsistent">False</property>
 									  <signal name="toggled" handler="on_autobutton_1_toggled" last_modification_time="Sun, 06 Jun 2004 10:51:53 GMT"/>
@@ -4475,6 +4896,8 @@
 									<widget class="GtkEventBox" id="eventbox63">
 									  <property name="visible">True</property>
 									  <property name="tooltip" translatable="yes">Makeup gain</property>
+									  <property name="visible_window">True</property>
+									  <property name="above_child">False</property>
 
 									  <child>
 									    <widget class="GtkVScale" id="comp_ma_1">
@@ -4593,6 +5016,8 @@
 							<widget class="GtkEventBox" id="low_stereo_event_box">
 							  <property name="visible">True</property>
 							  <property name="tooltip" translatable="yes">Low Band Stereo Width</property>
+							  <property name="visible_window">True</property>
+							  <property name="above_child">False</property>
 							  <signal name="enter_notify_event" handler="on_stereo_event_box_enter_notify_event" last_modification_time="Sat, 03 Jan 2004 00:43:28 GMT"/>
 
 							  <child>
@@ -4623,6 +5048,8 @@
 						      <child>
 							<widget class="GtkEventBox" id="low_band_button_event_box">
 							  <property name="visible">True</property>
+							  <property name="visible_window">True</property>
+							  <property name="above_child">False</property>
 							  <signal name="enter_notify_event" handler="on_band_button_event_box_enter_notify_event" last_modification_time="Sun, 22 Feb 2004 12:24:43 GMT"/>
 
 							  <child>
@@ -4639,6 +5066,7 @@
 								  <property name="label" translatable="yes">Solo</property>
 								  <property name="use_underline">True</property>
 								  <property name="relief">GTK_RELIEF_NORMAL</property>
+								  <property name="focus_on_click">True</property>
 								  <property name="active">False</property>
 								  <property name="inconsistent">False</property>
 								  <property name="draw_indicator">True</property>
@@ -4659,6 +5087,7 @@
 								  <property name="label" translatable="yes">Bypass</property>
 								  <property name="use_underline">True</property>
 								  <property name="relief">GTK_RELIEF_NORMAL</property>
+								  <property name="focus_on_click">True</property>
 								  <property name="active">False</property>
 								  <property name="inconsistent">False</property>
 								  <property name="draw_indicator">True</property>
@@ -4702,6 +5131,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="type">label_item</property>
@@ -4720,6 +5153,8 @@
 				      <child>
 					<widget class="GtkEventBox" id="mid_comp_event_box">
 					  <property name="visible">True</property>
+					  <property name="visible_window">True</property>
+					  <property name="above_child">False</property>
 					  <signal name="enter_notify_event" handler="on_mid_comp_event_box_enter_notify_event" last_modification_time="Sun, 31 Aug 2003 15:22:56 GMT"/>
 					  <signal name="leave_notify_event" handler="on_mid_comp_event_box_leave_notify_event" last_modification_time="Sun, 31 Aug 2003 15:23:02 GMT"/>
 
@@ -4743,6 +5178,8 @@
 						  <child>
 						    <widget class="GtkEventBox" id="comp_m_event_box">
 						      <property name="visible">True</property>
+						      <property name="visible_window">True</property>
+						      <property name="above_child">False</property>
 						      <signal name="enter_notify_event" handler="on_comp_event_box_enter_notify_event" last_modification_time="Sat, 03 Jan 2004 00:42:51 GMT"/>
 
 						      <child>
@@ -4768,6 +5205,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_at_label_2_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_at_label_2_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:15:04 GMT"/>
 
 								      <child>
@@ -4783,6 +5222,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -4797,6 +5240,8 @@
 								    <widget class="GtkEventBox" id="comp_at_2_event_box">
 								      <property name="visible">True</property>
 								      <property name="tooltip" translatable="yes">Attack</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 
 								      <child>
 									<widget class="GtkVScale" id="comp_at_2">
@@ -4837,6 +5282,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_re_label_2_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_re_label_2_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:15:25 GMT"/>
 
 								      <child>
@@ -4852,6 +5299,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -4866,6 +5317,8 @@
 								    <widget class="GtkEventBox" id="comp_re_2_event_box">
 								      <property name="visible">True</property>
 								      <property name="tooltip" translatable="yes">Release</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 
 								      <child>
 									<widget class="GtkVScale" id="comp_re_2">
@@ -4906,6 +5359,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_th_label_2_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_th_label_2_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:15:42 GMT"/>
 
 								      <child>
@@ -4921,6 +5376,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -4935,6 +5394,8 @@
 								    <widget class="GtkEventBox" id="comp_th_2_event_box">
 								      <property name="visible">True</property>
 								      <property name="tooltip" translatable="yes">Threshold</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 
 								      <child>
 									<widget class="GtkVScale" id="comp_th_2">
@@ -4975,6 +5436,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_ra_label_2_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_ra_label_2_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:16:00 GMT"/>
 
 								      <child>
@@ -4990,6 +5453,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -5004,6 +5471,8 @@
 								    <widget class="GtkEventBox" id="comp_ra_2_event_box">
 								      <property name="visible">True</property>
 								      <property name="tooltip" translatable="yes">Ratio</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 
 								      <child>
 									<widget class="GtkVScale" id="comp_ra_2">
@@ -5044,6 +5513,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_kn_label_2_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_kn_label_2_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:16:24 GMT"/>
 
 								      <child>
@@ -5059,6 +5530,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -5073,6 +5548,8 @@
 								    <widget class="GtkEventBox" id="comp_kn_2_event_box">
 								      <property name="visible">True</property>
 								      <property name="tooltip" translatable="yes">Knee</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 
 								      <child>
 									<widget class="GtkVScale" id="comp_kn_2">
@@ -5113,6 +5590,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_ma_label_2_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_ma_label_2_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:16:45 GMT"/>
 
 								      <child>
@@ -5128,6 +5607,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -5152,6 +5635,7 @@
 									  <property name="label" translatable="yes">0.0</property>
 									  <property name="use_underline">True</property>
 									  <property name="relief">GTK_RELIEF_NORMAL</property>
+									  <property name="focus_on_click">True</property>
 									  <property name="active">False</property>
 									  <property name="inconsistent">False</property>
 									  <signal name="toggled" handler="on_autobutton_2_toggled" last_modification_time="Sun, 06 Jun 2004 11:01:01 GMT"/>
@@ -5167,6 +5651,8 @@
 									<widget class="GtkEventBox" id="eventbox64">
 									  <property name="visible">True</property>
 									  <property name="tooltip" translatable="yes">Makeup gain</property>
+									  <property name="visible_window">True</property>
+									  <property name="above_child">False</property>
 
 									  <child>
 									    <widget class="GtkVScale" id="comp_ma_2">
@@ -5285,6 +5771,8 @@
 							<widget class="GtkEventBox" id="mid_stereo_event_box">
 							  <property name="visible">True</property>
 							  <property name="tooltip" translatable="yes">Mid Band Stereo Width</property>
+							  <property name="visible_window">True</property>
+							  <property name="above_child">False</property>
 							  <signal name="enter_notify_event" handler="on_stereo_event_box_enter_notify_event" last_modification_time="Sat, 03 Jan 2004 00:43:28 GMT"/>
 
 							  <child>
@@ -5315,6 +5803,8 @@
 						      <child>
 							<widget class="GtkEventBox" id="mid_band_button_event_box">
 							  <property name="visible">True</property>
+							  <property name="visible_window">True</property>
+							  <property name="above_child">False</property>
 							  <signal name="enter_notify_event" handler="on_band_button_event_box_enter_notify_event" last_modification_time="Sun, 22 Feb 2004 12:24:55 GMT"/>
 
 							  <child>
@@ -5331,6 +5821,7 @@
 								  <property name="label" translatable="yes">Solo</property>
 								  <property name="use_underline">True</property>
 								  <property name="relief">GTK_RELIEF_NORMAL</property>
+								  <property name="focus_on_click">True</property>
 								  <property name="active">False</property>
 								  <property name="inconsistent">False</property>
 								  <property name="draw_indicator">True</property>
@@ -5351,6 +5842,7 @@
 								  <property name="label" translatable="yes">Bypass</property>
 								  <property name="use_underline">True</property>
 								  <property name="relief">GTK_RELIEF_NORMAL</property>
+								  <property name="focus_on_click">True</property>
 								  <property name="active">False</property>
 								  <property name="inconsistent">False</property>
 								  <property name="draw_indicator">True</property>
@@ -5394,6 +5886,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="type">label_item</property>
@@ -5412,6 +5908,8 @@
 				      <child>
 					<widget class="GtkEventBox" id="high_comp_event_box">
 					  <property name="visible">True</property>
+					  <property name="visible_window">True</property>
+					  <property name="above_child">False</property>
 					  <signal name="enter_notify_event" handler="on_high_comp_event_box_enter_notify_event" last_modification_time="Sun, 31 Aug 2003 15:23:40 GMT"/>
 					  <signal name="leave_notify_event" handler="on_high_comp_event_box_leave_notify_event" last_modification_time="Sun, 31 Aug 2003 15:23:48 GMT"/>
 
@@ -5435,6 +5933,8 @@
 						  <child>
 						    <widget class="GtkEventBox" id="comp_h_event_box">
 						      <property name="visible">True</property>
+						      <property name="visible_window">True</property>
+						      <property name="above_child">False</property>
 						      <signal name="enter_notify_event" handler="on_comp_event_box_enter_notify_event" last_modification_time="Sat, 03 Jan 2004 00:43:03 GMT"/>
 
 						      <child>
@@ -5460,6 +5960,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_at_label_3_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_at_label_3_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:17:12 GMT"/>
 
 								      <child>
@@ -5475,6 +5977,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -5489,6 +5995,8 @@
 								    <widget class="GtkEventBox" id="comp_at_3_event_box">
 								      <property name="visible">True</property>
 								      <property name="tooltip" translatable="yes">Attack</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 
 								      <child>
 									<widget class="GtkVScale" id="comp_at_3">
@@ -5529,6 +6037,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_re_label_3_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_re_label_3_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:17:30 GMT"/>
 
 								      <child>
@@ -5544,6 +6054,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -5558,6 +6072,8 @@
 								    <widget class="GtkEventBox" id="comp_re_3_event_box">
 								      <property name="visible">True</property>
 								      <property name="tooltip" translatable="yes">Release</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 
 								      <child>
 									<widget class="GtkVScale" id="comp_re_3">
@@ -5598,6 +6114,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_th_label_3_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_th_label_3_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:17:53 GMT"/>
 
 								      <child>
@@ -5613,6 +6131,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -5627,6 +6149,8 @@
 								    <widget class="GtkEventBox" id="comp_th_3_event_box">
 								      <property name="visible">True</property>
 								      <property name="tooltip" translatable="yes">Threshold</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 
 								      <child>
 									<widget class="GtkVScale" id="comp_th_3">
@@ -5667,6 +6191,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_ra_label_3_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_ra_label_3_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:18:23 GMT"/>
 
 								      <child>
@@ -5682,6 +6208,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -5696,6 +6226,8 @@
 								    <widget class="GtkEventBox" id="comp_ra_3_event_box">
 								      <property name="visible">True</property>
 								      <property name="tooltip" translatable="yes">Ratio</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 
 								      <child>
 									<widget class="GtkVScale" id="comp_ra_3">
@@ -5736,6 +6268,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_kn_label_3_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_kn_label_3_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:18:44 GMT"/>
 
 								      <child>
@@ -5751,6 +6285,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -5765,6 +6303,8 @@
 								    <widget class="GtkEventBox" id="comp_kn_3_event_box">
 								      <property name="visible">True</property>
 								      <property name="tooltip" translatable="yes">Knee</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 
 								      <child>
 									<widget class="GtkVScale" id="comp_kn_3">
@@ -5805,6 +6345,8 @@
 								  <child>
 								    <widget class="GtkEventBox" id="comp_ma_label_3_event_box">
 								      <property name="visible">True</property>
+								      <property name="visible_window">True</property>
+								      <property name="above_child">False</property>
 								      <signal name="button_press_event" handler="on_comp_ma_label_3_event_box_button_press_event" last_modification_time="Sun, 18 Jan 2004 11:19:03 GMT"/>
 
 								      <child>
@@ -5820,6 +6362,10 @@
 									  <property name="yalign">0.5</property>
 									  <property name="xpad">0</property>
 									  <property name="ypad">0</property>
+									  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+									  <property name="width_chars">-1</property>
+									  <property name="single_line_mode">False</property>
+									  <property name="angle">0</property>
 									</widget>
 								      </child>
 								    </widget>
@@ -5844,6 +6390,7 @@
 									  <property name="label" translatable="yes">0.0</property>
 									  <property name="use_underline">True</property>
 									  <property name="relief">GTK_RELIEF_NORMAL</property>
+									  <property name="focus_on_click">True</property>
 									  <property name="active">False</property>
 									  <property name="inconsistent">False</property>
 									  <signal name="toggled" handler="on_autobutton_3_toggled" last_modification_time="Sun, 06 Jun 2004 11:02:38 GMT"/>
@@ -5859,6 +6406,8 @@
 									<widget class="GtkEventBox" id="eventbox65">
 									  <property name="visible">True</property>
 									  <property name="tooltip" translatable="yes">Makeup gain</property>
+									  <property name="visible_window">True</property>
+									  <property name="above_child">False</property>
 
 									  <child>
 									    <widget class="GtkVScale" id="comp_ma_3">
@@ -5977,6 +6526,8 @@
 							<widget class="GtkEventBox" id="high_stereo_event_box">
 							  <property name="visible">True</property>
 							  <property name="tooltip" translatable="yes">High Band Stereo Width</property>
+							  <property name="visible_window">True</property>
+							  <property name="above_child">False</property>
 							  <signal name="enter_notify_event" handler="on_stereo_event_box_enter_notify_event" last_modification_time="Sat, 03 Jan 2004 00:43:28 GMT"/>
 
 							  <child>
@@ -6007,6 +6558,8 @@
 						      <child>
 							<widget class="GtkEventBox" id="high_band_button_event_box">
 							  <property name="visible">True</property>
+							  <property name="visible_window">True</property>
+							  <property name="above_child">False</property>
 							  <signal name="enter_notify_event" handler="on_band_button_event_box_enter_notify_event" last_modification_time="Sun, 22 Feb 2004 12:25:07 GMT"/>
 
 							  <child>
@@ -6023,6 +6576,7 @@
 								  <property name="label" translatable="yes">Solo</property>
 								  <property name="use_underline">True</property>
 								  <property name="relief">GTK_RELIEF_NORMAL</property>
+								  <property name="focus_on_click">True</property>
 								  <property name="active">False</property>
 								  <property name="inconsistent">False</property>
 								  <property name="draw_indicator">True</property>
@@ -6043,6 +6597,7 @@
 								  <property name="label" translatable="yes">Bypass</property>
 								  <property name="use_underline">True</property>
 								  <property name="relief">GTK_RELIEF_NORMAL</property>
+								  <property name="focus_on_click">True</property>
 								  <property name="active">False</property>
 								  <property name="inconsistent">False</property>
 								  <property name="draw_indicator">True</property>
@@ -6086,6 +6641,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="type">label_item</property>
@@ -6130,6 +6689,8 @@
 				  <child>
 				    <widget class="GtkEventBox" id="boost_eventbox">
 				      <property name="visible">True</property>
+				      <property name="visible_window">True</property>
+				      <property name="above_child">False</property>
 				      <signal name="enter_notify_event" handler="on_boost_eventbox_enter_notify_event" last_modification_time="Mon, 21 Jul 2003 00:29:16 GMT"/>
 
 				      <child>
@@ -6159,6 +6720,10 @@
 						  <property name="yalign">0.5</property>
 						  <property name="xpad">0</property>
 						  <property name="ypad">0</property>
+						  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						  <property name="width_chars">-1</property>
+						  <property name="single_line_mode">False</property>
+						  <property name="angle">0</property>
 						</widget>
 						<packing>
 						  <property name="padding">1</property>
@@ -6202,6 +6767,10 @@
 					      <property name="yalign">0.5</property>
 					      <property name="xpad">0</property>
 					      <property name="ypad">0</property>
+					      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+					      <property name="width_chars">-1</property>
+					      <property name="single_line_mode">False</property>
+					      <property name="angle">0</property>
 					    </widget>
 					    <packing>
 					      <property name="type">label_item</property>
@@ -6220,6 +6789,8 @@
 				  <child>
 				    <widget class="GtkEventBox" id="limiter_eventbox">
 				      <property name="visible">True</property>
+				      <property name="visible_window">True</property>
+				      <property name="above_child">False</property>
 				      <signal name="enter_notify_event" handler="on_limiter_eventbox_enter_notify_event" last_modification_time="Mon, 21 Jul 2003 00:28:43 GMT"/>
 
 				      <child>
@@ -6255,6 +6826,10 @@
 						      <property name="yalign">0.5</property>
 						      <property name="xpad">0</property>
 						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
 						    </widget>
 						    <packing>
 						      <property name="padding">1</property>
@@ -6294,6 +6869,8 @@
 					      <child>
 						<widget class="GtkEventBox" id="lim_in_meter_eventbox">
 						  <property name="visible">True</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 						  <signal name="button_press_event" handler="on_lim_in_meter_eventbox_button_press_event" last_modification_time="Sun, 06 Feb 2005 23:47:57 GMT"/>
 
 						  <child>
@@ -6371,6 +6948,10 @@
 						      <property name="yalign">0.5</property>
 						      <property name="xpad">4</property>
 						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
 						    </widget>
 						    <packing>
 						      <property name="left_attach">1</property>
@@ -6395,6 +6976,10 @@
 						      <property name="yalign">0.5</property>
 						      <property name="xpad">4</property>
 						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
 						      <signal name="realize" handler="on_release_val_label_realize" last_modification_time="Sun, 04 May 2003 11:26:06 GMT"/>
 						    </widget>
 						    <packing>
@@ -6464,6 +7049,10 @@
 						      <property name="yalign">0.5</property>
 						      <property name="xpad">0</property>
 						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
 						    </widget>
 						    <packing>
 						      <property name="left_attach">0</property>
@@ -6488,6 +7077,10 @@
 						      <property name="yalign">0.5</property>
 						      <property name="xpad">0</property>
 						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
 						    </widget>
 						    <packing>
 						      <property name="left_attach">0</property>
@@ -6509,6 +7102,8 @@
 					      <child>
 						<widget class="GtkEventBox" id="lim_out_meter_eventbox">
 						  <property name="visible">True</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 						  <signal name="button_press_event" handler="on_lim_out_meter_eventbox_button_press_event" last_modification_time="Sun, 06 Feb 2005 23:48:41 GMT"/>
 
 						  <child>
@@ -6584,6 +7179,8 @@
 					      <child>
 						<widget class="GtkEventBox" id="limiter_bypass_event_box">
 						  <property name="visible">True</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
 						  <signal name="enter_notify_event" handler="on_limiter_bypass_event_box_enter_notify_event" last_modification_time="Sun, 22 Feb 2004 12:55:23 GMT"/>
 
 						  <child>
@@ -6593,6 +7190,7 @@
 						      <property name="label" translatable="yes">Limiter bypass</property>
 						      <property name="use_underline">True</property>
 						      <property name="relief">GTK_RELIEF_NORMAL</property>
+						      <property name="focus_on_click">True</property>
 						      <property name="active">False</property>
 						      <property name="inconsistent">False</property>
 						      <property name="draw_indicator">True</property>
@@ -6622,6 +7220,10 @@
 					      <property name="yalign">0.5</property>
 					      <property name="xpad">0</property>
 					      <property name="ypad">0</property>
+					      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+					      <property name="width_chars">-1</property>
+					      <property name="single_line_mode">False</property>
+					      <property name="angle">0</property>
 					    </widget>
 					    <packing>
 					      <property name="type">label_item</property>
@@ -6679,6 +7281,8 @@
 		      <child>
 			<widget class="GtkEventBox" id="output_eventbox">
 			  <property name="visible">True</property>
+			  <property name="visible_window">True</property>
+			  <property name="above_child">False</property>
 			  <signal name="enter_notify_event" handler="on_output_eventbox_enter_notify_event" last_modification_time="Mon, 21 Jul 2003 00:29:49 GMT"/>
 
 			  <child>
@@ -6712,6 +7316,8 @@
 			      <child>
 				<widget class="GtkEventBox" id="outmeter_eventbox">
 				  <property name="visible">True</property>
+				  <property name="visible_window">True</property>
+				  <property name="above_child">False</property>
 				  <signal name="button_press_event" handler="on_outmeter_eventbox_button_press_event" last_modification_time="Sun, 06 Feb 2005 23:46:34 GMT"/>
 
 				  <child>
@@ -6800,6 +7406,7 @@
 			  <property name="label" translatable="yes">Bypass</property>
 			  <property name="use_underline">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
+			  <property name="focus_on_click">True</property>
 			  <property name="active">False</property>
 			  <property name="inconsistent">False</property>
 			  <signal name="toggled" handler="on_bypass_button_toggled" last_modification_time="Sun, 20 Apr 2003 16:13:35 GMT"/>
@@ -6827,6 +7434,10 @@
 		      <property name="yalign">0.5</property>
 		      <property name="xpad">0</property>
 		      <property name="ypad">0</property>
+		      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		      <property name="width_chars">-1</property>
+		      <property name="single_line_mode">False</property>
+		      <property name="angle">0</property>
 		    </widget>
 		    <packing>
 		      <property name="type">label_item</property>
@@ -6930,6 +7541,13 @@
   <property name="modal">False</property>
   <property name="resizable">True</property>
   <property name="destroy_with_parent">False</property>
+  <property name="decorated">True</property>
+  <property name="skip_taskbar_hint">False</property>
+  <property name="skip_pager_hint">False</property>
+  <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
+  <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
   <property name="has_separator">True</property>
 
   <child internal-child="vbox">
@@ -6952,6 +7570,7 @@
 	      <property name="label">gtk-close</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-7</property>
 	      <signal name="clicked" handler="on_pref_close_clicked" last_modification_time="Sun, 30 Jan 2005 17:34:34 GMT"/>
 	    </widget>
@@ -6968,6 +7587,8 @@
       <child>
 	<widget class="GtkEventBox" id="GraphicEqEvent">
 	  <property name="visible">True</property>
+	  <property name="visible_window">True</property>
+	  <property name="above_child">False</property>
 	  <signal name="enter_notify_event" handler="on_pref_enter_notify_event" last_modification_time="Sun, 30 Jan 2005 19:37:26 GMT"/>
 
 	  <child>
@@ -6994,8 +7615,8 @@
 		      <child>
 			<widget class="GtkLabel" id="MinGainLabel">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Minimum gain (db):</property>
-			  <property name="use_underline">False</property>
+			  <property name="label" translatable="yes">Mi_nimum gain (db):</property>
+			  <property name="use_underline">True</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
 			  <property name="wrap">False</property>
@@ -7004,6 +7625,11 @@
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
+			  <property name="mnemonic_widget">MinGainSpin</property>
+			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			  <property name="width_chars">-1</property>
+			  <property name="single_line_mode">False</property>
+			  <property name="angle">0</property>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>
@@ -7051,8 +7677,8 @@
 		      <child>
 			<widget class="GtkLabel" id="MaxGainLabel">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Maximum gain (db):</property>
-			  <property name="use_underline">False</property>
+			  <property name="label" translatable="yes">_Maximum gain (db):</property>
+			  <property name="use_underline">True</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
 			  <property name="wrap">False</property>
@@ -7061,6 +7687,11 @@
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
+			  <property name="mnemonic_widget">MaxGainSpin</property>
+			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			  <property name="width_chars">-1</property>
+			  <property name="single_line_mode">False</property>
+			  <property name="angle">0</property>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>
@@ -7114,6 +7745,10 @@
 		  <property name="yalign">0.5</property>
 		  <property name="xpad">0</property>
 		  <property name="ypad">0</property>
+		  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		  <property name="width_chars">-1</property>
+		  <property name="single_line_mode">False</property>
+		  <property name="angle">0</property>
 		</widget>
 		<packing>
 		  <property name="type">label_item</property>
@@ -7132,6 +7767,8 @@
       <child>
 	<widget class="GtkEventBox" id="CrossfadeEvent">
 	  <property name="visible">True</property>
+	  <property name="visible_window">True</property>
+	  <property name="above_child">False</property>
 	  <signal name="enter_notify_event" handler="on_pref_enter_notify_event" last_modification_time="Sun, 30 Jan 2005 19:38:06 GMT"/>
 
 	  <child>
@@ -7152,8 +7789,8 @@
 		  <child>
 		    <widget class="GtkLabel" id="CrossfadeTimeLabel">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">Crossfade time (sec):</property>
-		      <property name="use_underline">False</property>
+		      <property name="label" translatable="yes">_Crossfade time (sec):</property>
+		      <property name="use_underline">True</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
 		      <property name="wrap">False</property>
@@ -7162,6 +7799,11 @@
 		      <property name="yalign">0.5</property>
 		      <property name="xpad">0</property>
 		      <property name="ypad">0</property>
+		      <property name="mnemonic_widget">CrossfadeTimeSpin</property>
+		      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		      <property name="width_chars">-1</property>
+		      <property name="single_line_mode">False</property>
+		      <property name="angle">0</property>
 		    </widget>
 		    <packing>
 		      <property name="padding">0</property>
@@ -7208,6 +7850,10 @@
 		  <property name="yalign">0.5</property>
 		  <property name="xpad">0</property>
 		  <property name="ypad">0</property>
+		  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		  <property name="width_chars">-1</property>
+		  <property name="single_line_mode">False</property>
+		  <property name="angle">0</property>
 		</widget>
 		<packing>
 		  <property name="type">label_item</property>
@@ -7226,6 +7872,8 @@
       <child>
 	<widget class="GtkEventBox" id="SpectrumEvent">
 	  <property name="visible">True</property>
+	  <property name="visible_window">True</property>
+	  <property name="above_child">False</property>
 	  <signal name="enter_notify_event" handler="on_pref_enter_notify_event" last_modification_time="Sun, 30 Jan 2005 19:38:37 GMT"/>
 
 	  <child>
@@ -7307,8 +7955,8 @@
 		      <child>
 			<widget class="GtkLabel" id="UpdateFrequencyLabel">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Update frequency (Hz):</property>
-			  <property name="use_underline">False</property>
+			  <property name="label" translatable="yes">_Update frequency (Hz):</property>
+			  <property name="use_underline">True</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
 			  <property name="wrap">False</property>
@@ -7317,6 +7965,11 @@
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
+			  <property name="mnemonic_widget">UpdateFrequencySpin</property>
+			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			  <property name="width_chars">-1</property>
+			  <property name="single_line_mode">False</property>
+			  <property name="angle">0</property>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>
@@ -7370,6 +8023,10 @@
 		  <property name="yalign">0.5</property>
 		  <property name="xpad">0</property>
 		  <property name="ypad">0</property>
+		  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		  <property name="width_chars">-1</property>
+		  <property name="single_line_mode">False</property>
+		  <property name="angle">0</property>
 		</widget>
 		<packing>
 		  <property name="type">label_item</property>
@@ -7388,6 +8045,8 @@
       <child>
 	<widget class="GtkEventBox" id="CrossoverEvent">
 	  <property name="visible">True</property>
+	  <property name="visible_window">True</property>
+	  <property name="above_child">False</property>
 	  <signal name="enter_notify_event" handler="on_pref_enter_notify_event" last_modification_time="Sun, 30 Jan 2005 19:39:07 GMT"/>
 
 	  <child>
@@ -7410,9 +8069,10 @@
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">FFT is more CPU intensive but is the best choice</property>
 		      <property name="can_focus">True</property>
-		      <property name="label" translatable="yes">FFT</property>
+		      <property name="label" translatable="yes">_FFT</property>
 		      <property name="use_underline">True</property>
 		      <property name="relief">GTK_RELIEF_NORMAL</property>
+		      <property name="focus_on_click">True</property>
 		      <property name="active">False</property>
 		      <property name="inconsistent">False</property>
 		      <property name="draw_indicator">True</property>
@@ -7430,9 +8090,10 @@
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">IIR is less CPU intensive but is not recommended for serious work</property>
 		      <property name="can_focus">True</property>
-		      <property name="label" translatable="yes">IIR</property>
+		      <property name="label" translatable="yes">II_R</property>
 		      <property name="use_underline">True</property>
 		      <property name="relief">GTK_RELIEF_NORMAL</property>
+		      <property name="focus_on_click">True</property>
 		      <property name="active">False</property>
 		      <property name="inconsistent">False</property>
 		      <property name="draw_indicator">True</property>
@@ -7461,6 +8122,10 @@
 		  <property name="yalign">0.5</property>
 		  <property name="xpad">0</property>
 		  <property name="ypad">0</property>
+		  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		  <property name="width_chars">-1</property>
+		  <property name="single_line_mode">False</property>
+		  <property name="angle">0</property>
 		</widget>
 		<packing>
 		  <property name="type">label_item</property>
@@ -7479,6 +8144,8 @@
       <child>
 	<widget class="GtkEventBox" id="ColorsEvent">
 	  <property name="visible">True</property>
+	  <property name="visible_window">True</property>
+	  <property name="above_child">False</property>
 	  <signal name="enter_notify_event" handler="on_pref_enter_notify_event" last_modification_time="Sun, 30 Jan 2005 19:39:38 GMT"/>
 
 	  <child>
@@ -7685,6 +8352,10 @@
 		  <property name="yalign">0.5</property>
 		  <property name="xpad">0</property>
 		  <property name="ypad">0</property>
+		  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		  <property name="width_chars">-1</property>
+		  <property name="single_line_mode">False</property>
+		  <property name="angle">0</property>
 		</widget>
 		<packing>
 		  <property name="type">label_item</property>
@@ -7711,6 +8382,13 @@
   <property name="modal">False</property>
   <property name="resizable">False</property>
   <property name="destroy_with_parent">False</property>
+  <property name="decorated">True</property>
+  <property name="skip_taskbar_hint">False</property>
+  <property name="skip_pager_hint">False</property>
+  <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
+  <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child internal-child="cancel_button">
     <widget class="GtkButton" id="cancel_button1">
@@ -7718,6 +8396,7 @@
       <property name="can_default">True</property>
       <property name="can_focus">True</property>
       <property name="relief">GTK_RELIEF_NORMAL</property>
+      <property name="focus_on_click">True</property>
     </widget>
   </child>
 
@@ -7727,6 +8406,7 @@
       <property name="can_default">True</property>
       <property name="can_focus">True</property>
       <property name="relief">GTK_RELIEF_NORMAL</property>
+      <property name="focus_on_click">True</property>
     </widget>
   </child>
 
@@ -7736,6 +8416,7 @@
       <property name="can_default">True</property>
       <property name="can_focus">True</property>
       <property name="relief">GTK_RELIEF_NORMAL</property>
+      <property name="focus_on_click">True</property>
     </widget>
   </child>
 
@@ -7756,6 +8437,13 @@
   <property name="modal">False</property>
   <property name="resizable">True</property>
   <property name="destroy_with_parent">False</property>
+  <property name="decorated">True</property>
+  <property name="skip_taskbar_hint">False</property>
+  <property name="skip_pager_hint">False</property>
+  <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
+  <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
   <property name="has_separator">True</property>
 
   <child internal-child="vbox">
@@ -7777,6 +8465,7 @@
 	      <property name="label">gtk-cancel</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-6</property>
 	      <signal name="clicked" handler="on_scene_name_cancel_clicked" last_modification_time="Thu, 01 Apr 2004 01:21:43 GMT"/>
 	    </widget>
@@ -7790,6 +8479,7 @@
 	      <property name="label">gtk-ok</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-5</property>
 	      <signal name="clicked" handler="on_scene_name_ok_clicked" last_modification_time="Thu, 01 Apr 2004 01:21:22 GMT"/>
 	    </widget>
@@ -7812,7 +8502,7 @@
 	  <property name="max_length">99</property>
 	  <property name="text" translatable="yes"></property>
 	  <property name="has_frame">True</property>
-	  <property name="invisible_char" translatable="yes">*</property>
+	  <property name="invisible_char">*</property>
 	  <property name="activates_default">False</property>
 	  <signal name="changed" handler="on_scene_name_entry_changed" last_modification_time="Thu, 01 Apr 2004 01:20:45 GMT"/>
 	</widget>
@@ -7835,6 +8525,13 @@
   <property name="modal">False</property>
   <property name="resizable">True</property>
   <property name="destroy_with_parent">True</property>
+  <property name="decorated">True</property>
+  <property name="skip_taskbar_hint">False</property>
+  <property name="skip_pager_hint">False</property>
+  <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
+  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
+  <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkHBox" id="hbox66">
@@ -7862,6 +8559,10 @@
 	      <property name="yalign">0.5</property>
 	      <property name="xpad">0</property>
 	      <property name="ypad">0</property>
+	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+	      <property name="width_chars">-1</property>
+	      <property name="single_line_mode">False</property>
+	      <property name="angle">0</property>
 	    </widget>
 	    <packing>
 	      <property name="padding">0</property>
@@ -7883,6 +8584,10 @@
 	      <property name="yalign">0.5</property>
 	      <property name="xpad">0</property>
 	      <property name="ypad">0</property>
+	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+	      <property name="width_chars">-1</property>
+	      <property name="single_line_mode">False</property>
+	      <property name="angle">0</property>
 	    </widget>
 	    <packing>
 	      <property name="padding">0</property>
@@ -7904,6 +8609,10 @@
 	      <property name="yalign">0.5</property>
 	      <property name="xpad">0</property>
 	      <property name="ypad">0</property>
+	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+	      <property name="width_chars">-1</property>
+	      <property name="single_line_mode">False</property>
+	      <property name="angle">0</property>
 	    </widget>
 	    <packing>
 	      <property name="padding">0</property>
@@ -7925,6 +8634,10 @@
 	      <property name="yalign">0.5</property>
 	      <property name="xpad">0</property>
 	      <property name="ypad">0</property>
+	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+	      <property name="width_chars">-1</property>
+	      <property name="single_line_mode">False</property>
+	      <property name="angle">0</property>
 	    </widget>
 	    <packing>
 	      <property name="padding">0</property>
@@ -7946,6 +8659,10 @@
 	      <property name="yalign">0.5</property>
 	      <property name="xpad">0</property>
 	      <property name="ypad">0</property>
+	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+	      <property name="width_chars">-1</property>
+	      <property name="single_line_mode">False</property>
+	      <property name="angle">0</property>
 	    </widget>
 	    <packing>
 	      <property name="padding">0</property>
@@ -7967,6 +8684,10 @@
 	      <property name="yalign">0.5</property>
 	      <property name="xpad">0</property>
 	      <property name="ypad">0</property>
+	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+	      <property name="width_chars">-1</property>
+	      <property name="single_line_mode">False</property>
+	      <property name="angle">0</property>
 	    </widget>
 	    <packing>
 	      <property name="padding">0</property>
@@ -7988,6 +8709,10 @@
 	      <property name="yalign">0.5</property>
 	      <property name="xpad">0</property>
 	      <property name="ypad">0</property>
+	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+	      <property name="width_chars">-1</property>
+	      <property name="single_line_mode">False</property>
+	      <property name="angle">0</property>
 	    </widget>
 	    <packing>
 	      <property name="padding">0</property>
@@ -8009,6 +8734,10 @@
 	      <property name="yalign">0.5</property>
 	      <property name="xpad">0</property>
 	      <property name="ypad">0</property>
+	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+	      <property name="width_chars">-1</property>
+	      <property name="single_line_mode">False</property>
+	      <property name="angle">0</property>
 	    </widget>
 	    <packing>
 	      <property name="padding">0</property>
@@ -8204,6 +8933,13 @@
   <property name="modal">False</property>
   <property name="resizable">True</property>
   <property name="destroy_with_parent">False</property>
+  <property name="decorated">True</property>
+  <property name="skip_taskbar_hint">False</property>
+  <property name="skip_pager_hint">False</property>
+  <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
+  <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
   <property name="has_separator">True</property>
 
   <child internal-child="vbox">
@@ -8227,6 +8963,7 @@
 	      <property name="label">gtk-close</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-7</property>
 	      <signal name="clicked" handler="on_about_closebutton_clicked" last_modification_time="Wed, 03 Nov 2004 20:22:18 GMT"/>
 	    </widget>
@@ -8289,14 +9026,16 @@
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="editable">False</property>
+		      <property name="overwrite">False</property>
+		      <property name="accepts_tab">True</property>
 		      <property name="justification">GTK_JUSTIFY_LEFT</property>
 		      <property name="wrap_mode">GTK_WRAP_WORD</property>
 		      <property name="cursor_visible">False</property>
 		      <property name="pixels_above_lines">0</property>
 		      <property name="pixels_below_lines">0</property>
 		      <property name="pixels_inside_wrap">0</property>
-		      <property name="left_margin">10</property>
-		      <property name="right_margin">0</property>
+		      <property name="left_margin">5</property>
+		      <property name="right_margin">5</property>
 		      <property name="indent">0</property>
 		      <property name="text" translatable="yes">
 JAMin is the JACK Audio Mastering interface.  JAMin is designed to perform professional audio mastering of any number of input streams.  It consists of a number of tools to do this: a 1024 band hand drawn EQ with modifiable parametric controls, a 31 band graphic EQ, 3 band compressor, 3 band stereo width control, lookahead limiter, boost, and a number of other features.</property>
@@ -8312,8 +9051,8 @@ JAMin is the JACK Audio Mastering interface.  JAMin is designed to perform profe
 	      <child>
 		<widget class="GtkLabel" id="label327">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">What Is JAMin</property>
-		  <property name="use_underline">False</property>
+		  <property name="label" translatable="yes">_What Is JAMin</property>
+		  <property name="use_underline">True</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
 		  <property name="wrap">False</property>
@@ -8322,6 +9061,10 @@ JAMin is the JACK Audio Mastering interface.  JAMin is designed to perform profe
 		  <property name="yalign">0.5</property>
 		  <property name="xpad">0</property>
 		  <property name="ypad">0</property>
+		  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		  <property name="width_chars">-1</property>
+		  <property name="single_line_mode">False</property>
+		  <property name="angle">0</property>
 		</widget>
 		<packing>
 		  <property name="type">tab</property>
@@ -8342,14 +9085,16 @@ JAMin is the JACK Audio Mastering interface.  JAMin is designed to perform profe
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="editable">False</property>
+		      <property name="overwrite">False</property>
+		      <property name="accepts_tab">True</property>
 		      <property name="justification">GTK_JUSTIFY_LEFT</property>
 		      <property name="wrap_mode">GTK_WRAP_WORD</property>
 		      <property name="cursor_visible">False</property>
 		      <property name="pixels_above_lines">0</property>
 		      <property name="pixels_below_lines">0</property>
 		      <property name="pixels_inside_wrap">0</property>
-		      <property name="left_margin">10</property>
-		      <property name="right_margin">0</property>
+		      <property name="left_margin">5</property>
+		      <property name="right_margin">5</property>
 		      <property name="indent">0</property>
 		      <property name="text" translatable="yes">
 Steve Harris is the JAMin principle author and team leader.
@@ -8364,7 +9109,7 @@ Patrick Shirkey
 
 Translators:
 
-Alexandre Prokoudine
+Alexandre Prokoudine (Russian)
 </property>
 		    </widget>
 		  </child>
@@ -8378,8 +9123,8 @@ Alexandre Prokoudine
 	      <child>
 		<widget class="GtkLabel" id="label328">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">Developers</property>
-		  <property name="use_underline">False</property>
+		  <property name="label" translatable="yes">_Developers</property>
+		  <property name="use_underline">True</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
 		  <property name="wrap">False</property>
@@ -8388,6 +9133,10 @@ Alexandre Prokoudine
 		  <property name="yalign">0.5</property>
 		  <property name="xpad">0</property>
 		  <property name="ypad">0</property>
+		  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		  <property name="width_chars">-1</property>
+		  <property name="single_line_mode">False</property>
+		  <property name="angle">0</property>
 		</widget>
 		<packing>
 		  <property name="type">tab</property>
@@ -8408,14 +9157,16 @@ Alexandre Prokoudine
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="editable">False</property>
+		      <property name="overwrite">False</property>
+		      <property name="accepts_tab">True</property>
 		      <property name="justification">GTK_JUSTIFY_LEFT</property>
 		      <property name="wrap_mode">GTK_WRAP_WORD</property>
 		      <property name="cursor_visible">False</property>
 		      <property name="pixels_above_lines">0</property>
 		      <property name="pixels_below_lines">0</property>
 		      <property name="pixels_inside_wrap">0</property>
-		      <property name="left_margin">10</property>
-		      <property name="right_margin">0</property>
+		      <property name="left_margin">5</property>
+		      <property name="right_margin">5</property>
 		      <property name="indent">0</property>
 		      <property name="text" translatable="yes">
 JAMin is released under the GNU General Public License and is copyright (c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, and P. Shirkey. 
@@ -8436,8 +9187,8 @@ You should have received a copy of the GNU General Public License along with thi
 	      <child>
 		<widget class="GtkLabel" id="label329">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">License</property>
-		  <property name="use_underline">False</property>
+		  <property name="label" translatable="yes">_License</property>
+		  <property name="use_underline">True</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
 		  <property name="wrap">False</property>
@@ -8446,6 +9197,10 @@ You should have received a copy of the GNU General Public License along with thi
 		  <property name="yalign">0.5</property>
 		  <property name="xpad">0</property>
 		  <property name="ypad">0</property>
+		  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		  <property name="width_chars">-1</property>
+		  <property name="single_line_mode">False</property>
+		  <property name="angle">0</property>
 		</widget>
 		<packing>
 		  <property name="type">tab</property>
@@ -8466,17 +9221,19 @@ You should have received a copy of the GNU General Public License along with thi
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="editable">False</property>
+		      <property name="overwrite">False</property>
+		      <property name="accepts_tab">True</property>
 		      <property name="justification">GTK_JUSTIFY_LEFT</property>
 		      <property name="wrap_mode">GTK_WRAP_WORD</property>
 		      <property name="cursor_visible">False</property>
 		      <property name="pixels_above_lines">0</property>
 		      <property name="pixels_below_lines">0</property>
 		      <property name="pixels_inside_wrap">0</property>
-		      <property name="left_margin">10</property>
-		      <property name="right_margin">0</property>
+		      <property name="left_margin">5</property>
+		      <property name="right_margin">5</property>
 		      <property name="indent">0</property>
 		      <property name="text" translatable="yes">
-Web site: &lt;http://jamin.sourceforge.net&gt;
+Web site: http://jamin.sourceforge.net
 
 Mailing list: http://lists.sourceforge.net/lists/listinfo/jamin-devel
 
@@ -8493,8 +9250,8 @@ Project page: http://sourceforge.net/projects/jamin/</property>
 	      <child>
 		<widget class="GtkLabel" id="label330">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">Online</property>
-		  <property name="use_underline">False</property>
+		  <property name="label" translatable="yes">_Online</property>
+		  <property name="use_underline">True</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
 		  <property name="wrap">False</property>
@@ -8503,6 +9260,10 @@ Project page: http://sourceforge.net/projects/jamin/</property>
 		  <property name="yalign">0.5</property>
 		  <property name="xpad">0</property>
 		  <property name="ypad">0</property>
+		  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		  <property name="width_chars">-1</property>
+		  <property name="single_line_mode">False</property>
+		  <property name="angle">0</property>
 		</widget>
 		<packing>
 		  <property name="type">tab</property>
