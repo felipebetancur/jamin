@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: spectrum.c,v 1.19 2004/10/03 21:44:15 theno23 Exp $
+ *  $Id: spectrum.c,v 1.20 2006/07/10 23:05:32 jdepner Exp $
  */
 
 #include <math.h>
@@ -227,7 +227,7 @@ GtkWidget *make_mini_label(const char *text)
     char markup[256];
 
     label = GTK_LABEL(gtk_label_new(NULL));
-    snprintf(markup, 255, "<span size=\"%d\">%s</span>", 6 * PANGO_SCALE, text);
+    snprintf(markup, 255, "<span size=\"%d\">%s</span>", 8 * PANGO_SCALE, text);
     gtk_label_set_markup(label, markup);
 
     return GTK_WIDGET(label);
