@@ -4580,6 +4580,13 @@ create_pref_dialog (void)
   GtkWidget *imagemenuitem14;
   GtkWidget *image311;
   GtkWidget *ColorsLabel;
+  GtkWidget *warningFrame;
+  GtkWidget *alignment7;
+  GtkWidget *warningLevelHbox;
+  GtkWidget *Meter_warning_level__dbFS_;
+  GtkObject *warningLevelSpinButton_adj;
+  GtkWidget *warningLevelSpinButton;
+  GtkWidget *warningLabel;
   GtkWidget *dialog_action_area1;
   GtkWidget *pref_close;
   GtkTooltips *tooltips;
@@ -4647,10 +4654,11 @@ create_pref_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox71), MaxGainSpin, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, MaxGainSpin, _("Set the maximum gain level for the EQs"), NULL);
 
-  GraphicEQLabel = gtk_label_new (_("Graphic EQ"));
+  GraphicEQLabel = gtk_label_new (_("<i><b>Graphic EQ</b></i>"));
   gtk_widget_set_name (GraphicEQLabel, "GraphicEQLabel");
   gtk_widget_show (GraphicEQLabel);
   gtk_frame_set_label_widget (GTK_FRAME (GraphicEQ), GraphicEQLabel);
+  gtk_label_set_use_markup (GTK_LABEL (GraphicEQLabel), TRUE);
 
   CrossfadeEvent = gtk_event_box_new ();
   gtk_widget_set_name (CrossfadeEvent, "CrossfadeEvent");
@@ -4674,7 +4682,7 @@ create_pref_dialog (void)
   gtk_widget_show (CrossfadeTimeLabel);
   gtk_box_pack_start (GTK_BOX (hbox72), CrossfadeTimeLabel, FALSE, FALSE, 0);
 
-  CrossfadeTimeSpin_adj = gtk_adjustment_new (1, 0, 2, 0.1, 0.1, 0.1);
+  CrossfadeTimeSpin_adj = gtk_adjustment_new (1, 0, 2, 0.10000000149, 0.10000000149, 0.10000000149);
   CrossfadeTimeSpin = gtk_spin_button_new (GTK_ADJUSTMENT (CrossfadeTimeSpin_adj), 1, 1);
   gtk_widget_set_name (CrossfadeTimeSpin, "CrossfadeTimeSpin");
   gtk_widget_show (CrossfadeTimeSpin);
@@ -4682,10 +4690,11 @@ create_pref_dialog (void)
   gtk_tooltips_set_tip (tooltips, CrossfadeTimeSpin, _("Change the crossfade time for scene changes"), NULL);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (CrossfadeTimeSpin), TRUE);
 
-  CrossfadeLabel = gtk_label_new (_("Crossfade"));
+  CrossfadeLabel = gtk_label_new (_("<i><b>Crossfade</b></i>"));
   gtk_widget_set_name (CrossfadeLabel, "CrossfadeLabel");
   gtk_widget_show (CrossfadeLabel);
   gtk_frame_set_label_widget (GTK_FRAME (CrossfadeFrame), CrossfadeLabel);
+  gtk_label_set_use_markup (GTK_LABEL (CrossfadeLabel), TRUE);
 
   SpectrumEvent = gtk_event_box_new ();
   gtk_widget_set_name (SpectrumEvent, "SpectrumEvent");
@@ -4752,10 +4761,11 @@ create_pref_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox73), UpdateFrequencySpin, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, UpdateFrequencySpin, _("Change the spectrum update frequency"), NULL);
 
-  SpectrumLabel = gtk_label_new (_("Spectrum"));
+  SpectrumLabel = gtk_label_new (_("<i><b>Spectrum</b></i>"));
   gtk_widget_set_name (SpectrumLabel, "SpectrumLabel");
   gtk_widget_show (SpectrumLabel);
   gtk_frame_set_label_widget (GTK_FRAME (SpectrumFrame), SpectrumLabel);
+  gtk_label_set_use_markup (GTK_LABEL (SpectrumLabel), TRUE);
 
   CrossoverEvent = gtk_event_box_new ();
   gtk_widget_set_name (CrossoverEvent, "CrossoverEvent");
@@ -4790,10 +4800,11 @@ create_pref_dialog (void)
   gtk_radio_button_set_group (GTK_RADIO_BUTTON (IIRButton), FFTButton_group);
   FFTButton_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (IIRButton));
 
-  CrossoverLabel = gtk_label_new (_("Crossover type"));
+  CrossoverLabel = gtk_label_new (_("<i><b>Crossover type</b></i>"));
   gtk_widget_set_name (CrossoverLabel, "CrossoverLabel");
   gtk_widget_show (CrossoverLabel);
   gtk_frame_set_label_widget (GTK_FRAME (CrossoverFrame), CrossoverLabel);
+  gtk_label_set_use_markup (GTK_LABEL (CrossoverLabel), TRUE);
 
   ColorsEvent = gtk_event_box_new ();
   gtk_widget_set_name (ColorsEvent, "ColorsEvent");
@@ -4923,10 +4934,46 @@ create_pref_dialog (void)
 
   gtk_option_menu_set_menu (GTK_OPTION_MENU (ColorsMenu), menu4);
 
-  ColorsLabel = gtk_label_new (_("Colors"));
+  ColorsLabel = gtk_label_new (_("<i><b>Colors</b></i>"));
   gtk_widget_set_name (ColorsLabel, "ColorsLabel");
   gtk_widget_show (ColorsLabel);
   gtk_frame_set_label_widget (GTK_FRAME (ColorsFrame), ColorsLabel);
+  gtk_label_set_use_markup (GTK_LABEL (ColorsLabel), TRUE);
+
+  warningFrame = gtk_frame_new (NULL);
+  gtk_widget_set_name (warningFrame, "warningFrame");
+  gtk_widget_show (warningFrame);
+  gtk_box_pack_start (GTK_BOX (dialog_vbox1), warningFrame, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (warningFrame), 5);
+
+  alignment7 = gtk_alignment_new (0.5, 0.5, 1, 1);
+  gtk_widget_set_name (alignment7, "alignment7");
+  gtk_widget_show (alignment7);
+  gtk_container_add (GTK_CONTAINER (warningFrame), alignment7);
+  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment7), 0, 0, 12, 0);
+
+  warningLevelHbox = gtk_hbox_new (TRUE, 0);
+  gtk_widget_set_name (warningLevelHbox, "warningLevelHbox");
+  gtk_widget_show (warningLevelHbox);
+  gtk_container_add (GTK_CONTAINER (alignment7), warningLevelHbox);
+
+  Meter_warning_level__dbFS_ = gtk_label_new (_("Input/Output meters (dBFS):"));
+  gtk_widget_set_name (Meter_warning_level__dbFS_, "Meter_warning_level__dbFS_");
+  gtk_widget_show (Meter_warning_level__dbFS_);
+  gtk_box_pack_start (GTK_BOX (warningLevelHbox), Meter_warning_level__dbFS_, FALSE, FALSE, 0);
+
+  warningLevelSpinButton_adj = gtk_adjustment_new (-6, -30, 0, 1, 10, 10);
+  warningLevelSpinButton = gtk_spin_button_new (GTK_ADJUSTMENT (warningLevelSpinButton_adj), 1, 0);
+  gtk_widget_set_name (warningLevelSpinButton, "warningLevelSpinButton");
+  gtk_widget_show (warningLevelSpinButton);
+  gtk_box_pack_start (GTK_BOX (warningLevelHbox), warningLevelSpinButton, TRUE, TRUE, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (warningLevelSpinButton), TRUE);
+
+  warningLabel = gtk_label_new (_("<i><b>Warning Level</b></i>"));
+  gtk_widget_set_name (warningLabel, "warningLabel");
+  gtk_widget_show (warningLabel);
+  gtk_frame_set_label_widget (GTK_FRAME (warningFrame), warningLabel);
+  gtk_label_set_use_markup (GTK_LABEL (warningLabel), TRUE);
 
   dialog_action_area1 = GTK_DIALOG (pref_dialog)->action_area;
   gtk_widget_set_name (dialog_action_area1, "dialog_action_area1");
@@ -5051,6 +5098,15 @@ create_pref_dialog (void)
   g_signal_connect ((gpointer) imagemenuitem14, "activate",
                     G_CALLBACK (on_reset_all_colors1_activate),
                     NULL);
+  g_signal_connect ((gpointer) warningLevelSpinButton, "focus_in_event",
+                    G_CALLBACK (on_text_focus_in_event),
+                    NULL);
+  g_signal_connect ((gpointer) warningLevelSpinButton, "focus_out_event",
+                    G_CALLBACK (on_text_focus_out_event),
+                    NULL);
+  g_signal_connect ((gpointer) warningLevelSpinButton, "value_changed",
+                    G_CALLBACK (on_warningLevelSpinButton_value_changed),
+                    NULL);
   g_signal_connect ((gpointer) pref_close, "clicked",
                     G_CALLBACK (on_pref_close_clicked),
                     NULL);
@@ -5123,6 +5179,12 @@ create_pref_dialog (void)
   GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem14, "imagemenuitem14");
   GLADE_HOOKUP_OBJECT (pref_dialog, image311, "image311");
   GLADE_HOOKUP_OBJECT (pref_dialog, ColorsLabel, "ColorsLabel");
+  GLADE_HOOKUP_OBJECT (pref_dialog, warningFrame, "warningFrame");
+  GLADE_HOOKUP_OBJECT (pref_dialog, alignment7, "alignment7");
+  GLADE_HOOKUP_OBJECT (pref_dialog, warningLevelHbox, "warningLevelHbox");
+  GLADE_HOOKUP_OBJECT (pref_dialog, Meter_warning_level__dbFS_, "Meter_warning_level__dbFS_");
+  GLADE_HOOKUP_OBJECT (pref_dialog, warningLevelSpinButton, "warningLevelSpinButton");
+  GLADE_HOOKUP_OBJECT (pref_dialog, warningLabel, "warningLabel");
   GLADE_HOOKUP_OBJECT_NO_REF (pref_dialog, dialog_action_area1, "dialog_action_area1");
   GLADE_HOOKUP_OBJECT (pref_dialog, pref_close, "pref_close");
   GLADE_HOOKUP_OBJECT_NO_REF (pref_dialog, tooltips, "tooltips");

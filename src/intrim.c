@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: intrim.c,v 1.15 2005/02/06 23:31:11 jdepner Exp $
+ *  $Id: intrim.c,v 1.16 2006/11/24 16:14:26 jdepner Exp $
  */
 
 #include <gtk/gtk.h>
@@ -29,6 +29,7 @@
 static GtkMeter *in_meter[2], *out_meter[2];
 static GtkAdjustment *in_meter_adj[2], *out_meter_adj[2];
 static GtkLabel	*pan_label;
+static float inmeter_warn_level, outmeter_warn_level;
 
 void intrim_cb(int id, float value);
 void outtrim_cb(int id, float value);
@@ -130,5 +131,31 @@ void intrim_outmeter_reset_peak ()
   gtk_meter_reset_peak (out_meter[0]);
   gtk_meter_reset_peak (out_meter[1]);
 }
+
+void intrim_inmeter_set_warn (float level)
+{
+  inmeter_warn_level = level;
+
+  gtk_meter_set_warn_point (in_meter[0], level);
+  gtk_meter_set_warn_point (in_meter[1], level);
+}
+
+void intrim_outmeter_set_warn (float level)
+{
+  outmeter_warn_level = level;
+  gtk_meter_set_warn_point (out_meter[0], level);
+  gtk_meter_set_warn_point (out_meter[1], level);
+}
+
+float intrim_inmeter_get_warn ()
+{
+  return (inmeter_warn_level);
+}
+
+float intrim_outmeter_get_warn ()
+{
+  return (outmeter_warn_level);
+}
+
 
 /* vi:set ts=8 sts=4 sw=4: */

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.39 2005/02/06 23:31:09 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.40 2006/11/24 16:14:26 jdepner Exp $
  */
 
 #include "support.h"
@@ -243,7 +243,8 @@ exit from JAMin.  You can actually edit this file and change the colors by \
 hand.  They are just RGB values in the 0-65535 range but it's much easier to \
 use the GUI ;-).  You may also set the crossfade time and crossover type in \
 this dialog (see the man page for more information on crossfade time and \
-crossover type).\n")
+crossover type).  In addition, the input and output meter warning level may \
+be set using this dialog.\n")
 };
 
 

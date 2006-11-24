@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.58 2004/11/02 05:40:16 joq Exp $
+ *  $Id: state.c,v 1.59 2006/11/24 16:14:26 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -30,6 +30,7 @@
 #include "main.h"
 #include "geq.h"
 #include "spectrum.h"
+#include "intrim.h"
 #include "state.h"
 #include "io.h"
 #include "process.h"
@@ -82,6 +83,8 @@ typedef struct {
     float lgain;
     float hgain;
     float ct;
+    float inwl;
+    float outwl;
     int gang_at[XO_BANDS];
     int gang_re[XO_BANDS];
     int gang_th[XO_BANDS];
@@ -511,6 +514,8 @@ void s_save_session (const char *fname)
     s_save_global_int(doc, "mode", process_get_spec_mode());
     s_save_global_int(doc, "freq", get_spectrum_freq());
     s_save_global_float(doc, "ct", crossfade_time);
+    s_save_global_float(doc, "inwl", intrim_inmeter_get_warn());
+    s_save_global_float(doc, "outwl", intrim_outmeter_get_warn());
     s_save_global_float(doc, "lgain", hdeq_get_lower_gain());
     s_save_global_float(doc, "hgain", hdeq_get_upper_gain());
 
@@ -644,6 +649,8 @@ void s_load_session (const char *fname)
     gp.freq = 10;
     gp.lgain = -12.0;
     gp.hgain = 12.0;
+    gp.inwl = -6.0;
+    gp.outwl = -6.0;
     gp.ct = 1.0;
     for (i = 0 ; i < XO_BANDS ; i++) {
         gp.gang_at[i] = FALSE;
@@ -680,6 +687,8 @@ void s_load_session (const char *fname)
     hdeq_set_lower_gain (gp.lgain);
     geq_set_range (gp.lgain, geq_get_adjustment(0)->upper);
     s_set_crossfade_time (gp.ct);
+    intrim_inmeter_set_warn (gp.inwl);
+    intrim_outmeter_set_warn (gp.outwl);
 
 
     /*  This is the active scene.  */
@@ -789,6 +798,10 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 	    gp->hgain = atof(value);
 	} else if (!strcmp(symbol, "ct")) {
 	    gp->ct = atof(value);
+	} else if (!strcmp(symbol, "inwl")) {
+	    gp->inwl = atof(value);
+	} else if (!strcmp(symbol, "outwl")) {
+	    gp->outwl = atof(value);
 	} else if ((const char *)strstr(symbol, "gang_") == symbol) {
 	    int ind = index ? atoi(index) : -1;
 	    int val = atoi(value);

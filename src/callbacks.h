@@ -1268,3 +1268,8 @@ on_lim_out_meter_eventbox_button_press_event
                                         (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
+
+void
+on_warningLevelSpinButton_value_changed
+                                        (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data);

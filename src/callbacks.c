@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.161 2005/02/16 13:57:22 joq Exp $
+ *  $Id: callbacks.c,v 1.162 2006/11/24 16:14:26 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -2685,3 +2685,14 @@ on_lim_out_meter_eventbox_button_press_event
   return FALSE;
 }
 
+
+void
+on_warningLevelSpinButton_value_changed
+                                        (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data)
+{
+  float wl = gtk_spin_button_get_value (spinbutton);
+
+  intrim_inmeter_set_warn (wl);
+  intrim_outmeter_set_warn (wl);
+}

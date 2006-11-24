@@ -35,6 +35,7 @@
 #include "main.h"
 #include "help.h"
 #include "interface.h"
+#include "intrim.h"
 #include "support.h"
 #include "process.h"
 #include "compressor-ui.h"
@@ -54,7 +55,7 @@ static GtkWidget         *pref_dialog, *color_dialog, *colorsel;
 static GdkColormap       *colormap = NULL;
 static GdkColor          color[COLORS];
 static int               color_id;
-static GtkSpinButton     *ct_spin, *lgain_spin, *ugain_spin, *spec_freq_spin;
+static GtkSpinButton     *ct_spin, *wl_spin, *lgain_spin, *ugain_spin, *spec_freq_spin;
 static GtkRadioButton    *iir_button, *fft_button;
 static GtkToggleButton   *t_iir, *t_fft;
 static GtkMenu           *l_menu3;
@@ -102,6 +103,9 @@ void preferences_init()
 
     ct_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, 
                                               "CrossfadeTimeSpin"));
+
+    wl_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, 
+                                              "warningLevelSpinButton"));
 
     iir_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, 
 						   "IIRButton"));
@@ -277,6 +281,7 @@ void popup_pref_dialog (int updown)
   if (updown)
     {
       gtk_spin_button_set_value (ct_spin, s_get_crossfade_time());
+      gtk_spin_button_set_value (wl_spin, intrim_inmeter_get_warn());
 
       gtk_spin_button_set_value (lgain_spin, hdeq_get_lower_gain ());
       gtk_spin_button_set_value (ugain_spin, hdeq_get_upper_gain ());
