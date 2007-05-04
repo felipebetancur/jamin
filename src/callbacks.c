@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.162 2006/11/24 16:14:26 jdepner Exp $
+ *  $Id: callbacks.c,v 1.163 2007/05/04 15:24:58 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -60,7 +60,8 @@
 static char             *help_ptr = NULL, scene_name_text[100];
 static gboolean         text_focus = FALSE, force_keypress_help = FALSE;
 static GtkToggleButton  *l_solo_button[XO_NBANDS], *l_bypass_button[XO_NBANDS], 
-                        *l_main_bypass;
+                        *l_main_bypass, *l_eq_bypass, *l_limiter_bypass;
+static GtkLabel         *l_eqbFreqLabel, *l_eqbAmpLabel;
 static int              hot_scene = 0;
 static GtkWidget        *scene_name_dialog, *about_dialog;
 static GtkEntry         *l_scene_name_entry;
@@ -191,9 +192,17 @@ on_window1_show                        (GtkWidget       *widget,
   l_solo_button[2] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
                                                        "high_solo"));
   l_bypass_button[2] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
-                                                       "high_bypass"));
+                                                         "high_bypass"));
   l_main_bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
-                                                       "bypass_button"));
+                                                    "bypass_button"));
+  l_eq_bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
+                                                  "eq_bypass"));
+  l_limiter_bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
+                                                       "limiter_bypass"));
+
+  l_eqbFreqLabel = GTK_LABEL (lookup_widget (main_window, "eqbFreqLabel"));
+  l_eqbAmpLabel = GTK_LABEL (lookup_widget (main_window, "eqbAmpLabel"));
+
 
   scene_name_dialog = create_scene_name_dialog ();
 
@@ -2177,6 +2186,28 @@ on_high_bypass_toggled                  (GtkToggleButton *togglebutton,
   bypass (2, gtk_toggle_button_get_active (togglebutton));
 }
 
+
+void 
+callbacks_set_comp_bypass_button_state (int band, int state)
+{
+  gtk_toggle_button_set_active (l_bypass_button[band], state);
+}
+
+
+void 
+callbacks_set_eq_bypass_button_state (int state)
+{
+  gtk_toggle_button_set_active (l_eq_bypass, state);
+}
+
+
+void 
+callbacks_set_limiter_bypass_button_state (int state)
+{
+  gtk_toggle_button_set_active (l_limiter_bypass, state);
+}
+
+
 gboolean
 on_eq_bypass_event_box_enter_notify_event
                                         (GtkWidget       *widget,
@@ -2569,7 +2600,7 @@ on_UpdateFrequencySpin_value_changed   (GtkSpinButton   *spinbutton,
 
 void
 on_preferences1_activate               (GtkMenuItem     *menuitem,
-				gpointer         user_data)
+				        gpointer         user_data)
 {
   popup_pref_dialog (1);
 }
@@ -2695,4 +2726,136 @@ on_warningLevelSpinButton_value_changed
 
   intrim_inmeter_set_warn (wl);
   intrim_outmeter_set_warn (wl);
+}
+
+
+  /*  I've included the following helpful information that I found on the web 
+      since this is an extremely confusing thing.  I'm passing the name of a
+      widget as the "Object" with the signal.  You would expect that to show
+      up as user_data but as you can see from the following, it doesn't ;-)
+      JCD 04/25/2007
+
+
+      Hi Ashwin,
+
+      you've just outlined one of the problems that have existed in glade/libglade
+      for a long time, let me try to illustrate how it works and what we've done
+      to address that.
+
+      The way it works:
+      Currently if you set the "object" string in the signal handler, libglade
+      will use that to lookup the said "object" by name in the interface
+      (i.e. the same widget that would be returned by glade_xml_get_widget () on
+      that string would become your userdata)... but wait ! it gets even more confusing,
+      signals in glade files that bear the "object" attribute are always connected
+      with the SWAPPED flag, that means that the "object" will be passed to your
+      callback as the _first_ argument and the actual object that emitted the signal
+      in question will be passed as the user_data argument to the signal handler.
+
+      One step to improve this:
+      in glade3 we originally included a "lookup" checkbutton on the signal
+      data and supplied support for this in libglade as part of a GObject support
+      patch to libglade: http://bugzilla.gnome.org/show_bug.cgi?id=161903 .
+      this approach; if ever applied to libglade (or the future gtk+ builder code)
+      would allow us to specify a symbol name for the user_data argument, the
+      builder code (i.e. libglade) would simply g_module_lookup() the symbol
+      string provided and pass that address to the callback as user_data.
+
+      Ideally it would probably be great to allow the user to specify enum/flag/int
+      values to user_data as well, enums and flags would be difficult because they
+      have to be typed.
+
+      Discussion on improving this situation probably belongs on gtk-devel-list
+      or on http://bugzilla.gnome.org/show_bug.cgi?id=172535 ...
+
+      Cheers,
+                     -Tristan
+  */
+
+/*  Passing the band label from under the band slider as "Object" in glade-2.  The
+    label becomes *range and the range becomes user_data - weird.  */
+
+void
+on_eqb_value_changed                   (GtkRange        *range,
+                                        gpointer         user_data)
+{
+  char *freq = NULL;
+  char *amp = NULL;
+  int th, hu, val;
+
+  th = 0;
+  hu = 0;
+  val = 0;
+  if (strchr (gtk_label_get_text (GTK_LABEL (range)), 'k'))
+    {
+      sscanf (gtk_label_get_text (GTK_LABEL (range)), "%dk%d", &th, &hu);
+      val = th * 1000 + hu * 100;
+    }
+  else
+    {
+      sscanf (gtk_label_get_text (GTK_LABEL (range)), "%d", &val);
+    }
+
+  freq = g_strdup_printf ("<b>%d Hz</b>", val);
+  amp = g_strdup_printf ("<b>%.1f dB</b>", gtk_range_get_value (GTK_RANGE (user_data)));
+
+  gtk_label_set_label (l_eqbFreqLabel, freq);
+  gtk_label_set_label (l_eqbAmpLabel, amp);
+
+  free (freq);
+  free (amp);
+}
+
+
+/*  Passing the band slider as "Object" in glade-2.  The slider becomes *widget
+    and the event box widget becomes user_data.  */
+
+gboolean
+on_eqb_enter_notify_event              (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+  char *amp = NULL;
+
+  amp = g_strdup_printf ("<b>%.1f dB</b>", gtk_range_get_value (GTK_RANGE (widget)));
+
+  gtk_label_set_label (l_eqbAmpLabel, amp);
+
+  free (amp);
+
+  return FALSE;
+}
+
+
+/*  Passing the band label from under the band slider as "Object" in glade-2.  The
+    label becomes *widget and the event box becomes user_data.  */
+
+gboolean
+on_eqbl_enter_notify_event             (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+  char *freq = NULL;
+  int th, hu, val;
+
+  th = 0;
+  hu = 0;
+  val = 0;
+  if (strchr (gtk_label_get_text (GTK_LABEL (widget)), 'k'))
+    {
+      sscanf (gtk_label_get_text (GTK_LABEL (widget)), "%dk%d", &th, &hu);
+      val = th * 1000 + hu * 100;
+    }
+  else
+    {
+      sscanf (gtk_label_get_text (GTK_LABEL (widget)), "%d", &val);
+    }
+
+  freq = g_strdup_printf ("<b>%d Hz</b>", val);
+
+  gtk_label_set_label (l_eqbFreqLabel, freq);
+
+  free (freq);
+
+  return FALSE;
 }

@@ -1273,3 +1273,29 @@ void
 on_warningLevelSpinButton_value_changed
                                         (GtkSpinButton   *spinbutton,
                                         gpointer         user_data);
+
+
+void 
+callbacks_set_comp_bypass_button_state (int band, int state);
+
+
+void 
+callbacks_set_eq_bypass_button_state (int state);
+
+
+void 
+callbacks_set_limiter_bypass_button_state (int state);
+
+void
+on_eqb_value_changed                   (GtkRange        *range,
+                                        gpointer         user_data);
+
+gboolean
+on_eqb_enter_notify_event              (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_eqbl_enter_notify_event             (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);

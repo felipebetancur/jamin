@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: geq.c,v 1.32 2004/08/20 22:56:08 jdepner Exp $
+ *  $Id: geq.c,v 1.33 2007/05/04 15:24:58 jdepner Exp $
  */
 
 /* code to control the graphic eq's, swh */
@@ -54,8 +54,6 @@ void bind_geq()
     int i, bin;
     float last_bin, next_bin;
     const double hz_per_bin = sample_rate / (double)BINS;
-    GtkTooltips *tooltips = gtk_tooltips_new();
-    char tip[255];
 
     for (i=0; i<EQ_BANDS; i++) {
 	geq_freqs[i] = 1000.0 * pow(10.0, (double)(i-16) * 0.1);
@@ -65,8 +63,6 @@ void bind_geq()
     for (i=0; i<EQ_BANDS; i++) {
 	sprintf(name, "eqb%d", i+1);
 	geqr[i] = GTK_RANGE(lookup_widget(main_window, name));
-	snprintf(tip, 255, "%'.0f Hz", floor(geq_freqs[i] + 0.5));
-	gtk_tooltips_set_tip(tooltips, GTK_WIDGET(geqr[i]), tip, NULL);
 	geqa[i] = GTK_ADJUSTMENT(gtk_range_get_adjustment(GTK_RANGE(geqr[i])));
 	g_signal_connect(G_OBJECT(geqa[i]), "value-changed", 
                          G_CALLBACK(eqb_changed), (gpointer)i+1);

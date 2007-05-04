@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.h,v 1.31 2004/10/28 08:20:33 theno23 Exp $
+ *  $Id: process.h,v 1.32 2007/05/04 15:24:58 jdepner Exp $
  */
 
 #ifndef PROCESS_H
@@ -64,6 +64,14 @@
 #define FFT 0
 #define IIR 1
 
+/* bypass type */
+#define EQ_BYPASS          0
+#define LOW_COMP_BYPASS    1
+#define MID_COMP_BYPASS    2
+#define HIGH_COMP_BYPASS   3
+#define LIMITER_BYPASS     4
+
+
 extern const jack_nframes_t dsp_block_size;
 extern float sample_rate;
 extern float eq_coefs[];
@@ -105,6 +113,7 @@ void process_set_low2mid_xover (float freq);
 void process_set_mid2high_xover (float freq);
 float process_get_low2mid_xover ();
 float process_get_mid2high_xover ();
+int process_get_bypass_state (int bypass_type);
 
 extern comp_settings compressors[XO_NBANDS];
 extern lim_settings limiter;

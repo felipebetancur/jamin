@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.65 2004/10/28 08:20:33 theno23 Exp $
+ *  $Id: process.c,v 1.66 2007/05/04 15:24:58 jdepner Exp $
  */
 
 #include <math.h>
@@ -48,8 +48,8 @@ static int xo_band_action[XO_NBANDS] = {ACTIVE, ACTIVE, ACTIVE};
 static int xo_band_action_pending[XO_NBANDS] = {ACTIVE, ACTIVE, ACTIVE};
 
 /* These values need to be controlled by the UI, somehow */
-float xover_fa = 207.0f;
-float xover_fb = 2048.0f;
+float xover_fa = 150.0f;
+float xover_fb = 1200.0f;
 comp_settings compressors[XO_NBANDS];
 lim_settings limiter;
 float eq_coefs[BINS]; /* Linear gain of each FFT bin */
@@ -734,6 +734,36 @@ float process_get_low2mid_xover ()
 float process_get_mid2high_xover ()
 {
     return (xover_fb);
+}
+
+int process_get_bypass_state (int bypass_type)
+{
+  switch (bypass_type)
+    {
+    case EQ_BYPASS:
+      return (eq_bypass);
+      break;
+
+    case LOW_COMP_BYPASS:
+      return (xo_band_action[0]);
+      break;
+
+    case MID_COMP_BYPASS:
+      return (xo_band_action[1]);
+      break;
+
+    case HIGH_COMP_BYPASS:
+      return (xo_band_action[2]);
+      break;
+
+    case LIMITER_BYPASS:
+      return (limiter_bypass);
+      break;
+
+    default:
+      return (-1);
+      break;
+    }
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

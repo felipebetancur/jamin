@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.59 2006/11/24 16:14:26 jdepner Exp $
+ *  $Id: state.c,v 1.60 2007/05/04 15:24:58 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -28,6 +28,7 @@
 
 #include "config.h"
 #include "main.h"
+#include "callbacks.h"
 #include "geq.h"
 #include "spectrum.h"
 #include "intrim.h"
@@ -74,7 +75,7 @@ void s_save_global_gang(xmlDocPtr doc, char *p, int band, gboolean value);
 
 static const gchar *filename = NULL;
 
-/* global session parmaeters read from the XML file */
+/* global session parameters read from the XML file */
 
 typedef struct {
     int scene;
@@ -85,6 +86,9 @@ typedef struct {
     float ct;
     float inwl;
     float outwl;
+    int eq_bypass;
+    int comp_bypass[3];
+    int limiter_bypass;
     int gang_at[XO_BANDS];
     int gang_re[XO_BANDS];
     int gang_th[XO_BANDS];
@@ -519,6 +523,12 @@ void s_save_session (const char *fname)
     s_save_global_float(doc, "lgain", hdeq_get_lower_gain());
     s_save_global_float(doc, "hgain", hdeq_get_upper_gain());
 
+    s_save_global_int(doc, "eq bypass", process_get_bypass_state (EQ_BYPASS));
+    s_save_global_int(doc, "comp bypass0", process_get_bypass_state (LOW_COMP_BYPASS));
+    s_save_global_int(doc, "comp bypass1", process_get_bypass_state (MID_COMP_BYPASS));
+    s_save_global_int(doc, "comp bypass2", process_get_bypass_state (HIGH_COMP_BYPASS));
+    s_save_global_int(doc, "limiter bypass", process_get_bypass_state (LIMITER_BYPASS));
+
 
     /* record the current gang state of the compressor controls */
 
@@ -642,7 +652,7 @@ void s_load_session (const char *fname)
     handler->warning = s_warning;
     handler->error = s_error;
 
-    /* set the gp struct to some sensible defualts incase values aren't set in
+    /* set the gp struct to some sensible defaults in case values aren't set in
      * the XML file */
     gp.scene = scene;
     gp.mode = SPEC_POST_EQ;
@@ -652,6 +662,9 @@ void s_load_session (const char *fname)
     gp.inwl = -6.0;
     gp.outwl = -6.0;
     gp.ct = 1.0;
+    gp.eq_bypass = 0;
+    gp.comp_bypass[0] = gp.comp_bypass[1] = gp.comp_bypass[2] = 0;
+    gp.limiter_bypass = 0;
     for (i = 0 ; i < XO_BANDS ; i++) {
         gp.gang_at[i] = FALSE;
         gp.gang_re[i] = FALSE;
@@ -689,6 +702,22 @@ void s_load_session (const char *fname)
     s_set_crossfade_time (gp.ct);
     intrim_inmeter_set_warn (gp.inwl);
     intrim_outmeter_set_warn (gp.outwl);
+
+
+    for (i = 0 ; i < XO_NBANDS ; i++)
+      {
+        if (gp.comp_bypass[i] != 2)
+          {
+            callbacks_set_comp_bypass_button_state (i, FALSE);
+          }
+        else
+          {
+            callbacks_set_comp_bypass_button_state (i, TRUE);
+          }
+      }
+
+    callbacks_set_eq_bypass_button_state (gp.eq_bypass);
+    callbacks_set_limiter_bypass_button_state (gp.limiter_bypass);
 
 
     /*  This is the active scene.  */
@@ -802,6 +831,16 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 	    gp->inwl = atof(value);
 	} else if (!strcmp(symbol, "outwl")) {
 	    gp->outwl = atof(value);
+	} else if (!strcmp(symbol, "eq bypass")) {
+	    gp->eq_bypass = atof(value);
+	} else if (!strcmp(symbol, "comp bypass0")) {
+	    gp->comp_bypass[0] = atoi(value);
+	} else if (!strcmp(symbol, "comp bypass1")) {
+	    gp->comp_bypass[1] = atoi(value);
+	} else if (!strcmp(symbol, "comp bypass2")) {
+	    gp->comp_bypass[2] = atoi(value);
+	} else if (!strcmp(symbol, "limiter bypass")) {
+	    gp->limiter_bypass = atof(value);
 	} else if ((const char *)strstr(symbol, "gang_") == symbol) {
 	    int ind = index ? atoi(index) : -1;
 	    int val = atoi(value);
