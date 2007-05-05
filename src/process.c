@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.67 2007/05/05 11:51:52 jdepner Exp $
+ *  $Id: process.c,v 1.68 2007/05/05 14:07:53 jdepner Exp $
  */
 
 #include <math.h>
@@ -60,6 +60,7 @@ float lim_peak[2];
 static int iir_xover = 0;
 
 float in_peak[NCHANNELS], out_peak[NCHANNELS], rms_peak[NCHANNELS];
+static rms *r[2];
 
 static float band_f[BANDS];
 static float gain_fix[BANDS];
@@ -128,6 +129,13 @@ void process_init(float fs)
     unsigned int i, j, band;
 
     sample_rate = fs;
+
+
+    /*  Initialize RMS per channel.  */
+
+    r[0] = rms_new (sample_rate, 0.1);
+    r[1] = rms_new (sample_rate, 0.1);
+
 
     for (i = 0; i < BANDS; i++) {
 	band_f[i] = centre;
@@ -606,12 +614,7 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 
     for (port = 0 ; port < nchannels ; port++)
       {
-        rms *r;
-        r = rms_new (sample_rate, 0.1);
-
-        rms_peak[port] = rms_run_buffer (r, out[port], nframes);
-
-        rms_free (r);
+        rms_peak[port] = rms_run_buffer (r[port], out[port], nframes);
       }
 
 
