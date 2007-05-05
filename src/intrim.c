@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: intrim.c,v 1.16 2006/11/24 16:14:26 jdepner Exp $
+ *  $Id: intrim.c,v 1.17 2007/05/05 11:51:52 jdepner Exp $
  */
 
 #include <gtk/gtk.h>
@@ -26,10 +26,10 @@
 #include "state.h"
 #include "db.h"
 
-static GtkMeter *in_meter[2], *out_meter[2];
-static GtkAdjustment *in_meter_adj[2], *out_meter_adj[2];
+static GtkMeter *in_meter[2], *out_meter[2], *rms_meter[2];
+static GtkAdjustment *in_meter_adj[2], *out_meter_adj[2], *rms_meter_adj[2];
 static GtkLabel	*pan_label;
-static float inmeter_warn_level, outmeter_warn_level;
+static float inmeter_warn_level, outmeter_warn_level, rmsmeter_warn_level;
 
 void intrim_cb(int id, float value);
 void outtrim_cb(int id, float value);
@@ -55,6 +55,13 @@ void bind_intrim()
     out_meter_adj[1] = gtk_meter_get_adjustment(out_meter[1]);
     gtk_adjustment_set_value(out_meter_adj[0], -60.0);
     gtk_adjustment_set_value(out_meter_adj[1], -60.0);
+
+    rms_meter[0] = GTK_METER(lookup_widget(main_window, "rmsmeter_l"));
+    rms_meter[1] = GTK_METER(lookup_widget(main_window, "rmsmeter_r"));
+    rms_meter_adj[0] = gtk_meter_get_adjustment(rms_meter[0]);
+    rms_meter_adj[1] = gtk_meter_get_adjustment(rms_meter[1]);
+    gtk_adjustment_set_value(rms_meter_adj[0], -60.0);
+    gtk_adjustment_set_value(rms_meter_adj[1], -60.0);
 
     pan_label = GTK_LABEL(lookup_widget(main_window, "pan_label"));
     update_pan_label(0.0);
@@ -106,6 +113,14 @@ void out_meter_value(float amp[])
     amp[1] = 0.0f;
 }
 
+void rms_meter_value(float amp[])
+{
+    gtk_adjustment_set_value(rms_meter_adj[0], lin2db(amp[0]));
+    gtk_adjustment_set_value(rms_meter_adj[1], lin2db(amp[1]));
+    amp[0] = 0.0f;
+    amp[1] = 0.0f;
+}
+
 void update_pan_label(float balance)
 {
     char tmp[256];
@@ -132,6 +147,12 @@ void intrim_outmeter_reset_peak ()
   gtk_meter_reset_peak (out_meter[1]);
 }
 
+void intrim_rmsmeter_reset_peak ()
+{
+  gtk_meter_reset_peak (rms_meter[0]);
+  gtk_meter_reset_peak (rms_meter[1]);
+}
+
 void intrim_inmeter_set_warn (float level)
 {
   inmeter_warn_level = level;
@@ -147,6 +168,13 @@ void intrim_outmeter_set_warn (float level)
   gtk_meter_set_warn_point (out_meter[1], level);
 }
 
+void intrim_rmsmeter_set_warn (float level)
+{
+  rmsmeter_warn_level = level;
+  gtk_meter_set_warn_point (rms_meter[0], level);
+  gtk_meter_set_warn_point (rms_meter[1], level);
+}
+
 float intrim_inmeter_get_warn ()
 {
   return (inmeter_warn_level);
@@ -155,6 +183,11 @@ float intrim_inmeter_get_warn ()
 float intrim_outmeter_get_warn ()
 {
   return (outmeter_warn_level);
+}
+
+float intrim_rmsmeter_get_warn ()
+{
+  return (rmsmeter_warn_level);
 }
 
 

@@ -7317,6 +7317,24 @@
 				      <property name="spacing">0</property>
 
 				      <child>
+					<widget class="Custom" id="rmsmeter_l">
+					  <property name="width_request">5</property>
+					  <property name="height_request">0</property>
+					  <property name="visible">True</property>
+					  <property name="creation_function">make_meter</property>
+					  <property name="string1">up</property>
+					  <property name="int1">-60</property>
+					  <property name="int2">6</property>
+					  <property name="last_modification_time">Sat, 26 Apr 2003 02:44:13 GMT</property>
+					</widget>
+					<packing>
+					  <property name="padding">1</property>
+					  <property name="expand">True</property>
+					  <property name="fill">True</property>
+					</packing>
+				      </child>
+
+				      <child>
 					<widget class="Custom" id="outmeter_l">
 					  <property name="width_request">15</property>
 					  <property name="height_request">0</property>
@@ -7365,6 +7383,24 @@
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
+					  <property name="expand">True</property>
+					  <property name="fill">True</property>
+					</packing>
+				      </child>
+
+				      <child>
+					<widget class="Custom" id="rmsmeter_r">
+					  <property name="width_request">5</property>
+					  <property name="height_request">0</property>
+					  <property name="visible">True</property>
+					  <property name="creation_function">make_meter</property>
+					  <property name="string1">up</property>
+					  <property name="int1">-60</property>
+					  <property name="int2">6</property>
+					  <property name="last_modification_time">Sat, 26 Apr 2003 02:44:13 GMT</property>
+					</widget>
+					<packing>
+					  <property name="padding">1</property>
 					  <property name="expand">True</property>
 					  <property name="fill">True</property>
 					</packing>

@@ -40,6 +40,7 @@ jamin_SOURCES = \
 	process.c process.h \
 	resource.c resource.h \
 	ringbuffer.c ringbuffer.h \
+	rms.c rms.h \
 	spectrum.c spectrum.h \
 	spline.c \
 	state.c state.h \

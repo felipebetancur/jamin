@@ -509,9 +509,11 @@ create_window1 (void)
   GtkWidget *out_trim_scale;
   GtkWidget *outmeter_eventbox;
   GtkWidget *outmeter_hbox;
+  GtkWidget *rmsmeter_l;
   GtkWidget *outmeter_l;
   GtkWidget *custom21;
   GtkWidget *outmeter_r;
+  GtkWidget *rmsmeter_r;
   GtkWidget *bypass_button;
   GtkWidget *label318;
   GtkAccelGroup *accel_group;
@@ -3281,6 +3283,14 @@ create_window1 (void)
   gtk_widget_show (outmeter_hbox);
   gtk_container_add (GTK_CONTAINER (outmeter_eventbox), outmeter_hbox);
 
+  rmsmeter_l = make_meter ("rmsmeter_l", "up", "", -60, 6);
+  gtk_widget_set_name (rmsmeter_l, "rmsmeter_l");
+  gtk_widget_show (rmsmeter_l);
+  gtk_box_pack_start (GTK_BOX (outmeter_hbox), rmsmeter_l, TRUE, TRUE, 1);
+  gtk_widget_set_size_request (rmsmeter_l, 5, 0);
+  GTK_WIDGET_UNSET_FLAGS (rmsmeter_l, GTK_CAN_FOCUS);
+  GTK_WIDGET_UNSET_FLAGS (rmsmeter_l, GTK_CAN_DEFAULT);
+
   outmeter_l = make_meter ("outmeter_l", "up", "", -60, 6);
   gtk_widget_set_name (outmeter_l, "outmeter_l");
   gtk_widget_show (outmeter_l);
@@ -3304,6 +3314,14 @@ create_window1 (void)
   gtk_widget_set_size_request (outmeter_r, 15, 0);
   GTK_WIDGET_UNSET_FLAGS (outmeter_r, GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (outmeter_r, GTK_CAN_DEFAULT);
+
+  rmsmeter_r = make_meter ("rmsmeter_r", "up", "", -60, 6);
+  gtk_widget_set_name (rmsmeter_r, "rmsmeter_r");
+  gtk_widget_show (rmsmeter_r);
+  gtk_box_pack_start (GTK_BOX (outmeter_hbox), rmsmeter_r, TRUE, TRUE, 1);
+  gtk_widget_set_size_request (rmsmeter_r, 5, 0);
+  GTK_WIDGET_UNSET_FLAGS (rmsmeter_r, GTK_CAN_FOCUS);
+  GTK_WIDGET_UNSET_FLAGS (rmsmeter_r, GTK_CAN_DEFAULT);
 
   bypass_button = gtk_toggle_button_new_with_mnemonic (_("Bypass"));
   gtk_widget_set_name (bypass_button, "bypass_button");
@@ -4697,9 +4715,11 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, out_trim_scale, "out_trim_scale");
   GLADE_HOOKUP_OBJECT (window1, outmeter_eventbox, "outmeter_eventbox");
   GLADE_HOOKUP_OBJECT (window1, outmeter_hbox, "outmeter_hbox");
+  GLADE_HOOKUP_OBJECT (window1, rmsmeter_l, "rmsmeter_l");
   GLADE_HOOKUP_OBJECT (window1, outmeter_l, "outmeter_l");
   GLADE_HOOKUP_OBJECT (window1, custom21, "custom21");
   GLADE_HOOKUP_OBJECT (window1, outmeter_r, "outmeter_r");
+  GLADE_HOOKUP_OBJECT (window1, rmsmeter_r, "rmsmeter_r");
   GLADE_HOOKUP_OBJECT (window1, bypass_button, "bypass_button");
   GLADE_HOOKUP_OBJECT (window1, label318, "label318");
   GLADE_HOOKUP_OBJECT_NO_REF (window1, tooltips, "tooltips");

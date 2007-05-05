@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.163 2007/05/04 15:24:58 jdepner Exp $
+ *  $Id: callbacks.c,v 1.164 2007/05/05 11:51:52 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -2687,7 +2687,11 @@ on_outmeter_eventbox_button_press_event
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
-  if (event->button == 3) intrim_outmeter_reset_peak ();
+  if (event->button == 3)
+    {
+      intrim_outmeter_reset_peak ();
+      intrim_rmsmeter_reset_peak ();
+    }
 
   return FALSE;
 }

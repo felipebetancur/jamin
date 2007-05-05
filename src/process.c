@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.66 2007/05/04 15:24:58 jdepner Exp $
+ *  $Id: process.c,v 1.67 2007/05/05 11:51:52 jdepner Exp $
  */
 
 #include <math.h>
@@ -32,6 +32,8 @@
 #include "io.h"
 #include "db.h"
 #include "denormal-kill.h"
+#include "rms.h"
+
 
 #define BIQUAD_TYPE double
 #include "biquad.h"
@@ -57,7 +59,7 @@ float lim_peak[2];
 
 static int iir_xover = 0;
 
-float in_peak[NCHANNELS], out_peak[NCHANNELS];
+float in_peak[NCHANNELS], out_peak[NCHANNELS], rms_peak[NCHANNELS];
 
 static float band_f[BANDS];
 static float gain_fix[BANDS];
@@ -179,7 +181,7 @@ void process_init(float fs)
     for (i = 0; i < BINS; i++) {
        window[i] = -0.5f * cosf(2.0f * M_PI * (float) i /
                                 (float) BINS) + 0.5f;
-/* root rasied cosine window - aparently sounds worse ...
+/* root raised cosine window - aparently sounds worse ...
 	window[i] = sqrtf(0.5f + -0.5 * cosf(2.0f * M_PI * (float) i /
 			  (float) BINS));
 */
@@ -214,7 +216,7 @@ void process_init(float fs)
 	latcorbuf_postcomp[i] = calloc(latcorbuf_len, sizeof(float));
     }
 
-    /* Clear the corssover filters state */
+    /* Clear the crossover filters state */
     memset(xo_filt, 0, sizeof(xo_filt));
 }
 
@@ -492,7 +494,7 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	}
     }
 
-    /* Handle solo and mute for the IIR crossove case */
+    /* Handle solo and mute for the IIR crossover case */
     if (iir_xover) {
 	for (port = 0; port < nchannels; port++) {
 	    for (band = XO_LOW; band < XO_NBANDS; band++) {
@@ -600,6 +602,18 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	    }
 	}
     }
+
+
+    for (port = 0 ; port < nchannels ; port++)
+      {
+        rms *r;
+        r = rms_new (sample_rate, 0.1);
+
+        rms_peak[port] = rms_run_buffer (r, out[port], nframes);
+
+        rms_free (r);
+      }
+
 
     /* We've got the the end of the processing, so update the actions */
 

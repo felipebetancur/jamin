@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.h,v 1.32 2007/05/04 15:24:58 jdepner Exp $
+ *  $Id: process.h,v 1.33 2007/05/05 11:51:52 jdepner Exp $
  */
 
 #ifndef PROCESS_H
@@ -75,7 +75,7 @@
 extern const jack_nframes_t dsp_block_size;
 extern float sample_rate;
 extern float eq_coefs[];
-extern float in_peak[], out_peak[];
+extern float in_peak[], out_peak[], rms_peak[];
 extern float lim_peak[];
 
 extern volatile int global_bypass;

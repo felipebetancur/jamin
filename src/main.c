@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.62 2006/02/23 03:50:23 jdepner Exp $
+ *  $Id: main.c,v 1.63 2007/05/05 11:51:52 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -215,6 +215,7 @@ static gboolean update_meters(gpointer data)
 
     in_meter_value(in_peak);
     out_meter_value(out_peak);
+    rms_meter_value(rms_peak);
     limiter_meters_update();
     compressor_meters_update();
     spectrum_timeout_check();
