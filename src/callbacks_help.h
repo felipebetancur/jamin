@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.40 2006/11/24 16:14:26 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.41 2007/05/05 11:55:09 jdepner Exp $
  */
 
 #include "support.h"
@@ -223,7 +223,8 @@ char output_help[] = {N_(
 "    The output control allows you to decrease the output level.  The upper \
 level is 0dB.  Clicking the right mouse button on the output control will \
 reset the value to 0.0.  Clicking the right mouse button on the meter will \
-reset the peak indicator to the current level.\n")
+reset the peak indicators for both the normal and RMS meters to their current \
+level.\n")
 };
 
 
