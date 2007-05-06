@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: gtkmeter.c,v 1.10 2005/01/22 17:10:55 theno23 Exp $
+ *  $Id: gtkmeter.c,v 1.11 2007/05/06 23:13:17 jdepner Exp $
  */
 
 #include <math.h>
@@ -422,7 +422,7 @@ gtk_meter_update (GtkMeter *meter)
       //		         "value_changed");
     }
 
-  gtk_widget_draw(GTK_WIDGET(meter), NULL);
+  gtk_widget_queue_draw(GTK_WIDGET(meter));
 }
 
 static void
@@ -515,7 +515,7 @@ void gtk_meter_set_warn_point(GtkMeter *meter, gfloat pt)
 		(meter->iec_upper - meter->iec_lower);
     }
 
-    gtk_widget_draw(GTK_WIDGET(meter), NULL);
+    gtk_widget_queue_draw(GTK_WIDGET(meter));
 }
 
 void gtk_meter_set_color (int color_id)
