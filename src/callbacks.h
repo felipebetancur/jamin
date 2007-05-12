@@ -59,10 +59,6 @@ on_EQ_curve_event_box_button_release_event
                                         gpointer         user_data);
 
 void
-on_bypass_button_toggled               (GtkToggleButton *togglebutton,
-                                        gpointer         user_data);
-
-void
 on_comp_kn_1_value_changed             (GtkRange        *range,
                                         gpointer         user_data);
 
@@ -623,11 +619,6 @@ on_spectrum_options_eventbox_enter_notify_event
 gboolean
 on_transport_controls_eventbox_enter_notify_event
                                         (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data);
-
-gboolean
-on_bypass_button_enter_notify_event    (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data);
 
@@ -1298,4 +1289,39 @@ on_eqb_enter_notify_event              (GtkWidget       *widget,
 gboolean
 on_eqbl_enter_notify_event             (GtkWidget       *widget,
                                         GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+void
+on_global_bypass_toggled               (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void 
+callbacks_blink_global_bypass_button (int start);
+
+
+gboolean
+on_global_bypass_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data);
+
+gboolean
+on_meter_text_button_press_event       (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+void
+on_out_meter_peak_button_clicked       (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_out_meter_full_button_clicked       (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_rms_meter_peak_button_clicked       (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_rms_meter_full_button_clicked       (GtkButton       *button,
                                         gpointer         user_data);

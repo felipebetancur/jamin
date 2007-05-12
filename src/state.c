@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.60 2007/05/04 15:24:58 jdepner Exp $
+ *  $Id: state.c,v 1.61 2007/05/12 16:28:36 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -89,6 +89,8 @@ typedef struct {
     int eq_bypass;
     int comp_bypass[3];
     int limiter_bypass;
+    gboolean out_meter_peak_pref;
+    gboolean rms_meter_peak_pref;
     int gang_at[XO_BANDS];
     int gang_re[XO_BANDS];
     int gang_th[XO_BANDS];
@@ -529,6 +531,9 @@ void s_save_session (const char *fname)
     s_save_global_int(doc, "comp bypass2", process_get_bypass_state (HIGH_COMP_BYPASS));
     s_save_global_int(doc, "limiter bypass", process_get_bypass_state (LIMITER_BYPASS));
 
+    s_save_global_int(doc, "output meter peak pref", (int) intrim_get_out_meter_peak_pref ());
+    s_save_global_int(doc, "rms meter peak pref", (int) intrim_get_rms_meter_peak_pref ());
+
 
     /* record the current gang state of the compressor controls */
 
@@ -665,6 +670,8 @@ void s_load_session (const char *fname)
     gp.eq_bypass = 0;
     gp.comp_bypass[0] = gp.comp_bypass[1] = gp.comp_bypass[2] = 0;
     gp.limiter_bypass = 0;
+    gp.out_meter_peak_pref = TRUE;
+    gp.rms_meter_peak_pref = TRUE;
     for (i = 0 ; i < XO_BANDS ; i++) {
         gp.gang_at[i] = FALSE;
         gp.gang_re[i] = FALSE;
@@ -718,6 +725,9 @@ void s_load_session (const char *fname)
 
     callbacks_set_eq_bypass_button_state (gp.eq_bypass);
     callbacks_set_limiter_bypass_button_state (gp.limiter_bypass);
+
+    intrim_set_out_meter_peak_pref (gp.out_meter_peak_pref);
+    intrim_set_rms_meter_peak_pref (gp.rms_meter_peak_pref);
 
 
     /*  This is the active scene.  */
@@ -840,7 +850,11 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
 	} else if (!strcmp(symbol, "comp bypass2")) {
 	    gp->comp_bypass[2] = atoi(value);
 	} else if (!strcmp(symbol, "limiter bypass")) {
-	    gp->limiter_bypass = atof(value);
+	    gp->limiter_bypass = atoi(value);
+	} else if (!strcmp(symbol, "output meter peak pref")) {
+          gp->out_meter_peak_pref = (gboolean) atoi(value);
+	} else if (!strcmp(symbol, "rms meter peak pref")) {
+          gp->rms_meter_peak_pref = (gboolean) atoi(value);
 	} else if ((const char *)strstr(symbol, "gang_") == symbol) {
 	    int ind = index ? atoi(index) : -1;
 	    int val = atoi(value);

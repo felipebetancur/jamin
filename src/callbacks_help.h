@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.41 2007/05/05 11:55:09 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.42 2007/05/12 16:28:35 jdepner Exp $
  */
 
 #include "support.h"
@@ -222,9 +222,14 @@ mouse button on the boost control will reset the value to 0.0.\n")
 char output_help[] = {N_(
 "    The output control allows you to decrease the output level.  The upper \
 level is 0dB.  Clicking the right mouse button on the output control will \
-reset the value to 0.0.  Clicking the right mouse button on the meter will \
-reset the peak indicators for both the normal and RMS meters to their current \
-level.\n")
+reset the value to 0.0.  Clicking the right mouse button anywhere on the meters \
+will reset the peak indicators for both the normal and RMS meters to their \
+current level.  The level indicator boxes above the meters display either \
+peak value or the current value for the main output meters and the RMS \
+level meters.  Which value is displayed can be selected in the Preferences \
+dialog that is accessible from the Edit->Preferences menu entry.  You can reset \
+the meter peak inicators (and values if that is what is displayed) by clicking \
+in the individual level indicator boxes.\n")
 };
 
 
@@ -267,8 +272,9 @@ reverse buttonsa will move the transport forward or back by five seconds.\n")
 
 
 char bypass_help[] = {N_(
-"    This button will bypass all of JAMin's functions.  The keyboard \
-accelerator for this button is the 'b' key.\n")
+"    This check box allows you to bypass all of JAMin's processing so that \
+you can quickly listen to the difference between the processed and unprocessed \
+sound.  The keyboard accelerator for this button is the 'b' key.\n")
 };
 
 
@@ -325,7 +331,7 @@ the other controls.\n")
 char keys_help[] = {N_(
 "    Keyboard accelerators are available for many of the functions in \
 JAMin:\n\n\
-\tb\t\t\t-\tBypass\n\
+\tb\t\t\t-\tGlobal bypass\n\
 \tSpace\t\t-\tToggle play and pause\n\
 \tHome\t\t-\tPosition transport to beginning\n\
 \t<\t\t\t-\tMove transport backwards 5 sec.\n\

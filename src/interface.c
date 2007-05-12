@@ -499,11 +499,21 @@ create_window1 (void)
   GtkWidget *lim_att_meter;
   GtkWidget *custom20;
   GtkWidget *lim_out_meter;
+  GtkWidget *limiter_global_bypass;
   GtkWidget *limiter_bypass_event_box;
   GtkWidget *limiter_bypass;
+  GtkWidget *global_bypass_event_box;
+  GtkWidget *global_bypass;
   GtkWidget *limiterlabel;
   GtkWidget *frame27;
   GtkWidget *output_vbox;
+  GtkWidget *table16;
+  GtkWidget *out_meter_text_l;
+  GtkWidget *out_meter_text_r;
+  GtkWidget *rms_meter_text_l;
+  GtkWidget *rms_meter_text_r;
+  GtkWidget *out_meter_label;
+  GtkWidget *rms_meter_label;
   GtkWidget *output_eventbox;
   GtkWidget *hbox51;
   GtkWidget *out_trim_scale;
@@ -514,7 +524,6 @@ create_window1 (void)
   GtkWidget *custom21;
   GtkWidget *outmeter_r;
   GtkWidget *rmsmeter_r;
-  GtkWidget *bypass_button;
   GtkWidget *label318;
   GtkAccelGroup *accel_group;
   GtkTooltips *tooltips;
@@ -3230,15 +3239,30 @@ create_window1 (void)
   GTK_WIDGET_UNSET_FLAGS (lim_out_meter, GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (lim_out_meter, GTK_CAN_DEFAULT);
 
+  limiter_global_bypass = gtk_hbox_new (TRUE, 0);
+  gtk_widget_set_name (limiter_global_bypass, "limiter_global_bypass");
+  gtk_widget_show (limiter_global_bypass);
+  gtk_box_pack_start (GTK_BOX (vbox105), limiter_global_bypass, FALSE, FALSE, 0);
+
   limiter_bypass_event_box = gtk_event_box_new ();
   gtk_widget_set_name (limiter_bypass_event_box, "limiter_bypass_event_box");
   gtk_widget_show (limiter_bypass_event_box);
-  gtk_box_pack_start (GTK_BOX (vbox105), limiter_bypass_event_box, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (limiter_global_bypass), limiter_bypass_event_box, TRUE, TRUE, 0);
 
   limiter_bypass = gtk_check_button_new_with_mnemonic (_("Limiter bypass"));
   gtk_widget_set_name (limiter_bypass, "limiter_bypass");
   gtk_widget_show (limiter_bypass);
   gtk_container_add (GTK_CONTAINER (limiter_bypass_event_box), limiter_bypass);
+
+  global_bypass_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (global_bypass_event_box, "global_bypass_event_box");
+  gtk_widget_show (global_bypass_event_box);
+  gtk_box_pack_start (GTK_BOX (limiter_global_bypass), global_bypass_event_box, FALSE, FALSE, 0);
+
+  global_bypass = gtk_check_button_new_with_mnemonic (_("Global bypass"));
+  gtk_widget_set_name (global_bypass, "global_bypass");
+  gtk_widget_show (global_bypass);
+  gtk_container_add (GTK_CONTAINER (global_bypass_event_box), global_bypass);
 
   limiterlabel = gtk_label_new (_("Limiter"));
   gtk_widget_set_name (limiterlabel, "limiterlabel");
@@ -3255,6 +3279,69 @@ create_window1 (void)
   gtk_widget_set_name (output_vbox, "output_vbox");
   gtk_widget_show (output_vbox);
   gtk_container_add (GTK_CONTAINER (frame27), output_vbox);
+
+  table16 = gtk_table_new (2, 3, FALSE);
+  gtk_widget_set_name (table16, "table16");
+  gtk_widget_show (table16);
+  gtk_box_pack_start (GTK_BOX (output_vbox), table16, FALSE, TRUE, 0);
+
+  out_meter_text_l = gtk_entry_new ();
+  gtk_widget_set_name (out_meter_text_l, "out_meter_text_l");
+  gtk_widget_show (out_meter_text_l);
+  gtk_table_attach (GTK_TABLE (table16), out_meter_text_l, 1, 2, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_editable_set_editable (GTK_EDITABLE (out_meter_text_l), FALSE);
+  gtk_entry_set_invisible_char (GTK_ENTRY (out_meter_text_l), 8226);
+  gtk_entry_set_width_chars (GTK_ENTRY (out_meter_text_l), 4);
+
+  out_meter_text_r = gtk_entry_new ();
+  gtk_widget_set_name (out_meter_text_r, "out_meter_text_r");
+  gtk_widget_show (out_meter_text_r);
+  gtk_table_attach (GTK_TABLE (table16), out_meter_text_r, 2, 3, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_editable_set_editable (GTK_EDITABLE (out_meter_text_r), FALSE);
+  gtk_entry_set_invisible_char (GTK_ENTRY (out_meter_text_r), 8226);
+  gtk_entry_set_width_chars (GTK_ENTRY (out_meter_text_r), 4);
+
+  rms_meter_text_l = gtk_entry_new ();
+  gtk_widget_set_name (rms_meter_text_l, "rms_meter_text_l");
+  gtk_widget_show (rms_meter_text_l);
+  gtk_table_attach (GTK_TABLE (table16), rms_meter_text_l, 1, 2, 1, 2,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_editable_set_editable (GTK_EDITABLE (rms_meter_text_l), FALSE);
+  gtk_entry_set_invisible_char (GTK_ENTRY (rms_meter_text_l), 8226);
+  gtk_entry_set_width_chars (GTK_ENTRY (rms_meter_text_l), 4);
+
+  rms_meter_text_r = gtk_entry_new ();
+  gtk_widget_set_name (rms_meter_text_r, "rms_meter_text_r");
+  gtk_widget_show (rms_meter_text_r);
+  gtk_table_attach (GTK_TABLE (table16), rms_meter_text_r, 2, 3, 1, 2,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_editable_set_editable (GTK_EDITABLE (rms_meter_text_r), FALSE);
+  gtk_entry_set_invisible_char (GTK_ENTRY (rms_meter_text_r), 8226);
+  gtk_entry_set_width_chars (GTK_ENTRY (rms_meter_text_r), 4);
+
+  out_meter_label = gtk_label_new (_("<b>OUT</b>"));
+  gtk_widget_set_name (out_meter_label, "out_meter_label");
+  gtk_widget_show (out_meter_label);
+  gtk_table_attach (GTK_TABLE (table16), out_meter_label, 0, 1, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_label_set_use_markup (GTK_LABEL (out_meter_label), TRUE);
+  gtk_misc_set_alignment (GTK_MISC (out_meter_label), 0, 0.5);
+
+  rms_meter_label = gtk_label_new (_("<b>RMS</b>"));
+  gtk_widget_set_name (rms_meter_label, "rms_meter_label");
+  gtk_widget_show (rms_meter_label);
+  gtk_table_attach (GTK_TABLE (table16), rms_meter_label, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_label_set_use_markup (GTK_LABEL (rms_meter_label), TRUE);
+  gtk_misc_set_alignment (GTK_MISC (rms_meter_label), 0, 0.5);
 
   output_eventbox = gtk_event_box_new ();
   gtk_widget_set_name (output_eventbox, "output_eventbox");
@@ -3322,12 +3409,6 @@ create_window1 (void)
   gtk_widget_set_size_request (rmsmeter_r, 5, 0);
   GTK_WIDGET_UNSET_FLAGS (rmsmeter_r, GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (rmsmeter_r, GTK_CAN_DEFAULT);
-
-  bypass_button = gtk_toggle_button_new_with_mnemonic (_("Bypass"));
-  gtk_widget_set_name (bypass_button, "bypass_button");
-  gtk_widget_show (bypass_button);
-  gtk_box_pack_start (GTK_BOX (output_vbox), bypass_button, FALSE, FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (bypass_button), 5);
 
   label318 = gtk_label_new (_("Output"));
   gtk_widget_set_name (label318, "label318");
@@ -4216,6 +4297,24 @@ create_window1 (void)
   g_signal_connect ((gpointer) limiter_bypass, "toggled",
                     G_CALLBACK (on_limiter_bypass_toggled),
                     NULL);
+  g_signal_connect ((gpointer) global_bypass_event_box, "enter_notify_event",
+                    G_CALLBACK (on_global_bypass_event_box_enter_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) global_bypass, "toggled",
+                    G_CALLBACK (on_global_bypass_toggled),
+                    NULL);
+  g_signal_connect_swapped ((gpointer) out_meter_text_l, "button_press_event",
+                            G_CALLBACK (on_meter_text_button_press_event),
+                            GTK_OBJECT (outmeter_l));
+  g_signal_connect_swapped ((gpointer) out_meter_text_r, "button_press_event",
+                            G_CALLBACK (on_meter_text_button_press_event),
+                            GTK_OBJECT (outmeter_r));
+  g_signal_connect_swapped ((gpointer) rms_meter_text_l, "button_press_event",
+                            G_CALLBACK (on_meter_text_button_press_event),
+                            GTK_OBJECT (rmsmeter_l));
+  g_signal_connect_swapped ((gpointer) rms_meter_text_r, "button_press_event",
+                            G_CALLBACK (on_meter_text_button_press_event),
+                            GTK_OBJECT (rmsmeter_r));
   g_signal_connect ((gpointer) output_eventbox, "enter_notify_event",
                     G_CALLBACK (on_output_eventbox_enter_notify_event),
                     NULL);
@@ -4227,12 +4326,6 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) outmeter_eventbox, "button_press_event",
                     G_CALLBACK (on_outmeter_eventbox_button_press_event),
-                    NULL);
-  g_signal_connect ((gpointer) bypass_button, "toggled",
-                    G_CALLBACK (on_bypass_button_toggled),
-                    NULL);
-  g_signal_connect ((gpointer) bypass_button, "enter_notify_event",
-                    G_CALLBACK (on_bypass_button_enter_notify_event),
                     NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
@@ -4705,11 +4798,21 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, lim_att_meter, "lim_att_meter");
   GLADE_HOOKUP_OBJECT (window1, custom20, "custom20");
   GLADE_HOOKUP_OBJECT (window1, lim_out_meter, "lim_out_meter");
+  GLADE_HOOKUP_OBJECT (window1, limiter_global_bypass, "limiter_global_bypass");
   GLADE_HOOKUP_OBJECT (window1, limiter_bypass_event_box, "limiter_bypass_event_box");
   GLADE_HOOKUP_OBJECT (window1, limiter_bypass, "limiter_bypass");
+  GLADE_HOOKUP_OBJECT (window1, global_bypass_event_box, "global_bypass_event_box");
+  GLADE_HOOKUP_OBJECT (window1, global_bypass, "global_bypass");
   GLADE_HOOKUP_OBJECT (window1, limiterlabel, "limiterlabel");
   GLADE_HOOKUP_OBJECT (window1, frame27, "frame27");
   GLADE_HOOKUP_OBJECT (window1, output_vbox, "output_vbox");
+  GLADE_HOOKUP_OBJECT (window1, table16, "table16");
+  GLADE_HOOKUP_OBJECT (window1, out_meter_text_l, "out_meter_text_l");
+  GLADE_HOOKUP_OBJECT (window1, out_meter_text_r, "out_meter_text_r");
+  GLADE_HOOKUP_OBJECT (window1, rms_meter_text_l, "rms_meter_text_l");
+  GLADE_HOOKUP_OBJECT (window1, rms_meter_text_r, "rms_meter_text_r");
+  GLADE_HOOKUP_OBJECT (window1, out_meter_label, "out_meter_label");
+  GLADE_HOOKUP_OBJECT (window1, rms_meter_label, "rms_meter_label");
   GLADE_HOOKUP_OBJECT (window1, output_eventbox, "output_eventbox");
   GLADE_HOOKUP_OBJECT (window1, hbox51, "hbox51");
   GLADE_HOOKUP_OBJECT (window1, out_trim_scale, "out_trim_scale");
@@ -4720,7 +4823,6 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, custom21, "custom21");
   GLADE_HOOKUP_OBJECT (window1, outmeter_r, "outmeter_r");
   GLADE_HOOKUP_OBJECT (window1, rmsmeter_r, "rmsmeter_r");
-  GLADE_HOOKUP_OBJECT (window1, bypass_button, "bypass_button");
   GLADE_HOOKUP_OBJECT (window1, label318, "label318");
   GLADE_HOOKUP_OBJECT_NO_REF (window1, tooltips, "tooltips");
 
@@ -4880,6 +4982,16 @@ create_pref_dialog (void)
   GtkObject *warningLevelSpinButton_adj;
   GtkWidget *warningLevelSpinButton;
   GtkWidget *warningLabel;
+  GtkWidget *out_meter_pref_frame;
+  GtkWidget *alignment8;
+  GtkWidget *hbox74;
+  GtkWidget *out_meter_peak_button;
+  GSList *out_meter_peak_button_group = NULL;
+  GtkWidget *out_meter_full_button;
+  GtkWidget *rms_meter_peak_button;
+  GSList *rms_meter_peak_button_group = NULL;
+  GtkWidget *rms_meter_full_button;
+  GtkWidget *out_meter_pref_label;
   GtkWidget *dialog_action_area1;
   GtkWidget *pref_close;
   GtkTooltips *tooltips;
@@ -5268,6 +5380,59 @@ create_pref_dialog (void)
   gtk_frame_set_label_widget (GTK_FRAME (warningFrame), warningLabel);
   gtk_label_set_use_markup (GTK_LABEL (warningLabel), TRUE);
 
+  out_meter_pref_frame = gtk_frame_new (NULL);
+  gtk_widget_set_name (out_meter_pref_frame, "out_meter_pref_frame");
+  gtk_widget_show (out_meter_pref_frame);
+  gtk_box_pack_start (GTK_BOX (dialog_vbox1), out_meter_pref_frame, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (out_meter_pref_frame), 5);
+
+  alignment8 = gtk_alignment_new (0.5, 0.5, 1, 1);
+  gtk_widget_set_name (alignment8, "alignment8");
+  gtk_widget_show (alignment8);
+  gtk_container_add (GTK_CONTAINER (out_meter_pref_frame), alignment8);
+  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment8), 0, 0, 12, 0);
+
+  hbox74 = gtk_hbox_new (TRUE, 0);
+  gtk_widget_set_name (hbox74, "hbox74");
+  gtk_widget_show (hbox74);
+  gtk_container_add (GTK_CONTAINER (alignment8), hbox74);
+
+  out_meter_peak_button = gtk_radio_button_new_with_mnemonic (NULL, _("Output peak"));
+  gtk_widget_set_name (out_meter_peak_button, "out_meter_peak_button");
+  gtk_widget_show (out_meter_peak_button);
+  gtk_box_pack_start (GTK_BOX (hbox74), out_meter_peak_button, FALSE, FALSE, 0);
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (out_meter_peak_button), out_meter_peak_button_group);
+  out_meter_peak_button_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (out_meter_peak_button));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (out_meter_peak_button), TRUE);
+
+  out_meter_full_button = gtk_radio_button_new_with_mnemonic (NULL, _("Output full"));
+  gtk_widget_set_name (out_meter_full_button, "out_meter_full_button");
+  gtk_widget_show (out_meter_full_button);
+  gtk_box_pack_start (GTK_BOX (hbox74), out_meter_full_button, FALSE, FALSE, 0);
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (out_meter_full_button), out_meter_peak_button_group);
+  out_meter_peak_button_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (out_meter_full_button));
+
+  rms_meter_peak_button = gtk_radio_button_new_with_mnemonic (NULL, _("RMS peak"));
+  gtk_widget_set_name (rms_meter_peak_button, "rms_meter_peak_button");
+  gtk_widget_show (rms_meter_peak_button);
+  gtk_box_pack_start (GTK_BOX (hbox74), rms_meter_peak_button, FALSE, FALSE, 0);
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (rms_meter_peak_button), rms_meter_peak_button_group);
+  rms_meter_peak_button_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (rms_meter_peak_button));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (rms_meter_peak_button), TRUE);
+
+  rms_meter_full_button = gtk_radio_button_new_with_mnemonic (NULL, _("RMS full"));
+  gtk_widget_set_name (rms_meter_full_button, "rms_meter_full_button");
+  gtk_widget_show (rms_meter_full_button);
+  gtk_box_pack_start (GTK_BOX (hbox74), rms_meter_full_button, FALSE, FALSE, 0);
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (rms_meter_full_button), rms_meter_peak_button_group);
+  rms_meter_peak_button_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (rms_meter_full_button));
+
+  out_meter_pref_label = gtk_label_new (_("<b><i>Output meter numeric display</i></b>"));
+  gtk_widget_set_name (out_meter_pref_label, "out_meter_pref_label");
+  gtk_widget_show (out_meter_pref_label);
+  gtk_frame_set_label_widget (GTK_FRAME (out_meter_pref_frame), out_meter_pref_label);
+  gtk_label_set_use_markup (GTK_LABEL (out_meter_pref_label), TRUE);
+
   dialog_action_area1 = GTK_DIALOG (pref_dialog)->action_area;
   gtk_widget_set_name (dialog_action_area1, "dialog_action_area1");
   gtk_widget_show (dialog_action_area1);
@@ -5400,6 +5565,18 @@ create_pref_dialog (void)
   g_signal_connect ((gpointer) warningLevelSpinButton, "value_changed",
                     G_CALLBACK (on_warningLevelSpinButton_value_changed),
                     NULL);
+  g_signal_connect ((gpointer) out_meter_peak_button, "clicked",
+                    G_CALLBACK (on_out_meter_peak_button_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) out_meter_full_button, "clicked",
+                    G_CALLBACK (on_out_meter_full_button_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) rms_meter_peak_button, "clicked",
+                    G_CALLBACK (on_rms_meter_peak_button_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) rms_meter_full_button, "clicked",
+                    G_CALLBACK (on_rms_meter_full_button_clicked),
+                    NULL);
   g_signal_connect ((gpointer) pref_close, "clicked",
                     G_CALLBACK (on_pref_close_clicked),
                     NULL);
@@ -5478,6 +5655,14 @@ create_pref_dialog (void)
   GLADE_HOOKUP_OBJECT (pref_dialog, Meter_warning_level__dbFS_, "Meter_warning_level__dbFS_");
   GLADE_HOOKUP_OBJECT (pref_dialog, warningLevelSpinButton, "warningLevelSpinButton");
   GLADE_HOOKUP_OBJECT (pref_dialog, warningLabel, "warningLabel");
+  GLADE_HOOKUP_OBJECT (pref_dialog, out_meter_pref_frame, "out_meter_pref_frame");
+  GLADE_HOOKUP_OBJECT (pref_dialog, alignment8, "alignment8");
+  GLADE_HOOKUP_OBJECT (pref_dialog, hbox74, "hbox74");
+  GLADE_HOOKUP_OBJECT (pref_dialog, out_meter_peak_button, "out_meter_peak_button");
+  GLADE_HOOKUP_OBJECT (pref_dialog, out_meter_full_button, "out_meter_full_button");
+  GLADE_HOOKUP_OBJECT (pref_dialog, rms_meter_peak_button, "rms_meter_peak_button");
+  GLADE_HOOKUP_OBJECT (pref_dialog, rms_meter_full_button, "rms_meter_full_button");
+  GLADE_HOOKUP_OBJECT (pref_dialog, out_meter_pref_label, "out_meter_pref_label");
   GLADE_HOOKUP_OBJECT_NO_REF (pref_dialog, dialog_action_area1, "dialog_action_area1");
   GLADE_HOOKUP_OBJECT (pref_dialog, pref_close, "pref_close");
   GLADE_HOOKUP_OBJECT_NO_REF (pref_dialog, tooltips, "tooltips");

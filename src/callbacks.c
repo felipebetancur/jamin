@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.164 2007/05/05 11:51:52 jdepner Exp $
+ *  $Id: callbacks.c,v 1.165 2007/05/12 16:28:35 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -62,9 +62,11 @@ static gboolean         text_focus = FALSE, force_keypress_help = FALSE;
 static GtkToggleButton  *l_solo_button[XO_NBANDS], *l_bypass_button[XO_NBANDS], 
                         *l_main_bypass, *l_eq_bypass, *l_limiter_bypass;
 static GtkLabel         *l_eqbFreqLabel, *l_eqbAmpLabel;
+GtkEventBox             *l_global_bypass_event_box;
 static int              hot_scene = 0;
 static GtkWidget        *scene_name_dialog, *about_dialog;
 static GtkEntry         *l_scene_name_entry;
+static GdkColor         l_main_color;
 
 
 void
@@ -170,8 +172,7 @@ void
 on_window1_show                        (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-  GdkColor    bypass;
-
+  GtkStyle *main_style;
 
   help_ptr = _(general_help);
 
@@ -181,42 +182,29 @@ on_window1_show                        (GtkWidget       *widget,
 
   on_EQ_curve_event_box_leave_notify_event (NULL, NULL, NULL);
 
-  l_solo_button[0] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
-                                                       "low_solo"));
-  l_bypass_button[0] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
-                                                       "low_bypass"));
-  l_solo_button[1] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
-                                                       "mid_solo"));
-  l_bypass_button[1] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
-                                                       "mid_bypass"));
-  l_solo_button[2] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
-                                                       "high_solo"));
-  l_bypass_button[2] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
-                                                         "high_bypass"));
-  l_main_bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
-                                                    "bypass_button"));
-  l_eq_bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
-                                                  "eq_bypass"));
-  l_limiter_bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
-                                                       "limiter_bypass"));
+  l_solo_button[0] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "low_solo"));
+  l_bypass_button[0] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "low_bypass"));
+  l_solo_button[1] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "mid_solo"));
+  l_bypass_button[1] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "mid_bypass"));
+  l_solo_button[2] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "high_solo"));
+  l_bypass_button[2] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "high_bypass"));
+  l_eq_bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "eq_bypass"));
+  l_limiter_bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "limiter_bypass"));
 
   l_eqbFreqLabel = GTK_LABEL (lookup_widget (main_window, "eqbFreqLabel"));
   l_eqbAmpLabel = GTK_LABEL (lookup_widget (main_window, "eqbAmpLabel"));
+
+  l_global_bypass_event_box = GTK_EVENT_BOX (lookup_widget (main_window, "global_bypass_event_box"));
+  l_main_bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "global_bypass"));
+  main_style = gtk_widget_get_style (GTK_WIDGET (l_global_bypass_event_box));
+  l_main_color = main_style->bg[GTK_STATE_NORMAL];
 
 
   scene_name_dialog = create_scene_name_dialog ();
 
   about_dialog = create_about_dialog ();
 
-  l_scene_name_entry = GTK_ENTRY (lookup_widget (scene_name_dialog, 
-                                                 "scene_name_entry"));
-
-  bypass.red = 65535;
-  bypass.green = 0;
-  bypass.blue = 0;
-
-  gtk_widget_modify_bg ((GtkWidget *) l_main_bypass, TRUE, &bypass);
-
+  l_scene_name_entry = GTK_ENTRY (lookup_widget (scene_name_dialog, "scene_name_entry"));
 }
 
 
@@ -303,16 +291,6 @@ on_EQ_curve_event_box_leave_notify_event
 
     return FALSE;
 }
-
-
-void
-on_bypass_button_toggled               (GtkToggleButton *togglebutton,
-                                        gpointer         user_data)
-{
-    global_bypass = gtk_toggle_button_get_active(togglebutton);
-}
-
-
 
 
 void
@@ -1254,17 +1232,6 @@ on_transport_controls_eventbox_enter_notify_event
 
 
 gboolean
-on_bypass_button_enter_notify_event    (GtkWidget       *widget,
-                                        GdkEventCrossing *event,
-                                        gpointer         user_data)
-{
-    help_ptr = _(bypass_help);
-
-    return FALSE;
-}
-
-
-gboolean
 on_scenes_eventbox_enter_notify_event  (GtkWidget       *widget,
                                         GdkEventCrossing *event,
                                         gpointer         user_data)
@@ -1476,7 +1443,6 @@ on_window1_key_press_event             (GtkWidget       *widget,
                                         GdkEventKey     *event,
                                         gpointer         user_data)
 {
-    GtkToggleButton       *bypass;
     gboolean              tmp;
     unsigned int          key, state;
     int                   scene;
@@ -1522,10 +1488,8 @@ on_window1_key_press_event             (GtkWidget       *widget,
         /*  Bypass  */
 
       case GDK_b:
-        bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, 
-                                                   "bypass_button"));
-        tmp = gtk_toggle_button_get_active (bypass);
-        gtk_toggle_button_set_active (bypass, (!tmp));
+        tmp = gtk_toggle_button_get_active (l_main_bypass);
+        gtk_toggle_button_set_active (l_main_bypass, (!tmp));
         break;
 
 
@@ -2862,4 +2826,98 @@ on_eqbl_enter_notify_event             (GtkWidget       *widget,
   free (freq);
 
   return FALSE;
+}
+
+
+void
+on_global_bypass_toggled               (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  global_bypass = gtk_toggle_button_get_active(togglebutton);
+
+  if (global_bypass) callbacks_blink_global_bypass_button (1);
+}
+
+
+
+void 
+callbacks_blink_global_bypass_button (int start)
+{
+  static int flip;
+  GdkColor    bypass;
+
+
+  if (start) flip = 1;
+
+
+  if (flip)
+    {
+      bypass.red = 65535;
+      bypass.green = 0;
+      bypass.blue = 0;
+    }
+  else
+    {
+      bypass = l_main_color;
+    }
+  flip ^= 1;
+
+  gtk_widget_modify_bg ((GtkWidget *) l_global_bypass_event_box, GTK_STATE_NORMAL, &bypass);
+} 
+
+
+gboolean
+on_global_bypass_event_box_enter_notify_event
+                                        (GtkWidget       *widget,
+                                        GdkEventCrossing *event,
+                                        gpointer         user_data)
+{
+  help_ptr = _(bypass_help);
+
+  return FALSE;
+}
+
+
+/*  Passing the gtk_meter as "Object" in glade-2.  The gtk_meter becomes
+    *widget and the text field becomes user_data.  */
+
+gboolean
+on_meter_text_button_press_event (GtkWidget       *widget,
+                                  GdkEventButton  *event,
+                                  gpointer         user_data)
+{
+  gtk_meter_reset_peak ((GtkMeter *) widget);
+
+  return FALSE;
+}
+
+void
+on_out_meter_peak_button_clicked       (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  intrim_set_out_meter_peak_pref (TRUE);
+}
+
+
+void
+on_out_meter_full_button_clicked       (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  intrim_set_out_meter_peak_pref (FALSE);
+}
+
+
+void
+on_rms_meter_peak_button_clicked       (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  intrim_set_rms_meter_peak_pref (TRUE);
+}
+
+
+void
+on_rms_meter_full_button_clicked       (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  intrim_set_rms_meter_peak_pref (FALSE);
 }

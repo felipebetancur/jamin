@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.63 2007/05/05 11:51:52 jdepner Exp $
+ *  $Id: main.c,v 1.64 2007/05/12 16:28:35 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -53,6 +53,8 @@
 #include "scenes.h"
 #include "help.h"
 #include "preferences.h"
+#include "callbacks.h"
+
 
 
 GtkWidget *main_window;
@@ -225,8 +227,18 @@ static gboolean update_meters(gpointer data)
 
     /*  Only update the remaining status once a second.  */
 
-    if (!(count = (count + 1) % 10)) status_update (main_window);
+    if (!(count = (count + 1) % 10))
+      {
+        status_update (main_window);
+      }
 
+
+    /*  Only blink the global bypass button twice a second when global bypass is on.  */
+
+    if (!(count % 5))
+      {
+        if (global_bypass) callbacks_blink_global_bypass_button (0);
+      }
 
     return TRUE;
 }

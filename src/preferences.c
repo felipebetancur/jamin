@@ -56,8 +56,9 @@ static GdkColormap       *colormap = NULL;
 static GdkColor          color[COLORS];
 static int               color_id;
 static GtkSpinButton     *ct_spin, *wl_spin, *lgain_spin, *ugain_spin, *spec_freq_spin;
-static GtkRadioButton    *iir_button, *fft_button;
-static GtkToggleButton   *t_iir, *t_fft;
+static GtkRadioButton    *iir_button, *fft_button, *out_meter_peak_button, *out_meter_full_button, 
+                         *rms_meter_peak_button, *rms_meter_full_button;
+static GtkToggleButton   *t_iir, *t_fft, *t_out_peak, *t_out_full, *t_rms_peak, *t_rms_full;
 static GtkMenu           *l_menu3;
 
 
@@ -92,27 +93,30 @@ void preferences_init()
 
     pref_dialog = create_pref_dialog ();
 
-    lgain_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, 
-                                                "MinGainSpin"));
-    ugain_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, 
-                                                "MaxGainSpin"));
-    spec_freq_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, 
-                                                "UpdateFrequencySpin"));
+    lgain_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "MinGainSpin"));
+    ugain_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "MaxGainSpin"));
+    spec_freq_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "UpdateFrequencySpin"));
     l_menu3 = GTK_MENU (lookup_widget (pref_dialog, "menu3"));
 
 
-    ct_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, 
-                                              "CrossfadeTimeSpin"));
+    ct_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "CrossfadeTimeSpin"));
 
-    wl_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, 
-                                              "warningLevelSpinButton"));
+    wl_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "warningLevelSpinButton"));
 
-    iir_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, 
-						   "IIRButton"));
-    fft_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, 
-						   "FFTButton"));
+    iir_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, "IIRButton"));
+    fft_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, "FFTButton"));
     t_iir = &iir_button->check_button.toggle_button;
     t_fft = &fft_button->check_button.toggle_button;
+
+    out_meter_peak_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, "out_meter_peak_button"));
+    out_meter_full_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, "out_meter_full_button"));
+    rms_meter_peak_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, "rms_meter_peak_button"));
+    rms_meter_full_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, "rms_meter_full_button"));
+    t_out_peak = &out_meter_peak_button->check_button.toggle_button;
+    t_out_full = &out_meter_full_button->check_button.toggle_button;
+    t_rms_peak = &rms_meter_peak_button->check_button.toggle_button;
+    t_rms_full = &rms_meter_full_button->check_button.toggle_button;
+
 
     color_dialog = create_colorselectiondialog1 ();
 
@@ -135,7 +139,7 @@ void preferences_init()
 
 
     /*  Set all of the colors to the defaults in case someone has edited the
-        ~/.jamin-defaults file and removed (or hosed) one or more of the
+        ~/.jamin/jamin-defaults file and removed (or hosed) one or more of the
         entries.  */
 
     pref_reset_all_colors ();
@@ -292,12 +296,30 @@ void popup_pref_dialog (int updown)
       if (process_get_crossover_type() == IIR)
 	{
 	  gtk_toggle_button_set_active (t_iir, TRUE);
-	  gtk_toggle_button_set_active (t_fft, FALSE);
 	}
       else
 	{
-	  gtk_toggle_button_set_active (t_iir, FALSE);
 	  gtk_toggle_button_set_active (t_fft, TRUE);
+	}
+
+
+      if (intrim_get_out_meter_peak_pref ())
+	{
+	  gtk_toggle_button_set_active (t_out_peak, TRUE);
+	}
+      else
+	{
+	  gtk_toggle_button_set_active (t_out_full, TRUE);
+	}
+
+
+      if (intrim_get_rms_meter_peak_pref ())
+	{
+	  gtk_toggle_button_set_active (t_rms_peak, TRUE);
+	}
+      else
+	{
+	  gtk_toggle_button_set_active (t_rms_full, TRUE);
 	}
 
 
@@ -395,6 +417,8 @@ static void color_help_callback (GtkWidget *w, gpointer user_data)
   message (GTK_MESSAGE_INFO, color_help);
 }
 
+
+/*  Actually just color defaults.  */
 
 void pref_write_jamin_defaults ()
 {

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: intrim.c,v 1.17 2007/05/05 11:51:52 jdepner Exp $
+ *  $Id: intrim.c,v 1.18 2007/05/12 16:28:35 jdepner Exp $
  */
 
 #include <gtk/gtk.h>
@@ -29,7 +29,9 @@
 static GtkMeter *in_meter[2], *out_meter[2], *rms_meter[2];
 static GtkAdjustment *in_meter_adj[2], *out_meter_adj[2], *rms_meter_adj[2];
 static GtkLabel	*pan_label;
+static GtkEntry *out_meter_text[2], *rms_meter_text[2];
 static float inmeter_warn_level, outmeter_warn_level, rmsmeter_warn_level;
+static gboolean out_meter_peak_pref = TRUE, rms_meter_peak_pref = TRUE;
 
 void intrim_cb(int id, float value);
 void outtrim_cb(int id, float value);
@@ -55,6 +57,8 @@ void bind_intrim()
     out_meter_adj[1] = gtk_meter_get_adjustment(out_meter[1]);
     gtk_adjustment_set_value(out_meter_adj[0], -60.0);
     gtk_adjustment_set_value(out_meter_adj[1], -60.0);
+    out_meter_text[0] = GTK_ENTRY (lookup_widget (main_window, "out_meter_text_l"));
+    out_meter_text[1] = GTK_ENTRY (lookup_widget (main_window, "out_meter_text_r"));
 
     rms_meter[0] = GTK_METER(lookup_widget(main_window, "rmsmeter_l"));
     rms_meter[1] = GTK_METER(lookup_widget(main_window, "rmsmeter_r"));
@@ -62,6 +66,8 @@ void bind_intrim()
     rms_meter_adj[1] = gtk_meter_get_adjustment(rms_meter[1]);
     gtk_adjustment_set_value(rms_meter_adj[0], -60.0);
     gtk_adjustment_set_value(rms_meter_adj[1], -60.0);
+    rms_meter_text[0] = GTK_ENTRY (lookup_widget (main_window, "rms_meter_text_l"));
+    rms_meter_text[1] = GTK_ENTRY (lookup_widget (main_window, "rms_meter_text_r"));
 
     pan_label = GTK_LABEL(lookup_widget(main_window, "pan_label"));
     update_pan_label(0.0);
@@ -107,18 +113,84 @@ void in_meter_value(float amp[])
 
 void out_meter_value(float amp[])
 {
-    gtk_adjustment_set_value(out_meter_adj[0], lin2db(amp[0]));
-    gtk_adjustment_set_value(out_meter_adj[1], lin2db(amp[1]));
+    char tmp[256];
+    float lamp[2];
+
+    lamp[0] = lin2db (amp[0]);
+    lamp[1] = lin2db (amp[1]);
+
+    gtk_adjustment_set_value(out_meter_adj[0], lamp[0]);
+    gtk_adjustment_set_value(out_meter_adj[1], lamp[1]);
+
+    if (out_meter_peak_pref)
+      {
+        lamp[0] = gtk_meter_get_peak (out_meter[0]);
+        lamp[1] = gtk_meter_get_peak (out_meter[1]);
+      }
+    else
+      {
+        if (lamp[0] < -60.0) lamp[0] = -60.0;
+        if (lamp[1] < -60.0) lamp[1] = -60.0;
+      }
+
+    snprintf (tmp, 255, "%.1f", lamp[0]);
+    gtk_entry_set_text (out_meter_text[0], tmp);
+    snprintf (tmp, 255, "%.1f", lamp[1]);
+    gtk_entry_set_text (out_meter_text[1], tmp);
+
     amp[0] = 0.0f;
     amp[1] = 0.0f;
 }
 
 void rms_meter_value(float amp[])
 {
-    gtk_adjustment_set_value(rms_meter_adj[0], lin2db(amp[0]));
-    gtk_adjustment_set_value(rms_meter_adj[1], lin2db(amp[1]));
+    char tmp[256];
+    float lamp[2];
+
+    lamp[0] = lin2db (amp[0]);
+    lamp[1] = lin2db (amp[1]);
+
+    gtk_adjustment_set_value(rms_meter_adj[0], lamp[0]);
+    gtk_adjustment_set_value(rms_meter_adj[1], lamp[1]);
+
+    if (rms_meter_peak_pref)
+      {
+        lamp[0] = gtk_meter_get_peak (rms_meter[0]);
+        lamp[1] = gtk_meter_get_peak (rms_meter[1]);
+      }
+    else
+      {
+        if (lamp[0] < -60.0) lamp[0] = -60.0;
+        if (lamp[1] < -60.0) lamp[1] = -60.0;
+      }
+
+    snprintf (tmp, 255, "%.1f", lamp[0]);
+    gtk_entry_set_text (rms_meter_text[0], tmp);
+    snprintf (tmp, 255, "%.1f", lamp[1]);
+    gtk_entry_set_text (rms_meter_text[1], tmp);
+
     amp[0] = 0.0f;
     amp[1] = 0.0f;
+}
+
+void intrim_set_out_meter_peak_pref (gboolean pref)
+{
+  out_meter_peak_pref = pref;
+}
+
+gboolean intrim_get_out_meter_peak_pref ()
+{
+  return (out_meter_peak_pref);
+}
+
+void intrim_set_rms_meter_peak_pref (gboolean pref)
+{
+  rms_meter_peak_pref = pref;
+}
+
+gboolean intrim_get_rms_meter_peak_pref ()
+{
+  return (rms_meter_peak_pref);
 }
 
 void update_pan_label(float balance)

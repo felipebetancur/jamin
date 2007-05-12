@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: gtkmeter.h,v 1.4 2004/04/26 20:44:25 jdepner Exp $
+ *  $Id: gtkmeter.h,v 1.5 2007/05/12 16:28:35 jdepner Exp $
  */
 
 #ifndef __GTK_METER_H__
@@ -61,6 +61,9 @@ struct _GtkMeter
   /* Peak deflection */
   gfloat peak;
 
+  /* Peak deflection in reasonable units */
+  gfloat peak_db;
+
   /* ID of update timer, or 0 if none */
   guint32 timer;
 
@@ -94,6 +97,8 @@ void           gtk_meter_set_adjustment         (GtkMeter     *meter,
 						 GtkAdjustment *adjustment);
 
 void	       gtk_meter_reset_peak		(GtkMeter     *meter);
+
+float          gtk_meter_get_peak               (GtkMeter *meter);
 
 void           gtk_meter_set_warn_point         (GtkMeter *meter,
 						 gfloat pt);

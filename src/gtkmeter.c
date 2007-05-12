@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: gtkmeter.c,v 1.11 2007/05/06 23:13:17 jdepner Exp $
+ *  $Id: gtkmeter.c,v 1.12 2007/05/12 16:28:35 jdepner Exp $
  */
 
 #include <math.h>
@@ -315,8 +315,10 @@ gtk_meter_expose (GtkWidget      *widget,
   if (val > meter->peak) {
     if (val > meter->iec_upper) {
       meter->peak = meter->iec_upper;
+      meter->peak_db = meter->adjustment->value;
     } else {
       meter->peak = val;
+      meter->peak_db = meter->adjustment->value;
     }
   }
 
@@ -501,6 +503,11 @@ static float iec_scale(float db)
 void gtk_meter_reset_peak(GtkMeter *meter)
 {
     meter->peak = 0.0f;
+}
+
+float gtk_meter_get_peak(GtkMeter *meter)
+{
+  return (meter->peak_db);
 }
 
 void gtk_meter_set_warn_point(GtkMeter *meter, gfloat pt)

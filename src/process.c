@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.68 2007/05/05 14:07:53 jdepner Exp $
+ *  $Id: process.c,v 1.69 2007/05/12 16:28:36 jdepner Exp $
  */
 
 #include <math.h>
@@ -131,10 +131,14 @@ void process_init(float fs)
     sample_rate = fs;
 
 
-    /*  Initialize RMS per channel.  */
+    /*  Initialize RMS per channel.  We want a window of about 1000 samples so
+        we divide 1000 by the sample rate to get the time.  */
 
-    r[0] = rms_new (sample_rate, 0.1);
-    r[1] = rms_new (sample_rate, 0.1);
+    float wndw;
+    wndw = 1000.0 / sample_rate;
+
+    r[0] = rms_new (sample_rate, wndw);
+    r[1] = rms_new (sample_rate, wndw);
 
 
     for (i = 0; i < BANDS; i++) {
