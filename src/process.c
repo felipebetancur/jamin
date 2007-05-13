@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.69 2007/05/12 16:28:36 jdepner Exp $
+ *  $Id: process.c,v 1.70 2007/05/13 00:38:52 jdepner Exp $
  */
 
 #include <math.h>
@@ -43,7 +43,6 @@
 #define LERP(f,a,b) ((a) + (f) * ((b) - (a)))
 
 #define IS_DENORMAL(fv) (((*(unsigned int*)&(fv))&0x7f800000)!=0)
-
 typedef FFTW_TYPE fft_data;
 
 static int xo_band_action[XO_NBANDS] = {ACTIVE, ACTIVE, ACTIVE};
@@ -60,7 +59,8 @@ float lim_peak[2];
 static int iir_xover = 0;
 
 float in_peak[NCHANNELS], out_peak[NCHANNELS], rms_peak[NCHANNELS];
-static rms *r[2];
+static rms *r[2] = {NULL, NULL};
+static gboolean rms_ready = FALSE;
 
 static float band_f[BANDS];
 static float gain_fix[BANDS];
@@ -96,6 +96,7 @@ static int eq_bypass_pending = FALSE;
 static int eq_bypass = FALSE;
 static int limiter_bypass_pending = FALSE;
 static int limiter_bypass = FALSE;
+static int rms_time_slice;
 
 /* Data for plugins */
 plugin *comp_plugin, *lim_plugin;
@@ -128,17 +129,8 @@ void process_init(float fs)
     float centre = 25.0f;
     unsigned int i, j, band;
 
+
     sample_rate = fs;
-
-
-    /*  Initialize RMS per channel.  We want a window of about 1000 samples so
-        we divide 1000 by the sample rate to get the time.  */
-
-    float wndw;
-    wndw = 1000.0 / sample_rate;
-
-    r[0] = rms_new (sample_rate, wndw);
-    r[1] = rms_new (sample_rate, wndw);
 
 
     for (i = 0; i < BANDS; i++) {
@@ -616,9 +608,14 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
     }
 
 
-    for (port = 0 ; port < nchannels ; port++)
+    /*  Don't try to play with the RMS meters until we've initialized the buffers.  */
+
+    if (rms_ready)
       {
-        rms_peak[port] = rms_run_buffer (r[port], out[port], nframes);
+        for (port = 0 ; port < nchannels ; port++)
+          {
+            rms_peak[port] = rms_run_buffer (r[port], out[port], nframes);
+          }
       }
 
 
@@ -785,6 +782,32 @@ int process_get_bypass_state (int bypass_type)
       return (-1);
       break;
     }
+}
+
+float process_get_sample_rate ()
+{
+  return (sample_rate);
+}
+
+int process_get_rms_time_slice ()
+{
+  return (rms_time_slice);
+}
+
+void process_set_rms_time_slice (int milliseconds)
+{
+  rms_time_slice = milliseconds;
+
+
+  if (r[0]) rms_free (r[0]);
+  if (r[1]) rms_free (r[1]);
+
+  float ts = rms_time_slice / 1000.0;
+
+  r[0] = rms_new (sample_rate, ts);
+  r[1] = rms_new (sample_rate, ts);
+
+  rms_ready = TRUE;
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

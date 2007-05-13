@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.165 2007/05/12 16:28:35 jdepner Exp $
+ *  $Id: callbacks.c,v 1.166 2007/05/13 00:38:41 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1314,7 +1314,7 @@ on_save_as1_activate                   (GtkMenuItem     *menuitem,
       {
         if (jamin_dir) 
             gtk_file_selection_set_filename (file_selector, jamin_dir);
-        gtk_file_selection_complete (file_selector, "*.jam");
+        gtk_file_selection_complete (file_selector, "default.jam");
       }
 
 
@@ -1339,7 +1339,7 @@ on_save1_activate                      (GtkMenuItem     *menuitem,
 	if (s_have_filename()) {
 		s_save_session(NULL);
 	} else {
-		on_save_as1_activate (NULL, NULL);
+          on_save_as1_activate (NULL, NULL);
 	}
 }
 
@@ -2920,4 +2920,32 @@ on_rms_meter_full_button_clicked       (GtkButton       *button,
                                         gpointer         user_data)
 {
   intrim_set_rms_meter_peak_pref (FALSE);
+}
+
+
+/*  Passing rmsSamples as "Object" in glade-2.  This becomes *spinbutton
+    and the spinbutton (rmsTime) becomes user_data (see above comments).  */
+
+void
+on_rmsTimeValue_value_changed  (GtkSpinButton   *spinbutton,
+                                gpointer         user_data)
+{
+  float sample_rate, time_slice;
+  int samples;
+  char *sample_label;
+
+
+  sample_rate = process_get_sample_rate ();
+
+  time_slice = gtk_spin_button_get_value (GTK_SPIN_BUTTON (user_data));
+
+  process_set_rms_time_slice ((int) time_slice);
+
+  samples = NINT ((time_slice / 1000.0) * sample_rate);
+
+  sample_label = g_strdup_printf ("%d", samples);
+
+  gtk_label_set_label (GTK_LABEL (spinbutton), sample_label);
+
+  free (sample_label);
 }

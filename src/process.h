@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.h,v 1.33 2007/05/05 11:51:52 jdepner Exp $
+ *  $Id: process.h,v 1.34 2007/05/13 00:38:52 jdepner Exp $
  */
 
 #ifndef PROCESS_H
@@ -114,6 +114,9 @@ void process_set_mid2high_xover (float freq);
 float process_get_low2mid_xover ();
 float process_get_mid2high_xover ();
 int process_get_bypass_state (int bypass_type);
+float process_get_sample_rate ();
+int process_get_rms_time_slice ();
+void process_set_rms_time_slice (int milliseconds);
 
 extern comp_settings compressors[XO_NBANDS];
 extern lim_settings limiter;

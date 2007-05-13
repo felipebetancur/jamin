@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.61 2007/05/12 16:28:36 jdepner Exp $
+ *  $Id: state.c,v 1.62 2007/05/13 00:38:52 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -91,6 +91,7 @@ typedef struct {
     int limiter_bypass;
     gboolean out_meter_peak_pref;
     gboolean rms_meter_peak_pref;
+    int rms_time_slice;
     int gang_at[XO_BANDS];
     int gang_re[XO_BANDS];
     int gang_th[XO_BANDS];
@@ -534,6 +535,8 @@ void s_save_session (const char *fname)
     s_save_global_int(doc, "output meter peak pref", (int) intrim_get_out_meter_peak_pref ());
     s_save_global_int(doc, "rms meter peak pref", (int) intrim_get_rms_meter_peak_pref ());
 
+    s_save_global_int(doc, "rms time slice", process_get_rms_time_slice ());
+
 
     /* record the current gang state of the compressor controls */
 
@@ -672,6 +675,7 @@ void s_load_session (const char *fname)
     gp.limiter_bypass = 0;
     gp.out_meter_peak_pref = TRUE;
     gp.rms_meter_peak_pref = TRUE;
+    gp.rms_time_slice = 50;
     for (i = 0 ; i < XO_BANDS ; i++) {
         gp.gang_at[i] = FALSE;
         gp.gang_re[i] = FALSE;
@@ -680,6 +684,7 @@ void s_load_session (const char *fname)
         gp.gang_kn[i] = FALSE;
         gp.gang_ma[i] = FALSE;
     }
+
 
     /* run the SAX parser */    
     scene_init();
@@ -728,6 +733,8 @@ void s_load_session (const char *fname)
 
     intrim_set_out_meter_peak_pref (gp.out_meter_peak_pref);
     intrim_set_rms_meter_peak_pref (gp.rms_meter_peak_pref);
+
+    process_set_rms_time_slice (gp.rms_time_slice);
 
 
     /*  This is the active scene.  */
@@ -855,6 +862,8 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
           gp->out_meter_peak_pref = (gboolean) atoi(value);
 	} else if (!strcmp(symbol, "rms meter peak pref")) {
           gp->rms_meter_peak_pref = (gboolean) atoi(value);
+	} else if (!strcmp(symbol, "rms time slice")) {
+          gp->rms_time_slice = atoi(value);
 	} else if ((const char *)strstr(symbol, "gang_") == symbol) {
 	    int ind = index ? atoi(index) : -1;
 	    int val = atoi(value);

@@ -4943,6 +4943,7 @@ create_pref_dialog (void)
   GtkObject *UpdateFrequencySpin_adj;
   GtkWidget *UpdateFrequencySpin;
   GtkWidget *SpectrumLabel;
+  GtkWidget *hbox75;
   GtkWidget *CrossoverEvent;
   GtkWidget *CrossoverFrame;
   GtkWidget *vbox165;
@@ -4950,6 +4951,14 @@ create_pref_dialog (void)
   GSList *FFTButton_group = NULL;
   GtkWidget *IIRButton;
   GtkWidget *CrossoverLabel;
+  GtkWidget *rmsWindowFrame;
+  GtkWidget *table17;
+  GtkWidget *rmsTimeLabel;
+  GtkObject *rmsTimeValue_adj;
+  GtkWidget *rmsTimeValue;
+  GtkWidget *rmsSamplesLabel;
+  GtkWidget *rmsSamples;
+  GtkWidget *label3179;
   GtkWidget *ColorsEvent;
   GtkWidget *ColorsFrame;
   GtkWidget *ColorsMenu;
@@ -5172,10 +5181,15 @@ create_pref_dialog (void)
   gtk_frame_set_label_widget (GTK_FRAME (SpectrumFrame), SpectrumLabel);
   gtk_label_set_use_markup (GTK_LABEL (SpectrumLabel), TRUE);
 
+  hbox75 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox75, "hbox75");
+  gtk_widget_show (hbox75);
+  gtk_box_pack_start (GTK_BOX (dialog_vbox1), hbox75, TRUE, TRUE, 0);
+
   CrossoverEvent = gtk_event_box_new ();
   gtk_widget_set_name (CrossoverEvent, "CrossoverEvent");
   gtk_widget_show (CrossoverEvent);
-  gtk_box_pack_start (GTK_BOX (dialog_vbox1), CrossoverEvent, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox75), CrossoverEvent, TRUE, TRUE, 0);
 
   CrossoverFrame = gtk_frame_new (NULL);
   gtk_widget_set_name (CrossoverFrame, "CrossoverFrame");
@@ -5210,6 +5224,56 @@ create_pref_dialog (void)
   gtk_widget_show (CrossoverLabel);
   gtk_frame_set_label_widget (GTK_FRAME (CrossoverFrame), CrossoverLabel);
   gtk_label_set_use_markup (GTK_LABEL (CrossoverLabel), TRUE);
+
+  rmsWindowFrame = gtk_frame_new (NULL);
+  gtk_widget_set_name (rmsWindowFrame, "rmsWindowFrame");
+  gtk_widget_show (rmsWindowFrame);
+  gtk_box_pack_start (GTK_BOX (hbox75), rmsWindowFrame, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (rmsWindowFrame), 5);
+
+  table17 = gtk_table_new (2, 2, TRUE);
+  gtk_widget_set_name (table17, "table17");
+  gtk_widget_show (table17);
+  gtk_container_add (GTK_CONTAINER (rmsWindowFrame), table17);
+  gtk_container_set_border_width (GTK_CONTAINER (table17), 6);
+
+  rmsTimeLabel = gtk_label_new (_("Time (ms):"));
+  gtk_widget_set_name (rmsTimeLabel, "rmsTimeLabel");
+  gtk_widget_show (rmsTimeLabel);
+  gtk_table_attach (GTK_TABLE (table17), rmsTimeLabel, 0, 1, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (rmsTimeLabel), 0, 0.5);
+
+  rmsTimeValue_adj = gtk_adjustment_new (50, 10, 1000, 100, 100, 100);
+  rmsTimeValue = gtk_spin_button_new (GTK_ADJUSTMENT (rmsTimeValue_adj), 1, 0);
+  gtk_widget_set_name (rmsTimeValue, "rmsTimeValue");
+  gtk_widget_show (rmsTimeValue);
+  gtk_table_attach (GTK_TABLE (table17), rmsTimeValue, 1, 2, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  rmsSamplesLabel = gtk_label_new (_("Samples:"));
+  gtk_widget_set_name (rmsSamplesLabel, "rmsSamplesLabel");
+  gtk_widget_show (rmsSamplesLabel);
+  gtk_table_attach (GTK_TABLE (table17), rmsSamplesLabel, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (rmsSamplesLabel), 0, 0.5);
+
+  rmsSamples = gtk_label_new (_("0"));
+  gtk_widget_set_name (rmsSamples, "rmsSamples");
+  gtk_widget_show (rmsSamples);
+  gtk_table_attach (GTK_TABLE (table17), rmsSamples, 1, 2, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (rmsSamples), 0, 0.5);
+
+  label3179 = gtk_label_new (_("<i><b>RMS Sample Size</b></i>"));
+  gtk_widget_set_name (label3179, "label3179");
+  gtk_widget_show (label3179);
+  gtk_frame_set_label_widget (GTK_FRAME (rmsWindowFrame), label3179);
+  gtk_label_set_use_markup (GTK_LABEL (label3179), TRUE);
 
   ColorsEvent = gtk_event_box_new ();
   gtk_widget_set_name (ColorsEvent, "ColorsEvent");
@@ -5511,6 +5575,9 @@ create_pref_dialog (void)
   g_signal_connect ((gpointer) IIRButton, "clicked",
                     G_CALLBACK (on_IIRButton_clicked),
                     NULL);
+  g_signal_connect_swapped ((gpointer) rmsTimeValue, "value_changed",
+                            G_CALLBACK (on_rmsTimeValue_value_changed),
+                            GTK_OBJECT (rmsSamples));
   g_signal_connect ((gpointer) ColorsEvent, "enter_notify_event",
                     G_CALLBACK (on_pref_enter_notify_event),
                     NULL);
@@ -5618,12 +5685,20 @@ create_pref_dialog (void)
   GLADE_HOOKUP_OBJECT (pref_dialog, UpdateFrequencyLabel, "UpdateFrequencyLabel");
   GLADE_HOOKUP_OBJECT (pref_dialog, UpdateFrequencySpin, "UpdateFrequencySpin");
   GLADE_HOOKUP_OBJECT (pref_dialog, SpectrumLabel, "SpectrumLabel");
+  GLADE_HOOKUP_OBJECT (pref_dialog, hbox75, "hbox75");
   GLADE_HOOKUP_OBJECT (pref_dialog, CrossoverEvent, "CrossoverEvent");
   GLADE_HOOKUP_OBJECT (pref_dialog, CrossoverFrame, "CrossoverFrame");
   GLADE_HOOKUP_OBJECT (pref_dialog, vbox165, "vbox165");
   GLADE_HOOKUP_OBJECT (pref_dialog, FFTButton, "FFTButton");
   GLADE_HOOKUP_OBJECT (pref_dialog, IIRButton, "IIRButton");
   GLADE_HOOKUP_OBJECT (pref_dialog, CrossoverLabel, "CrossoverLabel");
+  GLADE_HOOKUP_OBJECT (pref_dialog, rmsWindowFrame, "rmsWindowFrame");
+  GLADE_HOOKUP_OBJECT (pref_dialog, table17, "table17");
+  GLADE_HOOKUP_OBJECT (pref_dialog, rmsTimeLabel, "rmsTimeLabel");
+  GLADE_HOOKUP_OBJECT (pref_dialog, rmsTimeValue, "rmsTimeValue");
+  GLADE_HOOKUP_OBJECT (pref_dialog, rmsSamplesLabel, "rmsSamplesLabel");
+  GLADE_HOOKUP_OBJECT (pref_dialog, rmsSamples, "rmsSamples");
+  GLADE_HOOKUP_OBJECT (pref_dialog, label3179, "label3179");
   GLADE_HOOKUP_OBJECT (pref_dialog, ColorsEvent, "ColorsEvent");
   GLADE_HOOKUP_OBJECT (pref_dialog, ColorsFrame, "ColorsFrame");
   GLADE_HOOKUP_OBJECT (pref_dialog, ColorsMenu, "ColorsMenu");

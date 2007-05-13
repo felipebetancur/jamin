@@ -1325,3 +1325,7 @@ on_rms_meter_peak_button_clicked       (GtkButton       *button,
 void
 on_rms_meter_full_button_clicked       (GtkButton       *button,
                                         gpointer         user_data);
+
+void
+on_rmsTimeValue_value_changed          (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data);

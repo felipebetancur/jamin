@@ -8254,14 +8254,112 @@
       </child>
 
       <child>
-	<widget class="GtkEventBox" id="CrossoverEvent">
+	<widget class="GtkHBox" id="hbox75">
 	  <property name="visible">True</property>
-	  <property name="visible_window">True</property>
-	  <property name="above_child">False</property>
-	  <signal name="enter_notify_event" handler="on_pref_enter_notify_event" last_modification_time="Sun, 30 Jan 2005 19:39:07 GMT"/>
+	  <property name="homogeneous">False</property>
+	  <property name="spacing">0</property>
 
 	  <child>
-	    <widget class="GtkFrame" id="CrossoverFrame">
+	    <widget class="GtkEventBox" id="CrossoverEvent">
+	      <property name="visible">True</property>
+	      <property name="visible_window">True</property>
+	      <property name="above_child">False</property>
+	      <signal name="enter_notify_event" handler="on_pref_enter_notify_event" last_modification_time="Sun, 30 Jan 2005 19:39:07 GMT"/>
+
+	      <child>
+		<widget class="GtkFrame" id="CrossoverFrame">
+		  <property name="border_width">5</property>
+		  <property name="visible">True</property>
+		  <property name="label_xalign">0</property>
+		  <property name="label_yalign">0.5</property>
+		  <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+
+		  <child>
+		    <widget class="GtkVBox" id="vbox165">
+		      <property name="border_width">6</property>
+		      <property name="visible">True</property>
+		      <property name="homogeneous">False</property>
+		      <property name="spacing">0</property>
+
+		      <child>
+			<widget class="GtkRadioButton" id="FFTButton">
+			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">FFT is more CPU intensive but is the best choice</property>
+			  <property name="can_focus">True</property>
+			  <property name="label" translatable="yes">_FFT</property>
+			  <property name="use_underline">True</property>
+			  <property name="relief">GTK_RELIEF_NORMAL</property>
+			  <property name="focus_on_click">True</property>
+			  <property name="active">False</property>
+			  <property name="inconsistent">False</property>
+			  <property name="draw_indicator">True</property>
+			  <signal name="clicked" handler="on_FFTButton_clicked" last_modification_time="Sun, 30 Jan 2005 20:24:08 GMT"/>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkRadioButton" id="IIRButton">
+			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">IIR is less CPU intensive but is not recommended for serious work</property>
+			  <property name="can_focus">True</property>
+			  <property name="label" translatable="yes">II_R</property>
+			  <property name="use_underline">True</property>
+			  <property name="relief">GTK_RELIEF_NORMAL</property>
+			  <property name="focus_on_click">True</property>
+			  <property name="active">False</property>
+			  <property name="inconsistent">False</property>
+			  <property name="draw_indicator">True</property>
+			  <property name="group">FFTButton</property>
+			  <signal name="clicked" handler="on_IIRButton_clicked" last_modification_time="Sun, 30 Jan 2005 20:24:14 GMT"/>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkLabel" id="CrossoverLabel">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">&lt;i&gt;&lt;b&gt;Crossover type&lt;/b&gt;&lt;/i&gt;</property>
+		      <property name="use_underline">False</property>
+		      <property name="use_markup">True</property>
+		      <property name="justify">GTK_JUSTIFY_LEFT</property>
+		      <property name="wrap">False</property>
+		      <property name="selectable">False</property>
+		      <property name="xalign">0.5</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		      <property name="width_chars">-1</property>
+		      <property name="single_line_mode">False</property>
+		      <property name="angle">0</property>
+		    </widget>
+		    <packing>
+		      <property name="type">label_item</property>
+		    </packing>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">True</property>
+	      <property name="fill">True</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkFrame" id="rmsWindowFrame">
 	      <property name="border_width">5</property>
 	      <property name="visible">True</property>
 	      <property name="label_xalign">0</property>
@@ -8269,61 +8367,127 @@
 	      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
 
 	      <child>
-		<widget class="GtkVBox" id="vbox165">
+		<widget class="GtkTable" id="table17">
 		  <property name="border_width">6</property>
 		  <property name="visible">True</property>
-		  <property name="homogeneous">False</property>
-		  <property name="spacing">0</property>
+		  <property name="n_rows">2</property>
+		  <property name="n_columns">2</property>
+		  <property name="homogeneous">True</property>
+		  <property name="row_spacing">0</property>
+		  <property name="column_spacing">0</property>
 
 		  <child>
-		    <widget class="GtkRadioButton" id="FFTButton">
+		    <widget class="GtkLabel" id="rmsTimeLabel">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">FFT is more CPU intensive but is the best choice</property>
-		      <property name="can_focus">True</property>
-		      <property name="label" translatable="yes">_FFT</property>
-		      <property name="use_underline">True</property>
-		      <property name="relief">GTK_RELIEF_NORMAL</property>
-		      <property name="focus_on_click">True</property>
-		      <property name="active">False</property>
-		      <property name="inconsistent">False</property>
-		      <property name="draw_indicator">True</property>
-		      <signal name="clicked" handler="on_FFTButton_clicked" last_modification_time="Sun, 30 Jan 2005 20:24:08 GMT"/>
+		      <property name="label" translatable="yes">Time (ms):</property>
+		      <property name="use_underline">False</property>
+		      <property name="use_markup">False</property>
+		      <property name="justify">GTK_JUSTIFY_LEFT</property>
+		      <property name="wrap">False</property>
+		      <property name="selectable">False</property>
+		      <property name="xalign">0</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		      <property name="width_chars">-1</property>
+		      <property name="single_line_mode">False</property>
+		      <property name="angle">0</property>
 		    </widget>
 		    <packing>
-		      <property name="padding">0</property>
-		      <property name="expand">False</property>
-		      <property name="fill">False</property>
+		      <property name="left_attach">0</property>
+		      <property name="right_attach">1</property>
+		      <property name="top_attach">0</property>
+		      <property name="bottom_attach">1</property>
+		      <property name="x_options">fill</property>
+		      <property name="y_options"></property>
 		    </packing>
 		  </child>
 
 		  <child>
-		    <widget class="GtkRadioButton" id="IIRButton">
+		    <widget class="GtkSpinButton" id="rmsTimeValue">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">IIR is less CPU intensive but is not recommended for serious work</property>
 		      <property name="can_focus">True</property>
-		      <property name="label" translatable="yes">II_R</property>
-		      <property name="use_underline">True</property>
-		      <property name="relief">GTK_RELIEF_NORMAL</property>
-		      <property name="focus_on_click">True</property>
-		      <property name="active">False</property>
-		      <property name="inconsistent">False</property>
-		      <property name="draw_indicator">True</property>
-		      <property name="group">FFTButton</property>
-		      <signal name="clicked" handler="on_IIRButton_clicked" last_modification_time="Sun, 30 Jan 2005 20:24:14 GMT"/>
+		      <property name="climb_rate">1</property>
+		      <property name="digits">0</property>
+		      <property name="numeric">False</property>
+		      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+		      <property name="snap_to_ticks">False</property>
+		      <property name="wrap">False</property>
+		      <property name="adjustment">50 10 1000 100 100 100</property>
+		      <signal name="value_changed" handler="on_rmsTimeValue_value_changed" object="rmsSamples" last_modification_time="Sat, 12 May 2007 23:39:19 GMT"/>
 		    </widget>
 		    <packing>
-		      <property name="padding">0</property>
-		      <property name="expand">False</property>
-		      <property name="fill">False</property>
+		      <property name="left_attach">1</property>
+		      <property name="right_attach">2</property>
+		      <property name="top_attach">0</property>
+		      <property name="bottom_attach">1</property>
+		      <property name="y_options"></property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkLabel" id="rmsSamplesLabel">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">Samples:</property>
+		      <property name="use_underline">False</property>
+		      <property name="use_markup">False</property>
+		      <property name="justify">GTK_JUSTIFY_LEFT</property>
+		      <property name="wrap">False</property>
+		      <property name="selectable">False</property>
+		      <property name="xalign">0</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		      <property name="width_chars">-1</property>
+		      <property name="single_line_mode">False</property>
+		      <property name="angle">0</property>
+		    </widget>
+		    <packing>
+		      <property name="left_attach">0</property>
+		      <property name="right_attach">1</property>
+		      <property name="top_attach">1</property>
+		      <property name="bottom_attach">2</property>
+		      <property name="x_options">fill</property>
+		      <property name="y_options"></property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkLabel" id="rmsSamples">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">0</property>
+		      <property name="use_underline">False</property>
+		      <property name="use_markup">False</property>
+		      <property name="justify">GTK_JUSTIFY_LEFT</property>
+		      <property name="wrap">False</property>
+		      <property name="selectable">False</property>
+		      <property name="xalign">0</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		      <property name="width_chars">-1</property>
+		      <property name="single_line_mode">False</property>
+		      <property name="angle">0</property>
+		    </widget>
+		    <packing>
+		      <property name="left_attach">1</property>
+		      <property name="right_attach">2</property>
+		      <property name="top_attach">1</property>
+		      <property name="bottom_attach">2</property>
+		      <property name="x_options">fill</property>
+		      <property name="y_options"></property>
 		    </packing>
 		  </child>
 		</widget>
 	      </child>
 
 	      <child>
-		<widget class="GtkLabel" id="CrossoverLabel">
+		<widget class="GtkLabel" id="label3179">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">&lt;i&gt;&lt;b&gt;Crossover type&lt;/b&gt;&lt;/i&gt;</property>
+		  <property name="label" translatable="yes">&lt;i&gt;&lt;b&gt;RMS Sample Size&lt;/b&gt;&lt;/i&gt;</property>
 		  <property name="use_underline">False</property>
 		  <property name="use_markup">True</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -8343,6 +8507,11 @@
 		</packing>
 	      </child>
 	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">True</property>
+	      <property name="fill">True</property>
+	    </packing>
 	  </child>
 	</widget>
 	<packing>
