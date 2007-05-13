@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.h,v 1.6 2004/01/07 22:55:54 joq Exp $
+ *  $Id: main.h,v 1.7 2007/05/13 18:23:41 jdepner Exp $
  */
 
 #ifndef MAIN_H
@@ -25,6 +25,7 @@
  * JAMIN_DATA_DIR	installed data (pixmaps, etc.)
  * JAMIN_PIXMAP_DIR	installed images
  * JAMIN_EXAMPLES_DIR	installed examples
+ * GTK_VERSION_GE       check if GTK version is greater or equal to a given version number
  */
 #define JAMIN_DIR ".jamin"
 #define JAMIN_UI "jamin_ui"
@@ -32,6 +33,7 @@
 #define JAMIN_DATA_DIR PACKAGE_DATA_DIR "/jamin"
 #define JAMIN_PIXMAP_DIR JAMIN_DATA_DIR "/pixmaps/"
 #define JAMIN_EXAMPLES_DIR JAMIN_DATA_DIR "/examples/"
+#define GTK_VERSION_GE(major, minor) ((GTK_MAJOR_VERSION>major)||(GTK_MAJOR_VERSION==major)&&(GTK_MINOR_VERSION>=minor))
 
 extern GtkWidget *main_window;		/* Main GTK window */
 extern char *jamin_dir;			/* JAMin config directory path */

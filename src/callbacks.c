@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.167 2007/05/13 13:24:37 jdepner Exp $
+ *  $Id: callbacks.c,v 1.168 2007/05/13 18:23:41 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1270,6 +1270,35 @@ void
 on_open1_activate                      (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
+#if GTK_VERSION_GE(2, 4)
+
+    GtkFileChooser *file_selector;
+    GtkFileFilter *filter = gtk_file_filter_new ();
+
+    file_selector = (GtkFileChooser *) gtk_file_chooser_dialog_new (
+      _("Select a session file"),
+      NULL,
+      GTK_FILE_CHOOSER_ACTION_OPEN,
+      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+      GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+      NULL
+    );
+
+    if (jamin_dir) {
+        gtk_file_chooser_set_current_folder (file_selector, jamin_dir);
+    }
+
+    gtk_file_filter_add_pattern (filter, "*.jam");
+    gtk_file_chooser_set_filter (file_selector, filter);
+
+    if (gtk_dialog_run (GTK_DIALOG (file_selector)) == GTK_RESPONSE_ACCEPT) {
+        s_load_session_from_ui (NULL, (gpointer) file_selector);
+    }
+
+    gtk_widget_destroy (GTK_WIDGET (file_selector));
+
+#else
+
     GtkFileSelection    *file_selector;
 
     file_selector = 
@@ -1291,6 +1320,8 @@ on_open1_activate                      (GtkMenuItem     *menuitem,
         "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
 
     gtk_widget_show ((GtkWidget *) file_selector);
+
+#endif
 }
 
 
@@ -1298,12 +1329,44 @@ void
 on_save_as1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-    GtkFileSelection    *file_selector;
     gchar *fname = NULL;
 
     if (s_have_session_filename ()) {
         fname = s_get_session_filename ();
     }
+
+#if GTK_VERSION_GE(2, 4)
+
+    GtkFileChooser *file_selector;
+
+    file_selector = (GtkFileChooser *) gtk_file_chooser_dialog_new (
+      _("Select a session file"),
+      NULL,
+      GTK_FILE_CHOOSER_ACTION_SAVE,
+      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+      GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+      NULL
+    );
+
+    if (jamin_dir) {
+        gtk_file_chooser_set_current_folder (file_selector, jamin_dir);
+    }
+
+    if (fname != NULL) {
+        gtk_file_chooser_set_current_name (file_selector, fname);
+    } else {
+        gtk_file_chooser_set_current_name (file_selector, "default.jam");
+    }
+
+    if (gtk_dialog_run (GTK_DIALOG (file_selector)) == GTK_RESPONSE_ACCEPT) {
+        s_save_session_from_ui (NULL, (gpointer) file_selector);
+    }
+
+    gtk_widget_destroy (GTK_WIDGET (file_selector));
+
+#else
+
+    GtkFileSelection    *file_selector;
 
     file_selector = 
       (GtkFileSelection *) gtk_file_selection_new (_("Select a session file"));
@@ -1319,8 +1382,6 @@ on_save_as1_activate                   (GtkMenuItem     *menuitem,
         gtk_file_selection_complete (file_selector, "default.jam");
       }
 
-
-
     g_signal_connect (GTK_OBJECT (file_selector->ok_button),
         "clicked", G_CALLBACK (s_save_session_from_ui), file_selector);
 
@@ -1331,6 +1392,8 @@ on_save_as1_activate                   (GtkMenuItem     *menuitem,
         "clicked", G_CALLBACK (gtk_widget_destroy), (gpointer) file_selector);
 
     gtk_widget_show ((GtkWidget *) file_selector);
+
+#endif
 }
 
 
