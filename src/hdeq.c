@@ -200,6 +200,9 @@ void clean_quit ()
 
     pref_write_jamin_defaults ();
 
+    /* free global session filename */
+
+    s_set_session_filename (NULL);
 
     gtk_main_quit();
 }

@@ -786,7 +786,7 @@ void io_init(int argc, char *argv[])
 	case 'f':
             if (check_file(optarg)) {
 		strncpy(session_file, optarg, sizeof(session_file));
-		s_set_filename(session_file);
+		s_set_session_filename (session_file);
 	    }
             break;
 	case 'j':			/* Set JACK server name */

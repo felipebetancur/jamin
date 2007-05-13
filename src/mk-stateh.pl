@@ -56,15 +56,15 @@ void s_save_session_from_ui (GtkWidget *w, gpointer user_data);
 void s_save_session (const char *fname);
 void s_load_session_from_ui (GtkWidget *w, gpointer user_data);
 void s_load_session (const char *fname);
-void s_set_filename (const char *fname);
+void s_set_session_filename(const gchar *fname);
 void s_crossfade(const int nframes);
 void s_crossfade_ui();
 void s_suppress_push();
 void s_set_crossfade_time(float ct);
 float s_get_crossfade_time();
 void s_suppress_pop();
-int s_have_filename();
-char *s_get_filename();
+int s_have_session_filename();
+gchar *s_get_session_filename();
 
 
 #define S_NONE -1

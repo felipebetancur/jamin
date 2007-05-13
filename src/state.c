@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.62 2007/05/13 00:38:52 jdepner Exp $
+ *  $Id: state.c,v 1.63 2007/05/13 13:24:37 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -73,7 +73,7 @@ void s_save_global_int(xmlDocPtr doc, char *symbol, int value);
 void s_save_global_float(xmlDocPtr doc, char *symbol, float value);
 void s_save_global_gang(xmlDocPtr doc, char *p, int band, gboolean value);
 
-static const gchar *filename = NULL;
+gchar *session_filename = NULL;
 
 /* global session parameters read from the XML file */
 
@@ -481,7 +481,7 @@ void s_save_session_from_ui (GtkWidget *w, gpointer user_data)
     s_save_session(gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_selector)));
 }
     
-void s_save_session (const char *fname)
+void s_save_session (const gchar *fname)
 {
     xmlDocPtr doc;
     xmlNodePtr rootnode, node, sc_node;
@@ -494,11 +494,11 @@ void s_save_session (const char *fname)
      * previous one */
 
     if (fname) {
-	filename = fname;
+        s_set_session_filename (fname);
 	s_update_title();
     }
-    if (!filename) {
-	errstr = g_strdup_printf("No filename found at %s:%d, not saving\n",
+    if (!s_have_session_filename ()) {
+	errstr = g_strdup_printf("No session filename found at %s:%d, not saving\n",
                                  __FILE__, __LINE__);
 	message (GTK_MESSAGE_WARNING, errstr);
 	free(errstr);
@@ -600,7 +600,7 @@ void s_save_session (const char *fname)
 	    xmlAddChild(sc_node, node);
 	}
     }
-    xmlSaveFile(filename, doc);
+    xmlSaveFile((const char *) s_get_session_filename (), doc);
     xmlFreeDoc(doc);
 }
 
@@ -621,29 +621,32 @@ void s_load_session_from_ui (GtkWidget *w, gpointer user_data)
                                                 (file_selector)));
 }
     
-void s_load_session (const char *fname)
+void s_load_session (const gchar *fname)
 {
     xmlSAXHandlerPtr handler;
     int scene = -1;
     int fd;
     int i;
     xml_global_params gp;
+    gchar *session_filename;
 
     saved_scene = -1;
     unset_scene_buttons ();
 
     if (fname) {
-	filename = fname;
+	s_set_session_filename (fname);
     }
-    if (filename == NULL) {
-	filename = default_session;
+    if (!s_have_session_filename ()) {
+	s_set_session_filename (default_session);
     }
 
+    session_filename = s_get_session_filename ();
+
     /* Check to see if file is readable */
-    if ((fd = open(filename, O_RDONLY)) >= 0) {
+    if ((fd = open((const char *) session_filename, O_RDONLY)) >= 0) {
 	close(fd);
     } else {
-	errstr = g_strdup_printf("Error opening '%s'", filename);
+	errstr = g_strdup_printf("Error opening '%s'", session_filename);
 	message (GTK_MESSAGE_WARNING, errstr);
         perror(errstr);
 	free(errstr);
@@ -688,17 +691,17 @@ void s_load_session (const char *fname)
 
     /* run the SAX parser */    
     scene_init();
-    xmlSAXUserParseFile(handler, &gp, filename);
+    xmlSAXUserParseFile(handler, &gp, (const char *) session_filename);
 
     if (gp.scene == LOAD_ERROR) {
-	errstr = g_strdup_printf("Loading file '%s' failed", filename);
+	errstr = g_strdup_printf("Loading file '%s' failed", session_filename);
 	message (GTK_MESSAGE_WARNING, errstr);
         perror(errstr);
 	free(errstr);
 	return;
     }
 
-    s_history_add(g_strdup_printf("Load %s", filename));
+    s_history_add(g_strdup_printf("Load %s", session_filename));
     last_changed = S_LOAD;
     free(handler);
 
@@ -749,7 +752,7 @@ void s_load_session (const char *fname)
       }
 
     if (!fname) {
-	filename = NULL;
+	s_set_session_filename (NULL);
     }
 
 
@@ -1015,36 +1018,43 @@ void s_crossfade_ui()
     suppress_feedback--;
 }
 
-int s_have_filename()
+int s_have_session_filename()
 {
-    return (filename != NULL);
+    return (session_filename != NULL);
 }
 
-char *s_get_filename()
+gchar *s_get_session_filename()
 {
-    return ((char *) filename);
+    return ((gchar *) session_filename);
 }
 
 void s_update_title()
 {
     char *title; 
     char *base;
-    char *tmp;
+    gchar *tmp;
 
     /* name for title bar */
     char *title_name = (client_name? client_name: PACKAGE);
 
-    tmp = strdup(filename);
-    base = basename(tmp);
-    title = g_strdup_printf("%s - %s - " VERSION, title_name, base);
-    free(tmp);
+    tmp = g_strdup (s_get_session_filename ());
+    base = basename (tmp);
+    title = g_strdup_printf ("%s - %s - " VERSION, title_name, base);
+    g_free (tmp);
     gtk_window_set_title ((GtkWindow *) main_window, title);
-    free(title);
+    g_free (title);
 }
 
-void s_set_filename(const char *fname)
+void s_set_session_filename(const gchar *fname)
 {
-    filename = fname;
+    if (session_filename != NULL)
+      g_free (session_filename);
+
+    if (fname != NULL) {
+      session_filename = g_strdup (fname);
+    } else {
+      session_filename = NULL;
+    }
 }
 
 void s_set_crossfade_time(float ct)

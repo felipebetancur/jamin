@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.166 2007/05/13 00:38:41 jdepner Exp $
+ *  $Id: callbacks.c,v 1.167 2007/05/13 13:24:37 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1299,16 +1299,18 @@ on_save_as1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
     GtkFileSelection    *file_selector;
-    char *filename;
+    gchar *fname = NULL;
 
+    if (s_have_session_filename ()) {
+        fname = s_get_session_filename ();
+    }
 
     file_selector = 
       (GtkFileSelection *) gtk_file_selection_new (_("Select a session file"));
 
-    if (s_have_filename())
+    if (fname != NULL)
       {
-        filename = s_get_filename ();
-	gtk_file_selection_set_filename (file_selector, filename);
+	gtk_file_selection_set_filename (file_selector, fname);
       }
     else
       {
@@ -1336,8 +1338,8 @@ void
 on_save1_activate                      (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-	if (s_have_filename()) {
-		s_save_session(NULL);
+	if (s_have_session_filename ()) {
+		s_save_session (NULL);
 	} else {
           on_save_as1_activate (NULL, NULL);
 	}
