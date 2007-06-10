@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.168 2007/05/13 18:23:41 jdepner Exp $
+ *  $Id: callbacks.c,v 1.169 2007/06/10 23:05:10 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -2388,6 +2388,14 @@ on_hdeq_curve_color_activate           (GtkMenuItem     *menuitem,
   popup_color_dialog (HDEQ_CURVE_COLOR);
 }
 
+
+
+void
+on_hdeq_spectrum_color_activate        (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  popup_color_dialog (HDEQ_SPECTRUM_COLOR);
+}
 
 void
 on_hdeq_grid_color_activate            (GtkMenuItem     *menuitem,

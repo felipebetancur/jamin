@@ -516,6 +516,7 @@ create_window1 (void)
   GtkWidget *rms_meter_label;
   GtkWidget *output_eventbox;
   GtkWidget *hbox51;
+  GtkWidget *out_trim_eventbox;
   GtkWidget *out_trim_scale;
   GtkWidget *outmeter_eventbox;
   GtkWidget *outmeter_hbox;
@@ -3291,6 +3292,7 @@ create_window1 (void)
   gtk_table_attach (GTK_TABLE (table16), out_meter_text_l, 1, 2, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, out_meter_text_l, _("Left channel output peak/level"), NULL);
   gtk_editable_set_editable (GTK_EDITABLE (out_meter_text_l), FALSE);
   gtk_entry_set_invisible_char (GTK_ENTRY (out_meter_text_l), 8226);
   gtk_entry_set_width_chars (GTK_ENTRY (out_meter_text_l), 4);
@@ -3301,6 +3303,7 @@ create_window1 (void)
   gtk_table_attach (GTK_TABLE (table16), out_meter_text_r, 2, 3, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, out_meter_text_r, _("Right channel output peak/level"), NULL);
   gtk_editable_set_editable (GTK_EDITABLE (out_meter_text_r), FALSE);
   gtk_entry_set_invisible_char (GTK_ENTRY (out_meter_text_r), 8226);
   gtk_entry_set_width_chars (GTK_ENTRY (out_meter_text_r), 4);
@@ -3311,6 +3314,7 @@ create_window1 (void)
   gtk_table_attach (GTK_TABLE (table16), rms_meter_text_l, 1, 2, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, rms_meter_text_l, _("Left channel RMS peak/level"), NULL);
   gtk_editable_set_editable (GTK_EDITABLE (rms_meter_text_l), FALSE);
   gtk_entry_set_invisible_char (GTK_ENTRY (rms_meter_text_l), 8226);
   gtk_entry_set_width_chars (GTK_ENTRY (rms_meter_text_l), 4);
@@ -3321,6 +3325,7 @@ create_window1 (void)
   gtk_table_attach (GTK_TABLE (table16), rms_meter_text_r, 2, 3, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, rms_meter_text_r, _("Right channel RMS peak/level"), NULL);
   gtk_editable_set_editable (GTK_EDITABLE (rms_meter_text_r), FALSE);
   gtk_entry_set_invisible_char (GTK_ENTRY (rms_meter_text_r), 8226);
   gtk_entry_set_width_chars (GTK_ENTRY (rms_meter_text_r), 4);
@@ -3353,10 +3358,16 @@ create_window1 (void)
   gtk_widget_show (hbox51);
   gtk_container_add (GTK_CONTAINER (output_eventbox), hbox51);
 
+  out_trim_eventbox = gtk_event_box_new ();
+  gtk_widget_set_name (out_trim_eventbox, "out_trim_eventbox");
+  gtk_widget_show (out_trim_eventbox);
+  gtk_box_pack_start (GTK_BOX (hbox51), out_trim_eventbox, FALSE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, out_trim_eventbox, _("Output level"), NULL);
+
   out_trim_scale = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, -50, 0, 1, 5, 0)));
   gtk_widget_set_name (out_trim_scale, "out_trim_scale");
   gtk_widget_show (out_trim_scale);
-  gtk_box_pack_start (GTK_BOX (hbox51), out_trim_scale, FALSE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (out_trim_eventbox), out_trim_scale);
   gtk_widget_set_size_request (out_trim_scale, 35, 55);
   gtk_range_set_inverted (GTK_RANGE (out_trim_scale), TRUE);
 
@@ -3364,6 +3375,7 @@ create_window1 (void)
   gtk_widget_set_name (outmeter_eventbox, "outmeter_eventbox");
   gtk_widget_show (outmeter_eventbox);
   gtk_box_pack_start (GTK_BOX (hbox51), outmeter_eventbox, TRUE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, outmeter_eventbox, _("RMS (outer) and Output (inner) levels"), NULL);
 
   outmeter_hbox = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (outmeter_hbox, "outmeter_hbox");
@@ -4815,6 +4827,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, rms_meter_label, "rms_meter_label");
   GLADE_HOOKUP_OBJECT (window1, output_eventbox, "output_eventbox");
   GLADE_HOOKUP_OBJECT (window1, hbox51, "hbox51");
+  GLADE_HOOKUP_OBJECT (window1, out_trim_eventbox, "out_trim_eventbox");
   GLADE_HOOKUP_OBJECT (window1, out_trim_scale, "out_trim_scale");
   GLADE_HOOKUP_OBJECT (window1, outmeter_eventbox, "outmeter_eventbox");
   GLADE_HOOKUP_OBJECT (window1, outmeter_hbox, "outmeter_hbox");
@@ -4971,6 +4984,7 @@ create_pref_dialog (void)
   GtkWidget *menuitem6;
   GtkWidget *imagemenuitem5;
   GtkWidget *imagemenuitem6;
+  GtkWidget *hdeq_spectrum1;
   GtkWidget *imagemenuitem7;
   GtkWidget *imagemenuitem8;
   GtkWidget *menuitem7;
@@ -4982,7 +4996,7 @@ create_pref_dialog (void)
   GtkWidget *imagemenuitem13;
   GtkWidget *menuitem9;
   GtkWidget *imagemenuitem14;
-  GtkWidget *image311;
+  GtkWidget *image337;
   GtkWidget *ColorsLabel;
   GtkWidget *warningFrame;
   GtkWidget *alignment7;
@@ -5311,7 +5325,7 @@ create_pref_dialog (void)
   gtk_widget_show (imagemenuitem3);
   gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem3);
 
-  menuitem5 = gtk_menu_item_new ();
+  menuitem5 = gtk_separator_menu_item_new ();
   gtk_widget_set_name (menuitem5, "menuitem5");
   gtk_widget_show (menuitem5);
   gtk_container_add (GTK_CONTAINER (menu4), menuitem5);
@@ -5322,7 +5336,7 @@ create_pref_dialog (void)
   gtk_widget_show (imagemenuitem4);
   gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem4);
 
-  menuitem6 = gtk_menu_item_new ();
+  menuitem6 = gtk_separator_menu_item_new ();
   gtk_widget_set_name (menuitem6, "menuitem6");
   gtk_widget_show (menuitem6);
   gtk_container_add (GTK_CONTAINER (menu4), menuitem6);
@@ -5338,6 +5352,11 @@ create_pref_dialog (void)
   gtk_widget_show (imagemenuitem6);
   gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem6);
 
+  hdeq_spectrum1 = gtk_menu_item_new_with_mnemonic (_("HDEQ Spectrum"));
+  gtk_widget_set_name (hdeq_spectrum1, "hdeq_spectrum1");
+  gtk_widget_show (hdeq_spectrum1);
+  gtk_container_add (GTK_CONTAINER (menu4), hdeq_spectrum1);
+
   imagemenuitem7 = gtk_menu_item_new_with_mnemonic (_("HDEQ Grid"));
   gtk_widget_set_name (imagemenuitem7, "imagemenuitem7");
   gtk_widget_show (imagemenuitem7);
@@ -5348,7 +5367,7 @@ create_pref_dialog (void)
   gtk_widget_show (imagemenuitem8);
   gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem8);
 
-  menuitem7 = gtk_menu_item_new ();
+  menuitem7 = gtk_separator_menu_item_new ();
   gtk_widget_set_name (menuitem7, "menuitem7");
   gtk_widget_show (menuitem7);
   gtk_container_add (GTK_CONTAINER (menu4), menuitem7);
@@ -5359,7 +5378,7 @@ create_pref_dialog (void)
   gtk_widget_show (imagemenuitem9);
   gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem9);
 
-  menuitem8 = gtk_menu_item_new ();
+  menuitem8 = gtk_separator_menu_item_new ();
   gtk_widget_set_name (menuitem8, "menuitem8");
   gtk_widget_show (menuitem8);
   gtk_container_add (GTK_CONTAINER (menu4), menuitem8);
@@ -5385,7 +5404,7 @@ create_pref_dialog (void)
   gtk_widget_show (imagemenuitem13);
   gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem13);
 
-  menuitem9 = gtk_menu_item_new ();
+  menuitem9 = gtk_separator_menu_item_new ();
   gtk_widget_set_name (menuitem9, "menuitem9");
   gtk_widget_show (menuitem9);
   gtk_container_add (GTK_CONTAINER (menu4), menuitem9);
@@ -5396,10 +5415,10 @@ create_pref_dialog (void)
   gtk_widget_show (imagemenuitem14);
   gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem14);
 
-  image311 = gtk_image_new_from_stock ("gtk-refresh", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_name (image311, "image311");
-  gtk_widget_show (image311);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (imagemenuitem14), image311);
+  image337 = gtk_image_new_from_stock ("gtk-refresh", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image337, "image337");
+  gtk_widget_show (image337);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (imagemenuitem14), image337);
 
   gtk_option_menu_set_menu (GTK_OPTION_MENU (ColorsMenu), menu4);
 
@@ -5469,7 +5488,7 @@ create_pref_dialog (void)
   out_meter_peak_button_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (out_meter_peak_button));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (out_meter_peak_button), TRUE);
 
-  out_meter_full_button = gtk_radio_button_new_with_mnemonic (NULL, _("Output full"));
+  out_meter_full_button = gtk_radio_button_new_with_mnemonic (NULL, _("Output level"));
   gtk_widget_set_name (out_meter_full_button, "out_meter_full_button");
   gtk_widget_show (out_meter_full_button);
   gtk_box_pack_start (GTK_BOX (hbox74), out_meter_full_button, FALSE, FALSE, 0);
@@ -5484,7 +5503,7 @@ create_pref_dialog (void)
   rms_meter_peak_button_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (rms_meter_peak_button));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (rms_meter_peak_button), TRUE);
 
-  rms_meter_full_button = gtk_radio_button_new_with_mnemonic (NULL, _("RMS full"));
+  rms_meter_full_button = gtk_radio_button_new_with_mnemonic (NULL, _("RMS level"));
   gtk_widget_set_name (rms_meter_full_button, "rms_meter_full_button");
   gtk_widget_show (rms_meter_full_button);
   gtk_box_pack_start (GTK_BOX (hbox74), rms_meter_full_button, FALSE, FALSE, 0);
@@ -5599,6 +5618,9 @@ create_pref_dialog (void)
   g_signal_connect ((gpointer) imagemenuitem6, "activate",
                     G_CALLBACK (on_hdeq_curve_color_activate),
                     NULL);
+  g_signal_connect ((gpointer) hdeq_spectrum1, "activate",
+                    G_CALLBACK (on_hdeq_spectrum_color_activate),
+                    NULL);
   g_signal_connect ((gpointer) imagemenuitem7, "activate",
                     G_CALLBACK (on_hdeq_grid_color_activate),
                     NULL);
@@ -5711,6 +5733,7 @@ create_pref_dialog (void)
   GLADE_HOOKUP_OBJECT (pref_dialog, menuitem6, "menuitem6");
   GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem5, "imagemenuitem5");
   GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem6, "imagemenuitem6");
+  GLADE_HOOKUP_OBJECT (pref_dialog, hdeq_spectrum1, "hdeq_spectrum1");
   GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem7, "imagemenuitem7");
   GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem8, "imagemenuitem8");
   GLADE_HOOKUP_OBJECT (pref_dialog, menuitem7, "menuitem7");
@@ -5722,7 +5745,7 @@ create_pref_dialog (void)
   GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem13, "imagemenuitem13");
   GLADE_HOOKUP_OBJECT (pref_dialog, menuitem9, "menuitem9");
   GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem14, "imagemenuitem14");
-  GLADE_HOOKUP_OBJECT (pref_dialog, image311, "image311");
+  GLADE_HOOKUP_OBJECT (pref_dialog, image337, "image337");
   GLADE_HOOKUP_OBJECT (pref_dialog, ColorsLabel, "ColorsLabel");
   GLADE_HOOKUP_OBJECT (pref_dialog, warningFrame, "warningFrame");
   GLADE_HOOKUP_OBJECT (pref_dialog, alignment7, "alignment7");

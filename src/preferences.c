@@ -234,6 +234,12 @@ void preferences_init()
               set_color (&color[HDEQ_GRID_COLOR], i, j, k);
             }
 
+          if (strstr (varin, "[HDEQ SPECTRUM COLOR]") != NULL)
+            {
+              sscanf (info, "%hu %hu %hu", &i, &j, &k);
+              set_color (&color[HDEQ_SPECTRUM_COLOR], i, j, k);
+            }
+
           if (strstr (varin, "[HDEQ BACKGROUND COLOR]") != NULL)
             {
               sscanf (info, "%hu %hu %hu", &i, &j, &k);
@@ -517,6 +523,11 @@ void pref_write_jamin_defaults ()
                color[HDEQ_GRID_COLOR].green,
                color[HDEQ_GRID_COLOR].blue);
 
+      fprintf (fp, "[HDEQ SPECTRUM COLOR]        = %hu %hu %hu\n",
+               color[HDEQ_SPECTRUM_COLOR].red, 
+               color[HDEQ_SPECTRUM_COLOR].green,
+               color[HDEQ_SPECTRUM_COLOR].blue);
+
       fprintf (fp, "[HDEQ BACKGROUND COLOR]      = %hu %hu %hu\n",
                color[HDEQ_BACKGROUND_COLOR].red, 
                color[HDEQ_BACKGROUND_COLOR].green,
@@ -558,8 +569,8 @@ void pref_reset_all_colors ()
   set_color (&color[HANDLE_COLOR], 65535, 65535, 0);
   set_color (&color[HDEQ_CURVE_COLOR], 65535, 65535, 65535);
   set_color (&color[HDEQ_GRID_COLOR], 0, 36611, 0);
-  set_color (&color[HDEQ_SPECTRUM_COLOR], 32768, 32768, 32768);
-  set_color (&color[HDEQ_BACKGROUND_COLOR], 0, 21611, 0);
+  set_color (&color[HDEQ_SPECTRUM_COLOR], 0, 65535, 65535);
+  set_color (&color[HDEQ_BACKGROUND_COLOR], 0, 0, 0);
   set_color (&color[METER_NORMAL_COLOR], 0, 60000, 0);
   set_color (&color[METER_WARNING_COLOR], 50000, 55000, 0);
   set_color (&color[METER_OVER_COLOR], 60000, 0, 0);
