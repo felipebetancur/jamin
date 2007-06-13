@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.169 2007/06/10 23:05:10 jdepner Exp $
+ *  $Id: callbacks.c,v 1.170 2007/06/13 02:20:07 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -3021,4 +3021,28 @@ on_rmsTimeValue_value_changed  (GtkSpinButton   *spinbutton,
   gtk_label_set_label (GTK_LABEL (spinbutton), sample_label);
 
   free (sample_label);
+}
+
+void
+on_reset_hdeq_curve1_activate          (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  hdeq_popup (0);
+}
+
+
+void
+on_release_parametric_eq_controls1_activate
+                                        (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  hdeq_popup (1);
+}
+
+
+void
+on_cancel2_activate                    (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  hdeq_popup (2);
 }

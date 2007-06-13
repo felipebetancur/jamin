@@ -9,3 +9,4 @@ GtkWidget* create_colorselectiondialog1 (void);
 GtkWidget* create_scene_name_dialog (void);
 GtkWidget* create_filter_tuning (void);
 GtkWidget* create_about_dialog (void);
+GtkWidget* create_HDEQ_menu (void);

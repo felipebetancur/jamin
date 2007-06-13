@@ -1333,3 +1333,16 @@ on_rmsTimeValue_value_changed          (GtkSpinButton   *spinbutton,
 void
 on_hdeq_spectrum_color_activate        (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
+
+void
+on_reset_hdeq_curve1_activate          (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_release_parametric_eq_controls1_activate
+                                        (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_cancel2_activate                    (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);

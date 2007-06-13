@@ -6259,3 +6259,70 @@ create_about_dialog (void)
   return about_dialog;
 }
 
+GtkWidget*
+create_HDEQ_menu (void)
+{
+  GtkWidget *HDEQ_menu;
+  GtkWidget *reset_hdeq_curve1;
+  GtkWidget *release_parametric_eq_controls1;
+  GtkWidget *separator3;
+  GtkWidget *cancel2;
+  GtkWidget *image338;
+  GtkTooltips *tooltips;
+
+  tooltips = gtk_tooltips_new ();
+
+  HDEQ_menu = gtk_menu_new ();
+  gtk_widget_set_name (HDEQ_menu, "HDEQ_menu");
+
+  reset_hdeq_curve1 = gtk_menu_item_new_with_mnemonic (_("Reset HDEQ curve"));
+  gtk_widget_set_name (reset_hdeq_curve1, "reset_hdeq_curve1");
+  gtk_widget_show (reset_hdeq_curve1);
+  gtk_container_add (GTK_CONTAINER (HDEQ_menu), reset_hdeq_curve1);
+  gtk_tooltips_set_tip (tooltips, reset_hdeq_curve1, _("Reset the HDEQ curve to zero"), NULL);
+
+  release_parametric_eq_controls1 = gtk_menu_item_new_with_mnemonic (_("Release parametric EQ controls"));
+  gtk_widget_set_name (release_parametric_eq_controls1, "release_parametric_eq_controls1");
+  gtk_widget_show (release_parametric_eq_controls1);
+  gtk_container_add (GTK_CONTAINER (HDEQ_menu), release_parametric_eq_controls1);
+  gtk_tooltips_set_tip (tooltips, release_parametric_eq_controls1, _("Release the parametric controls but leave the EQ curve as is"), NULL);
+
+  separator3 = gtk_separator_menu_item_new ();
+  gtk_widget_set_name (separator3, "separator3");
+  gtk_widget_show (separator3);
+  gtk_container_add (GTK_CONTAINER (HDEQ_menu), separator3);
+  gtk_widget_set_sensitive (separator3, FALSE);
+
+  cancel2 = gtk_image_menu_item_new_with_mnemonic (_("Cancel"));
+  gtk_widget_set_name (cancel2, "cancel2");
+  gtk_widget_show (cancel2);
+  gtk_container_add (GTK_CONTAINER (HDEQ_menu), cancel2);
+  gtk_tooltips_set_tip (tooltips, cancel2, _("Close the popup menu"), NULL);
+
+  image338 = gtk_image_new_from_stock ("gtk-cancel", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image338, "image338");
+  gtk_widget_show (image338);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (cancel2), image338);
+
+  g_signal_connect ((gpointer) reset_hdeq_curve1, "activate",
+                    G_CALLBACK (on_reset_hdeq_curve1_activate),
+                    NULL);
+  g_signal_connect ((gpointer) release_parametric_eq_controls1, "activate",
+                    G_CALLBACK (on_release_parametric_eq_controls1_activate),
+                    NULL);
+  g_signal_connect ((gpointer) cancel2, "activate",
+                    G_CALLBACK (on_cancel2_activate),
+                    NULL);
+
+  /* Store pointers to all widgets, for use by lookup_widget(). */
+  GLADE_HOOKUP_OBJECT_NO_REF (HDEQ_menu, HDEQ_menu, "HDEQ_menu");
+  GLADE_HOOKUP_OBJECT (HDEQ_menu, reset_hdeq_curve1, "reset_hdeq_curve1");
+  GLADE_HOOKUP_OBJECT (HDEQ_menu, release_parametric_eq_controls1, "release_parametric_eq_controls1");
+  GLADE_HOOKUP_OBJECT (HDEQ_menu, separator3, "separator3");
+  GLADE_HOOKUP_OBJECT (HDEQ_menu, cancel2, "cancel2");
+  GLADE_HOOKUP_OBJECT (HDEQ_menu, image338, "image338");
+  GLADE_HOOKUP_OBJECT_NO_REF (HDEQ_menu, tooltips, "tooltips");
+
+  return HDEQ_menu;
+}
+

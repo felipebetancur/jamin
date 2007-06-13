@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.42 2007/05/12 16:28:35 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.43 2007/06/13 02:20:08 jdepner Exp $
  */
 
 #include "support.h"
@@ -97,17 +97,27 @@ char hdeq_help[] = {N_(
 "    The hand drawn EQ (HDEQ) allows the user to draw the EQ curve using the \
 mouse.  The curve is then splined to fill 1024 EQ bands.  There are a number \
 of other options available in the HDEQ.  There are user defined notches that \
-act as a parametric EQ.  There are also crossover controls that will allow \
+act as parametric EQ controls.  There are also crossover controls that will allow \
 the user to change the compressor crossover points.  The following is a quick \
 guide to using the HDEQ:\n\n\
     In the background window - left click and release to begin drawing the \
 curve.  Left click again to end the curve.  You can define any portion of the \
 curve, you don't have to define the entire curve.  Drawing can be done from \
 left to right or right to left.  If you try to reverse direction while \
-drawing the data in the reverse direction will be ignored.  You can discard \
-the curve that you are drawing by clicking the middle or right buttons.  \
-Clicking the right mouse button in the HDEQ when not drawing a curve will \
-reset all EQ and notch values to their original (flat) settings.\n\n\
+drawing, the data in the reverse direction will be ignored.  You can discard \
+the curve that you are drawing by clicking the middle button or by clicking the \
+right button and selecting Cancel from the popup menu that appears.  \
+Clicking the right mouse button in the HDEQ will pop up a menu with three \
+entries:\n\n\
+    Reset HDEQ curve\n\
+    Release parametric EQ controls\n\
+    Cancel\n\n\
+The first entry will reset the entire EQ curve to its original \
+(flat) setting.  The second entry will leave the EQ curve as is but will release \
+the parametric EQ controls to be used again (this effectively gives you an \
+infinite number of parametric EQ controls).  The third entry will discard any \
+hand drawn line that you are in the process of drawing.  If you are not drawing \
+a line it does nothing.\n\n\
     Over the crossover bar handles - left click and hold to drag the \
 crossover bars.\n\n\
     Over the notch handles - left click and hold to drag the notch center or \

@@ -9947,4 +9947,55 @@ Project page: http://sourceforge.net/projects/jamin/</property>
   </child>
 </widget>
 
+<widget class="GtkMenu" id="HDEQ_menu">
+
+  <child>
+    <widget class="GtkMenuItem" id="reset_hdeq_curve1">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Reset the HDEQ curve to zero</property>
+      <property name="label" translatable="yes">Reset HDEQ curve</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_reset_hdeq_curve1_activate" last_modification_time="Wed, 13 Jun 2007 00:11:31 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkMenuItem" id="release_parametric_eq_controls1">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Release the parametric controls but leave the EQ curve as is</property>
+      <property name="label" translatable="yes">Release parametric EQ controls</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_release_parametric_eq_controls1_activate" last_modification_time="Wed, 13 Jun 2007 00:32:15 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkSeparatorMenuItem" id="separator3">
+      <property name="visible">True</property>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="cancel2">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Close the popup menu</property>
+      <property name="label" translatable="yes">Cancel</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_cancel2_activate" last_modification_time="Wed, 13 Jun 2007 00:11:31 GMT"/>
+
+      <child internal-child="image">
+	<widget class="GtkImage" id="image338">
+	  <property name="visible">True</property>
+	  <property name="stock">gtk-cancel</property>
+	  <property name="icon_size">1</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+      </child>
+    </widget>
+  </child>
+</widget>
+
 </glade-interface>

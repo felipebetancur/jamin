@@ -123,6 +123,11 @@ void interpolate (float, int, float, float, int *, float *, float *, float *,
 /* vi:set ts=8 sts=4 sw=4: */
 
 
+/*  HDEQ right-click popup menu.  */
+
+static GtkMenu           *HDEQ_menu;
+
+
 /*  This is the offscreen drawable on which we paint our "static"
     background elements (gain lines, crossover bars, EQ curve, notch
     handles, etc).  Anytime these elements change or we paint the
@@ -176,7 +181,7 @@ static gboolean        hdeq_ready = FALSE;
 
 
 /*  Saving the last drawn spectrum curve so we can keep it visible when moving
-    anything in the hdeq window.  */
+    anything in the hdeq window (see draw_EQ_spectrum_curve).  */
 
 static int             spectrum_x[EQ_INTERP], spectrum_y[EQ_INTERP];
 
@@ -233,6 +238,11 @@ void clean_quit ()
 void bind_hdeq ()
 {
     int    i;
+
+
+    /*  The HDEQ right click popup menu (see interface.c for create_HDEQ_menu). */
+
+    HDEQ_menu = (GtkMenu *) create_HDEQ_menu();
 
 
     /*  Looking up the widgets we'll need to work with based on the name
@@ -546,8 +556,7 @@ void hdeq_mid2high_button (int active)
 
 void hdeq_low2mid_init ()
 {
-    s_set_adjustment (S_XOVER_FREQ(0), 
-                     gtk_range_get_adjustment(GTK_RANGE(l_low2mid)));
+    s_set_adjustment (S_XOVER_FREQ(0), gtk_range_get_adjustment(GTK_RANGE(l_low2mid)));
 }
 
 
@@ -555,8 +564,7 @@ void hdeq_low2mid_init ()
 
 void hdeq_mid2high_init ()
 {
-    s_set_adjustment (S_XOVER_FREQ(1), 
-                      gtk_range_get_adjustment(GTK_RANGE(l_mid2high)));
+    s_set_adjustment (S_XOVER_FREQ(1), gtk_range_get_adjustment(GTK_RANGE(l_mid2high)));
 }
 
 
@@ -720,8 +728,7 @@ static void set_EQ ()
     /*  Recompute the splined curve in the freq domain for setting the 
         eq_coefs.  */
 
-    for (i = 0 ; i < EQ_length ; i++)
-        x[i] = powf (10.0f, EQ_x_notched[i]);
+    for (i = 0 ; i < EQ_length ; i++) x[i] = powf (10.0f, EQ_x_notched[i]);
 
     interval = ((l_geq_freqs[EQ_BANDS - 1]) - l_geq_freqs[0]) / EQ_INTERP;
 
@@ -756,8 +763,7 @@ void reset_hdeq ()
 
     /*  Setting the EQ (and state).  */
 
-    for (i = 0 ; i < EQ_length ; i++)
-        EQ_y_notched[i] = EQ_yinterp[i] = 0.0;
+    for (i = 0 ; i < EQ_length ; i++) EQ_y_notched[i] = EQ_yinterp[i] = 0.0;
     s_set_value_block (EQ_yinterp, S_EQ_GAIN(0), EQ_length);
 
 
@@ -782,8 +788,7 @@ void reset_hdeq ()
 
         /*  Set the state so that we can save the scene if we need to.  */
 
-        s_set_description (S_NOTCH_GAIN (i) , 
-                           g_strdup_printf ("Reset notch %d", i));
+        s_set_description (S_NOTCH_GAIN (i), g_strdup_printf ("Reset notch %d", i));
         s_set_value_ns (S_NOTCH_GAIN (i), EQ_notch_gain[i]);
         s_set_value_ns (S_NOTCH_FREQ (i), EQ_notch_default[i]);
         s_set_value_ns (S_NOTCH_FLAG (i), (float) EQ_notch_flag[i]);
@@ -1071,12 +1076,10 @@ void draw_EQ_curve ()
 
         for (i = 0 ; i < NOTCHES ; i++)
           {
-	    s_set_description (S_NOTCH_GAIN (i) ,
-			       g_strdup_printf("Reset notch %d", i));
+	    s_set_description (S_NOTCH_GAIN (i), g_strdup_printf("Reset notch %d", i));
             s_set_value_ns (S_NOTCH_GAIN (i), EQ_notch_gain[i]);
             s_set_value_ns (S_NOTCH_Q (i), (float) EQ_notch_width[i]);
-            s_set_value_ns (S_NOTCH_FREQ (i), 
-                            powf (10.0f, EQ_x_notched[EQ_notch_index[i]]));
+            s_set_value_ns (S_NOTCH_FREQ (i), powf (10.0f, EQ_x_notched[EQ_notch_index[i]]));
             s_set_value_ns (S_NOTCH_FLAG (i), (float) EQ_notch_flag[i]);
           }
       }
@@ -1539,15 +1542,11 @@ void hdeq_curve_motion (GdkEventMotion *event)
 
                             /*  Save state.  */
 
-			    s_set_description (S_NOTCH_GAIN (i) ,
-			       g_strdup_printf("Move notch %d", i));
-                            s_set_value_ns (S_NOTCH_GAIN (i), 
-                                EQ_notch_gain[i]);
+			    s_set_description (S_NOTCH_GAIN (i), g_strdup_printf("Move notch %d", i));
+                            s_set_value_ns (S_NOTCH_GAIN (i), EQ_notch_gain[i]);
                             s_set_value_ns (S_NOTCH_FREQ (i), freq);
-                            s_set_value_ns (S_NOTCH_FLAG (i), 
-                                (float) EQ_notch_flag[i]);
-                            s_set_value_ns (S_NOTCH_Q (i), 
-                                (float) EQ_notch_width[i]);
+                            s_set_value_ns (S_NOTCH_FLAG (i), (float) EQ_notch_flag[i]);
+                            s_set_value_ns (S_NOTCH_Q (i), (float) EQ_notch_width[i]);
 
                             break;
                           }
@@ -1580,15 +1579,11 @@ void hdeq_curve_motion (GdkEventMotion *event)
 
                                 /*  Save state.  */
 
-			        s_set_description (S_NOTCH_GAIN (i) ,
-			            g_strdup_printf("Move notch %d", i));
-                                s_set_value_ns (S_NOTCH_GAIN (i), 
-                                                EQ_notch_gain[i]);
+			        s_set_description (S_NOTCH_GAIN (i), g_strdup_printf("Move notch %d", i));
+                                s_set_value_ns (S_NOTCH_GAIN (i), EQ_notch_gain[i]);
                                 s_set_value_ns (S_NOTCH_FREQ (i), freq);
-                                s_set_value_ns (S_NOTCH_FLAG (i), 
-                                                (float) EQ_notch_flag[i]);
-                                s_set_value_ns (S_NOTCH_Q (i), 
-                                                (float) EQ_notch_width[i]);
+                                s_set_value_ns (S_NOTCH_FLAG (i), (float) EQ_notch_flag[i]);
+                                s_set_value_ns (S_NOTCH_Q (i), (float) EQ_notch_width[i]);
                               }
                             break;
                           }
@@ -1626,15 +1621,11 @@ void hdeq_curve_motion (GdkEventMotion *event)
 
                             /*  Save state.  */
 
-			    s_set_description (S_NOTCH_GAIN (i) ,
-			       g_strdup_printf("Move notch %d", i));
-                            s_set_value_ns (S_NOTCH_GAIN (i), 
-                                EQ_notch_gain[i]);
+			    s_set_description (S_NOTCH_GAIN (i), g_strdup_printf("Move notch %d", i));
+                            s_set_value_ns (S_NOTCH_GAIN (i), EQ_notch_gain[i]);
                             s_set_value_ns (S_NOTCH_FREQ (i), freq);
-                            s_set_value_ns (S_NOTCH_FLAG (i), 
-                                (float) EQ_notch_flag[i]);
-                            s_set_value_ns (S_NOTCH_Q (i), 
-                                (float) EQ_notch_width[i]);
+                            s_set_value_ns (S_NOTCH_FLAG (i), (float) EQ_notch_flag[i]);
+                            s_set_value_ns (S_NOTCH_Q (i), (float) EQ_notch_width[i]);
                           }
                         break;
                       }
@@ -1940,14 +1931,10 @@ void hdeq_curve_button_press (GdkEventButton *event)
 
                             /*  Save state.  */
 
-			    s_set_description (S_NOTCH_GAIN (i) ,
-			       g_strdup_printf("Reset notch %d", i));
-                            s_set_value_ns (S_NOTCH_GAIN (i), 
-                                EQ_notch_gain[i]);
-                            s_set_value_ns (S_NOTCH_Q (i), 
-                                (float) EQ_notch_width[i]);
-                            s_set_value_ns (S_NOTCH_FLAG (i), 
-                                (float) EQ_notch_flag[i]);
+			    s_set_description (S_NOTCH_GAIN (i), g_strdup_printf("Reset notch %d", i));
+                            s_set_value_ns (S_NOTCH_GAIN (i), EQ_notch_gain[i]);
+                            s_set_value_ns (S_NOTCH_Q (i), (float) EQ_notch_width[i]);
+                            s_set_value_ns (S_NOTCH_FLAG (i), (float) EQ_notch_flag[i]);
 
 
                             /*  Recompute the "notched" curves and redraw.  */
@@ -2220,6 +2207,13 @@ void hdeq_curve_button_press (GdkEventButton *event)
         break;
 
 
+        /*  Popup the right click menu.  */
+
+      case 3:
+        gtk_menu_popup (HDEQ_menu, NULL, NULL, NULL, NULL, event->button, gtk_get_current_event_time());
+        break;
+
+
       default:
         break;
       }
@@ -2238,6 +2232,7 @@ void hdeq_curve_button_release (GdkEventButton  *event)
     switch (event->button)
       {
       case 1:
+ 
         /*  This is a bit weird.  We're just trying to count releases while
             drawing the EQ curve.  If we're drawing and release the first time
             we'll set to 2 (we just started drawing, EQ_drawing was set to 1
@@ -2263,27 +2258,19 @@ void hdeq_curve_button_release (GdkEventButton  *event)
         break;
 
 
-        /*  Button 2 or 3 - discard (or reset) the drawn curve.  */
+        /*  Discard the hand drawn curve if we're drawing something.  */
 
       case 2:
-      case 3:
 
-        /*  If we're not drawing the curve and the right button is pressed,
-            reset the curve and all of the parametric controls.  */
+        if (EQ_drawing)
+          {
+            EQ_draw_dir = 0;
+            EQ_drawing = 0;
 
-        if (event->button == 3 && !EQ_drawing) reset_hdeq ();
+            EQ_input_points = 0;
 
-
-        /*  We might have been drawing so we want to discard all of the drawn 
-            data and redraw the curve.  */
-
-        EQ_draw_dir = 0;
-        EQ_drawing = 0;
-
-        EQ_input_points = 0;
-
-        draw_EQ_curve ();
-        
+            draw_EQ_curve ();
+          }
         break;
       }
 
@@ -2305,6 +2292,77 @@ void hdeq_curve_button_release (GdkEventButton  *event)
         something.  */
 
     set_scene_warning_button ();
+}
+
+
+/*  Handle a button press in the HDEQ popup menu.  */
+
+void hdeq_popup (int action)
+{
+    int           i;
+
+
+    switch (action)
+      {
+
+        /*  Reset the HDEQ to 0.  */
+
+      case 0:
+        reset_hdeq ();
+        break;
+
+
+        /*  Release the parametric controls but leave the EQ as is.  */
+
+      case 1:
+
+        /*  Setting the EQ (and state).  */
+
+        for (i = 0 ; i < EQ_length ; i++) EQ_yinterp[i] = EQ_y_notched[i];
+        s_set_value_block (EQ_yinterp, S_EQ_GAIN(0), EQ_length);
+
+
+        for (i = 1 ; i < NOTCHES - 1 ; i++)
+          {
+            EQ_notch_gain[i] = 0.0;
+            EQ_notch_drag[i] = 0;
+            EQ_notch_Q_drag[i] = 0;
+            EQ_notch_flag[i] = 0;
+            EQ_notch_width[i] = 5;
+            EQ_notch_index[i] = nearest_x (EQ_notch_default[i]);
+
+
+            /*  Set the state so that we can save the scene if we need to.  */
+
+            s_set_description (S_NOTCH_GAIN (i), g_strdup_printf ("Reset notch %d", i));
+            s_set_value_ns (S_NOTCH_GAIN (i), EQ_notch_gain[i]);
+            s_set_value_ns (S_NOTCH_FREQ (i), EQ_notch_default[i]);
+            s_set_value_ns (S_NOTCH_FLAG (i), (float) EQ_notch_flag[i]);
+            s_set_value_ns (S_NOTCH_Q (i), (float) EQ_notch_width[i]);
+          }
+
+
+        set_EQ ();
+        draw_EQ_curve ();
+
+        break;
+
+
+        /*  If we're drawing something "Cancel" will discard it.  If we're not drawing it does nothing.  */
+
+      case 2:
+
+        if (EQ_drawing)
+          {
+            EQ_draw_dir = 0;
+            EQ_drawing = 0;
+
+            EQ_input_points = 0;
+
+            draw_EQ_curve ();
+          }
+        break;
+      }
 }
 
 
