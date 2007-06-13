@@ -1346,3 +1346,15 @@ on_release_parametric_eq_controls1_activate
 void
 on_cancel2_activate                    (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
+
+void
+on_help2_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_scene_menu_help_activate            (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_pref_help_clicked                   (GtkButton       *button,
+                                        gpointer         user_data);

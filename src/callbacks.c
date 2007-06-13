@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.170 2007/06/13 02:20:07 jdepner Exp $
+ *  $Id: callbacks.c,v 1.171 2007/06/13 23:32:04 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -3045,4 +3045,28 @@ on_cancel2_activate                    (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
   hdeq_popup (2);
+}
+
+
+void
+on_help2_activate                      (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+    message (GTK_MESSAGE_INFO, _(hdeq_help));
+}
+
+
+void
+on_scene_menu_help_activate            (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+    message (GTK_MESSAGE_INFO, _(scenes_help));
+}
+
+
+void
+on_pref_help_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+    message (GTK_MESSAGE_INFO, _(preferences_help));
 }

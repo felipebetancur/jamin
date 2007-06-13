@@ -4850,11 +4850,14 @@ create_scene_menu (void)
 {
   GtkWidget *scene_menu;
   GtkWidget *setscene;
-  GtkWidget *image224;
+  GtkWidget *image340;
   GtkWidget *clearscene;
-  GtkWidget *image225;
+  GtkWidget *image341;
   GtkWidget *name;
-  GtkWidget *image226;
+  GtkWidget *image342;
+  GtkWidget *separator5;
+  GtkWidget *help3;
+  GtkWidget *image343;
   GtkTooltips *tooltips;
 
   tooltips = gtk_tooltips_new ();
@@ -4868,10 +4871,10 @@ create_scene_menu (void)
   gtk_container_add (GTK_CONTAINER (scene_menu), setscene);
   gtk_tooltips_set_tip (tooltips, setscene, _("Assign settings to button"), NULL);
 
-  image224 = gtk_image_new_from_stock ("gtk-apply", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_name (image224, "image224");
-  gtk_widget_show (image224);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (setscene), image224);
+  image340 = gtk_image_new_from_stock ("gtk-apply", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image340, "image340");
+  gtk_widget_show (image340);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (setscene), image340);
 
   clearscene = gtk_image_menu_item_new_with_mnemonic (_("Clear"));
   gtk_widget_set_name (clearscene, "clearscene");
@@ -4879,10 +4882,10 @@ create_scene_menu (void)
   gtk_container_add (GTK_CONTAINER (scene_menu), clearscene);
   gtk_tooltips_set_tip (tooltips, clearscene, _("Clear settings from button"), NULL);
 
-  image225 = gtk_image_new_from_stock ("gtk-clear", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_name (image225, "image225");
-  gtk_widget_show (image225);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (clearscene), image225);
+  image341 = gtk_image_new_from_stock ("gtk-clear", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image341, "image341");
+  gtk_widget_show (image341);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (clearscene), image341);
 
   name = gtk_image_menu_item_new_with_mnemonic (_("Name"));
   gtk_widget_set_name (name, "name");
@@ -4890,10 +4893,27 @@ create_scene_menu (void)
   gtk_container_add (GTK_CONTAINER (scene_menu), name);
   gtk_tooltips_set_tip (tooltips, name, _("Set scene name"), NULL);
 
-  image226 = gtk_image_new_from_stock ("gtk-properties", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_name (image226, "image226");
-  gtk_widget_show (image226);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (name), image226);
+  image342 = gtk_image_new_from_stock ("gtk-properties", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image342, "image342");
+  gtk_widget_show (image342);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (name), image342);
+
+  separator5 = gtk_separator_menu_item_new ();
+  gtk_widget_set_name (separator5, "separator5");
+  gtk_widget_show (separator5);
+  gtk_container_add (GTK_CONTAINER (scene_menu), separator5);
+  gtk_widget_set_sensitive (separator5, FALSE);
+
+  help3 = gtk_image_menu_item_new_with_mnemonic (_("Help"));
+  gtk_widget_set_name (help3, "help3");
+  gtk_widget_show (help3);
+  gtk_container_add (GTK_CONTAINER (scene_menu), help3);
+  gtk_tooltips_set_tip (tooltips, help3, _("Display scene menu help information"), NULL);
+
+  image343 = gtk_image_new_from_stock ("gtk-help", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image343, "image343");
+  gtk_widget_show (image343);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (help3), image343);
 
   g_signal_connect ((gpointer) setscene, "activate",
                     G_CALLBACK (on_setscene_activate),
@@ -4904,15 +4924,21 @@ create_scene_menu (void)
   g_signal_connect ((gpointer) name, "activate",
                     G_CALLBACK (on_name_activate),
                     NULL);
+  g_signal_connect ((gpointer) help3, "activate",
+                    G_CALLBACK (on_scene_menu_help_activate),
+                    NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
   GLADE_HOOKUP_OBJECT_NO_REF (scene_menu, scene_menu, "scene_menu");
   GLADE_HOOKUP_OBJECT (scene_menu, setscene, "setscene");
-  GLADE_HOOKUP_OBJECT (scene_menu, image224, "image224");
+  GLADE_HOOKUP_OBJECT (scene_menu, image340, "image340");
   GLADE_HOOKUP_OBJECT (scene_menu, clearscene, "clearscene");
-  GLADE_HOOKUP_OBJECT (scene_menu, image225, "image225");
+  GLADE_HOOKUP_OBJECT (scene_menu, image341, "image341");
   GLADE_HOOKUP_OBJECT (scene_menu, name, "name");
-  GLADE_HOOKUP_OBJECT (scene_menu, image226, "image226");
+  GLADE_HOOKUP_OBJECT (scene_menu, image342, "image342");
+  GLADE_HOOKUP_OBJECT (scene_menu, separator5, "separator5");
+  GLADE_HOOKUP_OBJECT (scene_menu, help3, "help3");
+  GLADE_HOOKUP_OBJECT (scene_menu, image343, "image343");
   GLADE_HOOKUP_OBJECT_NO_REF (scene_menu, tooltips, "tooltips");
 
   return scene_menu;
@@ -5016,6 +5042,7 @@ create_pref_dialog (void)
   GtkWidget *rms_meter_full_button;
   GtkWidget *out_meter_pref_label;
   GtkWidget *dialog_action_area1;
+  GtkWidget *pref_help;
   GtkWidget *pref_close;
   GtkTooltips *tooltips;
 
@@ -5233,7 +5260,7 @@ create_pref_dialog (void)
   gtk_radio_button_set_group (GTK_RADIO_BUTTON (IIRButton), FFTButton_group);
   FFTButton_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (IIRButton));
 
-  CrossoverLabel = gtk_label_new (_("<i><b>Crossover type</b></i>"));
+  CrossoverLabel = gtk_label_new (_("<i><b>Crossover Type</b></i>"));
   gtk_widget_set_name (CrossoverLabel, "CrossoverLabel");
   gtk_widget_show (CrossoverLabel);
   gtk_frame_set_label_widget (GTK_FRAME (CrossoverFrame), CrossoverLabel);
@@ -5510,7 +5537,7 @@ create_pref_dialog (void)
   gtk_radio_button_set_group (GTK_RADIO_BUTTON (rms_meter_full_button), rms_meter_peak_button_group);
   rms_meter_peak_button_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (rms_meter_full_button));
 
-  out_meter_pref_label = gtk_label_new (_("<b><i>Output meter numeric display</i></b>"));
+  out_meter_pref_label = gtk_label_new (_("<b><i>Output Meter Numeric Display</i></b>"));
   gtk_widget_set_name (out_meter_pref_label, "out_meter_pref_label");
   gtk_widget_show (out_meter_pref_label);
   gtk_frame_set_label_widget (GTK_FRAME (out_meter_pref_frame), out_meter_pref_label);
@@ -5519,7 +5546,13 @@ create_pref_dialog (void)
   dialog_action_area1 = GTK_DIALOG (pref_dialog)->action_area;
   gtk_widget_set_name (dialog_action_area1, "dialog_action_area1");
   gtk_widget_show (dialog_action_area1);
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area1), GTK_BUTTONBOX_END);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area1), GTK_BUTTONBOX_EDGE);
+
+  pref_help = gtk_button_new_from_stock ("gtk-help");
+  gtk_widget_set_name (pref_help, "pref_help");
+  gtk_widget_show (pref_help);
+  gtk_dialog_add_action_widget (GTK_DIALOG (pref_dialog), pref_help, GTK_RESPONSE_HELP);
+  GTK_WIDGET_SET_FLAGS (pref_help, GTK_CAN_DEFAULT);
 
   pref_close = gtk_button_new_from_stock ("gtk-close");
   gtk_widget_set_name (pref_close, "pref_close");
@@ -5666,6 +5699,9 @@ create_pref_dialog (void)
   g_signal_connect ((gpointer) rms_meter_full_button, "clicked",
                     G_CALLBACK (on_rms_meter_full_button_clicked),
                     NULL);
+  g_signal_connect ((gpointer) pref_help, "clicked",
+                    G_CALLBACK (on_pref_help_clicked),
+                    NULL);
   g_signal_connect ((gpointer) pref_close, "clicked",
                     G_CALLBACK (on_pref_close_clicked),
                     NULL);
@@ -5762,6 +5798,7 @@ create_pref_dialog (void)
   GLADE_HOOKUP_OBJECT (pref_dialog, rms_meter_full_button, "rms_meter_full_button");
   GLADE_HOOKUP_OBJECT (pref_dialog, out_meter_pref_label, "out_meter_pref_label");
   GLADE_HOOKUP_OBJECT_NO_REF (pref_dialog, dialog_action_area1, "dialog_action_area1");
+  GLADE_HOOKUP_OBJECT (pref_dialog, pref_help, "pref_help");
   GLADE_HOOKUP_OBJECT (pref_dialog, pref_close, "pref_close");
   GLADE_HOOKUP_OBJECT_NO_REF (pref_dialog, tooltips, "tooltips");
 
@@ -6266,8 +6303,11 @@ create_HDEQ_menu (void)
   GtkWidget *reset_hdeq_curve1;
   GtkWidget *release_parametric_eq_controls1;
   GtkWidget *separator3;
-  GtkWidget *cancel2;
+  GtkWidget *help2;
   GtkWidget *image338;
+  GtkWidget *separator4;
+  GtkWidget *cancel2;
+  GtkWidget *image339;
   GtkTooltips *tooltips;
 
   tooltips = gtk_tooltips_new ();
@@ -6293,22 +6333,42 @@ create_HDEQ_menu (void)
   gtk_container_add (GTK_CONTAINER (HDEQ_menu), separator3);
   gtk_widget_set_sensitive (separator3, FALSE);
 
+  help2 = gtk_image_menu_item_new_with_mnemonic (_("Help"));
+  gtk_widget_set_name (help2, "help2");
+  gtk_widget_show (help2);
+  gtk_container_add (GTK_CONTAINER (HDEQ_menu), help2);
+  gtk_tooltips_set_tip (tooltips, help2, _("Display HDEQ help page"), NULL);
+
+  image338 = gtk_image_new_from_stock ("gtk-help", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image338, "image338");
+  gtk_widget_show (image338);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (help2), image338);
+
+  separator4 = gtk_separator_menu_item_new ();
+  gtk_widget_set_name (separator4, "separator4");
+  gtk_widget_show (separator4);
+  gtk_container_add (GTK_CONTAINER (HDEQ_menu), separator4);
+  gtk_widget_set_sensitive (separator4, FALSE);
+
   cancel2 = gtk_image_menu_item_new_with_mnemonic (_("Cancel"));
   gtk_widget_set_name (cancel2, "cancel2");
   gtk_widget_show (cancel2);
   gtk_container_add (GTK_CONTAINER (HDEQ_menu), cancel2);
   gtk_tooltips_set_tip (tooltips, cancel2, _("Close the popup menu"), NULL);
 
-  image338 = gtk_image_new_from_stock ("gtk-cancel", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_name (image338, "image338");
-  gtk_widget_show (image338);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (cancel2), image338);
+  image339 = gtk_image_new_from_stock ("gtk-cancel", GTK_ICON_SIZE_MENU);
+  gtk_widget_set_name (image339, "image339");
+  gtk_widget_show (image339);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (cancel2), image339);
 
   g_signal_connect ((gpointer) reset_hdeq_curve1, "activate",
                     G_CALLBACK (on_reset_hdeq_curve1_activate),
                     NULL);
   g_signal_connect ((gpointer) release_parametric_eq_controls1, "activate",
                     G_CALLBACK (on_release_parametric_eq_controls1_activate),
+                    NULL);
+  g_signal_connect ((gpointer) help2, "activate",
+                    G_CALLBACK (on_help2_activate),
                     NULL);
   g_signal_connect ((gpointer) cancel2, "activate",
                     G_CALLBACK (on_cancel2_activate),
@@ -6319,8 +6379,11 @@ create_HDEQ_menu (void)
   GLADE_HOOKUP_OBJECT (HDEQ_menu, reset_hdeq_curve1, "reset_hdeq_curve1");
   GLADE_HOOKUP_OBJECT (HDEQ_menu, release_parametric_eq_controls1, "release_parametric_eq_controls1");
   GLADE_HOOKUP_OBJECT (HDEQ_menu, separator3, "separator3");
-  GLADE_HOOKUP_OBJECT (HDEQ_menu, cancel2, "cancel2");
+  GLADE_HOOKUP_OBJECT (HDEQ_menu, help2, "help2");
   GLADE_HOOKUP_OBJECT (HDEQ_menu, image338, "image338");
+  GLADE_HOOKUP_OBJECT (HDEQ_menu, separator4, "separator4");
+  GLADE_HOOKUP_OBJECT (HDEQ_menu, cancel2, "cancel2");
+  GLADE_HOOKUP_OBJECT (HDEQ_menu, image339, "image339");
   GLADE_HOOKUP_OBJECT_NO_REF (HDEQ_menu, tooltips, "tooltips");
 
   return HDEQ_menu;

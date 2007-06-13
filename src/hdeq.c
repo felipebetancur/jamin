@@ -1417,8 +1417,8 @@ void hdeq_curve_motion (GdkEventMotion *event)
         s_gain = -(EQ_SPECTRUM_RANGE - (((((double) EQ_curve_height - 
             (double) y) / (double) EQ_curve_height) * EQ_SPECTRUM_RANGE)));
 
-	coords = g_strdup_printf(_("%dHz , EQ : %ddb , Spectrum : %ddb"), NINT
-		(freq), NINT (gain), NINT (s_gain));
+	coords = g_strdup_printf(_("%dHz , EQ : %.1fdb , Spectrum : %ddb"), NINT
+		(freq), gain, NINT (s_gain));
 
         gtk_label_set_text (l_EQ_curve_lbl, coords);
 	free(coords);

@@ -7699,7 +7699,7 @@
       <signal name="activate" handler="on_setscene_activate" last_modification_time="Sun, 13 Jul 2003 18:13:07 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image224">
+	<widget class="GtkImage" id="image340">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-apply</property>
 	  <property name="icon_size">1</property>
@@ -7721,7 +7721,7 @@
       <signal name="activate" handler="on_clearscene_activate" last_modification_time="Sun, 13 Jul 2003 18:13:07 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image225">
+	<widget class="GtkImage" id="image341">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-clear</property>
 	  <property name="icon_size">1</property>
@@ -7743,9 +7743,37 @@
       <signal name="activate" handler="on_name_activate" last_modification_time="Wed, 31 Mar 2004 23:24:33 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image226">
+	<widget class="GtkImage" id="image342">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-properties</property>
+	  <property name="icon_size">1</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+      </child>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkSeparatorMenuItem" id="separator5">
+      <property name="visible">True</property>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="help3">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Display scene menu help information</property>
+      <property name="label" translatable="yes">Help</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_scene_menu_help_activate" last_modification_time="Wed, 13 Jun 2007 22:45:07 GMT"/>
+
+      <child internal-child="image">
+	<widget class="GtkImage" id="image343">
+	  <property name="visible">True</property>
+	  <property name="stock">gtk-help</property>
 	  <property name="icon_size">1</property>
 	  <property name="xalign">0.5</property>
 	  <property name="yalign">0.5</property>
@@ -7784,7 +7812,21 @@
       <child internal-child="action_area">
 	<widget class="GtkHButtonBox" id="dialog-action_area1">
 	  <property name="visible">True</property>
-	  <property name="layout_style">GTK_BUTTONBOX_END</property>
+	  <property name="layout_style">GTK_BUTTONBOX_EDGE</property>
+
+	  <child>
+	    <widget class="GtkButton" id="pref_help">
+	      <property name="visible">True</property>
+	      <property name="can_default">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label">gtk-help</property>
+	      <property name="use_stock">True</property>
+	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
+	      <property name="response_id">-11</property>
+	      <signal name="clicked" handler="on_pref_help_clicked" last_modification_time="Wed, 13 Jun 2007 22:49:52 GMT"/>
+	    </widget>
+	  </child>
 
 	  <child>
 	    <widget class="GtkButton" id="pref_close">
@@ -7797,7 +7839,7 @@
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-7</property>
-	      <signal name="clicked" handler="on_pref_close_clicked" last_modification_time="Sun, 30 Jan 2005 17:34:34 GMT"/>
+	      <signal name="clicked" handler="on_pref_close_clicked" last_modification_time="Wed, 13 Jun 2007 22:49:37 GMT"/>
 	    </widget>
 	  </child>
 	</widget>
@@ -8343,7 +8385,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="CrossoverLabel">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">&lt;i&gt;&lt;b&gt;Crossover type&lt;/b&gt;&lt;/i&gt;</property>
+		      <property name="label" translatable="yes">&lt;i&gt;&lt;b&gt;Crossover Type&lt;/b&gt;&lt;/i&gt;</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">True</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -8996,7 +9038,7 @@
 	  <child>
 	    <widget class="GtkLabel" id="out_meter_pref_label">
 	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">&lt;b&gt;&lt;i&gt;Output meter numeric display&lt;/i&gt;&lt;/b&gt;</property>
+	      <property name="label" translatable="yes">&lt;b&gt;&lt;i&gt;Output Meter Numeric Display&lt;/i&gt;&lt;/b&gt;</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">True</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -9976,6 +10018,34 @@ Project page: http://sourceforge.net/projects/jamin/</property>
   </child>
 
   <child>
+    <widget class="GtkImageMenuItem" id="help2">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Display HDEQ help page</property>
+      <property name="label" translatable="yes">Help</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_help2_activate" last_modification_time="Wed, 13 Jun 2007 22:35:53 GMT"/>
+
+      <child internal-child="image">
+	<widget class="GtkImage" id="image338">
+	  <property name="visible">True</property>
+	  <property name="stock">gtk-help</property>
+	  <property name="icon_size">1</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+      </child>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkSeparatorMenuItem" id="separator4">
+      <property name="visible">True</property>
+    </widget>
+  </child>
+
+  <child>
     <widget class="GtkImageMenuItem" id="cancel2">
       <property name="visible">True</property>
       <property name="tooltip" translatable="yes">Close the popup menu</property>
@@ -9984,7 +10054,7 @@ Project page: http://sourceforge.net/projects/jamin/</property>
       <signal name="activate" handler="on_cancel2_activate" last_modification_time="Wed, 13 Jun 2007 00:11:31 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image338">
+	<widget class="GtkImage" id="image339">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-cancel</property>
 	  <property name="icon_size">1</property>
