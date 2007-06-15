@@ -3385,8 +3385,8 @@ create_window1 (void)
   rmsmeter_l = make_meter ("rmsmeter_l", "up", "", -60, 6);
   gtk_widget_set_name (rmsmeter_l, "rmsmeter_l");
   gtk_widget_show (rmsmeter_l);
-  gtk_box_pack_start (GTK_BOX (outmeter_hbox), rmsmeter_l, TRUE, TRUE, 1);
-  gtk_widget_set_size_request (rmsmeter_l, 5, 0);
+  gtk_box_pack_start (GTK_BOX (outmeter_hbox), rmsmeter_l, FALSE, TRUE, 1);
+  gtk_widget_set_size_request (rmsmeter_l, 10, 0);
   GTK_WIDGET_UNSET_FLAGS (rmsmeter_l, GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (rmsmeter_l, GTK_CAN_DEFAULT);
 
@@ -3417,8 +3417,8 @@ create_window1 (void)
   rmsmeter_r = make_meter ("rmsmeter_r", "up", "", -60, 6);
   gtk_widget_set_name (rmsmeter_r, "rmsmeter_r");
   gtk_widget_show (rmsmeter_r);
-  gtk_box_pack_start (GTK_BOX (outmeter_hbox), rmsmeter_r, TRUE, TRUE, 1);
-  gtk_widget_set_size_request (rmsmeter_r, 5, 0);
+  gtk_box_pack_start (GTK_BOX (outmeter_hbox), rmsmeter_r, FALSE, TRUE, 1);
+  gtk_widget_set_size_request (rmsmeter_r, 10, 0);
   GTK_WIDGET_UNSET_FLAGS (rmsmeter_r, GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (rmsmeter_r, GTK_CAN_DEFAULT);
 

@@ -804,6 +804,11 @@ void reset_hdeq ()
     /*  Redraw the EQ curve.  */
 
     draw_EQ_curve ();
+
+
+    /*  Set the scene warning button so that people will know to save it.  */
+
+    set_scene_warning_button ();
 }
 
 
@@ -2309,6 +2314,17 @@ void hdeq_popup (int action)
 
       case 0:
         reset_hdeq ();
+
+
+        /*  Just in case we were drawing something.  */
+
+        if (EQ_drawing)
+          {
+            EQ_draw_dir = 0;
+            EQ_drawing = 0;
+
+            EQ_input_points = 0;
+          }
         break;
 
 
@@ -2342,8 +2358,24 @@ void hdeq_popup (int action)
           }
 
 
+        /*  Just in case we were drawing something.  */
+
+        if (EQ_drawing)
+          {
+            EQ_draw_dir = 0;
+            EQ_drawing = 0;
+
+            EQ_input_points = 0;
+          }
+
+
         set_EQ ();
         draw_EQ_curve ();
+
+
+        /*  Set the scene warning button so that people will know to save it.  */
+
+        set_scene_warning_button ();
 
         break;
 

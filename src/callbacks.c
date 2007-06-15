@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.171 2007/06/13 23:32:04 jdepner Exp $
+ *  $Id: callbacks.c,v 1.172 2007/06/15 01:05:26 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -2908,7 +2908,14 @@ on_global_bypass_toggled               (GtkToggleButton *togglebutton,
 {
   global_bypass = gtk_toggle_button_get_active(togglebutton);
 
-  if (global_bypass) callbacks_blink_global_bypass_button (1);
+  if (global_bypass) 
+    {
+      callbacks_blink_global_bypass_button (1);
+    }
+  else
+    {
+      callbacks_blink_global_bypass_button (-1);
+    }
 }
 
 
@@ -2920,20 +2927,30 @@ callbacks_blink_global_bypass_button (int start)
   GdkColor    bypass;
 
 
-  if (start) flip = 1;
+  /*  -1 sets the button to the background color, 1 starts it as red, 0 flips it
+      between red and background.  */
 
-
-  if (flip)
-    {
-      bypass.red = 65535;
-      bypass.green = 0;
-      bypass.blue = 0;
-    }
-  else
+  if (start < 0)
     {
       bypass = l_main_color;
     }
-  flip ^= 1;
+  else
+    {
+      if (start) flip = 1;
+
+
+      if (flip)
+        {
+          bypass.red = 65535;
+          bypass.green = 0;
+          bypass.blue = 0;
+        }
+      else
+        {
+          bypass = l_main_color;
+        }
+      flip ^= 1;
+    }
 
   gtk_widget_modify_bg ((GtkWidget *) l_global_bypass_event_box, GTK_STATE_NORMAL, &bypass);
 } 
@@ -3052,7 +3069,12 @@ void
 on_help2_activate                      (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-    message (GTK_MESSAGE_INFO, _(hdeq_help));
+  message (GTK_MESSAGE_INFO, _(hdeq_help));
+
+
+  /*  Cancel any pre-existing hand-drawn curves.  */
+
+  hdeq_popup (2);
 }
 
 
@@ -3060,7 +3082,7 @@ void
 on_scene_menu_help_activate            (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-    message (GTK_MESSAGE_INFO, _(scenes_help));
+  message (GTK_MESSAGE_INFO, _(scenes_help));
 }
 
 
@@ -3068,5 +3090,5 @@ void
 on_pref_help_clicked                   (GtkButton       *button,
                                         gpointer         user_data)
 {
-    message (GTK_MESSAGE_INFO, _(preferences_help));
+  message (GTK_MESSAGE_INFO, _(preferences_help));
 }
