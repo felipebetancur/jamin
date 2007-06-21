@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: rms.c,v 1.1 2007/05/05 11:51:52 jdepner Exp $
+ *  $Id: rms.c,v 1.2 2007/06/21 18:48:29 theno23 Exp $
  */
 
 #include <math.h>
@@ -36,6 +36,7 @@ rms *rms_new(float fs, float time)
 
 float rms_run(rms *r, float x)
 {
+    x = fabs(x) + 0.0001;
     r->rm += r->coef * ((x * x / r->rm) - r->rm);
 
     return r->rm;
@@ -46,7 +47,7 @@ float rms_run_buffer(rms *r, float *x, int length)
     int i;
 
     for (i=0; i<length; i++) {
-        r->rm += r->coef * ((x[i] * x[i] / r->rm) - r->rm);
+        rms_run(r, x[i]);
     }
 
     return r->rm;
