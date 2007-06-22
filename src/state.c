@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.65 2007/06/22 01:25:03 jdepner Exp $
+ *  $Id: state.c,v 1.66 2007/06/22 01:29:22 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -775,6 +775,7 @@ void s_load_session (const gchar *fname)
         it from the defaults.  */
 
     if (!override_limiter_default) process_set_limiter_plugin (gp.limiter_plugin);
+    override_limiter_default = FALSE;
 
 
     /*  This is the active scene.  */
