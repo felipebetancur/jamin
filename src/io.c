@@ -91,7 +91,7 @@
 #include "help.h"
 #include "support.h"
 
-char *jamin_options = "dFf:j:n:hprTtvVs:c:i";   /* valid JAMin options */
+char *jamin_options = "dFf:j:n:hprTtvVl:s:c:i";   /* valid JAMin options */
 char *pname;				      /* `basename $0` */
 int dummy_mode = 0;			      /* -d option */
 int all_errors_fatal = 0;		      /* -F option */
@@ -101,6 +101,7 @@ int trace_option = 0;			      /* -T option */
 int thread_option = 1;			      /* -t option */
 int debug_level = DBG_OFF;		      /* -v option */
 char session_file[PATH_MAX];		      /* -f option */
+int limiter_plugin_type;                      /* -l option - 0=Steve's fast, 1=Sampo's foo */
 static char *errstr;
 
 /*  Synchronization within the DSP engine is managed as a finite state
@@ -822,6 +823,12 @@ void io_init(int argc, char *argv[])
 	case 'i':			/* Use IIR type crossover */
             process_set_crossover_type (IIR);
 	    break;
+	case 'l':			/* Select limiter, 0=Steve's fast, 1=Sampo's foo */
+	    sscanf (optarg, "%d", &limiter_plugin_type);
+            if (limiter_plugin_type < 0 || limiter_plugin_type > 1) limiter_plugin_type = 0;
+            process_set_limiter_plugin (limiter_plugin_type);
+            s_set_override_limiter_default ();
+	    break;
 	case 'v':			/* verbose */
 	    debug_level += 1;		/* increment output level */
 	    break;
@@ -866,6 +873,8 @@ void io_init(int argc, char *argv[])
                 "\t-c time\tcrossfade time\n"
                 "\t-r\tuse example GTK resource file\n"
                 "\t-p\tdo not automatically connect JACK output ports\n"
+                "\t-i\tUse IIR crossover instead of FFT\n"
+                "\t-l limiter\tUse fast-lookahead limiter(0) or foo-limiter(1)\n"
                 "\t-v\tverbose output (use -vv... for more detail)\n"
                 "\t-V\tprint JAMin version and quit\n"
                 "\ndeveloper options:\n"

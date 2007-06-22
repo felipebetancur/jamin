@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.64 2007/05/13 18:23:41 jdepner Exp $
+ *  $Id: state.c,v 1.65 2007/06/22 01:25:03 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -65,6 +65,7 @@ static GList         *undo_pos = NULL;
 static int suppress_feedback = 0;
 static int saved_scene;
 static float crossfade_time = 1.0;
+static gboolean override_limiter_default = FALSE;
 
 static void s_set_events(int id, float value);
 void s_update_title();
@@ -92,6 +93,7 @@ typedef struct {
     gboolean out_meter_peak_pref;
     gboolean rms_meter_peak_pref;
     int rms_time_slice;
+    int limiter_plugin;
     int gang_at[XO_BANDS];
     int gang_re[XO_BANDS];
     int gang_th[XO_BANDS];
@@ -550,6 +552,8 @@ void s_save_session (const gchar *fname)
 
     s_save_global_int(doc, "rms time slice", process_get_rms_time_slice ());
 
+    s_save_global_int(doc, "limiter plugin", process_get_limiter_plugin ());
+
 
     /* record the current gang state of the compressor controls */
 
@@ -705,6 +709,7 @@ void s_load_session (const gchar *fname)
     gp.out_meter_peak_pref = TRUE;
     gp.rms_meter_peak_pref = TRUE;
     gp.rms_time_slice = 50;
+    gp.limiter_plugin = 0;
     for (i = 0 ; i < XO_BANDS ; i++) {
         gp.gang_at[i] = FALSE;
         gp.gang_re[i] = FALSE;
@@ -764,6 +769,12 @@ void s_load_session (const gchar *fname)
     intrim_set_rms_meter_peak_pref (gp.rms_meter_peak_pref);
 
     process_set_rms_time_slice (gp.rms_time_slice);
+
+
+    /*  If we set the limiter plugin on the command line don't set
+        it from the defaults.  */
+
+    if (!override_limiter_default) process_set_limiter_plugin (gp.limiter_plugin);
 
 
     /*  This is the active scene.  */
@@ -893,6 +904,8 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
           gp->rms_meter_peak_pref = (gboolean) atoi(value);
 	} else if (!strcmp(symbol, "rms time slice")) {
           gp->rms_time_slice = atoi(value);
+	} else if (!strcmp(symbol, "limiter plugin")) {
+          gp->limiter_plugin = atoi(value);
 	} else if ((const char *)strstr(symbol, "gang_") == symbol) {
 	    int ind = index ? atoi(index) : -1;
 	    int val = atoi(value);
@@ -1141,5 +1154,14 @@ void s_save_global_gang(xmlDocPtr doc, char *p, int band, gboolean value)
     node = xmlNewText("\n");
     xmlAddChild(root, node);
 }
+
+
+/*  Set a boolean if we put the limiter in on the command line.  */
+
+void s_set_override_limiter_default ()
+{
+  override_limiter_default = TRUE;
+}
+
 
 /* vi:set ts=8 sts=4 sw=4: */

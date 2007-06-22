@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.44 2007/06/13 23:32:04 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.45 2007/06/22 01:25:03 jdepner Exp $
  */
 
 #include "support.h"
@@ -343,6 +343,12 @@ on the selected bands.\n")
 char limiter_bypass_help[] = {N_(
 "    This button allows you to bypass limiting.  It has no effect on any of \
 the other controls.\n")
+};
+
+
+char limiter_plugin_warning[] = {N_(
+"    Changes to the limiter plugin will not go into effect until JAMin is \
+restarted.\n")
 };
 
 

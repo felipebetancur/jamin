@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.70 2007/05/13 00:38:52 jdepner Exp $
+ *  $Id: process.c,v 1.71 2007/06/22 01:25:03 jdepner Exp $
  */
 
 #include <math.h>
@@ -80,6 +80,9 @@ static float sw_s_gain[XO_NBANDS];
 static float sb_l_gain[XO_NBANDS];
 static float sb_r_gain[XO_NBANDS];
 static float limiter_gain = 1.0f;
+static int limiter_plugin = 0;
+static int limiter_plugin_pending = 0;
+static int limiter_plugin_change_pending = FALSE;
 
 static float ws_boost_wet = 0.0f;
 static float ws_boost_a = 1.0f;
@@ -94,12 +97,12 @@ static int spectrum_mode = SPEC_POST_EQ;
 volatile int global_bypass = 0;		/* updated from GUI thread */
 static int eq_bypass_pending = FALSE;
 static int eq_bypass = FALSE;
-static int limiter_bypass_pending = FALSE;
 static int limiter_bypass = FALSE;
+static int limiter_bypass_pending = FALSE;
 static int rms_time_slice;
 
 /* Data for plugins */
-plugin *comp_plugin, *lim_plugin;
+plugin *comp_plugin, *lim_plugin[2];
 
 /* FFTW data */
 fftwf_plan plan_rc = NULL, plan_cr = NULL;
@@ -193,11 +196,30 @@ void process_init(float fs)
 
     plugin_init();
     comp_plugin = plugin_load("sc4_1882.so");
-    lim_plugin = plugin_load("fast_lookahead_limiter_1913.so");
-    if (comp_plugin == NULL || lim_plugin == NULL)  {
-           fprintf(stderr, "Required plugin missing.\n");
+    if (comp_plugin == NULL)  {
+           fprintf(stderr, "Required plugin sc4_1882.so missing.\n");
+           fprintf(stderr, "Please load the SWH plugins.\n");
            exit(1);
     }
+
+
+    /*  Decide which limiter to use.  Steve Harris' fast_lookahead_limiter or
+        Sampo Savolainen's foo_limiter.  */
+
+    lim_plugin[0] = plugin_load("fast_lookahead_limiter_1913.so");
+    lim_plugin[1] = plugin_load("foo_limiter.so");
+
+    if (lim_plugin[limiter_plugin] == NULL) {
+      limiter_plugin ^= 1;
+
+      if (lim_plugin[limiter_plugin] == NULL) {
+          fprintf(stderr, "Required plugin fast_lookahead_limiter_1913.so and/or foo_limiter.so missing.\n");
+          fprintf(stderr, "Please load the SWH plugins and/or Sampo Savolainen's foo_limiter plugin.\n");
+          exit(1);
+        }
+    }
+
+
 
     /* This compressor is specifically stereo, so there are always two
      * channels. */
@@ -209,8 +231,8 @@ void process_init(float fs)
 		     out_tmp[CHANNEL_L][band], out_tmp[CHANNEL_R][band]);
     }
 
-    limiter.handle = plugin_instantiate(lim_plugin, fs);
-    lim_connect(lim_plugin, &limiter, NULL, NULL);
+    limiter.handle = plugin_instantiate(lim_plugin[limiter_plugin], fs);
+    lim_connect(lim_plugin[limiter_plugin], &limiter, NULL, NULL);
 
     /* Allocate at least 1 second of latency correction buffer */
     for (latcorbuf_len = 256; latcorbuf_len < fs * 1.0f; latcorbuf_len *= 2);
@@ -391,10 +413,10 @@ int process_signal(jack_nframes_t nframes,
     static unsigned int n_calc_pt = BINS - (BINS / OVER_SAMP);
 
     /* The limiters i/o ports potentially change with every call */
-    plugin_connect_port(lim_plugin, limiter.handle, LIM_IN_1, out[CHANNEL_L]);
-    plugin_connect_port(lim_plugin, limiter.handle, LIM_IN_2, out[CHANNEL_R]);
-    plugin_connect_port(lim_plugin, limiter.handle, LIM_OUT_1, out[CHANNEL_L]);
-    plugin_connect_port(lim_plugin, limiter.handle, LIM_OUT_2, out[CHANNEL_R]);
+    plugin_connect_port(lim_plugin[limiter_plugin], limiter.handle, LIM_IN_1, out[CHANNEL_L]);
+    plugin_connect_port(lim_plugin[limiter_plugin], limiter.handle, LIM_IN_2, out[CHANNEL_R]);
+    plugin_connect_port(lim_plugin[limiter_plugin], limiter.handle, LIM_OUT_1, out[CHANNEL_L]);
+    plugin_connect_port(lim_plugin[limiter_plugin], limiter.handle, LIM_OUT_2, out[CHANNEL_R]);
 
     /* Crossfade parameter values from current to target */
     s_crossfade(nframes);
@@ -560,9 +582,9 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	}
     }
 
-    plugin_run(lim_plugin, limiter.handle, nframes);
+    plugin_run(lim_plugin[limiter_plugin], limiter.handle, nframes);
 
-    /* Keep a buffer of old input data, incase we need it for bypass */
+    /* Keep a buffer of old input data, in case we need it for bypass */
     for (port = 0; port < nchannels; port++) {
 	for (pos = 0; pos < nframes; pos++) {
 	    latcorbuf[port][(latcorbuf_pos + pos) & (latcorbuf_len - 1)] =
@@ -570,8 +592,8 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	}
     }
 
-    /* If bypass is on override all the stuff done by the crossover section,
-     * limiter and so on */
+    /* If bypass is on, override all the stuff done by the crossover section,
+     * limiter, and so on */
     if (limiter_bypass) {
 	const unsigned int limiter_latency = (unsigned int)limiter.latency;
 
@@ -625,6 +647,21 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	xo_band_action[band] = xo_band_action_pending[band];
     }
 
+
+    /*  As above, don't change the limiter plugin until we're done processing.  */
+
+    if (limiter_plugin_change_pending)
+      {
+        limiter_plugin = limiter_plugin_pending;
+
+        if (lim_plugin[limiter_plugin] == NULL) limiter_plugin ^= 1;
+
+        limiter.handle = plugin_instantiate(lim_plugin[limiter_plugin], sample_rate);
+        lim_connect(lim_plugin[limiter_plugin], &limiter, NULL, NULL);
+
+        limiter_plugin_change_pending = FALSE;
+      }
+
     return 0;
 }
 
@@ -655,6 +692,19 @@ void process_set_spec_mode(int mode)
 int process_get_spec_mode()
 {
   return (spectrum_mode);
+}
+
+void process_set_limiter_plugin(int id)
+{
+  limiter_plugin_change_pending = TRUE;
+
+
+  limiter_plugin_pending = id;
+}
+
+int process_get_limiter_plugin()
+{
+  return (limiter_plugin);
 }
 
 void process_set_stereo_width(int xo_band, float width)
@@ -721,6 +771,7 @@ void process_set_eq_bypass(int bypass)
 
 void process_set_crossover_type(int type)
 {
+  fprintf(stderr,"%s %d %d\n",__FILE__,__LINE__,type);
     iir_xover = type;
 }
 
@@ -802,10 +853,11 @@ void process_set_rms_time_slice (int milliseconds)
   if (r[0]) rms_free (r[0]);
   if (r[1]) rms_free (r[1]);
 
-  float ts = rms_time_slice / 1000.0;
+  float ts = (float) rms_time_slice / 1000.0;
 
   r[0] = rms_new (sample_rate, ts);
   r[1] = rms_new (sample_rate, ts);
+
 
   rms_ready = TRUE;
 }

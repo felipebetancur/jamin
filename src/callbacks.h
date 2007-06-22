@@ -1358,3 +1358,7 @@ on_scene_menu_help_activate            (GtkMenuItem     *menuitem,
 void
 on_pref_help_clicked                   (GtkButton       *button,
                                         gpointer         user_data);
+
+void
+on_limiter_combo_changed               (GtkComboBox     *combobox,
+                                        gpointer         user_data);

@@ -62,6 +62,7 @@ static GtkRadioButton    *iir_button, *fft_button, *out_meter_peak_button, *out_
 static GtkToggleButton   *t_iir, *t_fft, *t_out_peak, *t_out_full, *t_rms_peak, *t_rms_full;
 static GtkMenu           *l_menu3;
 static GtkLabel          *l_rms_samples;
+static GtkComboBox       *l_limiter_combo;
 
 
 static void color_ok_callback (GtkWidget *w, gpointer user_data);
@@ -103,6 +104,7 @@ void preferences_init()
 
   pref_dialog = create_pref_dialog ();
 
+
   lgain_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "MinGainSpin"));
   ugain_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "MaxGainSpin"));
   spec_freq_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "UpdateFrequencySpin"));
@@ -130,6 +132,8 @@ void preferences_init()
 
 
   l_rms_samples = GTK_LABEL (lookup_widget (pref_dialog, "rmsSamples"));
+
+  l_limiter_combo = GTK_COMBO_BOX (lookup_widget (pref_dialog, "limiter_combo"));
 
 
   color_dialog = create_colorselectiondialog1 ();
@@ -362,6 +366,9 @@ void popup_pref_dialog (int updown)
       gtk_label_set_label (l_rms_samples, sample_label);
 
       free (sample_label);
+
+
+      gtk_combo_box_set_active (l_limiter_combo, process_get_limiter_plugin ());
 
 
       gtk_widget_show (pref_dialog);

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.172 2007/06/15 01:05:26 jdepner Exp $
+ *  $Id: callbacks.c,v 1.173 2007/06/22 01:25:02 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -3091,4 +3091,12 @@ on_pref_help_clicked                   (GtkButton       *button,
                                         gpointer         user_data)
 {
   message (GTK_MESSAGE_INFO, _(preferences_help));
+}
+
+
+void
+on_limiter_combo_changed               (GtkComboBox     *combobox,
+                                        gpointer         user_data)
+{
+  process_set_limiter_plugin (gtk_combo_box_get_active (combobox));
 }

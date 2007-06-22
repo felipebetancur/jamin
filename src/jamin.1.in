@@ -1,4 +1,4 @@
-.TH JAMIN "1" @VERSION@ "December 2004" "Audio"
+.TH JAMIN "1" @VERSION@ "June 2007" "Audio"
 .SH "NAME"
 jamin \- JACK Audio Mastering interface
 
@@ -68,8 +68,14 @@ string ":playback" in their names.
 \fB\-i\fR
 .br 
 Use IIR type crossover instead of the default FFT type crossover.
-The IIR crossover is less CPU intensive but the FFT crossover may
+The IIR crossover is less CPU intensive but the FFT crossover will
 give better results (YMMV).
+.TP 
+\fB\-l\fR
+.br 
+Set to 0 to use Steve Harris' fast-lookahead-limiter or 1 for Sampo
+Savolainen's foo-limiter.  At this time there is a problem with
+the foo-limiter if you push the input too hard.
 .TP 
 \fB\-r\fR
 .br 
@@ -169,7 +175,7 @@ these ports.
 .br 
 .BR <\fBhttp://www.alsa\-project.org\fR>
 .br 
-.BR <\fBhttp://jackd.sourceforge.net\fR>
+.BR <\fBhttp://jackaudio.org\fR>
 .br 
 .BR <\fBhttp://qjackctl.sourceforge.net\fR>
 .br 
@@ -177,7 +183,7 @@ these ports.
 .br 
 .BR <\fBhttp://alsaplayer.sourceforge.net\fR>
 .br 
-.BR <\fBhttp://ardour.sourceforge.net\fR>
+.BR <\fBhttp://www.ardour.org\fR>
 .br 
 .BR <\fBhttp://rezound.sourceforge.net\fR>
 .br 
@@ -190,6 +196,7 @@ these ports.
 Please send bug reports to <\fBjamin\-devel@lists.sourceforge.net\fR>.
 .SH "AUTHORS"
 Steve Harris is the principal JAMin author and team leader.  Other
-developers include: Jan Depner, Jack O'Quin, Ron Parker, and Patrick
-Shirkey.  Alexandre Prokoudine assisted with internationalization and
-translated JAMin into Russian.
+developers include: Jan Depner, Jack O'Quin, Ron Parker, Emmanuel
+Saracco, and Patrick Shirkey.  Alexandre Prokoudine and Yuri N.
+Sedunov developed the translation infrastructure.  Alexandre also
+translated JAMin into Russian and is our (really good) web engineer.

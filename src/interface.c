@@ -4970,7 +4970,7 @@ create_pref_dialog (void)
   GtkWidget *CrossfadeLabel;
   GtkWidget *SpectrumEvent;
   GtkWidget *SpectrumFrame;
-  GtkWidget *vbox164;
+  GtkWidget *hbox76;
   GtkWidget *SpectrumMenu;
   GtkWidget *menu3;
   GtkWidget *pre_eq;
@@ -5041,6 +5041,10 @@ create_pref_dialog (void)
   GSList *rms_meter_peak_button_group = NULL;
   GtkWidget *rms_meter_full_button;
   GtkWidget *out_meter_pref_label;
+  GtkWidget *limiter_frame;
+  GtkWidget *alignment9;
+  GtkWidget *limiter_combo;
+  GtkWidget *limiter_frame_label;
   GtkWidget *dialog_action_area1;
   GtkWidget *pref_help;
   GtkWidget *pref_close;
@@ -5052,6 +5056,7 @@ create_pref_dialog (void)
   gtk_widget_set_name (pref_dialog, "pref_dialog");
   gtk_container_set_border_width (GTK_CONTAINER (pref_dialog), 10);
   gtk_window_set_title (GTK_WINDOW (pref_dialog), _("Preferences"));
+  gtk_window_set_modal (GTK_WINDOW (pref_dialog), TRUE);
   gtk_window_set_type_hint (GTK_WINDOW (pref_dialog), GDK_WINDOW_TYPE_HINT_DIALOG);
 
   dialog_vbox1 = GTK_DIALOG (pref_dialog)->vbox;
@@ -5162,16 +5167,15 @@ create_pref_dialog (void)
   gtk_container_add (GTK_CONTAINER (SpectrumEvent), SpectrumFrame);
   gtk_container_set_border_width (GTK_CONTAINER (SpectrumFrame), 5);
 
-  vbox164 = gtk_vbox_new (TRUE, 12);
-  gtk_widget_set_name (vbox164, "vbox164");
-  gtk_widget_show (vbox164);
-  gtk_container_add (GTK_CONTAINER (SpectrumFrame), vbox164);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox164), 6);
+  hbox76 = gtk_hbox_new (FALSE, 20);
+  gtk_widget_set_name (hbox76, "hbox76");
+  gtk_widget_show (hbox76);
+  gtk_container_add (GTK_CONTAINER (SpectrumFrame), hbox76);
 
   SpectrumMenu = gtk_option_menu_new ();
   gtk_widget_set_name (SpectrumMenu, "SpectrumMenu");
   gtk_widget_show (SpectrumMenu);
-  gtk_box_pack_start (GTK_BOX (vbox164), SpectrumMenu, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox76), SpectrumMenu, FALSE, FALSE, 0);
   gtk_tooltips_set_tip (tooltips, SpectrumMenu, _("Choose source for spectrum display"), NULL);
 
   menu3 = gtk_menu_new ();
@@ -5202,7 +5206,7 @@ create_pref_dialog (void)
   hbox73 = gtk_hbox_new (TRUE, 0);
   gtk_widget_set_name (hbox73, "hbox73");
   gtk_widget_show (hbox73);
-  gtk_box_pack_start (GTK_BOX (vbox164), hbox73, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox76), hbox73, TRUE, TRUE, 0);
 
   UpdateFrequencyLabel = gtk_label_new_with_mnemonic (_("_Update frequency (Hz):"));
   gtk_widget_set_name (UpdateFrequencyLabel, "UpdateFrequencyLabel");
@@ -5543,6 +5547,31 @@ create_pref_dialog (void)
   gtk_frame_set_label_widget (GTK_FRAME (out_meter_pref_frame), out_meter_pref_label);
   gtk_label_set_use_markup (GTK_LABEL (out_meter_pref_label), TRUE);
 
+  limiter_frame = gtk_frame_new (NULL);
+  gtk_widget_set_name (limiter_frame, "limiter_frame");
+  gtk_widget_show (limiter_frame);
+  gtk_box_pack_start (GTK_BOX (dialog_vbox1), limiter_frame, TRUE, TRUE, 0);
+  gtk_frame_set_shadow_type (GTK_FRAME (limiter_frame), GTK_SHADOW_NONE);
+
+  alignment9 = gtk_alignment_new (0.5, 0.5, 1, 1);
+  gtk_widget_set_name (alignment9, "alignment9");
+  gtk_widget_show (alignment9);
+  gtk_container_add (GTK_CONTAINER (limiter_frame), alignment9);
+  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment9), 0, 0, 12, 0);
+
+  limiter_combo = gtk_combo_box_new_text ();
+  gtk_widget_set_name (limiter_combo, "limiter_combo");
+  gtk_widget_show (limiter_combo);
+  gtk_container_add (GTK_CONTAINER (alignment9), limiter_combo);
+  gtk_combo_box_append_text (GTK_COMBO_BOX (limiter_combo), _("Steve Harris' fast_lookahead_limiter"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (limiter_combo), _("Sampo Savolainen's foo_limiter"));
+
+  limiter_frame_label = gtk_label_new (_("<b>Limiter</b>"));
+  gtk_widget_set_name (limiter_frame_label, "limiter_frame_label");
+  gtk_widget_show (limiter_frame_label);
+  gtk_frame_set_label_widget (GTK_FRAME (limiter_frame), limiter_frame_label);
+  gtk_label_set_use_markup (GTK_LABEL (limiter_frame_label), TRUE);
+
   dialog_action_area1 = GTK_DIALOG (pref_dialog)->action_area;
   gtk_widget_set_name (dialog_action_area1, "dialog_action_area1");
   gtk_widget_show (dialog_action_area1);
@@ -5699,6 +5728,9 @@ create_pref_dialog (void)
   g_signal_connect ((gpointer) rms_meter_full_button, "clicked",
                     G_CALLBACK (on_rms_meter_full_button_clicked),
                     NULL);
+  g_signal_connect ((gpointer) limiter_combo, "changed",
+                    G_CALLBACK (on_limiter_combo_changed),
+                    NULL);
   g_signal_connect ((gpointer) pref_help, "clicked",
                     G_CALLBACK (on_pref_help_clicked),
                     NULL);
@@ -5732,7 +5764,7 @@ create_pref_dialog (void)
   GLADE_HOOKUP_OBJECT (pref_dialog, CrossfadeLabel, "CrossfadeLabel");
   GLADE_HOOKUP_OBJECT (pref_dialog, SpectrumEvent, "SpectrumEvent");
   GLADE_HOOKUP_OBJECT (pref_dialog, SpectrumFrame, "SpectrumFrame");
-  GLADE_HOOKUP_OBJECT (pref_dialog, vbox164, "vbox164");
+  GLADE_HOOKUP_OBJECT (pref_dialog, hbox76, "hbox76");
   GLADE_HOOKUP_OBJECT (pref_dialog, SpectrumMenu, "SpectrumMenu");
   GLADE_HOOKUP_OBJECT (pref_dialog, menu3, "menu3");
   GLADE_HOOKUP_OBJECT (pref_dialog, pre_eq, "pre_eq");
@@ -5797,6 +5829,10 @@ create_pref_dialog (void)
   GLADE_HOOKUP_OBJECT (pref_dialog, rms_meter_peak_button, "rms_meter_peak_button");
   GLADE_HOOKUP_OBJECT (pref_dialog, rms_meter_full_button, "rms_meter_full_button");
   GLADE_HOOKUP_OBJECT (pref_dialog, out_meter_pref_label, "out_meter_pref_label");
+  GLADE_HOOKUP_OBJECT (pref_dialog, limiter_frame, "limiter_frame");
+  GLADE_HOOKUP_OBJECT (pref_dialog, alignment9, "alignment9");
+  GLADE_HOOKUP_OBJECT (pref_dialog, limiter_combo, "limiter_combo");
+  GLADE_HOOKUP_OBJECT (pref_dialog, limiter_frame_label, "limiter_frame_label");
   GLADE_HOOKUP_OBJECT_NO_REF (pref_dialog, dialog_action_area1, "dialog_action_area1");
   GLADE_HOOKUP_OBJECT (pref_dialog, pref_help, "pref_help");
   GLADE_HOOKUP_OBJECT (pref_dialog, pref_close, "pref_close");
@@ -5817,6 +5853,7 @@ create_colorselectiondialog1 (void)
   colorselectiondialog1 = gtk_color_selection_dialog_new (_("Select Color"));
   gtk_widget_set_name (colorselectiondialog1, "colorselectiondialog1");
   gtk_container_set_border_width (GTK_CONTAINER (colorselectiondialog1), 5);
+  gtk_window_set_modal (GTK_WINDOW (colorselectiondialog1), TRUE);
   gtk_window_set_resizable (GTK_WINDOW (colorselectiondialog1), FALSE);
   gtk_window_set_type_hint (GTK_WINDOW (colorselectiondialog1), GDK_WINDOW_TYPE_HINT_DIALOG);
 
@@ -6387,5 +6424,19 @@ create_HDEQ_menu (void)
   GLADE_HOOKUP_OBJECT_NO_REF (HDEQ_menu, tooltips, "tooltips");
 
   return HDEQ_menu;
+}
+
+GtkWidget*
+create_window2 (void)
+{
+  GtkWidget *window2;
+
+  window2 = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_widget_set_name (window2, "window2");
+
+  /* Store pointers to all widgets, for use by lookup_widget(). */
+  GLADE_HOOKUP_OBJECT_NO_REF (window2, window2, "window2");
+
+  return window2;
 }
 

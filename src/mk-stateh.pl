@@ -65,6 +65,8 @@ float s_get_crossfade_time();
 void s_suppress_pop();
 int s_have_session_filename();
 gchar *s_get_session_filename();
+void s_set_override_limiter_default ();
+
 
 
 #define S_NONE -1
