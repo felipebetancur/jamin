@@ -5056,7 +5056,6 @@ create_pref_dialog (void)
   gtk_widget_set_name (pref_dialog, "pref_dialog");
   gtk_container_set_border_width (GTK_CONTAINER (pref_dialog), 10);
   gtk_window_set_title (GTK_WINDOW (pref_dialog), _("Preferences"));
-  gtk_window_set_modal (GTK_WINDOW (pref_dialog), TRUE);
   gtk_window_set_type_hint (GTK_WINDOW (pref_dialog), GDK_WINDOW_TYPE_HINT_DIALOG);
 
   dialog_vbox1 = GTK_DIALOG (pref_dialog)->vbox;
@@ -5853,7 +5852,6 @@ create_colorselectiondialog1 (void)
   colorselectiondialog1 = gtk_color_selection_dialog_new (_("Select Color"));
   gtk_widget_set_name (colorselectiondialog1, "colorselectiondialog1");
   gtk_container_set_border_width (GTK_CONTAINER (colorselectiondialog1), 5);
-  gtk_window_set_modal (GTK_WINDOW (colorselectiondialog1), TRUE);
   gtk_window_set_resizable (GTK_WINDOW (colorselectiondialog1), FALSE);
   gtk_window_set_type_hint (GTK_WINDOW (colorselectiondialog1), GDK_WINDOW_TYPE_HINT_DIALOG);
 
