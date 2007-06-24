@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: limiter-ui.c,v 1.17 2007/06/24 17:48:42 jdepner Exp $
+ *  $Id: limiter-ui.c,v 1.18 2007/06/24 23:28:28 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -82,7 +82,7 @@ void bind_limiter()
 
 void li_changed(int id, float value)
 {
-    limiter.ingain = value;
+    limiter[limiter_plugin].ingain = value;
 }
 
 void lh_changed(int id, float value)
@@ -97,14 +97,14 @@ void lh_changed(int id, float value)
     }
     gtk_label_set_text(lh_label, text);
 
-    limiter.release = powf(10.0f, value - 3.0f);
+    limiter[limiter_plugin].release = powf(10.0f, value - 3.0f);
 }
 
 void ll_changed(int id, float value)
 {
     char text[256];
 
-    limiter.limit = value;
+    limiter[limiter_plugin].limit = value;
 	        
     snprintf(text, 255, _("%.1f dB"), value);
     gtk_label_set_text(ll_label, text);
@@ -119,7 +119,7 @@ void limiter_meters_update()
 {
     float peak_in = lin2db(lim_peak[LIM_PEAK_IN]);
     float peak_out = lin2db(lim_peak[LIM_PEAK_OUT]);
-    float atten = -limiter.attenuation;
+    float atten = -limiter[limiter_plugin].attenuation;
     lim_peak[LIM_PEAK_IN] = 0.0f;
     lim_peak[LIM_PEAK_OUT] = 0.0f;
 

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.h,v 1.36 2007/06/24 17:48:42 jdepner Exp $
+ *  $Id: process.h,v 1.37 2007/06/24 23:28:29 jdepner Exp $
  */
 
 #ifndef PROCESS_H
@@ -109,8 +109,6 @@ void process_set_stereo_width(int xo_band, float width);
 
 void process_set_stereo_balance(int xo_band, float bias);
 
-void process_set_limiter_input_gain(float gain);
-
 void process_set_ws_boost(float val);
 
 void process_init(float fs);
@@ -132,15 +130,17 @@ void process_set_low2mid_xover (float freq);
 void process_set_mid2high_xover (float freq);
 float process_get_low2mid_xover ();
 float process_get_mid2high_xover ();
+void process_get_bypass_states (int *eq, int *comp, int *limit, int *global);
 int process_get_bypass_state (int bypass_type);
 float process_get_sample_rate ();
 int process_get_rms_time_slice ();
 void process_set_rms_time_slice (int milliseconds);
 void process_set_global_bypass (int state);
+int process_limiter_plugins_available ();
 
 extern comp_settings compressors[XO_NBANDS];
-extern lim_settings limiter;
-
+extern lim_settings limiter[2];
+extern int limiter_plugin;
 extern plugin *comp_plugin;
 
 #ifdef FILTER_TUNING

@@ -287,6 +287,8 @@ void preferences_init()
       fclose (fp);
     }
 
+  if (process_limiter_plugins_available () < 2) gtk_widget_set_sensitive (GTK_WIDGET (l_limiter_combo), FALSE);
+
   initialized = TRUE;
 }
 

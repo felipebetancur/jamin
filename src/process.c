@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.72 2007/06/24 17:48:42 jdepner Exp $
+ *  $Id: process.c,v 1.73 2007/06/24 23:28:28 jdepner Exp $
  */
 
 #include <math.h>
@@ -53,7 +53,8 @@ static int xo_band_action_pending[XO_NBANDS] = {ACTIVE, ACTIVE, ACTIVE};
 float xover_fa = 150.0f;
 float xover_fb = 1200.0f;
 comp_settings compressors[XO_NBANDS];
-lim_settings limiter;
+lim_settings limiter[2];
+int limiter_plugin = FAST;
 float eq_coefs[BINS]; /* Linear gain of each FFT bin */
 float lim_peak[2];
 
@@ -81,7 +82,6 @@ static float sw_s_gain[XO_NBANDS];
 static float sb_l_gain[XO_NBANDS];
 static float sb_r_gain[XO_NBANDS];
 static float limiter_gain = 1.0f;
-static int limiter_plugin = FAST;
 static int limiter_plugin_pending = FAST;
 static int limiter_plugin_change_pending = FALSE;
 
@@ -231,8 +231,12 @@ void process_init(float fs)
 		     out_tmp[CHANNEL_L][band], out_tmp[CHANNEL_R][band]);
     }
 
-    limiter.handle = plugin_instantiate(lim_plugin[limiter_plugin], fs);
-    lim_connect(lim_plugin[limiter_plugin], &limiter, NULL, NULL);
+    limiter[FAST].handle = plugin_instantiate(lim_plugin[FAST], fs);
+    limiter[FOO].handle = plugin_instantiate(lim_plugin[FOO], fs);
+
+    lim_connect(lim_plugin[FAST], &limiter[FAST], NULL, NULL);
+    lim_connect(lim_plugin[FOO], &limiter[FOO], NULL, NULL);
+
 
     /* Allocate at least 1 second of latency correction buffer */
     for (latcorbuf_len = 256; latcorbuf_len < fs * 1.0f; latcorbuf_len *= 2);
@@ -413,10 +417,10 @@ int process_signal(jack_nframes_t nframes,
     static unsigned int n_calc_pt = BINS - (BINS / OVER_SAMP);
 
     /* The limiters i/o ports potentially change with every call */
-    plugin_connect_port(lim_plugin[limiter_plugin], limiter.handle, LIM_IN_1, out[CHANNEL_L]);
-    plugin_connect_port(lim_plugin[limiter_plugin], limiter.handle, LIM_IN_2, out[CHANNEL_R]);
-    plugin_connect_port(lim_plugin[limiter_plugin], limiter.handle, LIM_OUT_1, out[CHANNEL_L]);
-    plugin_connect_port(lim_plugin[limiter_plugin], limiter.handle, LIM_OUT_2, out[CHANNEL_R]);
+    plugin_connect_port(lim_plugin[limiter_plugin], limiter[limiter_plugin].handle, LIM_IN_1, out[CHANNEL_L]);
+    plugin_connect_port(lim_plugin[limiter_plugin], limiter[limiter_plugin].handle, LIM_IN_2, out[CHANNEL_R]);
+    plugin_connect_port(lim_plugin[limiter_plugin], limiter[limiter_plugin].handle, LIM_OUT_1, out[CHANNEL_L]);
+    plugin_connect_port(lim_plugin[limiter_plugin], limiter[limiter_plugin].handle, LIM_OUT_2, out[CHANNEL_R]);
 
     /* Crossfade parameter values from current to target */
     s_crossfade(nframes);
@@ -582,7 +586,7 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	}
     }
 
-    plugin_run(lim_plugin[limiter_plugin], limiter.handle, nframes);
+    plugin_run(lim_plugin[limiter_plugin], limiter[limiter_plugin].handle, nframes);
 
     /* Keep a buffer of old input data, in case we need it for bypass */
     for (port = 0; port < nchannels; port++) {
@@ -595,7 +599,7 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
     /* If bypass is on, override all the stuff done by the crossover section,
      * limiter, and so on */
     if (limiter_bypass) {
-	const unsigned int limiter_latency = (unsigned int)limiter.latency;
+	const unsigned int limiter_latency = (unsigned int)limiter[limiter_plugin].latency;
 
 	for (port = 0; port < nchannels; port++) {
 	    for (pos = 0; pos < nframes; pos++) {
@@ -605,7 +609,7 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	}
     }
     if (global_bypass) {
-	const unsigned int limiter_latency = (unsigned int)limiter.latency;
+	const unsigned int limiter_latency = (unsigned int)limiter[limiter_plugin].latency;
 
 	for (port = 0; port < nchannels; port++) {
 	    for (pos = 0; pos < nframes; pos++) {
@@ -648,16 +652,11 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
     }
 
 
-    /*  As above, don't change the limiter plugin until we're done processing.  */
+    /*  As above, update the limiter.  */
 
     if (limiter_plugin_change_pending)
       {
         limiter_plugin = limiter_plugin_pending;
-
-        if (lim_plugin[limiter_plugin] == NULL) limiter_plugin ^= 1;
-
-        limiter.handle = plugin_instantiate(lim_plugin[limiter_plugin], sample_rate);
-        lim_connect(lim_plugin[limiter_plugin], &limiter, NULL, NULL);
 
         limiter_set_label (limiter_plugin);
 
@@ -698,10 +697,23 @@ int process_get_spec_mode()
 
 void process_set_limiter_plugin(int id)
 {
-  limiter_plugin_change_pending = TRUE;
+  int pid = limiter_plugin;
 
+  if (lim_plugin[id] == NULL) return;
 
   limiter_plugin_pending = id;
+
+
+  /*  Copy the previous settings to the current plugin.  */
+
+  limiter[id].ingain = limiter[pid].ingain;
+  limiter[id].limit = limiter[pid].limit;
+  limiter[id].release = limiter[pid].release;
+  limiter[id].attenuation = limiter[pid].attenuation;
+  limiter[id].latency = limiter[pid].latency;
+
+
+  limiter_plugin_change_pending = TRUE;
 }
 
 int process_get_limiter_plugin()
@@ -741,11 +753,6 @@ void run_width(int xo_band, float *left, float *right, int nframes)
 	left[pos] = (mid + side) * sb_l_gain[xo_band];
 	right[pos] = (mid - side) * sb_r_gain[xo_band];
     }
-}
-
-void process_set_limiter_input_gain(float gain)
-{
-        limiter_gain = gain;
 }
 
 void process_set_ws_boost(float val)
@@ -807,7 +814,7 @@ float process_get_mid2high_xover ()
     return (xover_fb);
 }
 
-void process_get_bypass_states (int *eq, int *comp, int *limiter, int *global)
+void process_get_bypass_states (int *eq, int *comp, int *limit, int *global)
 {
   int i;
 
@@ -816,7 +823,7 @@ void process_get_bypass_states (int *eq, int *comp, int *limiter, int *global)
 
   for (i = 0 ; i < XO_NBANDS ; i++) comp[i] = xo_band_action[i];
 
-  *limiter = limiter_bypass;
+  *limit = limiter_bypass;
   *global = global_bypass;
 }
 
@@ -884,6 +891,13 @@ void process_set_rms_time_slice (int milliseconds)
 void process_set_global_bypass (int state)
 {
   global_bypass = state;
+}
+
+
+int process_limiter_plugins_available ()
+{
+  if (lim_plugin[FAST] == NULL || lim_plugin[FOO] == NULL) return (1);
+  return (2);
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

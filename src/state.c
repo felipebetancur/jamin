@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.66 2007/06/22 01:29:22 jdepner Exp $
+ *  $Id: state.c,v 1.67 2007/06/24 23:28:29 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -709,7 +709,7 @@ void s_load_session (const gchar *fname)
     gp.out_meter_peak_pref = TRUE;
     gp.rms_meter_peak_pref = TRUE;
     gp.rms_time_slice = 50;
-    gp.limiter_plugin = 0;
+    gp.limiter_plugin = FAST;
     for (i = 0 ; i < XO_BANDS ; i++) {
         gp.gang_at[i] = FALSE;
         gp.gang_re[i] = FALSE;
@@ -771,13 +771,6 @@ void s_load_session (const gchar *fname)
     process_set_rms_time_slice (gp.rms_time_slice);
 
 
-    /*  If we set the limiter plugin on the command line don't set
-        it from the defaults.  */
-
-    if (!override_limiter_default) process_set_limiter_plugin (gp.limiter_plugin);
-    override_limiter_default = FALSE;
-
-
     /*  This is the active scene.  */
 
     if (saved_scene < 100)
@@ -805,6 +798,13 @@ void s_load_session (const gchar *fname)
         if (gp.gang_kn[i]) comp_gang_kn (i);
         if (gp.gang_ma[i]) comp_gang_ma (i);
     }
+
+
+    /*  If we set the limiter plugin on the command line don't set
+        it from the defaults.  */
+
+    if (!override_limiter_default) process_set_limiter_plugin (gp.limiter_plugin);
+    override_limiter_default = FALSE;
 
 
     hdeq_set_xover ();
