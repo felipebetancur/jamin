@@ -370,6 +370,7 @@ create_window1 (void)
   GtkWidget *low_band_button_event_box;
   GtkWidget *low_band_button_hbox;
   GtkWidget *low_solo;
+  GtkWidget *low_bypass_event_box;
   GtkWidget *low_bypass;
   GtkWidget *label_freq_l;
   GtkWidget *mid_comp_event_box;
@@ -419,6 +420,7 @@ create_window1 (void)
   GtkWidget *mid_band_button_event_box;
   GtkWidget *mid_band_button_hbox;
   GtkWidget *mid_solo;
+  GtkWidget *mid_bypass_event_box;
   GtkWidget *mid_bypass;
   GtkWidget *label_freq_m;
   GtkWidget *high_comp_event_box;
@@ -468,6 +470,7 @@ create_window1 (void)
   GtkWidget *high_band_button_event_box;
   GtkWidget *high_band_button_hbox;
   GtkWidget *high_solo;
+  GtkWidget *high_bypass_event_box;
   GtkWidget *high_bypass;
   GtkWidget *label_freq_h;
   GtkWidget *right_bottom_vbox;
@@ -499,11 +502,8 @@ create_window1 (void)
   GtkWidget *lim_att_meter;
   GtkWidget *custom20;
   GtkWidget *lim_out_meter;
-  GtkWidget *limiter_global_bypass;
   GtkWidget *limiter_bypass_event_box;
   GtkWidget *limiter_bypass;
-  GtkWidget *global_bypass_event_box;
-  GtkWidget *global_bypass;
   GtkWidget *limiterlabel;
   GtkWidget *frame27;
   GtkWidget *output_vbox;
@@ -525,6 +525,8 @@ create_window1 (void)
   GtkWidget *custom21;
   GtkWidget *outmeter_r;
   GtkWidget *rmsmeter_r;
+  GtkWidget *global_bypass_event_box;
+  GtkWidget *global_bypass;
   GtkWidget *label318;
   GtkAccelGroup *accel_group;
   GtkTooltips *tooltips;
@@ -2089,6 +2091,7 @@ create_window1 (void)
   gtk_widget_set_name (eq_bypass_event_box, "eq_bypass_event_box");
   gtk_widget_show (eq_bypass_event_box);
   gtk_box_pack_start (GTK_BOX (hbox59), eq_bypass_event_box, FALSE, FALSE, 0);
+  gtk_tooltips_set_tip (tooltips, eq_bypass_event_box, _("Bypass EQ processing"), NULL);
 
   eq_bypass = gtk_check_button_new_with_mnemonic (_("EQ bypass"));
   gtk_widget_set_name (eq_bypass, "eq_bypass");
@@ -2465,11 +2468,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (low_band_button_hbox), low_solo, FALSE, FALSE, 0);
   gtk_tooltips_set_tip (tooltips, low_solo, _("Low Band Solo"), NULL);
 
+  low_bypass_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (low_bypass_event_box, "low_bypass_event_box");
+  gtk_widget_show (low_bypass_event_box);
+  gtk_box_pack_start (GTK_BOX (low_band_button_hbox), low_bypass_event_box, FALSE, FALSE, 0);
+  gtk_tooltips_set_tip (tooltips, low_bypass_event_box, _("Bypass low band compressor processing"), NULL);
+
   low_bypass = gtk_check_button_new_with_mnemonic (_("Bypass"));
   gtk_widget_set_name (low_bypass, "low_bypass");
   gtk_widget_show (low_bypass);
-  gtk_box_pack_start (GTK_BOX (low_band_button_hbox), low_bypass, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, low_bypass, _("Low Band Bypass"), NULL);
+  gtk_container_add (GTK_CONTAINER (low_bypass_event_box), low_bypass);
 
   label_freq_l = gtk_label_new (_("Low : 00000 - 00000"));
   gtk_widget_set_name (label_freq_l, "label_freq_l");
@@ -2751,11 +2759,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (mid_band_button_hbox), mid_solo, FALSE, FALSE, 0);
   gtk_tooltips_set_tip (tooltips, mid_solo, _("Mid Band Solo"), NULL);
 
+  mid_bypass_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (mid_bypass_event_box, "mid_bypass_event_box");
+  gtk_widget_show (mid_bypass_event_box);
+  gtk_box_pack_start (GTK_BOX (mid_band_button_hbox), mid_bypass_event_box, FALSE, FALSE, 0);
+  gtk_tooltips_set_tip (tooltips, mid_bypass_event_box, _("Bypass mid band compressor processing"), NULL);
+
   mid_bypass = gtk_check_button_new_with_mnemonic (_("Bypass"));
   gtk_widget_set_name (mid_bypass, "mid_bypass");
   gtk_widget_show (mid_bypass);
-  gtk_box_pack_start (GTK_BOX (mid_band_button_hbox), mid_bypass, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, mid_bypass, _("Mid Band Bypass"), NULL);
+  gtk_container_add (GTK_CONTAINER (mid_bypass_event_box), mid_bypass);
 
   label_freq_m = gtk_label_new (_("Mid : 00000 - 00000"));
   gtk_widget_set_name (label_freq_m, "label_freq_m");
@@ -3037,11 +3050,16 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (high_band_button_hbox), high_solo, FALSE, FALSE, 0);
   gtk_tooltips_set_tip (tooltips, high_solo, _("High Band Solo"), NULL);
 
+  high_bypass_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (high_bypass_event_box, "high_bypass_event_box");
+  gtk_widget_show (high_bypass_event_box);
+  gtk_box_pack_start (GTK_BOX (high_band_button_hbox), high_bypass_event_box, FALSE, FALSE, 0);
+  gtk_tooltips_set_tip (tooltips, high_bypass_event_box, _("Bypass high band compressor processing"), NULL);
+
   high_bypass = gtk_check_button_new_with_mnemonic (_("Bypass"));
   gtk_widget_set_name (high_bypass, "high_bypass");
   gtk_widget_show (high_bypass);
-  gtk_box_pack_start (GTK_BOX (high_band_button_hbox), high_bypass, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, high_bypass, _("High Band Bypass"), NULL);
+  gtk_container_add (GTK_CONTAINER (high_bypass_event_box), high_bypass);
 
   label_freq_h = gtk_label_new (_("High : 00000 - 00000"));
   gtk_widget_set_name (label_freq_h, "label_freq_h");
@@ -3057,7 +3075,7 @@ create_window1 (void)
   boost_eventbox = gtk_event_box_new ();
   gtk_widget_set_name (boost_eventbox, "boost_eventbox");
   gtk_widget_show (boost_eventbox);
-  gtk_box_pack_start (GTK_BOX (right_bottom_vbox), boost_eventbox, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (right_bottom_vbox), boost_eventbox, TRUE, TRUE, 0);
 
   frame26 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame26, "frame26");
@@ -3240,32 +3258,18 @@ create_window1 (void)
   GTK_WIDGET_UNSET_FLAGS (lim_out_meter, GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (lim_out_meter, GTK_CAN_DEFAULT);
 
-  limiter_global_bypass = gtk_hbox_new (TRUE, 0);
-  gtk_widget_set_name (limiter_global_bypass, "limiter_global_bypass");
-  gtk_widget_show (limiter_global_bypass);
-  gtk_box_pack_start (GTK_BOX (vbox105), limiter_global_bypass, FALSE, FALSE, 0);
-
   limiter_bypass_event_box = gtk_event_box_new ();
   gtk_widget_set_name (limiter_bypass_event_box, "limiter_bypass_event_box");
   gtk_widget_show (limiter_bypass_event_box);
-  gtk_box_pack_start (GTK_BOX (limiter_global_bypass), limiter_bypass_event_box, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox105), limiter_bypass_event_box, FALSE, FALSE, 0);
+  gtk_tooltips_set_tip (tooltips, limiter_bypass_event_box, _("Bypass boost and limiter processing"), NULL);
 
   limiter_bypass = gtk_check_button_new_with_mnemonic (_("Limiter bypass"));
   gtk_widget_set_name (limiter_bypass, "limiter_bypass");
   gtk_widget_show (limiter_bypass);
   gtk_container_add (GTK_CONTAINER (limiter_bypass_event_box), limiter_bypass);
 
-  global_bypass_event_box = gtk_event_box_new ();
-  gtk_widget_set_name (global_bypass_event_box, "global_bypass_event_box");
-  gtk_widget_show (global_bypass_event_box);
-  gtk_box_pack_start (GTK_BOX (limiter_global_bypass), global_bypass_event_box, FALSE, FALSE, 0);
-
-  global_bypass = gtk_check_button_new_with_mnemonic (_("Global bypass"));
-  gtk_widget_set_name (global_bypass, "global_bypass");
-  gtk_widget_show (global_bypass);
-  gtk_container_add (GTK_CONTAINER (global_bypass_event_box), global_bypass);
-
-  limiterlabel = gtk_label_new (_("Limiter"));
+  limiterlabel = gtk_label_new (_("Fast-lookahead-limiter (Harris)"));
   gtk_widget_set_name (limiterlabel, "limiterlabel");
   gtk_widget_show (limiterlabel);
   gtk_frame_set_label_widget (GTK_FRAME (frame25), limiterlabel);
@@ -3421,6 +3425,17 @@ create_window1 (void)
   gtk_widget_set_size_request (rmsmeter_r, 10, 0);
   GTK_WIDGET_UNSET_FLAGS (rmsmeter_r, GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (rmsmeter_r, GTK_CAN_DEFAULT);
+
+  global_bypass_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (global_bypass_event_box, "global_bypass_event_box");
+  gtk_widget_show (global_bypass_event_box);
+  gtk_box_pack_start (GTK_BOX (output_vbox), global_bypass_event_box, FALSE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, global_bypass_event_box, _("Bypass all processing"), NULL);
+
+  global_bypass = gtk_check_button_new_with_mnemonic (_("Global bypass"));
+  gtk_widget_set_name (global_bypass, "global_bypass");
+  gtk_widget_show (global_bypass);
+  gtk_container_add (GTK_CONTAINER (global_bypass_event_box), global_bypass);
 
   label318 = gtk_label_new (_("Output"));
   gtk_widget_set_name (label318, "label318");
@@ -4309,12 +4324,6 @@ create_window1 (void)
   g_signal_connect ((gpointer) limiter_bypass, "toggled",
                     G_CALLBACK (on_limiter_bypass_toggled),
                     NULL);
-  g_signal_connect ((gpointer) global_bypass_event_box, "enter_notify_event",
-                    G_CALLBACK (on_global_bypass_event_box_enter_notify_event),
-                    NULL);
-  g_signal_connect ((gpointer) global_bypass, "toggled",
-                    G_CALLBACK (on_global_bypass_toggled),
-                    NULL);
   g_signal_connect_swapped ((gpointer) out_meter_text_l, "button_press_event",
                             G_CALLBACK (on_meter_text_button_press_event),
                             GTK_OBJECT (outmeter_l));
@@ -4338,6 +4347,12 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) outmeter_eventbox, "button_press_event",
                     G_CALLBACK (on_outmeter_eventbox_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) global_bypass_event_box, "enter_notify_event",
+                    G_CALLBACK (on_global_bypass_event_box_enter_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) global_bypass, "toggled",
+                    G_CALLBACK (on_global_bypass_toggled),
                     NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
@@ -4681,6 +4696,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, low_band_button_event_box, "low_band_button_event_box");
   GLADE_HOOKUP_OBJECT (window1, low_band_button_hbox, "low_band_button_hbox");
   GLADE_HOOKUP_OBJECT (window1, low_solo, "low_solo");
+  GLADE_HOOKUP_OBJECT (window1, low_bypass_event_box, "low_bypass_event_box");
   GLADE_HOOKUP_OBJECT (window1, low_bypass, "low_bypass");
   GLADE_HOOKUP_OBJECT (window1, label_freq_l, "label_freq_l");
   GLADE_HOOKUP_OBJECT (window1, mid_comp_event_box, "mid_comp_event_box");
@@ -4730,6 +4746,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, mid_band_button_event_box, "mid_band_button_event_box");
   GLADE_HOOKUP_OBJECT (window1, mid_band_button_hbox, "mid_band_button_hbox");
   GLADE_HOOKUP_OBJECT (window1, mid_solo, "mid_solo");
+  GLADE_HOOKUP_OBJECT (window1, mid_bypass_event_box, "mid_bypass_event_box");
   GLADE_HOOKUP_OBJECT (window1, mid_bypass, "mid_bypass");
   GLADE_HOOKUP_OBJECT (window1, label_freq_m, "label_freq_m");
   GLADE_HOOKUP_OBJECT (window1, high_comp_event_box, "high_comp_event_box");
@@ -4779,6 +4796,7 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, high_band_button_event_box, "high_band_button_event_box");
   GLADE_HOOKUP_OBJECT (window1, high_band_button_hbox, "high_band_button_hbox");
   GLADE_HOOKUP_OBJECT (window1, high_solo, "high_solo");
+  GLADE_HOOKUP_OBJECT (window1, high_bypass_event_box, "high_bypass_event_box");
   GLADE_HOOKUP_OBJECT (window1, high_bypass, "high_bypass");
   GLADE_HOOKUP_OBJECT (window1, label_freq_h, "label_freq_h");
   GLADE_HOOKUP_OBJECT (window1, right_bottom_vbox, "right_bottom_vbox");
@@ -4810,11 +4828,8 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, lim_att_meter, "lim_att_meter");
   GLADE_HOOKUP_OBJECT (window1, custom20, "custom20");
   GLADE_HOOKUP_OBJECT (window1, lim_out_meter, "lim_out_meter");
-  GLADE_HOOKUP_OBJECT (window1, limiter_global_bypass, "limiter_global_bypass");
   GLADE_HOOKUP_OBJECT (window1, limiter_bypass_event_box, "limiter_bypass_event_box");
   GLADE_HOOKUP_OBJECT (window1, limiter_bypass, "limiter_bypass");
-  GLADE_HOOKUP_OBJECT (window1, global_bypass_event_box, "global_bypass_event_box");
-  GLADE_HOOKUP_OBJECT (window1, global_bypass, "global_bypass");
   GLADE_HOOKUP_OBJECT (window1, limiterlabel, "limiterlabel");
   GLADE_HOOKUP_OBJECT (window1, frame27, "frame27");
   GLADE_HOOKUP_OBJECT (window1, output_vbox, "output_vbox");
@@ -4836,6 +4851,8 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, custom21, "custom21");
   GLADE_HOOKUP_OBJECT (window1, outmeter_r, "outmeter_r");
   GLADE_HOOKUP_OBJECT (window1, rmsmeter_r, "rmsmeter_r");
+  GLADE_HOOKUP_OBJECT (window1, global_bypass_event_box, "global_bypass_event_box");
+  GLADE_HOOKUP_OBJECT (window1, global_bypass, "global_bypass");
   GLADE_HOOKUP_OBJECT (window1, label318, "label318");
   GLADE_HOOKUP_OBJECT_NO_REF (window1, tooltips, "tooltips");
 
@@ -4971,12 +4988,8 @@ create_pref_dialog (void)
   GtkWidget *SpectrumEvent;
   GtkWidget *SpectrumFrame;
   GtkWidget *hbox76;
-  GtkWidget *SpectrumMenu;
-  GtkWidget *menu3;
-  GtkWidget *pre_eq;
-  GtkWidget *post_eq;
-  GtkWidget *post_compressor;
-  GtkWidget *output2;
+  GtkWidget *eventbox69;
+  GtkWidget *SpectrumComboBox;
   GtkWidget *hbox73;
   GtkWidget *UpdateFrequencyLabel;
   GtkObject *UpdateFrequencySpin_adj;
@@ -5000,29 +5013,8 @@ create_pref_dialog (void)
   GtkWidget *label3179;
   GtkWidget *ColorsEvent;
   GtkWidget *ColorsFrame;
-  GtkWidget *ColorsMenu;
-  GtkWidget *menu4;
-  GtkWidget *imagemenuitem1;
-  GtkWidget *imagemenuitem2;
-  GtkWidget *imagemenuitem3;
-  GtkWidget *menuitem5;
-  GtkWidget *imagemenuitem4;
-  GtkWidget *menuitem6;
-  GtkWidget *imagemenuitem5;
-  GtkWidget *imagemenuitem6;
-  GtkWidget *hdeq_spectrum1;
-  GtkWidget *imagemenuitem7;
-  GtkWidget *imagemenuitem8;
-  GtkWidget *menuitem7;
-  GtkWidget *imagemenuitem9;
-  GtkWidget *menuitem8;
-  GtkWidget *imagemenuitem10;
-  GtkWidget *imagemenuitem11;
-  GtkWidget *imagemenuitem12;
-  GtkWidget *imagemenuitem13;
-  GtkWidget *menuitem9;
-  GtkWidget *imagemenuitem14;
-  GtkWidget *image337;
+  GtkWidget *eventbox68;
+  GtkWidget *ColorsComboBox;
   GtkWidget *ColorsLabel;
   GtkWidget *warningFrame;
   GtkWidget *alignment7;
@@ -5043,6 +5035,7 @@ create_pref_dialog (void)
   GtkWidget *out_meter_pref_label;
   GtkWidget *limiter_frame;
   GtkWidget *alignment9;
+  GtkWidget *eventbox67;
   GtkWidget *limiter_combo;
   GtkWidget *limiter_frame_label;
   GtkWidget *dialog_action_area1;
@@ -5171,36 +5164,20 @@ create_pref_dialog (void)
   gtk_widget_show (hbox76);
   gtk_container_add (GTK_CONTAINER (SpectrumFrame), hbox76);
 
-  SpectrumMenu = gtk_option_menu_new ();
-  gtk_widget_set_name (SpectrumMenu, "SpectrumMenu");
-  gtk_widget_show (SpectrumMenu);
-  gtk_box_pack_start (GTK_BOX (hbox76), SpectrumMenu, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, SpectrumMenu, _("Choose source for spectrum display"), NULL);
+  eventbox69 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox69, "eventbox69");
+  gtk_widget_show (eventbox69);
+  gtk_box_pack_start (GTK_BOX (hbox76), eventbox69, FALSE, FALSE, 0);
+  gtk_tooltips_set_tip (tooltips, eventbox69, _("Select HDEQ spectrum source"), NULL);
 
-  menu3 = gtk_menu_new ();
-  gtk_widget_set_name (menu3, "menu3");
-
-  pre_eq = gtk_menu_item_new_with_mnemonic (_("Pre EQ"));
-  gtk_widget_set_name (pre_eq, "pre_eq");
-  gtk_widget_show (pre_eq);
-  gtk_container_add (GTK_CONTAINER (menu3), pre_eq);
-
-  post_eq = gtk_menu_item_new_with_mnemonic (_("Post EQ"));
-  gtk_widget_set_name (post_eq, "post_eq");
-  gtk_widget_show (post_eq);
-  gtk_container_add (GTK_CONTAINER (menu3), post_eq);
-
-  post_compressor = gtk_menu_item_new_with_mnemonic (_("Post Compressor"));
-  gtk_widget_set_name (post_compressor, "post_compressor");
-  gtk_widget_show (post_compressor);
-  gtk_container_add (GTK_CONTAINER (menu3), post_compressor);
-
-  output2 = gtk_menu_item_new_with_mnemonic (_("Output"));
-  gtk_widget_set_name (output2, "output2");
-  gtk_widget_show (output2);
-  gtk_container_add (GTK_CONTAINER (menu3), output2);
-
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (SpectrumMenu), menu3);
+  SpectrumComboBox = gtk_combo_box_new_text ();
+  gtk_widget_set_name (SpectrumComboBox, "SpectrumComboBox");
+  gtk_widget_show (SpectrumComboBox);
+  gtk_container_add (GTK_CONTAINER (eventbox69), SpectrumComboBox);
+  gtk_combo_box_append_text (GTK_COMBO_BOX (SpectrumComboBox), _("Pre EQ"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (SpectrumComboBox), _("Post EQ"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (SpectrumComboBox), _("Post Compressor"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (SpectrumComboBox), _("Output"));
 
   hbox73 = gtk_hbox_new (TRUE, 0);
   gtk_widget_set_name (hbox73, "hbox73");
@@ -5330,127 +5307,31 @@ create_pref_dialog (void)
   gtk_container_add (GTK_CONTAINER (ColorsEvent), ColorsFrame);
   gtk_container_set_border_width (GTK_CONTAINER (ColorsFrame), 5);
 
-  ColorsMenu = gtk_option_menu_new ();
-  gtk_widget_set_name (ColorsMenu, "ColorsMenu");
-  gtk_widget_show (ColorsMenu);
-  gtk_container_add (GTK_CONTAINER (ColorsFrame), ColorsMenu);
-  gtk_container_set_border_width (GTK_CONTAINER (ColorsMenu), 6);
-  gtk_tooltips_set_tip (tooltips, ColorsMenu, _("Set colors for GUI components"), NULL);
+  eventbox68 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox68, "eventbox68");
+  gtk_widget_show (eventbox68);
+  gtk_container_add (GTK_CONTAINER (ColorsFrame), eventbox68);
+  gtk_tooltips_set_tip (tooltips, eventbox68, _("Select colors for main JAMin GUI components"), NULL);
 
-  menu4 = gtk_menu_new ();
-  gtk_widget_set_name (menu4, "menu4");
-
-  imagemenuitem1 = gtk_menu_item_new_with_mnemonic (_("Low Band Compressor"));
-  gtk_widget_set_name (imagemenuitem1, "imagemenuitem1");
-  gtk_widget_show (imagemenuitem1);
-  gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem1);
-
-  imagemenuitem2 = gtk_menu_item_new_with_mnemonic (_("Mid Band Compressor"));
-  gtk_widget_set_name (imagemenuitem2, "imagemenuitem2");
-  gtk_widget_show (imagemenuitem2);
-  gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem2);
-
-  imagemenuitem3 = gtk_menu_item_new_with_mnemonic (_("High Band Compressor"));
-  gtk_widget_set_name (imagemenuitem3, "imagemenuitem3");
-  gtk_widget_show (imagemenuitem3);
-  gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem3);
-
-  menuitem5 = gtk_separator_menu_item_new ();
-  gtk_widget_set_name (menuitem5, "menuitem5");
-  gtk_widget_show (menuitem5);
-  gtk_container_add (GTK_CONTAINER (menu4), menuitem5);
-  gtk_widget_set_sensitive (menuitem5, FALSE);
-
-  imagemenuitem4 = gtk_menu_item_new_with_mnemonic (_("Ganged Controls"));
-  gtk_widget_set_name (imagemenuitem4, "imagemenuitem4");
-  gtk_widget_show (imagemenuitem4);
-  gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem4);
-
-  menuitem6 = gtk_separator_menu_item_new ();
-  gtk_widget_set_name (menuitem6, "menuitem6");
-  gtk_widget_show (menuitem6);
-  gtk_container_add (GTK_CONTAINER (menu4), menuitem6);
-  gtk_widget_set_sensitive (menuitem6, FALSE);
-
-  imagemenuitem5 = gtk_menu_item_new_with_mnemonic (_("Parametric Handles"));
-  gtk_widget_set_name (imagemenuitem5, "imagemenuitem5");
-  gtk_widget_show (imagemenuitem5);
-  gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem5);
-
-  imagemenuitem6 = gtk_menu_item_new_with_mnemonic (_("HDEQ Curve"));
-  gtk_widget_set_name (imagemenuitem6, "imagemenuitem6");
-  gtk_widget_show (imagemenuitem6);
-  gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem6);
-
-  hdeq_spectrum1 = gtk_menu_item_new_with_mnemonic (_("HDEQ Spectrum"));
-  gtk_widget_set_name (hdeq_spectrum1, "hdeq_spectrum1");
-  gtk_widget_show (hdeq_spectrum1);
-  gtk_container_add (GTK_CONTAINER (menu4), hdeq_spectrum1);
-
-  imagemenuitem7 = gtk_menu_item_new_with_mnemonic (_("HDEQ Grid"));
-  gtk_widget_set_name (imagemenuitem7, "imagemenuitem7");
-  gtk_widget_show (imagemenuitem7);
-  gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem7);
-
-  imagemenuitem8 = gtk_menu_item_new_with_mnemonic (_("HDEQ Background"));
-  gtk_widget_set_name (imagemenuitem8, "imagemenuitem8");
-  gtk_widget_show (imagemenuitem8);
-  gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem8);
-
-  menuitem7 = gtk_separator_menu_item_new ();
-  gtk_widget_set_name (menuitem7, "menuitem7");
-  gtk_widget_show (menuitem7);
-  gtk_container_add (GTK_CONTAINER (menu4), menuitem7);
-  gtk_widget_set_sensitive (menuitem7, FALSE);
-
-  imagemenuitem9 = gtk_menu_item_new_with_mnemonic (_("Text"));
-  gtk_widget_set_name (imagemenuitem9, "imagemenuitem9");
-  gtk_widget_show (imagemenuitem9);
-  gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem9);
-
-  menuitem8 = gtk_separator_menu_item_new ();
-  gtk_widget_set_name (menuitem8, "menuitem8");
-  gtk_widget_show (menuitem8);
-  gtk_container_add (GTK_CONTAINER (menu4), menuitem8);
-  gtk_widget_set_sensitive (menuitem8, FALSE);
-
-  imagemenuitem10 = gtk_menu_item_new_with_mnemonic (_("Meter Normal"));
-  gtk_widget_set_name (imagemenuitem10, "imagemenuitem10");
-  gtk_widget_show (imagemenuitem10);
-  gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem10);
-
-  imagemenuitem11 = gtk_menu_item_new_with_mnemonic (_("Meter Warning"));
-  gtk_widget_set_name (imagemenuitem11, "imagemenuitem11");
-  gtk_widget_show (imagemenuitem11);
-  gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem11);
-
-  imagemenuitem12 = gtk_menu_item_new_with_mnemonic (_("Meter Over"));
-  gtk_widget_set_name (imagemenuitem12, "imagemenuitem12");
-  gtk_widget_show (imagemenuitem12);
-  gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem12);
-
-  imagemenuitem13 = gtk_menu_item_new_with_mnemonic (_("Meter Peak"));
-  gtk_widget_set_name (imagemenuitem13, "imagemenuitem13");
-  gtk_widget_show (imagemenuitem13);
-  gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem13);
-
-  menuitem9 = gtk_separator_menu_item_new ();
-  gtk_widget_set_name (menuitem9, "menuitem9");
-  gtk_widget_show (menuitem9);
-  gtk_container_add (GTK_CONTAINER (menu4), menuitem9);
-  gtk_widget_set_sensitive (menuitem9, FALSE);
-
-  imagemenuitem14 = gtk_image_menu_item_new_with_mnemonic (_("Reset All Colors"));
-  gtk_widget_set_name (imagemenuitem14, "imagemenuitem14");
-  gtk_widget_show (imagemenuitem14);
-  gtk_container_add (GTK_CONTAINER (menu4), imagemenuitem14);
-
-  image337 = gtk_image_new_from_stock ("gtk-refresh", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_name (image337, "image337");
-  gtk_widget_show (image337);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (imagemenuitem14), image337);
-
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (ColorsMenu), menu4);
+  ColorsComboBox = gtk_combo_box_new_text ();
+  gtk_widget_set_name (ColorsComboBox, "ColorsComboBox");
+  gtk_widget_show (ColorsComboBox);
+  gtk_container_add (GTK_CONTAINER (eventbox68), ColorsComboBox);
+  gtk_combo_box_append_text (GTK_COMBO_BOX (ColorsComboBox), _("Low Band Compressor"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (ColorsComboBox), _("Mid Band Compressor"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (ColorsComboBox), _("High Band Compressor"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (ColorsComboBox), _("Ganged Controls"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (ColorsComboBox), _("Parametric Handles"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (ColorsComboBox), _("HDEQ Curve"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (ColorsComboBox), _("HDEQ Spectrum"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (ColorsComboBox), _("HDEQ Grid"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (ColorsComboBox), _("HDEQ Background"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (ColorsComboBox), _("Text"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (ColorsComboBox), _("Meter Normal"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (ColorsComboBox), _("Meter Warning"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (ColorsComboBox), _("Meter Over"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (ColorsComboBox), _("Meter Peak"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (ColorsComboBox), _("Reset All Colors To Defaults"));
 
   ColorsLabel = gtk_label_new (_("<i><b>Colors</b></i>"));
   gtk_widget_set_name (ColorsLabel, "ColorsLabel");
@@ -5558,10 +5439,16 @@ create_pref_dialog (void)
   gtk_container_add (GTK_CONTAINER (limiter_frame), alignment9);
   gtk_alignment_set_padding (GTK_ALIGNMENT (alignment9), 0, 0, 12, 0);
 
+  eventbox67 = gtk_event_box_new ();
+  gtk_widget_set_name (eventbox67, "eventbox67");
+  gtk_widget_show (eventbox67);
+  gtk_container_add (GTK_CONTAINER (alignment9), eventbox67);
+  gtk_tooltips_set_tip (tooltips, eventbox67, _("Select the type of limiter"), NULL);
+
   limiter_combo = gtk_combo_box_new_text ();
   gtk_widget_set_name (limiter_combo, "limiter_combo");
   gtk_widget_show (limiter_combo);
-  gtk_container_add (GTK_CONTAINER (alignment9), limiter_combo);
+  gtk_container_add (GTK_CONTAINER (eventbox67), limiter_combo);
   gtk_combo_box_append_text (GTK_COMBO_BOX (limiter_combo), _("Steve Harris' fast_lookahead_limiter"));
   gtk_combo_box_append_text (GTK_COMBO_BOX (limiter_combo), _("Sampo Savolainen's foo_limiter"));
 
@@ -5625,17 +5512,8 @@ create_pref_dialog (void)
   g_signal_connect ((gpointer) SpectrumEvent, "enter_notify_event",
                     G_CALLBACK (on_pref_enter_notify_event),
                     NULL);
-  g_signal_connect ((gpointer) pre_eq, "activate",
-                    G_CALLBACK (on_pre_eq_activate),
-                    NULL);
-  g_signal_connect ((gpointer) post_eq, "activate",
-                    G_CALLBACK (on_post_eq_activate),
-                    NULL);
-  g_signal_connect ((gpointer) post_compressor, "activate",
-                    G_CALLBACK (on_post_compressor_activate),
-                    NULL);
-  g_signal_connect ((gpointer) output2, "activate",
-                    G_CALLBACK (on_output2_activate),
+  g_signal_connect ((gpointer) SpectrumComboBox, "changed",
+                    G_CALLBACK (on_SpectrumComboBox_changed),
                     NULL);
   g_signal_connect ((gpointer) UpdateFrequencySpin, "focus_in_event",
                     G_CALLBACK (on_text_focus_in_event),
@@ -5661,50 +5539,8 @@ create_pref_dialog (void)
   g_signal_connect ((gpointer) ColorsEvent, "enter_notify_event",
                     G_CALLBACK (on_pref_enter_notify_event),
                     NULL);
-  g_signal_connect ((gpointer) imagemenuitem1, "activate",
-                    G_CALLBACK (on_low_band_compressor_color_activate),
-                    NULL);
-  g_signal_connect ((gpointer) imagemenuitem2, "activate",
-                    G_CALLBACK (on_mid_band_compressor_color_activate),
-                    NULL);
-  g_signal_connect ((gpointer) imagemenuitem3, "activate",
-                    G_CALLBACK (on_high_band_compressor_color_activate),
-                    NULL);
-  g_signal_connect ((gpointer) imagemenuitem4, "activate",
-                    G_CALLBACK (on_ganged_controls_color_activate),
-                    NULL);
-  g_signal_connect ((gpointer) imagemenuitem5, "activate",
-                    G_CALLBACK (on_parametric_handles_color_activate),
-                    NULL);
-  g_signal_connect ((gpointer) imagemenuitem6, "activate",
-                    G_CALLBACK (on_hdeq_curve_color_activate),
-                    NULL);
-  g_signal_connect ((gpointer) hdeq_spectrum1, "activate",
-                    G_CALLBACK (on_hdeq_spectrum_color_activate),
-                    NULL);
-  g_signal_connect ((gpointer) imagemenuitem7, "activate",
-                    G_CALLBACK (on_hdeq_grid_color_activate),
-                    NULL);
-  g_signal_connect ((gpointer) imagemenuitem8, "activate",
-                    G_CALLBACK (on_hdeq_background_color_activate),
-                    NULL);
-  g_signal_connect ((gpointer) imagemenuitem9, "activate",
-                    G_CALLBACK (on_text_color_activate),
-                    NULL);
-  g_signal_connect ((gpointer) imagemenuitem10, "activate",
-                    G_CALLBACK (on_meter_normal_color_activate),
-                    NULL);
-  g_signal_connect ((gpointer) imagemenuitem11, "activate",
-                    G_CALLBACK (on_meter_warning_color_activate),
-                    NULL);
-  g_signal_connect ((gpointer) imagemenuitem12, "activate",
-                    G_CALLBACK (on_meter_over_color_activate),
-                    NULL);
-  g_signal_connect ((gpointer) imagemenuitem13, "activate",
-                    G_CALLBACK (on_meter_peak_color_activate),
-                    NULL);
-  g_signal_connect ((gpointer) imagemenuitem14, "activate",
-                    G_CALLBACK (on_reset_all_colors1_activate),
+  g_signal_connect ((gpointer) ColorsComboBox, "changed",
+                    G_CALLBACK (on_ColorsComboBox_changed),
                     NULL);
   g_signal_connect ((gpointer) warningLevelSpinButton, "focus_in_event",
                     G_CALLBACK (on_text_focus_in_event),
@@ -5764,12 +5600,8 @@ create_pref_dialog (void)
   GLADE_HOOKUP_OBJECT (pref_dialog, SpectrumEvent, "SpectrumEvent");
   GLADE_HOOKUP_OBJECT (pref_dialog, SpectrumFrame, "SpectrumFrame");
   GLADE_HOOKUP_OBJECT (pref_dialog, hbox76, "hbox76");
-  GLADE_HOOKUP_OBJECT (pref_dialog, SpectrumMenu, "SpectrumMenu");
-  GLADE_HOOKUP_OBJECT (pref_dialog, menu3, "menu3");
-  GLADE_HOOKUP_OBJECT (pref_dialog, pre_eq, "pre_eq");
-  GLADE_HOOKUP_OBJECT (pref_dialog, post_eq, "post_eq");
-  GLADE_HOOKUP_OBJECT (pref_dialog, post_compressor, "post_compressor");
-  GLADE_HOOKUP_OBJECT (pref_dialog, output2, "output2");
+  GLADE_HOOKUP_OBJECT (pref_dialog, eventbox69, "eventbox69");
+  GLADE_HOOKUP_OBJECT (pref_dialog, SpectrumComboBox, "SpectrumComboBox");
   GLADE_HOOKUP_OBJECT (pref_dialog, hbox73, "hbox73");
   GLADE_HOOKUP_OBJECT (pref_dialog, UpdateFrequencyLabel, "UpdateFrequencyLabel");
   GLADE_HOOKUP_OBJECT (pref_dialog, UpdateFrequencySpin, "UpdateFrequencySpin");
@@ -5790,29 +5622,8 @@ create_pref_dialog (void)
   GLADE_HOOKUP_OBJECT (pref_dialog, label3179, "label3179");
   GLADE_HOOKUP_OBJECT (pref_dialog, ColorsEvent, "ColorsEvent");
   GLADE_HOOKUP_OBJECT (pref_dialog, ColorsFrame, "ColorsFrame");
-  GLADE_HOOKUP_OBJECT (pref_dialog, ColorsMenu, "ColorsMenu");
-  GLADE_HOOKUP_OBJECT (pref_dialog, menu4, "menu4");
-  GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem1, "imagemenuitem1");
-  GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem2, "imagemenuitem2");
-  GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem3, "imagemenuitem3");
-  GLADE_HOOKUP_OBJECT (pref_dialog, menuitem5, "menuitem5");
-  GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem4, "imagemenuitem4");
-  GLADE_HOOKUP_OBJECT (pref_dialog, menuitem6, "menuitem6");
-  GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem5, "imagemenuitem5");
-  GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem6, "imagemenuitem6");
-  GLADE_HOOKUP_OBJECT (pref_dialog, hdeq_spectrum1, "hdeq_spectrum1");
-  GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem7, "imagemenuitem7");
-  GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem8, "imagemenuitem8");
-  GLADE_HOOKUP_OBJECT (pref_dialog, menuitem7, "menuitem7");
-  GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem9, "imagemenuitem9");
-  GLADE_HOOKUP_OBJECT (pref_dialog, menuitem8, "menuitem8");
-  GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem10, "imagemenuitem10");
-  GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem11, "imagemenuitem11");
-  GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem12, "imagemenuitem12");
-  GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem13, "imagemenuitem13");
-  GLADE_HOOKUP_OBJECT (pref_dialog, menuitem9, "menuitem9");
-  GLADE_HOOKUP_OBJECT (pref_dialog, imagemenuitem14, "imagemenuitem14");
-  GLADE_HOOKUP_OBJECT (pref_dialog, image337, "image337");
+  GLADE_HOOKUP_OBJECT (pref_dialog, eventbox68, "eventbox68");
+  GLADE_HOOKUP_OBJECT (pref_dialog, ColorsComboBox, "ColorsComboBox");
   GLADE_HOOKUP_OBJECT (pref_dialog, ColorsLabel, "ColorsLabel");
   GLADE_HOOKUP_OBJECT (pref_dialog, warningFrame, "warningFrame");
   GLADE_HOOKUP_OBJECT (pref_dialog, alignment7, "alignment7");
@@ -5830,6 +5641,7 @@ create_pref_dialog (void)
   GLADE_HOOKUP_OBJECT (pref_dialog, out_meter_pref_label, "out_meter_pref_label");
   GLADE_HOOKUP_OBJECT (pref_dialog, limiter_frame, "limiter_frame");
   GLADE_HOOKUP_OBJECT (pref_dialog, alignment9, "alignment9");
+  GLADE_HOOKUP_OBJECT (pref_dialog, eventbox67, "eventbox67");
   GLADE_HOOKUP_OBJECT (pref_dialog, limiter_combo, "limiter_combo");
   GLADE_HOOKUP_OBJECT (pref_dialog, limiter_frame_label, "limiter_frame_label");
   GLADE_HOOKUP_OBJECT_NO_REF (pref_dialog, dialog_action_area1, "dialog_action_area1");

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.71 2007/06/22 01:25:03 jdepner Exp $
+ *  $Id: process.c,v 1.72 2007/06/24 17:48:42 jdepner Exp $
  */
 
 #include <math.h>
@@ -26,6 +26,7 @@
 #include "process.h"
 #include "compressor.h"
 #include "limiter.h"
+#include "limiter-ui.h"
 #include "geq.h"
 #include "scenes.h"
 #include "intrim.h"
@@ -80,8 +81,8 @@ static float sw_s_gain[XO_NBANDS];
 static float sb_l_gain[XO_NBANDS];
 static float sb_r_gain[XO_NBANDS];
 static float limiter_gain = 1.0f;
-static int limiter_plugin = 0;
-static int limiter_plugin_pending = 0;
+static int limiter_plugin = FAST;
+static int limiter_plugin_pending = FAST;
 static int limiter_plugin_change_pending = FALSE;
 
 static float ws_boost_wet = 0.0f;
@@ -94,7 +95,7 @@ static float *latcorbuf_postcomp[NCHANNELS];
 
 static int spectrum_mode = SPEC_POST_EQ;
 
-volatile int global_bypass = 0;		/* updated from GUI thread */
+static int global_bypass = FALSE;
 static int eq_bypass_pending = FALSE;
 static int eq_bypass = FALSE;
 static int limiter_bypass = FALSE;
@@ -206,8 +207,8 @@ void process_init(float fs)
     /*  Decide which limiter to use.  Steve Harris' fast_lookahead_limiter or
         Sampo Savolainen's foo_limiter.  */
 
-    lim_plugin[0] = plugin_load("fast_lookahead_limiter_1913.so");
-    lim_plugin[1] = plugin_load("foo_limiter.so");
+    lim_plugin[FAST] = plugin_load("fast_lookahead_limiter_1913.so");
+    lim_plugin[FOO] = plugin_load("foo_limiter.so");
 
     if (lim_plugin[limiter_plugin] == NULL) {
       limiter_plugin ^= 1;
@@ -218,7 +219,6 @@ void process_init(float fs)
           exit(1);
         }
     }
-
 
 
     /* This compressor is specifically stereo, so there are always two
@@ -659,6 +659,8 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
         limiter.handle = plugin_instantiate(lim_plugin[limiter_plugin], sample_rate);
         lim_connect(lim_plugin[limiter_plugin], &limiter, NULL, NULL);
 
+        limiter_set_label (limiter_plugin);
+
         limiter_plugin_change_pending = FALSE;
       }
 
@@ -805,6 +807,19 @@ float process_get_mid2high_xover ()
     return (xover_fb);
 }
 
+void process_get_bypass_states (int *eq, int *comp, int *limiter, int *global)
+{
+  int i;
+
+  *global = global_bypass;
+  *eq = eq_bypass;
+
+  for (i = 0 ; i < XO_NBANDS ; i++) comp[i] = xo_band_action[i];
+
+  *limiter = limiter_bypass;
+  *global = global_bypass;
+}
+
 int process_get_bypass_state (int bypass_type)
 {
   switch (bypass_type)
@@ -827,6 +842,10 @@ int process_get_bypass_state (int bypass_type)
 
     case LIMITER_BYPASS:
       return (limiter_bypass);
+      break;
+
+    case GLOBAL_BYPASS:
+      return (global_bypass);
       break;
 
     default:
@@ -860,6 +879,11 @@ void process_set_rms_time_slice (int milliseconds)
 
 
   rms_ready = TRUE;
+}
+
+void process_set_global_bypass (int state)
+{
+  global_bypass = state;
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

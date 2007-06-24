@@ -142,7 +142,7 @@ static GdkPixmap *hdeq_pixmap = NULL;
 static GtkHScale       *l_low2mid, *l_mid2high;
 static GtkWidget       *l_comp[3];
 static GtkLabel        *l_low2mid_lbl, *l_mid2high_lbl, *l_comp_lbl[3], 
-                       *l_EQ_curve_lbl, *l_c_curve_lbl[3];
+                       *l_EQ_curve_lbl = NULL, *l_c_curve_lbl[3];
 static GtkDrawingArea  *l_EQ_curve, *l_comp_curve[3];
 static GdkDrawable     *EQ_drawable, *comp_drawable[3];
 static GdkGC           *EQ_gc, *comp_gc[3];
@@ -2402,7 +2402,7 @@ void hdeq_popup (int action)
 
 void hdeq_curve_set_label (char *string)
 {
-    gtk_label_set_text (l_EQ_curve_lbl, string);
+  if (l_EQ_curve_lbl != NULL) gtk_label_set_text (l_EQ_curve_lbl, string);
 }
 
 

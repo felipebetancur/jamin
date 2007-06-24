@@ -4111,6 +4111,7 @@
 			      <child>
 				<widget class="GtkEventBox" id="eq_bypass_event_box">
 				  <property name="visible">True</property>
+				  <property name="tooltip" translatable="yes">Bypass EQ processing</property>
 				  <property name="visible_window">True</property>
 				  <property name="above_child">False</property>
 				  <signal name="enter_notify_event" handler="on_eq_bypass_event_box_enter_notify_event" last_modification_time="Sun, 22 Feb 2004 12:21:15 GMT"/>
@@ -5070,18 +5071,26 @@
 							      </child>
 
 							      <child>
-								<widget class="GtkCheckButton" id="low_bypass">
+								<widget class="GtkEventBox" id="low_bypass_event_box">
 								  <property name="visible">True</property>
-								  <property name="tooltip" translatable="yes">Low Band Bypass</property>
-								  <property name="can_focus">True</property>
-								  <property name="label" translatable="yes">Bypass</property>
-								  <property name="use_underline">True</property>
-								  <property name="relief">GTK_RELIEF_NORMAL</property>
-								  <property name="focus_on_click">True</property>
-								  <property name="active">False</property>
-								  <property name="inconsistent">False</property>
-								  <property name="draw_indicator">True</property>
-								  <signal name="toggled" handler="on_low_bypass_toggled" last_modification_time="Mon, 16 Feb 2004 22:32:01 GMT"/>
+								  <property name="tooltip" translatable="yes">Bypass low band compressor processing</property>
+								  <property name="visible_window">True</property>
+								  <property name="above_child">False</property>
+
+								  <child>
+								    <widget class="GtkCheckButton" id="low_bypass">
+								      <property name="visible">True</property>
+								      <property name="can_focus">True</property>
+								      <property name="label" translatable="yes">Bypass</property>
+								      <property name="use_underline">True</property>
+								      <property name="relief">GTK_RELIEF_NORMAL</property>
+								      <property name="focus_on_click">True</property>
+								      <property name="active">False</property>
+								      <property name="inconsistent">False</property>
+								      <property name="draw_indicator">True</property>
+								      <signal name="toggled" handler="on_low_bypass_toggled" last_modification_time="Mon, 16 Feb 2004 22:32:01 GMT"/>
+								    </widget>
+								  </child>
 								</widget>
 								<packing>
 								  <property name="padding">0</property>
@@ -5825,18 +5834,26 @@
 							      </child>
 
 							      <child>
-								<widget class="GtkCheckButton" id="mid_bypass">
+								<widget class="GtkEventBox" id="mid_bypass_event_box">
 								  <property name="visible">True</property>
-								  <property name="tooltip" translatable="yes">Mid Band Bypass</property>
-								  <property name="can_focus">True</property>
-								  <property name="label" translatable="yes">Bypass</property>
-								  <property name="use_underline">True</property>
-								  <property name="relief">GTK_RELIEF_NORMAL</property>
-								  <property name="focus_on_click">True</property>
-								  <property name="active">False</property>
-								  <property name="inconsistent">False</property>
-								  <property name="draw_indicator">True</property>
-								  <signal name="toggled" handler="on_mid_bypass_toggled" last_modification_time="Mon, 16 Feb 2004 22:31:47 GMT"/>
+								  <property name="tooltip" translatable="yes">Bypass mid band compressor processing</property>
+								  <property name="visible_window">True</property>
+								  <property name="above_child">False</property>
+
+								  <child>
+								    <widget class="GtkCheckButton" id="mid_bypass">
+								      <property name="visible">True</property>
+								      <property name="can_focus">True</property>
+								      <property name="label" translatable="yes">Bypass</property>
+								      <property name="use_underline">True</property>
+								      <property name="relief">GTK_RELIEF_NORMAL</property>
+								      <property name="focus_on_click">True</property>
+								      <property name="active">False</property>
+								      <property name="inconsistent">False</property>
+								      <property name="draw_indicator">True</property>
+								      <signal name="toggled" handler="on_mid_bypass_toggled" last_modification_time="Mon, 16 Feb 2004 22:31:47 GMT"/>
+								    </widget>
+								  </child>
 								</widget>
 								<packing>
 								  <property name="padding">0</property>
@@ -6580,18 +6597,26 @@
 							      </child>
 
 							      <child>
-								<widget class="GtkCheckButton" id="high_bypass">
+								<widget class="GtkEventBox" id="high_bypass_event_box">
 								  <property name="visible">True</property>
-								  <property name="tooltip" translatable="yes">High Band Bypass</property>
-								  <property name="can_focus">True</property>
-								  <property name="label" translatable="yes">Bypass</property>
-								  <property name="use_underline">True</property>
-								  <property name="relief">GTK_RELIEF_NORMAL</property>
-								  <property name="focus_on_click">True</property>
-								  <property name="active">False</property>
-								  <property name="inconsistent">False</property>
-								  <property name="draw_indicator">True</property>
-								  <signal name="toggled" handler="on_high_bypass_toggled" last_modification_time="Mon, 16 Feb 2004 22:33:17 GMT"/>
+								  <property name="tooltip" translatable="yes">Bypass high band compressor processing</property>
+								  <property name="visible_window">True</property>
+								  <property name="above_child">False</property>
+
+								  <child>
+								    <widget class="GtkCheckButton" id="high_bypass">
+								      <property name="visible">True</property>
+								      <property name="can_focus">True</property>
+								      <property name="label" translatable="yes">Bypass</property>
+								      <property name="use_underline">True</property>
+								      <property name="relief">GTK_RELIEF_NORMAL</property>
+								      <property name="focus_on_click">True</property>
+								      <property name="active">False</property>
+								      <property name="inconsistent">False</property>
+								      <property name="draw_indicator">True</property>
+								      <signal name="toggled" handler="on_high_bypass_toggled" last_modification_time="Mon, 16 Feb 2004 22:33:17 GMT"/>
+								    </widget>
+								  </child>
 								</widget>
 								<packing>
 								  <property name="padding">0</property>
@@ -6671,10 +6696,6 @@
 				  <property name="visible">True</property>
 				  <property name="homogeneous">False</property>
 				  <property name="spacing">0</property>
-
-				  <child>
-				    <placeholder/>
-				  </child>
 
 				  <child>
 				    <widget class="GtkEventBox" id="boost_eventbox">
@@ -6771,7 +6792,7 @@
 				    </widget>
 				    <packing>
 				      <property name="padding">0</property>
-				      <property name="expand">False</property>
+				      <property name="expand">True</property>
 				      <property name="fill">True</property>
 				    </packing>
 				  </child>
@@ -7167,67 +7188,26 @@
 					      </child>
 
 					      <child>
-						<widget class="GtkHBox" id="limiter_global_bypass">
+						<widget class="GtkEventBox" id="limiter_bypass_event_box">
 						  <property name="visible">True</property>
-						  <property name="homogeneous">True</property>
-						  <property name="spacing">0</property>
+						  <property name="tooltip" translatable="yes">Bypass boost and limiter processing</property>
+						  <property name="visible_window">True</property>
+						  <property name="above_child">False</property>
+						  <signal name="enter_notify_event" handler="on_limiter_bypass_event_box_enter_notify_event" last_modification_time="Sun, 22 Feb 2004 12:55:23 GMT"/>
 
 						  <child>
-						    <widget class="GtkEventBox" id="limiter_bypass_event_box">
+						    <widget class="GtkCheckButton" id="limiter_bypass">
 						      <property name="visible">True</property>
-						      <property name="visible_window">True</property>
-						      <property name="above_child">False</property>
-						      <signal name="enter_notify_event" handler="on_limiter_bypass_event_box_enter_notify_event" last_modification_time="Sun, 22 Feb 2004 12:55:23 GMT"/>
-
-						      <child>
-							<widget class="GtkCheckButton" id="limiter_bypass">
-							  <property name="visible">True</property>
-							  <property name="can_focus">True</property>
-							  <property name="label" translatable="yes">Limiter bypass</property>
-							  <property name="use_underline">True</property>
-							  <property name="relief">GTK_RELIEF_NORMAL</property>
-							  <property name="focus_on_click">True</property>
-							  <property name="active">False</property>
-							  <property name="inconsistent">False</property>
-							  <property name="draw_indicator">True</property>
-							  <signal name="toggled" handler="on_limiter_bypass_toggled" last_modification_time="Sun, 22 Feb 2004 12:27:46 GMT"/>
-							</widget>
-						      </child>
+						      <property name="can_focus">True</property>
+						      <property name="label" translatable="yes">Limiter bypass</property>
+						      <property name="use_underline">True</property>
+						      <property name="relief">GTK_RELIEF_NORMAL</property>
+						      <property name="focus_on_click">True</property>
+						      <property name="active">False</property>
+						      <property name="inconsistent">False</property>
+						      <property name="draw_indicator">True</property>
+						      <signal name="toggled" handler="on_limiter_bypass_toggled" last_modification_time="Sun, 22 Feb 2004 12:27:46 GMT"/>
 						    </widget>
-						    <packing>
-						      <property name="padding">0</property>
-						      <property name="expand">True</property>
-						      <property name="fill">True</property>
-						    </packing>
-						  </child>
-
-						  <child>
-						    <widget class="GtkEventBox" id="global_bypass_event_box">
-						      <property name="visible">True</property>
-						      <property name="visible_window">True</property>
-						      <property name="above_child">False</property>
-						      <signal name="enter_notify_event" handler="on_global_bypass_event_box_enter_notify_event" last_modification_time="Tue, 08 May 2007 02:55:07 GMT"/>
-
-						      <child>
-							<widget class="GtkCheckButton" id="global_bypass">
-							  <property name="visible">True</property>
-							  <property name="can_focus">True</property>
-							  <property name="label" translatable="yes">Global bypass</property>
-							  <property name="use_underline">True</property>
-							  <property name="relief">GTK_RELIEF_NORMAL</property>
-							  <property name="focus_on_click">True</property>
-							  <property name="active">False</property>
-							  <property name="inconsistent">False</property>
-							  <property name="draw_indicator">True</property>
-							  <signal name="toggled" handler="on_global_bypass_toggled" last_modification_time="Tue, 08 May 2007 02:52:09 GMT"/>
-							</widget>
-						      </child>
-						    </widget>
-						    <packing>
-						      <property name="padding">0</property>
-						      <property name="expand">False</property>
-						      <property name="fill">False</property>
-						    </packing>
 						  </child>
 						</widget>
 						<packing>
@@ -7242,7 +7222,7 @@
 					  <child>
 					    <widget class="GtkLabel" id="limiterlabel">
 					      <property name="visible">True</property>
-					      <property name="label" translatable="yes">Limiter</property>
+					      <property name="label" translatable="yes">Fast-lookahead-limiter (Harris)</property>
 					      <property name="use_underline">False</property>
 					      <property name="use_markup">False</property>
 					      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -7640,6 +7620,36 @@
 			<packing>
 			  <property name="padding">0</property>
 			  <property name="expand">True</property>
+			  <property name="fill">True</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkEventBox" id="global_bypass_event_box">
+			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Bypass all processing</property>
+			  <property name="visible_window">True</property>
+			  <property name="above_child">False</property>
+			  <signal name="enter_notify_event" handler="on_global_bypass_event_box_enter_notify_event" last_modification_time="Tue, 08 May 2007 02:55:07 GMT"/>
+
+			  <child>
+			    <widget class="GtkCheckButton" id="global_bypass">
+			      <property name="visible">True</property>
+			      <property name="can_focus">True</property>
+			      <property name="label" translatable="yes">Global bypass</property>
+			      <property name="use_underline">True</property>
+			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
+			      <property name="active">False</property>
+			      <property name="inconsistent">False</property>
+			      <property name="draw_indicator">True</property>
+			      <signal name="toggled" handler="on_global_bypass_toggled" last_modification_time="Tue, 08 May 2007 02:52:09 GMT"/>
+			    </widget>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
 			  <property name="fill">True</property>
 			</packing>
 		      </child>
@@ -8158,50 +8168,22 @@
 		  <property name="spacing">20</property>
 
 		  <child>
-		    <widget class="GtkOptionMenu" id="SpectrumMenu">
+		    <widget class="GtkEventBox" id="eventbox69">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">Choose source for spectrum display</property>
-		      <property name="can_focus">True</property>
-		      <property name="history">0</property>
+		      <property name="tooltip" translatable="yes">Select HDEQ spectrum source</property>
+		      <property name="visible_window">True</property>
+		      <property name="above_child">False</property>
 
 		      <child>
-			<widget class="GtkMenu" id="menu3">
-
-			  <child>
-			    <widget class="GtkMenuItem" id="pre_eq">
-			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Pre EQ</property>
-			      <property name="use_underline">True</property>
-			      <signal name="activate" handler="on_pre_eq_activate" last_modification_time="Sun, 30 Jan 2005 17:58:10 GMT"/>
-			    </widget>
-			  </child>
-
-			  <child>
-			    <widget class="GtkMenuItem" id="post_eq">
-			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Post EQ</property>
-			      <property name="use_underline">True</property>
-			      <signal name="activate" handler="on_post_eq_activate" last_modification_time="Sun, 30 Jan 2005 17:58:10 GMT"/>
-			    </widget>
-			  </child>
-
-			  <child>
-			    <widget class="GtkMenuItem" id="post_compressor">
-			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Post Compressor</property>
-			      <property name="use_underline">True</property>
-			      <signal name="activate" handler="on_post_compressor_activate" last_modification_time="Sun, 30 Jan 2005 17:58:10 GMT"/>
-			    </widget>
-			  </child>
-
-			  <child>
-			    <widget class="GtkMenuItem" id="output2">
-			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Output</property>
-			      <property name="use_underline">True</property>
-			      <signal name="activate" handler="on_output2_activate" last_modification_time="Sun, 30 Jan 2005 17:58:10 GMT"/>
-			    </widget>
-			  </child>
+			<widget class="GtkComboBox" id="SpectrumComboBox">
+			  <property name="visible">True</property>
+			  <property name="items" translatable="yes">Pre EQ
+Post EQ
+Post Compressor
+Output</property>
+			  <property name="add_tearoffs">False</property>
+			  <property name="focus_on_click">True</property>
+			  <signal name="changed" handler="on_SpectrumComboBox_changed" last_modification_time="Sun, 24 Jun 2007 14:00:35 GMT"/>
 			</widget>
 		      </child>
 		    </widget>
@@ -8592,192 +8574,33 @@
 	      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
 
 	      <child>
-		<widget class="GtkOptionMenu" id="ColorsMenu">
-		  <property name="border_width">6</property>
+		<widget class="GtkEventBox" id="eventbox68">
 		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">Set colors for GUI components</property>
-		  <property name="can_focus">True</property>
-		  <property name="history">0</property>
+		  <property name="tooltip" translatable="yes">Select colors for main JAMin GUI components</property>
+		  <property name="visible_window">True</property>
+		  <property name="above_child">False</property>
 
 		  <child>
-		    <widget class="GtkMenu" id="menu4">
-
-		      <child>
-			<widget class="GtkMenuItem" id="imagemenuitem1">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Low Band Compressor</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_low_band_compressor_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="imagemenuitem2">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Mid Band Compressor</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_mid_band_compressor_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="imagemenuitem3">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">High Band Compressor</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_high_band_compressor_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkSeparatorMenuItem" id="menuitem5">
-			  <property name="visible">True</property>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="imagemenuitem4">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Ganged Controls</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_ganged_controls_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkSeparatorMenuItem" id="menuitem6">
-			  <property name="visible">True</property>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="imagemenuitem5">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Parametric Handles</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_parametric_handles_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="imagemenuitem6">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">HDEQ Curve</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_hdeq_curve_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="hdeq_spectrum1">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">HDEQ Spectrum</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_hdeq_spectrum_color_activate" last_modification_time="Sun, 10 Jun 2007 15:10:56 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="imagemenuitem7">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">HDEQ Grid</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_hdeq_grid_color_activate" last_modification_time="Mon, 26 Apr 2004 19:51:53 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="imagemenuitem8">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">HDEQ Background</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_hdeq_background_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkSeparatorMenuItem" id="menuitem7">
-			  <property name="visible">True</property>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="imagemenuitem9">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Text</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_text_color_activate" last_modification_time="Mon, 26 Apr 2004 21:44:00 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkSeparatorMenuItem" id="menuitem8">
-			  <property name="visible">True</property>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="imagemenuitem10">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Meter Normal</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_meter_normal_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="imagemenuitem11">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Meter Warning</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_meter_warning_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="imagemenuitem12">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Meter Over</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_meter_over_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="imagemenuitem13">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Meter Peak</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_meter_peak_color_activate" last_modification_time="Mon, 26 Apr 2004 19:09:32 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkSeparatorMenuItem" id="menuitem9">
-			  <property name="visible">True</property>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkImageMenuItem" id="imagemenuitem14">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Reset All Colors</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_reset_all_colors1_activate" last_modification_time="Thu, 29 Apr 2004 14:38:01 GMT"/>
-
-			  <child internal-child="image">
-			    <widget class="GtkImage" id="image337">
-			      <property name="visible">True</property>
-			      <property name="stock">gtk-refresh</property>
-			      <property name="icon_size">1</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
-			    </widget>
-			  </child>
-			</widget>
-		      </child>
+		    <widget class="GtkComboBox" id="ColorsComboBox">
+		      <property name="visible">True</property>
+		      <property name="items" translatable="yes">Low Band Compressor
+Mid Band Compressor
+High Band Compressor
+Ganged Controls
+Parametric Handles
+HDEQ Curve
+HDEQ Spectrum
+HDEQ Grid
+HDEQ Background
+Text
+Meter Normal
+Meter Warning
+Meter Over
+Meter Peak
+Reset All Colors To Defaults</property>
+		      <property name="add_tearoffs">False</property>
+		      <property name="focus_on_click">True</property>
+		      <signal name="changed" handler="on_ColorsComboBox_changed" last_modification_time="Sun, 24 Jun 2007 14:17:57 GMT"/>
 		    </widget>
 		  </child>
 		</widget>
@@ -9084,13 +8907,22 @@
 	      <property name="right_padding">0</property>
 
 	      <child>
-		<widget class="GtkComboBox" id="limiter_combo">
+		<widget class="GtkEventBox" id="eventbox67">
 		  <property name="visible">True</property>
-		  <property name="items" translatable="yes">Steve Harris' fast_lookahead_limiter
+		  <property name="tooltip" translatable="yes">Select the type of limiter</property>
+		  <property name="visible_window">True</property>
+		  <property name="above_child">False</property>
+
+		  <child>
+		    <widget class="GtkComboBox" id="limiter_combo">
+		      <property name="visible">True</property>
+		      <property name="items" translatable="yes">Steve Harris' fast_lookahead_limiter
 Sampo Savolainen's foo_limiter</property>
-		  <property name="add_tearoffs">False</property>
-		  <property name="focus_on_click">True</property>
-		  <signal name="changed" handler="on_limiter_combo_changed" last_modification_time="Sun, 17 Jun 2007 19:21:05 GMT"/>
+		      <property name="add_tearoffs">False</property>
+		      <property name="focus_on_click">True</property>
+		      <signal name="changed" handler="on_limiter_combo_changed" last_modification_time="Sun, 17 Jun 2007 19:21:05 GMT"/>
+		    </widget>
+		  </child>
 		</widget>
 	      </child>
 	    </widget>

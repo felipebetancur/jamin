@@ -11,23 +11,27 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: preferences.h,v 1.9 2005/01/30 20:06:20 jdepner Exp $
+ *  $Id: preferences.h,v 1.10 2007/06/24 17:48:42 jdepner Exp $
  */
 
 #ifndef PREFERENCES_H
 #define PREFERENCES_H
 
 
-#define TEXT_COLOR            0
-#define LOW_BAND_COLOR        1
-#define MID_BAND_COLOR        2
-#define HIGH_BAND_COLOR       3
-#define GANG_HIGHLIGHT_COLOR  4
-#define HANDLE_COLOR          5
-#define HDEQ_CURVE_COLOR      6
+/*  Important note - definition of colors is in the same order as
+    the combo box buttons.  Don't add to or rearrange the colors unless
+    you set the combo box entries to match.  */
+
+#define LOW_BAND_COLOR        0
+#define MID_BAND_COLOR        1
+#define HIGH_BAND_COLOR       2
+#define GANG_HIGHLIGHT_COLOR  3
+#define HANDLE_COLOR          4
+#define HDEQ_CURVE_COLOR      5
+#define HDEQ_SPECTRUM_COLOR   6
 #define HDEQ_GRID_COLOR       7
-#define HDEQ_SPECTRUM_COLOR   8
-#define HDEQ_BACKGROUND_COLOR 9
+#define HDEQ_BACKGROUND_COLOR 8
+#define TEXT_COLOR            9
 #define METER_NORMAL_COLOR    10
 #define METER_WARNING_COLOR   11
 #define METER_OVER_COLOR      12

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.173 2007/06/22 01:25:02 jdepner Exp $
+ *  $Id: callbacks.c,v 1.174 2007/06/24 17:48:42 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -60,13 +60,14 @@
 static char             *help_ptr = NULL, scene_name_text[100];
 static gboolean         text_focus = FALSE, force_keypress_help = FALSE;
 static GtkToggleButton  *l_solo_button[XO_NBANDS], *l_bypass_button[XO_NBANDS], 
-                        *l_main_bypass, *l_eq_bypass, *l_limiter_bypass;
+                        *l_global_bypass, *l_eq_bypass, *l_limiter_bypass;
 static GtkLabel         *l_eqbFreqLabel, *l_eqbAmpLabel;
-GtkEventBox             *l_global_bypass_event_box;
+GtkEventBox             *l_global_bypass_event_box, *l_comp_bypass_event_box[XO_NBANDS],
+                        *l_eq_bypass_event_box, *l_limiter_bypass_event_box;
 static int              hot_scene = 0;
 static GtkWidget        *scene_name_dialog, *about_dialog;
 static GtkEntry         *l_scene_name_entry;
-static GdkColor         l_main_color;
+static GdkColor         l_main_color, l_eq_color, l_comp_color[XO_NBANDS], l_limiter_color;
 
 
 void
@@ -172,7 +173,7 @@ void
 on_window1_show                        (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-  GtkStyle *main_style;
+  GtkStyle *main_style, *eq_style, *comp_style[XO_NBANDS], *limiter_style;
 
   help_ptr = _(general_help);
 
@@ -183,19 +184,39 @@ on_window1_show                        (GtkWidget       *widget,
   on_EQ_curve_event_box_leave_notify_event (NULL, NULL, NULL);
 
   l_solo_button[0] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "low_solo"));
-  l_bypass_button[0] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "low_bypass"));
   l_solo_button[1] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "mid_solo"));
-  l_bypass_button[1] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "mid_bypass"));
   l_solo_button[2] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "high_solo"));
-  l_bypass_button[2] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "high_bypass"));
-  l_eq_bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "eq_bypass"));
-  l_limiter_bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "limiter_bypass"));
 
   l_eqbFreqLabel = GTK_LABEL (lookup_widget (main_window, "eqbFreqLabel"));
   l_eqbAmpLabel = GTK_LABEL (lookup_widget (main_window, "eqbAmpLabel"));
 
+  l_eq_bypass_event_box = GTK_EVENT_BOX (lookup_widget (main_window, "eq_bypass_event_box"));
+  l_eq_bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "eq_bypass"));
+  eq_style = gtk_widget_get_style (GTK_WIDGET (l_eq_bypass_event_box));
+  l_eq_color = eq_style->bg[GTK_STATE_NORMAL];
+
+  l_comp_bypass_event_box[0] = GTK_EVENT_BOX (lookup_widget (main_window, "low_bypass_event_box"));
+  l_bypass_button[0] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "low_bypass"));
+  comp_style[0] = gtk_widget_get_style (GTK_WIDGET (l_comp_bypass_event_box[0]));
+  l_comp_color[0] = comp_style[0]->bg[GTK_STATE_NORMAL];
+
+  l_comp_bypass_event_box[1] = GTK_EVENT_BOX (lookup_widget (main_window, "mid_bypass_event_box"));
+  l_bypass_button[1] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "mid_bypass"));
+  comp_style[1] = gtk_widget_get_style (GTK_WIDGET (l_comp_bypass_event_box[1]));
+  l_comp_color[1] = comp_style[1]->bg[GTK_STATE_NORMAL];
+
+  l_comp_bypass_event_box[2] = GTK_EVENT_BOX (lookup_widget (main_window, "high_bypass_event_box"));
+  l_bypass_button[2] = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "high_bypass"));
+  comp_style[2] = gtk_widget_get_style (GTK_WIDGET (l_comp_bypass_event_box[2]));
+  l_comp_color[2] = comp_style[2]->bg[GTK_STATE_NORMAL];
+
+  l_limiter_bypass_event_box = GTK_EVENT_BOX (lookup_widget (main_window, "limiter_bypass_event_box"));
+  l_limiter_bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "limiter_bypass"));
+  limiter_style = gtk_widget_get_style (GTK_WIDGET (l_limiter_bypass_event_box));
+  l_limiter_color = limiter_style->bg[GTK_STATE_NORMAL];
+
   l_global_bypass_event_box = GTK_EVENT_BOX (lookup_widget (main_window, "global_bypass_event_box"));
-  l_main_bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "global_bypass"));
+  l_global_bypass = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "global_bypass"));
   main_style = gtk_widget_get_style (GTK_WIDGET (l_global_bypass_event_box));
   l_main_color = main_style->bg[GTK_STATE_NORMAL];
 
@@ -1553,8 +1574,8 @@ on_window1_key_press_event             (GtkWidget       *widget,
         /*  Bypass  */
 
       case GDK_b:
-        tmp = gtk_toggle_button_get_active (l_main_bypass);
-        gtk_toggle_button_set_active (l_main_bypass, (!tmp));
+        tmp = gtk_toggle_button_get_active (l_global_bypass);
+        gtk_toggle_button_set_active (l_global_bypass, (!tmp));
         break;
 
 
@@ -2196,7 +2217,23 @@ void
 on_low_bypass_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
-  bypass (0, gtk_toggle_button_get_active (togglebutton));
+  int state;
+
+
+  state = gtk_toggle_button_get_active(togglebutton);
+
+  bypass (0, state);
+
+
+  if (state) 
+    {
+      callbacks_blink_bypass_button (LOW_COMP_BYPASS, 1);
+    }
+  else
+    {
+      callbacks_blink_bypass_button (LOW_COMP_BYPASS, -1);
+    }
+
 }
 
 
@@ -2204,7 +2241,22 @@ void
 on_mid_bypass_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
-  bypass (1, gtk_toggle_button_get_active (togglebutton));
+  int state;
+
+
+  state = gtk_toggle_button_get_active(togglebutton);
+
+  bypass (1, state);
+
+
+  if (state) 
+    {
+      callbacks_blink_bypass_button (MID_COMP_BYPASS, 1);
+    }
+  else
+    {
+      callbacks_blink_bypass_button (MID_COMP_BYPASS, -1);
+    }
 }
 
 
@@ -2212,7 +2264,22 @@ void
 on_high_bypass_toggled                  (GtkToggleButton *togglebutton,
                                          gpointer         user_data)
 {
-  bypass (2, gtk_toggle_button_get_active (togglebutton));
+  int state;
+
+
+  state = gtk_toggle_button_get_active(togglebutton);
+
+  bypass (2, state);
+
+
+  if (state) 
+    {
+      callbacks_blink_bypass_button (HIGH_COMP_BYPASS, 1);
+    }
+  else
+    {
+      callbacks_blink_bypass_button (HIGH_COMP_BYPASS, -1);
+    }
 }
 
 
@@ -2253,7 +2320,22 @@ void
 on_eq_bypass_toggled                   (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
-  process_set_eq_bypass(gtk_toggle_button_get_active(togglebutton));
+  int state;
+
+
+  state = gtk_toggle_button_get_active(togglebutton);
+
+  process_set_eq_bypass(state);
+
+
+  if (state) 
+    {
+      callbacks_blink_bypass_button (EQ_BYPASS, 1);
+    }
+  else
+    {
+      callbacks_blink_bypass_button (EQ_BYPASS, -1);
+    }
 }
 
 
@@ -2273,8 +2355,22 @@ void
 on_limiter_bypass_toggled              (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
+  int state;
 
-  process_set_limiter_bypass(gtk_toggle_button_get_active(togglebutton));
+
+  state = gtk_toggle_button_get_active(togglebutton);
+
+  process_set_limiter_bypass(state);
+
+
+  if (state) 
+    {
+      callbacks_blink_bypass_button (LIMITER_BYPASS, 1);
+    }
+  else
+    {
+      callbacks_blink_bypass_button (LIMITER_BYPASS, -1);
+    }
 }
 
 
@@ -2340,125 +2436,6 @@ on_scene_name_ok_clicked               (GtkButton       *button,
   popup_scene_name_dialog (0);
 }
 
-
-void
-on_low_band_compressor_color_activate  (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (LOW_BAND_COLOR);
-}
-
-
-void
-on_mid_band_compressor_color_activate  (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (MID_BAND_COLOR);
-}
-
-
-void
-on_high_band_compressor_color_activate (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (HIGH_BAND_COLOR);
-}
-
-
-void
-on_ganged_controls_color_activate      (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (GANG_HIGHLIGHT_COLOR);
-}
-
-
-void
-on_parametric_handles_color_activate   (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (HANDLE_COLOR);
-}
-
-
-void
-on_hdeq_curve_color_activate           (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (HDEQ_CURVE_COLOR);
-}
-
-
-
-void
-on_hdeq_spectrum_color_activate        (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (HDEQ_SPECTRUM_COLOR);
-}
-
-void
-on_hdeq_grid_color_activate            (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (HDEQ_GRID_COLOR);
-}
-
-
-void
-on_hdeq_background_color_activate      (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (HDEQ_BACKGROUND_COLOR);
-}
-
-
-void
-on_text_color_activate                 (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (TEXT_COLOR);
-}
-
-
-void
-on_meter_normal_color_activate         (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (METER_NORMAL_COLOR);
-}
-
-
-void
-on_meter_warning_color_activate        (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (METER_WARNING_COLOR);
-}
-
-
-void
-on_meter_over_color_activate           (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (METER_OVER_COLOR);
-}
-
-
-void
-on_meter_peak_color_activate           (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  popup_color_dialog (METER_PEAK_COLOR);
-}
-
-void
-on_reset_all_colors1_activate          (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  pref_reset_all_colors ();
-  pref_force_color_change ();
-}
 
 void
 on_ft_bias_a_value_changed             (GtkRange        *range,
@@ -2585,43 +2562,6 @@ on_CrossfadeTimeSpin_value_changed     (GtkSpinButton   *spinbutton,
   float ct = gtk_spin_button_get_value (spinbutton);
 
   s_set_crossfade_time (ct);
-}
-
-
-void
-on_pre_eq_activate                     (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  process_set_spec_mode(SPEC_PRE_EQ);
-  on_EQ_curve_event_box_leave_notify_event (NULL, NULL, NULL);  
-
-}
-
-
-void
-on_post_eq_activate                    (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  process_set_spec_mode(SPEC_POST_EQ);
-  on_EQ_curve_event_box_leave_notify_event (NULL, NULL, NULL);  
-}
-
-
-void
-on_post_compressor_activate            (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  process_set_spec_mode(SPEC_POST_COMP);
-  on_EQ_curve_event_box_leave_notify_event (NULL, NULL, NULL);  
-}
-
-
-void
-on_output2_activate                     (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  process_set_spec_mode(SPEC_OUTPUT);
-  on_EQ_curve_event_box_leave_notify_event (NULL, NULL, NULL);  
 }
 
 
@@ -2906,53 +2846,194 @@ void
 on_global_bypass_toggled               (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
-  global_bypass = gtk_toggle_button_get_active(togglebutton);
+  int state;
 
-  if (global_bypass) 
+
+  state = gtk_toggle_button_get_active(togglebutton);
+
+  process_set_global_bypass (state);
+
+
+  if (state) 
     {
-      callbacks_blink_global_bypass_button (1);
+      callbacks_blink_bypass_button (GLOBAL_BYPASS, 1);
     }
   else
     {
-      callbacks_blink_global_bypass_button (-1);
+      callbacks_blink_bypass_button (GLOBAL_BYPASS, -1);
     }
 }
 
 
 
+/*  start = -1 sets the button to the background color, 1 starts it as red, 0 flips it
+    between red and background.  */
+
 void 
-callbacks_blink_global_bypass_button (int start)
+callbacks_blink_bypass_button (int button, int start)
 {
-  static int flip;
+  static int eq_flip, comp_flip[3], limiter_flip, global_flip;
   GdkColor    bypass;
 
 
-  /*  -1 sets the button to the background color, 1 starts it as red, 0 flips it
-      between red and background.  */
-
-  if (start < 0)
+  switch (button)
     {
-      bypass = l_main_color;
-    }
-  else
-    {
-      if (start) flip = 1;
-
-
-      if (flip)
+    case EQ_BYPASS:
+      if (start < 0)
         {
-          bypass.red = 65535;
-          bypass.green = 0;
-          bypass.blue = 0;
+          bypass = l_eq_color;
         }
       else
         {
+          if (start) eq_flip = 1;
+
+
+          if (eq_flip)
+            {
+              bypass.red = 65535;
+              bypass.green = 0;
+              bypass.blue = 0;
+            }
+          else
+            {
+              bypass = l_eq_color;
+            }
+          eq_flip ^= 1;
+        }
+
+      gtk_widget_modify_bg ((GtkWidget *) l_eq_bypass_event_box, GTK_STATE_NORMAL, &bypass);
+      break;
+
+    case LOW_COMP_BYPASS:
+      if (start < 0)
+        {
+          bypass = l_comp_color[0];
+        }
+      else
+        {
+          if (start) comp_flip[0] = 1;
+
+
+          if (comp_flip[0])
+            {
+              bypass.red = 65535;
+              bypass.green = 0;
+              bypass.blue = 0;
+            }
+          else
+            {
+              bypass = l_comp_color[0];
+            }
+          comp_flip[0] ^= 1;
+        }
+
+      gtk_widget_modify_bg ((GtkWidget *) l_comp_bypass_event_box[0], GTK_STATE_NORMAL, &bypass);
+      break;
+
+    case MID_COMP_BYPASS:
+      if (start < 0)
+        {
+          bypass = l_comp_color[1];
+        }
+      else
+        {
+          if (start) comp_flip[1] = 1;
+
+
+          if (comp_flip[1])
+            {
+              bypass.red = 65535;
+              bypass.green = 0;
+              bypass.blue = 0;
+            }
+          else
+            {
+              bypass = l_comp_color[1];
+            }
+          comp_flip[1] ^= 1;
+        }
+
+      gtk_widget_modify_bg ((GtkWidget *) l_comp_bypass_event_box[1], GTK_STATE_NORMAL, &bypass);
+      break;
+
+    case HIGH_COMP_BYPASS:
+      if (start < 0)
+        {
+          bypass = l_comp_color[2];
+        }
+      else
+        {
+          if (start) comp_flip[2] = 1;
+
+
+          if (comp_flip[2])
+            {
+              bypass.red = 65535;
+              bypass.green = 0;
+              bypass.blue = 0;
+            }
+          else
+            {
+              bypass = l_comp_color[2];
+            }
+          comp_flip[2] ^= 1;
+        }
+
+      gtk_widget_modify_bg ((GtkWidget *) l_comp_bypass_event_box[2], GTK_STATE_NORMAL, &bypass);
+      break;
+
+    case LIMITER_BYPASS:
+      if (start < 0)
+        {
+          bypass = l_limiter_color;
+        }
+      else
+        {
+          if (start) limiter_flip = 1;
+
+
+          if (limiter_flip)
+            {
+              bypass.red = 65535;
+              bypass.green = 0;
+              bypass.blue = 0;
+            }
+          else
+            {
+              bypass = l_limiter_color;
+            }
+          limiter_flip ^= 1;
+        }
+
+      gtk_widget_modify_bg ((GtkWidget *) l_limiter_bypass_event_box, GTK_STATE_NORMAL, &bypass);
+      break;
+
+    case GLOBAL_BYPASS:
+      if (start < 0)
+        {
           bypass = l_main_color;
         }
-      flip ^= 1;
-    }
+      else
+        {
+          if (start) global_flip = 1;
 
-  gtk_widget_modify_bg ((GtkWidget *) l_global_bypass_event_box, GTK_STATE_NORMAL, &bypass);
+
+          if (global_flip)
+            {
+              bypass.red = 65535;
+              bypass.green = 0;
+              bypass.blue = 0;
+            }
+          else
+            {
+              bypass = l_main_color;
+            }
+          global_flip ^= 1;
+        }
+
+      gtk_widget_modify_bg ((GtkWidget *) l_global_bypass_event_box, GTK_STATE_NORMAL, &bypass);
+      break;
+    }
 } 
 
 
@@ -3098,5 +3179,41 @@ void
 on_limiter_combo_changed               (GtkComboBox     *combobox,
                                         gpointer         user_data)
 {
+  /*  Important note - definition of limiters is in the same order as
+      the combo box buttons.  Don't add to or rearrange the combo box
+      entries unless you set the limiter definitions to match.  */
+
   process_set_limiter_plugin (gtk_combo_box_get_active (combobox));
+}
+
+
+void
+on_SpectrumComboBox_changed            (GtkComboBox     *combobox,
+                                        gpointer         user_data)
+{
+  /*  Important note - definition of spectrum modes is in the same order as
+      the combo box buttons.  Don't add to or rearrange the combo box
+      entries unless you set the spectrum mode definitions to match.  */
+
+  process_set_spec_mode(gtk_combo_box_get_active (combobox));
+  on_EQ_curve_event_box_leave_notify_event (NULL, NULL, NULL);
+}
+
+void
+on_ColorsComboBox_changed              (GtkComboBox     *combobox,
+                                        gpointer         user_data)
+{
+  /*  Important note - definition of colors is in the same order as
+      the combo box buttons.  Don't add to or rearrange the combo box
+      entries unless you set the color definitions to match.  */
+
+  if (gtk_combo_box_get_active (combobox) == COLORS)
+    {
+      pref_reset_all_colors ();
+      pref_force_color_change ();
+    }
+  else
+    {
+      popup_color_dialog (gtk_combo_box_get_active (combobox));
+    }
 }

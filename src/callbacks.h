@@ -1083,62 +1083,6 @@ on_scene_name_ok_clicked               (GtkButton       *button,
                                         gpointer         user_data);
 
 void
-on_low_band_compressor_color_activate  (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_mid_band_compressor_color_activate  (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_high_band_compressor_color_activate (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_ganged_controls_color_activate      (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_parametric_handles_color_activate   (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_hdeq_curve_color_activate           (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_hdeq_grid_color_activate            (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_hdeq_background_color_activate      (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_text_color_activate                 (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_meter_normal_color_activate         (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_meter_warning_color_activate        (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_meter_over_color_activate           (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_meter_peak_color_activate           (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_reset_all_colors1_activate          (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
 on_ft_bias_a_value_changed             (GtkRange        *range,
                                         gpointer         user_data);
 
@@ -1196,21 +1140,6 @@ void
 on_CrossfadeTimeSpin_value_changed     (GtkSpinButton   *spinbutton,
                                         gpointer         user_data);
 
-void
-on_pre_eq_activate                     (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_post_eq_activate                    (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_post_compressor_activate            (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_output2_activate                    (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
 
 void
 on_UpdateFrequencySpin_value_changed   (GtkSpinButton   *spinbutton,
@@ -1296,7 +1225,7 @@ on_global_bypass_toggled               (GtkToggleButton *togglebutton,
                                         gpointer         user_data);
 
 void 
-callbacks_blink_global_bypass_button (int start);
+callbacks_blink_bypass_button (int button, int start);
 
 
 gboolean
@@ -1361,4 +1290,12 @@ on_pref_help_clicked                   (GtkButton       *button,
 
 void
 on_limiter_combo_changed               (GtkComboBox     *combobox,
+                                        gpointer         user_data);
+
+void
+on_SpectrumComboBox_changed            (GtkComboBox     *combobox,
+                                        gpointer         user_data);
+
+void
+on_ColorsComboBox_changed              (GtkComboBox     *combobox,
                                         gpointer         user_data);

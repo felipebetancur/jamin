@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: limiter-ui.c,v 1.16 2005/02/06 23:31:12 jdepner Exp $
+ *  $Id: limiter-ui.c,v 1.17 2007/06/24 17:48:42 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -24,6 +24,8 @@
 #include "gtkmeter.h"
 #include "state.h"
 #include "db.h"
+#include "process.h"
+
 
 void li_changed(int id, float value);
 void lh_changed(int id, float value);
@@ -31,7 +33,9 @@ void ll_changed(int id, float value);
 void boost_changed(int id, float value);
 
 static GtkAdjustment *lh_adj, *ll_adj;
-static GtkLabel *lh_label, *ll_label;
+static GtkLabel *lh_label, *ll_label, *l_limiterlabel;
+
+static char limiter_text[2][35] = {"Fast-lookahead-limiter (Harris)", "Foo-limiter (Savolainen)"};
 
 static GtkMeter *in_meter, *att_meter, *out_meter;
 static GtkAdjustment *in_meter_adj, *att_meter_adj, *out_meter_adj;
@@ -39,6 +43,11 @@ static GtkAdjustment *in_meter_adj, *att_meter_adj, *out_meter_adj;
 void bind_limiter()
 {
     GtkWidget *scale;
+
+
+    l_limiterlabel = GTK_LABEL (lookup_widget (main_window, "limiterlabel"));
+    gtk_label_set_text (l_limiterlabel, limiter_text[process_get_limiter_plugin ()]);
+
 
     s_set_callback(S_LIM_INPUT, li_changed);
 
@@ -128,6 +137,11 @@ void limiter_outmeter_reset_peak ()
 {
   gtk_meter_reset_peak (att_meter);
   gtk_meter_reset_peak (out_meter);
+}
+
+void limiter_set_label (int limiter_plugin)
+{
+  gtk_label_set_text (l_limiterlabel, limiter_text[limiter_plugin]);
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.65 2007/05/13 00:38:52 jdepner Exp $
+ *  $Id: main.c,v 1.66 2007/06/24 17:48:42 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -215,6 +215,8 @@ static void set_configuration_files(void)
 static gboolean update_meters(gpointer data)
 {
     static unsigned int count = 1;
+    int i, global, eq, comp[XO_NBANDS], limiter;
+
 
     in_meter_value(in_peak);
     out_meter_value(out_peak);
@@ -234,11 +236,18 @@ static gboolean update_meters(gpointer data)
       }
 
 
-    /*  Only blink the global bypass button twice a second when global bypass is on.  */
+    /*  Only blink the bypass buttons twice a second when bypass is on.  */
 
     if (!(count % 5))
       {
-        if (global_bypass) callbacks_blink_global_bypass_button (0);
+        process_get_bypass_states (&eq, comp, &limiter, &global);
+
+        if (global) callbacks_blink_bypass_button (GLOBAL_BYPASS, 0);
+        if (eq) callbacks_blink_bypass_button (EQ_BYPASS, 0);
+        if (comp[0] == BYPASS) callbacks_blink_bypass_button (LOW_COMP_BYPASS, 0);
+        if (comp[1] == BYPASS) callbacks_blink_bypass_button (MID_COMP_BYPASS, 0);
+        if (comp[2] == BYPASS) callbacks_blink_bypass_button (HIGH_COMP_BYPASS, 0);
+        if (limiter) callbacks_blink_bypass_button (LIMITER_BYPASS, 0);
       }
 
     return TRUE;

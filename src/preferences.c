@@ -60,9 +60,9 @@ static GtkSpinButton     *ct_spin, *wl_spin, *lgain_spin, *ugain_spin, *spec_fre
 static GtkRadioButton    *iir_button, *fft_button, *out_meter_peak_button, *out_meter_full_button, 
                          *rms_meter_peak_button, *rms_meter_full_button;
 static GtkToggleButton   *t_iir, *t_fft, *t_out_peak, *t_out_full, *t_rms_peak, *t_rms_full;
-static GtkMenu           *l_menu3;
 static GtkLabel          *l_rms_samples;
-static GtkComboBox       *l_limiter_combo;
+static GtkComboBox       *l_limiter_combo, *l_SpectrumComboBox, *l_ColorsComboBox;
+static gboolean          initialized = FALSE;
 
 
 static void color_ok_callback (GtkWidget *w, gpointer user_data);
@@ -108,7 +108,12 @@ void preferences_init()
   lgain_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "MinGainSpin"));
   ugain_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "MaxGainSpin"));
   spec_freq_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "UpdateFrequencySpin"));
-  l_menu3 = GTK_MENU (lookup_widget (pref_dialog, "menu3"));
+  l_SpectrumComboBox = GTK_COMBO_BOX (lookup_widget (pref_dialog, "SpectrumComboBox"));
+  gtk_combo_box_set_active (l_SpectrumComboBox, process_get_spec_mode ());
+
+
+  l_ColorsComboBox = GTK_COMBO_BOX (lookup_widget (pref_dialog, "ColorsComboBox"));
+  gtk_combo_box_set_active (l_ColorsComboBox, LOW_BAND_COLOR);
 
   rms_time_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "rmsTimeValue"));
 
@@ -133,12 +138,15 @@ void preferences_init()
 
   l_rms_samples = GTK_LABEL (lookup_widget (pref_dialog, "rmsSamples"));
 
+
   l_limiter_combo = GTK_COMBO_BOX (lookup_widget (pref_dialog, "limiter_combo"));
+  gtk_combo_box_set_active (l_limiter_combo, process_get_limiter_plugin ());
 
 
   color_dialog = create_colorselectiondialog1 ();
 
   colorsel = GTK_COLOR_SELECTION_DIALOG (color_dialog)->colorsel;
+
 
   g_signal_connect (GTK_OBJECT 
                     (GTK_COLOR_SELECTION_DIALOG (color_dialog)->ok_button),
@@ -190,12 +198,6 @@ void preferences_init()
           /*  Check input for matching strings and load values if
               found.  */
             
-          if (strstr (varin, "[TEXT COLOR]") != NULL)
-            {
-              sscanf (info, "%hu %hu %hu", &i, &j, &k);
-              set_color (&color[TEXT_COLOR], i, j, k);
-            }
-
           if (strstr (varin, "[LOW BAND COMPRESSOR COLOR]") != NULL)
             {
               sscanf (info, "%hu %hu %hu", &i, &j, &k);
@@ -232,22 +234,28 @@ void preferences_init()
               set_color (&color[HDEQ_CURVE_COLOR], i, j, k);
             }
 
-          if (strstr (varin, "[HDEQ GRID COLOR]") != NULL)
-            {
-              sscanf (info, "%hu %hu %hu", &i, &j, &k);
-              set_color (&color[HDEQ_GRID_COLOR], i, j, k);
-            }
-
           if (strstr (varin, "[HDEQ SPECTRUM COLOR]") != NULL)
             {
               sscanf (info, "%hu %hu %hu", &i, &j, &k);
               set_color (&color[HDEQ_SPECTRUM_COLOR], i, j, k);
             }
 
+          if (strstr (varin, "[HDEQ GRID COLOR]") != NULL)
+            {
+              sscanf (info, "%hu %hu %hu", &i, &j, &k);
+              set_color (&color[HDEQ_GRID_COLOR], i, j, k);
+            }
+
           if (strstr (varin, "[HDEQ BACKGROUND COLOR]") != NULL)
             {
               sscanf (info, "%hu %hu %hu", &i, &j, &k);
               set_color (&color[HDEQ_BACKGROUND_COLOR], i, j, k);
+            }
+
+          if (strstr (varin, "[TEXT COLOR]") != NULL)
+            {
+              sscanf (info, "%hu %hu %hu", &i, &j, &k);
+              set_color (&color[TEXT_COLOR], i, j, k);
             }
 
           if (strstr (varin, "[METER NORMAL COLOR]") != NULL)
@@ -278,6 +286,8 @@ void preferences_init()
 
       fclose (fp);
     }
+
+  initialized = TRUE;
 }
 
 
@@ -304,73 +314,10 @@ void set_color (GdkColor *color, unsigned short red, unsigned short green,
 
 void popup_pref_dialog (int updown)
 {
-  float sample_rate, time_slice;
-  int samples;
-  char *sample_label;
-
-
   /*  Pop up on 1.  */
 
   if (updown)
     {
-      gtk_spin_button_set_value (ct_spin, s_get_crossfade_time());
-      gtk_spin_button_set_value (wl_spin, intrim_inmeter_get_warn());
-
-      gtk_spin_button_set_value (lgain_spin, hdeq_get_lower_gain ());
-      gtk_spin_button_set_value (ugain_spin, hdeq_get_upper_gain ());
-      gtk_spin_button_set_value (spec_freq_spin, get_spectrum_freq ());
-
-      gtk_menu_set_active (l_menu3, process_get_spec_mode());
-
-      if (process_get_crossover_type() == IIR)
-	{
-	  gtk_toggle_button_set_active (t_iir, TRUE);
-	}
-      else
-	{
-	  gtk_toggle_button_set_active (t_fft, TRUE);
-	}
-
-
-      if (intrim_get_out_meter_peak_pref ())
-	{
-	  gtk_toggle_button_set_active (t_out_peak, TRUE);
-	}
-      else
-	{
-	  gtk_toggle_button_set_active (t_out_full, TRUE);
-	}
-
-
-      if (intrim_get_rms_meter_peak_pref ())
-	{
-	  gtk_toggle_button_set_active (t_rms_peak, TRUE);
-	}
-      else
-	{
-	  gtk_toggle_button_set_active (t_rms_full, TRUE);
-	}
-
-
-      sample_rate = process_get_sample_rate ();
-
-      time_slice = process_get_rms_time_slice ();
-
-      gtk_spin_button_set_value (rms_time_spin, time_slice);
-
-
-      samples = NINT ((time_slice / 1000.0) * sample_rate);
-
-      sample_label = g_strdup_printf ("%d", samples);
-
-      gtk_label_set_label (l_rms_samples, sample_label);
-
-      free (sample_label);
-
-
-      gtk_combo_box_set_active (l_limiter_combo, process_get_limiter_plugin ());
-
-
       gtk_widget_show (pref_dialog);
     }
 
@@ -390,15 +337,21 @@ void popup_color_dialog (int id)
 {
   GdkColor *ptr;
 
-  color_id = id;
 
-  ptr = &color[id];
+  /*  We don't want to do this until after the colors combo box has been set the first time.  */
+
+  if (initialized)
+    {
+      color_id = id;
+
+      ptr = &color[id];
 
 
-  gtk_color_selection_set_current_color ((GtkColorSelection *) colorsel, ptr);
+      gtk_color_selection_set_current_color ((GtkColorSelection *) colorsel, ptr);
 
 
-  gtk_widget_show (color_dialog);
+      gtk_widget_show (color_dialog);
+    }
 }
 
 
@@ -490,11 +443,6 @@ void pref_write_jamin_defaults ()
     {
       fprintf (fp, "JAMin defaults file V%s\n",  VERSION);
 
-      fprintf (fp, "[TEXT COLOR]                 = %hu %hu %hu\n",
-               color[TEXT_COLOR].red, 
-               color[TEXT_COLOR].green,
-               color[TEXT_COLOR].blue);
-
       fprintf (fp, "[LOW BAND COMPRESSOR COLOR]  = %hu %hu %hu\n",
                color[LOW_BAND_COLOR].red, 
                color[LOW_BAND_COLOR].green,
@@ -525,20 +473,25 @@ void pref_write_jamin_defaults ()
                color[HDEQ_CURVE_COLOR].green,
                color[HDEQ_CURVE_COLOR].blue);
 
-      fprintf (fp, "[HDEQ GRID COLOR]            = %hu %hu %hu\n",
-               color[HDEQ_GRID_COLOR].red, 
-               color[HDEQ_GRID_COLOR].green,
-               color[HDEQ_GRID_COLOR].blue);
-
       fprintf (fp, "[HDEQ SPECTRUM COLOR]        = %hu %hu %hu\n",
                color[HDEQ_SPECTRUM_COLOR].red, 
                color[HDEQ_SPECTRUM_COLOR].green,
                color[HDEQ_SPECTRUM_COLOR].blue);
 
+      fprintf (fp, "[HDEQ GRID COLOR]            = %hu %hu %hu\n",
+               color[HDEQ_GRID_COLOR].red, 
+               color[HDEQ_GRID_COLOR].green,
+               color[HDEQ_GRID_COLOR].blue);
+
       fprintf (fp, "[HDEQ BACKGROUND COLOR]      = %hu %hu %hu\n",
                color[HDEQ_BACKGROUND_COLOR].red, 
                color[HDEQ_BACKGROUND_COLOR].green,
                color[HDEQ_BACKGROUND_COLOR].blue);
+
+      fprintf (fp, "[TEXT COLOR]                 = %hu %hu %hu\n",
+               color[TEXT_COLOR].red, 
+               color[TEXT_COLOR].green,
+               color[TEXT_COLOR].blue);
 
       fprintf (fp, "[METER NORMAL COLOR]         = %hu %hu %hu\n",
                color[METER_NORMAL_COLOR].red, 
@@ -567,17 +520,16 @@ void pref_write_jamin_defaults ()
 
 void pref_reset_all_colors ()
 {
-  set_color (&color[TEXT_COLOR], 0, 0, 0);
   set_color (&color[LOW_BAND_COLOR], 0, 50000, 0);
   set_color (&color[MID_BAND_COLOR], 0, 0, 60000);
   set_color (&color[HIGH_BAND_COLOR], 60000, 0, 0);
   set_color (&color[GANG_HIGHLIGHT_COLOR], 65535, 0, 0);
-
   set_color (&color[HANDLE_COLOR], 65535, 65535, 0);
   set_color (&color[HDEQ_CURVE_COLOR], 65535, 65535, 65535);
-  set_color (&color[HDEQ_GRID_COLOR], 0, 36611, 0);
   set_color (&color[HDEQ_SPECTRUM_COLOR], 0, 65535, 65535);
+  set_color (&color[HDEQ_GRID_COLOR], 0, 36611, 0);
   set_color (&color[HDEQ_BACKGROUND_COLOR], 0, 0, 0);
+  set_color (&color[TEXT_COLOR], 0, 0, 0);
   set_color (&color[METER_NORMAL_COLOR], 0, 60000, 0);
   set_color (&color[METER_WARNING_COLOR], 50000, 55000, 0);
   set_color (&color[METER_OVER_COLOR], 60000, 0, 0);

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.h,v 1.35 2007/06/22 01:25:03 jdepner Exp $
+ *  $Id: process.h,v 1.36 2007/06/24 17:48:42 jdepner Exp $
  */
 
 #ifndef PROCESS_H
@@ -52,10 +52,17 @@
 #define LIM_PEAK_IN  0
 #define LIM_PEAK_OUT 1
 
+
+/*  Important note - definition of spectrum mode is in the same order as
+    the combo box buttons.  Don't add to or rearrange the spectrum modes unless
+    you set the combo box entries to match.  */
+
+/* spectrum modes */
 #define SPEC_PRE_EQ    0
 #define SPEC_POST_EQ   1
 #define SPEC_POST_COMP 2
 #define SPEC_OUTPUT    3
+
 
 #define ACTIVE	0
 #define MUTE    1
@@ -70,6 +77,16 @@
 #define MID_COMP_BYPASS    2
 #define HIGH_COMP_BYPASS   3
 #define LIMITER_BYPASS     4
+#define GLOBAL_BYPASS      5
+
+
+/*  Important note - definition of limiter types is in the same order as
+    the combo box buttons.  Don't add to or rearrange the limiter types unless
+    you set the combo box entries to match.  */
+
+/* limiter type */
+#define FAST               0
+#define FOO                1
 
 
 extern const jack_nframes_t dsp_block_size;
@@ -77,8 +94,6 @@ extern float sample_rate;
 extern float eq_coefs[];
 extern float in_peak[], out_peak[], rms_peak[];
 extern float lim_peak[];
-
-extern volatile int global_bypass;
 
 float bin_peak_read_and_clear(int bin);
 
@@ -121,6 +136,7 @@ int process_get_bypass_state (int bypass_type);
 float process_get_sample_rate ();
 int process_get_rms_time_slice ();
 void process_set_rms_time_slice (int milliseconds);
+void process_set_global_bypass (int state);
 
 extern comp_settings compressors[XO_NBANDS];
 extern lim_settings limiter;
