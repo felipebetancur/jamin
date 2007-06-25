@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.73 2007/06/24 23:28:28 jdepner Exp $
+ *  $Id: process.c,v 1.74 2007/06/25 21:00:46 jdepner Exp $
  */
 
 #include <math.h>
@@ -231,11 +231,19 @@ void process_init(float fs)
 		     out_tmp[CHANNEL_L][band], out_tmp[CHANNEL_R][band]);
     }
 
-    limiter[FAST].handle = plugin_instantiate(lim_plugin[FAST], fs);
-    limiter[FOO].handle = plugin_instantiate(lim_plugin[FOO], fs);
 
-    lim_connect(lim_plugin[FAST], &limiter[FAST], NULL, NULL);
-    lim_connect(lim_plugin[FOO], &limiter[FOO], NULL, NULL);
+    if (lim_plugin[FAST] != NULL)
+      {
+        limiter[FAST].handle = plugin_instantiate(lim_plugin[FAST], fs);
+        lim_connect(lim_plugin[FAST], &limiter[FAST], NULL, NULL);
+      }
+
+    if (lim_plugin[FOO] != NULL)
+      {
+        limiter[FOO].handle = plugin_instantiate(lim_plugin[FOO], fs);
+        lim_connect(lim_plugin[FOO], &limiter[FOO], NULL, NULL);
+      }
+
 
 
     /* Allocate at least 1 second of latency correction buffer */
