@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.66 2007/06/24 17:48:42 jdepner Exp $
+ *  $Id: main.c,v 1.67 2007/06/29 17:17:59 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -215,7 +215,7 @@ static void set_configuration_files(void)
 static gboolean update_meters(gpointer data)
 {
     static unsigned int count = 1;
-    int i, global, eq, comp[XO_NBANDS], limiter;
+    int global, eq, comp[XO_NBANDS], limiter;
 
 
     in_meter_value(in_peak);

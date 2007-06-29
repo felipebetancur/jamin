@@ -1299,3 +1299,19 @@ on_SpectrumComboBox_changed            (GtkComboBox     *combobox,
 void
 on_ColorsComboBox_changed              (GtkComboBox     *combobox,
                                         gpointer         user_data);
+
+void
+on_LowDelayButton_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_MidDelayButton_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_LowDelaySpinButton_value_changed    (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data);
+
+void
+on_MidDelaySpinButton_value_changed    (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data);

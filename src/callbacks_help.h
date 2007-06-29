@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks_help.h,v 1.45 2007/06/22 01:25:03 jdepner Exp $
+ *  $Id: callbacks_help.h,v 1.46 2007/06/29 17:17:58 jdepner Exp $
  */
 
 #include "support.h"
@@ -92,6 +92,7 @@ char preferences_help[] = {N_(
 (HDEQ) and the graphic EQ (GEQ).\n\n\
     Crossfade : Set the length of the crossfade time when changing between \
 scenes or using the undo/redo functions.\n\n\
+    Warning Level : Set the input and output meter warning level.\n\n\
     Spectrum : Set the source for the spectrum displays in the HDEQ and the \
 Spectrum tab.  Also, set the spectrum update frequency for both of these \
 tabs.\n\n\
@@ -100,12 +101,20 @@ or Infinite Impulse Response (IIR).  IIR should only be used for testing as \
 your results will be substantially inferior to the FFT crossover.\n\n\
     RMS Sample Size : Set the time slice size to be used for the RMS meter \
 displays.  The number of samples will change as you modify the time.\n\n\
+    Band Delays : Set delays for the low and mid bands.  The maximum delay \
+for the low band is 2 milliseconds and the maximum delay for the mid band is \
+0.5 milliseconds.  These delays are used for compensating for for the different \
+low and mid frequency drivers in a speaker system.  This is sometimes nice for \
+mastering.  The delays will not bgo into effect unless the Delay buttons under \
+the low and mid band compressor control areas are selected.\n\n\
     Colors : Set the colors for most of JAMin's displays.  These colors \
 are saved in the file $HOME/.jamin/jamin-defaults.  This is done whenever you \
 exit from JAMin.  You can actually edit this file and change the colors by \
 hand.  They are just RGB values in the 0-65535 range but it's much easier to \
 use the GUI ;-).\n\n\
-    Warning Level : Set the input and output meter warning level.\n\n\
+    Limiter : Select either Steve Harris' fast-lookahead-limiter plugin or \
+Sampo Savolainen's foo-limiter.  Note that there may be artifacts if you push \
+the foo-limiter too hard.\n\n\
     Output Meter Numeric Display : Set whether the output meter numeric displays \
 for output and RMS display peak values or the current level values.\n")
 };
@@ -120,7 +129,7 @@ the user to change the compressor crossover points.  The following is a quick \
 guide to using the HDEQ:\n\n\
     In the background window - left click and release to begin drawing the \
 curve.  Left click again to end the curve.  You can define any portion of the \
-curve, you don't have to define the entire curve.  Drawing can be done from \
+curve, you don 't have to define the entire curve.  Drawing can be done from \
 left to right or right to left.  If you try to reverse direction while \
 drawing, the data in the reverse direction will be ignored.  You can discard \
 the curve that you are drawing by clicking the middle button or by clicking the \

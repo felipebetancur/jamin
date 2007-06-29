@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.74 2007/06/25 21:00:46 jdepner Exp $
+ *  $Id: process.c,v 1.75 2007/06/29 17:17:59 jdepner Exp $
  */
 
 #include <math.h>
@@ -59,6 +59,32 @@ float eq_coefs[BINS]; /* Linear gain of each FFT bin */
 float lim_peak[2];
 
 static int iir_xover = 0;
+static unsigned int delay_mask;
+
+
+/*  Low and mid band delays.  Note that there is no high band delay
+    (it makes no sense) but there is a slot for it ('cause it was 
+    easier to deal with ;-)  */
+
+static float *delay_buf[NCHANNELS][XO_NBANDS];
+
+
+/*  save_delay saves the actual time setting from preferences.  */
+
+static float save_delay[XO_NBANDS] = {0.0, 0.0, 0.0};
+
+
+/*  If delay is set to 0 then the band delay push button is off but 
+    we will stuff the actual delay (in samples) in here when we want
+    to delay).  */
+
+static int delay[XO_NBANDS] = {0, 0, 0};
+
+
+/*  Set this if we want to set the actual delays on the next pass through.  */
+
+static int delay_pending[XO_NBANDS] = {0, 0, 0};
+
 
 float in_peak[NCHANNELS], out_peak[NCHANNELS], rms_peak[NCHANNELS];
 static rms *r[2] = {NULL, NULL};
@@ -229,7 +255,14 @@ void process_init(float fs)
 	compressors[band].handle = plugin_instantiate(comp_plugin, fs);
 	comp_connect(comp_plugin, &compressors[band],
 		     out_tmp[CHANNEL_L][band], out_tmp[CHANNEL_R][band]);
+        delay_buf[CHANNEL_L][band] = calloc(dsp_block_size * 4, sizeof(float));
+        delay_buf[CHANNEL_R][band] = calloc(dsp_block_size * 4, sizeof(float));
     }
+
+
+    /*  Multiply by four so we'll have enough to cover 2 ms at 192KHz.  */
+
+    delay_mask = (dsp_block_size * 4) - 1;
 
 
     if (lim_plugin[FAST] != NULL)
@@ -421,8 +454,9 @@ int process_signal(jack_nframes_t nframes,
 {
     unsigned int pos, port, band;
     const unsigned int latency = BINS - dsp_block_size;
-    static unsigned int in_ptr = 0;
+    static unsigned int in_ptr = 0, dpos[2] = {0, 0};
     static unsigned int n_calc_pt = BINS - (BINS / OVER_SAMP);
+
 
     /* The limiters i/o ports potentially change with every call */
     plugin_connect_port(lim_plugin[limiter_plugin], limiter[limiter_plugin].handle, LIM_IN_1, out[CHANNEL_L]);
@@ -559,13 +593,28 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 
     for (port = 0; port < nchannels; port++) {
 	for (pos = 0; pos < nframes; pos++) {
+
+          /*  Original (no delay) code.
 	    out[port][pos] =
 		out_tmp[port][XO_LOW][pos] + out_tmp[port][XO_MID][pos] +
 		out_tmp[port][XO_HIGH][pos];
-		/* Keep buffer of compressor outputs incase we need it for
-		 * limiter bypass */
-		latcorbuf_postcomp[port][(latcorbuf_pos + pos) &
-		    (latcorbuf_len - 1)] = out[port][pos];
+          */
+
+
+          delay_buf[port][XO_LOW][dpos[port] & delay_mask] = out_tmp[port][XO_LOW][pos];
+          delay_buf[port][XO_MID][dpos[port] & delay_mask] = out_tmp[port][XO_MID][pos];
+          delay_buf[port][XO_HIGH][dpos[port] & delay_mask] = out_tmp[port][XO_HIGH][pos];
+
+          out[port][pos] = delay_buf[port][XO_LOW][(dpos[port] - delay[XO_LOW]) & delay_mask] +
+            delay_buf[port][XO_MID][(dpos[port] - delay[XO_MID]) & delay_mask] +
+            delay_buf[port][XO_HIGH][(dpos[port] - delay[XO_HIGH]) & delay_mask];
+
+          dpos[port]++;
+
+
+          /* Keep buffer of compressor outputs incase we need it for
+           * limiter bypass */
+          latcorbuf_postcomp[port][(latcorbuf_pos + pos) & (latcorbuf_len - 1)] = out[port][pos];
 	}
     }
 
@@ -670,6 +719,12 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 
         limiter_plugin_change_pending = FALSE;
       }
+
+
+    /*  Always set these since we turn off delay by setting to 0.  */
+
+    delay[XO_LOW] = delay_pending[XO_LOW];
+    delay[XO_MID] = delay_pending[XO_MID];
 
     return 0;
 }
@@ -788,7 +843,6 @@ void process_set_eq_bypass(int bypass)
 
 void process_set_crossover_type(int type)
 {
-  fprintf(stderr,"%s %d %d\n",__FILE__,__LINE__,type);
     iir_xover = type;
 }
 
@@ -906,6 +960,38 @@ int process_limiter_plugins_available ()
 {
   if (lim_plugin[FAST] == NULL || lim_plugin[FOO] == NULL) return (1);
   return (2);
+}
+
+
+/*  This actually returns the number of samples for the delay but 
+    it really doesn't matter.  Anyway, we might want to use that 
+    sometime in the future.  */
+
+int process_get_xo_delay_state (int band)
+{
+  return (delay[band]);
+}
+
+void process_set_xo_delay_state (int band, int state)
+{
+  if (state)
+    {
+      delay_pending[band] = NINT ((sample_rate / 1000.0) * save_delay[band]);
+    }
+  else
+    {
+      delay_pending[band] = 0;
+    }
+}
+
+float process_get_xo_delay_time (int band)
+{
+  return (save_delay[band]);
+}
+
+void process_set_xo_delay_time (int band, float ms)
+{
+  save_delay[band] = ms;
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

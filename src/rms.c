@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: rms.c,v 1.2 2007/06/21 18:48:29 theno23 Exp $
+ *  $Id: rms.c,v 1.3 2007/06/29 17:17:59 jdepner Exp $
  */
 
 #include <math.h>
@@ -28,7 +28,7 @@ rms *rms_new(float fs, float time)
 {
     rms *r = calloc(1, sizeof(rms));
 
-    r->rm = 0.1;
+    r->rm = 0.0001;
     r->coef = 0.5 * (1.0 - exp(-1.0 / (fs * time)));
 
     return r;

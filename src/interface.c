@@ -372,6 +372,8 @@ create_window1 (void)
   GtkWidget *low_solo;
   GtkWidget *low_bypass_event_box;
   GtkWidget *low_bypass;
+  GtkWidget *low_delay_event_box;
+  GtkWidget *LowDelayButton;
   GtkWidget *label_freq_l;
   GtkWidget *mid_comp_event_box;
   GtkWidget *frame_m;
@@ -422,6 +424,8 @@ create_window1 (void)
   GtkWidget *mid_solo;
   GtkWidget *mid_bypass_event_box;
   GtkWidget *mid_bypass;
+  GtkWidget *mid_delay_event_box;
+  GtkWidget *MidDelayButton;
   GtkWidget *label_freq_m;
   GtkWidget *high_comp_event_box;
   GtkWidget *frame_h;
@@ -2457,7 +2461,7 @@ create_window1 (void)
   gtk_widget_show (low_band_button_event_box);
   gtk_box_pack_start (GTK_BOX (low_band_vbox), low_band_button_event_box, TRUE, TRUE, 0);
 
-  low_band_button_hbox = gtk_hbox_new (TRUE, 0);
+  low_band_button_hbox = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (low_band_button_hbox, "low_band_button_hbox");
   gtk_widget_show (low_band_button_hbox);
   gtk_container_add (GTK_CONTAINER (low_band_button_event_box), low_band_button_hbox);
@@ -2478,6 +2482,17 @@ create_window1 (void)
   gtk_widget_set_name (low_bypass, "low_bypass");
   gtk_widget_show (low_bypass);
   gtk_container_add (GTK_CONTAINER (low_bypass_event_box), low_bypass);
+
+  low_delay_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (low_delay_event_box, "low_delay_event_box");
+  gtk_widget_show (low_delay_event_box);
+  gtk_box_pack_start (GTK_BOX (low_band_button_hbox), low_delay_event_box, FALSE, FALSE, 0);
+  gtk_tooltips_set_tip (tooltips, low_delay_event_box, _("Toggle the low band delay (set in Preferences)"), NULL);
+
+  LowDelayButton = gtk_check_button_new_with_mnemonic (_("Delay"));
+  gtk_widget_set_name (LowDelayButton, "LowDelayButton");
+  gtk_widget_show (LowDelayButton);
+  gtk_container_add (GTK_CONTAINER (low_delay_event_box), LowDelayButton);
 
   label_freq_l = gtk_label_new (_("Low : 00000 - 00000"));
   gtk_widget_set_name (label_freq_l, "label_freq_l");
@@ -2748,7 +2763,7 @@ create_window1 (void)
   gtk_widget_show (mid_band_button_event_box);
   gtk_box_pack_start (GTK_BOX (mid_band_vbox), mid_band_button_event_box, TRUE, TRUE, 0);
 
-  mid_band_button_hbox = gtk_hbox_new (TRUE, 0);
+  mid_band_button_hbox = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (mid_band_button_hbox, "mid_band_button_hbox");
   gtk_widget_show (mid_band_button_hbox);
   gtk_container_add (GTK_CONTAINER (mid_band_button_event_box), mid_band_button_hbox);
@@ -2769,6 +2784,17 @@ create_window1 (void)
   gtk_widget_set_name (mid_bypass, "mid_bypass");
   gtk_widget_show (mid_bypass);
   gtk_container_add (GTK_CONTAINER (mid_bypass_event_box), mid_bypass);
+
+  mid_delay_event_box = gtk_event_box_new ();
+  gtk_widget_set_name (mid_delay_event_box, "mid_delay_event_box");
+  gtk_widget_show (mid_delay_event_box);
+  gtk_box_pack_start (GTK_BOX (mid_band_button_hbox), mid_delay_event_box, FALSE, FALSE, 0);
+  gtk_tooltips_set_tip (tooltips, mid_delay_event_box, _("Toggle the mid band delay (set in Preferences)"), NULL);
+
+  MidDelayButton = gtk_check_button_new_with_mnemonic (_("Delay"));
+  gtk_widget_set_name (MidDelayButton, "MidDelayButton");
+  gtk_widget_show (MidDelayButton);
+  gtk_container_add (GTK_CONTAINER (mid_delay_event_box), MidDelayButton);
 
   label_freq_m = gtk_label_new (_("Mid : 00000 - 00000"));
   gtk_widget_set_name (label_freq_m, "label_freq_m");
@@ -4132,6 +4158,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) low_bypass, "toggled",
                     G_CALLBACK (on_low_bypass_toggled),
                     NULL);
+  g_signal_connect ((gpointer) LowDelayButton, "toggled",
+                    G_CALLBACK (on_LowDelayButton_toggled),
+                    NULL);
   g_signal_connect ((gpointer) mid_comp_event_box, "enter_notify_event",
                     G_CALLBACK (on_mid_comp_event_box_enter_notify_event),
                     NULL);
@@ -4203,6 +4232,9 @@ create_window1 (void)
                     NULL);
   g_signal_connect ((gpointer) mid_bypass, "toggled",
                     G_CALLBACK (on_mid_bypass_toggled),
+                    NULL);
+  g_signal_connect ((gpointer) MidDelayButton, "toggled",
+                    G_CALLBACK (on_MidDelayButton_toggled),
                     NULL);
   g_signal_connect ((gpointer) high_comp_event_box, "enter_notify_event",
                     G_CALLBACK (on_high_comp_event_box_enter_notify_event),
@@ -4698,6 +4730,8 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, low_solo, "low_solo");
   GLADE_HOOKUP_OBJECT (window1, low_bypass_event_box, "low_bypass_event_box");
   GLADE_HOOKUP_OBJECT (window1, low_bypass, "low_bypass");
+  GLADE_HOOKUP_OBJECT (window1, low_delay_event_box, "low_delay_event_box");
+  GLADE_HOOKUP_OBJECT (window1, LowDelayButton, "LowDelayButton");
   GLADE_HOOKUP_OBJECT (window1, label_freq_l, "label_freq_l");
   GLADE_HOOKUP_OBJECT (window1, mid_comp_event_box, "mid_comp_event_box");
   GLADE_HOOKUP_OBJECT (window1, frame_m, "frame_m");
@@ -4748,6 +4782,8 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, mid_solo, "mid_solo");
   GLADE_HOOKUP_OBJECT (window1, mid_bypass_event_box, "mid_bypass_event_box");
   GLADE_HOOKUP_OBJECT (window1, mid_bypass, "mid_bypass");
+  GLADE_HOOKUP_OBJECT (window1, mid_delay_event_box, "mid_delay_event_box");
+  GLADE_HOOKUP_OBJECT (window1, MidDelayButton, "MidDelayButton");
   GLADE_HOOKUP_OBJECT (window1, label_freq_m, "label_freq_m");
   GLADE_HOOKUP_OBJECT (window1, high_comp_event_box, "high_comp_event_box");
   GLADE_HOOKUP_OBJECT (window1, frame_h, "frame_h");
@@ -4978,6 +5014,7 @@ create_pref_dialog (void)
   GtkObject *MaxGainSpin_adj;
   GtkWidget *MaxGainSpin;
   GtkWidget *GraphicEQLabel;
+  GtkWidget *hbox78;
   GtkWidget *CrossfadeEvent;
   GtkWidget *CrossfadeFrame;
   GtkWidget *hbox72;
@@ -4985,6 +5022,13 @@ create_pref_dialog (void)
   GtkObject *CrossfadeTimeSpin_adj;
   GtkWidget *CrossfadeTimeSpin;
   GtkWidget *CrossfadeLabel;
+  GtkWidget *warningFrame;
+  GtkWidget *alignment7;
+  GtkWidget *warningLevelHbox;
+  GtkWidget *Meter_warning_level__dbFS_;
+  GtkObject *warningLevelSpinButton_adj;
+  GtkWidget *warningLevelSpinButton;
+  GtkWidget *warningLabel;
   GtkWidget *SpectrumEvent;
   GtkWidget *SpectrumFrame;
   GtkWidget *hbox76;
@@ -5011,33 +5055,37 @@ create_pref_dialog (void)
   GtkWidget *rmsSamplesLabel;
   GtkWidget *rmsSamples;
   GtkWidget *label3179;
+  GtkWidget *DelayFrame;
+  GtkWidget *alignment10;
+  GtkWidget *DelayTable;
+  GtkWidget *LowDelayLabel;
+  GtkWidget *MidDelayLabel;
+  GtkObject *LowDelaySpinButton_adj;
+  GtkWidget *LowDelaySpinButton;
+  GtkObject *MidDelaySpinButton_adj;
+  GtkWidget *MidDelaySpinButton;
+  GtkWidget *label3180;
+  GtkWidget *hbox77;
   GtkWidget *ColorsEvent;
   GtkWidget *ColorsFrame;
   GtkWidget *eventbox68;
   GtkWidget *ColorsComboBox;
   GtkWidget *ColorsLabel;
-  GtkWidget *warningFrame;
-  GtkWidget *alignment7;
-  GtkWidget *warningLevelHbox;
-  GtkWidget *Meter_warning_level__dbFS_;
-  GtkObject *warningLevelSpinButton_adj;
-  GtkWidget *warningLevelSpinButton;
-  GtkWidget *warningLabel;
-  GtkWidget *out_meter_pref_frame;
-  GtkWidget *alignment8;
-  GtkWidget *hbox74;
+  GtkWidget *limiter_frame;
+  GtkWidget *alignment9;
+  GtkWidget *eventbox67;
+  GtkWidget *limiter_combo;
+  GtkWidget *limiter_frame_label;
+  GtkWidget *output_meter_numeric_display_frame;
+  GtkWidget *alignment11;
+  GtkWidget *hbox79;
   GtkWidget *out_meter_peak_button;
   GSList *out_meter_peak_button_group = NULL;
   GtkWidget *out_meter_full_button;
   GtkWidget *rms_meter_peak_button;
   GSList *rms_meter_peak_button_group = NULL;
   GtkWidget *rms_meter_full_button;
-  GtkWidget *out_meter_pref_label;
-  GtkWidget *limiter_frame;
-  GtkWidget *alignment9;
-  GtkWidget *eventbox67;
-  GtkWidget *limiter_combo;
-  GtkWidget *limiter_frame_label;
+  GtkWidget *output_meter_numeric_display_label;
   GtkWidget *dialog_action_area1;
   GtkWidget *pref_help;
   GtkWidget *pref_close;
@@ -5112,10 +5160,15 @@ create_pref_dialog (void)
   gtk_frame_set_label_widget (GTK_FRAME (GraphicEQ), GraphicEQLabel);
   gtk_label_set_use_markup (GTK_LABEL (GraphicEQLabel), TRUE);
 
+  hbox78 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox78, "hbox78");
+  gtk_widget_show (hbox78);
+  gtk_box_pack_start (GTK_BOX (dialog_vbox1), hbox78, TRUE, TRUE, 0);
+
   CrossfadeEvent = gtk_event_box_new ();
   gtk_widget_set_name (CrossfadeEvent, "CrossfadeEvent");
   gtk_widget_show (CrossfadeEvent);
-  gtk_box_pack_start (GTK_BOX (dialog_vbox1), CrossfadeEvent, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox78), CrossfadeEvent, TRUE, TRUE, 0);
 
   CrossfadeFrame = gtk_frame_new (NULL);
   gtk_widget_set_name (CrossfadeFrame, "CrossfadeFrame");
@@ -5147,6 +5200,41 @@ create_pref_dialog (void)
   gtk_widget_show (CrossfadeLabel);
   gtk_frame_set_label_widget (GTK_FRAME (CrossfadeFrame), CrossfadeLabel);
   gtk_label_set_use_markup (GTK_LABEL (CrossfadeLabel), TRUE);
+
+  warningFrame = gtk_frame_new (NULL);
+  gtk_widget_set_name (warningFrame, "warningFrame");
+  gtk_widget_show (warningFrame);
+  gtk_box_pack_start (GTK_BOX (hbox78), warningFrame, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (warningFrame), 5);
+
+  alignment7 = gtk_alignment_new (0.5, 0.5, 1, 1);
+  gtk_widget_set_name (alignment7, "alignment7");
+  gtk_widget_show (alignment7);
+  gtk_container_add (GTK_CONTAINER (warningFrame), alignment7);
+  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment7), 0, 0, 12, 0);
+
+  warningLevelHbox = gtk_hbox_new (TRUE, 0);
+  gtk_widget_set_name (warningLevelHbox, "warningLevelHbox");
+  gtk_widget_show (warningLevelHbox);
+  gtk_container_add (GTK_CONTAINER (alignment7), warningLevelHbox);
+
+  Meter_warning_level__dbFS_ = gtk_label_new (_("Input/Output meters (dBFS):"));
+  gtk_widget_set_name (Meter_warning_level__dbFS_, "Meter_warning_level__dbFS_");
+  gtk_widget_show (Meter_warning_level__dbFS_);
+  gtk_box_pack_start (GTK_BOX (warningLevelHbox), Meter_warning_level__dbFS_, FALSE, FALSE, 0);
+
+  warningLevelSpinButton_adj = gtk_adjustment_new (-6, -30, 0, 1, 10, 10);
+  warningLevelSpinButton = gtk_spin_button_new (GTK_ADJUSTMENT (warningLevelSpinButton_adj), 1, 0);
+  gtk_widget_set_name (warningLevelSpinButton, "warningLevelSpinButton");
+  gtk_widget_show (warningLevelSpinButton);
+  gtk_box_pack_start (GTK_BOX (warningLevelHbox), warningLevelSpinButton, TRUE, TRUE, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (warningLevelSpinButton), TRUE);
+
+  warningLabel = gtk_label_new (_("<i><b>Warning Level</b></i>"));
+  gtk_widget_set_name (warningLabel, "warningLabel");
+  gtk_widget_show (warningLabel);
+  gtk_frame_set_label_widget (GTK_FRAME (warningFrame), warningLabel);
+  gtk_label_set_use_markup (GTK_LABEL (warningLabel), TRUE);
 
   SpectrumEvent = gtk_event_box_new ();
   gtk_widget_set_name (SpectrumEvent, "SpectrumEvent");
@@ -5296,10 +5384,73 @@ create_pref_dialog (void)
   gtk_frame_set_label_widget (GTK_FRAME (rmsWindowFrame), label3179);
   gtk_label_set_use_markup (GTK_LABEL (label3179), TRUE);
 
+  DelayFrame = gtk_frame_new (NULL);
+  gtk_widget_set_name (DelayFrame, "DelayFrame");
+  gtk_widget_show (DelayFrame);
+  gtk_box_pack_start (GTK_BOX (hbox75), DelayFrame, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (DelayFrame), 5);
+
+  alignment10 = gtk_alignment_new (0.5, 0.5, 1, 1);
+  gtk_widget_set_name (alignment10, "alignment10");
+  gtk_widget_show (alignment10);
+  gtk_container_add (GTK_CONTAINER (DelayFrame), alignment10);
+  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment10), 0, 0, 12, 0);
+
+  DelayTable = gtk_table_new (2, 2, TRUE);
+  gtk_widget_set_name (DelayTable, "DelayTable");
+  gtk_widget_show (DelayTable);
+  gtk_container_add (GTK_CONTAINER (alignment10), DelayTable);
+  gtk_container_set_border_width (GTK_CONTAINER (DelayTable), 6);
+
+  LowDelayLabel = gtk_label_new (_("Low band"));
+  gtk_widget_set_name (LowDelayLabel, "LowDelayLabel");
+  gtk_widget_show (LowDelayLabel);
+  gtk_table_attach (GTK_TABLE (DelayTable), LowDelayLabel, 0, 1, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (LowDelayLabel), 0, 0.5);
+
+  MidDelayLabel = gtk_label_new (_("Mid band"));
+  gtk_widget_set_name (MidDelayLabel, "MidDelayLabel");
+  gtk_widget_show (MidDelayLabel);
+  gtk_table_attach (GTK_TABLE (DelayTable), MidDelayLabel, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (MidDelayLabel), 0, 0.5);
+
+  LowDelaySpinButton_adj = gtk_adjustment_new (2, 0, 2, 0.00999999977648, 0.10000000149, 0.10000000149);
+  LowDelaySpinButton = gtk_spin_button_new (GTK_ADJUSTMENT (LowDelaySpinButton_adj), 1, 2);
+  gtk_widget_set_name (LowDelaySpinButton, "LowDelaySpinButton");
+  gtk_widget_show (LowDelaySpinButton);
+  gtk_table_attach (GTK_TABLE (DelayTable), LowDelaySpinButton, 1, 2, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (LowDelaySpinButton), TRUE);
+
+  MidDelaySpinButton_adj = gtk_adjustment_new (0.5, 0, 0.5, 0.00999999977648, 0.10000000149, 0.10000000149);
+  MidDelaySpinButton = gtk_spin_button_new (GTK_ADJUSTMENT (MidDelaySpinButton_adj), 1, 2);
+  gtk_widget_set_name (MidDelaySpinButton, "MidDelaySpinButton");
+  gtk_widget_show (MidDelaySpinButton);
+  gtk_table_attach (GTK_TABLE (DelayTable), MidDelaySpinButton, 1, 2, 1, 2,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (MidDelaySpinButton), TRUE);
+
+  label3180 = gtk_label_new (_("<b><i>Band Delays</i></b>"));
+  gtk_widget_set_name (label3180, "label3180");
+  gtk_widget_show (label3180);
+  gtk_frame_set_label_widget (GTK_FRAME (DelayFrame), label3180);
+  gtk_label_set_use_markup (GTK_LABEL (label3180), TRUE);
+
+  hbox77 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox77, "hbox77");
+  gtk_widget_show (hbox77);
+  gtk_box_pack_start (GTK_BOX (dialog_vbox1), hbox77, TRUE, TRUE, 0);
+
   ColorsEvent = gtk_event_box_new ();
   gtk_widget_set_name (ColorsEvent, "ColorsEvent");
   gtk_widget_show (ColorsEvent);
-  gtk_box_pack_start (GTK_BOX (dialog_vbox1), ColorsEvent, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox77), ColorsEvent, TRUE, TRUE, 0);
 
   ColorsFrame = gtk_frame_new (NULL);
   gtk_widget_set_name (ColorsFrame, "ColorsFrame");
@@ -5339,99 +5490,11 @@ create_pref_dialog (void)
   gtk_frame_set_label_widget (GTK_FRAME (ColorsFrame), ColorsLabel);
   gtk_label_set_use_markup (GTK_LABEL (ColorsLabel), TRUE);
 
-  warningFrame = gtk_frame_new (NULL);
-  gtk_widget_set_name (warningFrame, "warningFrame");
-  gtk_widget_show (warningFrame);
-  gtk_box_pack_start (GTK_BOX (dialog_vbox1), warningFrame, TRUE, TRUE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (warningFrame), 5);
-
-  alignment7 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_widget_set_name (alignment7, "alignment7");
-  gtk_widget_show (alignment7);
-  gtk_container_add (GTK_CONTAINER (warningFrame), alignment7);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment7), 0, 0, 12, 0);
-
-  warningLevelHbox = gtk_hbox_new (TRUE, 0);
-  gtk_widget_set_name (warningLevelHbox, "warningLevelHbox");
-  gtk_widget_show (warningLevelHbox);
-  gtk_container_add (GTK_CONTAINER (alignment7), warningLevelHbox);
-
-  Meter_warning_level__dbFS_ = gtk_label_new (_("Input/Output meters (dBFS):"));
-  gtk_widget_set_name (Meter_warning_level__dbFS_, "Meter_warning_level__dbFS_");
-  gtk_widget_show (Meter_warning_level__dbFS_);
-  gtk_box_pack_start (GTK_BOX (warningLevelHbox), Meter_warning_level__dbFS_, FALSE, FALSE, 0);
-
-  warningLevelSpinButton_adj = gtk_adjustment_new (-6, -30, 0, 1, 10, 10);
-  warningLevelSpinButton = gtk_spin_button_new (GTK_ADJUSTMENT (warningLevelSpinButton_adj), 1, 0);
-  gtk_widget_set_name (warningLevelSpinButton, "warningLevelSpinButton");
-  gtk_widget_show (warningLevelSpinButton);
-  gtk_box_pack_start (GTK_BOX (warningLevelHbox), warningLevelSpinButton, TRUE, TRUE, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (warningLevelSpinButton), TRUE);
-
-  warningLabel = gtk_label_new (_("<i><b>Warning Level</b></i>"));
-  gtk_widget_set_name (warningLabel, "warningLabel");
-  gtk_widget_show (warningLabel);
-  gtk_frame_set_label_widget (GTK_FRAME (warningFrame), warningLabel);
-  gtk_label_set_use_markup (GTK_LABEL (warningLabel), TRUE);
-
-  out_meter_pref_frame = gtk_frame_new (NULL);
-  gtk_widget_set_name (out_meter_pref_frame, "out_meter_pref_frame");
-  gtk_widget_show (out_meter_pref_frame);
-  gtk_box_pack_start (GTK_BOX (dialog_vbox1), out_meter_pref_frame, TRUE, TRUE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (out_meter_pref_frame), 5);
-
-  alignment8 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_widget_set_name (alignment8, "alignment8");
-  gtk_widget_show (alignment8);
-  gtk_container_add (GTK_CONTAINER (out_meter_pref_frame), alignment8);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment8), 0, 0, 12, 0);
-
-  hbox74 = gtk_hbox_new (TRUE, 0);
-  gtk_widget_set_name (hbox74, "hbox74");
-  gtk_widget_show (hbox74);
-  gtk_container_add (GTK_CONTAINER (alignment8), hbox74);
-
-  out_meter_peak_button = gtk_radio_button_new_with_mnemonic (NULL, _("Output peak"));
-  gtk_widget_set_name (out_meter_peak_button, "out_meter_peak_button");
-  gtk_widget_show (out_meter_peak_button);
-  gtk_box_pack_start (GTK_BOX (hbox74), out_meter_peak_button, FALSE, FALSE, 0);
-  gtk_radio_button_set_group (GTK_RADIO_BUTTON (out_meter_peak_button), out_meter_peak_button_group);
-  out_meter_peak_button_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (out_meter_peak_button));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (out_meter_peak_button), TRUE);
-
-  out_meter_full_button = gtk_radio_button_new_with_mnemonic (NULL, _("Output level"));
-  gtk_widget_set_name (out_meter_full_button, "out_meter_full_button");
-  gtk_widget_show (out_meter_full_button);
-  gtk_box_pack_start (GTK_BOX (hbox74), out_meter_full_button, FALSE, FALSE, 0);
-  gtk_radio_button_set_group (GTK_RADIO_BUTTON (out_meter_full_button), out_meter_peak_button_group);
-  out_meter_peak_button_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (out_meter_full_button));
-
-  rms_meter_peak_button = gtk_radio_button_new_with_mnemonic (NULL, _("RMS peak"));
-  gtk_widget_set_name (rms_meter_peak_button, "rms_meter_peak_button");
-  gtk_widget_show (rms_meter_peak_button);
-  gtk_box_pack_start (GTK_BOX (hbox74), rms_meter_peak_button, FALSE, FALSE, 0);
-  gtk_radio_button_set_group (GTK_RADIO_BUTTON (rms_meter_peak_button), rms_meter_peak_button_group);
-  rms_meter_peak_button_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (rms_meter_peak_button));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (rms_meter_peak_button), TRUE);
-
-  rms_meter_full_button = gtk_radio_button_new_with_mnemonic (NULL, _("RMS level"));
-  gtk_widget_set_name (rms_meter_full_button, "rms_meter_full_button");
-  gtk_widget_show (rms_meter_full_button);
-  gtk_box_pack_start (GTK_BOX (hbox74), rms_meter_full_button, FALSE, FALSE, 0);
-  gtk_radio_button_set_group (GTK_RADIO_BUTTON (rms_meter_full_button), rms_meter_peak_button_group);
-  rms_meter_peak_button_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (rms_meter_full_button));
-
-  out_meter_pref_label = gtk_label_new (_("<b><i>Output Meter Numeric Display</i></b>"));
-  gtk_widget_set_name (out_meter_pref_label, "out_meter_pref_label");
-  gtk_widget_show (out_meter_pref_label);
-  gtk_frame_set_label_widget (GTK_FRAME (out_meter_pref_frame), out_meter_pref_label);
-  gtk_label_set_use_markup (GTK_LABEL (out_meter_pref_label), TRUE);
-
   limiter_frame = gtk_frame_new (NULL);
   gtk_widget_set_name (limiter_frame, "limiter_frame");
   gtk_widget_show (limiter_frame);
-  gtk_box_pack_start (GTK_BOX (dialog_vbox1), limiter_frame, TRUE, TRUE, 0);
-  gtk_frame_set_shadow_type (GTK_FRAME (limiter_frame), GTK_SHADOW_NONE);
+  gtk_box_pack_start (GTK_BOX (hbox77), limiter_frame, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (limiter_frame), 5);
 
   alignment9 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_widget_set_name (alignment9, "alignment9");
@@ -5457,6 +5520,57 @@ create_pref_dialog (void)
   gtk_widget_show (limiter_frame_label);
   gtk_frame_set_label_widget (GTK_FRAME (limiter_frame), limiter_frame_label);
   gtk_label_set_use_markup (GTK_LABEL (limiter_frame_label), TRUE);
+
+  output_meter_numeric_display_frame = gtk_frame_new (NULL);
+  gtk_widget_set_name (output_meter_numeric_display_frame, "output_meter_numeric_display_frame");
+  gtk_widget_show (output_meter_numeric_display_frame);
+  gtk_box_pack_start (GTK_BOX (dialog_vbox1), output_meter_numeric_display_frame, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (output_meter_numeric_display_frame), 5);
+
+  alignment11 = gtk_alignment_new (0.5, 0.5, 1, 1);
+  gtk_widget_set_name (alignment11, "alignment11");
+  gtk_widget_show (alignment11);
+  gtk_container_add (GTK_CONTAINER (output_meter_numeric_display_frame), alignment11);
+  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment11), 0, 0, 12, 0);
+
+  hbox79 = gtk_hbox_new (TRUE, 0);
+  gtk_widget_set_name (hbox79, "hbox79");
+  gtk_widget_show (hbox79);
+  gtk_container_add (GTK_CONTAINER (alignment11), hbox79);
+
+  out_meter_peak_button = gtk_radio_button_new_with_mnemonic (NULL, _("Output meter peak"));
+  gtk_widget_set_name (out_meter_peak_button, "out_meter_peak_button");
+  gtk_widget_show (out_meter_peak_button);
+  gtk_box_pack_start (GTK_BOX (hbox79), out_meter_peak_button, FALSE, FALSE, 0);
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (out_meter_peak_button), out_meter_peak_button_group);
+  out_meter_peak_button_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (out_meter_peak_button));
+
+  out_meter_full_button = gtk_radio_button_new_with_mnemonic (NULL, _("Output meter level"));
+  gtk_widget_set_name (out_meter_full_button, "out_meter_full_button");
+  gtk_widget_show (out_meter_full_button);
+  gtk_box_pack_start (GTK_BOX (hbox79), out_meter_full_button, FALSE, FALSE, 0);
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (out_meter_full_button), out_meter_peak_button_group);
+  out_meter_peak_button_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (out_meter_full_button));
+
+  rms_meter_peak_button = gtk_radio_button_new_with_mnemonic (NULL, _("RMS meter peak"));
+  gtk_widget_set_name (rms_meter_peak_button, "rms_meter_peak_button");
+  gtk_widget_show (rms_meter_peak_button);
+  gtk_box_pack_start (GTK_BOX (hbox79), rms_meter_peak_button, FALSE, FALSE, 0);
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (rms_meter_peak_button), rms_meter_peak_button_group);
+  rms_meter_peak_button_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (rms_meter_peak_button));
+
+  rms_meter_full_button = gtk_radio_button_new_with_mnemonic (NULL, _("RMS meter level"));
+  gtk_widget_set_name (rms_meter_full_button, "rms_meter_full_button");
+  gtk_widget_show (rms_meter_full_button);
+  gtk_box_pack_start (GTK_BOX (hbox79), rms_meter_full_button, FALSE, FALSE, 0);
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (rms_meter_full_button), rms_meter_peak_button_group);
+  rms_meter_peak_button_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (rms_meter_full_button));
+
+  output_meter_numeric_display_label = gtk_label_new (_("<b><i>Output Meter Numeric Display</i></b>"));
+  gtk_widget_set_name (output_meter_numeric_display_label, "output_meter_numeric_display_label");
+  gtk_widget_show (output_meter_numeric_display_label);
+  gtk_frame_set_label_widget (GTK_FRAME (output_meter_numeric_display_frame), output_meter_numeric_display_label);
+  gtk_label_set_use_markup (GTK_LABEL (output_meter_numeric_display_label), TRUE);
 
   dialog_action_area1 = GTK_DIALOG (pref_dialog)->action_area;
   gtk_widget_set_name (dialog_action_area1, "dialog_action_area1");
@@ -5509,6 +5623,15 @@ create_pref_dialog (void)
   g_signal_connect ((gpointer) CrossfadeTimeSpin, "value_changed",
                     G_CALLBACK (on_CrossfadeTimeSpin_value_changed),
                     NULL);
+  g_signal_connect ((gpointer) warningLevelSpinButton, "focus_in_event",
+                    G_CALLBACK (on_text_focus_in_event),
+                    NULL);
+  g_signal_connect ((gpointer) warningLevelSpinButton, "focus_out_event",
+                    G_CALLBACK (on_text_focus_out_event),
+                    NULL);
+  g_signal_connect ((gpointer) warningLevelSpinButton, "value_changed",
+                    G_CALLBACK (on_warningLevelSpinButton_value_changed),
+                    NULL);
   g_signal_connect ((gpointer) SpectrumEvent, "enter_notify_event",
                     G_CALLBACK (on_pref_enter_notify_event),
                     NULL);
@@ -5536,20 +5659,20 @@ create_pref_dialog (void)
   g_signal_connect_swapped ((gpointer) rmsTimeValue, "value_changed",
                             G_CALLBACK (on_rmsTimeValue_value_changed),
                             GTK_OBJECT (rmsSamples));
+  g_signal_connect ((gpointer) LowDelaySpinButton, "value_changed",
+                    G_CALLBACK (on_LowDelaySpinButton_value_changed),
+                    NULL);
+  g_signal_connect ((gpointer) MidDelaySpinButton, "value_changed",
+                    G_CALLBACK (on_MidDelaySpinButton_value_changed),
+                    NULL);
   g_signal_connect ((gpointer) ColorsEvent, "enter_notify_event",
                     G_CALLBACK (on_pref_enter_notify_event),
                     NULL);
   g_signal_connect ((gpointer) ColorsComboBox, "changed",
                     G_CALLBACK (on_ColorsComboBox_changed),
                     NULL);
-  g_signal_connect ((gpointer) warningLevelSpinButton, "focus_in_event",
-                    G_CALLBACK (on_text_focus_in_event),
-                    NULL);
-  g_signal_connect ((gpointer) warningLevelSpinButton, "focus_out_event",
-                    G_CALLBACK (on_text_focus_out_event),
-                    NULL);
-  g_signal_connect ((gpointer) warningLevelSpinButton, "value_changed",
-                    G_CALLBACK (on_warningLevelSpinButton_value_changed),
+  g_signal_connect ((gpointer) limiter_combo, "changed",
+                    G_CALLBACK (on_limiter_combo_changed),
                     NULL);
   g_signal_connect ((gpointer) out_meter_peak_button, "clicked",
                     G_CALLBACK (on_out_meter_peak_button_clicked),
@@ -5562,9 +5685,6 @@ create_pref_dialog (void)
                     NULL);
   g_signal_connect ((gpointer) rms_meter_full_button, "clicked",
                     G_CALLBACK (on_rms_meter_full_button_clicked),
-                    NULL);
-  g_signal_connect ((gpointer) limiter_combo, "changed",
-                    G_CALLBACK (on_limiter_combo_changed),
                     NULL);
   g_signal_connect ((gpointer) pref_help, "clicked",
                     G_CALLBACK (on_pref_help_clicked),
@@ -5591,12 +5711,19 @@ create_pref_dialog (void)
   GLADE_HOOKUP_OBJECT (pref_dialog, MaxGainLabel, "MaxGainLabel");
   GLADE_HOOKUP_OBJECT (pref_dialog, MaxGainSpin, "MaxGainSpin");
   GLADE_HOOKUP_OBJECT (pref_dialog, GraphicEQLabel, "GraphicEQLabel");
+  GLADE_HOOKUP_OBJECT (pref_dialog, hbox78, "hbox78");
   GLADE_HOOKUP_OBJECT (pref_dialog, CrossfadeEvent, "CrossfadeEvent");
   GLADE_HOOKUP_OBJECT (pref_dialog, CrossfadeFrame, "CrossfadeFrame");
   GLADE_HOOKUP_OBJECT (pref_dialog, hbox72, "hbox72");
   GLADE_HOOKUP_OBJECT (pref_dialog, CrossfadeTimeLabel, "CrossfadeTimeLabel");
   GLADE_HOOKUP_OBJECT (pref_dialog, CrossfadeTimeSpin, "CrossfadeTimeSpin");
   GLADE_HOOKUP_OBJECT (pref_dialog, CrossfadeLabel, "CrossfadeLabel");
+  GLADE_HOOKUP_OBJECT (pref_dialog, warningFrame, "warningFrame");
+  GLADE_HOOKUP_OBJECT (pref_dialog, alignment7, "alignment7");
+  GLADE_HOOKUP_OBJECT (pref_dialog, warningLevelHbox, "warningLevelHbox");
+  GLADE_HOOKUP_OBJECT (pref_dialog, Meter_warning_level__dbFS_, "Meter_warning_level__dbFS_");
+  GLADE_HOOKUP_OBJECT (pref_dialog, warningLevelSpinButton, "warningLevelSpinButton");
+  GLADE_HOOKUP_OBJECT (pref_dialog, warningLabel, "warningLabel");
   GLADE_HOOKUP_OBJECT (pref_dialog, SpectrumEvent, "SpectrumEvent");
   GLADE_HOOKUP_OBJECT (pref_dialog, SpectrumFrame, "SpectrumFrame");
   GLADE_HOOKUP_OBJECT (pref_dialog, hbox76, "hbox76");
@@ -5620,30 +5747,33 @@ create_pref_dialog (void)
   GLADE_HOOKUP_OBJECT (pref_dialog, rmsSamplesLabel, "rmsSamplesLabel");
   GLADE_HOOKUP_OBJECT (pref_dialog, rmsSamples, "rmsSamples");
   GLADE_HOOKUP_OBJECT (pref_dialog, label3179, "label3179");
+  GLADE_HOOKUP_OBJECT (pref_dialog, DelayFrame, "DelayFrame");
+  GLADE_HOOKUP_OBJECT (pref_dialog, alignment10, "alignment10");
+  GLADE_HOOKUP_OBJECT (pref_dialog, DelayTable, "DelayTable");
+  GLADE_HOOKUP_OBJECT (pref_dialog, LowDelayLabel, "LowDelayLabel");
+  GLADE_HOOKUP_OBJECT (pref_dialog, MidDelayLabel, "MidDelayLabel");
+  GLADE_HOOKUP_OBJECT (pref_dialog, LowDelaySpinButton, "LowDelaySpinButton");
+  GLADE_HOOKUP_OBJECT (pref_dialog, MidDelaySpinButton, "MidDelaySpinButton");
+  GLADE_HOOKUP_OBJECT (pref_dialog, label3180, "label3180");
+  GLADE_HOOKUP_OBJECT (pref_dialog, hbox77, "hbox77");
   GLADE_HOOKUP_OBJECT (pref_dialog, ColorsEvent, "ColorsEvent");
   GLADE_HOOKUP_OBJECT (pref_dialog, ColorsFrame, "ColorsFrame");
   GLADE_HOOKUP_OBJECT (pref_dialog, eventbox68, "eventbox68");
   GLADE_HOOKUP_OBJECT (pref_dialog, ColorsComboBox, "ColorsComboBox");
   GLADE_HOOKUP_OBJECT (pref_dialog, ColorsLabel, "ColorsLabel");
-  GLADE_HOOKUP_OBJECT (pref_dialog, warningFrame, "warningFrame");
-  GLADE_HOOKUP_OBJECT (pref_dialog, alignment7, "alignment7");
-  GLADE_HOOKUP_OBJECT (pref_dialog, warningLevelHbox, "warningLevelHbox");
-  GLADE_HOOKUP_OBJECT (pref_dialog, Meter_warning_level__dbFS_, "Meter_warning_level__dbFS_");
-  GLADE_HOOKUP_OBJECT (pref_dialog, warningLevelSpinButton, "warningLevelSpinButton");
-  GLADE_HOOKUP_OBJECT (pref_dialog, warningLabel, "warningLabel");
-  GLADE_HOOKUP_OBJECT (pref_dialog, out_meter_pref_frame, "out_meter_pref_frame");
-  GLADE_HOOKUP_OBJECT (pref_dialog, alignment8, "alignment8");
-  GLADE_HOOKUP_OBJECT (pref_dialog, hbox74, "hbox74");
-  GLADE_HOOKUP_OBJECT (pref_dialog, out_meter_peak_button, "out_meter_peak_button");
-  GLADE_HOOKUP_OBJECT (pref_dialog, out_meter_full_button, "out_meter_full_button");
-  GLADE_HOOKUP_OBJECT (pref_dialog, rms_meter_peak_button, "rms_meter_peak_button");
-  GLADE_HOOKUP_OBJECT (pref_dialog, rms_meter_full_button, "rms_meter_full_button");
-  GLADE_HOOKUP_OBJECT (pref_dialog, out_meter_pref_label, "out_meter_pref_label");
   GLADE_HOOKUP_OBJECT (pref_dialog, limiter_frame, "limiter_frame");
   GLADE_HOOKUP_OBJECT (pref_dialog, alignment9, "alignment9");
   GLADE_HOOKUP_OBJECT (pref_dialog, eventbox67, "eventbox67");
   GLADE_HOOKUP_OBJECT (pref_dialog, limiter_combo, "limiter_combo");
   GLADE_HOOKUP_OBJECT (pref_dialog, limiter_frame_label, "limiter_frame_label");
+  GLADE_HOOKUP_OBJECT (pref_dialog, output_meter_numeric_display_frame, "output_meter_numeric_display_frame");
+  GLADE_HOOKUP_OBJECT (pref_dialog, alignment11, "alignment11");
+  GLADE_HOOKUP_OBJECT (pref_dialog, hbox79, "hbox79");
+  GLADE_HOOKUP_OBJECT (pref_dialog, out_meter_peak_button, "out_meter_peak_button");
+  GLADE_HOOKUP_OBJECT (pref_dialog, out_meter_full_button, "out_meter_full_button");
+  GLADE_HOOKUP_OBJECT (pref_dialog, rms_meter_peak_button, "rms_meter_peak_button");
+  GLADE_HOOKUP_OBJECT (pref_dialog, rms_meter_full_button, "rms_meter_full_button");
+  GLADE_HOOKUP_OBJECT (pref_dialog, output_meter_numeric_display_label, "output_meter_numeric_display_label");
   GLADE_HOOKUP_OBJECT_NO_REF (pref_dialog, dialog_action_area1, "dialog_action_area1");
   GLADE_HOOKUP_OBJECT (pref_dialog, pref_help, "pref_help");
   GLADE_HOOKUP_OBJECT (pref_dialog, pref_close, "pref_close");

@@ -56,11 +56,6 @@ static GtkWidget         *pref_dialog, *color_dialog, *colorsel;
 static GdkColormap       *colormap = NULL;
 static GdkColor          color[COLORS];
 static int               color_id;
-static GtkSpinButton     *ct_spin, *wl_spin, *lgain_spin, *ugain_spin, *spec_freq_spin, *rms_time_spin;
-static GtkRadioButton    *iir_button, *fft_button, *out_meter_peak_button, *out_meter_full_button, 
-                         *rms_meter_peak_button, *rms_meter_full_button;
-static GtkToggleButton   *t_iir, *t_fft, *t_out_peak, *t_out_full, *t_rms_peak, *t_rms_full;
-static GtkLabel          *l_rms_samples;
 static GtkComboBox       *l_limiter_combo, *l_SpectrumComboBox, *l_ColorsComboBox;
 static gboolean          initialized = FALSE;
 
@@ -105,38 +100,12 @@ void preferences_init()
   pref_dialog = create_pref_dialog ();
 
 
-  lgain_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "MinGainSpin"));
-  ugain_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "MaxGainSpin"));
-  spec_freq_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "UpdateFrequencySpin"));
   l_SpectrumComboBox = GTK_COMBO_BOX (lookup_widget (pref_dialog, "SpectrumComboBox"));
   gtk_combo_box_set_active (l_SpectrumComboBox, process_get_spec_mode ());
 
 
   l_ColorsComboBox = GTK_COMBO_BOX (lookup_widget (pref_dialog, "ColorsComboBox"));
   gtk_combo_box_set_active (l_ColorsComboBox, LOW_BAND_COLOR);
-
-  rms_time_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "rmsTimeValue"));
-
-  ct_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "CrossfadeTimeSpin"));
-
-  wl_spin = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "warningLevelSpinButton"));
-
-  iir_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, "IIRButton"));
-  fft_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, "FFTButton"));
-  t_iir = &iir_button->check_button.toggle_button;
-  t_fft = &fft_button->check_button.toggle_button;
-
-  out_meter_peak_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, "out_meter_peak_button"));
-  out_meter_full_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, "out_meter_full_button"));
-  rms_meter_peak_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, "rms_meter_peak_button"));
-  rms_meter_full_button = GTK_RADIO_BUTTON (lookup_widget (pref_dialog, "rms_meter_full_button"));
-  t_out_peak = &out_meter_peak_button->check_button.toggle_button;
-  t_out_full = &out_meter_full_button->check_button.toggle_button;
-  t_rms_peak = &rms_meter_peak_button->check_button.toggle_button;
-  t_rms_full = &rms_meter_full_button->check_button.toggle_button;
-
-
-  l_rms_samples = GTK_LABEL (lookup_widget (pref_dialog, "rmsSamples"));
 
 
   l_limiter_combo = GTK_COMBO_BOX (lookup_widget (pref_dialog, "limiter_combo"));

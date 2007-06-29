@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.67 2007/06/24 23:28:29 jdepner Exp $
+ *  $Id: state.c,v 1.68 2007/06/29 17:17:59 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -94,6 +94,8 @@ typedef struct {
     gboolean rms_meter_peak_pref;
     int rms_time_slice;
     int limiter_plugin;
+    float xo_delay_time[XO_BANDS - 1];
+    int xo_delay_state[XO_BANDS - 1];
     int gang_at[XO_BANDS];
     int gang_re[XO_BANDS];
     int gang_th[XO_BANDS];
@@ -555,7 +557,13 @@ void s_save_session (const gchar *fname)
     s_save_global_int(doc, "limiter plugin", process_get_limiter_plugin ());
 
 
-    /* record the current gang state of the compressor controls */
+    s_save_global_float(doc, "low delay time", process_get_xo_delay_time(XO_LOW));
+    s_save_global_int(doc, "low delay state", process_get_xo_delay_state (XO_LOW));
+    s_save_global_float(doc, "mid delay time", process_get_xo_delay_time(XO_MID));
+    s_save_global_int(doc, "mid delay state", process_get_xo_delay_state (XO_MID));
+
+
+    /* record the current gang state of the compressor controls  */
 
     for (i = 0 ; i < XO_BANDS ; i++) {
         s_save_global_gang(doc, "at", i, comp_at_ganged(i));
@@ -710,6 +718,10 @@ void s_load_session (const gchar *fname)
     gp.rms_meter_peak_pref = TRUE;
     gp.rms_time_slice = 50;
     gp.limiter_plugin = FAST;
+    gp.xo_delay_time[XO_LOW] = 2.0;
+    gp.xo_delay_state[XO_LOW] = 0;
+    gp.xo_delay_time[XO_MID] = 0.5;
+    gp.xo_delay_state[XO_MID] = 0;
     for (i = 0 ; i < XO_BANDS ; i++) {
         gp.gang_at[i] = FALSE;
         gp.gang_re[i] = FALSE;
@@ -764,6 +776,11 @@ void s_load_session (const gchar *fname)
 
     callbacks_set_eq_bypass_button_state (gp.eq_bypass);
     callbacks_set_limiter_bypass_button_state (gp.limiter_bypass);
+
+    process_set_xo_delay_time (XO_LOW, gp.xo_delay_time[XO_LOW]);
+    process_set_xo_delay_time (XO_MID, gp.xo_delay_time[XO_MID]);
+    process_set_xo_delay_state (XO_LOW, gp.xo_delay_state[XO_LOW]);
+    process_set_xo_delay_state (XO_MID, gp.xo_delay_state[XO_MID]);
 
     intrim_set_out_meter_peak_pref (gp.out_meter_peak_pref);
     intrim_set_rms_meter_peak_pref (gp.rms_meter_peak_pref);
@@ -907,6 +924,14 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
           gp->rms_time_slice = atoi(value);
 	} else if (!strcmp(symbol, "limiter plugin")) {
           gp->limiter_plugin = atoi(value);
+	} else if (!strcmp(symbol, "low delay time")) {
+          gp->xo_delay_time[XO_LOW] = atof(value);
+	} else if (!strcmp(symbol, "mid delay time")) {
+          gp->xo_delay_time[XO_MID] = atof(value);
+	} else if (!strcmp(symbol, "low delay state")) {
+          gp->xo_delay_state[XO_LOW] = atoi(value);
+	} else if (!strcmp(symbol, "mid delay state")) {
+          gp->xo_delay_state[XO_MID] = atoi(value);
 	} else if ((const char *)strstr(symbol, "gang_") == symbol) {
 	    int ind = index ? atoi(index) : -1;
 	    int val = atoi(value);

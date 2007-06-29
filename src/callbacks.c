@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.174 2007/06/24 17:48:42 jdepner Exp $
+ *  $Id: callbacks.c,v 1.175 2007/06/29 17:17:58 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -3216,4 +3216,36 @@ on_ColorsComboBox_changed              (GtkComboBox     *combobox,
     {
       popup_color_dialog (gtk_combo_box_get_active (combobox));
     }
+}
+
+
+void
+on_LowDelayButton_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  process_set_xo_delay_state (XO_LOW, gtk_toggle_button_get_active (togglebutton));
+}
+
+
+void
+on_MidDelayButton_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  process_set_xo_delay_state (XO_MID, gtk_toggle_button_get_active (togglebutton));
+}
+
+
+void
+on_LowDelaySpinButton_value_changed    (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data)
+{
+  process_set_xo_delay_time (XO_LOW, gtk_spin_button_get_value (spinbutton));
+}
+
+
+void
+on_MidDelaySpinButton_value_changed    (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data)
+{
+  process_set_xo_delay_time (XO_MID, gtk_spin_button_get_value (spinbutton));
 }
