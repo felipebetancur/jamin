@@ -506,6 +506,9 @@ create_window1 (void)
   GtkWidget *lim_att_meter;
   GtkWidget *custom20;
   GtkWidget *lim_out_meter;
+  GtkWidget *hbox80;
+  GtkWidget *logscale_label;
+  GtkWidget *logscale_scale;
   GtkWidget *limiter_bypass_event_box;
   GtkWidget *limiter_bypass;
   GtkWidget *limiterlabel;
@@ -843,10 +846,11 @@ create_window1 (void)
   gtk_widget_show (hbox60);
   gtk_container_add (GTK_CONTAINER (scenes_eventbox), hbox60);
 
-  scenes_label = gtk_label_new (_("Scenes"));
+  scenes_label = gtk_label_new (_("<b>Scenes</b>"));
   gtk_widget_set_name (scenes_label, "scenes_label");
   gtk_widget_show (scenes_label);
   gtk_box_pack_start (GTK_BOX (hbox60), scenes_label, FALSE, FALSE, 0);
+  gtk_label_set_use_markup (GTK_LABEL (scenes_label), TRUE);
 
   scenes_hbox = gtk_hbox_new (TRUE, 0);
   gtk_widget_set_name (scenes_hbox, "scenes_hbox");
@@ -1190,10 +1194,11 @@ create_window1 (void)
   gtk_scale_set_draw_value (GTK_SCALE (pan_scale), FALSE);
   gtk_scale_set_digits (GTK_SCALE (pan_scale), 2);
 
-  label252 = gtk_label_new (_("Input"));
+  label252 = gtk_label_new (_("<b>Input</b>"));
   gtk_widget_set_name (label252, "label252");
   gtk_widget_show (label252);
   gtk_frame_set_label_widget (GTK_FRAME (input_frame), label252);
+  gtk_label_set_use_markup (GTK_LABEL (label252), TRUE);
 
   vbox78 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox78, "vbox78");
@@ -1241,10 +1246,11 @@ create_window1 (void)
   gtk_widget_set_size_request (EQ_curve_lbl, 0, -1);
   gtk_label_set_justify (GTK_LABEL (EQ_curve_lbl), GTK_JUSTIFY_CENTER);
 
-  label47 = gtk_label_new (_("HDEQ"));
+  label47 = gtk_label_new (_("<b>HDEQ</b>"));
   gtk_widget_set_name (label47, "label47");
   gtk_widget_show (label47);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 0), label47);
+  gtk_label_set_use_markup (GTK_LABEL (label47), TRUE);
 
   eqbvbox = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (eqbvbox, "eqbvbox");
@@ -1943,10 +1949,11 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (eqbLabelBox), eqbAmpLabel, FALSE, FALSE, 0);
   gtk_label_set_use_markup (GTK_LABEL (eqbAmpLabel), TRUE);
 
-  label48 = gtk_label_new (_("30 band EQ"));
+  label48 = gtk_label_new (_("<b>30 band EQ</b>"));
   gtk_widget_set_name (label48, "label48");
   gtk_widget_show (label48);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 1), label48);
+  gtk_label_set_use_markup (GTK_LABEL (label48), TRUE);
 
   handlebox1 = gtk_handle_box_new ();
   gtk_widget_set_name (handlebox1, "handlebox1");
@@ -1964,10 +1971,11 @@ create_window1 (void)
   gtk_widget_show (spectrum_hbox);
   gtk_container_add (GTK_CONTAINER (spectrum_eventbox), spectrum_hbox);
 
-  label78 = gtk_label_new (_("Spectrum"));
+  label78 = gtk_label_new (_("<b>Spectrum</b>"));
   gtk_widget_set_name (label78, "label78");
   gtk_widget_show (label78);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 2), label78);
+  gtk_label_set_use_markup (GTK_LABEL (label78), TRUE);
 
   hbox38 = gtk_hbox_new (TRUE, 3);
   gtk_widget_set_name (hbox38, "hbox38");
@@ -2081,10 +2089,11 @@ create_window1 (void)
   gtk_frame_set_label_widget (GTK_FRAME (frame18), high_curve_lbl);
   gtk_label_set_justify (GTK_LABEL (high_curve_lbl), GTK_JUSTIFY_CENTER);
 
-  label3178 = gtk_label_new (_("Compressor curves"));
+  label3178 = gtk_label_new (_("<b>Compressor curves</b>"));
   gtk_widget_set_name (label3178, "label3178");
   gtk_widget_show (label3178);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 3), label3178);
+  gtk_label_set_use_markup (GTK_LABEL (label3178), TRUE);
 
   hbox59 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox59, "hbox59");
@@ -2494,10 +2503,11 @@ create_window1 (void)
   gtk_widget_show (LowDelayButton);
   gtk_container_add (GTK_CONTAINER (low_delay_event_box), LowDelayButton);
 
-  label_freq_l = gtk_label_new (_("Low : 00000 - 00000"));
+  label_freq_l = gtk_label_new (_("<b>Low : 00000 - 00000</b>"));
   gtk_widget_set_name (label_freq_l, "label_freq_l");
   gtk_widget_show (label_freq_l);
   gtk_frame_set_label_widget (GTK_FRAME (frame_l), label_freq_l);
+  gtk_label_set_use_markup (GTK_LABEL (label_freq_l), TRUE);
 
   mid_comp_event_box = gtk_event_box_new ();
   gtk_widget_set_name (mid_comp_event_box, "mid_comp_event_box");
@@ -2796,10 +2806,11 @@ create_window1 (void)
   gtk_widget_show (MidDelayButton);
   gtk_container_add (GTK_CONTAINER (mid_delay_event_box), MidDelayButton);
 
-  label_freq_m = gtk_label_new (_("Mid : 00000 - 00000"));
+  label_freq_m = gtk_label_new (_("<b>Mid : 00000 - 00000</b>"));
   gtk_widget_set_name (label_freq_m, "label_freq_m");
   gtk_widget_show (label_freq_m);
   gtk_frame_set_label_widget (GTK_FRAME (frame_m), label_freq_m);
+  gtk_label_set_use_markup (GTK_LABEL (label_freq_m), TRUE);
 
   high_comp_event_box = gtk_event_box_new ();
   gtk_widget_set_name (high_comp_event_box, "high_comp_event_box");
@@ -3087,10 +3098,11 @@ create_window1 (void)
   gtk_widget_show (high_bypass);
   gtk_container_add (GTK_CONTAINER (high_bypass_event_box), high_bypass);
 
-  label_freq_h = gtk_label_new (_("High : 00000 - 00000"));
+  label_freq_h = gtk_label_new (_("<b>High : 00000 - 00000</b>"));
   gtk_widget_set_name (label_freq_h, "label_freq_h");
   gtk_widget_show (label_freq_h);
   gtk_frame_set_label_widget (GTK_FRAME (frame_h), label_freq_h);
+  gtk_label_set_use_markup (GTK_LABEL (label_freq_h), TRUE);
 
   right_bottom_vbox = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (right_bottom_vbox, "right_bottom_vbox");
@@ -3125,10 +3137,11 @@ create_window1 (void)
   gtk_box_pack_start (GTK_BOX (hbox53), boost_scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (boost_scale), GTK_POS_LEFT);
 
-  boost_label = gtk_label_new (_("Boost"));
+  boost_label = gtk_label_new (_("<b>Boost</b>"));
   gtk_widget_set_name (boost_label, "boost_label");
   gtk_widget_show (boost_label);
   gtk_frame_set_label_widget (GTK_FRAME (frame26), boost_label);
+  gtk_label_set_use_markup (GTK_LABEL (boost_label), TRUE);
 
   limiter_eventbox = gtk_event_box_new ();
   gtk_widget_set_name (limiter_eventbox, "limiter_eventbox");
@@ -3284,10 +3297,26 @@ create_window1 (void)
   GTK_WIDGET_UNSET_FLAGS (lim_out_meter, GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (lim_out_meter, GTK_CAN_DEFAULT);
 
+  hbox80 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox80, "hbox80");
+  gtk_widget_show (hbox80);
+  gtk_box_pack_start (GTK_BOX (vbox105), hbox80, FALSE, FALSE, 0);
+
+  logscale_label = gtk_label_new (_("Linear/log release"));
+  gtk_widget_set_name (logscale_label, "logscale_label");
+  gtk_widget_show (logscale_label);
+  gtk_box_pack_start (GTK_BOX (hbox80), logscale_label, FALSE, FALSE, 0);
+
+  logscale_scale = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0.75, 0, 1, 0.01, 0.1, 0.1)));
+  gtk_widget_set_name (logscale_scale, "logscale_scale");
+  gtk_widget_show (logscale_scale);
+  gtk_box_pack_start (GTK_BOX (hbox80), logscale_scale, TRUE, TRUE, 0);
+  gtk_scale_set_digits (GTK_SCALE (logscale_scale), 3);
+
   limiter_bypass_event_box = gtk_event_box_new ();
   gtk_widget_set_name (limiter_bypass_event_box, "limiter_bypass_event_box");
   gtk_widget_show (limiter_bypass_event_box);
-  gtk_box_pack_start (GTK_BOX (vbox105), limiter_bypass_event_box, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox105), limiter_bypass_event_box, TRUE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, limiter_bypass_event_box, _("Bypass boost and limiter processing"), NULL);
 
   limiter_bypass = gtk_check_button_new_with_mnemonic (_("Limiter bypass"));
@@ -3295,10 +3324,11 @@ create_window1 (void)
   gtk_widget_show (limiter_bypass);
   gtk_container_add (GTK_CONTAINER (limiter_bypass_event_box), limiter_bypass);
 
-  limiterlabel = gtk_label_new (_("Fast-lookahead-limiter (Harris)"));
+  limiterlabel = gtk_label_new (_("<b>Fast-lookahead-limiter (Harris)</b>"));
   gtk_widget_set_name (limiterlabel, "limiterlabel");
   gtk_widget_show (limiterlabel);
   gtk_frame_set_label_widget (GTK_FRAME (frame25), limiterlabel);
+  gtk_label_set_use_markup (GTK_LABEL (limiterlabel), TRUE);
 
   frame27 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame27, "frame27");
@@ -3463,10 +3493,11 @@ create_window1 (void)
   gtk_widget_show (global_bypass);
   gtk_container_add (GTK_CONTAINER (global_bypass_event_box), global_bypass);
 
-  label318 = gtk_label_new (_("Output"));
+  label318 = gtk_label_new (_("<b>Output</b>"));
   gtk_widget_set_name (label318, "label318");
   gtk_widget_show (label318);
   gtk_frame_set_label_widget (GTK_FRAME (frame27), label318);
+  gtk_label_set_use_markup (GTK_LABEL (label318), TRUE);
 
   g_signal_connect ((gpointer) window1, "delete_event",
                     G_CALLBACK (on_window1_delete_event),
@@ -4350,6 +4381,9 @@ create_window1 (void)
   g_signal_connect ((gpointer) lim_out_meter_eventbox, "button_press_event",
                     G_CALLBACK (on_lim_out_meter_eventbox_button_press_event),
                     NULL);
+  g_signal_connect ((gpointer) logscale_scale, "value_changed",
+                    G_CALLBACK (on_logscale_scale_value_changed),
+                    NULL);
   g_signal_connect ((gpointer) limiter_bypass_event_box, "enter_notify_event",
                     G_CALLBACK (on_limiter_bypass_event_box_enter_notify_event),
                     NULL);
@@ -4864,6 +4898,9 @@ create_window1 (void)
   GLADE_HOOKUP_OBJECT (window1, lim_att_meter, "lim_att_meter");
   GLADE_HOOKUP_OBJECT (window1, custom20, "custom20");
   GLADE_HOOKUP_OBJECT (window1, lim_out_meter, "lim_out_meter");
+  GLADE_HOOKUP_OBJECT (window1, hbox80, "hbox80");
+  GLADE_HOOKUP_OBJECT (window1, logscale_label, "logscale_label");
+  GLADE_HOOKUP_OBJECT (window1, logscale_scale, "logscale_scale");
   GLADE_HOOKUP_OBJECT (window1, limiter_bypass_event_box, "limiter_bypass_event_box");
   GLADE_HOOKUP_OBJECT (window1, limiter_bypass, "limiter_bypass");
   GLADE_HOOKUP_OBJECT (window1, limiterlabel, "limiterlabel");

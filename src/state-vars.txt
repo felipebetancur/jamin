@@ -16,6 +16,7 @@ lim-input	Limiter input gain
 lim-time	Limiter time
 lim-limit	Limiter level
 boost		Waveshaper boost
+lim-logscale	Limiter logscale
 notch-gain(5)	Notch gain
 notch-freq(5)	Notch frequency
 notch-q(5)	Notch Q

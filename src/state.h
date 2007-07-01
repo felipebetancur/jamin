@@ -59,11 +59,12 @@ void s_set_override_limiter_default();
 #define S_LIM_TIME 1052
 #define S_LIM_LIMIT 1053
 #define S_BOOST 1054
-#define S_NOTCH_GAIN(n) (1055 + n)
-#define S_NOTCH_FREQ(n) (1060 + n)
-#define S_NOTCH_Q(n) (1065 + n)
-#define S_NOTCH_FLAG(n) (1070 + n)
-#define S_SIZE 1075
+#define S_LIM_LOGSCALE 1055
+#define S_NOTCH_GAIN(n) (1056 + n)
+#define S_NOTCH_FREQ(n) (1061 + n)
+#define S_NOTCH_Q(n) (1066 + n)
+#define S_NOTCH_FLAG(n) (1071 + n)
+#define S_SIZE 1076
 
 typedef struct {
     char *description;
@@ -358,13 +359,13 @@ static const char *const s_description[S_SIZE] = {
 	"Compressor makeup gain 1", "Compressor makeup gain 2",
 	"Compressor makeup gain 3", "Stereo width 1", "Stereo width 2",
 	"Stereo width 3", "Limiter input gain", "Limiter time",
-	"Limiter level", "Waveshaper boost", "Notch gain 1",
-	"Notch gain 2", "Notch gain 3", "Notch gain 4", "Notch gain 5",
-	"Notch frequency 1", "Notch frequency 2", "Notch frequency 3",
-	"Notch frequency 4", "Notch frequency 5", "Notch Q 1", "Notch Q 2",
-	"Notch Q 3", "Notch Q 4", "Notch Q 5", "Notch active flag 1",
-	"Notch active flag 2", "Notch active flag 3",
-	"Notch active flag 4", "Notch active flag 5"
+	"Limiter level", "Waveshaper boost", "Limiter logscale",
+	"Notch gain 1", "Notch gain 2", "Notch gain 3", "Notch gain 4",
+	"Notch gain 5", "Notch frequency 1", "Notch frequency 2",
+	"Notch frequency 3", "Notch frequency 4", "Notch frequency 5",
+	"Notch Q 1", "Notch Q 2", "Notch Q 3", "Notch Q 4", "Notch Q 5",
+	"Notch active flag 1", "Notch active flag 2",
+	"Notch active flag 3", "Notch active flag 4", "Notch active flag 5"
 };
 
 static const char *const s_symbol[S_SIZE] = {
@@ -626,11 +627,11 @@ static const char *const s_symbol[S_SIZE] = {
 	"comp-knee0", "comp-knee1", "comp-knee2", "comp-makeup0",
 	"comp-makeup1", "comp-makeup2", "stereo-width0", "stereo-width1",
 	"stereo-width2", "lim-input", "lim-time", "lim-limit", "boost",
-	"notch-gain0", "notch-gain1", "notch-gain2", "notch-gain3",
-	"notch-gain4", "notch-freq0", "notch-freq1", "notch-freq2",
-	"notch-freq3", "notch-freq4", "notch-q0", "notch-q1", "notch-q2",
-	"notch-q3", "notch-q4", "notch-flag0", "notch-flag1",
-	"notch-flag2", "notch-flag3", "notch-flag4"
+	"lim-logscale", "notch-gain0", "notch-gain1", "notch-gain2",
+	"notch-gain3", "notch-gain4", "notch-freq0", "notch-freq1",
+	"notch-freq2", "notch-freq3", "notch-freq4", "notch-q0",
+	"notch-q1", "notch-q2", "notch-q3", "notch-q4", "notch-flag0",
+	"notch-flag1", "notch-flag2", "notch-flag3", "notch-flag4"
 };
 
 #endif

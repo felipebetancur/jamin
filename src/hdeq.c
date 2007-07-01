@@ -386,14 +386,16 @@ void hdeq_low2mid_set (GtkRange *range)
     /*  Set the compressor labels.  */
 
     hvalue = pow (10.0, other_value);
-    label = g_strdup_printf (_("Mid : %d - %d"), NINT (lvalue), NINT (hvalue));
+    label = g_strdup_printf (_("<b>Mid : %d - %d</b>"), NINT (lvalue), NINT (hvalue));
     gtk_label_set_label (l_comp_lbl[1], label);
+    gtk_label_set_use_markup (l_comp_lbl[1], TRUE);
     free(label);
 
     lvalue = pow (10.0, l_low2mid_adj->lower);
     mvalue = pow (10.0, value);
-    label = g_strdup_printf(_("Low : %d - %d"), NINT (lvalue), NINT (mvalue));
+    label = g_strdup_printf(_("<b>Low : %d - %d</b>"), NINT (lvalue), NINT (mvalue));
     gtk_label_set_label (l_comp_lbl[0], label);
+    gtk_label_set_use_markup (l_comp_lbl[0], TRUE);
     free(label);
 
 
@@ -493,13 +495,15 @@ void hdeq_mid2high_set (GtkRange *range)
     /*  Set the compressor labels.  */
 
     lvalue = pow (10.0, other_value);
-    label = g_strdup_printf (_("Mid : %d - %d"), NINT (lvalue), NINT (mvalue));
+    label = g_strdup_printf (_("<b>Mid : %d - %d</b>"), NINT (lvalue), NINT (mvalue));
     gtk_label_set_label (l_comp_lbl[1], label);
+    gtk_label_set_use_markup (l_comp_lbl[1], TRUE);
     free(label);
 
     hvalue = pow (10.0, l_low2mid_adj->upper);
-    label = g_strdup_printf (_("High : %d - %d"), NINT (mvalue), NINT (hvalue));
+    label = g_strdup_printf (_("<b>High : %d - %d</b>"), NINT (mvalue), NINT (hvalue));
     gtk_label_set_label (l_comp_lbl[2], label);
+    gtk_label_set_use_markup (l_comp_lbl[2], TRUE);
     free(label);
 
 

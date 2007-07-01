@@ -590,9 +590,9 @@
 	      <child>
 		<widget class="GtkLabel" id="scenes_label">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">Scenes</property>
+		  <property name="label" translatable="yes">&lt;b&gt;Scenes&lt;/b&gt;</property>
 		  <property name="use_underline">False</property>
-		  <property name="use_markup">False</property>
+		  <property name="use_markup">True</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
 		  <property name="wrap">False</property>
 		  <property name="selectable">False</property>
@@ -1401,9 +1401,9 @@
 			      <child>
 				<widget class="GtkLabel" id="label252">
 				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">Input</property>
+				  <property name="label" translatable="yes">&lt;b&gt;Input&lt;/b&gt;</property>
 				  <property name="use_underline">False</property>
-				  <property name="use_markup">False</property>
+				  <property name="use_markup">True</property>
 				  <property name="justify">GTK_JUSTIFY_LEFT</property>
 				  <property name="wrap">False</property>
 				  <property name="selectable">False</property>
@@ -1543,9 +1543,9 @@
 			      <child>
 				<widget class="GtkLabel" id="label47">
 				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">HDEQ</property>
+				  <property name="label" translatable="yes">&lt;b&gt;HDEQ&lt;/b&gt;</property>
 				  <property name="use_underline">False</property>
-				  <property name="use_markup">False</property>
+				  <property name="use_markup">True</property>
 				  <property name="justify">GTK_JUSTIFY_LEFT</property>
 				  <property name="wrap">False</property>
 				  <property name="selectable">False</property>
@@ -3716,9 +3716,9 @@
 			      <child>
 				<widget class="GtkLabel" id="label48">
 				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">30 band EQ</property>
+				  <property name="label" translatable="yes">&lt;b&gt;30 band EQ&lt;/b&gt;</property>
 				  <property name="use_underline">False</property>
-				  <property name="use_markup">False</property>
+				  <property name="use_markup">True</property>
 				  <property name="justify">GTK_JUSTIFY_LEFT</property>
 				  <property name="wrap">False</property>
 				  <property name="selectable">False</property>
@@ -3773,9 +3773,9 @@
 			      <child>
 				<widget class="GtkLabel" id="label78">
 				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">Spectrum</property>
+				  <property name="label" translatable="yes">&lt;b&gt;Spectrum&lt;/b&gt;</property>
 				  <property name="use_underline">False</property>
-				  <property name="use_markup">False</property>
+				  <property name="use_markup">True</property>
 				  <property name="justify">GTK_JUSTIFY_LEFT</property>
 				  <property name="wrap">False</property>
 				  <property name="selectable">False</property>
@@ -4075,9 +4075,9 @@
 			      <child>
 				<widget class="GtkLabel" id="label3178">
 				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">Compressor curves</property>
+				  <property name="label" translatable="yes">&lt;b&gt;Compressor curves&lt;/b&gt;</property>
 				  <property name="use_underline">False</property>
-				  <property name="use_markup">False</property>
+				  <property name="use_markup">True</property>
 				  <property name="justify">GTK_JUSTIFY_LEFT</property>
 				  <property name="wrap">False</property>
 				  <property name="selectable">False</property>
@@ -5149,9 +5149,9 @@
 					      <child>
 						<widget class="GtkLabel" id="label_freq_l">
 						  <property name="visible">True</property>
-						  <property name="label" translatable="yes">Low : 00000 - 00000</property>
+						  <property name="label" translatable="yes">&lt;b&gt;Low : 00000 - 00000&lt;/b&gt;</property>
 						  <property name="use_underline">False</property>
-						  <property name="use_markup">False</property>
+						  <property name="use_markup">True</property>
 						  <property name="justify">GTK_JUSTIFY_LEFT</property>
 						  <property name="wrap">False</property>
 						  <property name="selectable">False</property>
@@ -5941,9 +5941,9 @@
 					      <child>
 						<widget class="GtkLabel" id="label_freq_m">
 						  <property name="visible">True</property>
-						  <property name="label" translatable="yes">Mid : 00000 - 00000</property>
+						  <property name="label" translatable="yes">&lt;b&gt;Mid : 00000 - 00000&lt;/b&gt;</property>
 						  <property name="use_underline">False</property>
-						  <property name="use_markup">False</property>
+						  <property name="use_markup">True</property>
 						  <property name="justify">GTK_JUSTIFY_LEFT</property>
 						  <property name="wrap">False</property>
 						  <property name="selectable">False</property>
@@ -6704,9 +6704,9 @@
 					      <child>
 						<widget class="GtkLabel" id="label_freq_h">
 						  <property name="visible">True</property>
-						  <property name="label" translatable="yes">High : 00000 - 00000</property>
+						  <property name="label" translatable="yes">&lt;b&gt;High : 00000 - 00000&lt;/b&gt;</property>
 						  <property name="use_underline">False</property>
-						  <property name="use_markup">False</property>
+						  <property name="use_markup">True</property>
 						  <property name="justify">GTK_JUSTIFY_LEFT</property>
 						  <property name="wrap">False</property>
 						  <property name="selectable">False</property>
@@ -6826,9 +6826,9 @@
 					  <child>
 					    <widget class="GtkLabel" id="boost_label">
 					      <property name="visible">True</property>
-					      <property name="label" translatable="yes">Boost</property>
+					      <property name="label" translatable="yes">&lt;b&gt;Boost&lt;/b&gt;</property>
 					      <property name="use_underline">False</property>
-					      <property name="use_markup">False</property>
+					      <property name="use_markup">True</property>
 					      <property name="justify">GTK_JUSTIFY_LEFT</property>
 					      <property name="wrap">False</property>
 					      <property name="selectable">False</property>
@@ -7246,6 +7246,63 @@
 					      </child>
 
 					      <child>
+						<widget class="GtkHBox" id="hbox80">
+						  <property name="visible">True</property>
+						  <property name="homogeneous">False</property>
+						  <property name="spacing">0</property>
+
+						  <child>
+						    <widget class="GtkLabel" id="logscale_label">
+						      <property name="visible">True</property>
+						      <property name="label" translatable="yes">Linear/log release</property>
+						      <property name="use_underline">False</property>
+						      <property name="use_markup">False</property>
+						      <property name="justify">GTK_JUSTIFY_LEFT</property>
+						      <property name="wrap">False</property>
+						      <property name="selectable">False</property>
+						      <property name="xalign">0.5</property>
+						      <property name="yalign">0.5</property>
+						      <property name="xpad">0</property>
+						      <property name="ypad">0</property>
+						      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+						      <property name="width_chars">-1</property>
+						      <property name="single_line_mode">False</property>
+						      <property name="angle">0</property>
+						    </widget>
+						    <packing>
+						      <property name="padding">0</property>
+						      <property name="expand">False</property>
+						      <property name="fill">False</property>
+						    </packing>
+						  </child>
+
+						  <child>
+						    <widget class="GtkHScale" id="logscale_scale">
+						      <property name="visible">True</property>
+						      <property name="can_focus">True</property>
+						      <property name="draw_value">True</property>
+						      <property name="value_pos">GTK_POS_TOP</property>
+						      <property name="digits">3</property>
+						      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+						      <property name="inverted">False</property>
+						      <property name="adjustment">0.75 0 1 0.00999999977648 0.10000000149 0.10000000149</property>
+						      <signal name="value_changed" handler="on_logscale_scale_value_changed" last_modification_time="Sun, 01 Jul 2007 06:07:51 GMT"/>
+						    </widget>
+						    <packing>
+						      <property name="padding">0</property>
+						      <property name="expand">True</property>
+						      <property name="fill">True</property>
+						    </packing>
+						  </child>
+						</widget>
+						<packing>
+						  <property name="padding">0</property>
+						  <property name="expand">False</property>
+						  <property name="fill">False</property>
+						</packing>
+					      </child>
+
+					      <child>
 						<widget class="GtkEventBox" id="limiter_bypass_event_box">
 						  <property name="visible">True</property>
 						  <property name="tooltip" translatable="yes">Bypass boost and limiter processing</property>
@@ -7270,8 +7327,8 @@
 						</widget>
 						<packing>
 						  <property name="padding">0</property>
-						  <property name="expand">False</property>
-						  <property name="fill">False</property>
+						  <property name="expand">True</property>
+						  <property name="fill">True</property>
 						</packing>
 					      </child>
 					    </widget>
@@ -7280,9 +7337,9 @@
 					  <child>
 					    <widget class="GtkLabel" id="limiterlabel">
 					      <property name="visible">True</property>
-					      <property name="label" translatable="yes">Fast-lookahead-limiter (Harris)</property>
+					      <property name="label" translatable="yes">&lt;b&gt;Fast-lookahead-limiter (Harris)&lt;/b&gt;</property>
 					      <property name="use_underline">False</property>
-					      <property name="use_markup">False</property>
+					      <property name="use_markup">True</property>
 					      <property name="justify">GTK_JUSTIFY_LEFT</property>
 					      <property name="wrap">False</property>
 					      <property name="selectable">False</property>
@@ -7717,9 +7774,9 @@
 		  <child>
 		    <widget class="GtkLabel" id="label318">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">Output</property>
+		      <property name="label" translatable="yes">&lt;b&gt;Output&lt;/b&gt;</property>
 		      <property name="use_underline">False</property>
-		      <property name="use_markup">False</property>
+		      <property name="use_markup">True</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
 		      <property name="wrap">False</property>
 		      <property name="selectable">False</property>

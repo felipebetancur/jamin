@@ -1315,3 +1315,7 @@ on_LowDelaySpinButton_value_changed    (GtkSpinButton   *spinbutton,
 void
 on_MidDelaySpinButton_value_changed    (GtkSpinButton   *spinbutton,
                                         gpointer         user_data);
+
+void
+on_logscale_scale_value_changed        (GtkRange        *range,
+                                        gpointer         user_data);

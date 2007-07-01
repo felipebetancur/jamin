@@ -109,6 +109,7 @@ void preferences_init()
 
 
   l_limiter_combo = GTK_COMBO_BOX (lookup_widget (pref_dialog, "limiter_combo"));
+
   gtk_combo_box_set_active (l_limiter_combo, process_get_limiter_plugin ());
 
 

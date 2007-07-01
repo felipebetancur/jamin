@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.h,v 1.38 2007/06/29 17:17:59 jdepner Exp $
+ *  $Id: process.h,v 1.39 2007/07/01 15:33:18 jdepner Exp $
  */
 
 #ifndef PROCESS_H
@@ -141,6 +141,7 @@ int process_get_xo_delay_state (int band);
 void process_set_xo_delay_state (int band, int state);
 float process_get_xo_delay_time (int band);
 void process_set_xo_delay_time (int band, float ms);
+void process_set_limiter_logscale (float value);
 
 extern comp_settings compressors[XO_NBANDS];
 extern lim_settings limiter[2];

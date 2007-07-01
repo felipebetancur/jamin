@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.175 2007/06/29 17:17:58 jdepner Exp $
+ *  $Id: callbacks.c,v 1.176 2007/07/01 15:33:18 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -650,7 +650,7 @@ void
 on_lim_lh_scale_value_changed          (GtkRange        *range,
                                         gpointer         user_data)
 {
-    s_set_value_ui(S_LIM_TIME,
+  s_set_value_ui(S_LIM_TIME,
                  gtk_range_get_adjustment(GTK_RANGE(range))->value);
 }
 
@@ -668,8 +668,8 @@ void
 on_hscale_1_l_value_changed               (GtkRange        *range,
                                         gpointer         user_data)
 {
-    s_set_value_ui(S_STEREO_WIDTH(0),
-                   gtk_range_get_adjustment(GTK_RANGE(range))->value);
+  s_set_value_ui(S_STEREO_WIDTH(0),
+                 gtk_range_get_adjustment(GTK_RANGE(range))->value);
 }
 
 
@@ -677,8 +677,8 @@ void
 on_hscale_1_l_realize                     (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-    s_set_adjustment(S_STEREO_WIDTH(0),
-                     gtk_range_get_adjustment(GTK_RANGE(widget)));
+  s_set_adjustment(S_STEREO_WIDTH(0),
+                   gtk_range_get_adjustment(GTK_RANGE(widget)));
 }
 
 
@@ -686,8 +686,8 @@ void
 on_hscale_1_m_value_changed               (GtkRange        *range,
                                         gpointer         user_data)
 {
-    s_set_value_ui(S_STEREO_WIDTH(1),
-                   gtk_range_get_adjustment(GTK_RANGE(range))->value);
+  s_set_value_ui(S_STEREO_WIDTH(1),
+                 gtk_range_get_adjustment(GTK_RANGE(range))->value);
 }
 
 
@@ -695,8 +695,8 @@ void
 on_hscale_1_m_realize                     (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-    s_set_adjustment(S_STEREO_WIDTH(1),
-                     gtk_range_get_adjustment(GTK_RANGE(widget)));
+  s_set_adjustment(S_STEREO_WIDTH(1),
+                   gtk_range_get_adjustment(GTK_RANGE(widget)));
 }
 
 
@@ -704,8 +704,8 @@ void
 on_hscale_1_h_value_changed               (GtkRange        *range,
                                         gpointer         user_data)
 {
-    s_set_value_ui(S_STEREO_WIDTH(2),
-                   gtk_range_get_adjustment(GTK_RANGE(range))->value);
+  s_set_value_ui(S_STEREO_WIDTH(2),
+                 gtk_range_get_adjustment(GTK_RANGE(range))->value);
 }
 
 
@@ -713,8 +713,8 @@ void
 on_hscale_1_h_realize                     (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-	s_set_adjustment(S_STEREO_WIDTH(2),
-			gtk_range_get_adjustment(GTK_RANGE(widget)));
+  s_set_adjustment(S_STEREO_WIDTH(2),
+                   gtk_range_get_adjustment(GTK_RANGE(widget)));
 }
 
 
@@ -722,8 +722,8 @@ void
 on_lim_input_hscale_value_changed      (GtkRange        *range,
                                         gpointer         user_data)
 {
-    s_set_value_ui(S_LIM_INPUT,
-                   gtk_range_get_adjustment(GTK_RANGE(range))->value);
+  s_set_value_ui(S_LIM_INPUT,
+                 gtk_range_get_adjustment(GTK_RANGE(range))->value);
 }
 
 
@@ -731,8 +731,8 @@ void
 on_lim_input_hscale_realize            (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-	s_set_adjustment(S_LIM_INPUT,
-			gtk_range_get_adjustment(GTK_RANGE(widget)));
+  s_set_adjustment(S_LIM_INPUT,
+                   gtk_range_get_adjustment(GTK_RANGE(widget)));
 }
 
 
@@ -3248,4 +3248,11 @@ on_MidDelaySpinButton_value_changed    (GtkSpinButton   *spinbutton,
                                         gpointer         user_data)
 {
   process_set_xo_delay_time (XO_MID, gtk_spin_button_get_value (spinbutton));
+}
+
+void
+on_logscale_scale_value_changed        (GtkRange        *range,
+                                        gpointer         user_data)
+{
+  s_set_value_ui (S_LIM_LOGSCALE, gtk_range_get_adjustment (GTK_RANGE (range))->value);
 }

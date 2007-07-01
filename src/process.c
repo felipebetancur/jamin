@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.75 2007/06/29 17:17:59 jdepner Exp $
+ *  $Id: process.c,v 1.76 2007/07/01 15:33:18 jdepner Exp $
  */
 
 #include <math.h>
@@ -110,6 +110,7 @@ static float sb_r_gain[XO_NBANDS];
 static float limiter_gain = 1.0f;
 static int limiter_plugin_pending = FAST;
 static int limiter_plugin_change_pending = FALSE;
+static float logscale_pending = -1.0;
 
 static float ws_boost_wet = 0.0f;
 static float ws_boost_a = 1.0f;
@@ -715,9 +716,14 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
       {
         limiter_plugin = limiter_plugin_pending;
 
-        limiter_set_label (limiter_plugin);
-
         limiter_plugin_change_pending = FALSE;
+      }
+
+
+    if (logscale_pending >= 0.0) 
+      {
+        limiter[limiter_plugin].logscale = logscale_pending;
+        logscale_pending = -1.0;
       }
 
 
@@ -762,9 +768,10 @@ void process_set_limiter_plugin(int id)
 {
   int pid = limiter_plugin;
 
-  if (lim_plugin[id] == NULL) return;
-
   limiter_plugin_pending = id;
+
+
+  if (lim_plugin[id] == NULL) return;
 
 
   /*  Copy the previous settings to the current plugin.  */
@@ -774,14 +781,39 @@ void process_set_limiter_plugin(int id)
   limiter[id].release = limiter[pid].release;
   limiter[id].attenuation = limiter[pid].attenuation;
   limiter[id].latency = limiter[pid].latency;
+  limiter[id].logscale = limiter[pid].logscale;
 
 
   limiter_plugin_change_pending = TRUE;
+
+
+  /*  Turn the logscale on or off depending on whether we're using FAST or FOO.  */
+
+  if (limiter_plugin_pending == FOO)
+    {
+      limiter_logscale_set_state (TRUE);
+    }
+  else
+    {
+      limiter_logscale_set_state (FALSE);
+    }
+
+  limiter_set_label (limiter_plugin_pending);
 }
 
 int process_get_limiter_plugin()
 {
-  return (limiter_plugin);
+  /*  This is a startup fixer.  If we specified the plugin on the command line
+      we want to return pending until these two are the same.  */
+
+  if (limiter_plugin_pending != limiter_plugin)
+    {
+      return (limiter_plugin_pending);
+    }
+  else
+    {
+      return (limiter_plugin);
+    }
 }
 
 void process_set_stereo_width(int xo_band, float width)
@@ -992,6 +1024,13 @@ float process_get_xo_delay_time (int band)
 void process_set_xo_delay_time (int band, float ms)
 {
   save_delay[band] = ms;
+}
+
+void process_set_limiter_logscale (float value)
+{
+  logscale_pending = value;
+
+  set_scene_warning_button ();
 }
 
 /* vi:set ts=8 sts=4 sw=4: */

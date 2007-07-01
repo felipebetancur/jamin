@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.68 2007/06/29 17:17:59 jdepner Exp $
+ *  $Id: state.c,v 1.69 2007/07/01 15:33:19 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -42,6 +42,7 @@
 
 /* A scene value to indicate that loading failed */
 #define LOAD_ERROR -2
+
 
 /* The smallest value that counts as a change, should be approximately
  * epsilon+delta */
