@@ -969,10 +969,6 @@ on_low_active_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data);
 
 void
-on_low_bypass_toggled                  (GtkToggleButton *togglebutton,
-                                        gpointer         user_data);
-
-void
 on_low_mute_toggled                    (GtkToggleButton *togglebutton,
                                         gpointer         user_data);
 
@@ -981,19 +977,11 @@ on_mid_active_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data);
 
 void
-on_mid_bypass_toggled                  (GtkToggleButton *togglebutton,
-                                        gpointer         user_data);
-
-void
 on_mid_mute_toggled                    (GtkToggleButton *togglebutton,
                                         gpointer         user_data);
 
 void
 on_high_active_toggled                 (GtkToggleButton *togglebutton,
-                                        gpointer         user_data);
-
-void
-on_high_bypass_toggled                 (GtkToggleButton *togglebutton,
                                         gpointer         user_data);
 
 void
@@ -1205,6 +1193,12 @@ callbacks_set_eq_bypass_button_state (int state);
 
 void 
 callbacks_set_limiter_bypass_button_state (int state);
+
+void 
+callbacks_set_low_delay_button_state (int state);
+
+void 
+callbacks_set_mid_delay_button_state (int state);
 
 void
 on_eqb_value_changed                   (GtkRange        *range,

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.176 2007/07/01 15:33:18 jdepner Exp $
+ *  $Id: callbacks.c,v 1.177 2007/11/05 17:52:01 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -60,7 +60,8 @@
 static char             *help_ptr = NULL, scene_name_text[100];
 static gboolean         text_focus = FALSE, force_keypress_help = FALSE;
 static GtkToggleButton  *l_solo_button[XO_NBANDS], *l_bypass_button[XO_NBANDS], 
-                        *l_global_bypass, *l_eq_bypass, *l_limiter_bypass;
+                        *l_global_bypass, *l_eq_bypass, *l_limiter_bypass,
+                        *l_low_delay,*l_mid_delay;
 static GtkLabel         *l_eqbFreqLabel, *l_eqbAmpLabel;
 GtkEventBox             *l_global_bypass_event_box, *l_comp_bypass_event_box[XO_NBANDS],
                         *l_eq_bypass_event_box, *l_limiter_bypass_event_box;
@@ -220,6 +221,8 @@ on_window1_show                        (GtkWidget       *widget,
   main_style = gtk_widget_get_style (GTK_WIDGET (l_global_bypass_event_box));
   l_main_color = main_style->bg[GTK_STATE_NORMAL];
 
+  l_low_delay = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "LowDelayButton"));
+  l_mid_delay = GTK_TOGGLE_BUTTON (lookup_widget (main_window, "MidDelayButton"));
 
   scene_name_dialog = create_scene_name_dialog ();
 
@@ -2301,6 +2304,20 @@ void
 callbacks_set_limiter_bypass_button_state (int state)
 {
   gtk_toggle_button_set_active (l_limiter_bypass, state);
+}
+
+
+void 
+callbacks_set_low_delay_button_state (int state)
+{
+  gtk_toggle_button_set_active (l_low_delay, state);
+}
+
+
+void 
+callbacks_set_mid_delay_button_state (int state)
+{
+  gtk_toggle_button_set_active (l_mid_delay, state);
 }
 
 

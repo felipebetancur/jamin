@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.69 2007/07/01 15:33:19 jdepner Exp $
+ *  $Id: state.c,v 1.70 2007/11/05 17:52:01 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -782,6 +782,9 @@ void s_load_session (const gchar *fname)
     process_set_xo_delay_time (XO_MID, gp.xo_delay_time[XO_MID]);
     process_set_xo_delay_state (XO_LOW, gp.xo_delay_state[XO_LOW]);
     process_set_xo_delay_state (XO_MID, gp.xo_delay_state[XO_MID]);
+
+    callbacks_set_low_delay_button_state (gp.xo_delay_state[XO_LOW]);
+    callbacks_set_mid_delay_button_state (gp.xo_delay_state[XO_MID]);
 
     intrim_set_out_meter_peak_pref (gp.out_meter_peak_pref);
     intrim_set_rms_meter_peak_pref (gp.rms_meter_peak_pref);
