@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.177 2007/11/05 17:52:01 jdepner Exp $
+ *  $Id: callbacks.c,v 1.178 2008/01/21 20:58:34 jdepner Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -3272,4 +3272,14 @@ on_logscale_scale_value_changed        (GtkRange        *range,
                                         gpointer         user_data)
 {
   s_set_value_ui (S_LIM_LOGSCALE, gtk_range_get_adjustment (GTK_RANGE (range))->value);
+}
+
+gboolean
+on_pref_dialog_delete_event            (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data)
+{
+  popup_pref_dialog (0);
+
+  return TRUE;
 }

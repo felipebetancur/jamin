@@ -1313,3 +1313,13 @@ on_MidDelaySpinButton_value_changed    (GtkSpinButton   *spinbutton,
 void
 on_logscale_scale_value_changed        (GtkRange        *range,
                                         gpointer         user_data);
+
+gboolean
+on_pref_dialog_delete_event            (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data);
+
+gboolean
+on_pref_dialog_delete_event            (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data);

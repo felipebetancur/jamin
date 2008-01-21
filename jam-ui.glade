@@ -7927,6 +7927,7 @@
   <property name="focus_on_map">True</property>
   <property name="urgency_hint">False</property>
   <property name="has_separator">True</property>
+  <signal name="delete_event" handler="on_pref_dialog_delete_event" last_modification_time="Wed, 09 Jan 2008 14:16:35 GMT"/>
 
   <child internal-child="vbox">
     <widget class="GtkVBox" id="dialog-vbox1">

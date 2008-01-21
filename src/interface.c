@@ -5627,6 +5627,9 @@ create_pref_dialog (void)
   GTK_WIDGET_SET_FLAGS (pref_close, GTK_CAN_DEFAULT);
   gtk_tooltips_set_tip (tooltips, pref_close, _("Close the Preferences window"), NULL);
 
+  g_signal_connect ((gpointer) pref_dialog, "delete_event",
+                    G_CALLBACK (on_pref_dialog_delete_event),
+                    NULL);
   g_signal_connect ((gpointer) GraphicEqEvent, "enter_notify_event",
                     G_CALLBACK (on_pref_enter_notify_event),
                     NULL);
