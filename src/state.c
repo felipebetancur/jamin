@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.70 2007/11/05 17:52:01 jdepner Exp $
+ *  $Id: state.c,v 1.71 2008/01/31 15:47:38 jdepner Exp $
  */
 
 #include <stdio.h>
@@ -391,14 +391,14 @@ void s_redo()
 
     restore = FALSE;
     if (undo_pos) {
-	if (undo_pos->next) {
-	    undo_pos = g_list_next(undo_pos);
-            restore = TRUE;
-	}
-    } else {
-	undo_pos = history;
-	undo_pos = g_list_next(undo_pos);
+      if (undo_pos->next) {
+        undo_pos = g_list_next(undo_pos);
         restore = TRUE;
+      }
+    } else if (history->next) {
+      undo_pos = history;
+      undo_pos = g_list_next(undo_pos);
+      restore = TRUE;
     }
 
     if (restore)
