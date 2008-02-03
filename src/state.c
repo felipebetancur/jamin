@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.71 2008/01/31 15:47:38 jdepner Exp $
+ *  $Id: state.c,v 1.72 2008/02/03 20:43:20 esaracco Exp $
  */
 
 #include <stdio.h>
@@ -103,6 +103,7 @@ typedef struct {
     int gang_ra[XO_BANDS];
     int gang_kn[XO_BANDS];
     int gang_ma[XO_BANDS];
+    int iir_xover;
 } xml_global_params;
 
 void state_init()
@@ -563,6 +564,7 @@ void s_save_session (const gchar *fname)
     s_save_global_float(doc, "mid delay time", process_get_xo_delay_time(XO_MID));
     s_save_global_int(doc, "mid delay state", process_get_xo_delay_state (XO_MID));
 
+    s_save_global_int (doc, "crossover type", process_get_crossover_type ());
 
     /* record the current gang state of the compressor controls  */
 
@@ -723,6 +725,7 @@ void s_load_session (const gchar *fname)
     gp.xo_delay_state[XO_LOW] = 0;
     gp.xo_delay_time[XO_MID] = 0.5;
     gp.xo_delay_state[XO_MID] = 0;
+    gp.iir_xover = FFT;
     for (i = 0 ; i < XO_BANDS ; i++) {
         gp.gang_at[i] = FALSE;
         gp.gang_re[i] = FALSE;
@@ -791,6 +794,7 @@ void s_load_session (const gchar *fname)
 
     process_set_rms_time_slice (gp.rms_time_slice);
 
+    process_set_crossover_type (gp.iir_xover);
 
     /*  This is the active scene.  */
 
@@ -832,6 +836,7 @@ void s_load_session (const gchar *fname)
     set_EQ_curve_values (0, 0.0);
 
     s_clear_history();
+    pref_set_all_values ();
 }
 
 void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
@@ -936,6 +941,9 @@ void s_startElement(void *user_data, const xmlChar *name, const xmlChar **attrs)
           gp->xo_delay_state[XO_LOW] = atoi(value);
 	} else if (!strcmp(symbol, "mid delay state")) {
           gp->xo_delay_state[XO_MID] = atoi(value);
+	} else if (!strcmp(symbol, "crossover type")) {
+          gp->iir_xover = atoi(value);
+	} else if (!strcmp(symbol, "mid delay state")) {
 	} else if ((const char *)strstr(symbol, "gang_") == symbol) {
 	    int ind = index ? atoi(index) : -1;
 	    int val = atoi(value);

@@ -31,6 +31,7 @@
 
 
 #include "preferences.h"
+#include "callbacks.h"
 #include "hdeq.h"
 #include "geq.h"
 #include "main.h"
@@ -57,6 +58,11 @@ static GdkColormap       *colormap = NULL;
 static GdkColor          color[COLORS];
 static int               color_id;
 static GtkComboBox       *l_limiter_combo, *l_SpectrumComboBox, *l_ColorsComboBox;
+static GtkSpinButton     *l_hdeq_lower_gain, *l_hdeq_upper_gain, *l_crossfade_time, 
+                         *l_inmeter_warn, *l_spectrum_freq, *l_rms_time_slice, 
+                         *l_xo_delay_time_low, *l_xo_delay_time_mid;
+static GtkToggleButton   *l_out_meter_peak, *l_out_meter_full, *l_rms_meter_peak, 
+                         *l_rms_meter_full, *l_fft, *l_iir; 
 static gboolean          initialized = FALSE;
 
 
@@ -111,6 +117,22 @@ void preferences_init()
   l_limiter_combo = GTK_COMBO_BOX (lookup_widget (pref_dialog, "limiter_combo"));
 
   gtk_combo_box_set_active (l_limiter_combo, process_get_limiter_plugin ());
+
+  l_hdeq_lower_gain = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "MinGainSpin"));
+  l_hdeq_upper_gain = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "MaxGainSpin"));
+  l_crossfade_time = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "CrossfadeTimeSpin"));
+  l_inmeter_warn = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "warningLevelSpinButton"));
+  l_spectrum_freq = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "UpdateFrequencySpin"));
+  l_rms_time_slice = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "rmsTimeValue"));
+  l_xo_delay_time_low = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "LowDelaySpinButton"));
+  l_xo_delay_time_mid = GTK_SPIN_BUTTON (lookup_widget (pref_dialog, "MidDelaySpinButton"));
+
+  l_out_meter_peak = GTK_TOGGLE_BUTTON (lookup_widget (pref_dialog, "out_meter_peak_button"));
+  l_out_meter_full = GTK_TOGGLE_BUTTON (lookup_widget (pref_dialog, "out_meter_full_button"));
+  l_rms_meter_peak = GTK_TOGGLE_BUTTON (lookup_widget (pref_dialog, "rms_meter_peak_button"));
+  l_rms_meter_full = GTK_TOGGLE_BUTTON (lookup_widget (pref_dialog, "rms_meter_full_button"));
+  l_fft = GTK_TOGGLE_BUTTON (lookup_widget (pref_dialog, "FFTButton"));
+  l_iir = GTK_TOGGLE_BUTTON (lookup_widget (pref_dialog, "IIRButton"));
 
 
   color_dialog = create_colorselectiondialog1 ();
@@ -260,6 +282,42 @@ void preferences_init()
   if (process_limiter_plugins_available () < 2) gtk_widget_set_sensitive (GTK_WIDGET (l_limiter_combo), FALSE);
 
   initialized = TRUE;
+}
+
+void pref_set_all_values ()
+{
+  gtk_spin_button_set_value (l_hdeq_lower_gain, hdeq_get_lower_gain ());
+  gtk_spin_button_set_value (l_hdeq_upper_gain, hdeq_get_upper_gain ());
+  gtk_spin_button_set_value (l_crossfade_time, s_get_crossfade_time ());
+  gtk_spin_button_set_value (l_inmeter_warn, intrim_inmeter_get_warn ());
+  gtk_spin_button_set_value (l_spectrum_freq, get_spectrum_freq ());
+  gtk_spin_button_set_value (l_rms_time_slice, process_get_rms_time_slice ());
+  gtk_spin_button_set_value (l_xo_delay_time_low, process_get_xo_delay_time (XO_LOW));
+  gtk_spin_button_set_value (l_xo_delay_time_mid, process_get_xo_delay_time (XO_MID));
+
+  g_signal_handlers_block_by_func (l_out_meter_peak, on_out_meter_peak_button_clicked, NULL);
+  g_signal_handlers_block_by_func (l_out_meter_full, on_out_meter_full_button_clicked, NULL);
+  g_signal_handlers_block_by_func (l_rms_meter_peak, on_rms_meter_peak_button_clicked, NULL);
+  g_signal_handlers_block_by_func (l_rms_meter_full, on_rms_meter_full_button_clicked, NULL);
+  g_signal_handlers_block_by_func (l_fft, on_FFTButton_clicked, NULL);
+  g_signal_handlers_block_by_func (l_iir, on_IIRButton_clicked, NULL);
+
+  gtk_toggle_button_set_active (l_out_meter_peak, intrim_get_out_meter_peak_pref ());
+  gtk_toggle_button_set_active (l_out_meter_full, !intrim_get_out_meter_peak_pref ());
+  gtk_toggle_button_set_active (l_rms_meter_peak, intrim_get_rms_meter_peak_pref ());
+  gtk_toggle_button_set_active (l_rms_meter_full, !intrim_get_rms_meter_peak_pref ());
+  gtk_toggle_button_set_active (l_fft, (process_get_crossover_type () == FFT));
+  gtk_toggle_button_set_active (l_iir, (process_get_crossover_type () == IIR));
+
+  g_signal_handlers_unblock_by_func (l_out_meter_peak, on_out_meter_peak_button_clicked, NULL);
+  g_signal_handlers_unblock_by_func (l_out_meter_full, on_out_meter_full_button_clicked, NULL);
+  g_signal_handlers_unblock_by_func (l_rms_meter_peak, on_rms_meter_peak_button_clicked, NULL);
+  g_signal_handlers_unblock_by_func (l_rms_meter_full, on_rms_meter_full_button_clicked, NULL);
+  g_signal_handlers_unblock_by_func (l_fft, on_FFTButton_clicked, NULL);
+  g_signal_handlers_unblock_by_func (l_iir, on_IIRButton_clicked, NULL);
+  
+  gtk_combo_box_set_active (l_SpectrumComboBox, process_get_spec_mode ());
+  gtk_combo_box_set_active (l_limiter_combo, process_get_limiter_plugin ());
 }
 
 

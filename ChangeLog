@@ -1,3 +1,8 @@
+2008-02-02  Emmanuel Saracco  <esaracco@free.fr>
+
+	* Save/Load Crossover type to/from JAMin session file.
+	* Refresh preferences dialog properties when session file is loaded.
+
 2005-11-15  Steve Harris  <steve@plugin.org.uk>
 
 	* Fixed OSC scene path discrepencies.
