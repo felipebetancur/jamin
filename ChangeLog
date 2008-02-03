@@ -1,3 +1,7 @@
+2008-02-03  Emmanuel Saracco  <esaracco@free.fr>
+
+	* Install libs under lib64 directory on 64bits architectures.
+
 2008-02-02  Emmanuel Saracco  <esaracco@free.fr>
 
 	* Save/Load Crossover type to/from JAMin session file.
