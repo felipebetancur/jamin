@@ -6223,7 +6223,7 @@ create_about_dialog (void)
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (developers), FALSE);
   gtk_text_view_set_left_margin (GTK_TEXT_VIEW (developers), 5);
   gtk_text_view_set_right_margin (GTK_TEXT_VIEW (developers), 5);
-  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (developers)), _("\nSteve Harris is the JAMin principle author and team leader.\n\nSourceForge CVS developers, in alphabetical order:\n\nJan Depner\nSteve Harris\nJack O'Quin\nRon Parker\nEmmanuel Saracco\nPatrick Shirkey\n\nTranslators:\n\nAlexandre Prokoudine (Russian)\nEmmanuel Saracco (French)"), -1);
+  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (developers)), _("\nSteve Harris is the JAMin principle author and team leader.\n\nSourceForge CVS developers, in alphabetical order:\n\nJan Depner\nSteve Harris\nJack O'Quin\nRon Parker\nEmmanuel Saracco\nPatrick Shirkey\n\nTranslators:\n\nAlexandre Prokoudine (Russian)\nEmmanuel Saracco (French)\nRaphaël Doursenaud (French)"), -1);
 
   label328 = gtk_label_new_with_mnemonic (_("_Developers"));
   gtk_widget_set_name (label328, "label328");
