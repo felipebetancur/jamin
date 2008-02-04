@@ -1,3 +1,7 @@
+2008-02-04  Emmanuel Saracco  <esaracco@free.fr>
+
+	* Avoid some GCC warnings about cast.
+
 2008-02-03  Emmanuel Saracco  <esaracco@free.fr>
 
 	* Install libs under lib64 directory on 64bits architectures.

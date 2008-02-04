@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: compressor-ui.c,v 1.28 2004/09/08 13:44:03 jdepner Exp $
+ *  $Id: compressor-ui.c,v 1.29 2008/02/04 15:03:50 esaracco Exp $
  */
 
 #include <stdio.h>
@@ -109,7 +109,7 @@ static gboolean suspend_gang = FALSE;
         s_set_callback(state_id, sym##_changed); \
 	s_set_adjustment(state_id, adj_##sym[i]); \
 	s_set_value(state_id, compressors[i].member, 0); \
-	sig_hand_##sym[i] = g_signal_connect(G_OBJECT(adj_##sym[i]), "value-changed", G_CALLBACK(adj_cb), (gpointer)state_id); 
+	sig_hand_##sym[i] = g_signal_connect(G_OBJECT(adj_##sym[i]), "value-changed", G_CALLBACK(adj_cb), GINT_TO_POINTER (state_id)); 
 
 	//g_signal_connect(G_OBJECT(adj_##sym[i]), "value-changed", G_CALLBACK(sym##_changed), (gpointer)i); 
 	//gtk_adjustment_set_value(adj_##sym[i], compressors[i].member);
@@ -144,7 +144,7 @@ void bind_compressors()
 
 gboolean adj_cb(GtkAdjustment *adj, gpointer p)
 {
-    s_set_value_ui((int)p, adj->value);
+    s_set_value_ui(GPOINTER_TO_INT (p), adj->value);
 
     return FALSE;
 }

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: geq.c,v 1.33 2007/05/04 15:24:58 jdepner Exp $
+ *  $Id: geq.c,v 1.34 2008/02/04 15:03:50 esaracco Exp $
  */
 
 /* code to control the graphic eq's, swh */
@@ -65,7 +65,7 @@ void bind_geq()
 	geqr[i] = GTK_RANGE(lookup_widget(main_window, name));
 	geqa[i] = GTK_ADJUSTMENT(gtk_range_get_adjustment(GTK_RANGE(geqr[i])));
 	g_signal_connect(G_OBJECT(geqa[i]), "value-changed", 
-                         G_CALLBACK(eqb_changed), (gpointer)i+1);
+                         G_CALLBACK(eqb_changed), GINT_TO_POINTER (i+1));
         g_signal_connect(G_OBJECT(geqa[i]), "value-changed", 
                          G_CALLBACK(hdeq_eqb_mod), NULL);
     }
@@ -214,7 +214,7 @@ void geq_get_freqs_and_gains(float *freqs, float *gains)
     
 gboolean eqb_changed(GtkAdjustment *adj, gpointer user_data)
 {
-    int band = (int)user_data;
+    int band = GPOINTER_TO_INT (user_data);
 
     geq_gains[band-1] = db2lin(adj->value);
 
