@@ -1,11 +1,12 @@
 # French translation of JAMin.
-# Copyright (C) 2008
-# Emmanuel Saracco <esaracco@free.fr>, 2008.
+# Copyright (C) 2007-2008
+# Raphaël Doursenaud <rdoursenaud@free.fr>, 2007
+# Emmanuel Saracco <esaracco@free.fr>, 2008
 # This file is distributed under the same license as the JAMin package.
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: JAMin 0.97.12\n"
+"Project-Id-Version: JAMin 0.97.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-03 20:57+0100\n"
 "PO-Revision-Date: 2008-02-03 21:25+0100\n"
@@ -17,7 +18,7 @@ msgstr ""
 
 #: ../data/jamin.desktop.in.h:1
 msgid "JACK Audio Mastering interface"
-msgstr "Interface de mixage JACK Audio"
+msgstr "Interface de masterisation JACK Audio"
 
 #: ../data/jamin.desktop.in.h:2 ../src/interface.c:548
 msgid "JAMin"
@@ -25,28 +26,28 @@ msgstr "JAMin"
 
 #: ../data/jamin.xml.in.h:1
 msgid "JAMin session file"
-msgstr "Fichier de session de JAMin"
+msgstr "Fichier de session JAMin"
 
 #: ../src/callbacks.c:303
 msgid "Pre EQ spectrum         "
-msgstr ""
+msgstr "Spectre pré-égaliseur   "
 
 #: ../src/callbacks.c:306
 msgid "Post EQ spectrum        "
-msgstr ""
+msgstr "Spectre post-égaliseur  "
 
 #: ../src/callbacks.c:309
 msgid "Post compressor spectrum"
-msgstr ""
+msgstr "Spectre post-compresseur "
 
 #: ../src/callbacks.c:312
 msgid "Output spectrum         "
-msgstr ""
+msgstr "Spectre en sortie       "
 
 #: ../src/callbacks.c:1303 ../src/callbacks.c:1329 ../src/callbacks.c:1367
 #: ../src/callbacks.c:1396
 msgid "Select a session file"
-msgstr ""
+msgstr "Sélectionner un fichier de session"
 
 #: ../src/callbacks_help.h:20
 msgid ""
@@ -84,6 +85,40 @@ msgid ""
 "with this program; if not, write to the Free Software Foundation, Inc., 675 "
 "Mass Ave, Cambridge, MA 02139, USA.\n"
 msgstr ""
+"    JAMin est l'interface de Mastering Audio de JACK.\n"
+"\n"
+"    Site Web: <http://jamin.sourceforge.net>\n"
+"\n"
+"    JAMin est conçu pour réaliser un mastering audio professionnel de "
+"n'importe quel nombre de canaux d'entrée.Pour ce faire, il est composé d'un "
+"certain nombre d'outils: un égaliseur 1024 bandes dessinable à la main avec "
+"contrôles paramétriques modifiables; un égaliseur graphique 31 bandes, un "
+"compresseur 3 bandes, un contrôleur de stéréophonie 3 bandes, un limiteur "
+"\"lookahead\", un \"boost\" et un certain nombre d'autres fonctionnalités.\n"
+"\n"
+"    Steve Harris est l'auteur principal et le chef d'équipe de JAMin.\n"
+"\n"
+"    Développeurs CVS SourceForge, par ordre alphabétique:\n"
+"\n"
+"    Jan Depner\n"
+"    Steve Harris\n"
+"    Jack O'Quin\n"
+"    Ron Parker\n"
+"    Patrick Shirkey\n"
+"\n"
+"    JAMin is released under the GNU General Public License and is copyright "
+"(c) 2003 J. Depner, S. Harris, J. O'Quin, R. Parker, and P. Shirkey. \n"
+"    This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"    This program is distributed in the hope that it will be useful, but "
+"WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY "
+"or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"    You should have received a copy of the GNU General Public License along "
+"with this program; if not, write to the Free Software Foundation, Inc., 675 "
+"Mass Ave, Cambridge, MA 02139, USA.\n"
 
 #: ../src/callbacks_help.h:51
 msgid ""
@@ -475,17 +510,17 @@ msgstr ""
 #: ../src/hdeq.c:389 ../src/hdeq.c:498
 #, c-format
 msgid "<b>Mid : %d - %d</b>"
-msgstr ""
+msgstr "<b>Médiums : %d - %d</b>"
 
 #: ../src/hdeq.c:396
 #, c-format
 msgid "<b>Low : %d - %d</b>"
-msgstr ""
+msgstr "<b>Graves : %d - %d</b>"
 
 #: ../src/hdeq.c:504
 #, c-format
 msgid "<b>High : %d - %d</b>"
-msgstr ""
+msgstr "<b>Aigües : %d - %d</b>"
 
 #: ../src/hdeq.c:727
 msgid "Allocating x in set_EQ"
@@ -494,7 +529,7 @@ msgstr ""
 #: ../src/hdeq.c:1429
 #, c-format
 msgid "%dHz , EQ : %.1fdb , Spectrum : %ddb"
-msgstr ""
+msgstr "%dHz , Correction : %.1fdb , Spectre : %ddb"
 
 #: ../src/hdeq.c:1477 ../src/hdeq.c:2018
 msgid "Allocating EQ_yinput in callbacks.c"
@@ -503,7 +538,7 @@ msgstr ""
 #: ../src/hdeq.c:1795
 #, c-format
 msgid "%ddb , %dHz - %dHz"
-msgstr ""
+msgstr "%ddb , %dHz - %dHz"
 
 #: ../src/hdeq.c:2135 ../src/hdeq.c:2155
 msgid "Allocating y in callbacks.c"
@@ -511,79 +546,79 @@ msgstr ""
 
 #: ../src/interface.c:567
 msgid "_File"
-msgstr ""
+msgstr "_Fichier"
 
 #: ../src/interface.c:591
 msgid "Save _As"
-msgstr ""
+msgstr "Enregistrer _sous..."
 
 #: ../src/interface.c:615
 msgid "_Edit"
-msgstr ""
+msgstr "_Edition"
 
 #: ../src/interface.c:624
 msgid "_Undo"
-msgstr ""
+msgstr "_Défaire"
 
 #: ../src/interface.c:637
 msgid "_Redo"
-msgstr ""
+msgstr "_Refaire"
 
 #: ../src/interface.c:655
 msgid "_Ports"
-msgstr ""
+msgstr "_Ports"
 
 #: ../src/interface.c:660
 msgid "_Help"
-msgstr ""
+msgstr "_Aide"
 
 #: ../src/interface.c:669
 msgid "_General"
-msgstr ""
+msgstr "_Générale"
 
 #: ../src/interface.c:682
 msgid "_Keys"
-msgstr ""
+msgstr "_Touches"
 
 #: ../src/interface.c:701
 msgid "About _JAMin"
-msgstr ""
+msgstr "À propos de _JAMin"
 
 #: ../src/interface.c:714
 msgid "About Prerequisites"
-msgstr ""
+msgstr "À propos des dépendances"
 
 #: ../src/interface.c:751
 msgid "rewind transport"
-msgstr ""
+msgstr "rembobiner"
 
 #: ../src/interface.c:764
 msgid "backward transport"
-msgstr ""
+msgstr "déplacer en arrière"
 
 #: ../src/interface.c:777
 msgid "play transport"
-msgstr ""
+msgstr "lecture"
 
 #: ../src/interface.c:790
 msgid "pause transport"
-msgstr ""
+msgstr "pause"
 
 #: ../src/interface.c:803
 msgid "forward transport"
-msgstr ""
+msgstr "déplacer en avant"
 
 #: ../src/interface.c:815
 msgid "HH:MM:SS:xx"
-msgstr ""
+msgstr "HH:MM:SS:xx"
 
 #: ../src/interface.c:827
 msgid "Stopped | some CPU | some frames | 96000 Hz | Focus - something"
-msgstr ""
+msgstr "Arrêté | some CPU | some frames | 96000 Hz | Focus - something"
 
 #: ../src/interface.c:849
 msgid "<b>Scenes</b>"
-msgstr ""
+msgstr "<b>Scènes</b>"
 
 #: ../src/interface.c:865 ../src/interface.c:876 ../src/interface.c:887
 #: ../src/interface.c:898
@@ -597,11 +632,11 @@ msgstr ""
 #: ../src/interface.c:1041 ../src/interface.c:1052 ../src/interface.c:1063
 #: ../src/interface.c:1074
 msgid "Right click for menu"
-msgstr ""
+msgstr "Clic droit pour le menu"
 
 #: ../src/interface.c:1137
 msgid "Input Gain"
-msgstr ""
+msgstr "Gain d'entrée"
 
 #: ../src/interface.c:1179
 msgid "pan_label"
@@ -609,23 +644,23 @@ msgstr ""
 
 #: ../src/interface.c:1188
 msgid "Input Balance"
-msgstr ""
+msgstr "Panoramique d'entrée"
 
 #: ../src/interface.c:1197
 msgid "<b>Input</b>"
-msgstr ""
+msgstr "<b>Entrée</b>"
 
 #: ../src/interface.c:1249
 msgid "<b>HDEQ</b>"
-msgstr ""
+msgstr "<b>Egaliseur HD</b>"
 
 #: ../src/interface.c:1292
 msgid "25"
-msgstr ""
+msgstr "25"
 
 #: ../src/interface.c:1314
 msgid "31"
-msgstr ""
+msgstr "31"
 
 #: ../src/interface.c:1336
 msgid "39"
@@ -749,196 +784,196 @@ msgstr ""
 
 #: ../src/interface.c:1952
 msgid "<b>30 band EQ</b>"
-msgstr ""
+msgstr "<b>Egaliseur 30 bandes</b>"
 
 #: ../src/interface.c:1974
 msgid "<b>Spectrum</b>"
-msgstr ""
+msgstr "<b>Spectre</b>"
 
 #: ../src/interface.c:2003 ../src/interface.c:2038 ../src/interface.c:2073
 msgid "X=input db , Y=output db"
-msgstr ""
+msgstr "X=entrée dB , Y=sortie dB"
 
 #: ../src/interface.c:2016
 msgid "Low"
-msgstr ""
+msgstr "Graves"
 
 #: ../src/interface.c:2051
 msgid "Mid"
-msgstr ""
+msgstr "Médiums"
 
 #: ../src/interface.c:2086
 msgid "High"
-msgstr ""
+msgstr "Aigües"
 
 #: ../src/interface.c:2092
 msgid "<b>Compressor curves</b>"
-msgstr ""
+msgstr "<b>Courbes de compression</b>"
 
 #: ../src/interface.c:2107
 msgid "Bypass EQ processing"
-msgstr ""
+msgstr "Désactive l'égaliseur"
 
 #: ../src/interface.c:2109
 msgid "EQ bypass"
-msgstr ""
+msgstr "Désactiver égaliseur"
 
 #: ../src/interface.c:2124 ../src/interface.c:2137
 msgid "00000"
-msgstr ""
+msgstr "00000"
 
 #: ../src/interface.c:2132
 msgid "Crossover"
-msgstr ""
+msgstr "Filtre séparateur"
 
 #: ../src/interface.c:2161
 msgid "Low to Mid Band Crossover"
-msgstr ""
+msgstr "Fréquence de Coupure Graves/Médiums"
 
 #: ../src/interface.c:2175
 msgid "Mid to High Band Crossover"
-msgstr ""
+msgstr "Fréquence de Coupure Médiums/Aigües"
 
 #: ../src/interface.c:2252 ../src/interface.c:2555 ../src/interface.c:2858
 msgid "A"
-msgstr ""
+msgstr "A"
 
 #: ../src/interface.c:2261 ../src/interface.c:2564 ../src/interface.c:2867
 msgid "Attack"
-msgstr ""
+msgstr "Attaque"
 
 #: ../src/interface.c:2281 ../src/interface.c:2584 ../src/interface.c:2887
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: ../src/interface.c:2290 ../src/interface.c:2593 ../src/interface.c:2896
 #: ../src/interface.c:3249
 msgid "Release"
-msgstr ""
+msgstr "Relâche"
 
 #: ../src/interface.c:2310 ../src/interface.c:2613 ../src/interface.c:2916
 msgid "T"
-msgstr ""
+msgstr "S"
 
 #: ../src/interface.c:2319 ../src/interface.c:2622 ../src/interface.c:2925
 msgid "Threshold"
-msgstr ""
+msgstr "Seuil"
 
 #: ../src/interface.c:2338 ../src/interface.c:2641 ../src/interface.c:2944
 msgid "r"
-msgstr ""
+msgstr "r"
 
 #: ../src/interface.c:2347 ../src/interface.c:2650 ../src/interface.c:2953
 msgid "Ratio"
-msgstr ""
+msgstr "Ratio"
 
 #: ../src/interface.c:2366 ../src/interface.c:2669 ../src/interface.c:2972
 msgid "K"
-msgstr ""
+msgstr "T"
 
 #: ../src/interface.c:2375 ../src/interface.c:2678 ../src/interface.c:2981
 msgid "Knee"
-msgstr ""
+msgstr "Transition"
 
 #: ../src/interface.c:2394 ../src/interface.c:2697 ../src/interface.c:3000
 msgid "M"
-msgstr ""
+msgstr "G"
 
 #: ../src/interface.c:2404 ../src/interface.c:2707 ../src/interface.c:3010
 msgid "0.0"
-msgstr ""
+msgstr "0.0"
 
 #: ../src/interface.c:2408 ../src/interface.c:2711 ../src/interface.c:3014
 msgid "Auto makeup"
-msgstr ""
+msgstr "Rattrapage automatique"
 
 #: ../src/interface.c:2414 ../src/interface.c:2717 ../src/interface.c:3020
 msgid "Makeup gain"
-msgstr ""
+msgstr "Rattrapage de Gain"
 
 #: ../src/interface.c:2430 ../src/interface.c:2733 ../src/interface.c:3036
 msgid "Level"
-msgstr ""
+msgstr "Niveau"
 
 #: ../src/interface.c:2447 ../src/interface.c:2750 ../src/interface.c:3053
 msgid "Gain"
-msgstr ""
+msgstr "Gain"
 
 #: ../src/interface.c:2458
 msgid "Low Band Stereo Width"
-msgstr ""
+msgstr "Largeur Stéréo Bande Graves"
 
 #: ../src/interface.c:2478 ../src/interface.c:2781 ../src/interface.c:3084
 msgid "Solo"
-msgstr ""
+msgstr "Solo"
 
 #: ../src/interface.c:2482
 msgid "Low Band Solo"
-msgstr ""
+msgstr "Solo Bande Graves"
 
 #: ../src/interface.c:2488
 msgid "Bypass low band compressor processing"
-msgstr ""
+msgstr "Désactive la bande graves du compresseur"
 
 #: ../src/interface.c:2490 ../src/interface.c:2793 ../src/interface.c:3096
 msgid "Bypass"
-msgstr ""
+msgstr "Désactiver"
 
 #: ../src/interface.c:2499
 msgid "Toggle the low band delay (set in Preferences)"
-msgstr ""
+msgstr "Active le retard de la bande graves (réglé dans les préférences)"
 
 #: ../src/interface.c:2501 ../src/interface.c:2804
 msgid "Delay"
-msgstr ""
+msgstr "Retard"
 
 #: ../src/interface.c:2506
 msgid "<b>Low : 00000 - 00000</b>"
-msgstr ""
+msgstr "<b>Graves : 00000 - 00000</b>"
 
 #: ../src/interface.c:2761
 msgid "Mid Band Stereo Width"
-msgstr ""
+msgstr "Largeur Stéréo Bande Médiums"
 
 #: ../src/interface.c:2785
 msgid "Mid Band Solo"
-msgstr ""
+msgstr "Solo Bande Médiums"
 
 #: ../src/interface.c:2791
 msgid "Bypass mid band compressor processing"
-msgstr ""
+msgstr "Désactive la bande médiums du compresseur"
 
 #: ../src/interface.c:2802
 msgid "Toggle the mid band delay (set in Preferences)"
-msgstr ""
+msgstr "Active le retard de la bande médiums (réglé dans les préférences)"
 
 #: ../src/interface.c:2809
 msgid "<b>Mid : 00000 - 00000</b>"
-msgstr ""
+msgstr "<b>Médiums : 00000 - 00000</b>"
 
 #: ../src/interface.c:3064
 msgid "High Band Stereo Width"
-msgstr ""
+msgstr "Largeur Stéréo Bande Aigües"
 
 #: ../src/interface.c:3088
 msgid "High Band Solo"
-msgstr ""
+msgstr "Solo Bande Aigües"
 
 #: ../src/interface.c:3094
 msgid "Bypass high band compressor processing"
-msgstr ""
+msgstr "Désactive la bande aigües du compresseur"
 
 #: ../src/interface.c:3101
 msgid "<b>High : 00000 - 00000</b>"
-msgstr ""
+msgstr "<b>Aigües : 00000 - 00000</b>"
 
 #: ../src/interface.c:3129
 msgid "Amount "
-msgstr ""
+msgstr "Quantité"
 
 #: ../src/interface.c:3140
 msgid "<b>Boost</b>"
-msgstr ""
+msgstr "<b>Boost</b>"
 
 #: ../src/interface.c:3167
 msgid "Input"
@@ -946,15 +981,15 @@ msgstr "Entrée"
 
 #: ../src/interface.c:3211
 msgid "----"
-msgstr ""
+msgstr "----"
 
 #: ../src/interface.c:3220
 msgid "1.000 ms"
-msgstr ""
+msgstr "1.000 ms"
 
 #: ../src/interface.c:3257
 msgid "Limit"
-msgstr "Limite"
+msgstr "Seuil"
 
 #: ../src/interface.c:3305
 msgid "Linear/log release"
@@ -962,11 +997,11 @@ msgstr ""
 
 #: ../src/interface.c:3320
 msgid "Bypass boost and limiter processing"
-msgstr ""
+msgstr "Désactive le boost et le limiteur"
 
 #: ../src/interface.c:3322
 msgid "Limiter bypass"
-msgstr "Ignorer le limiteur"
+msgstr "Désactiver limiteur"
 
 #: ../src/interface.c:3327
 msgid "<b>Fast-lookahead-limiter (Harris)</b>"
@@ -998,7 +1033,7 @@ msgstr ""
 
 #: ../src/interface.c:3425
 msgid "Output level"
-msgstr ""
+msgstr "Niveau de sortie"
 
 #: ../src/interface.c:3438
 msgid "RMS (outer) and Output (inner) levels"
@@ -1006,31 +1041,31 @@ msgstr ""
 
 #: ../src/interface.c:3489
 msgid "Bypass all processing"
-msgstr ""
+msgstr "Désactive tous les traitements"
 
 #: ../src/interface.c:3491
 msgid "Global bypass"
-msgstr ""
+msgstr "Tout désactiver"
 
 #: ../src/interface.c:3496
 msgid "<b>Output</b>"
-msgstr ""
+msgstr "<b>Sortie</b>"
 
 #: ../src/interface.c:4958
 msgid "Set"
-msgstr ""
+msgstr "Régler"
 
 #: ../src/interface.c:4962
 msgid "Assign settings to button"
-msgstr ""
+msgstr "Assigne les paramètres au bouton"
 
 #: ../src/interface.c:4969
 msgid "Clear"
-msgstr ""
+msgstr "Vider"
 
 #: ../src/interface.c:4973
 msgid "Clear settings from button"
-msgstr ""
+msgstr "Vide les paramètres du bouton"
 
 #: ../src/interface.c:4980
 msgid "Name"
@@ -1038,7 +1073,7 @@ msgstr "Nom"
 
 #: ../src/interface.c:4984
 msgid "Set scene name"
-msgstr "Définir le nom de la scène"
+msgstr "Nomme la scène"
 
 #: ../src/interface.c:4997 ../src/interface.c:6353
 msgid "Help"
@@ -1054,59 +1089,59 @@ msgstr "Préférences"
 
 #: ../src/interface.c:5165
 msgid "Mi_nimum gain (db):"
-msgstr ""
+msgstr "Gain mi_nimal (en dB):"
 
 #: ../src/interface.c:5175
 msgid "Set the minimum gain level for the EQs"
-msgstr ""
+msgstr "Règle le niveau de gain minimal des égaliseurs"
 
 #: ../src/interface.c:5182
 msgid "_Maximum gain (db):"
-msgstr "Gain _Maximum (db)"
+msgstr "Gain _maximal (en dB):"
 
 #: ../src/interface.c:5192
 msgid "Set the maximum gain level for the EQs"
-msgstr ""
+msgstr "Règle le niveau de gain maximal des égaliseurs"
 
 #: ../src/interface.c:5194
 msgid "<i><b>Graphic EQ</b></i>"
-msgstr ""
+msgstr "<i><b>Egaliseur graphique</b></i>"
 
 #: ../src/interface.c:5222
 msgid "_Crossfade time (sec):"
-msgstr ""
+msgstr "Temps fondu en_chaîné (en s):"
 
 #: ../src/interface.c:5232
 msgid "Change the crossfade time for scene changes"
-msgstr ""
+msgstr "Change le temps de fondu enchaîné pour les changements de scène"
 
 #: ../src/interface.c:5235
 msgid "<i><b>Crossfade</b></i>"
-msgstr ""
+msgstr "<i><b>Fondu enchaîné</b></i>"
 
 #: ../src/interface.c:5258
 msgid "Input/Output meters (dBFS):"
-msgstr ""
+msgstr "Voyants Entrée/Sortie (dBFS):"
 
 #: ../src/interface.c:5270
 msgid "<i><b>Warning Level</b></i>"
-msgstr ""
+msgstr "<i><b>Niveau d'Alerte</b></i>"
 
 #: ../src/interface.c:5296
 msgid "Select HDEQ spectrum source"
-msgstr ""
+msgstr "Selectionner spectre source égaliseur HD"
 
 #: ../src/interface.c:5302
 msgid "Pre EQ"
-msgstr ""
+msgstr "Pré-égaliseur"
 
 #: ../src/interface.c:5303
 msgid "Post EQ"
-msgstr ""
+msgstr "Post-égaliseur"
 
 #: ../src/interface.c:5304
 msgid "Post Compressor"
-msgstr ""
+msgstr "Post-compresseur"
 
 #: ../src/interface.c:5305
 msgid "Output"
@@ -1114,11 +1149,11 @@ msgstr "Sortie"
 
 #: ../src/interface.c:5312
 msgid "_Update frequency (Hz):"
-msgstr ""
+msgstr "Fréquence de mise à jo_Ur (Hz):"
 
 #: ../src/interface.c:5322
 msgid "Change the spectrum update frequency"
-msgstr ""
+msgstr "Change la fréquence de mise à jour du spectre"
 
 #: ../src/interface.c:5324
 msgid "<i><b>Spectrum</b></i>"
@@ -1126,23 +1161,25 @@ msgstr "<i><b>Spectre</b></i>"
 
 #: ../src/interface.c:5352
 msgid "_FFT"
-msgstr ""
+msgstr "_FFT"
 
 #: ../src/interface.c:5356
 msgid "FFT is more CPU intensive but is the best choice"
-msgstr ""
+msgstr "FFT (Transformée de Fourier Rapide) est plus consommateur de ressources CPU mais est le meilleur choix"
 
 #: ../src/interface.c:5360
 msgid "II_R"
-msgstr ""
+msgstr "II_R"
 
 #: ../src/interface.c:5364
 msgid "IIR is less CPU intensive but is not recommended for serious work"
-msgstr "L'IIR consomme moins de ressources CPU mais n'est pas recommandé pour un travail sérieux"
+msgstr ""
+"IIR (Réponse Impulsionnelle Infinie) est moins consommateur de ressources CPU mais n'est pas recommandé pour "
+"le travail exigeant"
 
 #: ../src/interface.c:5368
 msgid "<i><b>Crossover Type</b></i>"
-msgstr "<i><b>Type de `Crossover'</b></i>"
+msgstr "<i><b>Type de filtre séparateur</b></i>"
 
 #: ../src/interface.c:5386
 msgid "Time (ms):"
@@ -1154,63 +1191,64 @@ msgstr ""
 
 #: ../src/interface.c:5410
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../src/interface.c:5418
+#, fuzzy
 msgid "<i><b>RMS Sample Size</b></i>"
-msgstr ""
+msgstr "<i><b>Spectre</b></i>"
 
 #: ../src/interface.c:5442
 msgid "Low band"
-msgstr "Bande basse"
+msgstr "Bande Graves"
 
 #: ../src/interface.c:5450
 msgid "Mid band"
-msgstr "Bande medium"
+msgstr "Bande Médiums"
 
 #: ../src/interface.c:5476
 msgid "<b><i>Band Delays</i></b>"
-msgstr ""
+msgstr "<b><i>Retards des bandes</i></b>"
 
 #: ../src/interface.c:5502
 msgid "Select colors for main JAMin GUI components"
-msgstr "Sélectionner les couleurs des principaux composants de JAMin"
+msgstr "Règle les couleurs des composants de l'interface"
 
 #: ../src/interface.c:5508
 msgid "Low Band Compressor"
-msgstr "Bande basse du compresseur"
+msgstr "Compresseur bande graves"
 
 #: ../src/interface.c:5509
 msgid "Mid Band Compressor"
-msgstr "bande medium du compresseur"
+msgstr "Compresseur bande médiums"
 
 #: ../src/interface.c:5510
 msgid "High Band Compressor"
-msgstr "Bande haute du compresseur"
+msgstr "Compresseur bande aigües"
 
 #: ../src/interface.c:5511
 msgid "Ganged Controls"
-msgstr ""
+msgstr "Contrôleurs liés"
 
 #: ../src/interface.c:5512
 msgid "Parametric Handles"
-msgstr ""
+msgstr "Poignées paramétriques"
 
 #: ../src/interface.c:5513
 msgid "HDEQ Curve"
-msgstr ""
+msgstr "Courbe égaliseur HD"
 
 #: ../src/interface.c:5514
 msgid "HDEQ Spectrum"
-msgstr ""
+msgstr "Spectre égaliseur HD"
 
 #: ../src/interface.c:5515
 msgid "HDEQ Grid"
-msgstr ""
+msgstr "Grille égaliseur HD"
 
 #: ../src/interface.c:5516
 msgid "HDEQ Background"
-msgstr ""
+msgstr "Arrière plan égaliseur HD"
 
 #: ../src/interface.c:5517
 msgid "Text"
@@ -1218,23 +1256,23 @@ msgstr "Texte"
 
 #: ../src/interface.c:5518
 msgid "Meter Normal"
-msgstr "Compteur normal"
+msgstr "Voyant normal"
 
 #: ../src/interface.c:5519
 msgid "Meter Warning"
-msgstr "Alerte compteur"
+msgstr "Alerte voyant"
 
 #: ../src/interface.c:5520
 msgid "Meter Over"
-msgstr ""
+msgstr "Dépassement voyant"
 
 #: ../src/interface.c:5521
 msgid "Meter Peak"
-msgstr ""
+msgstr "Crête voyant"
 
 #: ../src/interface.c:5522
 msgid "Reset All Colors To Defaults"
-msgstr ""
+msgstr "Réinitialiser Toutes les Couleurs"
 
 #: ../src/interface.c:5524
 msgid "<i><b>Colors</b></i>"
@@ -1242,11 +1280,11 @@ msgstr "<i><b>Couleurs</b></i>"
 
 #: ../src/interface.c:5546
 msgid "Select the type of limiter"
-msgstr "Sélectionner le type de limiteur"
+msgstr ""
 
 #: ../src/interface.c:5552
 msgid "Steve Harris' fast_lookahead_limiter"
-msgstr "Le fast_lookahead_limiter de Steve Harris"
+msgstr ""
 
 #: ../src/interface.c:5553
 msgid "Sampo Savolainen's foo_limiter"
@@ -1258,35 +1296,35 @@ msgstr "<b>Limiteur</b>"
 
 #: ../src/interface.c:5578
 msgid "Output meter peak"
-msgstr ""
+msgstr "Crête voyant"
 
 #: ../src/interface.c:5585
 msgid "Output meter level"
-msgstr "Niveau sortie compteur"
+msgstr "Niveau voyant"
 
 #: ../src/interface.c:5592
 msgid "RMS meter peak"
-msgstr ""
+msgstr "Crête voyant RMS"
 
 #: ../src/interface.c:5599
 msgid "RMS meter level"
-msgstr "Niveau sortie compteur RMS"
+msgstr "Niveau voyant RMS"
 
 #: ../src/interface.c:5606
 msgid "<b><i>Output Meter Numeric Display</i></b>"
-msgstr ""
+msgstr "<b><i>Affichage numérique voyant sortie</i></b>"
 
 #: ../src/interface.c:5628
 msgid "Close the Preferences window"
-msgstr "Fermer la fenêtre des préférences"
+msgstr "Ferme la fenêtre de Préférences"
 
 #: ../src/interface.c:5834
 msgid "Select Color"
-msgstr "Sélectionner une couleur"
+msgstr "Régler la couleur"
 
 #: ../src/interface.c:5883
 msgid "Scene X Name"
-msgstr ""
+msgstr "Nom Scène X"
 
 #: ../src/interface.c:5961
 msgid "filter tuning [DEBUG]"
@@ -1326,7 +1364,7 @@ msgstr ""
 
 #: ../src/interface.c:6164
 msgid "About JAMin"
-msgstr "A propos de JAMin"
+msgstr "À propos de JAMin"
 
 #: ../src/interface.c:6204
 msgid ""
@@ -1401,15 +1439,15 @@ msgstr ""
 
 #: ../src/interface.c:6272
 msgid "_Online"
-msgstr ""
+msgstr "_En ligne"
 
 #: ../src/interface.c:6335
 msgid "Reset HDEQ curve"
-msgstr ""
+msgstr "Réinitialiser courbe égaliseur HD"
 
 #: ../src/interface.c:6339
 msgid "Reset the HDEQ curve to zero"
-msgstr ""
+msgstr "Mettre la courbe égaliseur HD à zéro"
 
 #: ../src/interface.c:6341
 msgid "Release parametric EQ controls"
@@ -1421,30 +1459,30 @@ msgstr ""
 
 #: ../src/interface.c:6357
 msgid "Display HDEQ help page"
-msgstr ""
+msgstr "Afficher aide égaliseur HD"
 
 #: ../src/interface.c:6370
 msgid "Cancel"
-msgstr ""
+msgstr "Abandonner"
 
 #: ../src/interface.c:6374
 msgid "Close the popup menu"
-msgstr ""
+msgstr "Fermer le menu popup"
 
 #: ../src/intrim.c:201
 #, c-format
 msgid "left %.0fdB"
-msgstr ""
+msgstr "gauche %.0fdB"
 
 #: ../src/intrim.c:203
 #, c-format
 msgid "right %.0fdB"
-msgstr ""
+msgstr "droite %.0fdB"
 
 #: ../src/intrim.c:205
 #, c-format
 msgid "centre"
-msgstr ""
+msgstr "centre"
 
 #: ../src/io-menu.c:88
 #, c-format
@@ -1455,38 +1493,38 @@ msgstr ""
 #: ../src/io-menu.c:231
 #, c-format
 msgid "connecting port %s to %s\n"
-msgstr ""
+msgstr "connexion port %s à %s\n"
 
 #: ../src/io-menu.c:114
 #, c-format
 msgid "unable to connect from %s\n"
-msgstr ""
+msgstr "connexion impossible depuis %s\n"
 
 #: ../src/io-menu.c:121
 #, c-format
 msgid "unable to connect to %s\n"
-msgstr ""
+msgstr "connexion impossible à %s\n"
 
 #: ../src/io-menu.c:137 ../src/io-menu.c:144 ../src/io-menu.c:175
 #: ../src/io-menu.c:221
 #, c-format
 msgid "disconnecting port %s from %s\n"
-msgstr ""
+msgstr "déconnexion port %s à %s\n"
 
 #: ../src/io-menu.c:140 ../src/io-menu.c:147
 #, c-format
 msgid "unable to disconnect port %s\n"
-msgstr ""
+msgstr "déconnexion du port %s impossible\n"
 
 #: ../src/io-menu.c:179 ../src/io-menu.c:225
 #, c-format
 msgid "unable to disconnect %s from %s\n"
-msgstr ""
+msgstr "déconnexion de %s à %s impossible\n"
 
 #: ../src/io-menu.c:189 ../src/io-menu.c:235
 #, c-format
 msgid "unable to connect %s to %s\n"
-msgstr ""
+msgstr "connexion de %s à %s impossible\n"
 
 #: ../src/io-menu.c:367
 msgid "Groups"
@@ -1525,17 +1563,17 @@ msgstr ""
 #: ../src/io.c:736
 #, c-format
 msgid "%s: JACK server started\n"
-msgstr ""
+msgstr "%s: le serveur JACK a démarré\n"
 
 #: ../src/io.c:740
 #, c-format
 msgid "%s: unique name `%s' assigned\n"
-msgstr ""
+msgstr "%s: nom unique `%s' attribué\n"
 
 #: ../src/io.c:747
 #, c-format
 msgid "%s: Cannot contact JACK server, is it running?\n"
-msgstr "%s: Impossible de contacter le serveur JACK, est-il bien lancé?\n"
+msgstr "%s: Impossible de contacter le serveur JACK. Est-il lancé?\n"
 
 #: ../src/io.c:866
 #, c-format
@@ -1571,9 +1609,6 @@ msgid ""
 "\tYou must run as root or use JACK capabilities.\n"
 "\tContinuing operation, but with -t option.\n"
 msgstr ""
-"%s: n'est pas autorisé à créer un thread DSP en Temps Réel.\n"
-"\tVous devez faire tourner JACK en tant que root ou utiliser les `capacités' de JACK.\n"
-"\tPoursuite des opérations, mais avec l'option -t.\n"
 
 #: ../src/io.c:1125
 #, c-format
@@ -1588,23 +1623,23 @@ msgstr "%s: Impossible d'activer le client JACK."
 #: ../src/io.c:1152
 #, c-format
 msgid "No physical playback ports found"
-msgstr "Port physique de playback introuvable"
+msgstr "Aucune port physique de playback trouvé"
 
 #: ../src/io.c:1164
 #, c-format
 msgid "Cannot connect input port \"%s\"\n"
-msgstr "Connexion port d'entrée \"%s\" impossible\n"
+msgstr "Impossible de se connecter au port d'entrée \"%s\"\n"
 
 #: ../src/io.c:1174
 #, c-format
 msgid "Cannot connect output port \"%s\"\n"
-msgstr "Connexion port de sortie \"%s\" impossible\n"
+msgstr "Impossible de se connecter au port de sortie \"%s\"\n"
 
 #: ../src/main.c:90
 #, c-format
 msgid ""
 "(C) 2003-2005 J. Depner, S. Harris, J. O'Quin, R. Parker and P. Shirkey\n"
-msgstr ""
+msgstr "(C) 2003-2005 J. Depner, S. Harris, J. O'Quin, R. Parker et P. Shirkey\n"
 
 #: ../src/main.c:92
 #, c-format
@@ -1623,11 +1658,11 @@ msgstr "Arrêté"
 
 #: ../src/status-ui.c:54
 msgid "Starting"
-msgstr "Démarrer"
+msgstr "Démarre"
 
 #: ../src/status-ui.c:58
 msgid "Rolling"
-msgstr ""
+msgstr "Défile"
 
 #: ../src/status-ui.c:62
 msgid "[unknown]"
@@ -1635,12 +1670,14 @@ msgstr "[inconnu]"
 
 #: ../src/status-ui.c:67
 msgid "  |  RT"
-msgstr ""
+msgstr "  |  TR"
 
 #: ../src/status-ui.c:72
 #, c-format
 msgid "%s  |  %4.1f%% CPU  |  %d xruns  |  %<PRIu32> frames  |  %<PRIu32> Hz%s"
 msgstr ""
+"%s  |  %4.1f%% CPU  |  %d désynchronisations (xruns)  |  %<PRIu32> "
+"échantillons  |  %<PRIu32> Hz%s"
 
 #: ../src/support.c:90 ../src/support.c:114
 #, c-format
