@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: state.c,v 1.72 2008/02/03 20:43:20 esaracco Exp $
+ *  $Id: state.c,v 1.73 2008/02/04 14:23:34 esaracco Exp $
  */
 
 #include <stdio.h>
@@ -39,6 +39,7 @@
 #include "hdeq.h"
 #include "compressor-ui.h"
 #include "help.h"
+#include "preferences.h"
 
 /* A scene value to indicate that loading failed */
 #define LOAD_ERROR -2
