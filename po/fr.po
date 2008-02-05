@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: JAMin 0.97.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-03 20:57+0100\n"
-"PO-Revision-Date: 2008-02-03 21:25+0100\n"
+"PO-Revision-Date: 2008-02-05 16:00+0100\n"
 "Last-Translator: Emmanuel Saracco <esaracco@free.fr>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1121,7 +1121,7 @@ msgstr "<i><b>Fondu enchaîné</b></i>"
 
 #: ../src/interface.c:5258
 msgid "Input/Output meters (dBFS):"
-msgstr "Voyants Entrée/Sortie (dBFS):"
+msgstr "Vu-mètres Entrée/Sortie (dBFS):"
 
 #: ../src/interface.c:5270
 msgid "<i><b>Warning Level</b></i>"
@@ -1256,19 +1256,19 @@ msgstr "Texte"
 
 #: ../src/interface.c:5518
 msgid "Meter Normal"
-msgstr "Voyant normal"
+msgstr "Vu-mètre normal"
 
 #: ../src/interface.c:5519
 msgid "Meter Warning"
-msgstr "Alerte voyant"
+msgstr "Alerte vu-mètre"
 
 #: ../src/interface.c:5520
 msgid "Meter Over"
-msgstr "Dépassement voyant"
+msgstr "Dépassement vu-mètre"
 
 #: ../src/interface.c:5521
 msgid "Meter Peak"
-msgstr "Crête voyant"
+msgstr "Crête vu-mètre"
 
 #: ../src/interface.c:5522
 msgid "Reset All Colors To Defaults"
@@ -1296,23 +1296,23 @@ msgstr "<b>Limiteur</b>"
 
 #: ../src/interface.c:5578
 msgid "Output meter peak"
-msgstr "Crête voyant"
+msgstr "Crête vu-mètre"
 
 #: ../src/interface.c:5585
 msgid "Output meter level"
-msgstr "Niveau voyant"
+msgstr "Niveau vu-mètre"
 
 #: ../src/interface.c:5592
 msgid "RMS meter peak"
-msgstr "Crête voyant RMS"
+msgstr "Crête vu-mètre RMS"
 
 #: ../src/interface.c:5599
 msgid "RMS meter level"
-msgstr "Niveau voyant RMS"
+msgstr "Niveau vu-mètre RMS"
 
 #: ../src/interface.c:5606
 msgid "<b><i>Output Meter Numeric Display</i></b>"
-msgstr "<b><i>Affichage numérique voyant sortie</i></b>"
+msgstr "<b><i>Affichage numérique vu-mètre sortie</i></b>"
 
 #: ../src/interface.c:5628
 msgid "Close the Preferences window"
