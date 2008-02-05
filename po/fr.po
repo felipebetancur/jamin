@@ -30,11 +30,11 @@ msgstr "Fichier de session JAMin"
 
 #: ../src/callbacks.c:303
 msgid "Pre EQ spectrum         "
-msgstr "Spectre pré-égaliseur   "
+msgstr "Spectre pré-égalisation "
 
 #: ../src/callbacks.c:306
 msgid "Post EQ spectrum        "
-msgstr "Spectre post-égaliseur  "
+msgstr "Spectre post-égalisation "
 
 #: ../src/callbacks.c:309
 msgid "Post compressor spectrum"
@@ -1133,11 +1133,11 @@ msgstr "Selectionner spectre source égaliseur HD"
 
 #: ../src/interface.c:5302
 msgid "Pre EQ"
-msgstr "Pré-égaliseur"
+msgstr "Pré-égalisation"
 
 #: ../src/interface.c:5303
 msgid "Post EQ"
-msgstr "Post-égaliseur"
+msgstr "Post-égalisation"
 
 #: ../src/interface.c:5304
 msgid "Post Compressor"
