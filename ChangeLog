@@ -1,9 +1,15 @@
+2008-02-08  Emmanuel Saracco  <esaracco@free.fr>
+
+	* Take in account libdir defined at compile time
+	  for LADSPA plugins search path.
+
 2008-02-04  Emmanuel Saracco  <esaracco@free.fr>
 
 	* Avoid some GCC warnings about cast.
 
 2008-02-03  Emmanuel Saracco  <esaracco@free.fr>
 
+	* Version: 0.97.13
 	* Install libs under lib64 directory on 64bits architectures.
 
 2008-02-02  Emmanuel Saracco  <esaracco@free.fr>

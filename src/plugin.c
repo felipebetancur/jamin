@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: plugin.c,v 1.3 2003/11/19 15:28:17 theno23 Exp $
+ *  $Id: plugin.c,v 1.4 2008/02/08 13:20:56 esaracco Exp $
  */
 
 #include <stdlib.h>
@@ -29,7 +29,7 @@ void plugin_init()
 	if (getenv("LADSPA_PATH")) {
 		plugin_path = getenv("LADSPA_PATH");
 	} else {
-		plugin_path = "/usr/local/lib/ladspa:/usr/lib/ladspa";
+		plugin_path = "/usr/local/lib/ladspa:" PACKAGE_LIB_DIR "/ladspa";
 	}
 }
 
