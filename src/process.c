@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.77 2008/11/30 14:42:14 theno23 Exp $
+ *  $Id: process.c,v 1.78 2008/11/30 14:50:54 theno23 Exp $
  */
 
 #include <math.h>
@@ -454,12 +454,7 @@ int process_signal(jack_nframes_t nframes,
 		   jack_default_audio_sample_t *out[])
 {
     unsigned int pos, port, band;
-#if 0
-    /* if this is enabled we get some harmonic distortion in the output, it's
-     * not critical, so lets disable it */
     const unsigned int latency = BINS - dsp_block_size;
-#endif
-    const unsigned int latency = 0;
     static unsigned int in_ptr = 0, dpos[2] = {0, 0};
     static unsigned int n_calc_pt = BINS - (BINS / OVER_SAMP);
 
@@ -497,7 +492,7 @@ int process_signal(jack_nframes_t nframes,
     }
 
     for (pos = 0; pos < nframes; pos++) {
-	const unsigned int op = (in_ptr - latency) & BUF_MASK;
+	const unsigned int op = (in_ptr - (global_bypass ? latency : 0)) & BUF_MASK;
 	float amp;
 
 	for (port = 0; port < nchannels; port++) {
