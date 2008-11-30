@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.76 2007/07/01 15:33:18 jdepner Exp $
+ *  $Id: process.c,v 1.77 2008/11/30 14:42:14 theno23 Exp $
  */
 
 #include <math.h>
@@ -454,7 +454,12 @@ int process_signal(jack_nframes_t nframes,
 		   jack_default_audio_sample_t *out[])
 {
     unsigned int pos, port, band;
+#if 0
+    /* if this is enabled we get some harmonic distortion in the output, it's
+     * not critical, so lets disable it */
     const unsigned int latency = BINS - dsp_block_size;
+#endif
+    const unsigned int latency = 0;
     static unsigned int in_ptr = 0, dpos[2] = {0, 0};
     static unsigned int n_calc_pt = BINS - (BINS / OVER_SAMP);
 
@@ -637,7 +642,6 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	const float a = ws_boost_a * 0.3;
 	const float gain_corr = 1.0 / LERP(ws_boost_wet, 1.0,
 				a > M_PI*0.5 ? 1.0 : sinf(1.0 * a));
-
 	for (pos = 0; pos < nframes; pos++) {
 	    const float x = out[port][pos] * out_gain;
 	    out[port][pos] = LERP(ws_boost_wet, x, sinf(x * a)) * gain_corr;
