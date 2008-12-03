@@ -36,6 +36,7 @@ jamin_SOURCES = \
 	jackstatus.h \
 	limiter.h \
 	limiter-ui.c limiter-ui.h \
+	presets-ui.c presets-ui.h \
 	main.c main.h \
 	plugin.c plugin.h \
 	process.c process.h \

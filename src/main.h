@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.h,v 1.7 2007/05/13 18:23:41 jdepner Exp $
+ *  $Id: main.h,v 1.8 2008/12/03 03:22:03 kotau Exp $
  */
 
 #ifndef MAIN_H
@@ -35,7 +35,7 @@
 #define JAMIN_EXAMPLES_DIR JAMIN_DATA_DIR "/examples/"
 #define GTK_VERSION_GE(major, minor) ((GTK_MAJOR_VERSION>major)||(GTK_MAJOR_VERSION==major)&&(GTK_MINOR_VERSION>=minor))
 
-extern GtkWidget *main_window;		/* Main GTK window */
+extern GtkWidget *main_window, *presets_window;		/* Main GTK window */
 extern char *jamin_dir;			/* JAMin config directory path */
 extern char *default_session;		/* default session file */
 

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.178 2008/01/21 20:58:34 jdepner Exp $
+ *  $Id: callbacks.c,v 1.179 2008/12/03 03:22:03 kotau Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -44,6 +44,7 @@
 #include "gtkmeterscale.h"
 #include "state.h"
 #include "db.h"
+#include "presets-ui.h"
 #include "status-ui.h"
 #include "limiter-ui.h"
 #include "io-menu.h"
@@ -325,21 +326,6 @@ on_lim_out_trim_scale_value_changed        (GtkRange        *range,
 		    gtk_range_get_adjustment(GTK_RANGE(range))->value);
 }
 
-
-void
-on_in_trim_scale_value_changed         (GtkRange        *range,
-                                        gpointer         user_data)
-{
-    s_set_value_ui(S_IN_GAIN, gtk_range_get_adjustment(range)->value);
-}
-
-
-void
-on_pan_scale_value_changed             (GtkRange        *range,
-                                        gpointer         user_data)
-{
-    s_set_value_ui(S_IN_PAN, gtk_range_get_adjustment(range)->value);
-}
 
 
 gboolean
@@ -1834,14 +1820,6 @@ on_jack_ports_activate                 (GtkMenuItem     *menuitem,
 }
 
 
-void
-on_out_trim_scale_value_changed        (GtkRange        *range,
-                                        gpointer         user_data)
-{
-    s_set_value_ui(S_OUT_GAIN, gtk_range_get_adjustment(range)->value);
-}
-
-
 gboolean
 scene_warning                          (GtkWidget       *widget,
                                         GdkEventButton  *event,
@@ -3283,3 +3261,102 @@ on_pref_dialog_delete_event            (GtkWidget       *widget,
 
   return TRUE;
 }
+
+gboolean
+on_window2_delete_event                (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data)
+{
+
+  return FALSE;
+}
+
+
+gboolean
+on_window3_delete_event                (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data)
+{
+    clean_quit ();
+	
+  return FALSE;
+}
+
+
+
+gboolean
+on_eButton1_button_press_event         (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+	
+	if(global_gui  == 1)
+		global_gui = 0;
+	else 
+		global_gui = 1;
+	
+//	g_printerr("cllbk: clicked");
+	presets_ui_update ();
+	
+  return FALSE;
+}
+
+
+void
+on_presets_in_trim_scale_value_changed (GtkRange        *range,
+                                        gpointer         user_data)
+{
+	s_set_value_ui(S_IN_GAIN, gtk_range_get_adjustment(range)->value);
+	gtk_range_set_value (GTK_RANGE(lookup_widget(main_window, "in_trim_scale")), gtk_range_get_adjustment(range)->value);
+
+}
+
+
+void
+on_presets_pan_scale_value_changed     (GtkRange        *range,
+                                        gpointer         user_data)
+{
+	s_set_value_ui(S_IN_PAN, gtk_range_get_adjustment(range)->value);
+	gtk_range_set_value (GTK_RANGE(lookup_widget(main_window, "pan_scale")), gtk_range_get_adjustment(range)->value);
+}
+
+
+void
+on_presets_out_trim_scale_value_changed
+                                        (GtkRange        *range,
+                                        gpointer         user_data)
+{
+	
+    s_set_value_ui(S_OUT_GAIN, gtk_range_get_adjustment(range)->value);
+	gtk_range_set_value (GTK_RANGE(lookup_widget(main_window, "out_trim_scale")), gtk_range_get_adjustment(range)->value);
+}
+
+
+void
+on_in_trim_scale_value_changed         (GtkRange        *range,
+                                        gpointer         user_data)
+{
+    s_set_value_ui(S_IN_GAIN, gtk_range_get_adjustment(range)->value);
+	gtk_range_set_value (GTK_RANGE(lookup_widget(presets_window, "presets_in_trim_scale")), gtk_range_get_adjustment(range)->value);
+
+}
+
+
+void
+on_pan_scale_value_changed             (GtkRange        *range,
+                                        gpointer         user_data)
+{
+    s_set_value_ui(S_IN_PAN, gtk_range_get_adjustment(range)->value);
+	gtk_range_set_value (GTK_RANGE(lookup_widget(presets_window, "presets_pan_scale")), gtk_range_get_adjustment(range)->value);
+
+}
+
+void
+on_out_trim_scale_value_changed        (GtkRange        *range,
+                                        gpointer         user_data)
+{
+    s_set_value_ui(S_OUT_GAIN, gtk_range_get_adjustment(range)->value);
+	gtk_range_set_value (GTK_RANGE(lookup_widget(presets_window, "presets_out_trim_scale")), gtk_range_get_adjustment(range)->value);
+}
+
+

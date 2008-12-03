@@ -1323,3 +1323,57 @@ gboolean
 on_pref_dialog_delete_event            (GtkWidget       *widget,
                                         GdkEvent        *event,
                                         gpointer         user_data);
+
+gboolean
+on_window2_delete_event                (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data);
+
+gboolean
+on_show_help                           (GtkWidget       *widget,
+                                        GtkWidgetHelpType  help_type,
+                                        gpointer         user_data);
+
+void
+on_presets_in_trim_scale_value_changed (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_presets_pan_scale_value_changed     (GtkRange        *range,
+                                        gpointer         user_data);
+
+gboolean
+on_eButton1_button_press_event         (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+void
+on_presets_out_trim_scale_value_changed
+                                        (GtkRange        *range,
+                                        gpointer         user_data);
+
+gboolean
+on_window3_delete_event                (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data);
+
+
+gboolean
+on_eButton1_button_press_event         (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+void
+on_presets_in_trim_scale_value_changed (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_presets_pan_scale_value_changed     (GtkRange        *range,
+                                        gpointer         user_data);
+
+void
+on_presets_out_trim_scale_value_changed
+                                        (GtkRange        *range,
+                                        gpointer         user_data);
+
+

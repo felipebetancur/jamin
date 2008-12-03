@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.67 2007/06/29 17:17:59 jdepner Exp $
+ *  $Id: main.c,v 1.68 2008/12/03 03:22:03 kotau Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -57,12 +57,13 @@
 
 
 
-GtkWidget *main_window;
+GtkWidget *main_window, *presets_window;
 char *jamin_dir = NULL;
 char *default_session = NULL;
 char *resource_file = NULL;		/* GTK resource file */
 
 char user_default_session[PATH_MAX];	/* user's default session name */
+extern int show_gui;					/* Which gui to Display first */
 
 static gboolean update_meters(gpointer data);
 static void set_configuration_files(void);
@@ -104,7 +105,7 @@ int main(int argc, char *argv[])
     add_pixmap_directory("pixmaps");
     preferences_init();
     main_window = create_window1();
-
+	presets_window = create_window3();
 
 #ifdef FILTER_TUNING
     GtkWidget *ft = create_filter_tuning();
@@ -115,6 +116,7 @@ int main(int argc, char *argv[])
 
     /* bind the graphic equaliser sliders to adjustments */
 
+	gtk_widget_show(presets_window);
     bind_geq();
     bind_hdeq();
     gtk_widget_show(main_window);
@@ -125,6 +127,15 @@ int main(int argc, char *argv[])
     bind_spectrum();
     bind_stereo();
     bind_scenes();
+	
+	
+	/* Show the correct window */
+	
+	if(show_gui)
+		gtk_widget_hide(main_window);
+	else
+		gtk_widget_hide(presets_window);
+	
 
     s_clear_history();
 

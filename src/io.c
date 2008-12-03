@@ -91,7 +91,7 @@
 #include "help.h"
 #include "support.h"
 
-char *jamin_options = "dFf:j:n:hprTtvVl:s:c:i";   /* valid JAMin options */
+char *jamin_options = "dFf:j:n:hprTtvVl:s:c:ig";   /* valid JAMin options */
 char *pname;				      /* `basename $0` */
 int dummy_mode = 0;			      /* -d option */
 int all_errors_fatal = 0;		      /* -F option */
@@ -101,8 +101,10 @@ int trace_option = 0;			      /* -T option */
 int thread_option = 1;			      /* -t option */
 int debug_level = DBG_OFF;		      /* -v option */
 char session_file[PATH_MAX];		      /* -f option */
+int show_gui = 0;					/* -g option */
 int limiter_plugin_type;                      /* -l option - 0=Steve's fast, 1=Sampo's foo */
 static char *errstr;
+
 
 /*  Synchronization within the DSP engine is managed as a finite state
  *  machine.  These state transitions are the key to understanding
@@ -823,6 +825,9 @@ void io_init(int argc, char *argv[])
 	case 'i':			/* Use IIR type crossover */
             process_set_crossover_type (IIR);
 	    break;
+	case 'g':			/* Choose which interface to display */
+		show_gui = 1;
+		break;			
 	case 'l':			/* Select limiter, 0=Steve's fast, 1=Sampo's foo */
 	    sscanf (optarg, "%d", &limiter_plugin_type);
             if (limiter_plugin_type < 0 || limiter_plugin_type > 1) limiter_plugin_type = 0;
@@ -882,6 +887,7 @@ void io_init(int argc, char *argv[])
                 "\t-F\ttreat all errors as fatal\n"
                 "\t-T\tprint trace buffer\n"
                 "\t-t\tdon't start separate DSP thread\n"
+			    "\t-g\tshow simple gui at startup\n"
                 "\n"),
 		pname, jamin_options);
 	exit(1);
