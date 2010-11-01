@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.79 2008/12/03 03:22:03 kotau Exp $
+ *  $Id: process.c,v 1.80 2010/11/01 09:25:29 kotau Exp $
  */
 
 #include <math.h>
@@ -156,6 +156,8 @@ float ft_rez_hp_b_val = 1.2;
 void run_eq(unsigned int port, unsigned int in_pos);
 void run_eq_iir(unsigned int port, unsigned int in_pos);
 void run_width(int xo_band, float *left, float *right, int nframes);
+static void k_window_init(int alpha, float *window, int n, int iter);
+static void kbd_window_init(int alpha, float *window, int n, int iter);
 
 void process_init(float fs)
 {
@@ -214,15 +216,19 @@ void process_init(float fs)
     plan_rc = fftwf_plan_r2r_1d(BINS, real, comp, FFTW_R2HC, FFTW_MEASURE);
     plan_cr = fftwf_plan_r2r_1d(BINS, comp_tmp, real, FFTW_HC2R, FFTW_MEASURE);
 
-    /* Calculate root raised cosine window */
-    for (i = 0; i < BINS; i++) {
-       window[i] = -0.5f * cosf(2.0f * M_PI * (float) i /
-                                (float) BINS) + 0.5f;
+
+	/*	Use Kaiser-Bessel window for best results - Code taken from mplayer */
+		kbd_window_init(5.0, &window, BINS, 50);
+		
+    /* Calculate window*/
+//   for (i = 0; i < BINS; i++) {
+
+//     window[i] = -0.5f * cosf(2.0f * M_PI * (float) i / (float) BINS) + 0.5f; 
 /* root raised cosine window - aparently sounds worse ...
 	window[i] = sqrtf(0.5f + -0.5 * cosf(2.0f * M_PI * (float) i /
 			  (float) BINS));
 */
-    }
+//   }
 
     plugin_init();
     comp_plugin = plugin_load("sc4_1882.so");
@@ -292,6 +298,51 @@ void process_init(float fs)
 
     /* Clear the crossover filters state */
     memset(xo_filt, 0, sizeof(xo_filt));
+}
+
+
+/**
+ * Generate a Kaiser Window.
+ */
+static void k_window_init(int alpha, float *window, int n, int iter)
+{
+    int j, k;
+    float a, x;
+    a = alpha * M_PI / n;
+    a = a*a;
+    for(k=0; k<n; k++) {
+        x = k * (n - k) * a;
+        window[k] = 1.0;
+        for(j=iter; j>0; j--) {
+            window[k] = (window[k] * x / (j*j)) + 1.0;
+        }
+    }
+}
+
+/**
+ * Generate a Kaiser-Bessel Derived Window.
+ * @param alpha  determines window shape
+ * @param window array to fill with window values
+ * @param n      length of the window
+ * @param iter   number of iterations to use in BesselI0
+ */
+static void
+kbd_window_init(int alpha, float *window, int n, int iter)
+{
+    int k, n2;
+    float *kwindow;
+
+    n2 = n >> 1;
+    kwindow = &window[n2];
+    k_window_init(alpha, kwindow, n2, iter);
+    window[0] = kwindow[0];
+    for(k=1; k<n2; k++) {
+        window[k] = window[k-1] + kwindow[k];
+    }
+    for(k=0; k<n2; k++) {
+        window[k] = sqrt(window[k] / (window[n2-1]+1));
+        window[n-1-k] = window[k];
+    }
 }
 
 void run_eq(unsigned int port, unsigned int in_ptr)
