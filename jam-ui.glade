@@ -8473,7 +8473,7 @@ Output</property>
 			  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 			  <property name="snap_to_ticks">False</property>
 			  <property name="wrap">False</property>
-			  <property name="adjustment">10 0 10 1 1 1</property>
+			  <property name="adjustment">25 0 25 1 1 1</property>
 			  <signal name="focus_in_event" handler="on_text_focus_in_event" last_modification_time="Sun, 30 Jan 2005 18:03:37 GMT"/>
 			  <signal name="focus_out_event" handler="on_text_focus_out_event" last_modification_time="Sun, 30 Jan 2005 18:03:51 GMT"/>
 			  <signal name="value_changed" handler="on_UpdateFrequencySpin_value_changed" last_modification_time="Sun, 30 Jan 2005 18:03:55 GMT"/>

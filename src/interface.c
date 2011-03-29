@@ -5314,7 +5314,7 @@ create_pref_dialog (void)
   gtk_widget_show (UpdateFrequencyLabel);
   gtk_box_pack_start (GTK_BOX (hbox73), UpdateFrequencyLabel, FALSE, FALSE, 0);
 
-  UpdateFrequencySpin_adj = gtk_adjustment_new (10, 0, 10, 1, 1, 1);
+  UpdateFrequencySpin_adj = gtk_adjustment_new (25, 0, 25, 1, 1, 1);
   UpdateFrequencySpin = gtk_spin_button_new (GTK_ADJUSTMENT (UpdateFrequencySpin_adj), 1, 0);
   gtk_widget_set_name (UpdateFrequencySpin, "UpdateFrequencySpin");
   gtk_widget_show (UpdateFrequencySpin);

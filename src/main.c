@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.68 2008/12/03 03:22:03 kotau Exp $
+ *  $Id: main.c,v 1.69 2011/03/29 06:57:27 kotau Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -163,7 +163,7 @@ int main(int argc, char *argv[])
        without modifying the spectrum and status updates which are depending
        on it being 10/sec.  */
 
-    g_timeout_add (100, update_meters, NULL);
+    g_timeout_add (40, update_meters, NULL);
 
 
     /* If the filename has been set, load it */
