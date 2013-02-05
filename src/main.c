@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.69 2011/03/29 06:57:27 kotau Exp $
+ *  $Id: main.c,v 1.70 2013/02/05 01:34:01 kotau Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -63,7 +63,7 @@ char *default_session = NULL;
 char *resource_file = NULL;		/* GTK resource file */
 
 char user_default_session[PATH_MAX];	/* user's default session name */
-extern int show_gui;					/* Which gui to Display first */
+
 
 static gboolean update_meters(gpointer data);
 static void set_configuration_files(void);
@@ -88,23 +88,25 @@ int main(int argc, char *argv[])
 #endif
 
     printf(PACKAGE " " VERSION "\n");
-    g_print(_("(C) 2003-2005 J. Depner, S. Harris, J. O'Quin, R. Parker"
+    g_print(_("(C) 2003-2013 J. Depner, S. Harris, J. O'Quin, R. Parker"
 	      " and P. Shirkey\n"));
     g_print(_("This is free software, and you are welcome to redistribute it\n" 
 	      "under certain conditions; see the file COPYING for details.\n"));
 
     set_configuration_files();
-    gtk_init(&argc, &argv);
 
-    io_init(argc, argv);
-        
-    resource_file_parse();
+	gtk_init(&argc, &argv);
 
-    state_init();
-    add_pixmap_directory(JAMIN_PIXMAP_DIR);
-    add_pixmap_directory("pixmaps");
-    preferences_init();
-    main_window = create_window1();
+	io_init(argc, argv);
+	    
+	resource_file_parse();
+
+	state_init();
+
+	add_pixmap_directory(JAMIN_PIXMAP_DIR);
+	add_pixmap_directory("pixmaps");
+	preferences_init();
+	main_window = create_window1();
 	presets_window = create_window3();
 
 #ifdef FILTER_TUNING
@@ -112,32 +114,32 @@ int main(int argc, char *argv[])
     gtk_widget_show(ft);
 #endif
 
-    //status_init();
+    
+	/* Bind the ui widgets to adjustments */
+	bind_geq();
+	bind_hdeq();
 
-    /* bind the graphic equaliser sliders to adjustments */
+	/* Show Preset or Main window  - commandline toggle "-g" */
+	//g_print(_("11: show_gui = %i\n"), show_gui);
 
-	gtk_widget_show(presets_window);
-    bind_geq();
-    bind_hdeq();
-    gtk_widget_show(main_window);
-    bind_intrim();
-    iomenu_bind(main_window);
-    bind_limiter(); 
-    bind_compressors();
-    bind_spectrum();
-    bind_stereo();
-    bind_scenes();
-	
-	
-	/* Show the correct window */
-	
-	if(show_gui)
-		gtk_widget_hide(main_window);
-	else
-		gtk_widget_hide(presets_window);
-	
+	if(show_gui != 2){ 
+	    if(show_gui == 1){      
+		gtk_widget_show(presets_window);
+	    }else{
+		gtk_widget_show(main_window);
+	    }   
+	}
+	/* Bind the ui widgets to adjustments */
+	iomenu_bind(main_window);
+	bind_intrim();
+	bind_limiter(); 
+	bind_compressors();
+	bind_spectrum();
+	bind_stereo();
+	bind_scenes();
+     
 
-    s_clear_history();
+	s_clear_history();
 
     /* Create OSC server */
 
@@ -150,7 +152,7 @@ int main(int argc, char *argv[])
 	fprintf(stderr, "Started OSC server thread at %s\n", urlstr);
 	free (urlstr);
     } else {
-	fprintf(stderr, "This " PACKAGE " instance will not have OSC support,\n"		"probably the port is allread in use\n");
+	fprintf(stderr, "This " PACKAGE " instance will not have OSC support,\n""probably the port is already in use\n");
     }
 #endif
 
@@ -158,20 +160,23 @@ int main(int argc, char *argv[])
 
     io_activate();
 
-
     /* start the meter update.  NOTE: Don't change this from 100 milliseconds
        without modifying the spectrum and status updates which are depending
        on it being 10/sec.  */
+    
+    /* only update meters if not in daemon mode */
 
-    g_timeout_add (40, update_meters, NULL);
-
+    if(show_gui != 2){ 
+	g_timeout_add (40, update_meters, NULL);
+    }
 
     /* If the filename has been set, load it */
 
     s_load_session(NULL);
 
-
-    gtk_main();
+    //if(show_gui != 2){  
+	gtk_main();
+   // }
     io_cleanup();
 
     return 0;
@@ -223,19 +228,24 @@ static void set_configuration_files(void)
     }
 }
 
+/* Only update i/o meters if not in daemon mode */
 static gboolean update_meters(gpointer data)
 {
     static unsigned int count = 1;
     int global, eq, comp[XO_NBANDS], limiter;
 
-
+    
     in_meter_value(in_peak);
     out_meter_value(out_peak);
-    rms_meter_value(rms_peak);
-    limiter_meters_update();
-    compressor_meters_update();
-    spectrum_timeout_check();
-    s_crossfade_ui();
+
+    /* Only update meters if main window is displayed */
+    if(show_gui == 0){
+	rms_meter_value(rms_peak);
+	limiter_meters_update();
+	compressor_meters_update();
+	spectrum_timeout_check();
+	s_crossfade_ui();
+    }
     status_set_time(main_window);
 
 

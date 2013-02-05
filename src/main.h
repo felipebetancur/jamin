@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.h,v 1.8 2008/12/03 03:22:03 kotau Exp $
+ *  $Id: main.h,v 1.9 2013/02/05 01:34:01 kotau Exp $
  */
 
 #ifndef MAIN_H
@@ -38,5 +38,6 @@
 extern GtkWidget *main_window, *presets_window;		/* Main GTK window */
 extern char *jamin_dir;			/* JAMin config directory path */
 extern char *default_session;		/* default session file */
+extern int show_gui;			/* Which gui to Display first */
 
 #endif

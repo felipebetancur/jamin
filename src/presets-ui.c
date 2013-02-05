@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: presets-ui.c,v 1.1 2008/12/03 03:22:03 kotau Exp $
+ *  $Id: presets-ui.c,v 1.2 2013/02/05 01:34:01 kotau Exp $
  */
 
 #include <stdio.h>
@@ -38,10 +38,12 @@ void presets_ui_update ()
 	if(global_gui){
 		gtk_widget_show(main_window);
 		gtk_button_set_label(tButton, "hide");
+		show_gui = 0;
 			
 	}else {
 		gtk_widget_hide(main_window);
 		gtk_button_set_label(tButton, "show");
+		show_gui = 1;
 		
 	}
 	//g_print("clicked");

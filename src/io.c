@@ -91,7 +91,7 @@
 #include "help.h"
 #include "support.h"
 
-char *jamin_options = "dFf:j:n:hprTtvVl:s:c:ig";   /* valid JAMin options */
+char *jamin_options = "dFf:j:n:hprTtvVl:s:c:igD";   /* valid JAMin options */
 char *pname;				      /* `basename $0` */
 int dummy_mode = 0;			      /* -d option */
 int all_errors_fatal = 0;		      /* -F option */
@@ -101,7 +101,7 @@ int trace_option = 0;			      /* -T option */
 int thread_option = 1;			      /* -t option */
 int debug_level = DBG_OFF;		      /* -v option */
 char session_file[PATH_MAX];		      /* -f option */
-int show_gui = 0;					/* -g option */
+int show_gui = 0;			      /* -g option */
 int limiter_plugin_type;                      /* -l option - 0=Steve's fast, 1=Sampo's foo */
 static char *errstr;
 
@@ -826,7 +826,12 @@ void io_init(int argc, char *argv[])
             process_set_crossover_type (IIR);
 	    break;
 	case 'g':			/* Choose which interface to display */
-		show_gui = 1;
+		show_gui = 1;   
+		//g_print(_("show_gui = %i\n"), show_gui);
+		break;	
+	case 'D':			/* Choose which interface to display */
+		show_gui = 2;   
+		//g_print(_("show_gui = %i\n"), show_gui);
 		break;			
 	case 'l':			/* Select limiter, 0=Steve's fast, 1=Sampo's foo */
 	    sscanf (optarg, "%d", &limiter_plugin_type);
@@ -887,7 +892,8 @@ void io_init(int argc, char *argv[])
                 "\t-F\ttreat all errors as fatal\n"
                 "\t-T\tprint trace buffer\n"
                 "\t-t\tdon't start separate DSP thread\n"
-			    "\t-g\tshow simple gui at startup\n"
+		"\t-g\tshow simple gui at startup\n"
+		"\t-D\tRun in Daemon mode\n"
                 "\n"),
 		pname, jamin_options);
 	exit(1);

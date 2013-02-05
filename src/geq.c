@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: geq.c,v 1.34 2008/02/04 15:03:50 esaracco Exp $
+ *  $Id: geq.c,v 1.35 2013/02/05 01:34:01 kotau Exp $
  */
 
 /* code to control the graphic eq's, swh */
@@ -69,6 +69,7 @@ void bind_geq()
         g_signal_connect(G_OBJECT(geqa[i]), "value-changed", 
                          G_CALLBACK(hdeq_eqb_mod), NULL);
     }
+
 
     for (i=0; i<BANDS + 1; i++) {
 	geq_gains[i] = 1.0f;

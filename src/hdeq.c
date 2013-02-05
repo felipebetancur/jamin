@@ -745,13 +745,13 @@ static void set_EQ ()
 
 
     /*  Set EQ coefficients based on the hand-drawn curve.  */
-
-    geq_set_coefs (EQ_length, EQ_freq_xinterp, EQ_freq_yinterp);
+    if(show_gui == 0)
+    	geq_set_coefs (EQ_length, EQ_freq_xinterp, EQ_freq_yinterp);
 
 
     /*  Set the graphic EQ sliders based on the hand-drawn curve.  */
-
-    geq_set_sliders (EQ_length, EQ_freq_xinterp, EQ_freq_yinterp);
+    if(show_gui == 0)
+    	geq_set_sliders (EQ_length, EQ_freq_xinterp, EQ_freq_yinterp);
 
 
     EQ_mod = 0;
