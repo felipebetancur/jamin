@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.81 2013/02/06 03:42:39 kotau Exp $
+ *  $Id: process.c,v 1.82 2013/02/06 18:17:37 kotau Exp $
  */
 
 #include <math.h>
@@ -117,8 +117,8 @@ static float ws_boost_a = 1.0f;
 
 static unsigned int latcorbuf_pos;
 static unsigned int latcorbuf_len;
-static float *latcorbuf[NCHANNELS];
-static float *latcorbuf_postcomp[NCHANNELS];
+static float *latcorbuf[BCHANNELS];
+static float *latcorbuf_postcomp[BCHANNELS];
 
 static int spectrum_mode = SPEC_POST_EQ;
 
@@ -288,7 +288,7 @@ void process_init(float fs)
     /* Allocate at least 1 second of latency correction buffer */
     for (latcorbuf_len = 256; latcorbuf_len < fs * 1.0f; latcorbuf_len *= 2);
     latcorbuf_pos = 0;
-    for (i=0; i < NCHANNELS; i++) {
+    for (i=0; i < BCHANNELS; i++) {
 	latcorbuf[i] = calloc(latcorbuf_len, sizeof(float));
 	latcorbuf_postcomp[i] = calloc(latcorbuf_len, sizeof(float));
     }
@@ -652,41 +652,65 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 		out_tmp[port][XO_HIGH][pos];
           */
 
-		/* original  2 channel output
-          delay_buf[port][XO_LOW][dpos[port] & delay_mask] = out_tmp[port][XO_LOW][pos];
+          
+          
+		/* original  2 channel output */
+
+		/* copy out_tmp[] to delay_buf[] */
+		/*
+		  delay_buf[port][XO_LOW][dpos[port] & delay_mask] = out_tmp[port][XO_LOW][pos];
           delay_buf[port][XO_MID][dpos[port] & delay_mask] = out_tmp[port][XO_MID][pos];
           delay_buf[port][XO_HIGH][dpos[port] & delay_mask] = out_tmp[port][XO_HIGH][pos];
-		*/
+		 * 
+		  out[port][pos] = delay_buf[port % 2][XO_LOW][(dpos[port % 2] - delay[XO_LOW]) & delay_mask] +
+					delay_buf[port % 2][XO_MID][(dpos[port % 2] - delay[XO_MID]) & delay_mask] +
+					delay_buf[port % 2][XO_HIGH][(dpos[port % 2] - delay[XO_HIGH]) & delay_mask];
+		 * 
+		 */		
 		
 		/* multi channel output */
-			
+		
+
+		 
+		/*out[port][pos] = delay_buf[port % 2][XO_LOW][(dpos[port % 2] - delay[XO_LOW]) & delay_mask] +
+					delay_buf[port % 2][XO_MID][(dpos[port % 2] - delay[XO_MID]) & delay_mask] +
+					delay_buf[port % 2][XO_HIGH][(dpos[port % 2] - delay[XO_HIGH]) & delay_mask];	
+		*/	
 		switch (port){
 			case 0:
 			case 1:
+				
+				/* copy out_tmp[] to delay_buf[] */
+				
+				  delay_buf[port][XO_LOW][dpos[port] & delay_mask] = out_tmp[port][XO_LOW][pos];
+				  delay_buf[port][XO_MID][dpos[port] & delay_mask] = out_tmp[port][XO_MID][pos];
+				  delay_buf[port][XO_HIGH][dpos[port] & delay_mask] = out_tmp[port][XO_HIGH][pos];
+					
 				out[port][pos] = delay_buf[port][XO_LOW][(dpos[port] - delay[XO_LOW]) & delay_mask] +
 					delay_buf[port][XO_MID][(dpos[port] - delay[XO_MID]) & delay_mask] +
 					delay_buf[port][XO_HIGH][(dpos[port] - delay[XO_HIGH]) & delay_mask];
-				
-				/* Keep buffer of compressor outputs incase we need it for
-				* limiter bypass */
-				latcorbuf_postcomp[port][(latcorbuf_pos + pos) & (latcorbuf_len - 1)] = out[port][pos];
 			break;	
 			case 2:
 			case 3:
-				out[port][pos] = delay_buf[port % 2][XO_LOW][(dpos[port] - delay[XO_LOW]) & delay_mask];
+				out[port][pos] = delay_buf[port % 2][XO_LOW][(dpos[port % 2] - delay[XO_LOW]) & delay_mask];
 			break;
 			case 4:
 			case 5:
-				out[port][pos] = delay_buf[port % 2][XO_MID][(dpos[port] - delay[XO_MID]) & delay_mask];
+				out[port][pos] = delay_buf[port % 2][XO_MID][(dpos[port % 2] - delay[XO_MID]) & delay_mask];
 			break;
 			case 6:
 			case 7:
-				out[port][pos] = delay_buf[port % 2][XO_HIGH][(dpos[port] - delay[XO_HIGH]) & delay_mask];
+				out[port][pos] = delay_buf[port % 2][XO_HIGH][(dpos[port % 2] - delay[XO_HIGH]) & delay_mask];
 			break;			
 		}
+	
+		
 		
           dpos[port]++;
 
+			/* Keep buffer of compressor outputs incase we need it for
+			* limiter bypass */
+			latcorbuf_postcomp[port][(latcorbuf_pos + pos) & (latcorbuf_len - 1)] = out[port][pos];		
           
 	}
     }
@@ -699,9 +723,11 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 	    out[port][pos] *= limiter_gain;
 
 	    /* Check for peaks */
-	    if (out[port][pos] > lim_peak[LIM_PEAK_IN]) {
-		lim_peak[LIM_PEAK_IN] = out[port][pos];
-	    }
+	    if ( port < 2 ){
+			if (out[port][pos] > lim_peak[LIM_PEAK_IN]) {
+			lim_peak[LIM_PEAK_IN] = out[port][pos];
+			}
+		}
 	}
     }
 
@@ -718,10 +744,11 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
     plugin_run(lim_plugin[limiter_plugin], limiter[limiter_plugin].handle, nframes);
 
     /* Keep a buffer of old input data, in case we need it for bypass */
-    for (port = 0; port < nchannels; port++) {
+    for (port = 0; port < bchannels; port++) {
 	for (pos = 0; pos < nframes; pos++) {
 	    latcorbuf[port][(latcorbuf_pos + pos) & (latcorbuf_len - 1)] =
-		in[port][pos];
+		in[port % 2][pos];
+	//	g_print("port %i - %i\n", port, port % 2);
 	}
     }
 
@@ -730,7 +757,7 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
     if (limiter_bypass) {
 	const unsigned int limiter_latency = (unsigned int)limiter[limiter_plugin].latency;
 
-	for (port = 0; port < nchannels; port++) {
+	for (port = 0; port < bchannels; port++) {
 	    for (pos = 0; pos < nframes; pos++) {
 		out[port][pos] = latcorbuf_postcomp[port][(latcorbuf_pos +
 			pos - limiter_latency - nframes) & (latcorbuf_len - 1)];
@@ -740,7 +767,7 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
     if (global_bypass) {
 	const unsigned int limiter_latency = (unsigned int)limiter[limiter_plugin].latency;
 
-	for (port = 0; port < nchannels; port++) {
+	for (port = 0; port < bchannels; port++) {
 	    for (pos = 0; pos < nframes; pos++) {
 		out[port][pos] = latcorbuf[port][(latcorbuf_pos +
 			pos - limiter_latency - nframes) & (latcorbuf_len - 1)];
@@ -774,7 +801,7 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
       }
 
 
-    /* We've got the the end of the processing, so update the actions */
+    /* We've got to the end of the processing, so update the actions */
 
     for (band = 0; band < XO_NBANDS; band++) {
 	xo_band_action[band] = xo_band_action_pending[band];
