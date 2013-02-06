@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.80 2010/11/01 09:25:29 kotau Exp $
+ *  $Id: process.c,v 1.81 2013/02/06 03:42:39 kotau Exp $
  */
 
 #include <math.h>
@@ -164,49 +164,46 @@ void process_init(float fs)
     float centre = 25.0f;
     unsigned int i, j, band;
 
-
     sample_rate = fs;
 
-
     for (i = 0; i < BANDS; i++) {
-	band_f[i] = centre;
-	//printf("band %d = %fHz\n", i, centre);
-	centre *= 1.25992105f;		/* up a third of an octave */
-	gain_fix[i] = 0.0f;
+		band_f[i] = centre;
+		//printf("band %d = %fHz\n", i, centre);
+		centre *= 1.25992105f;		/* up a third of an octave */
+		gain_fix[i] = 0.0f;
     }
 
     band = 0;
     for (i = 0; i < BINS / 2; i++) {
-	const float binfreq =
-	    sample_rate * 0.5f * (i + 0.5f) / (float) BINS;
+		const float binfreq = sample_rate * 0.5f * (i + 0.5f) / (float) BINS;
 
-	while (binfreq > (band_f[band] + band_f[band + 1]) * 0.5f) {
-	    band++;
-	    if (band >= BANDS - 1) {
-		band = BANDS - 1;
-		break;
-	    }
-	}
-	bands[i] = band;
-	gain_fix[band]++;
-	//printf("bin %d (%f) -> band %d (%f) #%d\n", i, binfreq, band, band_f[band], (int)gain_fix[band]);
-    }
-
-    for (i = 0; i < BANDS; i++) {
-	if (gain_fix[i] != 0.0f) {
-	    gain_fix[i] = 1.0f / gain_fix[i];
-	} else {
-	    /* There are no bins for this band, reassign a nearby one */
-	    for (j = 0; j < BINS / 2; j++) {
-		if (bands[j] > i) {
-		    gain_fix[bands[j]]--;
-		    bands[j] = i;
-		    gain_fix[i] = 1.0f;
-		    break;
+		while (binfreq > (band_f[band] + band_f[band + 1]) * 0.5f) {
+			band++;
+			if (band >= BANDS - 1) {
+				band = BANDS - 1;
+				break;
+			}
 		}
-	    }
+		bands[i] = band;
+		gain_fix[band]++;
+		//printf("bin %d (%f) -> band %d (%f) #%d\n", i, binfreq, band, band_f[band], (int)gain_fix[band]);
 	}
-    }
+
+	for (i = 0; i < BANDS; i++) {
+		if (gain_fix[i] != 0.0f) {
+			gain_fix[i] = 1.0f / gain_fix[i];
+		} else {
+			/* There are no bins for this band, reassign a nearby one */
+			for (j = 0; j < BINS / 2; j++) {
+				if (bands[j] > i) {
+					gain_fix[bands[j]]--;
+					bands[j] = i;
+					gain_fix[i] = 1.0f;
+					break;
+				}
+			}
+		}
+	}
 
     /* Allocate space for FFT data */
     real = fftwf_malloc(sizeof(fft_data) * BINS);
@@ -503,12 +500,13 @@ float bin_peak_read_and_clear(int bin)
 
 int process_signal(jack_nframes_t nframes,
 		   int nchannels,
+		   int bchannels,
 		   jack_default_audio_sample_t *in[],
 		   jack_default_audio_sample_t *out[])
 {
     unsigned int pos, port, band;
     const unsigned int latency = BINS - dsp_block_size;
-    static unsigned int in_ptr = 0, dpos[2] = {0, 0};
+    static unsigned int in_ptr = 0, dpos[8] = {0,0,0,0,0,0,0,0};
     static unsigned int n_calc_pt = BINS - (BINS / OVER_SAMP);
 
 
@@ -645,7 +643,7 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 
     //printf("run compressors...\n");
 
-    for (port = 0; port < nchannels; port++) {
+    for (port = 0; port < bchannels; port++) {
 	for (pos = 0; pos < nframes; pos++) {
 
           /*  Original (no delay) code.
@@ -654,21 +652,42 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 		out_tmp[port][XO_HIGH][pos];
           */
 
-
+		/* original  2 channel output
           delay_buf[port][XO_LOW][dpos[port] & delay_mask] = out_tmp[port][XO_LOW][pos];
           delay_buf[port][XO_MID][dpos[port] & delay_mask] = out_tmp[port][XO_MID][pos];
           delay_buf[port][XO_HIGH][dpos[port] & delay_mask] = out_tmp[port][XO_HIGH][pos];
-
-          out[port][pos] = delay_buf[port][XO_LOW][(dpos[port] - delay[XO_LOW]) & delay_mask] +
-            delay_buf[port][XO_MID][(dpos[port] - delay[XO_MID]) & delay_mask] +
-            delay_buf[port][XO_HIGH][(dpos[port] - delay[XO_HIGH]) & delay_mask];
-
+		*/
+		
+		/* multi channel output */
+			
+		switch (port){
+			case 0:
+			case 1:
+				out[port][pos] = delay_buf[port][XO_LOW][(dpos[port] - delay[XO_LOW]) & delay_mask] +
+					delay_buf[port][XO_MID][(dpos[port] - delay[XO_MID]) & delay_mask] +
+					delay_buf[port][XO_HIGH][(dpos[port] - delay[XO_HIGH]) & delay_mask];
+				
+				/* Keep buffer of compressor outputs incase we need it for
+				* limiter bypass */
+				latcorbuf_postcomp[port][(latcorbuf_pos + pos) & (latcorbuf_len - 1)] = out[port][pos];
+			break;	
+			case 2:
+			case 3:
+				out[port][pos] = delay_buf[port % 2][XO_LOW][(dpos[port] - delay[XO_LOW]) & delay_mask];
+			break;
+			case 4:
+			case 5:
+				out[port][pos] = delay_buf[port % 2][XO_MID][(dpos[port] - delay[XO_MID]) & delay_mask];
+			break;
+			case 6:
+			case 7:
+				out[port][pos] = delay_buf[port % 2][XO_HIGH][(dpos[port] - delay[XO_HIGH]) & delay_mask];
+			break;			
+		}
+		
           dpos[port]++;
 
-
-          /* Keep buffer of compressor outputs incase we need it for
-           * limiter bypass */
-          latcorbuf_postcomp[port][(latcorbuf_pos + pos) & (latcorbuf_len - 1)] = out[port][pos];
+          
 	}
     }
 

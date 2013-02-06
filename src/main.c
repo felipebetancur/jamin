@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.70 2013/02/05 01:34:01 kotau Exp $
+ *  $Id: main.c,v 1.71 2013/02/06 03:42:39 kotau Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -122,8 +122,8 @@ int main(int argc, char *argv[])
 	/* Show Preset or Main window  - commandline toggle "-g" */
 	//g_print(_("11: show_gui = %i\n"), show_gui);
 
-	if(show_gui != 2){ 
-	    if(show_gui == 1){      
+	if(gui_mode != 2){ 
+	    if(gui_mode == 1){      
 		gtk_widget_show(presets_window);
 	    }else{
 		gtk_widget_show(main_window);
@@ -136,8 +136,7 @@ int main(int argc, char *argv[])
 	bind_compressors();
 	bind_spectrum();
 	bind_stereo();
-	bind_scenes();
-     
+	bind_scenes(); 
 
 	s_clear_history();
 
@@ -166,7 +165,7 @@ int main(int argc, char *argv[])
     
     /* only update meters if not in daemon mode */
 
-    if(show_gui != 2){ 
+    if(gui_mode != 2){ 
 	g_timeout_add (40, update_meters, NULL);
     }
 
@@ -174,9 +173,8 @@ int main(int argc, char *argv[])
 
     s_load_session(NULL);
 
-    //if(show_gui != 2){  
-	gtk_main();
-   // }
+    gtk_main();
+
     io_cleanup();
 
     return 0;
@@ -238,13 +236,13 @@ static gboolean update_meters(gpointer data)
     in_meter_value(in_peak);
     out_meter_value(out_peak);
 
-    /* Only update meters if main window is displayed */
-    if(show_gui == 0){
-	rms_meter_value(rms_peak);
-	limiter_meters_update();
-	compressor_meters_update();
-	spectrum_timeout_check();
-	s_crossfade_ui();
+    /* Only update these meters if main window is displayed */
+    if(gui_mode == 0){
+		rms_meter_value(rms_peak);
+		limiter_meters_update();
+		compressor_meters_update();
+		spectrum_timeout_check();
+		s_crossfade_ui();
     }
     status_set_time(main_window);
 

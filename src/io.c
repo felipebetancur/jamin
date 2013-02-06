@@ -101,7 +101,7 @@ int trace_option = 0;			      /* -T option */
 int thread_option = 1;			      /* -t option */
 int debug_level = DBG_OFF;		      /* -v option */
 char session_file[PATH_MAX];		      /* -f option */
-int show_gui = 0;			      /* -g option */
+int gui_mode = 0;			      /* -g/-D option : Classic, Presets, Daemon*/
 int limiter_plugin_type;                      /* -l option - 0=Steve's fast, 1=Sampo's foo */
 static char *errstr;
 
@@ -131,7 +131,7 @@ static pthread_mutex_t lock_dsp = PTHREAD_MUTEX_INITIALIZER;
 
 #define NCHUNKS 4		/* number of DSP blocks in ringbuffer */
 static jack_ringbuffer_t *in_rb[NCHANNELS];  /* input channel buffers */
-static jack_ringbuffer_t *out_rb[NCHANNELS]; /* output channel buffers */
+static jack_ringbuffer_t *out_rb[BCHANNELS]; /* output channel buffers */
 
 /* JACK connection data */
 io_jack_status_t jst = {0};		/* current JACK status */
@@ -139,15 +139,16 @@ jack_client_t *client;			/* JACK client structure */
 char *client_name = NULL;		/* JACK client name (in heap) */
 char *server_name = NULL;		/* JACK server name (in heap) */
 int nchannels = NCHANNELS;		/* actual number of channels */
+int bchannels = BCHANNELS;  /* actual numbers of xover channels */
 
 /* These arrays are NULL-terminated... */
 jack_port_t *input_ports[NCHANNELS+1] = {NULL};
-jack_port_t *output_ports[NCHANNELS+1] = {NULL};
+jack_port_t *output_ports[BCHANNELS+1] = {NULL};
 
 static const char *in_names[NCHANNELS] = {"in_L", "in_R"};
-static const char *out_names[NCHANNELS] = {"out_L", "out_R"};
+static const char *out_names[BCHANNELS] = {"a.master.out_L", "a.master.out_R","b.low.out_L", "b.low.out_R", "c.mid.out_L", "c.mid.out_R", "d.high.out_L", "d.high.out_R" };
 static const char *iports[NCHANNELS] = {NULL, NULL};
-static const char *oports[NCHANNELS] = {NULL, NULL};
+static const char *oports[BCHANNELS] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
 
 
 /****************  Low-level utility functions  ****************/
@@ -314,7 +315,7 @@ void io_set_latency(int source, jack_nframes_t delay)
 
     /* Set JACK port latencies (after ports connected). */
     if (DSP_STATE_NOT(DSP_INIT|DSP_STOPPED))
-	for (chan = 0; chan < nchannels; chan++) {
+	for (chan = 0; chan < bchannels; chan++) {
 	    jack_port_set_latency(output_ports[chan], jst.latency);
 	}
 }
@@ -327,30 +328,35 @@ void io_set_latency(int source, jack_nframes_t delay)
  *
  *  Returns: 1 if sufficient space available, 0 otherwise.
  */
-int io_get_dsp_buffers(int nchannels, 
+int io_get_dsp_buffers(int nchannels, int bchannels,
 		       jack_default_audio_sample_t *in[NCHANNELS],
-		       jack_default_audio_sample_t *out[NCHANNELS])
+		       jack_default_audio_sample_t *out[BCHANNELS])
 {
     int chan;
     jack_ringbuffer_data_t io_vec[2];
 
-    for (chan = 0; chan < nchannels; chan++) {
-	if ((jack_ringbuffer_read_space(in_rb[chan]) < dsp_block_bytes) ||
-	    (jack_ringbuffer_write_space(out_rb[chan]) < dsp_block_bytes))
-	    return 0;			/* not enough space */
+    for (chan = 0; chan < bchannels; chan++) {
+		if( chan < nchannels ){
+			if (jack_ringbuffer_read_space(in_rb[chan]) < dsp_block_bytes)
+				return 0;			/* not enough space */
+		}		
+		if (jack_ringbuffer_write_space(out_rb[chan]) < dsp_block_bytes)
+			return 0;			/* not enough space */
 
 	/* Copy buffer pointers to in[] and out[].  If the ringbuffer
 	 * space was discontiguous, we either need to rebuffer or
 	 * extend the interface to process_signal() to allow this
 	 * situation.  But, that's not implemented yet, hence the
 	 * asserts. */
-	jack_ringbuffer_get_read_vector(in_rb[chan], io_vec);
-	in[chan] = (jack_default_audio_sample_t *) io_vec[0].buf;
-	assert(io_vec[0].len >= dsp_block_bytes); /* must be contiguous */
-	    
-	jack_ringbuffer_get_write_vector(out_rb[chan], io_vec);
-	out[chan] = (jack_default_audio_sample_t *) io_vec[0].buf;
-	assert(io_vec[0].len >= dsp_block_bytes); /* must be contiguous */
+		if( chan < nchannels ){
+			jack_ringbuffer_get_read_vector(in_rb[chan], io_vec);
+			in[chan] = (jack_default_audio_sample_t *) io_vec[0].buf;
+			assert(io_vec[0].len >= dsp_block_bytes); /* must be contiguous */
+		}
+			
+		jack_ringbuffer_get_write_vector(out_rb[chan], io_vec);
+		out[chan] = (jack_default_audio_sample_t *) io_vec[0].buf;
+		assert(io_vec[0].len >= dsp_block_bytes); /* must be contiguous */
     }
     return 1;				/* success */
 }
@@ -371,7 +377,7 @@ int io_get_dsp_buffers(int nchannels,
  */
 void *io_dsp_thread(void *arg)
 {
-    jack_default_audio_sample_t *in[NCHANNELS], *out[NCHANNELS];
+    jack_default_audio_sample_t *in[NCHANNELS], *out[BCHANNELS];
     int chan;
     int rc;
 
@@ -387,9 +393,9 @@ void *io_dsp_thread(void *arg)
     while (DSP_STATE_NOT(DSP_STOPPING)) {
 
 	/* process any buffers queued for DSP */
-	while (io_get_dsp_buffers(nchannels, in, out)) {
+	while (io_get_dsp_buffers(nchannels, bchannels, in, out)) {
 
-	    rc = process_signal(dsp_block_size, nchannels, in, out);
+	    rc = process_signal(dsp_block_size, nchannels, bchannels, in, out);
 	    if (rc != 0)
 		io_errlog(EAGAIN, "signal processing error: %d.", rc);
 
@@ -398,9 +404,11 @@ void *io_dsp_thread(void *arg)
 	    /* Advance the ring buffers.  This frees up the input
 	     * space and queues the output for the JACK process
 	     * thread. */
-	    for (chan = 0; chan < nchannels; chan++) {
-		jack_ringbuffer_write_advance(out_rb[chan], dsp_block_bytes);
-		jack_ringbuffer_read_advance(in_rb[chan], dsp_block_bytes);
+	    for (chan = 0; chan < bchannels; chan++) {
+			jack_ringbuffer_write_advance(out_rb[chan], dsp_block_bytes);
+			if ( chan < nchannels ){	
+				jack_ringbuffer_read_advance(in_rb[chan], dsp_block_bytes);
+			}
 	    }
 	    if (DSP_STATE_IS(DSP_STARTING))
 		io_new_state(DSP_RUNNING); /* output available */
@@ -451,9 +459,9 @@ void io_schedule()
  *
  *  Runs as a high-priority realtime thread.  Cannot ever wait.
  */
-int io_queue(jack_nframes_t nframes, int nchannels,
+int io_queue(jack_nframes_t nframes, int nchannels, int bchannels,
 	     jack_default_audio_sample_t *in[NCHANNELS],
-	     jack_default_audio_sample_t *out[NCHANNELS])
+	     jack_default_audio_sample_t *out[BCHANNELS])
 {
     int chan;
     int rc = 0;
@@ -467,19 +475,19 @@ int io_queue(jack_nframes_t nframes, int nchannels,
 
     /* queue JACK input buffers for DSP thread */
     for (chan = 0; chan < nchannels; chan++) {
-	count = jack_ringbuffer_write(in_rb[chan], (void *) in[chan], nbytes);
-	if (count != nbytes) {		/* buffer overflow? */
+		count = jack_ringbuffer_write(in_rb[chan], (void *) in[chan], nbytes);
+		if (count != nbytes) {		/* buffer overflow? */
 
-	    /* This is a realtime bug.  We have input audio with no
-	     * place to go.  The DSP thread is not keeping up, and
-	     * there's nothing we can do about it here. */
-	    IF_DEBUG(DBG_TERSE,
-		     ((chan == 0)?
-		      io_trace("input overflow, %ld bytes written.", count):
-		      NULL));
-	    abort();			/* take a dump */
-	    rc = ENOSPC;		/* out of space */
-	}
+			/* This is a realtime bug.  We have input audio with no
+			 * place to go.  The DSP thread is not keeping up, and
+			 * there's nothing we can do about it here. */
+			IF_DEBUG(DBG_TERSE,
+				 ((chan == 0)?
+				  io_trace("input overflow, %ld bytes written.", count):
+				  NULL));
+			abort();			/* take a dump */
+			rc = ENOSPC;		/* out of space */
+		}
     } 
 
     /* if there is enough input, schedule the DSP thread */
@@ -487,7 +495,7 @@ int io_queue(jack_nframes_t nframes, int nchannels,
 	io_schedule();
 
     /* dequeue the next buffer that has been completed */
-    for (chan = 0; chan < nchannels; chan++) {
+    for (chan = 0; chan < bchannels; chan++) {
 	count = jack_ringbuffer_read(out_rb[chan], (void *) out[chan], nbytes);
 	if (count != nbytes) {		/* not enough output? */
 
@@ -522,7 +530,7 @@ int io_queue(jack_nframes_t nframes, int nchannels,
  */
 int io_process(jack_nframes_t nframes, void *arg)
 {
-    jack_default_audio_sample_t *in[NCHANNELS], *out[NCHANNELS];
+    jack_default_audio_sample_t *in[NCHANNELS], *out[BCHANNELS];
     int chan;
     int return_code = 0;
     int rc;
@@ -530,9 +538,12 @@ int io_process(jack_nframes_t nframes, void *arg)
     IF_DEBUG(DBG_VERBOSE, io_trace("JACK process() start"));
 
     /* get input and output buffer addresses from JACK */
-    for (chan = 0; chan < nchannels; chan++) {
-	in[chan] = jack_port_get_buffer(input_ports[chan], nframes);
-	out[chan] = jack_port_get_buffer(output_ports[chan], nframes);
+    for (chan = 0; chan < bchannels; chan++) {
+		if ( chan < nchannels){
+			in[chan] = jack_port_get_buffer(input_ports[chan], nframes);
+			
+		} 
+		out[chan] = jack_port_get_buffer(output_ports[chan], nframes);
     }
 
     if (nframes < dsp_block_size) {
@@ -544,26 +555,30 @@ int io_process(jack_nframes_t nframes, void *arg)
 	 * frames are available.  If there's some reason not to do
 	 * that, then process it here in smaller chunks.
 	 */
+
+	g_print("bchannels = %i\n", bchannels); 
 	if (have_dsp_thread)
-	    return_code = io_queue(nframes, nchannels, in, out);
+	    return_code = io_queue(nframes, nchannels, bchannels, in, out);
 	else
-	    return_code = process_signal(nframes, nchannels, in, out);
+	    return_code = process_signal(nframes, nchannels, bchannels, in, out);
 
     } else {
 
 	/* With larger JACK buffers, call DSP directly. */ 
 	while (nframes >= dsp_block_size)  {
 
-	    if ((rc = process_signal(dsp_block_size,
-				     nchannels, in, out)) != 0)
+	    if ((rc = process_signal(dsp_block_size, nchannels, bchannels, in, out)) != 0)
 		return_code = rc;
 
 	    IF_DEBUG(DBG_VERBOSE, io_trace(" DSP block done"));
 
-	    for (chan = 0; chan < nchannels; chan++) {
-		in[chan] += dsp_block_size;
-		out[chan] += dsp_block_size;
+	    for (chan = 0; chan < bchannels; chan++) {
+			if ( chan < nchannels){
+				in[chan] += dsp_block_size;
+			}
+			out[chan] += dsp_block_size;
 	    }
+    
 	    nframes -= dsp_block_size;
 	}
     }
@@ -666,9 +681,11 @@ void io_cleanup()
 	io_free_heap(&server_name);
 
 	/* free the ring buffers */
-	for (chan = 0; chan < nchannels; chan++) {
-	    if (in_rb[chan])
-		jack_ringbuffer_free(in_rb[chan]);
+	for (chan = 0; chan < bchannels; chan++) {
+		if (chan < nchannels ){
+			if (in_rb[chan])
+			jack_ringbuffer_free(in_rb[chan]);
+		}
 	    if (out_rb[chan])
 		jack_ringbuffer_free(out_rb[chan]);
 	}
@@ -826,12 +843,12 @@ void io_init(int argc, char *argv[])
             process_set_crossover_type (IIR);
 	    break;
 	case 'g':			/* Choose which interface to display */
-		show_gui = 1;   
-		//g_print(_("show_gui = %i\n"), show_gui);
+		gui_mode = 1;   
+		//g_print(_("gui_mode = %i\n"), gui_mode);
 		break;	
 	case 'D':			/* Choose which interface to display */
-		show_gui = 2;   
-		//g_print(_("show_gui = %i\n"), show_gui);
+		gui_mode = 2;   
+		//g_print(_("gui_mode = %i\n"), gui_mode);
 		break;			
 	case 'l':			/* Select limiter, 0=Steve's fast, 1=Sampo's foo */
 	    sscanf (optarg, "%d", &limiter_plugin_type);
@@ -892,8 +909,8 @@ void io_init(int argc, char *argv[])
                 "\t-F\ttreat all errors as fatal\n"
                 "\t-T\tprint trace buffer\n"
                 "\t-t\tdon't start separate DSP thread\n"
-		"\t-g\tshow simple gui at startup\n"
-		"\t-D\tRun in Daemon mode\n"
+				"\t-g\tDisplay Presets gui at startup\n"
+				"\t-D\tRun in Daemon mode\n"
                 "\n"),
 		pname, jamin_options);
 	exit(1);
@@ -1124,20 +1141,30 @@ void io_activate()
     io_new_state(DSP_ACTIVATING);
 
     for (chan = 0; chan < nchannels; chan++) {
-	input_ports[chan] =
-	    jack_port_register(client, in_names[chan],
-			       JACK_DEFAULT_AUDIO_TYPE,
-			       JackPortIsInput, 0);
-	output_ports[chan] =
-	    jack_port_register(client, out_names[chan],
-			       JACK_DEFAULT_AUDIO_TYPE,
-			       JackPortIsOutput, 0);
 
-	if (input_ports[chan] == NULL || output_ports[chan] == NULL) {
-	    g_print(_("%s: Cannot register JACK ports."), PACKAGE);
-	    exit(2);
-	}
+		input_ports[chan] =
+			jack_port_register(client, in_names[chan],
+					   JACK_DEFAULT_AUDIO_TYPE,
+					   JackPortIsInput, 0);
+
+		if (input_ports[chan] == NULL) {
+			g_print(_("%s: Cannot register JACK ports."), PACKAGE);
+			exit(2);
+		}
     }
+ 
+    for (chan = 0; chan < bchannels; chan++) {
+		output_ports[chan] =
+			jack_port_register(client, out_names[chan],
+					   JACK_DEFAULT_AUDIO_TYPE,
+					   JackPortIsOutput, 0);
+
+		if (output_ports[chan] == NULL) {
+			g_print(_("%s: Cannot register JACK ports."), PACKAGE);
+			exit(2);
+		}
+    }   
+
 
     if (jack_activate(client)) {
 	g_print(_("%s: Cannot activate JACK client."), PACKAGE);
@@ -1156,8 +1183,8 @@ void io_activate()
 	    pports = jack_get_ports (client, NULL, JACK_DEFAULT_AUDIO_TYPE,
 				     JackPortIsPhysical|JackPortIsInput);
 	    if (pports) {
-		/* use first `nchannels' physical playback ports */
-		for (chan = 0; chan < nchannels && pports[chan]; chan++) {
+		/* use first `bchannels' physical playback ports */
+		for (chan = 0; chan < bchannels && pports[chan]; chan++) {
 		    oports[chan] = pports[chan];
 		}
 	    } else {
@@ -1168,17 +1195,19 @@ void io_activate()
 	    }
 	}
 
-	for (chan = 0; chan < nchannels; chan++) {
-	    if (iports[chan] && *iports[chan]) {
-		if (jack_connect(client, iports[chan],
-				 jack_port_name(input_ports[chan]))) {
-                    errstr = g_strdup_printf(
-                        _("Cannot connect input port \"%s\"\n"), iports[chan]);
-                    g_print("%s\n", errstr);
-                    message (GTK_MESSAGE_WARNING, errstr);
-                    free (errstr);
+	for (chan = 0; chan < bchannels; chan++) {
+		if ( chan < nchannels ) {
+			if (iports[chan] && *iports[chan]) {
+			if (jack_connect(client, iports[chan],
+					 jack_port_name(input_ports[chan]))) {
+						errstr = g_strdup_printf(
+							_("Cannot connect input port \"%s\"\n"), iports[chan]);
+						g_print("%s\n", errstr);
+						message (GTK_MESSAGE_WARNING, errstr);
+						free (errstr);
+			}
+			}
 		}
-	    }
 	    if (oports[chan] && *oports[chan]) {
 		if (jack_connect(client, jack_port_name(output_ports[chan]),
 				 oports[chan])) {
@@ -1194,6 +1223,10 @@ void io_activate()
 	if (pports)
 	    free(pports);
     }
+    
+
+    
+    
 
     /* Allocate DSP engine ringbuffers.  Be careful to get the sizes
      * right, they are important for correct operation.  If we are
@@ -1201,11 +1234,13 @@ void io_activate()
      * mlockall() for this address space.  So, all we need to do is
      * touch all the pages in the buffers. */
     bufsize = dsp_block_bytes * NCHUNKS;
-    for (chan = 0; chan < nchannels; chan++) {
-	in_rb[chan] = jack_ringbuffer_create(bufsize);
-	memset(in_rb[chan]->buf, 0, bufsize);
-	out_rb[chan] = jack_ringbuffer_create(bufsize);
-	memset(out_rb[chan]->buf, 0, bufsize);
+    for (chan = 0; chan < bchannels; chan++) {
+		if(chan < nchannels){
+			in_rb[chan] = jack_ringbuffer_create(bufsize);
+			memset(in_rb[chan]->buf, 0, bufsize);
+		}	
+		out_rb[chan] = jack_ringbuffer_create(bufsize);
+		memset(out_rb[chan]->buf, 0, bufsize);
     }
 
     /* create DSP thread, if desired and able */

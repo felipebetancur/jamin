@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.h,v 1.41 2010/11/01 09:25:29 kotau Exp $
+ *  $Id: process.h,v 1.42 2013/02/06 03:42:39 kotau Exp $
  */
 
 #ifndef PROCESS_H
@@ -40,6 +40,7 @@
 
 /* number of input and output channels */
 #define NCHANNELS 2
+#define BCHANNELS 8
 #define CHANNEL_L 0
 #define CHANNEL_R 1
 
@@ -48,6 +49,7 @@
 #define XO_MID  1
 #define XO_HIGH 2
 #define XO_NBANDS 3
+
 
 #define LIM_PEAK_IN  0
 #define LIM_PEAK_OUT 1
@@ -151,7 +153,7 @@ void process_set_ws_boost(float val);
 
 void process_init(float fs);
 
-int process_signal(jack_nframes_t nframes, int nchannels,
+int process_signal(jack_nframes_t nframes, int nchannels, int bchannels,
 		   jack_default_audio_sample_t *in[],
 		   jack_default_audio_sample_t *out[]);
 
