@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.82 2013/02/06 18:17:37 kotau Exp $
+ *  $Id: process.c,v 1.83 2013/02/06 23:40:09 kotau Exp $
  */
 
 #include <math.h>
@@ -668,27 +668,20 @@ printf("WARNING: wierd input: %f\n", in_buf[port][in_ptr]);
 		 * 
 		 */		
 		
-		/* multi channel output */
-		
 
-		 
-		/*out[port][pos] = delay_buf[port % 2][XO_LOW][(dpos[port % 2] - delay[XO_LOW]) & delay_mask] +
-					delay_buf[port % 2][XO_MID][(dpos[port % 2] - delay[XO_MID]) & delay_mask] +
-					delay_buf[port % 2][XO_HIGH][(dpos[port % 2] - delay[XO_HIGH]) & delay_mask];	
-		*/	
+		/* copy out_tmp[] to delay_buf[] */
+		delay_buf[port % 2][XO_LOW][dpos[port % 2] & delay_mask] = out_tmp[port % 2][XO_LOW][pos];
+		delay_buf[port % 2][XO_MID][dpos[port % 2] & delay_mask] = out_tmp[port % 2][XO_MID][pos];
+		delay_buf[port % 2][XO_HIGH][dpos[port % 2] & delay_mask] = out_tmp[port % 2][XO_HIGH][pos];
+		
+		/* multi channel output */				
 		switch (port){
 			case 0:
 			case 1:
-				
-				/* copy out_tmp[] to delay_buf[] */
-				
-				  delay_buf[port][XO_LOW][dpos[port] & delay_mask] = out_tmp[port][XO_LOW][pos];
-				  delay_buf[port][XO_MID][dpos[port] & delay_mask] = out_tmp[port][XO_MID][pos];
-				  delay_buf[port][XO_HIGH][dpos[port] & delay_mask] = out_tmp[port][XO_HIGH][pos];
 					
-				out[port][pos] = delay_buf[port][XO_LOW][(dpos[port] - delay[XO_LOW]) & delay_mask] +
-					delay_buf[port][XO_MID][(dpos[port] - delay[XO_MID]) & delay_mask] +
-					delay_buf[port][XO_HIGH][(dpos[port] - delay[XO_HIGH]) & delay_mask];
+				out[port][pos] = delay_buf[port][XO_LOW][(dpos[port] - delay[XO_LOW]) & delay_mask]
+					 + delay_buf[port][XO_MID][(dpos[port] - delay[XO_MID]) & delay_mask]
+					 + delay_buf[port][XO_HIGH][(dpos[port] - delay[XO_HIGH]) & delay_mask];
 			break;	
 			case 2:
 			case 3:
