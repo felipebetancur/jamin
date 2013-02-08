@@ -6453,6 +6453,7 @@ create_window3 (void)
   GtkWidget *presets_outmeter_l;
   GtkWidget *custom26;
   GtkWidget *presets_outmeter_r;
+  GtkWidget *global_bypass_event_box_presets;
   GtkWidget *checkbutton1;
   GtkWidget *label3183;
   GtkTooltips *tooltips;
@@ -6646,16 +6647,25 @@ create_window3 (void)
   gtk_widget_set_size_request (presets_outmeter_r, 15, 0);
   GTK_WIDGET_UNSET_FLAGS (presets_outmeter_r, GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (presets_outmeter_r, GTK_CAN_DEFAULT);
-
+  
+  global_bypass_event_box_presets = gtk_event_box_new ();
+  gtk_widget_set_name (global_bypass_event_box_presets, "global_bypass_event_box_presets");
+  gtk_widget_show (global_bypass_event_box_presets);
+  gtk_box_pack_start (GTK_BOX (vbox168), global_bypass_event_box_presets, FALSE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, global_bypass_event_box_presets, _("Bypass all processing"), NULL);
+  
   checkbutton1 = gtk_check_button_new_with_mnemonic (_("Global bypass"));
   gtk_widget_set_name (checkbutton1, "checkbutton1");
   gtk_widget_show (checkbutton1);
-  gtk_box_pack_start (GTK_BOX (vbox168), checkbutton1, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (global_bypass_event_box_presets), checkbutton1);
+ // gtk_box_pack_start (GTK_BOX (global_bypass_event_box_presets), checkbutton1, FALSE, FALSE, 0);  
 
   label3183 = gtk_label_new (_("Output"));
   gtk_widget_set_name (label3183, "label3183");
   gtk_widget_show (label3183);
   gtk_frame_set_label_widget (GTK_FRAME (frame29), label3183);
+  
+  
 
   g_signal_connect ((gpointer) window3, "delete_event",
                     G_CALLBACK (on_window3_delete_event),
@@ -6728,6 +6738,7 @@ create_window3 (void)
   GLADE_HOOKUP_OBJECT (window3, presets_outmeter_l, "presets_outmeter_l");
   GLADE_HOOKUP_OBJECT (window3, custom26, "custom26");
   GLADE_HOOKUP_OBJECT (window3, presets_outmeter_r, "presets_outmeter_r");
+  GLADE_HOOKUP_OBJECT (window3, global_bypass_event_box_presets, "global_bypass_event_box_presets");
   GLADE_HOOKUP_OBJECT (window3, checkbutton1, "checkbutton1");
   GLADE_HOOKUP_OBJECT (window3, label3183, "label3183");
   GLADE_HOOKUP_OBJECT_NO_REF (window3, tooltips, "tooltips");

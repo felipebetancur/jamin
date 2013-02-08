@@ -52,7 +52,7 @@
 
     We're trying to stay away from extern'ed global variables as much as
     possible (I've been tainted by C++  ;-)  If you need to access a variable
-    that is used here (set or get) write a liitle one line function that
+    that is used here (set or get) write a little one line function that
     returns or sets it.  You can call it hdeq_set_... or hdeq_get_...  Yes,
     there is some overhead associated with it but it makes tracking things
     much easier.
@@ -1085,12 +1085,13 @@ void draw_EQ_curve ()
 
         for (i = 0 ; i < NOTCHES ; i++)
           {
-	    s_set_description (S_NOTCH_GAIN (i), g_strdup_printf("Reset notch %d", i));
+			s_set_description (S_NOTCH_GAIN (i), g_strdup_printf("Reset notch %d", i));
             s_set_value_ns (S_NOTCH_GAIN (i), EQ_notch_gain[i]);
             s_set_value_ns (S_NOTCH_Q (i), (float) EQ_notch_width[i]);
             s_set_value_ns (S_NOTCH_FREQ (i), powf (10.0f, EQ_x_notched[EQ_notch_index[i]]));
             s_set_value_ns (S_NOTCH_FLAG (i), (float) EQ_notch_flag[i]);
           }
+           
       }
 
 

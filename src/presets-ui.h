@@ -11,13 +11,13 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: presets-ui.h,v 1.1 2008/12/03 03:22:03 kotau Exp $
+ *  $Id: presets-ui.h,v 1.2 2013/02/08 23:19:38 kotau Exp $
  */
 
 #ifndef EASY_UI_H
 #define EASY_UI_H
 
-void presets_ui_update();
+void presets_ui_update(GtkButton *tButton);
 
 
 #endif

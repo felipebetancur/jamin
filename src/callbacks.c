@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.179 2008/12/03 03:22:03 kotau Exp $
+ *  $Id: callbacks.c,v 1.180 2013/02/08 23:19:37 kotau Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -2842,20 +2842,30 @@ on_global_bypass_toggled               (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
   int state;
-
+  GtkToggleButton *togglebutton1;
 
   state = gtk_toggle_button_get_active(togglebutton);
 
   process_set_global_bypass (state);
 
+  if ( togglebutton == lookup_widget(presets_window, "checkbutton1")) 
+  {
+	  togglebutton1 = lookup_widget(main_window, "global_bypass");
+	  
+  } else {
+	  togglebutton1 = lookup_widget(presets_window, "checkbutton1");
+	  
+  }
 
   if (state) 
     {
       callbacks_blink_bypass_button (GLOBAL_BYPASS, 1);
+      gtk_toggle_button_set_active(togglebutton1, TRUE);
     }
   else
     {
       callbacks_blink_bypass_button (GLOBAL_BYPASS, -1);
+      gtk_toggle_button_set_active(togglebutton1, FALSE);
     }
 }
 
@@ -3027,6 +3037,7 @@ callbacks_blink_bypass_button (int button, int start)
         }
 
       gtk_widget_modify_bg ((GtkWidget *) l_global_bypass_event_box, GTK_STATE_NORMAL, &bypass);
+      gtk_widget_modify_bg (lookup_widget(presets_window, "global_bypass_event_box_presets"), GTK_STATE_NORMAL, &bypass);
       break;
     }
 } 
@@ -3295,8 +3306,8 @@ on_eButton1_button_press_event         (GtkWidget       *widget,
 	else 
 		global_gui = 1;
 	
-//	g_printerr("cllbk: clicked");
-	presets_ui_update ();
+//	g_print("cllbk: clicked");
+	presets_ui_update (widget);
 	
   return FALSE;
 }

@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: presets-ui.c,v 1.3 2013/02/06 03:42:39 kotau Exp $
+ *  $Id: presets-ui.c,v 1.4 2013/02/08 23:19:38 kotau Exp $
  */
 
 #include <stdio.h>
@@ -30,10 +30,10 @@
 static GtkButton *tButton;
 
 
-void presets_ui_update ()
+void presets_ui_update (GtkButton *tButton)
 {
 	
-	tButton = GTK_BUTTON(lookup_widget(presets_window, "eButton1"));
+	//tButton = GTK_BUTTON(lookup_widget(presets_window, "eButton1"));
 	
 	if(global_gui){
 		gtk_widget_show(main_window);
