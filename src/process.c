@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.c,v 1.83 2013/02/06 23:40:09 kotau Exp $
+ *  $Id: process.c,v 1.84 2013/02/09 15:47:30 kotau Exp $
  */
 
 #include <math.h>
@@ -129,7 +129,8 @@ static int limiter_bypass = FALSE;
 static int limiter_bypass_pending = FALSE;
 static int rms_time_slice;
 
-volatile int global_gui = 0;		/* updated from GUI thread */
+volatile int global_main_gui = 0;		/* updated from GUI thread */
+volatile int global_multiout_gui = 0;		/* updated from GUI thread */
 
 /* Data for plugins */
 plugin *comp_plugin, *lim_plugin[2];

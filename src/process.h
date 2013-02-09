@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: process.h,v 1.42 2013/02/06 03:42:39 kotau Exp $
+ *  $Id: process.h,v 1.43 2013/02/09 15:47:30 kotau Exp $
  */
 
 #ifndef PROCESS_H
@@ -90,7 +90,8 @@
 #define FAST               0
 #define FOO                1
 
-extern volatile int global_gui;
+extern volatile int global_main_gui;
+extern volatile int global_multiout_gui;
 
 extern const jack_nframes_t dsp_block_size;
 extern float sample_rate;

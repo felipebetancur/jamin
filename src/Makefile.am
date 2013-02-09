@@ -38,6 +38,7 @@ jamin_SOURCES = \
 	limiter-ui.c limiter-ui.h \
 	presets-ui.c presets-ui.h \
 	main.c main.h \
+	multiout-ui.h \	
 	plugin.c plugin.h \
 	process.c process.h \
 	resource.c resource.h \

@@ -12,3 +12,4 @@ GtkWidget* create_about_dialog (void);
 GtkWidget* create_HDEQ_menu (void);
 GtkWidget* create_window2 (void);
 GtkWidget* create_window3 (void);
+GtkWidget* create_window4 (void);

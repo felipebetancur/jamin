@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: callbacks.c,v 1.180 2013/02/08 23:19:37 kotau Exp $
+ *  $Id: callbacks.c,v 1.181 2013/02/09 15:47:29 kotau Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -45,6 +45,7 @@
 #include "state.h"
 #include "db.h"
 #include "presets-ui.h"
+#include "multiout-ui.h"
 #include "status-ui.h"
 #include "limiter-ui.h"
 #include "io-menu.h"
@@ -3301,17 +3302,34 @@ on_eButton1_button_press_event         (GtkWidget       *widget,
                                         gpointer         user_data)
 {
 	
-	if(global_gui  == 1)
-		global_gui = 0;
+	if(global_main_gui  == 1)
+		global_main_gui = 0;
 	else 
-		global_gui = 1;
+		global_main_gui = 1;
 	
 //	g_print("cllbk: clicked");
-	presets_ui_update (widget);
+	presets_ui_show_main (widget);
 	
   return FALSE;
 }
 
+
+gboolean
+on_eButton2_button_press_event         (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+	
+	if(global_multiout_gui  == 1)
+		global_multiout_gui = 0;
+	else 
+		global_multiout_gui = 1;
+	
+//	g_print("cllbk: clicked");
+	presets_ui_show_multiout (widget);
+	
+  return FALSE;
+}
 
 void
 on_presets_in_trim_scale_value_changed (GtkRange        *range,
@@ -3370,4 +3388,14 @@ on_out_trim_scale_value_changed        (GtkRange        *range,
 	gtk_range_set_value (GTK_RANGE(lookup_widget(presets_window, "presets_out_trim_scale")), gtk_range_get_adjustment(range)->value);
 }
 
+
+gboolean
+on_window4_delete_event                (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data)
+{
+    clean_quit ();
+	
+  return FALSE;
+}
 

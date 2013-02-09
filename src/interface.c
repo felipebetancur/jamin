@@ -6442,7 +6442,9 @@ create_window3 (void)
   GtkWidget *vbox167;
   GtkWidget *image344;
   GtkWidget *combobox1;
+  GtkWidget *hbox_w3_1;
   GtkWidget *button1;
+  GtkWidget *button2;
   GtkWidget *frame29;
   GtkWidget *vbox168;
   GtkWidget *eventbox73;
@@ -6581,11 +6583,22 @@ create_window3 (void)
   gtk_combo_box_append_text (GTK_COMBO_BOX (combobox1), _("DnB"));
   gtk_combo_box_append_text (GTK_COMBO_BOX (combobox1), _("Pop"));
 
-  button1 = gtk_button_new_with_mnemonic (_("Show"));
+  hbox_w3_1 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox_w3_1, "hbox_w3_1");
+  gtk_widget_show (hbox_w3_1);
+ // gtk_container_add (GTK_CONTAINER (vbox167), hbox_w3_1);
+  gtk_box_pack_start (GTK_BOX (vbox167), hbox_w3_1, FALSE, TRUE, 0);
+  
+  button1 = gtk_button_new_with_mnemonic (_("Master"));
   gtk_widget_set_name (button1, "button1");
   gtk_widget_show (button1);
-  gtk_box_pack_start (GTK_BOX (vbox167), button1, FALSE, FALSE, 0);
-
+  gtk_box_pack_start (GTK_BOX (hbox_w3_1), button1, TRUE, TRUE, 0);
+  
+  button2 = gtk_button_new_with_mnemonic (_("Multi"));
+  gtk_widget_set_name (button2, "button2");
+  gtk_widget_show (button2);
+  gtk_box_pack_start (GTK_BOX (hbox_w3_1), button2, TRUE, TRUE, 0);
+  
   frame29 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame29, "frame29");
   gtk_widget_show (frame29);
@@ -6691,6 +6704,9 @@ create_window3 (void)
   g_signal_connect ((gpointer) button1, "button_press_event",
                     G_CALLBACK (on_eButton1_button_press_event),
                     NULL);
+  g_signal_connect ((gpointer) button2, "button_press_event",
+                    G_CALLBACK (on_eButton2_button_press_event),
+                    NULL);                  
   g_signal_connect ((gpointer) eventbox73, "enter_notify_event",
                     G_CALLBACK (on_output_eventbox_enter_notify_event),
                     NULL);
@@ -6728,6 +6744,7 @@ create_window3 (void)
   GLADE_HOOKUP_OBJECT (window3, image344, "image344");
   GLADE_HOOKUP_OBJECT (window3, combobox1, "combobox1");
   GLADE_HOOKUP_OBJECT (window3, button1, "button1");
+  GLADE_HOOKUP_OBJECT (window3, button1, "button2");
   GLADE_HOOKUP_OBJECT (window3, frame29, "frame29");
   GLADE_HOOKUP_OBJECT (window3, vbox168, "vbox168");
   GLADE_HOOKUP_OBJECT (window3, eventbox73, "eventbox73");
@@ -6746,3 +6763,66 @@ create_window3 (void)
   return window3;
 }
 
+
+GtkWidget*
+create_window4 (void)
+{
+  GtkWidget *window4;
+  GtkWidget *hbox_w4_1;
+  GtkWidget *frame_w4_1;
+  GtkWidget *vbox_w4_1;
+  GtkWidget *hbox_w4_2;
+
+
+  GtkTooltips *tooltips;
+
+  tooltips = gtk_tooltips_new ();
+
+  window4 = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_widget_set_name (window4, "window4");
+  gtk_widget_set_size_request (window4, 1024, 600);
+  gtk_window_set_title (GTK_WINDOW (window4), _("Jamin - Multi Out"));
+  gtk_window_set_default_size (GTK_WINDOW (window4), 1024, 600);
+  gtk_window_set_resizable (GTK_WINDOW (window4), FALSE);
+
+  hbox_w4_1 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox_w4_1, "hbox_w4_1");
+  gtk_widget_show (hbox_w4_1);
+  gtk_container_add (GTK_CONTAINER (window4), hbox_w4_1);
+
+  frame_w4_1 = gtk_frame_new (NULL);
+  gtk_widget_set_name (frame_w4_1, "frame_w4_1");
+  gtk_widget_show (frame_w4_1);
+  gtk_box_pack_start (GTK_BOX (hbox_w4_1), frame_w4_1, FALSE, FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (frame_w4_1), 2);
+  gtk_frame_set_label_align (GTK_FRAME (frame_w4_1), 0.5, 0.5);
+
+  vbox_w4_1 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_name (vbox_w4_1, "vbox_w4_1");
+  gtk_widget_show (vbox_w4_1);
+  gtk_container_add (GTK_CONTAINER (frame_w4_1), vbox_w4_1);
+
+  hbox_w4_2 = gtk_hbox_new (FALSE, 1);
+  gtk_widget_set_name (hbox_w4_2, "hbox_w4_2");
+  gtk_widget_show (hbox_w4_2);
+  gtk_box_pack_start (GTK_BOX (vbox_w4_1), hbox_w4_2, TRUE, TRUE, 5);
+  
+  
+  
+  g_signal_connect ((gpointer) window4, "delete_event",
+                    G_CALLBACK (on_window4_delete_event),
+                    NULL);
+  g_signal_connect ((gpointer) window4, "show_help",
+                    G_CALLBACK (on_show_help),
+                    NULL);
+  
+  /* Store pointers to all widgets, for use by lookup_widget(). */
+  GLADE_HOOKUP_OBJECT_NO_REF (window4, window4, "window4");
+  GLADE_HOOKUP_OBJECT (window4, hbox_w4_1, "hbox_w4_1");
+  GLADE_HOOKUP_OBJECT (window4, frame_w4_1, "frame_w4_1");
+  GLADE_HOOKUP_OBJECT (window4, vbox_w4_1, "vbox_w4_1");
+  GLADE_HOOKUP_OBJECT (window4, hbox_w4_2, "hbox_w4_2");
+  
+  return window4;
+  
+}  

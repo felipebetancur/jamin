@@ -11,7 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  $Id: main.c,v 1.71 2013/02/06 03:42:39 kotau Exp $
+ *  $Id: main.c,v 1.72 2013/02/09 15:47:29 kotau Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -57,7 +57,7 @@
 
 
 
-GtkWidget *main_window, *presets_window;
+GtkWidget *main_window, *presets_window, *multiout_window;
 char *jamin_dir = NULL;
 char *default_session = NULL;
 char *resource_file = NULL;		/* GTK resource file */
@@ -108,7 +108,8 @@ int main(int argc, char *argv[])
 	preferences_init();
 	main_window = create_window1();
 	presets_window = create_window3();
-
+	multiout_window = create_window4();
+	
 #ifdef FILTER_TUNING
     GtkWidget *ft = create_filter_tuning();
     gtk_widget_show(ft);
