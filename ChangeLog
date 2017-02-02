@@ -1,3 +1,7 @@
+2017-02-01	Quinn Storm	<rtmf@beautifulsunrise.org>
+
+	* Port Jamin's custom GTK types to Glib
+
 2008-02-08  Emmanuel Saracco  <esaracco@free.fr>
 
 	* Take in account libdir defined at compile time
