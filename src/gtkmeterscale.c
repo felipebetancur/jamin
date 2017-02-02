@@ -45,26 +45,27 @@ static void meterscale_draw_notch(GtkMeterScale *meterscale, float db, int
 
 static GtkWidgetClass *parent_class = NULL;
 
-guint
+GType
 gtk_meterscale_get_type ()
 {
-  static guint meterscale_type = 0;
+  static GType meterscale_type = 0;
 
   if (!meterscale_type)
     {
-      GtkTypeInfo meterscale_info =
-      {
-	"GtkMeterScale",
-	sizeof (GtkMeterScale),
-	sizeof (GtkMeterScaleClass),
-	(GtkClassInitFunc) gtk_meterscale_class_init,
-	(GtkObjectInitFunc) gtk_meterscale_init,
-	/*(GtkArgSetFunc)*/ NULL,
-	/*(GtkArgGetFunc)*/ NULL,
-      };
-
-      meterscale_type = gtk_type_unique (gtk_widget_get_type (),
-		      &meterscale_info);
+      static const GTypeInfo meterscale_info =
+			{
+				sizeof(GtkMeterScaleClass),
+				NULL,
+				NULL,
+				(GClassInitFunc) gtk_meterscale_class_init,
+				NULL,
+				NULL,
+				sizeof(GtkMeterScale),
+				0,
+				(GInstanceInitFunc) gtk_meterscale_init,
+				NULL
+			};
+			meterscale_type = g_type_register_static(gtk_widget_get_type(),"GtkMeterScale",&meterscale_info,(GTypeFlags)0);
     }
 
   return meterscale_type;
@@ -104,7 +105,7 @@ gtk_meterscale_new (gint direction, float min, float max)
 {
   GtkMeterScale *meterscale;
 
-  meterscale = gtk_type_new (gtk_meterscale_get_type ());
+  meterscale = g_object_new (gtk_meterscale_get_type (), NULL);
 
   meterscale->direction = direction;
   meterscale->lower = min;

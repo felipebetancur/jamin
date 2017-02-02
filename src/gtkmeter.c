@@ -56,25 +56,27 @@ static int meter_count = 0;
 
 static GtkWidgetClass *parent_class = NULL;
 
-guint
+GType
 gtk_meter_get_type ()
 {
-  static guint meter_type = 0;
+  static GType meter_type = 0;
 
   if (!meter_type)
     {
-      GtkTypeInfo meter_info =
+      static const GTypeInfo meter_info =
       {
-	"GtkMeter",
-	sizeof (GtkMeter),
-	sizeof (GtkMeterClass),
-	(GtkClassInitFunc) gtk_meter_class_init,
-	(GtkObjectInitFunc) gtk_meter_init,
-	/*(GtkArgSetFunc)*/ NULL,
-	/*(GtkArgGetFunc)*/ NULL,
-      };
-
-      meter_type = gtk_type_unique (gtk_widget_get_type (), &meter_info);
+				sizeof(GtkMeterClass),
+				NULL,
+				NULL,
+				(GClassInitFunc) gtk_meter_class_init,
+				NULL,
+				NULL,
+				sizeof(GtkMeter),
+				0,
+				(GInstanceInitFunc) gtk_meter_init,
+				NULL
+			};
+			meter_type = g_type_register_static(GTK_TYPE_WIDGET,"GtkMeter",&meter_info,(GTypeFlags)0);
     }
 
   return meter_type;
@@ -120,7 +122,7 @@ gtk_meter_new (GtkAdjustment *adjustment, gint direction)
 {
   GtkMeter *meter;
 
-  meter = gtk_type_new (gtk_meter_get_type ());
+  meter = g_object_new (gtk_meter_get_type (), NULL);
 
   if (!adjustment)
     adjustment = (GtkAdjustment*) gtk_adjustment_new (0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
